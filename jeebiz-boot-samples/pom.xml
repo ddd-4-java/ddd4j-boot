@@ -6,7 +6,6 @@
         <groupId>io.hiwepy</groupId>
         <artifactId>jeebiz-boot-parent</artifactId>
         <version>3.3.x.20240823-SNAPSHOT</version>
-        <relativePath/>
     </parent>
 
     <artifactId>jeebiz-boot-samples</artifactId>
