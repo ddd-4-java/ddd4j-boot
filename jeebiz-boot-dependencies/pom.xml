@@ -508,8 +508,7 @@
         <spring-boot-starter-grpc.version>4.5.9</spring-boot-starter-grpc.version>
         <spring-boot-starter-hikaricp-plus.version>3.3.x.20241003.RELEASE</spring-boot-starter-hikaricp-plus.version>
         <spring-boot-starter-ip2region.version>3.3.x.20241003.RELEASE</spring-boot-starter-ip2region.version>
-        <spring-boot-starter-ishumei.version>2.7.x.20240823.RELEASE</spring-boot-starter-ishumei.version>
-        <spring-boot-starter-j2cache.version>2.8.0-release</spring-boot-starter-j2cache.version>
+        <spring-boot-starter-ishumei.version>3.3.x.20241003.RELEASE</spring-boot-starter-ishumei.version>
         <spring-boot-starter-jasypt.version>2.1.0</spring-boot-starter-jasypt.version>
         <spring-boot-starter-javamelody.version>${javamelody.version}</spring-boot-starter-javamelody.version>
         <spring-boot-starter-javamelody-ui.version>1.5.7.2</spring-boot-starter-javamelody-ui.version>
@@ -6127,12 +6126,6 @@
                 <groupId>net.bull.javamelody</groupId>
                 <artifactId>spring-boot-admin-server-ui-javamelody</artifactId>
                 <version>${spring-boot-starter-javamelody-ui.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/net.oschina.j2cache/j2cache-spring-boot-starter -->
-            <dependency>
-                <groupId>net.oschina.j2cache</groupId>
-                <artifactId>j2cache-spring-boot2-starter</artifactId>
-                <version>${spring-boot-starter-j2cache.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/jcaptcha-spring-boot-starter -->
             <dependency>
