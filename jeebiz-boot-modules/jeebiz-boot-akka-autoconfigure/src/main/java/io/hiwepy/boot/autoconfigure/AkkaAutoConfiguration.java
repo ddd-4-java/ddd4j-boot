@@ -1,9 +1,14 @@
 package io.hiwepy.boot.autoconfigure;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import io.hiwepy.boot.autoconfigure.akka.SpringExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Akka Auto Configuration
+ */
 @Configuration(proxyBeanMethods = false)
 public class AkkaAutoConfiguration {
 

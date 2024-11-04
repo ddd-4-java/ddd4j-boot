@@ -5,7 +5,11 @@ import akka.actor.Actor;
 import akka.actor.IndirectActorProducer;
 import org.springframework.context.ApplicationContext;
 
+/**
+ * This class is used by the Spring extension of Akka to create the actor beans.
+ */
 public class SpringActorProducer implements IndirectActorProducer {
+
     private final ApplicationContext applicationContext;
     private final String beanActorName;
 

@@ -7,7 +7,11 @@ import akka.actor.Extension;
 import akka.actor.Props;
 import org.springframework.context.ApplicationContext;
 
-public class SpringExtension extends AbstractExtensionId<SpringExt> {
+/**
+ * This class is used by the Spring extension of Akka to create the actor beans.
+ */
+public class SpringExtension extends AbstractExtensionId<SpringExtension.SpringExt> {
+
     public static final SpringExtension SPRING_EXTENSION_PROVIDER = new SpringExtension();
 
     public SpringExtension() {
