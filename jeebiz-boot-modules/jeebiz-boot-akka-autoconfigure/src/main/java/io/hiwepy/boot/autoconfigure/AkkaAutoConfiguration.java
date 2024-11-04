@@ -1,5 +1,6 @@
 package io.hiwepy.boot.autoconfigure;
 
+import akka.actor.ActorSystem;
 import io.hiwepy.boot.autoconfigure.akka.SpringExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -22,7 +23,7 @@ public class AkkaAutoConfiguration {
         return system;
     }
 
-    public AkkaConfiguration() {
+    public AkkaAutoConfiguration() {
     }
 
     public ApplicationContext getApplicationContext() {
@@ -36,10 +37,10 @@ public class AkkaAutoConfiguration {
     public boolean equals(Object o) {
         if (o == this) {
             return true;
-        } else if (!(o instanceof AkkaConfiguration)) {
+        } else if (!(o instanceof AkkaAutoConfiguration)) {
             return false;
         } else {
-            AkkaConfiguration other = (AkkaConfiguration)o;
+            AkkaAutoConfiguration other = (AkkaAutoConfiguration)o;
             if (!other.canEqual(this)) {
                 return false;
             } else {
@@ -59,19 +60,19 @@ public class AkkaAutoConfiguration {
     }
 
     protected boolean canEqual(Object other) {
-        return other instanceof AkkaConfiguration;
+        return other instanceof AkkaAutoConfiguration;
     }
 
     public int hashCode() {
-        int PRIME = true;
         int result = 1;
         Object $applicationContext = this.getApplicationContext();
         result = result * 59 + ($applicationContext == null ? 43 : $applicationContext.hashCode());
         return result;
     }
 
+    @Override
     public String toString() {
-        return "AkkaConfiguration(applicationContext=" + this.getApplicationContext() + ")";
+        return "AkkaAutoConfiguration(applicationContext=" + this.getApplicationContext() + ")";
     }
 
 }

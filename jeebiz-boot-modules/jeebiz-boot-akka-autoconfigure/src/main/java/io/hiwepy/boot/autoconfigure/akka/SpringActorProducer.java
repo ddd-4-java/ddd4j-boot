@@ -23,6 +23,7 @@ public class SpringActorProducer implements IndirectActorProducer {
     }
 
     public Class<? extends Actor> actorClass() {
-        return this.applicationContext.getType(this.beanActorName);
+        return (Class<? extends Actor>) this.applicationContext.getType(this.beanActorName);
     }
+
 }
