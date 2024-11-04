@@ -23,7 +23,6 @@
         <module>jeebiz-boot-validation-autoconfigure</module>
         <module>jeebiz-boot-webflux-autoconfigure</module>
         <module>jeebiz-boot-webmvc-autoconfigure</module>
-        <module>jeebiz-boot-akka-autoconfigure</module>
     </modules>
 
     <dependencies>
