@@ -284,7 +284,7 @@
         <mybatis-freemarker.version>1.2.4</mybatis-freemarker.version>
         <mybatis-velocity.version>2.1.2</mybatis-velocity.version>
         <mybatis-generator.version>1.4.2</mybatis-generator.version>
-        <mybatis-tk.version>2.1.5</mybatis-tk.version>
+        <mybatis-tk.version>3.5.3</mybatis-tk.version>
         <mysql.version>8.3.0</mysql.version>
         <myth.version>2.0.2-RELEASE</myth.version>
         <nacos-client.version>2.2.4</nacos-client.version>
@@ -536,6 +536,7 @@
         <spring-boot-starter-maven-invoker.version>2.3.x.20240823.RELEASE</spring-boot-starter-maven-invoker.version>
         <spring-boot-starter-mybatis.version>3.0.3</spring-boot-starter-mybatis.version>
         <spring-boot-starter-mybatis-plus.version>${mybatis-plus.version}</spring-boot-starter-mybatis-plus.version>
+        <spring-boot-starter-mybatis-tk.version>2.1.5</spring-boot-starter-mybatis-tk.version>
         <spring-boot-starter-minio.version>2.3.x.20240823.RELEASE</spring-boot-starter-minio.version>
         <spring-boot-starter-nacos-config.version>0.2.10</spring-boot-starter-nacos-config.version>
         <spring-boot-starter-nacos-discovery.version>0.2.11</spring-boot-starter-nacos-discovery.version>
@@ -6347,7 +6348,7 @@
             <dependency>
                 <groupId>tk.mybatis</groupId>
                 <artifactId>mapper-spring-boot-starter</artifactId>
-                <version>${mybatis-tk.version}</version>
+                <version>${spring-boot-starter-mybatis-tk}</version>
                 <exclusions>
                     <exclusion>
                         <artifactId>spring-boot-starter-logging</artifactId>
