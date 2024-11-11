@@ -536,6 +536,7 @@
         <spring-boot-starter-maven-invoker.version>2.7.x.20240823.RELEASE</spring-boot-starter-maven-invoker.version>
         <spring-boot-starter-mybatis.version>3.0.3</spring-boot-starter-mybatis.version>
         <spring-boot-starter-mybatis-plus.version>${mybatis-plus.version}</spring-boot-starter-mybatis-plus.version>
+        <spring-boot-starter-mybatis-tk.version>2.1.5</spring-boot-starter-mybatis-tk.version>
         <spring-boot-starter-minio.version>2.7.x.20240823.RELEASE</spring-boot-starter-minio.version>
         <spring-boot-starter-nacos-config.version>0.3.0-RC</spring-boot-starter-nacos-config.version>
         <spring-boot-starter-nacos-discovery.version>0.3.0-RC</spring-boot-starter-nacos-discovery.version>
@@ -6348,7 +6349,7 @@
             <dependency>
                 <groupId>tk.mybatis</groupId>
                 <artifactId>mapper-spring-boot-starter</artifactId>
-                <version>${mybatis-tk.version}</version>
+                <version>${spring-boot-starter-mybatis-tk}</version>
                 <exclusions>
                     <exclusion>
                         <artifactId>spring-boot-starter-logging</artifactId>
