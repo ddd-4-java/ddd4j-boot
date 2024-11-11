@@ -287,7 +287,7 @@
         <mybatis-freemarker.version>1.2.4</mybatis-freemarker.version>
         <mybatis-velocity.version>2.1.2</mybatis-velocity.version>
         <mybatis-generator.version>1.4.2</mybatis-generator.version>
-        <mybatis-tk.version>5.0.0</mybatis-tk.version>
+        <mybatis-tk.version>5.0.1</mybatis-tk.version>
         <mysql.version>8.4.0</mysql.version>
         <myth.version>2.0.2-RELEASE</myth.version>
         <nacos-client.version>2.2.4</nacos-client.version>
