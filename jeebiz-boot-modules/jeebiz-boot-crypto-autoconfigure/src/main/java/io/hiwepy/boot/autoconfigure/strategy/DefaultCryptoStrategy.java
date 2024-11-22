@@ -41,6 +41,7 @@ public class DefaultCryptoStrategy implements CryptoStrategy {
         try {
             // 1、序列化Value
             String valueAsString = getObjectMapper().writeValueAsString(value);
+            log.debug("Plain Value To {} Encrypt: {}", algorithmType.getName(), valueAsString);
             // 2、获取加密器
             SymmetricCrypto crypto = SymmetricCryptoUtil.getSymmetricCrypto(algorithmType.getName(), encMode, padMode, Base64.decodeStr(key), Objects.isNull(iv) ? null : Base64.decodeStr(iv));
             // 3、加密Value，如果 plainIsEncode =true 则对加密结果进行Base64
@@ -60,17 +61,13 @@ public class DefaultCryptoStrategy implements CryptoStrategy {
     @Override
     public <T> T decrypt(String value, SymmetricAlgorithmType algorithmType, String encMode, String padMode, String key, String iv, boolean plainIsEncode, Class<T> rtType) {
         try {
-            // 1、判断是否需要先解码，如果需要则先Base64解码
-            if(plainIsEncode){
-                value = Base64.decodeStr(value);
-                log.debug("Base64 Decode String : {}", value);
-            }
-            // 2、获取解密器
+            log.debug("Plain Value to {} Decrypt : {}", algorithmType.getName(), value);
+            // 1、获取解密器
             SymmetricCrypto crypto = SymmetricCryptoUtil.getSymmetricCrypto(algorithmType.getName(), encMode, padMode, Base64.decodeStr(key), Objects.isNull(iv) ? null : Base64.decodeStr(iv));
-            // 3、解密请求体
-            value = crypto.decryptStr(value);
-            log.debug("{} Decrypt Value : {}", algorithmType.getName(), value);
-            return getObjectMapper().readValue(value, rtType);
+            // 2、解密请求体
+            String decryptStr = crypto.decryptStr(value);
+            log.debug("{} Decrypt Value : {}", algorithmType.getName(), decryptStr);
+            return getObjectMapper().readValue(decryptStr, rtType);
         } catch (Exception ex) {
             log.error("{} Decrypt Error : {}", algorithmType.getName(), ex.getMessage());
             throw new BizRuntimeException(ApiCode.SC_INTERNAL_SERVER_ERROR, algorithmType.getName() + " Decrypt Error");
@@ -80,6 +77,7 @@ public class DefaultCryptoStrategy implements CryptoStrategy {
     @Override
     public <T> String hmac(T value, HmacAlgorithm hmacAlgorithm, String key, String iv, boolean plainIsEncode) {
         try {
+            log.debug("Plain Value to {} HMAC : {}", hmacAlgorithm.name(), value);
             HMac hMac = SymmetricCryptoUtil.getHmac(hmacAlgorithm, Base64.decodeStr(key));
             String hmacValue;
             if(plainIsEncode){

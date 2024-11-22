@@ -9,34 +9,21 @@ import cn.hutool.crypto.symmetric.AES;
 import cn.hutool.crypto.symmetric.SM4;
 import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import cn.hutool.crypto.symmetric.SymmetricCrypto;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 对称加密工具类
  */
 public class SymmetricCryptoUtil {
 
-    private static Cache<String, SymmetricCrypto> SYMMETRIC_CRYPTO_CACHE = Caffeine.newBuilder()
-            .maximumSize(1000)
-            .expireAfterAccess(60, TimeUnit.SECONDS)
-            .build();
-    private static Cache<String, HMac> HMAC_CACHE = Caffeine.newBuilder()
-            .maximumSize(1000)
-            .expireAfterAccess(60, TimeUnit.SECONDS)
-            .build();
+    private static final Map<String, SymmetricCrypto> SYMMETRIC_CRYPTO_CACHE = new ConcurrentHashMap<>();
+    private static final Map<String, HMac> HMAC_CACHE  = new ConcurrentHashMap<>();
 
-    /**
-     * 获取 SymmetricCrypto
-     * @param key 密钥
-     * @param iv 偏移向量，加盐
-     * @return SymmetricCrypto
-     */
     /**
      * 获取 SymmetricCrypto
      * @param key 密钥
@@ -46,7 +33,7 @@ public class SymmetricCryptoUtil {
     public static SymmetricCrypto getSymmetricCrypto(String algorithmType, String mode, String padding, String key, String iv) {
         StringJoiner keyJoiner = new StringJoiner("_").add(algorithmType).add(mode).add(padding).add(key).add(iv);
         // 构造对称加密器
-        return SYMMETRIC_CRYPTO_CACHE.get(keyJoiner.toString(), join -> {
+        return SYMMETRIC_CRYPTO_CACHE.computeIfAbsent(keyJoiner.toString(), join -> {
             String[] keyArr =  join.split("_");
             String algorithmTypeStr = Objects.toString(keyArr[0], SM4.ALGORITHM_NAME);
             String modeStr = Objects.toString(keyArr[1], Mode.ECB.name());
@@ -55,14 +42,14 @@ public class SymmetricCryptoUtil {
             byte[] ivBytes = StringUtils.isBlank(keyArr[4]) ? null : keyArr[4].getBytes(CharsetUtil.CHARSET_UTF_8);
             // 构造SM4加密器
             if(SM4.ALGORITHM_NAME.equalsIgnoreCase(algorithmType)){
-                return new SM4(Mode.valueOf(algorithmTypeStr), Padding.valueOf(keyArr[2]), keyBytes, ivBytes);
+                return new SM4(Mode.valueOf(modeStr), Padding.valueOf(keyArr[2]), keyBytes, ivBytes);
             }
             // 构造AES加密器
             if(SymmetricAlgorithm.AES.name().equalsIgnoreCase(algorithmType)){
                 return new AES(Mode.valueOf(modeStr), Padding.valueOf(paddingStr), keyBytes, ivBytes);
             }
 
-            return new AES(Mode.valueOf(algorithmTypeStr), Padding.valueOf(keyArr[2]), keyBytes, ivBytes);
+            return new AES(Mode.valueOf(modeStr), Padding.valueOf(keyArr[2]), keyBytes, ivBytes);
         });
     }
 
@@ -95,7 +82,7 @@ public class SymmetricCryptoUtil {
     public static HMac getHmac(HmacAlgorithm hmacAlgorithm, String key) {
         StringJoiner keyJoiner = new StringJoiner("_").add(hmacAlgorithm.getValue()).add(key);
         // 构造对称加密器
-        return HMAC_CACHE.get(keyJoiner.toString(), join -> {
+        return HMAC_CACHE.computeIfAbsent(keyJoiner.toString(), join -> {
             String[] keyArr =  join.split("_");
             String hmacAlgorithmStr = Objects.toString(keyArr[0], HmacAlgorithm.HmacSM3.getValue());
             byte[] keyBytes = keyArr[1].getBytes(CharsetUtil.CHARSET_UTF_8);
