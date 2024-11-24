@@ -6695,6 +6695,30 @@
                 <artifactId>validation-mimetypes-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-validation-mimetypes.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-cp-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>wx-java-cp-spring-boot-starter</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-cp-multi-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>wx-java-cp-multi-spring-boot-starter</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-channel-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>wx-java-channel-spring-boot-starter</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-channel-multi-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>wx-java-channel-multi-spring-boot-starter</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-open-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
@@ -6713,10 +6737,28 @@
                 <artifactId>wx-java-miniapp-spring-boot-starter</artifactId>
                 <version>${weixin-java.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-miniapp-multi-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>wx-java-miniapp-multi-spring-boot-starter</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-mp-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>wx-java-mp-spring-boot-starter</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-mp-multi-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>wx-java-mp-multi-spring-boot-starter</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-qidian-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>wx-java-qidian-spring-boot-starter</artifactId>
                 <version>${weixin-java.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/xmemcached-spring-boot-starter -->
