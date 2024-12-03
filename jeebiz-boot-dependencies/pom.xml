@@ -266,7 +266,7 @@
         <mssql-jdbc.version>12.6.3.jre8</mssql-jdbc.version>
         <mybatis.version>3.5.16</mybatis.version>
         <mybatis-dynamic-sql.version>1.4.0</mybatis-dynamic-sql.version>
-        <mybatis-plus.version>3.5.8</mybatis-plus.version>
+        <mybatis-plus.version>3.5.9</mybatis-plus.version>
         <mybatis-plus-generator.version>${mybatis-plus.version}</mybatis-plus-generator.version>
         <mybatis-plus-join.version>1.4.13</mybatis-plus-join.version>
         <mybatis-plus-ext.version>1.7.4-RELEASE</mybatis-plus-ext.version>
@@ -3680,6 +3680,11 @@
                 <artifactId>mybatis-plus-annotation</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.jeffreyning/mybatisplus-plus -->
             <dependency>
                 <groupId>com.github.jeffreyning</groupId>
@@ -3698,7 +3703,6 @@
                 <artifactId>mybatis-mate-annotation</artifactId>
                 <version>${mybatis-mate.version}</version>
             </dependency>
-
             <!-- https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt -->
             <dependency>
                 <groupId>com.nimbusds</groupId>
@@ -6203,6 +6207,11 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${spring-boot-starter-mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${spring-boot-starter-mybatis-plus.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.yulichang/mybatis-plus-join-boot-starter -->
