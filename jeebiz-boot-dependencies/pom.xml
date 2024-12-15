@@ -503,7 +503,7 @@
         <spring-boot-starter-dynamic-datasource.version>4.3.1</spring-boot-starter-dynamic-datasource.version>
         <spring-boot-starter-elasticjob.version>3.0.4</spring-boot-starter-elasticjob.version>
         <spring-boot-starter-fastdfs.version>3.3.x.20241003.RELEASE</spring-boot-starter-fastdfs.version>
-        <spring-boot-starter-flyway-plus.version>2.7.x.20240823.RELEASE</spring-boot-starter-flyway-plus.version>
+        <spring-boot-starter-flyway-plus.version>3.3.x.20241003.RELEASE</spring-boot-starter-flyway-plus.version>
         <spring-boot-starter-geoip.version>3.3.x.20241003.RELEASE</spring-boot-starter-geoip.version>
         <spring-boot-starter-grpc.version>4.5.9</spring-boot-starter-grpc.version>
         <spring-boot-starter-hikaricp-plus.version>3.3.x.20241003.RELEASE</spring-boot-starter-hikaricp-plus.version>
