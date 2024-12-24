@@ -289,7 +289,7 @@
         <myth.version>2.0.2-RELEASE</myth.version>
         <nacos-client.version>2.2.4</nacos-client.version>
         <neethi.version>3.2.0</neethi.version>
-        <netty.version>4.1.113.Final</netty.version>
+        <netty.version>4.1.115.Final</netty.version>
         <netty-socketio.version>2.0.11</netty-socketio.version>
         <netty-tcnative.version>2.0.66.Final</netty-tcnative.version>
         <nimbus-jose-jwt.version>9.41.1</nimbus-jose-jwt.version>
