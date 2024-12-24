@@ -146,13 +146,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <scope>provided</scope>
         </dependency>
         <!-- For Spring Tx -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <scope>provided</scope>
         </dependency>
         <!-- For Libphonenumber -->
         <dependency>
