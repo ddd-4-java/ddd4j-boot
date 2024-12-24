@@ -35,6 +35,11 @@ public @interface ApiIdempotent {
     long expireMillis() default 2000;
 
     /**
+     * 是否重试，默认：false
+     */
+    boolean retry() default false;
+
+    /**
      * 重试次数，默认0
      */
     int retryTimes() default 0;
