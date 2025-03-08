@@ -202,7 +202,7 @@
         <java-jwt.version>4.4.0</java-jwt.version>
         <javamelody.version>2.2.0</javamelody.version>
         <jave.version>3.5.0</jave.version>
-        <javers.version>7.6.2</javers.version>
+        <javers.version>7.8.0</javers.version>
         <jakarta-servlet.version>6.1.0</jakarta-servlet.version>
         <jakarta-validation.version>3.1.0</jakarta-validation.version>
         <jai-imageio.version>1.4.0</jai-imageio.version>
@@ -344,7 +344,7 @@
         <reactor-bom.version>2023.0.11</reactor-bom.version>
         <rabbit-amqp-client.version>5.22.0</rabbit-amqp-client.version>
         <redisson.version>3.39.0</redisson.version>
-        <resilience4j.version>2.2.0</resilience4j.version>
+        <resilience4j.version>2.3.0</resilience4j.version>
         <reflections.version>0.10.2</reflections.version>
         <rocketmq-client.version>5.3.1</rocketmq-client.version>
         <rsocket.version>1.1.4</rsocket.version>
@@ -4156,11 +4156,6 @@
             </dependency>
             <dependency>
                 <groupId>io.github.resilience4j</groupId>
-                <artifactId>resilience4j-vertx</artifactId>
-                <version>${resilience4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.resilience4j</groupId>
                 <artifactId>resilience4j-annotations</artifactId>
                 <version>${resilience4j.version}</version>
             </dependency>
@@ -4177,26 +4172,6 @@
             <dependency>
                 <groupId>io.github.resilience4j</groupId>
                 <artifactId>resilience4j-spring-cloud2</artifactId>
-                <version>${resilience4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.resilience4j</groupId>
-                <artifactId>resilience4j-retrofit</artifactId>
-                <version>${resilience4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.resilience4j</groupId>
-                <artifactId>resilience4j-feign</artifactId>
-                <version>${resilience4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.resilience4j</groupId>
-                <artifactId>resilience4j-ratpack</artifactId>
-                <version>${resilience4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.resilience4j</groupId>
-                <artifactId>resilience4j-prometheus</artifactId>
                 <version>${resilience4j.version}</version>
             </dependency>
             <dependency>
