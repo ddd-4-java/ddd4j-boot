@@ -583,7 +583,7 @@
         <spring-boot-starter-redisson.version>${redisson.version}</spring-boot-starter-redisson.version>
         <spring-boot-starter-redisson-plus.version>2.3.x.20240823.RELEASE</spring-boot-starter-redisson-plus.version>
         <spring-boot-starter-redistpl-plus.version>2.3.x.20241003-SNAPSHOT</spring-boot-starter-redistpl-plus.version>
-        <spring-boot-starter-rocketmq.version>2.2.3</spring-boot-starter-rocketmq.version>
+        <spring-boot-starter-rocketmq.version>2.3.3</spring-boot-starter-rocketmq.version>
         <spring-boot-starter-schemacrawler.version>1.0.7.RELEASE</spring-boot-starter-schemacrawler.version>
         <spring-boot-starter-seata.version>${seata.version}</spring-boot-starter-seata.version>
         <spring-boot-starter-security-biz.version>2.3.x.20240823.RELEASE</spring-boot-starter-security-biz.version>
