@@ -5,7 +5,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.kafka.clients.admin.*;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.boot.ssl.SslBundles;
 
 import java.util.*;
 
@@ -13,11 +15,12 @@ import java.util.*;
 public class KafkaAdminTemplate {
 
     private final KafkaProperties properties;
-
+    private final SslBundles sslBundles;
     private volatile AdminClient adminClient;
 
-    public KafkaAdminTemplate(KafkaProperties properties) {
+    public KafkaAdminTemplate(KafkaProperties properties, SslBundles sslBundles) {
         this.properties = properties;
+        this.sslBundles = sslBundles;
     }
 
     /**
@@ -25,7 +28,7 @@ public class KafkaAdminTemplate {
      * @return KafkaProducer 的配置参数
      */
     public Map<String, Object> defaultAdminConfigs() {
-        Map<String, Object> props = new HashMap<>(properties.buildAdminProperties());
+        Map<String, Object> props = new HashMap<>(properties.buildAdminProperties(sslBundles));
         // key 和 value 的序列化方式
         props.putIfAbsent(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.putIfAbsent(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
