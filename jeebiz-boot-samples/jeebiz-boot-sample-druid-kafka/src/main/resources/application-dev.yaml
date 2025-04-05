@@ -30,9 +30,99 @@ spring:
     database: 0
     # Redis服务器连接密码（默认为空）
     password: HycBsP5cSp3enyGw
-  # Flyway (FlywayMigrationProperties) 数据库迁移脚本版本管理（实现软件版本升级数据库自动升级）配置：
-  flyway:
-    enabled: true
+  # Kafka相关配置
+  kafka:
+    # Kafka服务器地址
+    bootstrap-servers: 127.0.0.1:9092
+    admin:
+      # 客户端ID
+      client-id: ${spring.application.name}
+      # 快速失败
+      fail-fast: false
+      properties:
+        # 重试次数
+        retries: 3
+        # 重试间隔
+        retry-backoff-ms: 100
+    # Kafka 生产者配置
+    producer:
+      # 应答级别:多少个分区副本备份完成时向生产者发送ack确认(可选0、1、all/-1)
+      acks: "all"
+      batch-size: 256
+      # 客户端ID
+      client-id: ${spring.application.name}
+      # 用来指定在消息发送到 Kafka 主题（Topic）之前，是否对消息进行压缩以及使用哪种压缩算法
+      compression-type: snappy
+      # 消息发送重试次数
+      retries: 0
+      # 事务id前缀
+      transaction-id-prefix: tx_
+      buffer-memory: 1048576
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 更多配置，参见 org.apache.kafka.clients.producer.ProducerConfig
+      properties:
+        max.request.size: 5242880 #5M
+        linger.ms: 5
+        # 自定义分区器
+        # partitioner.class: com.uzx.kafka.kafkaPartitioner
+    # Kafka 消费监听器配置
+    listener:
+      # 消费模式：批量消费
+      type: batch
+      # 手动确认模式
+      ack-mode: manual-immediate
+      # 确认消息数
+      ack-count: 1
+      # 确认超时时间
+      ack-time: 10000
+      # 客户端ID
+      client-id: ${spring.application.name}-consumer-${random.uuid}
+      # 并发数
+      concurrency: 9
+      # 轮询超时时间
+      poll-timeout: 1500
+      # 空闲事件间隔
+      idle-event-interval: 10000
+      # 监控间隔
+      monitor-interval: 10000
+      # 记录容器配置
+      log-container-config: true
+      # 错误处理模式
+      error-handler-mode: logging
+      back-off-mode: fixed
+    # Kafka 消费者配置
+    consumer:
+      # 消费者组ID，默认 default-group
+      group-id: default-group
+      # 是否自动提交偏移量，默认值是true（KafkaConsumerTemplate 中，只对非事务消息起作用）
+      enable-auto-commit: true
+      # 自动提交的时间间隔，自动提交开启时生效
+      auto-commit-interval: 100
+      # 当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，从头开始消费
+      auto-offset-reset: earliest
+      # 会话超时
+      client-id: ${spring.application.name}-consumer-${random.uuid}
+      # key反序列化
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # value反序列化
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 定义了poll方法最多可以拉取多少条消息，默认值为50。如果在拉取消息的时候新消息不足50条，那有多少返回多少；如果超过50条，每次只返回50。
+      max-poll-records: 50
+      # 心跳间隔应该小于会话超时时间的 1/3
+      heartbeat-interval: 20000
+      # 隔离级别，读取已提交的事务消息
+      isolation-level: read-committed
+      # 额外属性
+      fetch-max-wait: 5s
+      fetch-min-size: 1
+      # 更多配置，参见 org.apache.kafka.clients.consumer.ConsumerConfig
+      properties:
+        # 当broker多久没有收到consumer的心跳请求后就触发reBalance，默认值是10s
+        '[session.timeout.ms]': 60000
+        '[max.poll.interval.ms]': 300000
+        # 设定信任所有类型以反序列化
+        '[spring.json.trusted.packages]': '*'
 
 ################################################################################################################
 ###logging (log4j2) 基本配置：
@@ -41,28 +131,3 @@ spring:
 logging:
   config: classpath:conf/log4j2-dev.xml
 
-################################################################################################################
-###RocketMQ (RocketMQProperties) 配置：
-################################################################################################################
-rocketmq:
-  # 访问地址
-  name-server: 124.221.173.158:9876
-  producer:
-    # 必须指定group
-    group: Pro-Group
-    namespace-v2: jeebiz-v2
-    namespace: jeebiz
-    # 消息发送超时时长，默认3s
-    send-message-timeout: 3000
-    # 同步发送消息失败重试次数，默认2
-    retry-times-when-send-failed: 3
-    # 异步发送消息失败重试次数，默认2
-    retry-times-when-send-async-failed: 3
-  consumer:
-    group: Pro-Group
-    namespace-v2: jeebiz-v2
-    namespace: jeebiz
-  pull-consumer:
-    group: Pro-Group
-    namespace-v2: jeebiz-v2
-    namespace: jeebiz

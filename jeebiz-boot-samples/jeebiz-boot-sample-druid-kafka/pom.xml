@@ -171,13 +171,9 @@
 
         <!-- For Kafka -->
         <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>${kafka.version}</version>
+            <groupId>io.hiwepy</groupId>
+            <artifactId>jeebiz-boot-kafka-autoconfigure</artifactId>
+            <version>${jeebiz-boot.version}</version>
         </dependency>
 
         <!-- For Embed Tomcat -->
