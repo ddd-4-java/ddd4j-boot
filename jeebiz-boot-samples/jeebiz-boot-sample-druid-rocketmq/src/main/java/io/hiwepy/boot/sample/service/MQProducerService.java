@@ -7,14 +7,15 @@ public interface MQProducerService {
 
     /**
      * 普通发送（这里的参数对象可以随意定义，可以发送个对象，也可以是字符串等）
+     * @see <a href="https://rocketmq.apache.org/zh/docs/featureBehavior/01normalmessage">普通消息</a>
      */
-    void send(MessageDTO message);
+    void send(String msgBody);
 
     /**
      * 发送同步消息（阻塞当前线程，等待broker响应发送结果，这样不太容易丢失消息）
      * （msgBody也可以是对象，sendResult为返回的发送结果）
      */
-    SendResult sendMsg(String msgBody);
+    SendResult sendSyncMsg(String msgBody);
 
     /**
      * 发送异步消息（通过线程池执行发送到broker的消息任务，执行完后回调：在SendCallback中可处理相关成功失败时的逻辑）
@@ -25,6 +26,7 @@ public interface MQProducerService {
     /**
      * 发送延时消息（上面的发送同步消息，delayLevel的值就为0，因为不延时）
      * 在start版本中 延时消息一共分为18个等级分别为：1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
+     * @see <a href="https://rocketmq.apache.org/zh/docs/featureBehavior/02delaymessage">延时消息</a>
      */
     void sendDelayMsg(String msgBody, int delayLevel);
 

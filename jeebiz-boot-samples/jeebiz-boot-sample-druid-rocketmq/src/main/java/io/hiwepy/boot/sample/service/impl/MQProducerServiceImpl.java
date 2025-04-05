@@ -2,6 +2,7 @@ package io.hiwepy.boot.sample.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import io.hiwepy.boot.sample.service.MQProducerService;
+import io.hiwepy.boot.sample.setup.TopicConstant;
 import io.hiwepy.boot.sample.web.dto.MessageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
@@ -19,9 +20,6 @@ public class MQProducerServiceImpl implements MQProducerService {
     @Value("${rocketmq.producer.send-message-timeout}")
     private Integer messageTimeOut;
 
-    // 建议正常规模项目统一用一个TOPIC
-    private static final String topic = "RLT_TEST_TOPIC";
-
     // 直接注入使用，用于发送消息到broker服务器
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
@@ -29,8 +27,8 @@ public class MQProducerServiceImpl implements MQProducerService {
     /**
      * 普通发送（这里的参数对象可以随意定义，可以发送个对象，也可以是字符串等）
      */
-    public void send(MessageDTO message) {
-        rocketMQTemplate.convertAndSend(topic + ":tag1", message);
+    public void send(String msgBody) {
+        rocketMQTemplate.convertAndSend(TopicConstant.DEMO_TOPIC + ":tag1", msgBody);
 //        rocketMQTemplate.send(topic + ":tag1", MessageBuilder.withPayload(user).build()); // 等价于上面一行
     }
 
@@ -38,8 +36,8 @@ public class MQProducerServiceImpl implements MQProducerService {
      * 发送同步消息（阻塞当前线程，等待broker响应发送结果，这样不太容易丢失消息）
      * （msgBody也可以是对象，sendResult为返回的发送结果）
      */
-    public SendResult sendMsg(String msgBody) {
-        SendResult sendResult = rocketMQTemplate.syncSend(topic, MessageBuilder.withPayload(msgBody).build());
+    public SendResult sendSyncMsg(String msgBody) {
+        SendResult sendResult = rocketMQTemplate.syncSend(TopicConstant.DEMO_TOPIC, MessageBuilder.withPayload(msgBody).build());
         log.info("【sendMsg】sendResult={}", JSON.toJSONString(sendResult));
         return sendResult;
     }
@@ -50,15 +48,16 @@ public class MQProducerServiceImpl implements MQProducerService {
      */
     public void sendAsyncMsg(String msgBody) {
 
-        rocketMQTemplate.asyncSend(topic, MessageBuilder.withPayload(msgBody).build(), new SendCallback() {
+        rocketMQTemplate.asyncSend(TopicConstant.DEMO_TOPIC, MessageBuilder.withPayload(msgBody).build(), new SendCallback() {
 
             @Override
             public void onSuccess(SendResult sendResult) {
-                // 处理消息发送成功逻辑
+                System.out.printf("异步发送成功: %s  ", sendResult);
             }
+
             @Override
             public void onException(Throwable throwable) {
-                // 处理消息发送异常逻辑
+                System.out.printf("异步发送失败: %s ", throwable.getMessage());
             }
         });
     }
@@ -68,21 +67,30 @@ public class MQProducerServiceImpl implements MQProducerService {
      * 在start版本中 延时消息一共分为18个等级分别为：1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
      */
     public void sendDelayMsg(String msgBody, int delayLevel) {
-        rocketMQTemplate.syncSend(topic, MessageBuilder.withPayload(msgBody).build(), messageTimeOut, delayLevel);
+        rocketMQTemplate.syncSend(TopicConstant.DEMO_TOPIC, MessageBuilder.withPayload(msgBody).build(), messageTimeOut, delayLevel);
     }
 
     /**
      * 发送单向消息（只负责发送消息，不等待应答，不关心发送结果，如日志）
      */
     public void sendOneWayMsg(String msgBody) {
-        rocketMQTemplate.sendOneWay(topic, MessageBuilder.withPayload(msgBody).build());
+        rocketMQTemplate.sendOneWay(TopicConstant.DEMO_TOPIC, MessageBuilder.withPayload(msgBody).build());
+        System.out.println("单向消息发送成功");
     }
 
     /**
      * 发送带tag的消息，直接在topic后面加上":tag"
      */
     public SendResult sendTagMsg(String msgBody) {
-        return rocketMQTemplate.syncSend(topic + ":tag2", MessageBuilder.withPayload(msgBody).build());
+        try {
+            // 发送带tag的消息
+            SendResult result =  rocketMQTemplate.syncSend(TopicConstant.DEMO_TOPIC + ":tag2", MessageBuilder.withPayload(msgBody).build());
+            System.out.printf("发送成功: %s ", result.getSendStatus());
+            return result;
+        } catch (Exception e) {
+            System.out.printf("发送失败: %s ", e.getMessage());
+            throw e;
+        }
     }
 
 }

@@ -22,10 +22,9 @@
             <artifactId>jeebiz-boot-jackson-autoconfigure</artifactId>
             <version>${jeebiz-boot.version}</version>
         </dependency>
-        <!-- For Mybatis -->
         <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
         </dependency>
         <!-- For Webjars -->
         <dependency>
@@ -52,11 +51,6 @@
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <!-- For Spring Tx -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
         </dependency>
 
     </dependencies>

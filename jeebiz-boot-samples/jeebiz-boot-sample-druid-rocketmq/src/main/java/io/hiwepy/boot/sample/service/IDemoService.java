@@ -1,7 +1,7 @@
 package io.hiwepy.boot.sample.service;
 
 import io.hiwepy.boot.api.service.IBaseService;
-import io.hiwepy.boot.sample.dao.entities.DemoEntity;
+import io.hiwepy.boot.sample.entity.DemoEntity;
 
 /**
  * <p>
@@ -12,5 +12,7 @@ import io.hiwepy.boot.sample.dao.entities.DemoEntity;
  * @since 2023-08-06
  */
 public interface IDemoService extends IBaseService<DemoEntity> {
+
+    void doSave(String txId, DemoEntity demo);
 
 }

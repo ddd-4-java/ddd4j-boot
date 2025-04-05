@@ -6,7 +6,7 @@ import io.hiwepy.boot.api.ApiCode;
 import io.hiwepy.boot.api.ApiRestResponse;
 import io.hiwepy.boot.api.dto.BaseDTO;
 import io.hiwepy.boot.api.exception.CryptoException;
-import io.hiwepy.boot.autoconfigure.annotation.ResponseEncrypt;
+import io.hiwepy.boot.autoconfigure.crypto.annotation.ResponseEncrypt;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,8 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Objects;
 
@@ -37,7 +37,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<ApiRestResp
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
 
-        ParameterizedType genericParameterType = (ParameterizedType) returnType.getGenericParameterType();
+        ParameterizedTypeImpl genericParameterType = (ParameterizedTypeImpl) returnType.getGenericParameterType();
 
         // 如果直接是ApiRestResponse，则返回
         if (genericParameterType.getRawType() == ApiRestResponse.class && returnType.hasMethodAnnotation(ResponseEncrypt.class)) {
@@ -50,7 +50,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<ApiRestResp
 
         // 如果是 ResponseEntity<ApiRestResponse>
         for (Type type : genericParameterType.getActualTypeArguments()) {
-            if (((ParameterizedType) type).getRawType() == ApiRestResponse.class && returnType.hasMethodAnnotation(ResponseEncrypt.class)) {
+            if (((ParameterizedTypeImpl) type).getRawType() == ApiRestResponse.class && returnType.hasMethodAnnotation(ResponseEncrypt.class)) {
                 return true;
             }
         }
@@ -72,7 +72,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<ApiRestResp
 
         // 如果是实体，并且继承了BaseDTO，则放入时间戳
         if (data instanceof BaseDTO) {
-            ((BaseDTO) data).setCurrentTimeMillis(System.currentTimeMillis());
+            ((BaseDTO)data).setCurrentTimeMillis(System.currentTimeMillis());
         }
 
         // 对象序列化

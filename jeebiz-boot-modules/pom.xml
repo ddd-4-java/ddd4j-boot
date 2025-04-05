@@ -16,6 +16,7 @@
         <module>jeebiz-boot-crypto-autoconfigure</module>
         <module>jeebiz-boot-external-autoconfigure</module>
         <module>jeebiz-boot-jackson-autoconfigure</module>
+        <module>jeebiz-boot-kafka-autoconfigure</module>
         <module>jeebiz-boot-license-autoconfigure</module>
         <module>jeebiz-boot-logs-autoconfigure</module>
         <module>jeebiz-boot-plugin-api</module>
