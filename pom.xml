@@ -28,7 +28,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jeebiz-boot.version>2.7.x.20240823-SNAPSHOT</jeebiz-boot.version>
-        <java.version>17</java.version>
+        <java.version>1.8</java.version>
         <!-- Maven Plugin versions -->
         <maven.version>3.6.3</maven.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -60,7 +60,7 @@
         <spring-amqp.version>3.2.3</spring-amqp.version>
         <spring-batch.version>4.3.10</spring-batch.version>
         <spring-data-bom.version>2021.2.18</spring-data-bom.version>
-        <spring-framework.version>6.2.3</spring-framework.version>
+        <spring-framework.version>5.3.39</spring-framework.version>
         <spring-graphql.version>1.0.6</spring-graphql.version>
         <spring-hateoas.version>1.5.6</spring-hateoas.version>
         <spring-integration.version>5.5.20</spring-integration.version>
