@@ -13,7 +13,7 @@
 
     <groupId>io.hiwepy</groupId>
     <artifactId>jeebiz-boot</artifactId>
-    <version>3.4x.20250405-SNAPSHOT</version>
+    <version>3.3.x.20250405-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>jeebiz-boot</name>
@@ -77,7 +77,7 @@
         <module>jeebiz-boot-dependencies</module>
         <module>jeebiz-boot-modules</module>
         <module>jeebiz-boot-parent</module>
-        <!--<module>jeebiz-boot-samples</module>-->
+        <module>jeebiz-boot-samples</module>
     </modules>
 
     <!--开源协议采用Apache 2.0协议-->

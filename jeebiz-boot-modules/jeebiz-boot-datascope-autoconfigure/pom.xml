@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.hiwepy</groupId>
         <artifactId>jeebiz-boot-modules</artifactId>
-        <version>3.4x.20250405-SNAPSHOT</version>
+        <version>3.3.x.20250405-SNAPSHOT</version>
     </parent>
 
     <artifactId>jeebiz-boot-datascope-autoconfigure</artifactId>
