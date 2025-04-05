@@ -16,6 +16,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.*;
+import org.springframework.util.ErrorHandler;
 import org.springframework.util.backoff.ExponentialBackOff;
 import org.springframework.util.backoff.FixedBackOff;
 
@@ -237,9 +238,9 @@ public class KafkaConsumerTemplate implements DisposableBean {
         
         // 默认的批量监听配置
         factory.setBatchListener(true);
-        factory.setBatchErrorHandler((thrownException, data) -> {
+       /* factory.setBatchErrorHandler((thrownException, data) -> {
             log.error("Batch error handler caught exception: {}", thrownException.getMessage(), thrownException);
-        });
+        });*/
         
         // 消息过滤
         factory.setRecordFilterStrategy(consumerRecord -> consumerRecord.value() == null);
@@ -327,7 +328,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
         return highestOffsetMap;
     }
 
-    public ErrorHandler createErrorHandler(KafkaTemplate<String, String> kafkaTemplate){
+    /*public ErrorHandler createErrorHandler(KafkaTemplate<String, String> kafkaTemplate){
         KafkaEnhanceProperties.EnhanceListener listener = enhanceProperties.getListener();
         switch (listener.getErrorHandlerMode()) {
             case SEEK_TO_CURRENT:
@@ -378,7 +379,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
             default:
                 return new BatchLoggingErrorHandler();
         }
-    }
+    }*/
 
     //============================ 资源管理方法 ============================
 

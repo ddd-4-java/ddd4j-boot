@@ -1,4 +1,4 @@
-package com.tianyin.boot.autoconfigure.datascope;
+package io.hiwepy.boot.autoconfigure.datascope;
 
 /**
  * 数据类型
