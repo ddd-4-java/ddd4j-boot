@@ -1,6 +1,6 @@
-package com.tianyin.boot.autoconfigure;
+package io.hiwepy.boot.autoconfigure;
 
-import com.tianyin.boot.autoconfigure.datascope.DataScopeProvider;
+import io.hiwepy.boot.autoconfigure.datascope.DataScopeProvider;
 import org.springframework.biz.context.SpringContextAwareContext;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

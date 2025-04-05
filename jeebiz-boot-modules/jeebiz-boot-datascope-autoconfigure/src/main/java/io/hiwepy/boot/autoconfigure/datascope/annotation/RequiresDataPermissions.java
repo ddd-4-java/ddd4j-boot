@@ -1,10 +1,10 @@
-package com.tianyin.boot.autoconfigure.datascope.annotation;
+package io.hiwepy.boot.autoconfigure.datascope.annotation;
 
-import com.tianyin.boot.autoconfigure.datascope.DataType;
-import com.tianyin.boot.autoconfigure.datascope.RequiresDataPermissionsValidator;
+import io.hiwepy.boot.autoconfigure.datascope.DataType;
+import io.hiwepy.boot.autoconfigure.datascope.RequiresDataPermissionsValidator;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 /**

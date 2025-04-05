@@ -1,11 +1,11 @@
-package com.tianyin.boot.autoconfigure.datascope;
+package io.hiwepy.boot.autoconfigure.datascope;
 
-import com.tianyin.boot.autoconfigure.datascope.annotation.RequiresDataPermissions;
+import io.hiwepy.boot.autoconfigure.datascope.annotation.RequiresDataPermissions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.biz.utils.SpringContextUtils;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import java.util.Objects;
 
 /**
