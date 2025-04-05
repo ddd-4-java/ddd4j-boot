@@ -1,11 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.hiwepy</groupId>
         <artifactId>jeebiz-boot-samples</artifactId>
-        <version>3.3.x.20240823-SNAPSHOT</version>
+        <version>3.4x.20250405-SNAPSHOT</version>
     </parent>
+
     <artifactId>jeebiz-boot-sample-hikaricp-kafka</artifactId>
 
     <dependencies>
@@ -143,10 +145,6 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-jsqlparser</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-mybatis</artifactId>
-        </dependency>
         <!-- For Mybatis Plus Generator -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -248,13 +246,13 @@
             <plugin>
                 <groupId>io.github.swagger2markup</groupId>
                 <artifactId>swagger2markup-maven-plugin</artifactId>
-            </plugin> -->
+            </plugin>-->
             <!-- Run the generated asciidoc through Asciidoctor to generate other
                 documentation types, such as PDFs or HTML5
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
-            </plugin> -->
+            </plugin>-->
         </plugins>
     </build>
 
