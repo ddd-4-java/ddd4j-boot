@@ -429,6 +429,7 @@
         <xmemcached.version>2.4.8</xmemcached.version>
         <xml-apis.version>1.4.01</xml-apis.version>
         <xmlschema-core.version>2.3.1</xmlschema-core.version>
+        <xmlunit2.version>2.10.0</xmlunit2.version>
         <xnio.version>3.8.16.Final</xnio.version>
         <xnio-netty-transport.version>0.1.10.Final</xnio-netty-transport.version>
         <xstream.version>1.4.16</xstream.version>

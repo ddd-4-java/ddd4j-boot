@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.4</version>
+        <version>3.3.10</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -43,7 +43,7 @@
         <maven-gpg-plugin.version>3.2.6</maven-gpg-plugin.version>
         <maven-failsafe-plugin.version>3.0.0</maven-failsafe-plugin.version>
         <maven-help-plugin.version>3.5.0</maven-help-plugin.version>
-        <maven-install-plugin.version>3.1.3</maven-install-plugin.version>
+        <maven-install-plugin.version>3.1.4</maven-install-plugin.version>
         <maven-invoker-plugin.version>3.8.0</maven-invoker-plugin.version>
         <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
         <maven-javadoc-plugin.version>3.8.0</maven-javadoc-plugin.version>
@@ -55,22 +55,22 @@
         <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
         <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
         <!-- Spring -->
-        <spring-amqp.version>3.1.7</spring-amqp.version>
-        <spring-authorization-server.version>1.3.2</spring-authorization-server.version>
-        <spring-batch.version>5.1.2</spring-batch.version>
-        <spring-data-bom.version>2024.0.3</spring-data-bom.version>
+        <spring-amqp.version>3.1.10</spring-amqp.version>
+        <spring-authorization-server.version>1.3.5</spring-authorization-server.version>
+        <spring-batch.version>5.1.3</spring-batch.version>
+        <spring-data-bom.version>2024.0.10</spring-data-bom.version>
         <spring-framework.version>6.1.18</spring-framework.version>
-        <spring-graphql.version>1.3.2</spring-graphql.version>
-        <spring-hateoas.version>2.3.2</spring-hateoas.version>
-        <spring-integration.version>6.3.3</spring-integration.version>
-        <spring-kafka.version>3.2.3</spring-kafka.version>
-        <spring-ldap.version>3.2.6</spring-ldap.version>
-        <spring-pulsar.version>1.1.3</spring-pulsar.version>
-        <spring-restdocs.version>3.0.1</spring-restdocs.version>
-        <spring-retry.version>2.0.8</spring-retry.version>
-        <spring-security.version>6.3.3</spring-security.version>
-        <spring-session.version>3.3.2</spring-session.version>
-        <spring-ws.version>4.0.11</spring-ws.version>
+        <spring-graphql.version>1.3.4</spring-graphql.version>
+        <spring-hateoas.version>2.3.4</spring-hateoas.version>
+        <spring-integration.version>6.3.9</spring-integration.version>
+        <spring-kafka.version>3.2.8</spring-kafka.version>
+        <spring-ldap.version>3.2.11</spring-ldap.version>
+        <spring-pulsar.version>1.1.10</spring-pulsar.version>
+        <spring-restdocs.version>3.0.3</spring-restdocs.version>
+        <spring-retry.version>2.0.11</spring-retry.version>
+        <spring-security.version>6.3.8</spring-security.version>
+        <spring-session.version>3.3.6</spring-session.version>
+        <spring-ws.version>4.0.12</spring-ws.version>
     </properties>
 
     <modules>
