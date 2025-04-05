@@ -27,7 +27,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jeebiz-boot.version>3.3.x.20240823-SNAPSHOT</jeebiz-boot.version>
+        <jeebiz-boot.version>3.3.x.20250405-SNAPSHOT</jeebiz-boot.version>
         <java.version>17</java.version>
         <!-- Maven Plugin versions -->
         <maven.version>3.9.9</maven.version>

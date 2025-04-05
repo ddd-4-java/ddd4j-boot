@@ -11,7 +11,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import jakarta.sql.DataSource;
+import javax.sql.DataSource;
+
 
 /**
  * 开启事务管理,确保在启动类中@component扫描到该类
