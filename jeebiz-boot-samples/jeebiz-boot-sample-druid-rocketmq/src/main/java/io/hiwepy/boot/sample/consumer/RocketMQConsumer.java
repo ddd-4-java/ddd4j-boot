@@ -50,16 +50,4 @@ public class RocketMQConsumer {
         }
     }
 
-    @Service
-    @RocketMQTransactionListener
-    public class Consumer implements RocketMQListener<MessageExt> {
-        @Override
-        public void onMessage(MessageExt messageExt) {
-            byte[] body = messageExt.getBody();
-            String msg = new String(body);
-            log.info("监听到消息：msg={}", msg);
-        }
-    }
-
-
 }
