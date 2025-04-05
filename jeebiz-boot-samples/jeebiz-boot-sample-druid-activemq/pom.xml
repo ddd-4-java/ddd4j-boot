@@ -5,7 +5,7 @@
         <groupId>io.hiwepy</groupId>
         <!-- 特别注意：真实的业务系统应继承 jeebiz-boot-parent -->
         <artifactId>jeebiz-boot-samples</artifactId>
-        <version>3.4x.20250405-SNAPSHOT</version>
+        <version>3.4.x.20250405-SNAPSHOT</version>
     </parent>
     <artifactId>jeebiz-boot-sample-druid-activemq</artifactId>
 
