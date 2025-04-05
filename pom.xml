@@ -55,6 +55,34 @@
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
         <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
+        <!-- Spring versions (Fix ) -->
+        <jackson.version>2.13.5</jackson.version>
+        <jackson-bom.version>${jackson.version}</jackson-bom.version>
+        <junit.version>4.13.2</junit.version>
+        <!-- Dysprosium-SR25 版本是匹配的 Spring Cloud，能使用的最高版本 -->
+        <reactor-bom.version>Dysprosium-SR25</reactor-bom.version>
+        <!--<spring-amqp.version>2.2.18.RELEASE</spring-amqp.version>-->
+        <spring-amqp.version>2.4.17</spring-amqp.version>
+        <!--<spring-batch.version>4.2.7.RELEASE</spring-batch.version>-->
+        <spring-batch.version>4.2.8.RELEASE</spring-batch.version>
+        <spring-data-releasetrain.version>Neumann-SR9</spring-data-releasetrain.version>
+        <spring-framework.version>5.2.25.RELEASE</spring-framework.version>
+        <!--<spring-framework.version>5.3.39</spring-framework.version>-->
+        <spring-hateoas.version>1.1.5.RELEASE</spring-hateoas.version>
+        <!--<spring-integration.version>5.3.8.RELEASE</spring-integration.version>-->
+        <spring-integration.version>5.3.10.RELEASE</spring-integration.version>
+        <!--<spring-kafka.version>2.5.14.RELEASE</spring-kafka.version>-->
+        <spring-kafka.version>2.5.17.RELEASE</spring-kafka.version>
+        <!--<spring-ldap.version>2.3.4.RELEASE</spring-ldap.version>-->
+        <spring-ldap.version>2.3.8.RELEASE</spring-ldap.version>
+        <!-- <spring-restdocs.version>2.0.5.RELEASE</spring-restdocs.version>-->
+        <spring-restdocs.version>2.0.8.RELEASE</spring-restdocs.version>
+        <spring-retry.version>1.2.5.RELEASE</spring-retry.version>
+        <spring-security.version>5.3.9.RELEASE</spring-security.version>
+        <!--<spring-security.version>5.7.12</spring-security.version>-->
+        <spring-session-bom.version>Dragonfruit-SR3</spring-session-bom.version>
+        <!--<spring-ws.version>3.0.10.RELEASE</spring-ws.version>-->
+        <spring-ws.version>3.1.8</spring-ws.version>
     </properties>
 
     <modules>
