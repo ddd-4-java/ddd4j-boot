@@ -5,8 +5,8 @@ import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.jms.Queue;
-import javax.jms.Topic;
+import jakarta.jms.Queue;
+import jakarta.jms.Topic;
 
 @Configuration
 public class ActiveMQConfiguration {

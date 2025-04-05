@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.jms.Queue;
+import jakarta.jms.Queue;
 
 @Component
 public class LogProducer implements CommandLineRunner {

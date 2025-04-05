@@ -7,9 +7,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.jms.Destination;
-import javax.jms.Queue;
-import javax.jms.Topic;
+import jakarta.jms.Destination;
+import jakarta.jms.Queue;
+import jakarta.jms.Topic;
 
 @Component
 @EnableScheduling

@@ -63,14 +63,14 @@
         </dependency>
 
         <!-- Java Servlet API -->
-        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+        <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <optional>true</optional>
         </dependency>
         <!-- Java Websocket API -->
-        <!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+        <!-- https://mvnrepository.com/artifact/jakarta.websocket/jakarta.websocket-api -->
         <dependency>
             <groupId>jakarta.websocket</groupId>
             <artifactId>jakarta.websocket-api</artifactId>

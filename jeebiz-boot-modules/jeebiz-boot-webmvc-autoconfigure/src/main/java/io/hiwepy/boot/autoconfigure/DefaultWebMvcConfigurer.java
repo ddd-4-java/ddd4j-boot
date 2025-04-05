@@ -82,7 +82,7 @@ public class DefaultWebMvcConfigurer implements WebMvcConfigurer {
      * ByteArrayHttpMessageConverter – converts byte arrays
      * StringHttpMessageConverter – converts Strings
      * ResourceHttpMessageConverter – converts org.springframework.core.io.Resource for any type of octet stream
-     * SourceHttpMessageConverter – converts javax.xml.transform.Source
+     * SourceHttpMessageConverter – converts jakarta.xml.transform.Source
      * FormHttpMessageConverter – converts form data to/from a MultiValueMap<String, String>.
      * Jaxb2RootElementHttpMessageConverter – converts Java objects to/from XML (added only if JAXB2 is present on the classpath)
      * MappingJackson2HttpMessageConverter – converts JSON (added only if Jackson 2 is present on the classpath)

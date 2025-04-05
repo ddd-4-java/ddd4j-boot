@@ -1,7 +1,7 @@
 package io.hiwepy.boot.sample.service;
 
 import io.hiwepy.boot.api.service.IBaseService;
-import io.hiwepy.boot.sample.dao.entities.DemoEntity;
+import io.hiwepy.boot.sample.entity.DemoEntity;
 
 /**
  * <p>

@@ -17,6 +17,7 @@
         <module>jeebiz-boot-datascope-autoconfigure</module>
         <module>jeebiz-boot-external-autoconfigure</module>
         <module>jeebiz-boot-jackson-autoconfigure</module>
+        <module>jeebiz-boot-kafka-autoconfigure</module>
         <module>jeebiz-boot-license-autoconfigure</module>
         <module>jeebiz-boot-logs-autoconfigure</module>
         <module>jeebiz-boot-plugin-api</module>
@@ -38,7 +39,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+        <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>

@@ -11,8 +11,8 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.StopWatch;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.List;

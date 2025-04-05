@@ -266,7 +266,7 @@
         <mssql-jdbc.version>12.6.3.jre8</mssql-jdbc.version>
         <mybatis.version>3.5.16</mybatis.version>
         <mybatis-dynamic-sql.version>1.4.0</mybatis-dynamic-sql.version>
-        <mybatis-plus.version>3.5.9</mybatis-plus.version>
+        <mybatis-plus.version>3.5.11</mybatis-plus.version>
         <mybatis-plus-generator.version>${mybatis-plus.version}</mybatis-plus-generator.version>
         <mybatis-plus-join.version>1.4.13</mybatis-plus-join.version>
         <mybatis-plus-ext.version>1.7.4-RELEASE</mybatis-plus-ext.version>
@@ -570,14 +570,6 @@
         <dependencies>
 
             <!-- Third Party -->
-
-            <!-- The JavaBeans(TM) Activation Framework is used by the JavaMail(TM)
-				API to manage MIME data -->
-            <dependency>
-                <groupId>javax.activation</groupId>
-                <artifactId>activation</artifactId>
-                <version>${activation.version}</version>
-            </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-actor -->
             <dependency>
@@ -4297,13 +4289,6 @@
                 <version>${perf4j.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/javax.persistence/persistence-api -->
-            <dependency>
-                <groupId>javax.persistence</groupId>
-                <artifactId>persistence-api</artifactId>
-                <version>${persistence-api.version}</version>
-            </dependency>
-
             <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
             <dependency>
                 <groupId>org.apache.poi</groupId>
@@ -4732,13 +4717,6 @@
                 <groupId>io.socket</groupId>
                 <artifactId>socket.io-client</artifactId>
                 <version>${socket-io.version}</version>
-            </dependency>
-
-            <!-- https://mvnrepository.com/artifact/javax.xml.stream/stax-api -->
-            <dependency>
-                <groupId>javax.xml.stream</groupId>
-                <artifactId>stax-api</artifactId>
-                <version>1.0-2</version>
             </dependency>
 
             <dependency>
@@ -5880,6 +5858,12 @@
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-dynamic-datasource.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot3-starter -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+                <version>${spring-boot-starter-dynamic-datasource.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/cn.afterturn/easypoi-spring-boot-starter -->
             <dependency>
                 <groupId>cn.afterturn</groupId>
@@ -6190,6 +6174,7 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${spring-boot-starter-mybatis-plus.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-spring-boot3-starter -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>

@@ -11,13 +11,6 @@ import io.hiwepy.boot.api.exception.BizIOException;
 import io.hiwepy.boot.api.exception.BizRuntimeException;
 import io.hiwepy.boot.api.exception.IdempotentException;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.binding.BindingException;
-import org.apache.ibatis.cache.CacheException;
-import org.apache.ibatis.datasource.DataSourceException;
-import org.apache.ibatis.exceptions.PersistenceException;
-import org.apache.ibatis.exceptions.TooManyResultsException;
-import org.apache.ibatis.executor.result.ResultMapException;
-import org.apache.ibatis.plugin.PluginException;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +42,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.server.ServerWebExchange;
 
-import javax.validation.*;
+import jakarta.validation.*;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
@@ -569,86 +562,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
 		ApiRestResponse<String> resp = ApiRestResponse.error(ex.getCode(), this.getLocaleMessage(exchange, ex, ex.getMessage()));
 		return new ResponseEntity<ApiRestResponse<String>>(resp, HttpStatus.OK);
 	}
-	
-	/**---------------------Mybatis 异常----------------------------*/
-	
-	/**
-	 * 500 (Internal Server Error)
-	 */
-	@ExceptionHandler({ BindingException.class })
-	@ResponseBody
-	public ResponseEntity<ApiRestResponse<String>> mybatisBindingException(ServerWebExchange exchange, BindingException ex) {
-		this.logException(ex);
-		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(exchange, ex, "MyBatis:绑定异常"));
-		return new ResponseEntity<ApiRestResponse<String>>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	/**
-	 * 500 (Internal Server Error)
-	 */
-	@ExceptionHandler({ CacheException.class })
-	@ResponseBody
-	public ResponseEntity<ApiRestResponse<String>> mybatisCacheException(ServerWebExchange exchange, CacheException ex) {
-		this.logException(ex);
-		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(exchange, ex, "MyBatis:缓存异常"));
-		return new ResponseEntity<ApiRestResponse<String>>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	/**
-	 * 500 (Internal Server Error)
-	 */
-	@ExceptionHandler({ DataSourceException.class })
-	@ResponseBody
-	public ResponseEntity<ApiRestResponse<String>> mybatisDataSourceException(ServerWebExchange exchange, DataSourceException ex) {
-		this.logException(ex);
-		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(exchange, ex, "MyBatis:数据源异常"));
-		return new ResponseEntity<ApiRestResponse<String>>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	/**
-	 * 500 (Internal Server Error)
-	 */
-	@ExceptionHandler({ PluginException.class })
-	@ResponseBody
-	public ResponseEntity<ApiRestResponse<String>> mybatisPluginException(ServerWebExchange exchange, PluginException ex) {
-		this.logException(ex);
-		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(exchange, ex, "MyBatis:插件异常"));
-		return new ResponseEntity<ApiRestResponse<String>>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	/**
-	 * 500 (Internal Server Error)
-	 */
-	@ExceptionHandler({ ResultMapException.class })
-	@ResponseBody
-	public ResponseEntity<ApiRestResponse<String>> mybatisResultMapException(ServerWebExchange exchange, ResultMapException ex) {
-		this.logException(ex);
-		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(exchange, ex, "MyBatis:结果集异常"));
-		return new ResponseEntity<ApiRestResponse<String>>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	/**
-	 * 500 (Internal Server Error)
-	 */
-	@ExceptionHandler({ TooManyResultsException.class })
-	@ResponseBody
-	public ResponseEntity<ApiRestResponse<String>> mybatisTooManyResultsException(ServerWebExchange exchange, TooManyResultsException ex) {
-		this.logException(ex);
-		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(exchange, ex, "MyBatis:结果集异常,返回了多条数据"));
-		return new ResponseEntity<ApiRestResponse<String>>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	/**
-	 * 500 (Internal Server Error)
-	 */
-	@ExceptionHandler({ PersistenceException.class })
-	@ResponseBody
-	public ResponseEntity<ApiRestResponse<String>> mybatisPersistenceException(ServerWebExchange exchange, PersistenceException ex) {
-		this.logException(ex);
-		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(exchange, ex, "MyBatis:内部异常"));
-		return new ResponseEntity<ApiRestResponse<String>>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
+
 	/**---------------------JDBC异常----------------------------*/
 	
 	/**

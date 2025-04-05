@@ -1,10 +1,8 @@
 /** 
  * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
- * All Rights Reserved. 
- */
+ * All Rights Reserved.
 package io.hiwepy.boot.sample.setup.config;
 
-import org.flywaydb.spring.boot.ext.FlywayFluentConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,3 +19,4 @@ public class FlywayDemoConfiguration {
 	}
 	
 }
+ */

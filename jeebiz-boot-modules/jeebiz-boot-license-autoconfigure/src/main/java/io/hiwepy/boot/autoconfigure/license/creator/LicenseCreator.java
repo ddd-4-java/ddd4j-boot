@@ -5,7 +5,7 @@ import io.hiwepy.boot.autoconfigure.license.CustomKeyStoreParam;
 import io.hiwepy.boot.autoconfigure.license.CustomLicenseManager;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.security.auth.x500.X500Principal;
+import jakarta.security.auth.x500.X500Principal;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.prefs.Preferences;

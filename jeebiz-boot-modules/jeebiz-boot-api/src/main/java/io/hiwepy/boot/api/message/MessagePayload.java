@@ -2,7 +2,7 @@ package io.hiwepy.boot.api.message;
 
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import java.awt.TrayIcon.MessageType;
 import java.io.Serializable;
 import java.util.HashMap;

@@ -133,12 +133,12 @@
             <artifactId>akka-slf4j_3</artifactId>
             <version>${akka.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-http -->
+        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-http
         <dependency>
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-http_3</artifactId>
             <version>10.7.0</version>
-        </dependency>
+        </dependency>-->
         <!-- For Cache Support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -158,20 +158,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>log4j2-plus-spring-boot-starter</artifactId>
-        </dependency>
         <!-- For Mybatis -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.freemarker</groupId>
                     <artifactId>freemarker</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
         </dependency>
         <!-- For Mybatis Plus Generator -->
         <dependency>

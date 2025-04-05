@@ -2,8 +2,7 @@ package io.hiwepy.boot.api.param;
 
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.Min;
-import java.time.LocalDateTime;
+import jakarta.validation.constraints.Min;
 
 public abstract class BasePaginationQueryParam extends BaseQueryParam {
 

@@ -18,10 +18,10 @@ management:
         enabled: true
   endpoints:
     web:
+      # 指定上下文路径，启用相应端点
+      base-path: /actuator
       exposure:
         # 指定上下文路径，启用相应端点
-        # 指定上下文路径，启用相应端点
-        base-path: /actuator
         include: health,shutdown,metrics,prometheus
 
 ################################################################################################################
