@@ -1,6 +1,5 @@
 package io.hiwepy.boot.sample;
 
-import io.hiwepy.boot.autoconfigure.EnableExtrasConfiguration;
 import io.hiwepy.boot.sample.dao.entities.MyEvent;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.CollectionOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 
-@EnableExtrasConfiguration
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
 

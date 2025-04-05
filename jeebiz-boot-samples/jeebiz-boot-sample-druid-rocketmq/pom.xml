@@ -121,11 +121,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>log4j2-plus-spring-boot-starter</artifactId>
-        </dependency>
-
         <!-- For Mybatis -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -146,19 +141,10 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
         </dependency>
-        <!-- For Flyway -->
-        <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>flyway-plus-spring-boot-starter</artifactId>
-        </dependency>
         <!-- For Druid -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>druid-plus-spring-boot-starter</artifactId>
         </dependency>
         <!-- JDBC Driver For MySQL -->
         <dependency>
@@ -187,6 +173,13 @@
         <dependency>
             <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>2.3.3</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>rocketmq-logback-classic</artifactId>
+                    <groupId>io.github.aliyunmq</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- For Embed Tomcat -->
@@ -208,6 +201,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -217,34 +211,6 @@
                     <mainClass>io.hiwepy.boot.sample.DemoApplication</mainClass>
                 </configuration>
             </plugin>
-            <!-- 第一步：生成可执行的启动脚本 -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>appassembler-maven-plugin</artifactId>
-            </plugin>
-            <!-- 第一步：通过antrun插件拷贝文件 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-            </plugin>
-            <!-- 第三步：通过docker-maven插件构造Docker镜像
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-            </plugin> -->
-            <!-- 第四步：生成离线文档-->
-            <!-- http://blog.didispace.com/swagger2markup-asciidoc/ -->
-            <!-- First, use the swagger2markup plugin to generate asciidoc
-            <plugin>
-                <groupId>io.github.swagger2markup</groupId>
-                <artifactId>swagger2markup-maven-plugin</artifactId>
-            </plugin>-->
-            <!-- Run the generated asciidoc through Asciidoctor to generate other
-                documentation types, such as PDFs or HTML5
-            <plugin>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctor-maven-plugin</artifactId>
-            </plugin>-->
         </plugins>
     </build>
 

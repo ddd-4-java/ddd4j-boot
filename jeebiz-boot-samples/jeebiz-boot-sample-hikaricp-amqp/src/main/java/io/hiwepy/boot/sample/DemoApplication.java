@@ -1,6 +1,5 @@
 package io.hiwepy.boot.sample;
 
-import io.hiwepy.boot.autoconfigure.EnableExtrasConfiguration;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableCaching(proxyTargetClass = true)
-@EnableExtrasConfiguration
 @EnableScheduling
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {

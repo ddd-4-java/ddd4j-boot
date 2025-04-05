@@ -1,6 +1,7 @@
-package io.hiwepy.boot.sample.service.impl;
+package io.hiwepy.boot.sample.consumer;
 
 import com.alibaba.fastjson2.JSON;
+import io.hiwepy.boot.sample.setup.TopicConstant;
 import io.hiwepy.boot.sample.web.dto.MessageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
@@ -16,7 +17,7 @@ public class MQConsumerServiceImpl {
     // topic需要和生产者的topic一致，consumerGroup属性是必须指定的，内容可以随意
     // selectorExpression的意思指的就是tag，默认为“*”，不设置的话会监听所有消息
     @Service
-    @RocketMQMessageListener(topic = "RLT_TEST_TOPIC", selectorExpression = "tag1", consumerGroup = "Con_Group_One")
+    @RocketMQMessageListener(topic = TopicConstant.DEMO_TOPIC, selectorExpression = "tag1", consumerGroup = "Con-Group-One")
     public class ConsumerSend implements RocketMQListener<MessageDTO> {
         // 监听到消息就会执行此方法
         @Override
@@ -28,7 +29,7 @@ public class MQConsumerServiceImpl {
     // 注意：这个ConsumerSend2和上面ConsumerSend在没有添加tag做区分时，不能共存，
     // 不然生产者发送一条消息，这两个都会去消费，如果类型不同会有一个报错，所以实际运用中最好加上tag，写这只是让你看知道就行
     @Service
-    @RocketMQMessageListener(topic = "RLT_TEST_TOPIC", consumerGroup = "Con_Group_Two")
+    @RocketMQMessageListener(topic = TopicConstant.DEMO_TOPIC, consumerGroup = "Con-Group-Two")
     public class ConsumerSend2 implements RocketMQListener<String> {
         @Override
         public void onMessage(String str) {
@@ -38,7 +39,7 @@ public class MQConsumerServiceImpl {
 
     // MessageExt：是一个消息接收通配符，不管发送的是String还是对象，都可接收，当然也可以像上面明确指定类型（我建议还是指定类型较方便）
     @Service
-    @RocketMQMessageListener(topic = "RLT_TEST_TOPIC", selectorExpression = "tag2", consumerGroup = "Con_Group_Three")
+    @RocketMQMessageListener(topic = TopicConstant.DEMO_TOPIC, selectorExpression = "tag2", consumerGroup = "Con-Group-Three")
     public class Consumer implements RocketMQListener<MessageExt> {
         @Override
         public void onMessage(MessageExt messageExt) {

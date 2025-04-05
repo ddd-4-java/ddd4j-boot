@@ -61,7 +61,7 @@
         <module>jeebiz-boot-dependencies</module>
         <module>jeebiz-boot-modules</module>
         <module>jeebiz-boot-parent</module>
-        <!--<module>jeebiz-boot-samples</module>-->
+        <module>jeebiz-boot-samples</module>
     </modules>
 
     <!--开源协议采用Apache 2.0协议-->
@@ -92,29 +92,6 @@
             <timezone>+8</timezone>
         </developer>
     </developers>
-
-    <!-- <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <name>Nexus Release Repository</name>
-            <url>https://nexus.hiwepy.com/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>https://nexus.hiwepy.com/repository/maven-snapshots/</url>
-            <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement> -->
-
-    <!-- omitted xml
-    <distributionManagement>
-        <repository>
-            <id>jeebiz-platform-maven</id>
-            <name>maven</name>
-            <url>https://jeebiz-maven.pkg.coding.net/repository/platform/maven/</url>
-        </repository>
-    </distributionManagement> -->
 
     <distributionManagement>
         <repository>
