@@ -259,7 +259,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
 
 	/**
 	 * 400 (Bad Request)
-     * @see Valid
+     * @see javax.validation.Valid
      * @see org.springframework.validation.Validator
      * @see org.springframework.validation.DataBinder
      */
@@ -367,10 +367,10 @@ public class GlobalExceptionHandler extends ExceptinHandler {
 		double d = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 		error.append("最大上传文件为:" + ex.getMaxUploadSize() / 1024 / 1024).append("M;");
 		error.append("实际文件大小为：").append(d).append("M");
-        System.out.println(error.toString());
+        log.debug(error.toString());
 
 		error.append("上传文件出错");
-		System.out.println(error.toString());
+		log.debug(error.toString());
 		*/
 		String message = String.format("所有文件超过允许的最大限制: %s", ByteUnitFormat.B.to(ByteUnitFormat.K, ex.getMaxUploadSize()));
 		ApiRestResponse<String> resp = ApiCode.SC_REQUEST_TOO_LONG.toResponse(this.getLocaleMessage(ex, message));
@@ -574,7 +574,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
 		} else if(cause instanceof SQLIntegrityConstraintViolationException) {
 			return sqlIntegrityConstraintViolationException((SQLIntegrityConstraintViolationException) ex.getCause());
 		}
-		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, "数据源访问异常"));
+		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, "数据库访问异常，请稍后再试"));
 		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
@@ -584,18 +584,8 @@ public class GlobalExceptionHandler extends ExceptinHandler {
 	@ExceptionHandler(SQLException.class)
 	public ResponseEntity<ApiRestResponse<String>> sqlException(SQLException ex) {
 		this.logException(ex);
-		String message = String.format("SQL-%s：JDBC异常[%s] [%s].", ex.getSQLState(), ex.getErrorCode(), ex.getMessage());
-		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+		String message = String.format("SQL-%s[%s]：数据库操作失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
 
-	/**
-	 * 500 (Internal Server Error)
-	 */
-	@ExceptionHandler(SQLTimeoutException.class)
-	public ResponseEntity<ApiRestResponse<String>> sqlTimeoutException(SQLTimeoutException ex) {
-		this.logException(ex);
-		String message = String.format("SQL-%s：JDBC异常[%s] [%s].", ex.getSQLState(), ex.getErrorCode(), ex.getMessage());
 		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
 		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -607,29 +597,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
 	@ExceptionHandler(BatchUpdateException.class)
 	public ResponseEntity<ApiRestResponse<String>> sqlBatchUpdateException(BatchUpdateException ex) {
 		this.logException(ex);
-		String message = String.format("SQL-%s：批量更新失败 [%s] [%s].", ex.getSQLState(), ex.getErrorCode(), ex.getMessage());
-		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-
-	/**
-	 * 500 (Internal Server Error)
-	 */
-	@ExceptionHandler(SQLClientInfoException.class)
-	public ResponseEntity<ApiRestResponse<String>> sqlClientInfoException(SQLClientInfoException ex) {
-		this.logException(ex);
-		String message = String.format("SQL-%s：JDBC客户端配置错误 [%s] [%s].", ex.getSQLState(), ex.getErrorCode(), ex.getMessage());
-		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-
-	/**
-	 * 500 (Internal Server Error)
-	 */
-	@ExceptionHandler(SQLSyntaxErrorException.class)
-	public ResponseEntity<ApiRestResponse<String>> sqlSyntaxErrorException(SQLSyntaxErrorException ex) {
-		this.logException(ex);
-		String message = String.format("SQL-%s：SQL 语法错误 [%s] [%s].", ex.getSQLState(), ex.getErrorCode(), ex.getMessage());
+		String message = String.format("SQL-%s[%s]：数据批量更新失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
 		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
 		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -640,11 +608,88 @@ public class GlobalExceptionHandler extends ExceptinHandler {
 	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
 	public ResponseEntity<ApiRestResponse<String>> sqlIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
 		this.logException(ex);
-		String message = String.format("SQL-%s：违反唯一约束条件 [%s] [%s].", ex.getSQLState(), ex.getErrorCode(), ex.getMessage());
+		String message = String.format("SQL-%s[%s]：数据保存失败，有重复的数据.", ex.getSQLState(), ex.getErrorCode());
 		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
 		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	/**
+	 * 500 (Internal Server Error)
+	 */
+	@ExceptionHandler(SQLClientInfoException.class)
+	public ResponseEntity<ApiRestResponse<String>> sqlClientInfoException(SQLClientInfoException ex) {
+		this.logException(ex);
+		String message = String.format("SQL-%s[%s]：数据库访问异常，客户端配置错误.", ex.getSQLState(), ex.getErrorCode());
+		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
+		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	/**
+	 * 500 (Internal Server Error)
+	 */
+	@ExceptionHandler(SQLRecoverableException.class)
+	public ResponseEntity<ApiRestResponse<String>> sqlRecoverableException(SQLRecoverableException ex) {
+		this.logException(ex);
+		String message = String.format("SQL-%s[%s]：数据库访问异常，请稍后再试", ex.getSQLState(), ex.getErrorCode());
+		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
+		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	/**
+	 * 500 (Internal Server Error)
+	 */
+	@ExceptionHandler(SQLSyntaxErrorException.class)
+	public ResponseEntity<ApiRestResponse<String>> sqlSyntaxErrorException(SQLSyntaxErrorException ex) {
+		this.logException(ex);
+		String message = String.format("SQL-%s[%s]：SQL 语法错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
+		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	/**
+	 * 500 (Internal Server Error)
+	 */
+	@ExceptionHandler(SQLTimeoutException.class)
+	public ResponseEntity<ApiRestResponse<String>> sqlTimeoutException(SQLTimeoutException ex) {
+		this.logException(ex);
+		String message = String.format("SQL-%s[%s]：数据库连接超时，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
+		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	/**
+	 * 500 (Internal Server Error)
+	 */
+	@ExceptionHandler(SQLTransactionRollbackException.class)
+	public ResponseEntity<ApiRestResponse<String>> sqlTransactionRollbackException(SQLTransactionRollbackException ex) {
+		this.logException(ex);
+		String message = String.format("SQL-%s[%s]：数据库错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
+		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	/**
+	 * 500 (Internal Server Error)
+	 */
+	@ExceptionHandler(SQLTransientConnectionException.class)
+	public ResponseEntity<ApiRestResponse<String>> sqlTransientConnectionException(SQLTransientConnectionException ex) {
+		this.logException(ex);
+		String message = String.format("SQL-%s[%s]：数据库连接异常，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+		log.warn(message);
+		log.warn("可尝试：1. 增加连接池的大小，2. 检查数据库连接状态，3. 优化SQL查询，4. 调整超时设置");
+		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
+		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	/**
+	 * 500 (Internal Server Error)
+	 */
+	@ExceptionHandler(SQLTransientException.class)
+	public ResponseEntity<ApiRestResponse<String>> sqlTransientException(SQLTransientException ex) {
+		this.logException(ex);
+		String message = String.format("SQL-%s[%s]：数据服务器繁忙，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+		ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
+		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 	/**---------------------默认全局异常----------------------------*/
 
@@ -673,9 +718,6 @@ public class GlobalExceptionHandler extends ExceptinHandler {
 			i18nKey = bizEx.getI18n();
 		} else if(ex instanceof BizIOException) {
 			BizIOException bizEx = (BizIOException) ex;
-			i18nKey = bizEx.getI18n();
-		} else if(ex instanceof BizCheckedException) {
-			BizCheckedException bizEx = (BizCheckedException) ex;
 			i18nKey = bizEx.getI18n();
 		} else if(ex instanceof BizRuntimeException) {
 			BizRuntimeException bizEx = (BizRuntimeException) ex;
