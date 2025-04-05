@@ -4,7 +4,7 @@
  */
 package io.hiwepy.boot.sample.service.impl;
 
-import io.hiwepy.boot.sample.dao.entities.User;
+import io.hiwepy.boot.sample.mapper.entities.User;
 import io.hiwepy.boot.sample.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

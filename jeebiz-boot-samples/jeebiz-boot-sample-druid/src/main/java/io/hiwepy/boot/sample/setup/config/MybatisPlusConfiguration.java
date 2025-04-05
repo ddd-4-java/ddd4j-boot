@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan({ "io.hiwepy.**.dao", "io.hiwepy.**.mapper", "io.hiwepy.**.repository" })
+@MapperScan({"io.hiwepy.**.mapper", "io.hiwepy.**.mapper", "io.hiwepy.**.repository" })
 public class MybatisPlusConfiguration {
 
 	/**

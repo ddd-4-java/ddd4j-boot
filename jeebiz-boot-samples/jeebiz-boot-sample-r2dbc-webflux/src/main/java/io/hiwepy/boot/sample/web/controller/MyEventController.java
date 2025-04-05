@@ -4,7 +4,7 @@
  */
 package io.hiwepy.boot.sample.web.controller;
 
-import io.hiwepy.boot.sample.dao.entities.MyEvent;
+import io.hiwepy.boot.sample.entity.MyEvent;
 import io.hiwepy.boot.sample.repository.MyEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

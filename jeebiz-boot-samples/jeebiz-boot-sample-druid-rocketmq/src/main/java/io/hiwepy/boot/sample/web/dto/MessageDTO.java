@@ -7,7 +7,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class MessageDTO {
 
-    private String topic;
     private String tag;
     private String key;
     private String body;

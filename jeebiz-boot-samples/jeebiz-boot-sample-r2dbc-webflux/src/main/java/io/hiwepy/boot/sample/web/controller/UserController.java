@@ -4,7 +4,7 @@
  */
 package io.hiwepy.boot.sample.web.controller;
 
-import io.hiwepy.boot.sample.dao.entities.User;
+import io.hiwepy.boot.sample.entity.User;
 import io.hiwepy.boot.sample.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

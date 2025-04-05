@@ -27,8 +27,8 @@ public class MQProducerServiceImpl implements MQProducerService {
     /**
      * 普通发送（这里的参数对象可以随意定义，可以发送个对象，也可以是字符串等）
      */
-    public void send(MessageDTO message) {
-        rocketMQTemplate.convertAndSend(TopicConstant.DEMO_TOPIC + ":tag1", message);
+    public void send(String msgBody) {
+        rocketMQTemplate.convertAndSend(TopicConstant.DEMO_TOPIC + ":tag1", msgBody);
 //        rocketMQTemplate.send(topic + ":tag1", MessageBuilder.withPayload(user).build()); // 等价于上面一行
     }
 
@@ -36,7 +36,7 @@ public class MQProducerServiceImpl implements MQProducerService {
      * 发送同步消息（阻塞当前线程，等待broker响应发送结果，这样不太容易丢失消息）
      * （msgBody也可以是对象，sendResult为返回的发送结果）
      */
-    public SendResult sendMsg(String msgBody) {
+    public SendResult sendSyncMsg(String msgBody) {
         SendResult sendResult = rocketMQTemplate.syncSend(TopicConstant.DEMO_TOPIC, MessageBuilder.withPayload(msgBody).build());
         log.info("【sendMsg】sendResult={}", JSON.toJSONString(sendResult));
         return sendResult;

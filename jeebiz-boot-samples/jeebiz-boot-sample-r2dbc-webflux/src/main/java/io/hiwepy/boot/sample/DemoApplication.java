@@ -1,6 +1,6 @@
 package io.hiwepy.boot.sample;
 
-import io.hiwepy.boot.sample.dao.entities.MyEvent;
+import io.hiwepy.boot.sample.entity.MyEvent;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
