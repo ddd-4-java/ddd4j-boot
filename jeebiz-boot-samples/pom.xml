@@ -26,6 +26,8 @@
         <module>jeebiz-boot-sample-druid-activemq</module>
         <module>jeebiz-boot-sample-druid-amqp</module>
         <module>jeebiz-boot-sample-druid-kafka</module>
+        <module>jeebiz-boot-sample-druid-mqtt</module>
+        <module>jeebiz-boot-sample-druid-mqtt-server</module>
         <module>jeebiz-boot-sample-druid-rocketmq</module>
         <module>jeebiz-boot-sample-druid-war</module>
         <module>jeebiz-boot-sample-hikaricp</module>
