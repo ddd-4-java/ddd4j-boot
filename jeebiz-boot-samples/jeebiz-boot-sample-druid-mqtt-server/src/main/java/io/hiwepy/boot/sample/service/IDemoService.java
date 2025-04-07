@@ -1,6 +1,6 @@
 package io.hiwepy.boot.sample.service;
 
-import io.hiwepy.boot.api.service.IBaseService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 
 /**
@@ -11,7 +11,7 @@ import io.hiwepy.boot.sample.entity.DemoEntity;
  * @author wandl
  * @since 2023-08-06
  */
-public interface IDemoService extends IBaseService<DemoEntity> {
+public interface IDemoService extends IService<DemoEntity> {
 
     void doSave(String txId, DemoEntity demo);
 

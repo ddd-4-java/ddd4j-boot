@@ -236,7 +236,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <executable>true</executable>
-                    <mainClass>io.hiwepy.boot.sample.DemoApplication</mainClass>
+                    <mainClass>io.hiwepy.boot.sample.MqttServerApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

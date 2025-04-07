@@ -272,7 +272,7 @@
         <mybatis-plus-join.version>1.4.13</mybatis-plus-join.version>
         <mybatis-plus-ext.version>1.7.4-RELEASE</mybatis-plus-ext.version>
         <mybatis-r2dbc.version>3.0.4.RELEASE</mybatis-r2dbc.version>
-        <mybatis-spring.version>2.1.2</mybatis-spring.version>
+        <mybatis-spring.version>3.0.4</mybatis-spring.version>
         <mybatis-mate.version>1.3.6-sp2</mybatis-mate.version>
         <mybatis-migrations.version>3.3.11</mybatis-migrations.version>
         <mybatis-typehandlers-jsr310.version>1.0.2</mybatis-typehandlers-jsr310.version>

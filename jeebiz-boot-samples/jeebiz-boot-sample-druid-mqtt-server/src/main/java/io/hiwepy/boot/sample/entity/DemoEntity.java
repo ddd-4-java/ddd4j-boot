@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.hiwepy.boot.api.dao.entities.BaseEntity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -19,7 +18,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @TableName("t_demo")
-public class DemoEntity extends BaseEntity<DemoEntity> {
+public class DemoEntity {
 
     private static final long serialVersionUID = 1L;
 

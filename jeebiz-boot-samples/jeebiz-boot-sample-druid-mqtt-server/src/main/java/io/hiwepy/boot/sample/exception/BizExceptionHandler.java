@@ -4,16 +4,10 @@
  */
 package io.hiwepy.boot.sample.exception;
 
-import io.hiwepy.boot.autoconfigure.webmvc.ExceptinHandler;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 @ControllerAdvice
-public class BizExceptionHandler extends ExceptinHandler {
-
-	@Autowired
-	protected NestedMessageSource messageSource;
+public class BizExceptionHandler {
 
 	/**
 	 * 500 (降级熔断)

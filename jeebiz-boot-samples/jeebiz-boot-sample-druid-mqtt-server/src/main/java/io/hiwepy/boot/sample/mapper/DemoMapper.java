@@ -4,7 +4,7 @@
  */
 package io.hiwepy.boot.sample.mapper;
 
-import io.hiwepy.boot.api.dao.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 import org.apache.ibatis.annotations.Mapper;
 

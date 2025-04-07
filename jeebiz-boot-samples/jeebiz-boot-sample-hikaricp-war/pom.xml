@@ -191,11 +191,6 @@
             <artifactId>ojdbc8</artifactId>
             <scope>runtime</scope>
         </dependency>
-       <dependency>
-            <groupId>com.oracle.database.observability</groupId>
-            <artifactId>ojdbc8dms</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         <dependency>
             <groupId>com.oracle.database.nls</groupId>
             <artifactId>orai18n</artifactId>
@@ -237,7 +232,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <executable>true</executable>
-                    <mainClass>io.hiwepy.boot.sample.DemoApplication</mainClass>
+                    <mainClass>io.hiwepy.boot.sample.MqttServerApplication</mainClass>
                 </configuration>
             </plugin>
             <!-- 第三步：通过docker-maven插件构造Docker镜像 <plugin> <groupId>com.spotify</groupId>
