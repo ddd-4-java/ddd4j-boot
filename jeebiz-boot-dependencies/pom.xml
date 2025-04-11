@@ -262,6 +262,7 @@
         <metadata-extractor.version>2.19.0</metadata-extractor.version>
         <mica-mqtt.version>2.4.3</mica-mqtt.version>
         <micrometer.version>1.13.4</micrometer.version>
+        <milvus-plus.version>2.2.4</milvus-plus.version>
         <mockito.version>5.13.0</mockito.version>
         <mongo-java-driver.version>3.12.14</mongo-java-driver.version>
         <mssql-jdbc.version>12.6.3.jre8</mssql-jdbc.version>
@@ -3545,6 +3546,13 @@
                 <version>${dropwizard-metrics-influxdb.version}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.dromara.milvus-plus/milvus-plus-core -->
+            <dependency>
+                <groupId>org.dromara.milvus-plus</groupId>
+                <artifactId>milvus-plus-core</artifactId>
+                <version>${milvus-plus.version}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
             <dependency>
                 <groupId>org.mongodb</groupId>
@@ -4676,36 +4684,6 @@
                 <version>${shedlock.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/org.dromara.sms4j/sms4j-aliyun -->
-            <dependency>
-                <groupId>org.dromara.sms4j</groupId>
-                <artifactId>sms4j-aliyun</artifactId>
-                <version>2.0.1</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.dromara.sms4j/sms4j-tencent -->
-            <dependency>
-                <groupId>org.dromara.sms4j</groupId>
-                <artifactId>sms4j-tencent</artifactId>
-                <version>2.0.1</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.dromara.sms4j/sms4j-unisms -->
-            <dependency>
-                <groupId>org.dromara.sms4j</groupId>
-                <artifactId>sms4j-unisms</artifactId>
-                <version>2.0.1</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.dromara.sms4j/sms4j-huawei -->
-            <dependency>
-                <groupId>org.dromara.sms4j</groupId>
-                <artifactId>sms4j-huawei</artifactId>
-                <version>2.0.1</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.dromara.sms4j/sms4j-yunpian -->
-            <dependency>
-                <groupId>org.dromara.sms4j</groupId>
-                <artifactId>sms4j-yunpian</artifactId>
-                <version>2.0.1</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
             <dependency>
                 <groupId>org.yaml</groupId>
@@ -6188,6 +6166,12 @@
                 <groupId>org.dromara.mica-mqtt</groupId>
                 <artifactId>mica-mqtt-server-spring-boot-starter</artifactId>
                 <version>${mica-mqtt.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.dromara.milvus-plus/milvus-plus-boot-starter -->
+            <dependency>
+                <groupId>org.dromara.milvus-plus</groupId>
+                <artifactId>milvus-plus-boot-starter</artifactId>
+                <version>${milvus-plus.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/maven-invoker-spring-boot-starter -->
             <dependency>
