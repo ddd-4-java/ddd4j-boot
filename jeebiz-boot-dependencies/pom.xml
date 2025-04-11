@@ -127,7 +127,7 @@
         <dozer-proto3.version>6.5.2</dozer-proto3.version>
         <dozer-spring4.version>${dozer-core.version}</dozer-spring4.version>
         <dozer-extra-converters.version>7.0.x.20241003.RELEASE</dozer-extra-converters.version>
-        <druid.version>1.2.23</druid.version>
+        <druid.version>1.2.24</druid.version>
         <druid-metrics.version>1.0.2.RELEASE</druid-metrics.version>
         <dropwizard-metrics.version>4.2.22</dropwizard-metrics.version>
         <dropwizard-metrics-influxdb.version>1.3.4</dropwizard-metrics-influxdb.version>
@@ -262,6 +262,7 @@
         <metadata-extractor.version>2.19.0</metadata-extractor.version>
         <mica-mqtt.version>2.4.3</mica-mqtt.version>
         <micrometer.version>1.13.4</micrometer.version>
+        <milvus-plus.version>2.2.4</milvus-plus.version>
         <mockito.version>5.13.0</mockito.version>
         <mongo-java-driver.version>3.12.14</mongo-java-driver.version>
         <mssql-jdbc.version>12.6.3.jre8</mssql-jdbc.version>
@@ -376,6 +377,7 @@
         <sitemesh3.version>3.0.1</sitemesh3.version>
         <skywalking.version>10.0.1</skywalking.version>
         <slf4j.version>2.0.16</slf4j.version>
+        <sms4j.version>3.3.4</sms4j.version>
         <snakeyaml.version>2.3</snakeyaml.version>
         <snmp4j.version>3.8.2</snmp4j.version>
         <snmp4j-agent.version>3.8.1</snmp4j-agent.version>
@@ -430,6 +432,7 @@
         <xmemcached.version>2.4.8</xmemcached.version>
         <xml-apis.version>1.4.01</xml-apis.version>
         <xmlschema-core.version>2.3.1</xmlschema-core.version>
+        <xmlunit2.version>2.10.0</xmlunit2.version>
         <xnio.version>3.8.16.Final</xnio.version>
         <xnio-netty-transport.version>0.1.10.Final</xnio-netty-transport.version>
         <xstream.version>1.4.16</xstream.version>
@@ -3543,6 +3546,13 @@
                 <version>${dropwizard-metrics-influxdb.version}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.dromara.milvus-plus/milvus-plus-core -->
+            <dependency>
+                <groupId>org.dromara.milvus-plus</groupId>
+                <artifactId>milvus-plus-core</artifactId>
+                <version>${milvus-plus.version}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
             <dependency>
                 <groupId>org.mongodb</groupId>
@@ -6157,6 +6167,12 @@
                 <artifactId>mica-mqtt-server-spring-boot-starter</artifactId>
                 <version>${mica-mqtt.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.dromara.milvus-plus/milvus-plus-boot-starter -->
+            <dependency>
+                <groupId>org.dromara.milvus-plus</groupId>
+                <artifactId>milvus-plus-boot-starter</artifactId>
+                <version>${milvus-plus.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/maven-invoker-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.hiwepy</groupId>
@@ -6432,6 +6448,12 @@
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>shardingsphere-encrypt-spring-boot-starter</artifactId>
                 <version>${shardingsphere.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.dromara.sms4j/sms4j-spring-boot-starter -->
+            <dependency>
+                <groupId>org.dromara.sms4j</groupId>
+                <artifactId>sms4j-spring-boot-starter</artifactId>
+                <version>${sms4j.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/sigar-spring-boot-starter -->
             <dependency>
