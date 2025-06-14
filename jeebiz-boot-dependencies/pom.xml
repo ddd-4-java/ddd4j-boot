@@ -24,6 +24,7 @@
         <aliyun-sdk-mts.version>3.3.63</aliyun-sdk-mts.version>
         <antlr-st4.version>4.3.4</antlr-st4.version>
         <antlr-runtime.version>3.5.3</antlr-runtime.version>
+        <apiguardian-api.version>1.1.2</apiguardian-api.version>
         <appium.version>9.3.0</appium.version>
         <aspectj.version>1.9.22.1</aspectj.version>
         <assertj.version>3.26.3</assertj.version>
@@ -107,6 +108,7 @@
         <commons-text.version>1.12.0</commons-text.version>
         <commons-validator.version>1.9.0</commons-validator.version>
         <commons-vfs2.version>2.9.0</commons-vfs2.version>
+        <checker-framework.version>3.49.1</checker-framework.version>
         <contiperf.version>2.3.4</contiperf.version>
         <cos.version>6.0.x.20241003.RELEASE</cos.version>
         <curator.version>5.7.0</curator.version>
@@ -136,6 +138,7 @@
         <dubbo.version>3.3.0</dubbo.version>
         <dynamic-tp.version>1.1.8.1-3.x</dynamic-tp.version>
         <easyexcel.version>4.0.3</easyexcel.version>
+        <easypoi.version>4.5.0</easypoi.version>
         <echarts.version>3.0.0.6</echarts.version>
         <ehcache2.version>2.10.9.2</ehcache2.version>
         <expressly.version>6.0.0-M1</expressly.version>
@@ -150,6 +153,7 @@
         <formio.version>1.7.0</formio.version>
         <forest.version>1.5.28</forest.version>
         <geodesy.version>1.1.3</geodesy.version>
+        <glassfish-el.version>3.0.4</glassfish-el.version>
         <goeasy.version>0.4.2</goeasy.version>
         <google-api-client.version>2.2.0</google-api-client.version>
         <google-api-services-androidpublisher.version>v3-rev142-1.25.0</google-api-services-androidpublisher.version>
@@ -168,8 +172,9 @@
         <hanlp.version>portable-1.8.4</hanlp.version>
         <hanlp-restful.version>0.0.15</hanlp-restful.version>
         <hbase.version>2.6.0</hbase.version>
-        <hibernate.version>6.6.1.Final</hibernate.version>
-        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
+        <hdrhistogram.version>2.2.2</hdrhistogram.version>
+        <hibernate.version>5.4.33.Final</hibernate.version>
+        <hibernate-validator.version>6.2.5.Final</hibernate-validator.version>
         <hibernate4-sqlite-dialect.version>0.1.2</hibernate4-sqlite-dialect.version>
         <hikaricp.version>5.1.0</hikaricp.version>
         <h2.version>2.3.232</h2.version>
@@ -191,6 +196,7 @@
         <imageio.version>3.11.0</imageio.version>
         <influxdb-java.version>2.24</influxdb-java.version>
         <influxdb-client-java.version>7.2.0</influxdb-client-java.version>
+        <istack.version>3.0.12</istack.version>
         <istio-client.version>1.7.7.1</istio-client.version>
         <jackson-bom.version>2.17.2</jackson-bom.version>
         <janino.version>3.1.12</janino.version>
@@ -200,6 +206,7 @@
         <java-uuid-generator.version>4.0.1</java-uuid-generator.version>
         <java-unrar.version>1.7.0-8</java-unrar.version>
         <java-jwt.version>4.4.0</java-jwt.version>
+        <java-websocket.version>1.6.0</java-websocket.version>
         <javamelody.version>2.2.0</javamelody.version>
         <jave.version>3.5.0</jave.version>
         <javers.version>7.8.0</javers.version>
@@ -227,12 +234,13 @@
         <jooq-plus.version>0.3.2</jooq-plus.version>
         <jpush-client.version>3.7.7</jpush-client.version>
         <jruby.version>9.4.8.0</jruby.version>
-        <jsch.version>0.2.20</jsch.version>
+        <jsch.version>0.2.23</jsch.version>
         <jsqlparser.version>5.0</jsqlparser.version>
         <jsoup.version>1.18.1</jsoup.version>
         <json.version>20240303</json.version>
         <json-path.version>2.9.0</json-path.version>
-        <json-smart.version>2.5.1</json-smart.version>
+        <json-smart.version>2.5.2</json-smart.version>
+        <json-schema-validator.version>2.2.14</json-schema-validator.version>
         <jtds.version>1.3.1</jtds.version>
         <junrar.version>7.5.5</junrar.version>
         <juniversalchardet.version>2.5.0</juniversalchardet.version>
@@ -241,15 +249,15 @@
         <junit-jupiter.version>5.11.0</junit-jupiter.version>
         <jxl.version>2.6.12</jxl.version>
         <jwt-issuer.version>1.1.4.1.RELEASE</jwt-issuer.version>
-        <kafka.version>3.8.0</kafka.version>
-        <knife4j.version>3.0.3</knife4j.version>
+        <kafka.version>3.9.0</kafka.version>
+        <knife4j.version>4.5.0</knife4j.version>
         <kisso.version>3.9.3</kisso.version>
         <kubernetes-client.version>6.13.3</kubernetes-client.version>
         <kylin-jdbc.version>4.0.4</kylin-jdbc.version>
-        <libphonenumber.version>8.13.46</libphonenumber.version>
-        <libphonenumber-carrier.version>1.230</libphonenumber-carrier.version>
-        <libphonenumber-prefixmapper.version>2.240</libphonenumber-prefixmapper.version>
-        <libphonenumber-geocoder.version>2.240</libphonenumber-geocoder.version>
+        <libphonenumber.version>8.13.55</libphonenumber.version>
+        <libphonenumber-carrier.version>1.239</libphonenumber-carrier.version>
+        <libphonenumber-prefixmapper.version>2.249</libphonenumber-prefixmapper.version>
+        <libphonenumber-geocoder.version>2.249</libphonenumber-geocoder.version>
         <liquibase.version>4.29.2</liquibase.version>
         <lock4j.version>2.2.0</lock4j.version>
         <lombok.version>1.18.34</lombok.version>
@@ -3245,29 +3253,64 @@
                 <artifactId>kisso</artifactId>
                 <version>${kisso.version}</version>
             </dependency>
-
-            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-annotations -->
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-core -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-annotations</artifactId>
+                <artifactId>knife4j-core</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-ui -->
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-openapi3-webflux-jakarta-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-ui</artifactId>
+                <artifactId>knife4j-openapi3-webflux-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-openapi3-webflux-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <artifactId>knife4j-openapi3-webflux-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-micro-spring-boot-starter -->
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-openapi3-jakarta-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-micro-spring-boot-starter</artifactId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-openapi3-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-openapi2-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-openapi3-ui -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-ui</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-openapi2-ui -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi2-ui</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-gateway-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-aggregation-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-aggregation-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
 

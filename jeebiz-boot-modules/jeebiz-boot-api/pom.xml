@@ -85,7 +85,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-annotations</artifactId>
+            <artifactId>knife4j-core</artifactId>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
