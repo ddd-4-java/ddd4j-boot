@@ -17,7 +17,7 @@ import java.util.Objects;
 @Slf4j
 public class RequiresDataPermissionsValidator implements ConstraintValidator<RequiresDataPermissions, Object> {
 
-    private DataType dataType;
+    private String dataType;
     private DataScopeProvider provider;
 
     @Override

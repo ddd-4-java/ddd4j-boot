@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,15 +40,18 @@ public class GeoBaiduTemplate {
     /**
      * 调用百度API
      *
-     * @param addr
-     * @return
-     * @throws IOException
+     * @param addr 地址
+     * @return 经纬度
+     * @throws IOException 调用异常
      */
     public Map<String, BigDecimal> getLatAndLngByAddress(String addr) throws IOException {
 
         // {"message":"APP Referer校验失败","status":220}
-        Optional<JSONObject> json = this.getLocationByAddress(addr);
-        JSONObject result = json.get().getJSONObject("result");
+        Optional<JSONObject> optional = this.getLocationByAddress(addr);
+        if (optional.isEmpty()) {
+            return null;
+        }
+        JSONObject result = optional.get().getJSONObject("result");
         JSONObject location = result.getJSONObject("location");
 
         Map<String, BigDecimal> map = new HashMap<String, BigDecimal>();
@@ -59,17 +63,13 @@ public class GeoBaiduTemplate {
     /**
      * 调用百度API
      *
-     * @param addr
-     * @return
-     * @throws IOException
+     * @param addr 地址
+     * @return 经纬度
+     * @throws IOException 调用异常
      */
     public Optional<JSONObject> getLocationByAddress(String addr) throws IOException {
         String address = "";
-        try {
-            address = java.net.URLEncoder.encode(addr, "UTF-8");
-        } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
-        }
+        address = java.net.URLEncoder.encode(addr, StandardCharsets.UTF_8);
         String url = String.format(geocoder, address, this.ak);
         // {"message":"APP Referer校验失败","status":220}
         Request request = new Request.Builder().url(url).build();
@@ -81,9 +81,9 @@ public class GeoBaiduTemplate {
             if (jsonObject.getInteger("status") != 0) {
                 throw new IOException(jsonObject.getString("message"));
             }
-            return Optional.ofNullable(jsonObject);
+            return Optional.of(jsonObject);
         }
-        log.error("Addr Location Query Error. Response Code >> {}, Body >> {}", response.code(), response.body().string());
+        log.error("Addr Location Query Error. Response Code >> {}, Body >> {}", response.code(), response.body());
         return Optional.empty();
     }
 
@@ -114,8 +114,8 @@ public class GeoBaiduTemplate {
      * status: 0    #结果状态返回码
      * }
      *
-     * @param ip
-     * @return
+     * @param ip ipv4
+     * @return 经纬度
      */
     public Optional<JSONObject> getLocationByIp(String ip) {
         if (Objects.isNull(ip)) {
@@ -132,85 +132,12 @@ public class GeoBaiduTemplate {
                 if (jsonObject.getInteger("status") != 0) {
                     throw new IOException(jsonObject.getString("message"));
                 }
-                return Optional.ofNullable(jsonObject);
+                return Optional.of(jsonObject);
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+           log.error("IP : {} >> Location Query Error：{}", ip, e.getMessage());
         }
-        return null;
-    }
-
-    /**
-     * unicode 字节码转换成 中文
-     *
-     * @param ascii
-     * @return
-     */
-    public String decodeUnicode(String ascii) {
-        char aChar;
-        int len = ascii.length();
-        StringBuffer outBuffer = new StringBuffer(len);
-        for (int x = 0; x < len; ) {
-            aChar = ascii.charAt(x++);
-            if (aChar == '\\') {
-                aChar = ascii.charAt(x++);
-                if (aChar == 'u') {
-                    int value = 0;
-                    for (int i = 0; i < 4; i++) {
-                        aChar = ascii.charAt(x++);
-                        switch (aChar) {
-                            case '0':
-                            case '1':
-                            case '2':
-                            case '3':
-                            case '4':
-                            case '5':
-                            case '6':
-                            case '7':
-                            case '8':
-                            case '9':
-                                value = (value << 4) + aChar - '0';
-                                break;
-                            case 'a':
-                            case 'b':
-                            case 'c':
-                            case 'd':
-                            case 'e':
-                            case 'f':
-                                value = (value << 4) + 10 + aChar - 'a';
-                                break;
-                            case 'A':
-                            case 'B':
-                            case 'C':
-                            case 'D':
-                            case 'E':
-                            case 'F':
-                                value = (value << 4) + 10 + aChar - 'A';
-                                break;
-                            default:
-                                throw new IllegalArgumentException("Malformed encoding.");
-                        }
-                    }
-                    outBuffer.append((char) value);
-                } else {
-                    if (aChar == 't') {
-                        aChar = '\t';
-                    } else if (aChar == 'r') {
-                        aChar = '\r';
-                    } else if (aChar == 'n') {
-                        aChar = '\n';
-                    } else if (aChar == 'f') {
-                        aChar = '\f';
-                    }
-                    outBuffer.append(aChar);
-                }
-            } else {
-                outBuffer.append(aChar);
-            }
-        }
-        return outBuffer.toString();
+        return Optional.empty();
     }
 
     public static void main(String[] args) throws IOException {

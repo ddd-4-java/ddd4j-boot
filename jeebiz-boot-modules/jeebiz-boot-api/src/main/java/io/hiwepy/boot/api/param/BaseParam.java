@@ -2,13 +2,13 @@
  * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
  * All Rights Reserved.
  */
-package io.hiwepy.boot.api.dto;
+package io.hiwepy.boot.api.param;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public abstract class BaseDTO {
+public abstract class BaseParam {
 
     /**
      * 请求发生的时间

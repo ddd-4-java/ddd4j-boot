@@ -28,8 +28,8 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
     private ObjectMapper objectMapper;
     @Getter
     private OkHttp3Template okHttp3Template;
-    private String address;
-    private String port;
+    private final String address;
+    private final String port;
 
     public FlksecCryptoStrategy(OkHttp3Template okHttp3Template, String address, String port) {
         this.okHttp3Template = okHttp3Template;

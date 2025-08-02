@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class DefaultCryptoProvider implements CryptoProvider {
 
     private final EnumMap<CryptoType, CryptoStrategy> enumMap = new EnumMap<>(CryptoType.class);
-    private CryptoProperties cryptoProperties;
+    private final CryptoProperties cryptoProperties;
 
     public DefaultCryptoProvider(List<CryptoStrategy> cryptoStrategies, CryptoProperties cryptoProperties) {
         enumMap.putAll(cryptoStrategies.stream().collect(Collectors.toMap(CryptoStrategy::getType, strategy -> strategy)));

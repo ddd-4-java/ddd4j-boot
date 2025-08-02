@@ -8,13 +8,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * 內存相关信息
- *
- * @author:
  */
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class Mem {
     /**
      * 内存总量

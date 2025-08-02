@@ -1,6 +1,5 @@
 package io.hiwepy.boot.autoconfigure.datascope.annotation;
 
-import io.hiwepy.boot.autoconfigure.datascope.DataType;
 import io.hiwepy.boot.autoconfigure.datascope.RequiresDataPermissionsValidator;
 
 import jakarta.validation.Constraint;
@@ -24,7 +23,7 @@ public @interface RequiresDataPermissions {
      * 数据类型
      * @return the data type
      */
-    DataType dataType();
+    String dataType();
 
     /**
      * Message string.

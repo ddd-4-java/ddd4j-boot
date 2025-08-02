@@ -5,7 +5,7 @@ import cn.hutool.crypto.symmetric.AES;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.hiwepy.boot.api.ApiCode;
 import io.hiwepy.boot.api.ApiRestResponse;
-import io.hiwepy.boot.api.dto.BaseDTO;
+import io.hiwepy.boot.api.param.BaseParam;
 import io.hiwepy.boot.api.exception.CryptoException;
 import io.hiwepy.boot.autoconfigure.crypto.annotation.ResponseEncrypt;
 import lombok.SneakyThrows;
@@ -71,8 +71,8 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<ApiRestResp
         }
 
         // 如果是实体，并且继承了BaseDTO，则放入时间戳
-        if (data instanceof BaseDTO) {
-            ((BaseDTO)data).setCurrentTimeMillis(System.currentTimeMillis());
+        if (data instanceof BaseParam) {
+            ((BaseParam)data).setCurrentTimeMillis(System.currentTimeMillis());
         }
 
         // 对象序列化

@@ -1,13 +1,16 @@
 package io.hiwepy.boot.autoconfigure.crypto;
 
 import cn.hutool.crypto.symmetric.AES;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.hiwepy.boot.api.ApiCode;
-import io.hiwepy.boot.api.dto.BaseDTO;
-import io.hiwepy.boot.api.dto.RequestData;
+import io.hiwepy.boot.api.param.BaseParam;
+import io.hiwepy.boot.api.param.RequestData;
+import io.hiwepy.boot.api.exception.BizRuntimeException;
 import io.hiwepy.boot.api.exception.ParamException;
 import io.hiwepy.boot.autoconfigure.CryptoConstant;
 import io.hiwepy.boot.autoconfigure.crypto.annotation.RequestDecryption;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +23,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdviceAdapter;
 
-import jakarta.servlet.ServletInputStream;
-import jakarta.servlet.http.HttpServletRequest;
 import java.lang.reflect.Type;
 
 /**
@@ -56,9 +57,12 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
      * @param converterType 消息转换类型
      * @return 真实的参数
      */
-    @SneakyThrows
     @Override
-    public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
+    public Object afterBodyRead(Object body,
+                                HttpInputMessage inputMessage,
+                                MethodParameter parameter,
+                                Type targetType,
+                                Class<? extends HttpMessageConverter<?>> converterType) {
 
         // 获取request
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
@@ -70,9 +74,12 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
         HttpServletRequest request = servletRequestAttributes.getRequest();
 
         // 获取数据
-        ServletInputStream inputStream = request.getInputStream();
-        RequestData requestData = objectMapper.readValue(inputStream, RequestData.class);
-
+        RequestData requestData;
+        try {
+            requestData = objectMapper.readValue(request.getInputStream(), RequestData.class);
+        } catch (Exception e) {
+            throw new BizRuntimeException(e.getMessage());
+        }
         if (requestData == null || StringUtils.isBlank(requestData.getText())) {
             throw new ParamException(ApiCode.SC_FAIL, "参数错误");
         }
@@ -99,27 +106,29 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
         request.setAttribute(CryptoConstant.INPUT_DECRYPT_DATA, decryptText);
 
         // 获取结果
-        Object result = objectMapper.readValue(decryptText, body.getClass());
+        Object result = null;
+        try {
+            result = objectMapper.readValue(decryptText, body.getClass());
+        } catch (JsonProcessingException e) {
+            throw new BizRuntimeException(e.getMessage());
+        }
 
         // 强制所有实体类必须继承RequestBase类，设置时间戳
-        if (result instanceof BaseDTO) {
+        if (result instanceof BaseParam) {
             // 获取时间戳
-            Long currentTimeMillis = ((BaseDTO) result).getCurrentTimeMillis();
+            long currentTimeMillis = ((BaseParam) result).getCurrentTimeMillis();
             // 有效期 60秒
-            long effective = 60*1000;
-
+            long effective = 60 * 1000;
             // 时间差
             long expire = System.currentTimeMillis() - currentTimeMillis;
-
             // 是否在有效期内
             if (Math.abs(expire) > effective) {
                 throw new ParamException(ApiCode.SC_FAIL, "时间戳不合法");
             }
-
             // 返回解密之后的数据
             return result;
         } else {
-            throw new ParamException(ApiCode.SC_FAIL, String.format("请求参数类型：%s 未继承：%s", result.getClass().getName(), BaseDTO.class.getName()));
+            throw new ParamException(ApiCode.SC_FAIL, String.format("请求参数类型：%s 未继承：%s", result.getClass().getName(), BaseParam.class.getName()));
         }
     }
 

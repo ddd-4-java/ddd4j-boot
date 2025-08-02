@@ -49,8 +49,7 @@ public class BaiduRegionTemplate {
 	}
 
     /**
-	* 获取指定IP对应的经纬度（为空返回当前机器经纬度）
-	 *
+	 * 获取指定IP对应的经纬度（为空返回当前机器经纬度）
 	 * {
 		    address: "CN|北京|北京|None|CHINANET|1|None",    #详细地址信息
 		    content:    #结构信息
@@ -74,8 +73,8 @@ public class BaiduRegionTemplate {
 		    status: 0    #结果状态返回码
 		}
 	*
-	* @param ip
-	* @return
+	* @param ip ipv4
+	* @return 经纬度
 	*/
 	public Optional<JSONObject> getLocationByIp(String ip) {
 		// 1、检查ip有效性
@@ -110,11 +109,10 @@ public class BaiduRegionTemplate {
 				if(Objects.nonNull(redisOperation)) {
 					redisOperation.set(redisKey, bodyString, CalendarUtils.getSecondsNextEarlyMorning());
 				}
-				return Optional.ofNullable(jsonObject);
+				return Optional.of(jsonObject);
 			}
-			log.error("IP : {} >> Location Query Error. Response Code >> {}, Body >> {}", response.code(), response.body().string());
+			log.error("IP : {} >> Location Query Error. Response Code >> {}, Body >> {}", ip, response.code(), response.body().string());
 		} catch (Exception e) {
-			e.printStackTrace();
 			log.error("IP : {} >> Country/Region Parser Error：{}", ip, e.getMessage());
 		}
 		return Optional.empty();
@@ -206,14 +204,7 @@ public class BaiduRegionTemplate {
 	public boolean isMainlandIp(String ip) {
 		try {
 			Optional<JSONObject> optional = this.getLocationByIp(ip);
-			if(optional.isPresent()) {
-
-				JSONObject regionData = optional.get();
-				log.info(" IP : {} >> Region : {} ", ip, regionData.toJSONString());
-
-
-
-			}
+            optional.ifPresent(regionData -> log.info(" IP : {} >> Region : {} ", ip, regionData.toJSONString()));
 		} catch (Exception e) {
 			log.error("IP Region Parser Error：{}", e.getMessage());
 		}
@@ -222,7 +213,7 @@ public class BaiduRegionTemplate {
 
 	@Data
 	@AllArgsConstructor
-	public class Location {
+	public static class Location {
 
 		/**
 		 * 经度
