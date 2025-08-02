@@ -5,24 +5,23 @@
 package io.hiwepy.boot.sample.web.vo;
 
 import com.github.hiwepy.validation.constraints.FileNotEmpty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotBlank;
 
-@ApiModel(value = "DemoVo", description = "xxx数据传输对象")
+@Schema(description = "xxx数据传输对象")
 public class DemoVo {
 
-    @ApiModelProperty(value = "xxID", required = true)
+    @Schema(description = "xxID", required = true)
     private String id;
-    @ApiModelProperty(value = "xx名称", required = true)
+    @Schema(description = "xx名称", required = true)
     @NotBlank(message = "名称必填")
     private String name;
-    @ApiModelProperty(value = "xx描述", required = true)
+    @Schema(description = "xx描述", required = true)
     @NotBlank(message = "描述必填")
     private String text;
-    @ApiModelProperty(value = "文件")
+    @Schema(description = "文件")
     @FileNotEmpty
     private MultipartFile file;
 

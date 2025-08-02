@@ -18,11 +18,6 @@
             <artifactId>jeebiz-boot-api</artifactId>
             <version>${jeebiz-boot.version}</version>
         </dependency>
-        <!-- For Swagger -->
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-        </dependency>
         <!-- For Embedded Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -2,7 +2,7 @@ package io.hiwepy.boot.autoconfigure.aspect;
 
 import io.hiwepy.boot.api.Constants;
 import io.hiwepy.boot.api.utils.WebUtils;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -24,21 +24,21 @@ import java.util.stream.Stream;
 public class DefaultApiOperationLogProvider implements ApiOperationLogProvider {
 
     @Override
-    public void doBefore(JoinPoint joinPoint, ApiOperation apiOperation) {
+    public void doBefore(JoinPoint joinPoint, Operation apiOperation) {
 
     }
 
     @Override
-    public void afterReturing(JoinPoint joinPoint, ApiOperation apiOperation, Object rt, StopWatch stopWatch) {
+    public void afterReturing(JoinPoint joinPoint, Operation apiOperation, Object rt, StopWatch stopWatch) {
         this.doApiOperationLog(joinPoint, apiOperation, rt, null, stopWatch);
     }
 
     @Override
-    public void afterThrowing(JoinPoint joinPoint, ApiOperation apiOperation, Throwable ex, StopWatch stopWatch) {
+    public void afterThrowing(JoinPoint joinPoint, Operation apiOperation, Throwable ex, StopWatch stopWatch) {
         this.doApiOperationLog(joinPoint, apiOperation,null, ex, stopWatch);
     }
 
-    protected void doApiOperationLog(JoinPoint joinPoint, ApiOperation apiOperation, Object rt, Throwable ex, StopWatch stopWatch) {
+    protected void doApiOperationLog(JoinPoint joinPoint, Operation apiOperation, Object rt, Throwable ex, StopWatch stopWatch) {
 
         // 1、获取AOP信息
         Signature signature = joinPoint.getSignature();
@@ -89,7 +89,7 @@ public class DefaultApiOperationLogProvider implements ApiOperationLogProvider {
         log.info(Constants.accessMarker, stopWatch.prettyPrint());
     }
 
-    protected void saveLog(JoinPoint joinPoint, Method method, ApiOperation apiOperation, Object rt, Throwable ex, StopWatch stopWatch){
+    protected void saveLog(JoinPoint joinPoint, Method method, Operation apiOperation, Object rt, Throwable ex, StopWatch stopWatch){
         // do nothing
     }
 

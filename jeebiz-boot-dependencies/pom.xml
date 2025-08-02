@@ -419,7 +419,7 @@
         <soapui-template.version>1.0.2.RELEASE</soapui-template.version>
         <socket-io.version>2.1.2</socket-io.version>
         <!--<spring-framework.version>5.3.39</spring-framework.version>-->
-        <springdoc.version>2.3.0</springdoc.version>
+        <springdoc.version>2.8.9</springdoc.version>
         <springfox.version>3.0.0</springfox.version>
         <spring-biz.version>3.3.x.20241020.RELEASE</spring-biz.version>
         <spring-bytebuddy.version>6.1.x.20241003.RELEASE</spring-bytebuddy.version>
@@ -437,7 +437,7 @@
         <swagger-butler.version>1.2.0</swagger-butler.version>
         <swagger-codegen.version>2.4.19</swagger-codegen.version>
         <swagger2markup.version>1.3.3</swagger2markup.version>
-        <swagger3.version>2.2.34</swagger3.version>
+        <swagger3.version>2.2.35</swagger3.version>
         <tablesaw.version>0.40.0</tablesaw.version>
         <taos-jdbc.version>3.5.3</taos-jdbc.version>
         <tencentcloud-sdk-java.version>4.0.11</tencentcloud-sdk-java.version>
@@ -5322,34 +5322,6 @@
                 <artifactId>soapui-template</artifactId>
                 <version>${soapui-template.version}</version>
             </dependency>-->
-
-            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-bom -->
-            <!--<dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-bom</artifactId>
-                <version>${springdoc.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>-->
-            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-                <version>${springdoc.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-                <version>${springdoc.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webflux-api -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-starter-webflux-api</artifactId>
-                <version>${springdoc.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>spring-biz</artifactId>
@@ -6875,6 +6847,36 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>shanyan-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-shanyan.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-common -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-common</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-api -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webflux-api -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webflux-api</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.dromara.sms4j/sms4j-spring-boot-starter -->
             <dependency>

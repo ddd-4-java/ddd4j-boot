@@ -3,7 +3,7 @@ package io.hiwepy.boot.autoconfigure.aspect;
 import io.hiwepy.boot.api.XHeaders;
 import io.hiwepy.boot.api.sequence.Sequence;
 import io.hiwepy.boot.api.utils.WebUtils;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,13 +27,13 @@ public class ApiOperationLogAspect {
     @Autowired
     private ApiOperationLogProvider logProvider;
 
-    @Around("@annotation(io.swagger.annotations.ApiOperation) && @annotation(apiOperation)")
-    public Object aroundMethod(ProceedingJoinPoint pjd, ApiOperation apiOperation) throws Throwable {
+    @Around("@annotation(io.swagger.v3.oas.annotations.Operation) && @annotation(apiOperation)")
+    public Object aroundMethod(ProceedingJoinPoint pjd, Operation apiOperation) throws Throwable {
 
         // 1、创建并启动 StopWatch
         String requestId = this.getRequestId();
         StopWatch stopWatch = new StopWatch(requestId);
-        stopWatch.start(Objects.nonNull(apiOperation.value()) ? apiOperation.value() : apiOperation.notes());
+        stopWatch.start(Objects.nonNull(apiOperation.summary()) ? apiOperation.summary() : apiOperation.description());
 
         try {
 
