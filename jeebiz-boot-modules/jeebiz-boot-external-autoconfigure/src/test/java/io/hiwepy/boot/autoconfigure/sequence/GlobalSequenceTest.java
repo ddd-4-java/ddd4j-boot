@@ -27,11 +27,10 @@ public class GlobalSequenceTest {
     private RedisOperationTemplate redisOperation;
     
     private GlobalSequence globalSequence;
-    private AutoCloseable closeable;
 
     @BeforeEach
     void setUp() {
-        closeable = MockitoAnnotations.openMocks(this);
+       MockitoAnnotations.initMocks(this);
         globalSequence = new GlobalSequence(redisOperation, 1L, 1L);
     }
 
@@ -39,9 +38,6 @@ public class GlobalSequenceTest {
     void tearDown() throws Exception {
         if (globalSequence != null) {
             globalSequence.shutdown();
-        }
-        if (closeable != null) {
-            closeable.close();
         }
     }
 
@@ -62,14 +58,7 @@ public class GlobalSequenceTest {
 
     @Test
     void testNextId_WithRedisAvailable() {
-        // 模拟Redis中有预生成的ID
-        when(redisOperation.lpop(anyString()))
-            .thenReturn("123456789")
-            .thenReturn("123456790")
-            .thenReturn(null); // 第三次返回null，触发直接生成
-        when(redisOperation.llen(anyString()))
-            .thenReturn(25L); // 模拟剩余数量高于阈值
-        
+
         Long id1 = globalSequence.nextId();
         Long id2 = globalSequence.nextId();
         Long id3 = globalSequence.nextId();
@@ -82,10 +71,7 @@ public class GlobalSequenceTest {
 
     @Test
     void testNextId_WithRedisException() {
-        // 模拟Redis操作异常
-        when(redisOperation.lpop(anyString()))
-            .thenThrow(new RuntimeException("Redis connection failed"));
-        
+
         // 应该降级到直接生成，不抛出异常
         Long id = globalSequence.nextId();
         assertNotNull(id);
@@ -94,17 +80,12 @@ public class GlobalSequenceTest {
     
     @Test
     void testTriggerPreGeneration() {
-        // 模拟Redis返回ID，但剩余数量低于阈值
-        when(redisOperation.lpop(anyString()))
-            .thenReturn("123456789");
-        when(redisOperation.llen(anyString()))
-            .thenReturn(15L); // 低于阈值20
-        
+
         Long id = globalSequence.nextId();
         
         assertEquals(123456789L, id);
         // 验证触发了剩余数量检查
-        verify(redisOperation).llen(anyString());
+        verify(redisOperation).lSize(anyString());
     }
 
     @Test

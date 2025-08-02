@@ -9,6 +9,8 @@ import io.hiwepy.boot.autoconfigure.region.BaiduRegionTemplate;
 import io.hiwepy.boot.autoconfigure.region.NestedRegionTemplate;
 import io.hiwepy.boot.autoconfigure.region.PconlineRegionTemplate;
 import io.hiwepy.boot.autoconfigure.weather.WeatherTemplate;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,10 +40,10 @@ public class ExternalAutoConfiguration {
 	}
 
 	@Bean
-	public NestedRegionTemplate nestedRegionTemplate(RedisOperationTemplate redisOperation,
-													 IP2regionTemplate ip2RegionTemplate,
+	public NestedRegionTemplate nestedRegionTemplate(ObjectProvider<RedisOperationTemplate> redisOperationProvider,
+													 ObjectProvider<IP2regionTemplate> ip2RegionTemplateProvider,
 													 PconlineRegionTemplate pconlineRegionTemplate) {
-		return new NestedRegionTemplate( redisOperation, ip2RegionTemplate, pconlineRegionTemplate);
+		return new NestedRegionTemplate( redisOperationProvider.getIfAvailable(), ip2RegionTemplateProvider.getIfAvailable(), pconlineRegionTemplate);
 	}
 
 	@Bean

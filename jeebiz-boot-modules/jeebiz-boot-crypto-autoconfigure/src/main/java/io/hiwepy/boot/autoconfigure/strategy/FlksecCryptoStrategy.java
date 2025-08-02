@@ -136,7 +136,7 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
             bodyContent.put("data", valueAsString);
             // 远程请求地址
             String url = String.format("https://%s:%s/api/hmac/sm3hmac", address, port);
-            FlkSecSignResponseVO signResponse = okHttp3Template.post(url, bodyContent, FlkSecSignResponseVO.class);
+            FlkSecSignResponseVO signResponse =  restClient.post().uri(url).body(bodyContent).retrieve().body(FlkSecSignResponseVO.class);
             if (signResponse.getCode() == 200) {
                 return StringUtils.defaultString(signResponse.getData());
             } else {
