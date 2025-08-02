@@ -11,8 +11,8 @@ import io.hiwepy.boot.autoconfigure.crypto.vo.FlkSecEncryptResponseVO;
 import io.hiwepy.boot.autoconfigure.crypto.vo.FlkSecSignResponseVO;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.spring.boot.OkHttp3Template;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.client.RestClient;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,12 +27,12 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
     @Getter
     private ObjectMapper objectMapper;
     @Getter
-    private OkHttp3Template okHttp3Template;
-    private final String address;
-    private final String port;
+    private RestClient restClient;
+    private String address;
+    private String port;
 
-    public FlksecCryptoStrategy(OkHttp3Template okHttp3Template, String address, String port) {
-        this.okHttp3Template = okHttp3Template;
+    public FlksecCryptoStrategy(RestClient restClient, String address, String port) {
+        this.restClient = restClient;
         this.address = address;
         this.port = port;
     }
@@ -69,7 +69,7 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
             bodyContent.put("plainIsEncode", String.valueOf(plainIsEncode));
             // 远程请求地址
             String url = String.format("https://%s:%s/api/crypto/sysEncrypt", address, port);
-            FlkSecEncryptResponseVO encryptResponse = okHttp3Template.post(url, bodyContent, FlkSecEncryptResponseVO.class);
+            FlkSecEncryptResponseVO encryptResponse =  restClient.post().uri(url).body(bodyContent).retrieve().body(FlkSecEncryptResponseVO.class);
             if (encryptResponse.getCode() == 200) {
                 String responseString = StringUtils.defaultString(encryptResponse.getData());
                 log.debug("Response Encrypt Value : {}", responseString);
@@ -103,7 +103,7 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
             bodyContent.put("plainIsEncode", String.valueOf(plainIsEncode));
             // 远程请求地址
             String url = String.format("https://%s:%s/api/crypto/sysDecrypt", address, port);
-            FlkSecDecryptResponseVO decryptResponse = okHttp3Template.post(url, bodyContent, FlkSecDecryptResponseVO.class);
+            FlkSecDecryptResponseVO decryptResponse =  restClient.post().uri(url).body(bodyContent).retrieve().body(FlkSecDecryptResponseVO.class);
             if (decryptResponse.getCode() == 200) {
                 String responseString = StringUtils.defaultString(decryptResponse.getData());
                 log.debug("Response Decrypt Value : {}", responseString);

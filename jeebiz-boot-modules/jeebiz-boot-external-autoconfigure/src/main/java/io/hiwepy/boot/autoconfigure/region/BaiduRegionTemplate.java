@@ -14,12 +14,11 @@ import hitool.core.lang3.time.CalendarUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.springframework.data.redis.core.RedisKey;
 import org.springframework.data.redis.core.RedisOperationTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestClient;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -34,22 +33,23 @@ public class BaiduRegionTemplate {
 
 	private static final String GET_LOCATION_BY_IP_URL = "https://api.map.baidu.com/location/ip?ak=%s&ip=%s&coor=bd09ll";
 	private final String ak;
-	private final OkHttpClient okhttp3Client;
+	private final RestClient restClient;
 	private RedisOperationTemplate redisOperation;
 
-	public BaiduRegionTemplate(String ak, OkHttpClient okhttp3Client) {
+	public BaiduRegionTemplate(String ak, RestClient restClient) {
 		this.ak = ak;
-		this.okhttp3Client = okhttp3Client;
+		this.restClient = restClient;
 	}
 
-	public BaiduRegionTemplate(String ak, OkHttpClient okhttp3Client, RedisOperationTemplate redisOperation) {
+	public BaiduRegionTemplate(String ak, RestClient restClient, RedisOperationTemplate redisOperation) {
 		this.ak = ak;
-		this.okhttp3Client = okhttp3Client;
+		this.restClient = restClient;
 		this.redisOperation = redisOperation;
 	}
 
     /**
-	 * 获取指定IP对应的经纬度（为空返回当前机器经纬度）
+	* 获取指定IP对应的经纬度（为空返回当前机器经纬度）
+	 *
 	 * {
 		    address: "CN|北京|北京|None|CHINANET|1|None",    #详细地址信息
 		    content:    #结构信息
@@ -97,21 +97,25 @@ public class BaiduRegionTemplate {
 		// 3、调用三方接口解析IP信息
 		try {
 			String url = String.format(GET_LOCATION_BY_IP_URL, this.ak, ip);
-			Request request = new Request.Builder().url(url).build();
-			Response response = okhttp3Client.newCall(request).execute();
-			if (response.isSuccessful()) {
-				String bodyString = response.body().string();
+			ResponseEntity<String> response = restClient.post()
+					.uri(url)
+					.retrieve()
+					.toEntity(String.class);
+			if (response.getStatusCode().is2xxSuccessful()) {
+				String bodyString = response.getBody();
 				log.info(" IP : {} >> Location : {} ", ip, bodyString);
-				JSONObject jsonObject = JSONObject.parseObject(bodyString);
-				if (jsonObject.getInteger("status") != 0) {
-					throw new IOException(jsonObject.getString("message"));
+				if(StringUtils.hasText(bodyString)){
+					JSONObject jsonObject = JSONObject.parseObject(bodyString);
+					if (jsonObject.getInteger("status") != 0) {
+						throw new IOException(jsonObject.getString("message"));
+					}
+					if(Objects.nonNull(redisOperation)) {
+						redisOperation.set(redisKey, bodyString, CalendarUtils.getSecondsNextEarlyMorning());
+					}
+					return Optional.of(jsonObject);
 				}
-				if(Objects.nonNull(redisOperation)) {
-					redisOperation.set(redisKey, bodyString, CalendarUtils.getSecondsNextEarlyMorning());
-				}
-				return Optional.of(jsonObject);
 			}
-			log.error("IP : {} >> Location Query Error. Response Code >> {}, Body >> {}", ip, response.code(), response.body().string());
+			log.error("IP : {} >> Location Query Error. Response Code >> {}, Body >> {}", ip, response.getStatusCode().value(), response.getBody());
 		} catch (Exception e) {
 			log.error("IP : {} >> Country/Region Parser Error：{}", ip, e.getMessage());
 		}
@@ -204,7 +208,14 @@ public class BaiduRegionTemplate {
 	public boolean isMainlandIp(String ip) {
 		try {
 			Optional<JSONObject> optional = this.getLocationByIp(ip);
-            optional.ifPresent(regionData -> log.info(" IP : {} >> Region : {} ", ip, regionData.toJSONString()));
+			if(optional.isPresent()) {
+
+				JSONObject regionData = optional.get();
+				log.info(" IP : {} >> Region : {} ", ip, regionData.toJSONString());
+
+
+
+			}
 		} catch (Exception e) {
 			log.error("IP Region Parser Error：{}", e.getMessage());
 		}
@@ -213,7 +224,7 @@ public class BaiduRegionTemplate {
 
 	@Data
 	@AllArgsConstructor
-	public static class Location {
+	public class Location {
 
 		/**
 		 * 经度
@@ -229,11 +240,10 @@ public class BaiduRegionTemplate {
 
 	public static void main(String[] args) throws IOException {
 
-		BaiduRegionTemplate template = new BaiduRegionTemplate("CGxeqGuAGgP7n475kMPTi58y2EqjAPTh",
-				new OkHttpClient.Builder().build());
+		BaiduRegionTemplate template = new BaiduRegionTemplate("CGxeqGuAGgP7n475kMPTi58y2EqjAPTh", RestClient.create());
 
 		Optional<JSONObject> mapLL2 = template.getLocationByIp("183.128.136.82"); // lng：116.86380647644208  lat：38.297615350325717
-		System.out.println(mapLL2.get().toJSONString());
+		log.debug(mapLL2.get().toJSONString());
 	}
 
 

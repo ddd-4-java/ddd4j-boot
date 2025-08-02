@@ -7,14 +7,13 @@ import io.hiwepy.boot.autoconfigure.strategy.CryptoStrategy;
 import io.hiwepy.boot.autoconfigure.strategy.DefaultCryptoStrategy;
 import io.hiwepy.boot.autoconfigure.strategy.FlksecCryptoStrategy;
 import io.hiwepy.boot.autoconfigure.strategy.NoOpCryptoStrategy;
-import okhttp3.OkHttpClient;
-import okhttp3.spring.boot.OkHttp3Template;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestClient;
 
 import java.util.stream.Collectors;
 
@@ -49,12 +48,9 @@ public class DefaultCryptoAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(FlksecCryptoStrategy.class)
     public FlksecCryptoStrategy flksecCryptoStrategy(ObjectProvider<ObjectMapper> objectMapperProvider,
-                                                     ObjectProvider<OkHttp3Template> okHttp3TemplateProvider, CryptoProperties cryptoProperties) {
-        OkHttp3Template okHttp3Template = okHttp3TemplateProvider.getIfAvailable(() -> {
-            ObjectMapper objectMapper = objectMapperProvider.getIfAvailable(ObjectMapper::new);
-            return new OkHttp3Template(new OkHttpClient(), objectMapper);
-        });
-        return new FlksecCryptoStrategy(okHttp3Template, cryptoProperties.getFlksecAddress(), cryptoProperties.getFlksecPort());
+                                                     ObjectProvider<RestClient> restClientProvider, CryptoProperties cryptoProperties) {
+
+        return new FlksecCryptoStrategy(restClientProvider.getIfAvailable(), cryptoProperties.getFlksecAddress(), cryptoProperties.getFlksecPort());
     }
 
 }

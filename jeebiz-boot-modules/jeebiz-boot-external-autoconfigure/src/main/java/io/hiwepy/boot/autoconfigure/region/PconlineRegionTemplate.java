@@ -10,13 +10,11 @@ import com.github.hiwepy.ip2region.spring.boot.ext.RegionEnum;
 import com.github.hiwepy.ip2region.spring.boot.ext.XdbSearcher;
 import com.github.hiwepy.ip2region.spring.boot.util.IpUtils;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.springframework.data.redis.core.RedisKey;
 import org.springframework.data.redis.core.RedisOperationTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestClient;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -28,11 +26,12 @@ import java.util.stream.Stream;
 /**
  * IP地址解析
  * http://whois.pconline.com.cn/
+ * https://blog.csdn.net/m0_73978383/article/details/149198389
  */
 @Slf4j
 public class PconlineRegionTemplate {
 
-	private static final String GET_COUNTRY_BY_IP_URL = "https://whois.pconline.com.cn/ipJson.jsp";
+	private static final String GET_COUNTRY_BY_IP_URL = "https://whois.pconline.com.cn/ipJson.jsp?json=true&ip=%s";
 	// 810000 香港， 820000 澳门 ，710000 台湾， 999999国外
 	private static final String[] SPECIAL_PROVINCE = new String[] { "810000", "820000", "710000", "999999" };
 	private static final String CHINA = "中国";
@@ -48,15 +47,15 @@ public class PconlineRegionTemplate {
 		SPECIAL_PROVINCE_SET = Arrays.stream(SPECIAL_PROVINCE).collect(Collectors.toSet());
 	}
 
-	private final OkHttpClient okhttp3Client;
+	private final RestClient restClient;
 	private RedisOperationTemplate redisOperation;
 
-	public PconlineRegionTemplate(OkHttpClient okhttp3Client) {
-		this.okhttp3Client = okhttp3Client;
+	public PconlineRegionTemplate(RestClient restClient) {
+		this.restClient = restClient;
 	}
 
-	public PconlineRegionTemplate(OkHttpClient okhttp3Client, RedisOperationTemplate redisOperation) {
-		this.okhttp3Client = okhttp3Client;
+	public PconlineRegionTemplate(RestClient restClient, RedisOperationTemplate redisOperation) {
+		this.restClient = restClient;
 		this.redisOperation = redisOperation;
 	}
 
@@ -69,7 +68,7 @@ public class PconlineRegionTemplate {
 	public Optional<JSONObject> getLocationByIp(String ip) {
 		// 1、检查ip有效性
 		if (Objects.isNull(ip)) {
-			throw new NullPointerException("ip can not empty");
+			throw new NullPointerException("IP can not empty");
 		}
 		if(!IpUtils.isIpv4(ip)){
 			throw new IllegalArgumentException("Invalid IPv4 address");
@@ -86,24 +85,30 @@ public class PconlineRegionTemplate {
 		}
 		// 3、调用三方接口解析IP信息
 		try {
-			HttpUrl httpUrl = HttpUrl.parse(GET_COUNTRY_BY_IP_URL).newBuilder()
-					.addQueryParameter("json", Boolean.TRUE.toString())
-					.addQueryParameter("ip", ip).build();
-			Request request = new Request.Builder().addHeader("Connection","close").url(httpUrl).build();
-			Response response = okhttp3Client.newCall(request).execute();
-			if (response.isSuccessful()) {
-				String bodyString = response.body().string();
+
+			Map<String, String> queryParams = new HashMap<>();
+			queryParams.put("json", "true");
+			queryParams.put("ip", ip);
+			//String url = String.format(GET_COUNTRY_BY_IP_URL, ip);
+			ResponseEntity<String> response = restClient.get()
+					.uri(GET_COUNTRY_BY_IP_URL, queryParams)
+					.retrieve()
+					.toEntity(String.class);
+			if (response.getStatusCode().is2xxSuccessful()) {
+				String bodyString = response.getBody();
 				log.info(" IP : {} >> Location : {} ", ip, bodyString);
-				JSONObject jsonObject = JSONObject.parseObject(bodyString);
-				String addr = jsonObject.getString("addr");
-				if (StringUtils.hasText(addr)) {
-					if(Objects.nonNull(redisOperation)) {
-						redisOperation.set(redisKey, bodyString, Duration.ofMinutes(30));
+				if(StringUtils.hasText(bodyString)){
+					JSONObject jsonObject = JSONObject.parseObject(bodyString);
+					String addr = jsonObject.getString("addr");
+					if (StringUtils.hasText(addr)) {
+						if(Objects.nonNull(redisOperation)) {
+							redisOperation.set(redisKey, bodyString, Duration.ofMinutes(30));
+						}
+						return Optional.of(jsonObject);
 					}
-					return Optional.ofNullable(jsonObject);
 				}
 			}
-			log.error("IP : {} >> Location Query Error. Response Code >> {}, Body >> {}", response.code(), response.body().string());
+			log.error("IP : {} >> Location Query Error. Response Code >> {}, Body >> {}", response.getStatusCode().value(), response.getBody());
 		} catch (Exception e) {
 			log.error("IP : {} >> Location Query Error：{}", e.getMessage());
 		}
@@ -214,7 +219,7 @@ public class PconlineRegionTemplate {
 
 	public static void main(String[] args) throws IOException {
 
-		PconlineRegionTemplate template = new PconlineRegionTemplate(new OkHttpClient.Builder().build());
+		PconlineRegionTemplate template = new PconlineRegionTemplate(RestClient.create());
 
 		Optional<JSONObject> mapLL2 = template.getLocationByIp("13.228.204.118"); // lng：116.86380647644208  lat：38.297615350325717
 		System.out.println(mapLL2.get().toJSONString());
