@@ -2,7 +2,7 @@
  * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
  * All Rights Reserved.
  */
-package io.hiwepy.boot.api.mybatis;
+package io.hiwepy.boot.api.mybatis.handler;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;

@@ -20,14 +20,9 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * @description: 服务器相关信息
- * @author: Xiong
- * @date: 2022/12/8 10:26
+ * 服务器相关信息
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Server {
 
     private static final int OSHI_WAIT_SECOND = 1000;

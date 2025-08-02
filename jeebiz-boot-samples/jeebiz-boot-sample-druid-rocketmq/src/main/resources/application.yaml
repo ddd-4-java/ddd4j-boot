@@ -254,17 +254,17 @@ spring:
       aop-patterns:
       - io.hiwepy.boot.demo.web.mvc
       stat-view-servlet:
-        enabled: true
+        enabled: false
         reset-enable: false
       web-stat-filter:
-        enabled: true
+        enabled: false
         session-stat-enable: true
         session-stat-max-count: 20000
       # Druid自定义过滤器参数
       filter:
         # 配置日志输出
         slf4j:
-          enabled: true
+          enabled: false
           statement-create-after-log-enabled: false
           statement-close-after-log-enabled: false
           result-set-open-after-log-enabled: false

@@ -59,12 +59,9 @@ public class DefaultMessageSourceAutoConfiguration {
     public MessageSource messageSource(@Qualifier("myMessageSourceProperties") MessageSourceProperties properties, ResourceBasenameHandler resourceBasenameHandler) {
         MultiResourceBundleMessageSource messageSource = new MultiResourceBundleMessageSource();
         messageSource.setBasenameHandler(resourceBasenameHandler);
-        /*if (StringUtils.hasText(properties.getBasename())) {
+        if (StringUtils.hasText(properties.getBasename())) {
             messageSource.setBasenames(  StringUtils.commaDelimitedListToStringArray(
                     StringUtils.trimAllWhitespace(properties.getBasename())));
-        }*/
-        if (!CollectionUtils.isEmpty(properties.getBasename())) {
-            messageSource.setBasenames(properties.getBasename().toArray(new String[0]));
         }
         if (properties.getEncoding() != null) {
             messageSource.setDefaultEncoding(properties.getEncoding().name());

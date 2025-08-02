@@ -14,13 +14,8 @@ import java.time.LocalDateTime;
 
 /**
  * JVM相关信息
- *
- * @author:
  */
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class Jvm {
     /**
      * 当前JVM占用的内存总数(M)
