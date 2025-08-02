@@ -24,11 +24,6 @@
             <artifactId>jeebiz-boot-jackson-autoconfigure</artifactId>
             <version>${jeebiz-boot.version}</version>
         </dependency>
-        <!-- For Okhttp3 -->
-        <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>okhttp3-spring-boot-starter</artifactId>
-        </dependency>
         <!-- For Spring Webmvc -->
         <dependency>
             <groupId>org.springframework</groupId>
