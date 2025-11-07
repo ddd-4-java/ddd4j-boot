@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisOperationTemplate;
 
 import java.util.HashSet;
+import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +19,9 @@ public class GlobalSequence extends Sequence {
     private static final String ID_LIST_KEY = "global:sequence:ids";
     private static final int BATCH_SIZE = 100; // 每次预生成的ID数量
     private static final int MIN_THRESHOLD = 20; // 最小阈值，低于此值时触发预生成
+    private static final Queue<Long> idPool = new ConcurrentLinkedQueue<>();
+
+
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public GlobalSequence(RedisOperationTemplate redisOperation, long workerId) {

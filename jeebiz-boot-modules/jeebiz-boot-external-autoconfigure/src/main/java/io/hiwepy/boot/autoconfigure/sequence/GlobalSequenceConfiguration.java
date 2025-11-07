@@ -1,5 +1,6 @@
 package io.hiwepy.boot.autoconfigure.sequence;
 
+import cn.hutool.core.util.IdUtil;
 import io.hiwepy.boot.api.sequence.Sequence;
 import io.hiwepy.boot.autoconfigure.SequenceProperties;
 import jakarta.annotation.PreDestroy;
@@ -9,8 +10,14 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.redis.core.RedisOperationTemplate;
+import org.springframework.util.StreamUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
@@ -48,4 +55,23 @@ public class GlobalSequenceConfiguration {
             globalSequence.shutdown();
         }
     }
+
+    @Bean
+    public Sequence snowflakeIdGenerator() throws IOException {
+
+        // 1. 读取 Lua 脚本内容
+        Resource lua = new ClassPathResource("scripts/redis-snowflake-batch.lua");
+        InputStream in = lua.getInputStream();
+        String scriptText = StreamUtils.copyToString(in, StandardCharsets.UTF_8);
+        // 3. 配置：数据中心ID, 节点ID, 起始时间戳, 批次大小
+        long datacenterId = IdUtil.getDataCenterId(31);
+        long workerId =  IdUtil.getWorkerId(datacenterId,31);
+        long epoch = 1288834974657L;
+        long batchSize = 1000L;
+        System.out.println("datacenterId:"+datacenterId);
+        System.out.println("workerId:"+workerId);
+        // 4. 返回实例
+        return new Sequence(redisTemplate, scriptText, datacenterId, workerId, epoch, batchSize);
+    }
+
 }

@@ -33,6 +33,7 @@
         <asciidoctorj.pdf.version>2.3.18</asciidoctorj.pdf.version>
         <asmsupport.version>0.4.3</asmsupport.version>
         <async-http-client.version>3.0.0</async-http-client.version>
+        <aviator.version>5.4.3</aviator.version>
         <awsjavasdk.version>1.12.787</awsjavasdk.version>
         <axiom.version>1.4.0</axiom.version>
         <axis.version>1.4</axis.version>
