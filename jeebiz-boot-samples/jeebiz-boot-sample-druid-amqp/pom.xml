@@ -6,7 +6,8 @@
         <groupId>io.hiwepy</groupId>
         <!-- 特别注意：真实的业务系统应继承 jeebiz-boot-parent -->
         <artifactId>jeebiz-boot-samples</artifactId>
-        <version>3.4.x.20250405-SNAPSHOT</version>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>jeebiz-boot-sample-druid-amqp</artifactId>
@@ -17,12 +18,12 @@
         <dependency>
             <groupId>io.hiwepy</groupId>
             <artifactId>jeebiz-boot-api</artifactId>
-            <version>${jeebiz-boot.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>io.hiwepy</groupId>
             <artifactId>jeebiz-boot-webmvc-autoconfigure</artifactId>
-            <version>${jeebiz-boot.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- For Embedded Web -->

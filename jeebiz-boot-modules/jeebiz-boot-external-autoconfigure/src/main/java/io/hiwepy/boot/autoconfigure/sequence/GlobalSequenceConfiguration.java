@@ -71,7 +71,8 @@ public class GlobalSequenceConfiguration {
         System.out.println("datacenterId:"+datacenterId);
         System.out.println("workerId:"+workerId);
         // 4. 返回实例
-        return new Sequence(redisTemplate, scriptText, datacenterId, workerId, epoch, batchSize);
+        // return new Sequence(redisTemplate, scriptText, datacenterId, workerId, epoch, batchSize);
+        return null;
     }
 
 }

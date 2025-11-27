@@ -4,8 +4,8 @@
     <parent>
         <groupId>io.hiwepy</groupId>
         <artifactId>jeebiz-boot-dependencies</artifactId>
-        <version>3.4.x.20250405-SNAPSHOT</version>
-        <relativePath>../jeebiz-boot-dependencies</relativePath>
+        <version>${revision}</version>
+        <relativePath>../jeebiz-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <artifactId>jeebiz-boot-parent</artifactId>
@@ -915,47 +915,47 @@
                                     <copy file="${basedir}/runenv/jre-8u60-linux-x64.tar.gz"
                                         todir="${appassembler-dir}/${project.artifactId}" /> -->
                                     <!-- 步骤5、构建应用安装脚本 -->
-                                    <delete file="${appassembler-dir}/${project.artifactId}/install.sh"></delete>
+                                    <delete file="${appassembler-dir}/${project.artifactId}/install.sh"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#!/bin/sh${line.separator}"></echo>
+                                          message="#!/bin/sh${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#解压独立jre运行包【如果希望工程使用独有的jdk、jre请将压缩包放置在项目根目录并修改下面的配置】${line.separator}"></echo>
+                                          message="#解压独立jre运行包【如果希望工程使用独有的jdk、jre请将压缩包放置在项目根目录并修改下面的配置】${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#rm -rf jre${line.separator}"></echo>
+                                          message="#rm -rf jre${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#tar -zxvf jre-8u60-linux-x64.tar.gz${line.separator}"></echo>
+                                          message="#tar -zxvf jre-8u60-linux-x64.tar.gz${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#File Authorized${line.separator}"></echo>
+                                          message="#File Authorized${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 jre/bin/*${line.separator}"></echo>
+                                          message="chmod 755 jre/bin/*${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 bin/*${line.separator}"></echo>
+                                          message="chmod 755 bin/*${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 ${appassembler-bin-fileName}${line.separator}"></echo>
+                                          message="chmod 755 ${appassembler-bin-fileName}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 uninstall.sh${line.separator}"></echo>
+                                          message="chmod 755 uninstall.sh${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#启停脚本服务化软连接${line.separator}"></echo>
+                                          message="#启停脚本服务化软连接${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"></echo>
+                                          message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="cp ./${appassembler-bin-fileName} /etc/init.d/${project.artifactId}${line.separator}"></echo>
+                                          message="cp ./${appassembler-bin-fileName} /etc/init.d/${project.artifactId}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chkconfig --add ${project.artifactId}${line.separator}"></echo>
+                                          message="chkconfig --add ${project.artifactId}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chkconfig --level 345 ${project.artifactId} on${line.separator}"></echo>
+                                          message="chkconfig --level 345 ${project.artifactId} on${line.separator}"/>
                                     <!-- 步骤6、构建应用卸载脚本 -->
-                                    <delete file="${appassembler-dir}/${project.artifactId}/uninstall.sh"></delete>
+                                    <delete file="${appassembler-dir}/${project.artifactId}/uninstall.sh"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="#!/bin/sh${line.separator}"></echo>
+                                          message="#!/bin/sh${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="chkconfig ${appassembler-bin-fileName} off${line.separator}"></echo>
+                                          message="chkconfig ${appassembler-bin-fileName} off${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="chkconfig --del ${appassembler-bin-fileName}${line.separator}"></echo>
+                                          message="chkconfig --del ${appassembler-bin-fileName}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"></echo>
+                                          message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="#rm -rf jre${line.separator}"></echo>
+                                          message="#rm -rf jre${line.separator}"/>
 
                                     <!-- 处理服务模式依赖资源 -->
 
@@ -1136,6 +1136,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
+            </plugin>
+            <!-- 模块版本管理插件 ：替换 ${revision} -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
             </plugin>
             <!-- 发布插件 ：将项目输出构件部署到远程仓库 -->
             <plugin>

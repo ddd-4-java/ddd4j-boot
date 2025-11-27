@@ -4,8 +4,8 @@
     <parent>
         <groupId>io.hiwepy</groupId>
         <artifactId>jeebiz-boot-dependencies</artifactId>
-        <version>3.4.x.20250405-SNAPSHOT</version>
-        <relativePath>../jeebiz-boot-dependencies</relativePath>
+        <version>${revision}</version>
+        <relativePath>../jeebiz-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <artifactId>jeebiz-boot-modules</artifactId>
