@@ -77,7 +77,7 @@
         <module>jeebiz-boot-dependencies</module>
         <module>jeebiz-boot-modules</module>
         <module>jeebiz-boot-parent</module>
-        <!--<module>jeebiz-boot-samples</module>-->
+        <!--<module>jeebiz-boot-samples</module> -->
     </modules>
 
     <!--开源协议采用Apache 2.0协议-->
@@ -91,17 +91,17 @@
 
     <!-- 组织信息 -->
     <organization>
-        <name>Jeebiz</name>
-        <url>https://jeebiz.net</url>
+        <name>Hiwepy</name>
+        <url>https://wiki.hiwepy.com</url>
     </organization>
 
     <!-- 开发者信息 -->
     <developers>
         <developer>
             <name>wandl</name>
-            <email>hnxyhcwdl1003@163.com</email>
-            <organization>jeebiz</organization>
-            <organizationUrl>https://jeebiz.net</organizationUrl>
+            <email>hiwepy@gmail.com</email>
+            <organization>hiwepy</organization>
+            <organizationUrl>https://wiki.hiwepy.com</organizationUrl>
             <roles>
                 <role>developer</role>
             </roles>
@@ -109,9 +109,9 @@
         </developer>
     </developers>
 
-    <distributionManagement>
+<!--    <distributionManagement>
         <repository>
-            <!--必须与 settings.xml 的 id 一致-->
+            &lt;!&ndash;必须与 settings.xml 的 id 一致&ndash;&gt;
             <id>wans-hz-base-platform-maven</id>
             <name>maven</name>
             <url>https://wans-hz-maven.pkg.coding.net/repository/base-platform/maven/</url>
@@ -120,6 +120,30 @@
             <id>wans-hz-base-platform-maven</id>
             <name>maven</name>
             <url>https://wans-hz-maven.pkg.coding.net/repository/base-platform/maven/</url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>-->
+
+    <distributionManagement>
+        <repository>
+            <id>2624322-release-6F6h6R</id>
+            <url>https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-release-6f6h6r</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <snapshotRepository>
+            <id>2624322-snapshot-3EoOv3</id>
+            <url>https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-snapshot-3eoov3</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>

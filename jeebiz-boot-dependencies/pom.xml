@@ -217,7 +217,7 @@
         <jetty-version>${jetty.version}</jetty-version>
         <jedis.version>5.1.5</jedis.version>
         <jep.version>2.4.2</jep.version>
-        <jetcache.version>2.7.7</jetcache.version>
+        <jetcache.version>2.6.7</jetcache.version>
         <jjwt.version>0.12.6</jjwt.version>
         <jakarta-websocket.version>2.2.0</jakarta-websocket.version>
         <jgoodies.version>2.7.0</jgoodies.version>
