@@ -16,12 +16,12 @@
         <dependency>
             <groupId>io.hiwepy</groupId>
             <artifactId>jeebiz-boot-api</artifactId>
-            <version>${jeebiz-boot.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>io.hiwepy</groupId>
             <artifactId>jeebiz-boot-webmvc-autoconfigure</artifactId>
-            <version>${jeebiz-boot.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- For Embedded Web -->
@@ -173,7 +173,7 @@
         <dependency>
             <groupId>io.hiwepy</groupId>
             <artifactId>jeebiz-boot-kafka-autoconfigure</artifactId>
-            <version>${jeebiz-boot.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- For Embed Tomcat -->

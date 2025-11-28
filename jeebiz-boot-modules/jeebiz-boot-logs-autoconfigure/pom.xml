@@ -16,7 +16,7 @@
         <dependency>
             <groupId>io.hiwepy</groupId>
             <artifactId>jeebiz-boot-api</artifactId>
-            <version>${jeebiz-boot.version}</version>
+            <version>${revision}</version>
         </dependency>
         <!-- For AOP -->
         <dependency>

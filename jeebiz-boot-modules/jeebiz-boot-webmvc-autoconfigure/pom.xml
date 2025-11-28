@@ -15,12 +15,12 @@
         <dependency>
             <groupId>io.hiwepy</groupId>
             <artifactId>jeebiz-boot-api</artifactId>
-            <version>${jeebiz-boot.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>io.hiwepy</groupId>
             <artifactId>jeebiz-boot-jackson-autoconfigure</artifactId>
-            <version>${jeebiz-boot.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
