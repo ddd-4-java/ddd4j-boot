@@ -21,24 +21,26 @@ public class KafkaConsumer implements InitializingBean {
 
     /**
      * 普通消息监听器
+     *
      * @param records 消息记录
      */
     @KafkaListener(topics = TopicConstant.DEMO_TOPIC, containerFactory = "kafkaListenerContainerFactory")
-    public void onMessage(List<ConsumerRecord<String,String>> records){
-        for(ConsumerRecord<String, String> record : records){
-            log.info("接收普通消息>>topic={},value={},size={}",record.topic(),record.value(),records.size());
+    public void onMessage(List<ConsumerRecord<String, String>> records) {
+        for (ConsumerRecord<String, String> record : records) {
+            log.info("接收普通消息>>topic={},value={},size={}", record.topic(), record.value(), records.size());
         }
     }
 
     /**
      * 事务消息监听器
+     *
      * @param records 消息记录
-     * @param ack Acknowledgment 对象
+     * @param ack     Acknowledgment 对象
      */
     @KafkaListener(topics = TopicConstant.DEMO_TOPIC_TS, containerFactory = "kafkaTsListenerContainerFactory")
-    public void onTsMessage(List<ConsumerRecord<String,String>> records, Acknowledgment ack){
-        for (ConsumerRecord<String,String> record : records) {
-            log.info("接收事务消息>>topic={},value={},size={}",record.topic(),record.value(),records.size());
+    public void onTsMessage(List<ConsumerRecord<String, String>> records, Acknowledgment ack) {
+        for (ConsumerRecord<String, String> record : records) {
+            log.info("接收事务消息>>topic={},value={},size={}", record.topic(), record.value(), records.size());
         }
         // 手动提交偏移量
         ack.acknowledge();

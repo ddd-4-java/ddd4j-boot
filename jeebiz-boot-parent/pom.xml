@@ -1,5 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.hiwepy</groupId>
@@ -47,6 +49,18 @@
 
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-bom</artifactId>
+                <version>${micrometer.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- For Lombok -->
         <dependency>
@@ -74,6 +88,11 @@
             <artifactId>javax.websocket-api</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- Bouncy Castle -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk18on</artifactId>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus -->
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -85,12 +104,8 @@
             <artifactId>spring-boot-starter-json</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-databind</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>ch.qos.logback</groupId>
-                    <artifactId>logback-classic</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -268,6 +283,33 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin/ -->
+                <!-- Jacoco 统计自动化代码覆盖率-->
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <configuration>
+                        <skip>false</skip>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default-prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                            <configuration>
+                                <propertyName>jacocoArgLine</propertyName>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>default-report</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
                 <plugin>
                     <!-- 资源插件：复制主资源文件至主输出目录 -->
@@ -280,6 +322,13 @@
                         <nonFilteredFileExtensions>
                             <nonFilteredFileExtension>publicKeys.store</nonFilteredFileExtension>
                             <nonFilteredFileExtension>sql</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>TTF</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>TTC</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>ttc</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>otf</nonFilteredFileExtension>
                         </nonFilteredFileExtensions>
                     </configuration>
                     <!-- 配置文件变量替换 -->
@@ -337,11 +386,12 @@
                         <!-- forkMode 可设置值有 “never”， “once”， “always” 和 “pertest”。 pretest：
                             每一个测试创建一个新进程，为每个测试创建新的JVM是单独测试的最彻底方式，但也是最慢的，不适合hudson上持续回归。 once：在一个进程中进行所有测试。once为默认设置，在Hudson上持续回归时建议使用默认设置。
                             always：在一个进程中并行的运行脚本，Junit4.7以上版本才可以使用，surefire的版本要在2.6以上提供这个功能，其中 threadCount：执行时，指定可分配的线程数量。只和参数parallel配合使用有效。默认：5。 -->
-                        <argLine>-Xmx1024M -XX:MetaspaceSize=256M -XX:MaxMetaspaceSize=256M</argLine>
+                        <!--<forkMode>once</forkMode>-->
+                        <argLine>-Dfile.encoding=UTF-8 ${jacocoArgLine} -Xmx1024M -XX:MetaspaceSize=256M
+                            -XX:MaxMetaspaceSize=256M
+                        </argLine>
                         <additionalClasspathElements>
-                            <additionalClasspathElement>
-                                ${basedir}/target/test-classes
-                            </additionalClasspathElement>
+                            <additionalClasspathElement>${basedir}/target/test-classes</additionalClasspathElement>
                         </additionalClasspathElements>
                         <includes>
                             <include>**/*Test.java</include>
@@ -369,15 +419,15 @@
 
                 <!-- Spring Boot 代码质量检查 -->
 
+                <!-- 代码格式检查  -->
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin -->
                 <plugin>
-                    <!-- 代码格式检查  -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
                 </plugin>
+                <!-- 代码覆盖率 -->
                 <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/cobertura-maven-plugin -->
                 <plugin>
-                    <!-- 代码覆盖率 -->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>cobertura-maven-plugin</artifactId>
                     <configuration>
@@ -411,12 +461,19 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- 依赖检查：检查是否有依赖有漏洞的第三方包 -->
                 <!-- https://mvnrepository.com/artifact/org.owasp/dependency-check-maven -->
                 <plugin>
-                    <!-- 依赖检查：检查是否有依赖有漏洞的第三方包 -->
                     <groupId>org.owasp</groupId>
                     <artifactId>dependency-check-maven</artifactId>
                     <configuration>
+                        <!-- 默认跳过 -->
+                        <skip>true</skip>
+                        <!-- 项目中不涉及 JavaScript 依赖项或无需检查相关漏洞，通过以下方式禁用 RetireJS 扫描 -->
+                        <retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
+                        <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                        <!-- 获取 NVD API 密钥： 访问 https://nvd.nist.gov/developers/request-an-api-key -->
+                        <nvdApiKey>3b8d0853-cc28-4b91-bfe2-a01c65870443</nvdApiKey>
                         <format>HTML</format>
                         <outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
                     </configuration>
@@ -428,9 +485,9 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- 代码检查：检查类或者 JAR 文件 -->
                 <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/findbugs-maven-plugin -->
                 <plugin>
-                    <!-- 代码检查：检查类或者 JAR 文件 -->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>findbugs-maven-plugin</artifactId>
                     <configuration>
@@ -440,8 +497,8 @@
                         <threshold>Medium</threshold>
                         <failOnError>true</failOnError>
                         <includeTests>true</includeTests>
-                        <!--findbugs需要忽略的错误的配置文件-->
-                        <excludeFilterFile>findbugs/findbugs-exclude-filter.xml</excludeFilterFile>
+                        <!--findbugs需要忽略的错误的配置文件
+                        <excludeFilterFile>findbugs/findbugs-exclude-filter.xml</excludeFilterFile>-->
                     </configuration>
                     <executions>
                         <execution>
@@ -912,47 +969,47 @@
                                     <copy file="${basedir}/runenv/jre-8u60-linux-x64.tar.gz"
                                         todir="${appassembler-dir}/${project.artifactId}" /> -->
                                     <!-- 步骤5、构建应用安装脚本 -->
-                                    <delete file="${appassembler-dir}/${project.artifactId}/install.sh"></delete>
+                                    <delete file="${appassembler-dir}/${project.artifactId}/install.sh"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#!/bin/sh${line.separator}"></echo>
+                                          message="#!/bin/sh${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#解压独立jre运行包【如果希望工程使用独有的jdk、jre请将压缩包放置在项目根目录并修改下面的配置】${line.separator}"></echo>
+                                          message="#解压独立jre运行包【如果希望工程使用独有的jdk、jre请将压缩包放置在项目根目录并修改下面的配置】${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#rm -rf jre${line.separator}"></echo>
+                                          message="#rm -rf jre${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#tar -zxvf jre-8u60-linux-x64.tar.gz${line.separator}"></echo>
+                                          message="#tar -zxvf jre-8u60-linux-x64.tar.gz${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#File Authorized${line.separator}"></echo>
+                                          message="#File Authorized${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 jre/bin/*${line.separator}"></echo>
+                                          message="chmod 755 jre/bin/*${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 bin/*${line.separator}"></echo>
+                                          message="chmod 755 bin/*${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 ${appassembler-bin-fileName}${line.separator}"></echo>
+                                          message="chmod 755 ${appassembler-bin-fileName}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 uninstall.sh${line.separator}"></echo>
+                                          message="chmod 755 uninstall.sh${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#启停脚本服务化软连接${line.separator}"></echo>
+                                          message="#启停脚本服务化软连接${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"></echo>
+                                          message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="cp ./${appassembler-bin-fileName} /etc/init.d/${project.artifactId}${line.separator}"></echo>
+                                          message="cp ./${appassembler-bin-fileName} /etc/init.d/${project.artifactId}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chkconfig --add ${project.artifactId}${line.separator}"></echo>
+                                          message="chkconfig --add ${project.artifactId}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chkconfig --level 345 ${project.artifactId} on${line.separator}"></echo>
+                                          message="chkconfig --level 345 ${project.artifactId} on${line.separator}"/>
                                     <!-- 步骤6、构建应用卸载脚本 -->
-                                    <delete file="${appassembler-dir}/${project.artifactId}/uninstall.sh"></delete>
+                                    <delete file="${appassembler-dir}/${project.artifactId}/uninstall.sh"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="#!/bin/sh${line.separator}"></echo>
+                                          message="#!/bin/sh${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="chkconfig ${appassembler-bin-fileName} off${line.separator}"></echo>
+                                          message="chkconfig ${appassembler-bin-fileName} off${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="chkconfig --del ${appassembler-bin-fileName}${line.separator}"></echo>
+                                          message="chkconfig --del ${appassembler-bin-fileName}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"></echo>
+                                          message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
                                     <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="#rm -rf jre${line.separator}"></echo>
+                                          message="#rm -rf jre${line.separator}"/>
 
                                     <!-- 处理服务模式依赖资源 -->
 
@@ -1062,149 +1119,18 @@
                         </buildArgs>
                     </configuration>
                 </plugin>
-                <!--
-                    https://mp.weixin.qq.com/s?__biz=MzAxODcyNjEzNQ==&mid=2247484764&idx=1&sn=10e4fcae5333687368960a2e64b2b70c&chksm=9bd0a8c4aca721d264e40f5f543b9f557eedf033719a97a38257835c5162ffa010c025580a65&scene=21#wechat_redirect
-                    https://github.com/tianqing2117/swagger-doc-demo/blob/master/pom.xml
-                    https://github.com/Swagger2Markup/swagger2markup-maven-project-template/blob/master/pom.xml
-                 -->
-                <!-- First, use the swagger2markup plugin to generate asciidoc -->
-                <plugin>
-                    <groupId>io.github.swagger2markup</groupId>
-                    <artifactId>swagger2markup-maven-plugin</artifactId>
-                    <dependencies>
-                        <dependency>
-                            <groupId>io.github.swagger2markup</groupId>
-                            <artifactId>swagger2markup</artifactId>
-                            <version>${swagger2markup.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>io.github.swagger2markup</groupId>
-                            <artifactId>swagger2markup-import-schemas-ext</artifactId>
-                            <version>${swagger2markup.extension.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>io.github.swagger2markup</groupId>
-                            <artifactId>swagger2markup-import-files-ext</artifactId>
-                            <version>${swagger2markup.extension.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>io.github.swagger2markup</groupId>
-                            <artifactId>swagger2markup-spring-restdocs-ext</artifactId>
-                            <version>${swagger2markup.extension.version}</version>
-                        </dependency>
-                    </dependencies>
-                    <configuration>
-                        <swaggerInput>${swagger.input}</swaggerInput>
-                        <outputDir>${generated.asciidoc.directory}</outputDir>
-                        <config>
-                            <swagger2markup.markupLanguage>ASCIIDOC</swagger2markup.markupLanguage>
-                            <swagger2markup.pathsGroupedBy>TAGS</swagger2markup.pathsGroupedBy>
-                            <swagger2markup.extensions.dynamicOverview.contentPath>
-                                ${project.basedir}/src/docs/asciidoc/extensions/overview
-                            </swagger2markup.extensions.dynamicOverview.contentPath>
-                            <swagger2markup.extensions.dynamicDefinitions.contentPath>
-                                ${project.basedir}/src/docs/asciidoc/extensions/definitions
-                            </swagger2markup.extensions.dynamicDefinitions.contentPath>
-                            <swagger2markup.extensions.dynamicPaths.contentPath>
-                                ${project.basedir}/src/docs/asciidoc/extensions/paths
-                            </swagger2markup.extensions.dynamicPaths.contentPath>
-                            <swagger2markup.extensions.dynamicSecurity.contentPath>
-                                ${project.basedir}src/docs/asciidoc/extensions/security
-                            </swagger2markup.extensions.dynamicSecurity.contentPath>
-                            <swagger2markup.extensions.springRestDocs.snippetBaseUri>${swagger.snippetOutput.dir}
-                            </swagger2markup.extensions.springRestDocs.snippetBaseUri>
-                            <swagger2markup.extensions.springRestDocs.defaultSnippets>true
-                            </swagger2markup.extensions.springRestDocs.defaultSnippets>
-                        </config>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>convertSwagger2markup</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <!-- Run the generated asciidoc through Asciidoctor to generate
-                     other documentation types, such as PDFs or HTML5 -->
-                <plugin>
-                    <groupId>org.asciidoctor</groupId>
-                    <artifactId>asciidoctor-maven-plugin</artifactId>
-                    <!-- Include Asciidoctor PDF for pdf generation -->
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.asciidoctor</groupId>
-                            <artifactId>asciidoctorj-pdf</artifactId>
-                            <version>${asciidoctorj.pdf.version}</version>
-                        </dependency>
-                        <!-- Comment this section to use the default jruby artifact provided by the plugin -->
-                        <dependency>
-                            <groupId>org.jruby</groupId>
-                            <artifactId>jruby-complete</artifactId>
-                            <version>${jruby.version}</version>
-                        </dependency>
-                        <!-- Comment this section to use the default AsciidoctorJ artifact provided by the plugin -->
-                        <dependency>
-                            <groupId>org.asciidoctor</groupId>
-                            <artifactId>asciidoctorj</artifactId>
-                            <version>${asciidoctorj.version}</version>
-                        </dependency>
-                    </dependencies>
-                    <!-- Configure generic document generation settings -->
-                    <configuration>
-                        <sourceDirectory>${asciidoctor.input.directory}</sourceDirectory>
-                        <!-- <sourceDocumentName>index.adoc</sourceDocumentName> -->
-                        <attributes>
-                            <doctype>book</doctype>
-                            <toc>left</toc>
-                            <toclevels>3</toclevels>
-                            <numbered></numbered>
-                            <hardbreaks></hardbreaks>
-                            <sectlinks></sectlinks>
-                            <sectanchors></sectanchors>
-                            <generated>${generated.asciidoc.directory}</generated>
-                        </attributes>
-                    </configuration>
-                    <!-- Since each execution can only handle one backend, run
-                         separate executions for each desired output type -->
-                    <executions>
-                        <execution>
-                            <id>output-html</id>
-                            <phase>package</phase><!-- generate-resources -->
-                            <goals>
-                                <goal>process-asciidoc</goal>
-                            </goals>
-                            <configuration>
-                                <backend>html5</backend>
-                                <outputDirectory>${asciidoctor.html.output.directory}</outputDirectory>
-                            </configuration>
-                        </execution>
-                        <!-- <execution>
-                            <id>output-pdf</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>process-asciidoc</goal>
-                            </goals>
-                            <configuration>
-                                <backend>pdf</backend>
-                                <outputDirectory>${asciidoctor.pdf.output.directory}</outputDirectory>
-                            </configuration>
-                        </execution> -->
-                    </executions>
-                </plugin>
                 <!-- https://my.oschina.net/u/4007037/blog/3101178 -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>license-maven-plugin</artifactId>
                     <configuration>
                         <!-- config for license:aggregate-add-third-party -->
-                        <outputDirectory>${main.basedir}</outputDirectory>
+                        <outputDirectory>${project.basedir}</outputDirectory>
                         <thirdPartyFilename>LICENSE-3RD-PARTY</thirdPartyFilename>
                         <fileTemplate>/org/codehaus/mojo/license/third-party-file-groupByLicense.ftl</fileTemplate>
                         <useMissingFile>true</useMissingFile>
-                        <missingFile>${main.basedir}/LICENSE-3RD-PARTY.properties</missingFile>
-                        <aggregateMissingLicensesFile>${main.basedir}/LICENSE-3RD-PARTY.properties
+                        <missingFile>${project.basedir}/LICENSE-3RD-PARTY.properties</missingFile>
+                        <aggregateMissingLicensesFile>${project.basedir}/LICENSE-3RD-PARTY.properties
                         </aggregateMissingLicensesFile>
                         <licenseMerges>
                             <licenseMerge>Apache 2.0|ASL, version
@@ -1240,8 +1166,8 @@
                         <aggregateDownloadLicenses.executeOnlyOnRootModule>true
                         </aggregateDownloadLicenses.executeOnlyOnRootModule>
                         <!--<licensesConfigFile>${main.basedir}/lic/config/licenses.xml</licensesConfigFile>-->
-                        <licensesOutputFile>${main.basedir}/lic/licenses.xml</licensesOutputFile>
-                        <licensesOutputDirectory>${main.basedir}/lic/licenses/</licensesOutputDirectory>
+                        <licensesOutputFile>${project.basedir}/lic/licenses.xml</licensesOutputFile>
+                        <licensesOutputDirectory>${project.basedir}/lic/licenses/</licensesOutputDirectory>
 
                         <!-- config for license:update-file-header -->
                         <licenseName>apache_v2</licenseName>
@@ -1274,7 +1200,7 @@
                         <sectionDelimiter>==</sectionDelimiter>
 
                         <!-- config for mvn license:update-project-license -->
-                        <licenseFile>${main.basedir}/LICENSE</licenseFile>
+                        <licenseFile>${project.basedir}/LICENSE</licenseFile>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -1318,16 +1244,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
-            <!-- findbugs插件 ：代码检查
+            <!-- 代码质量检查 ：检查 Bugs
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
             </plugin> -->
-            <!-- dependency-check 插件 ：依赖检查
+            <!-- 代码质量检查 ：依赖检查-->
             <plugin>
-			    <groupId>org.owasp</groupId>
-			    <artifactId>dependency-check-maven</artifactId>
-		    </plugin>-->
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+            </plugin>
             <!-- jar包生成插件 ：创建项目jar包 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -1385,6 +1311,19 @@
                 <spring.profiles.active>prod</spring.profiles.active>
             </properties>
         </profile>
+        <profile>
+            <id>edas</id>
+            <properties>
+                <spring.profiles.active>edas</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>local</id>
+            <properties>
+                <spring.profiles.active>local</spring.profiles.active>
+            </properties>
+        </profile>
+
     </profiles>
 
     <reporting>

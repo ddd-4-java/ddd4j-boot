@@ -36,11 +36,6 @@ pipeline {
             useCustomStepPlugin(key: 'coding-public:artifact_docker_push', version: 'latest', params: [image:"${CODING_DOCKER_IMAGE_NAME}:latest",repo:"${DOCKER_REPO_NAME}"])
           }
         }
-        stage('部署至Kubernetes 集群') {
-          steps {
-            cdDeploy(deployType: 'PATCH_IMAGE', application: '${CCI_CURRENT_TEAM}', pipelineName: '${PROJECT_NAME}-${CCI_JOB_NAME}-2217328', image: '${CODING_DOCKER_REG_HOST}/${CODING_DOCKER_IMAGE_NAME}:latest', cloudAccountName: 'huaweicloud', namespace: 'dy-test', manifestType: 'Deployment', manifestName: 'tianyin-edu-third-deploy', containerName: 'tianyin-edu-third', credentialId: '764068872ea6448b813bbac7e17b34ee', personalAccessToken: '${CD_PERSONAL_ACCESS_TOKEN}')
-          }
-        }
       }
       environment {
         DOCKER_REPO_NAME = 'docker'

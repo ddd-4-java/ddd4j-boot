@@ -1,65 +1,67 @@
-### gradle ###
+### IDE ###
+*.iml
+*.ipr
+*.iws
+.idea
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.apt_generated
+.metadata
+.recommenders
+rebel.xml
+
+### Gradle ###
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 
-### STS ###
-.settings/
-.apt_generated
-.classpath
-.factorypath
-.project
-.recommenders
-.settings
-.springBeans
-bin/
-codes/
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-*.jar
-*.sw?
-*.gz
-rebel.xml
-*#
-*~
-.#*
-.*.md.html
-
 ### NetBeans ###
 nbproject/private/
-build/
 nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-log.*/
 
-### maven ###
+### Maven ###
 target/
+target
+dependency-reduced-pom.xml
+pom.xml.versionsBackup
+.flattened-pom.xml
+
+### Build ###
+/build
+build/
+build
+build.log
+bin
+bin/
+lib/
+codes/
+
+### Logs ###
+/logs/
+*.log
+log.*/
+transaction-logs
+
+### Archives ###
+*.jar
 *.war
 *.ear
 *.tar
-#*.zip
 *.tar.gz
-pom.xml.versionsBackup
-dependency-reduced-pom.xml
-manifest.yml
-target
-MANIFEST.MF
-.flattened-pom.xml
+*.gz
 
-### logs ####
-/logs/
-*.log
-overridedb.*
-transaction-logs
-secrets.yml
-
-### temp ignore ###
+### Temporary files ###
+*#
+*.sw?
+*~
+.#*
+.*.md.html
 *.cache
 *.diff
 *.patch
@@ -68,30 +70,36 @@ secrets.yml
 *.properties~
 *.xml~
 
-### system ignore ###
+### System files ###
 .DS_Store
 Thumbs.db
 Servers
-.metadata
+
+### Application specific ###
+/code
+MANIFEST.MF
+_site/
+activemq-data
+dump.rdb
+interpolated*.xml
+manifest.yml
+overridedb.*
+secrets.yml
 upload
 gen_code
 
-### node ###
+### Node ###
 node_modules
+
+### Server ###
 /server/nacos-server/data
 /server/nacos-server/logs
+
+### Libraries ###
 !/libs/*.jar
 
+### Development tools ###
 .fastRequest
 *.http
 *.json
-/build
-/code
-_site/
-activemq-data
-bin
-build
-build.log
-dump.rdb
-interpolated*.xml
-lib/
+qodana.yaml

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 public class IndexController {
 
     /**
-     *  登录成功后的默认重定向地址：可重写返回的路径进行业务系统定制
+     * 登录成功后的默认重定向地址：可重写返回的路径进行业务系统定制
      */
     @RequestMapping("/index")
     public String index(HttpServletRequest request, Model model) {

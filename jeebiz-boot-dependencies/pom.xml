@@ -29,6 +29,7 @@
         <asciidoctorj.pdf.version>2.3.18</asciidoctorj.pdf.version>
         <asmsupport.version>0.4.3</asmsupport.version>
         <async-http-client.version>3.0.0</async-http-client.version>
+        <aviator.version>5.4.3</aviator.version>
         <axiom.version>1.4.0</axiom.version>
         <axis.version>1.4</axis.version>
         <axis-schema.version>1.3</axis-schema.version>
@@ -58,13 +59,13 @@
         <commons-attributes-api.version>2.2</commons-attributes-api.version>
         <commons-attributes-compiler.version>2.2</commons-attributes-compiler.version>
         <commons-attributes-plugin.version>2.2</commons-attributes-plugin.version>
-        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <commons-beanutils.version>1.11.0</commons-beanutils.version>
         <commons-betwixt.version>0.8</commons-betwixt.version>
         <commons-chain.version>1.2</commons-chain.version>
         <commons-cli.version>1.9.0</commons-cli.version>
         <commons-codec.version>1.17.1</commons-codec.version>
         <commons-collections.version>3.2.2</commons-collections.version>
-        <commons-collections4.version>4.5.0-M2</commons-collections4.version>
+        <commons-collections4.version>4.5.0</commons-collections4.version>
         <commons-compiler.version>3.1.2</commons-compiler.version>
         <commons-compress.version>1.27.1</commons-compress.version>
         <commons-configuration.version>1.10</commons-configuration.version>
@@ -85,13 +86,13 @@
         <commons-fileupload2.version>2.0.0-M2</commons-fileupload2.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
         <commons-imaging.version>1.0.0-alpha5</commons-imaging.version>
-        <commons-io.version>2.17.0</commons-io.version>
+        <commons-io.version>2.20.0</commons-io.version>
         <commons-jci.version>1.1</commons-jci.version>
         <commons-jexl.version>2.1.1</commons-jexl.version>
         <commons-jexl3.version>3.4.0</commons-jexl3.version>
         <commons-jxpath.version>1.3</commons-jxpath.version>
         <commons-lang.version>2.6</commons-lang.version>
-        <commons-lang3.version>3.17.0</commons-lang3.version>
+        <commons-lang3.version>3.18.0</commons-lang3.version>
         <commons-logging.version>1.3.4</commons-logging.version>
         <commons-math.version>2.2</commons-math.version>
         <commons-math3.version>3.6.1</commons-math3.version>
@@ -130,6 +131,7 @@
         <druid-metrics.version>1.0.2.RELEASE</druid-metrics.version>
         <dropwizard-metrics-influxdb.version>1.3.4</dropwizard-metrics-influxdb.version>
         <dingtalk-service-sdk.version>2.0.0</dingtalk-service-sdk.version>
+        <dingtalk-sdk.version>2.2.34</dingtalk-sdk.version>
         <disruptor.version>4.0.0</disruptor.version>
         <disruptor-biz.version>1.0.0.RELEASE</disruptor-biz.version>
         <dubbo.version>3.3.0</dubbo.version>
@@ -152,13 +154,15 @@
         <geodesy.version>1.1.3</geodesy.version>
         <glassfish-el.version>3.0.4</glassfish-el.version>
         <goeasy.version>0.4.2</goeasy.version>
+        <geoip2.version>4.3.0</geoip2.version>
+        <google-libraries-bom.version>26.72.0</google-libraries-bom.version>
         <google-api-client.version>2.2.0</google-api-client.version>
         <google-api-services-androidpublisher.version>v3-rev142-1.25.0</google-api-services-androidpublisher.version>
+        <google-error_prone_annotations.version>2.36.0</google-error_prone_annotations.version>
         <google-oauth-client.version>1.34.1</google-oauth-client.version>
         <google-auth-library.version>1.8.1</google-auth-library.version>
         <google-http-client.version>1.42.2</google-http-client.version>
         <google-cloud-translate.version>2.3.2</google-cloud-translate.version>
-        <google-error_prone_annotations.version>2.36.0</google-error_prone_annotations.version>
         <guava.version>33.4.0-jre</guava.version>
         <guice.version>7.0.0</guice.version>
         <grizzly.version>4.0.2</grizzly.version>
@@ -185,10 +189,11 @@
         <htmlparser.version>2.1</htmlparser.version>
         <hitool.version>1.0.2.RELEASE</hitool.version>
         <hive.version>4.0.0</hive.version>
-        <hutool.version>5.8.36</hutool.version>
+        <hutool.version>5.8.40</hutool.version>
         <hystrix.version>1.5.18</hystrix.version>
         <icu4j.version>75.1</icu4j.version>
-        <imageio.version>3.11.0</imageio.version>
+        <imageio.version>3.12.0</imageio.version>
+        <imagej.version>2.16.0</imagej.version>
         <influxdb-java.version>2.24</influxdb-java.version>
         <influxdb-client-java.version>7.2.0</influxdb-client-java.version>
         <istack.version>3.0.12</istack.version>
@@ -217,7 +222,7 @@
         <jetty-version>${jetty.version}</jetty-version>
         <jedis.version>5.1.5</jedis.version>
         <jep.version>2.4.2</jep.version>
-        <jetcache.version>2.6.7</jetcache.version>
+        <jetcache.version>2.7.7</jetcache.version>
         <jjwt.version>0.12.6</jjwt.version>
         <jakarta-websocket.version>2.2.0</jakarta-websocket.version>
         <jgoodies.version>2.7.0</jgoodies.version>
@@ -326,10 +331,11 @@
         <perf4j.version>0.9.16</perf4j.version>
         <persistence-api.version>1.0.2</persistence-api.version>
         <postgresql.version>42.7.5</postgresql.version>
-        <poi.version>5.2.5</poi.version>
+        <poi.version>5.4.1</poi.version>
+        <powerjob.version>5.1.0</powerjob.version>
         <prometheus.version>1.3.6</prometheus.version>
         <prometheus-pushgateway.version>0.16.0</prometheus-pushgateway.version>
-        <prometheus-client.version>0.16.0</prometheus-client.version>
+        <prometheus-client.version>1.3.1</prometheus-client.version>
         <prometheus-simpleclient.version>0.16.0</prometheus-simpleclient.version>
         <protobuf.version>4.29.0</protobuf.version>
         <proxool.version>0.9.1</proxool.version>
@@ -357,7 +363,7 @@
         <rsocket.version>1.1.4</rsocket.version>
         <rxjava2.version>2.2.21</rxjava2.version>
         <rxjava3.version>3.1.9</rxjava3.version>
-        <sa-token.version>1.40.0</sa-token.version>
+        <sa-token.version>1.44.0</sa-token.version>
         <seata.version>2.0.0</seata.version>
         <schemacrawler.version>16.23.2</schemacrawler.version>
         <schemacrawler-diff.version>16.21.4</schemacrawler-diff.version>
@@ -426,6 +432,7 @@
         <taos-jdbc.version>3.5.3</taos-jdbc.version>
         <tencentcloud-sdk-java.version>3.1.1212</tencentcloud-sdk-java.version>
         <tencentcloud-tls-sig-api-v2.version>2.0</tencentcloud-tls-sig-api-v2.version>
+        <testcontainers.version>1.20.1</testcontainers.version>
         <thumbnailator.version>0.4.20</thumbnailator.version>
         <thymeleaf.version>3.1.3.RELEASE</thymeleaf.version>
         <thymeleaf-extras-data-attribute.version>2.0.1</thymeleaf-extras-data-attribute.version>
@@ -443,6 +450,7 @@
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <undertow.version>2.2.37.Final</undertow.version>
         <undertow-metrics.version>1.0.0.RELEASE</undertow-metrics.version>
+        <unirest-java.version>3.14.5</unirest-java.version>
         <velocity.version>2.4.1</velocity.version>
         <webcollector.version>2.73-alpha</webcollector.version>
         <webjars-locator.version>0.52</webjars-locator.version>
@@ -453,6 +461,7 @@
         <weixin-java.version>4.7.2.B</weixin-java.version>
         <weixin-qrcode.version>1.2</weixin-qrcode.version>
         <weixin-emoji.version>1.0.2</weixin-emoji.version>
+        <woodstox-core.version>6.4.0</woodstox-core.version>
         <woodstox-stax2-api.version>4.1</woodstox-stax2-api.version>
         <woodstox-asl.version>4.4.1</woodstox-asl.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
@@ -471,7 +480,7 @@
         <zookeeper.version>3.9.2</zookeeper.version>
         <zip4j.version>2.11.5</zip4j.version>
         <zipkin2.version>2.27.1</zipkin2.version>
-        <zxing.version>3.5.3</zxing.version>
+        <zxing.version>3.5.4</zxing.version>
 
         <!-- Maven Plugin versions -->
         <maven-alibaba-plugin.version>1.1.9</maven-alibaba-plugin.version>
@@ -495,26 +504,18 @@
         <maven-jarsigner-plugin.version>3.0.0</maven-jarsigner-plugin.version>
         <maven-mybatis-generator-plugin.version>1.3.7</maven-mybatis-generator-plugin.version>
         <maven-jacoco-plugin.version>0.8.12</maven-jacoco-plugin.version>
-        <maven-jaxb2-plugin.version>2.4</maven-jaxb2-plugin.version>
+        <maven-jaxb2-plugin.version>3.3.0</maven-jaxb2-plugin.version>
         <maven-javancss-plugin.version>2.1</maven-javancss-plugin.version>
         <maven-jdepend-plugin.version>2.0</maven-jdepend-plugin.version>
-        <maven-jetty-plugin.version>${jetty.version}</maven-jetty-plugin.version>
+        <maven-jetty-plugin.version>11.0.25</maven-jetty-plugin.version>
         <maven-license-plugin.version>2.5.0</maven-license-plugin.version>
-        <maven-native2ascii-plugin.version>2.0.1</maven-native2ascii-plugin.version>
         <maven-nexus-m2settings-plugin.version>1.6.8</maven-nexus-m2settings-plugin.version>
-        <maven-nexus-staging-plugin.version>1.7.0</maven-nexus-staging-plugin.version>
-        <maven-nexus-yuicompressor-plugin.version>1.1.0</maven-nexus-yuicompressor-plugin.version>
-        <maven-notice-plugin.version>1.1.0</maven-notice-plugin.version>
-        <maven-pmd-plugin.version>3.11.0</maven-pmd-plugin.version>
-        <maven-properties-plugin.version>1.0.0</maven-properties-plugin.version>
-        <maven-release-plugin.version>3.2.0</maven-release-plugin.version>
+        <maven-pmd-plugin.version>3.26.0</maven-pmd-plugin.version>
+        <maven-properties-plugin.version>1.2.1</maven-properties-plugin.version>
         <maven-rpm-plugin.version>2.2.0</maven-rpm-plugin.version>
         <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
         <maven-sonar-plugin.version>4.0.0.4121</maven-sonar-plugin.version>
-        <maven-swagger-codegen-plugin.version>${swagger-codegen.version}</maven-swagger-codegen-plugin.version>
-        <maven-swagger3-plugin.version>${swagger3.version}</maven-swagger3-plugin.version>
-        <maven-swagger2markup-plugin.version>1.3.7</maven-swagger2markup-plugin.version>
-        <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+        <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
 
         <!-- Third Party Spring Boot Starter Dependency versions -->
         <spring-boot-admin.version>2.7.16</spring-boot-admin.version>
@@ -679,6 +680,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
             <!-- https://mvnrepository.com/artifact/com.aliyun.oss/aliyun-sdk-oss -->
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
@@ -736,6 +738,11 @@
                 <groupId>org.asynchttpclient</groupId>
                 <artifactId>async-http-client</artifactId>
                 <version>${async-http-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.googlecode.aviator</groupId>
+                <artifactId>aviator</artifactId>
+                <version>${aviator.version}</version>
             </dependency>
 
             <!-- Axiom : http://mvnrepository.com/artifact/org.apache.ws.commons.axiom -->
@@ -1892,6 +1899,12 @@
                 <groupId>com.github.dozermapper</groupId>
                 <artifactId>dozer-core</artifactId>
                 <version>${dozer-core.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.dozermapper/dozer-proto3 -->
             <dependency>
@@ -1930,6 +1943,12 @@
                 <artifactId>alibaba-dingtalk-service-sdk</artifactId>
                 <version>${dingtalk-service-sdk.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.aliyun/dingtalk -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>dingtalk</artifactId>
+                <version>${dingtalk-sdk.version}</version>
+            </dependency>
 
             <!-- http://mvnrepository.com/artifact/com.lmax/disruptor -->
             <dependency>
@@ -1937,6 +1956,7 @@
                 <artifactId>disruptor</artifactId>
                 <version>${disruptor.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>disruptor-biz</artifactId>
@@ -2158,7 +2178,20 @@
                 <artifactId>goeasy-sdk</artifactId>
                 <version>${goeasy.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.maxmind.geoip2</groupId>
+                <artifactId>geoip2</artifactId>
+                <version>${geoip2.version}</version>
+            </dependency>
 
+            <!-- https://mvnrepository.com/artifact/com.google.cloud/libraries-bom -->
+            <dependency>
+                <groupId>com.google.cloud</groupId>
+                <artifactId>libraries-bom</artifactId>
+                <version>${google-libraries-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
             <dependency>
                 <groupId>com.google.api-client</groupId>
@@ -2777,6 +2810,25 @@
                 <groupId>com.twelvemonkeys.imageio</groupId>
                 <artifactId>imageio-psd</artifactId>
                 <version>${imageio.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-webp -->
+            <dependency>
+                <groupId>com.twelvemonkeys.imageio</groupId>
+                <artifactId>imageio-webp</artifactId>
+                <version>${imageio.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/net.imagej/imagej -->
+            <dependency>
+                <groupId>net.imagej</groupId>
+                <artifactId>imagej</artifactId>
+                <version>${imagej.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/net.imagej/imagej-ui-swing -->
+            <dependency>
+                <groupId>net.imagej</groupId>
+                <artifactId>imagej-ui-swing</artifactId>
+                <version>imagej-ui-swing-1.0.1</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.influxdb/influxdb-java -->
@@ -3811,7 +3863,6 @@
                 <artifactId>mybatis-mate-annotation</artifactId>
                 <version>${mybatis-mate.version}</version>
             </dependency>
-
             <!-- https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt -->
             <dependency>
                 <groupId>com.nimbusds</groupId>
@@ -4154,6 +4205,17 @@
                 <version>${okhttp-metrics.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>io.opentracing</groupId>
+                <artifactId>opentracing-api</artifactId>
+                <version>${opentracing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentracing</groupId>
+                <artifactId>opentracing-util</artifactId>
+                <version>${opentracing.version}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/com.aliyun.openservices/ons-client -->
             <dependency>
                 <groupId>com.aliyun.openservices</groupId>
@@ -4382,6 +4444,13 @@
                 <groupId>com.keypoint</groupId>
                 <artifactId>png-encoder</artifactId>
                 <version>${png-encoder.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/tech.powerjob/powerjob-client -->
+            <dependency>
+                <groupId>tech.powerjob</groupId>
+                <artifactId>powerjob-client</artifactId>
+                <version>${powerjob.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
@@ -5116,8 +5185,8 @@
                 <version>${shedlock.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>logback-core</artifactId>
                         <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-core</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -5735,6 +5804,12 @@
                 <artifactId>undertow-metrics-prometheus</artifactId>
                 <version>${undertow-metrics.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.konghq/unirest-java -->
+            <dependency>
+                <groupId>com.konghq</groupId>
+                <artifactId>unirest-java</artifactId>
+                <version>${unirest-java.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-core -->
             <dependency>
                 <groupId>org.apache.velocity</groupId>
@@ -5829,6 +5904,13 @@
                 <groupId>io.github.rcarlosdasilva</groupId>
                 <artifactId>weixin</artifactId>
                 <version>0.6</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.fasterxml.woodstox/woodstox-core -->
+            <dependency>
+                <groupId>com.fasterxml.woodstox</groupId>
+                <artifactId>woodstox-core</artifactId>
+                <version>${woodstox-core.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.codehaus.woodstox -->
@@ -7183,54 +7265,6 @@
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${maven-assembly-plugin.version}</version>
                 </plugin>
-                <!-- https://mvnrepository.com/artifact/org.asciidoctor/asciidoctor-maven-plugin -->
-                <plugin>
-                    <groupId>org.asciidoctor</groupId>
-                    <artifactId>asciidoctor-maven-plugin</artifactId>
-                    <version>${maven-asciidoctor-plugin.version}</version>
-                </plugin>
-                <!-- http://mvnrepository.com/artifact/org.apache.cxf/cxf-codegen-plugin -->
-                <plugin>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-codegen-plugin</artifactId>
-                    <version>${cxf.version}</version>
-                </plugin>
-                <!-- http://mvnrepository.com/artifact/org.apache.cxf/cxf-java2ws-plugin -->
-                <plugin>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-java2ws-plugin</artifactId>
-                    <version>${cxf.version}</version>
-                </plugin>
-                <!-- http://mvnrepository.com/artifact/org.apache.cxf/cxf-java2swagger-plugin -->
-                <plugin>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-java2swagger-plugin</artifactId>
-                    <version>${cxf.version}</version>
-                </plugin>
-                <!-- http://mvnrepository.com/artifact/org.apache.cxf/cxf-xml2fastinfoset-plugin -->
-                <plugin>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-xml2fastinfoset-plugin</artifactId>
-                    <version>${cxf.version}</version>
-                </plugin>
-                <!-- http://mvnrepository.com/artifact/org.apache.cxf/cxf-xjc-plugin -->
-                <plugin>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-xjc-plugin</artifactId>
-                    <version>${cxf.version}</version>
-                </plugin>
-                <!-- http://mvnrepository.com/artifact/org.apache.cxf/cxf-wsdl-validator-plugin -->
-                <plugin>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-wsdl-validator-plugin</artifactId>
-                    <version>${cxf.version}</version>
-                </plugin>
-                <!-- http://mvnrepository.com/artifact/org.apache.cxf/cxf-corbatools-maven-plugin -->
-                <plugin>
-                    <groupId>org.apache.cxf</groupId>
-                    <artifactId>cxf-corbatools-maven-plugin</artifactId>
-                    <version>${cxf.version}</version>
-                </plugin>
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -7360,12 +7394,6 @@
                     <artifactId>license-maven-plugin</artifactId>
                     <version>${maven-license-plugin.version}</version>
                 </plugin>
-                <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/native2ascii-maven-plugin -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>native2ascii-maven-plugin</artifactId>
-                    <version>${maven-native2ascii-plugin.version}</version>
-                </plugin>
                 <!-- https://mvnrepository.com/artifact/org.sonatype.plugins/nexus-m2settings-maven-plugin -->
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
@@ -7377,18 +7405,6 @@
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
                     <version>${maven-nexus-staging-plugin.version}</version>
-                </plugin>
-                <!-- https://mvnrepository.com/artifact/org.sonatype.plugins/yuicompressor-maven-plugin -->
-                <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>yuicompressor-maven-plugin</artifactId>
-                    <version>${maven-nexus-yuicompressor-plugin.version}</version>
-                </plugin>
-                <!-- https://mvnrepository.com/artifact/org.jasig.maven/maven-notice-plugin -->
-                <plugin>
-                    <groupId>org.jasig.maven</groupId>
-                    <artifactId>maven-notice-plugin</artifactId>
-                    <version>${maven-notice-plugin.version}</version>
                 </plugin>
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-pmd-plugin -->
                 <plugin>
@@ -7425,24 +7441,6 @@
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
                     <version>${maven-sonar-plugin.version}</version>
-                </plugin>
-                <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-maven-plugin -->
-                <plugin>
-                    <groupId>io.swagger.core.v3</groupId>
-                    <artifactId>swagger-maven-plugin</artifactId>
-                    <version>${maven-swagger3-plugin.version}</version>
-                </plugin>
-                <!-- https://mvnrepository.com/artifact/io.swagger/swagger-codegen-maven-plugin -->
-                <plugin>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-codegen-maven-plugin</artifactId>
-                    <version>${maven-swagger-codegen-plugin.version}</version>
-                </plugin>
-                <!-- https://mvnrepository.com/artifact/io.github.swagger2markup/swagger2markup-maven-plugin -->
-                <plugin>
-                    <groupId>io.github.swagger2markup</groupId>
-                    <artifactId>swagger2markup-maven-plugin</artifactId>
-                    <version>${maven-swagger2markup-plugin.version}</version>
                 </plugin>
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-war-plugin -->
                 <plugin>

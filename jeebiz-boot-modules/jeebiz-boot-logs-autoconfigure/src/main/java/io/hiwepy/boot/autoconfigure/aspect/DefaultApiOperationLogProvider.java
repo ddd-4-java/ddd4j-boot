@@ -35,7 +35,7 @@ public class DefaultApiOperationLogProvider implements ApiOperationLogProvider {
 
     @Override
     public void afterThrowing(JoinPoint joinPoint, ApiOperation apiOperation, Throwable ex, StopWatch stopWatch) {
-        this.doApiOperationLog(joinPoint, apiOperation,null, ex, stopWatch);
+        this.doApiOperationLog(joinPoint, apiOperation, null, ex, stopWatch);
     }
 
     protected void doApiOperationLog(JoinPoint joinPoint, ApiOperation apiOperation, Object rt, Throwable ex, StopWatch stopWatch) {
@@ -89,7 +89,7 @@ public class DefaultApiOperationLogProvider implements ApiOperationLogProvider {
         log.info(Constants.accessMarker, stopWatch.prettyPrint());
     }
 
-    protected void saveLog(JoinPoint joinPoint, Method method, ApiOperation apiOperation, Object rt, Throwable ex, StopWatch stopWatch){
+    protected void saveLog(JoinPoint joinPoint, Method method, ApiOperation apiOperation, Object rt, Throwable ex, StopWatch stopWatch) {
         // do nothing
     }
 

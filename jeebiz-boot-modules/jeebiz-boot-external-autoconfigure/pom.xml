@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -10,8 +11,13 @@
     <artifactId>jeebiz-boot-external-autoconfigure</artifactId>
 
     <dependencies>
-
-        <!-- For Tianyin API -->
+        <!-- For Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- For Jeebiz API -->
         <dependency>
             <groupId>io.hiwepy</groupId>
             <artifactId>jeebiz-boot-api</artifactId>
@@ -32,15 +38,16 @@
             <groupId>com.github.hiwepy</groupId>
             <artifactId>ip2region-spring-boot-starter</artifactId>
         </dependency>
-        <!-- For OSI -->
-        <dependency>
-            <groupId>com.github.oshi</groupId>
-            <artifactId>oshi-core</artifactId>
-        </dependency>
         <!-- For Redis -->
         <dependency>
             <groupId>com.github.hiwepy</groupId>
             <artifactId>redistpl-plus-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- For Oshi -->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <scope>provided</scope>
         </dependency>
         <!-- @ConfigurationProperties annotation processing (metadata for IDEs) -->
         <dependency>
@@ -53,6 +60,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

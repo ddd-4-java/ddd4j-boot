@@ -1,5 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <!-- POM的模型版本 -->
     <modelVersion>4.0.0</modelVersion>
 
@@ -60,7 +62,7 @@
         <module>jeebiz-boot-dependencies</module>
         <module>jeebiz-boot-modules</module>
         <module>jeebiz-boot-parent</module>
-        <!--<module>jeebiz-boot-samples</module> -->
+        <!--<module>jeebiz-boot-samples</module>-->
     </modules>
 
     <!--开源协议采用Apache 2.0协议-->
@@ -92,20 +94,20 @@
         </developer>
     </developers>
 
-<!--    <distributionManagement>
-        <repository>
-            &lt;!&ndash;必须与 settings.xml 的 id 一致&ndash;&gt;
-            <id>wans-hz-base-platform-maven</id>
-            <name>maven</name>
-            <url>https://wans-hz-maven.pkg.coding.net/repository/base-platform/maven/</url>
-        </repository>
-        <snapshotRepository>
-            <id>wans-hz-base-platform-maven</id>
-            <name>maven</name>
-            <url>https://wans-hz-maven.pkg.coding.net/repository/base-platform/maven/</url>
-            <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>-->
+    <!--    <distributionManagement>
+            <repository>
+                &lt;!&ndash;必须与 settings.xml 的 id 一致&ndash;&gt;
+                <id>wans-hz-base-platform-maven</id>
+                <name>maven</name>
+                <url>https://wans-hz-maven.pkg.coding.net/repository/base-platform/maven/</url>
+            </repository>
+            <snapshotRepository>
+                <id>wans-hz-base-platform-maven</id>
+                <name>maven</name>
+                <url>https://wans-hz-maven.pkg.coding.net/repository/base-platform/maven/</url>
+                <uniqueVersion>true</uniqueVersion>
+            </snapshotRepository>
+        </distributionManagement>-->
 
     <distributionManagement>
         <repository>
@@ -130,6 +132,40 @@
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring-framework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-bom</artifactId>
+                <version>${spring-security.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.projectreactor/reactor-bom -->
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-bom</artifactId>
+                <version>${reactor-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <repositories>
         <repository>

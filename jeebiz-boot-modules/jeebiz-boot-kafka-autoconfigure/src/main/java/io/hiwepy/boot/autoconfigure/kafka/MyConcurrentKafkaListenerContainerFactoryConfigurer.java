@@ -61,6 +61,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link KafkaProperties} to use.
+     *
      * @param properties the properties
      */
     public void setKafkaProperties(KafkaProperties properties) {
@@ -69,6 +70,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set
+     *
      * @param messageConverter the message converter
      */
     public void setMessageConverter(MessageConverter messageConverter) {
@@ -77,6 +79,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link KafkaTemplate} to use to send replies.
+     *
      * @param replyTemplate the reply template
      */
     public void setReplyTemplate(KafkaTemplate<String, String> replyTemplate) {
@@ -85,6 +88,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link KafkaAwareTransactionManager} to use.
+     *
      * @param transactionManager the transaction manager
      */
     public void setTransactionManager(KafkaAwareTransactionManager<String, String> transactionManager) {
@@ -93,6 +97,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link ConsumerAwareRebalanceListener} to use.
+     *
      * @param rebalanceListener the rebalance listener.
      * @since 2.2
      */
@@ -102,6 +107,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link ErrorHandler} to use.
+     *
      * @param errorHandler the error handler
      */
     public void setErrorHandler(ErrorHandler errorHandler) {
@@ -110,6 +116,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link BatchErrorHandler} to use.
+     *
      * @param batchErrorHandler the error handler
      */
     public void setBatchErrorHandler(BatchErrorHandler batchErrorHandler) {
@@ -118,6 +125,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link AfterRollbackProcessor} to use.
+     *
      * @param afterRollbackProcessor the after rollback processor
      */
     public void setAfterRollbackProcessor(AfterRollbackProcessor<String, String> afterRollbackProcessor) {
@@ -126,9 +134,10 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link RecordInterceptor} to use.
+     *
      * @param recordInterceptor the record interceptor.
      */
-    public  void setRecordInterceptor(RecordInterceptor<String, String> recordInterceptor) {
+    public void setRecordInterceptor(RecordInterceptor<String, String> recordInterceptor) {
         this.recordInterceptor = recordInterceptor;
     }
 
@@ -139,12 +148,13 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
     /**
      * Configure the specified Kafka listener container factory. The factory can be
      * further tuned and default settings can be overridden.
+     *
      * @param listenerFactory the {@link ConcurrentKafkaListenerContainerFactory} instance
-     * to configure
+     *                        to configure
      * @param consumerFactory the {@link ConsumerFactory} to use
      */
     public void configure2(ConcurrentKafkaListenerContainerFactory<String, String> listenerFactory,
-                          ConsumerFactory<String, String> consumerFactory) {
+                           ConsumerFactory<String, String> consumerFactory) {
         listenerFactory.setConsumerFactory(consumerFactory);
         configureListenerFactory(listenerFactory);
         configureContainer(consumerFactory, listenerFactory.getContainerProperties());
@@ -159,15 +169,14 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
         if (properties.getType().equals(Listener.Type.BATCH)) {
             factory.setBatchListener(true);
             factory.setBatchErrorHandler(this.batchErrorHandler);
-        }
-        else {
+        } else {
             factory.setErrorHandler(this.errorHandler);
         }
         map.from(this.afterRollbackProcessor).to(factory::setAfterRollbackProcessor);
         map.from(this.recordInterceptor).to(factory::setRecordInterceptor);
     }
 
-    private void configureContainer( ConsumerFactory<String, String> consumerFactory, ContainerProperties container) {
+    private void configureContainer(ConsumerFactory<String, String> consumerFactory, ContainerProperties container) {
         PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
         Listener properties = this.properties.getListener();
         // 如果是自动提交，且ackMode是MANUAL或MANUAL_IMMEDIATE，那么ackMode需要手动设置

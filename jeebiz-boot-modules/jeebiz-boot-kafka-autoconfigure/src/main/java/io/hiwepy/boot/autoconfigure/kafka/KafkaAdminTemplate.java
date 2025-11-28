@@ -22,6 +22,7 @@ public class KafkaAdminTemplate {
 
     /**
      * AdminClient 的配置参数
+     *
      * @return KafkaProducer 的配置参数
      */
     public Map<String, Object> defaultAdminConfigs() {

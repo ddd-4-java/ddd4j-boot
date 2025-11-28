@@ -19,11 +19,12 @@ public class AESUtil {
 
     /**
      * 获取aes
+     *
      * @param key 密钥，支持三种密钥长度：128、192、256位
-     * @param iv 偏移向量，加盐
+     * @param iv  偏移向量，加盐
      * @return AES
      */
-    public static AES getAes( String key, String iv) {
+    public static AES getAes(String key, String iv) {
         return aesMap.computeIfAbsent(key + iv, k -> new AES(Mode.CBC, Padding.PKCS5Padding, key.getBytes(CharsetUtil.CHARSET_UTF_8),
                 iv.getBytes(CharsetUtil.CHARSET_UTF_8)));
     }

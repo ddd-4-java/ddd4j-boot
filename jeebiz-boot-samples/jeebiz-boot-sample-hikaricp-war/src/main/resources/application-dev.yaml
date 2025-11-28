@@ -47,5 +47,5 @@ spring:
 ###logging (log4j2) 基本配置：  
 ###http://www.cnblogs.com/yhtboke/p/Mybatis.html
 ################################################################################################################
-logging: 
+logging:
   config: classpath:conf/log4j2-dev.xml

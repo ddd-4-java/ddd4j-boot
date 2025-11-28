@@ -56,6 +56,7 @@ public class MQProducerServiceImpl implements MQProducerService {
             public void onSuccess(SendResult sendResult) {
                 // 处理消息发送成功逻辑
             }
+
             @Override
             public void onException(Throwable throwable) {
                 // 处理消息发送异常逻辑

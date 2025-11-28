@@ -29,7 +29,7 @@ import org.springframework.kafka.transaction.KafkaTransactionManager;
 
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(KafkaTemplate.class)
-@EnableConfigurationProperties({ KafkaProperties.class, KafkaEnhanceProperties.class , KafkaBackupProperties.class })
+@EnableConfigurationProperties({KafkaProperties.class, KafkaEnhanceProperties.class, KafkaBackupProperties.class})
 public class DefaultKafkaAutoConfiguration {
 
     @Bean
@@ -46,8 +46,10 @@ public class DefaultKafkaAutoConfiguration {
     public KafkaProducerTemplate kafkaProducerTemplate(KafkaProperties properties) {
         return new KafkaProducerTemplate(properties);
     }
+
     /**
      * 自定义Kafka生产者监听器（覆盖默认的Kafka生产者监听器）
+     *
      * @return 自定义的Kafka生产者监听器
      */
     @Bean
@@ -57,6 +59,7 @@ public class DefaultKafkaAutoConfiguration {
 
     /**
      * 自定义一个Kafka生产者工厂（非事务消息,覆盖默认的Kafka生产者工厂）
+     *
      * @param customizers 自定义生产者工厂的配置
      * @return 自定义的Kafka生产者工厂
      */
@@ -71,8 +74,9 @@ public class DefaultKafkaAutoConfiguration {
 
     /**
      * 自定义Kafka模板（覆盖默认的Kafka模板）
+     *
      * @param kafkaProducerListener 生产者监听器
-     * @param messageConverter 消息转换器
+     * @param messageConverter      消息转换器
      * @return Kafka模板
      */
     @Bean("kafkaTemplate")
@@ -90,6 +94,7 @@ public class DefaultKafkaAutoConfiguration {
 
     /**
      * 自定义一个Kafka事务生产者工厂（专用于事务消息的发送）
+     *
      * @param customizers 自定义生产者工厂的配置
      * @return 自定义的Kafka事务生产者工厂
      */
@@ -104,6 +109,7 @@ public class DefaultKafkaAutoConfiguration {
 
     /**
      * 自定义一个Kafka事务模板（专用于事务消息的发送）
+     *
      * @param kafkaProducerFactory 事务生产者工厂
      * @return 自定义的Kafka事务模板
      */
@@ -122,6 +128,7 @@ public class DefaultKafkaAutoConfiguration {
 
     /**
      * 自定义一个Kafka事务管理器（覆盖默认的Kafka事务管理器）
+     *
      * @param producerFactory 事务生产者工厂
      * @return 自定义的Kafka事务管理器
      */
@@ -134,6 +141,7 @@ public class DefaultKafkaAutoConfiguration {
 
     /**
      * 自定义Kafka消费者工厂（非事务,覆盖默认的Kafka消费者工厂）
+     *
      * @param customizers 自定义消费者工厂的配置
      * @return 自定义的Kafka消费者工厂
      */
@@ -148,15 +156,16 @@ public class DefaultKafkaAutoConfiguration {
 
     /**
      * 自定义Kafka消费者工厂配置器（不初始化事务）
-     * @param properties Kafka属性
-     * @param messageConverter 消息转换器
-     * @param batchMessageConverter 批量消息转换器
-     * @param kafkaTemplate Kafka模板
-     * @param rebalanceListener Rebalance监听器
-     * @param errorHandler 错误处理器
-     * @param batchErrorHandler 批量错误处理器
+     *
+     * @param properties             Kafka属性
+     * @param messageConverter       消息转换器
+     * @param batchMessageConverter  批量消息转换器
+     * @param kafkaTemplate          Kafka模板
+     * @param rebalanceListener      Rebalance监听器
+     * @param errorHandler           错误处理器
+     * @param batchErrorHandler      批量错误处理器
      * @param afterRollbackProcessor 回滚处理器
-     * @param recordInterceptor 记录拦截器
+     * @param recordInterceptor      记录拦截器
      * @return 自定义的Kafka消费者工厂配置器
      */
     @Bean("kafkaListenerContainerFactoryConfigurer")
@@ -187,7 +196,8 @@ public class DefaultKafkaAutoConfiguration {
 
     /**
      * 自定义Kafka消费者工厂（非事务,覆盖默认的Kafka消费者工厂）
-     * @param configurer 配置器
+     *
+     * @param configurer           配置器
      * @param kafkaConsumerFactory 消费者工厂
      * @return 自定义的Kafka消费者工厂
      */
@@ -195,7 +205,7 @@ public class DefaultKafkaAutoConfiguration {
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory(
             KafkaConsumerTemplate kafkaConsumerTemplate,
             @Qualifier("kafkaListenerContainerFactoryConfigurer") ConcurrentKafkaListenerContainerFactoryConfigurer configurer,
-            @Qualifier("kafkaConsumerFactory") ConsumerFactory<String, String>  kafkaConsumerFactory) {
+            @Qualifier("kafkaConsumerFactory") ConsumerFactory<String, String> kafkaConsumerFactory) {
 
         ConcurrentKafkaListenerContainerFactory<String, String> factory = kafkaConsumerTemplate.createKafkaListenerContainerFactory();
 
@@ -209,6 +219,7 @@ public class DefaultKafkaAutoConfiguration {
 
     /**
      * 自定义一个Kafka事务消费者工厂（专用于事务消息）
+     *
      * @param customizers 自定义消费者工厂的配置
      * @return 自定义的Kafka事务消费者工厂
      */
@@ -222,14 +233,14 @@ public class DefaultKafkaAutoConfiguration {
     }
 
     @Bean("kafkaTsErrorHandler")
-    public ErrorHandler errorHandler(@Qualifier("kafkaTsTemplate") KafkaTemplate<String, String> kafkaTemplate){
+    public ErrorHandler errorHandler(@Qualifier("kafkaTsTemplate") KafkaTemplate<String, String> kafkaTemplate) {
         // TODO 事务消费者的错误处理器，目前仅进行日志记录，需要根据实际情况进行调整
         return new LoggingErrorHandler();
         // return kafkaConsumerTemplate.createErrorHandler(kafkaTemplate);
     }
 
     @Bean("kafkaTsBatchErrorHandler")
-    public BatchErrorHandler batchErrorHandler(@Qualifier("kafkaTsTemplate") KafkaTemplate<String, String> kafkaTemplate){
+    public BatchErrorHandler batchErrorHandler(@Qualifier("kafkaTsTemplate") KafkaTemplate<String, String> kafkaTemplate) {
         // TODO 事务消费者的错误处理器，目前仅进行日志记录，需要根据实际情况进行调整
         return new BatchLoggingErrorHandler();
         // return kafkaConsumerTemplate.createErrorHandler(kafkaTemplate);
@@ -237,15 +248,16 @@ public class DefaultKafkaAutoConfiguration {
 
     /**
      * 自定义Kafka消费者工厂配置器（初始化事务）
-     * @param properties Kafka属性
-     * @param messageConverter 消息转换器
-     * @param batchMessageConverter 批量消息转换器
-     * @param kafkaTemplate Kafka模板
-     * @param rebalanceListener Rebalance监听器
-     * @param errorHandler 错误处理器
-     * @param batchErrorHandler 批量错误处理器
+     *
+     * @param properties             Kafka属性
+     * @param messageConverter       消息转换器
+     * @param batchMessageConverter  批量消息转换器
+     * @param kafkaTemplate          Kafka模板
+     * @param rebalanceListener      Rebalance监听器
+     * @param errorHandler           错误处理器
+     * @param batchErrorHandler      批量错误处理器
      * @param afterRollbackProcessor 回滚处理器
-     * @param recordInterceptor 记录拦截器
+     * @param recordInterceptor      记录拦截器
      * @return 自定义的Kafka消费者工厂配置器
      */
     @Bean("kafkaTsListenerContainerFactoryConfigurer")
@@ -278,13 +290,14 @@ public class DefaultKafkaAutoConfiguration {
 
     /**
      * 自定义Kafka消费者工厂（事务）
+     *
      * @return 自定义的Kafka消费者工厂
      */
     @Bean("kafkaTsListenerContainerFactory")
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaTransactionListenerContainerFactory(
             KafkaConsumerTemplate kafkaConsumerTemplate,
             @Qualifier("kafkaTsListenerContainerFactoryConfigurer") ConcurrentKafkaListenerContainerFactoryConfigurer configurer,
-            @Qualifier("kafkaTsConsumerFactory") ConsumerFactory<String, String>  kafkaConsumerFactory) {
+            @Qualifier("kafkaTsConsumerFactory") ConsumerFactory<String, String> kafkaConsumerFactory) {
 
         ConcurrentKafkaListenerContainerFactory<String, String> factory = kafkaConsumerTemplate.createkafkaTsListenerContainerFactory();
         MyConcurrentKafkaListenerContainerFactoryConfigurer myConfigurer = (MyConcurrentKafkaListenerContainerFactoryConfigurer) configurer;

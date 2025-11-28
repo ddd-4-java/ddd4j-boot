@@ -1,6 +1,6 @@
-/** 
+/**
  * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
- * All Rights Reserved. 
+ * All Rights Reserved.
  */
 package io.hiwepy.boot.sample.setup.config;
 
@@ -17,35 +17,35 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DozerMapperConfiguration implements DozerBeanMapperBuilderCustomizer {
 
-	@Bean
-	public BooleanStringConverter booleanStringConverter() {
-		return new BooleanStringConverter();
-	}
-	
-	@Bean
-	public BigDecimalStringConverter bigDecimalStringConverter() {
-		return new BigDecimalStringConverter();
-	}
-	
-	@Bean
-	public BigIntegerStringConverter bigIntegerStringConverter() {
-		return new BigIntegerStringConverter();
-	}
-	
-	@Bean
-	public JSONArrayStringConverter jsonArrayStringConverter() {
-		return new JSONArrayStringConverter();
-	}
-	
-	@Bean
-	public JSONObjectStringConverter jsonObjectStringConverter() {
-		return new JSONObjectStringConverter();
-	}
+    @Bean
+    public BooleanStringConverter booleanStringConverter() {
+        return new BooleanStringConverter();
+    }
 
-	@Override
-	public void customize(DozerBeanMapperBuilder builder) {
-		builder.withCustomConverters(jsonArrayStringConverter(), jsonObjectStringConverter(), bigDecimalStringConverter(), bigDecimalStringConverter());
-		
-	}
-	
+    @Bean
+    public BigDecimalStringConverter bigDecimalStringConverter() {
+        return new BigDecimalStringConverter();
+    }
+
+    @Bean
+    public BigIntegerStringConverter bigIntegerStringConverter() {
+        return new BigIntegerStringConverter();
+    }
+
+    @Bean
+    public JSONArrayStringConverter jsonArrayStringConverter() {
+        return new JSONArrayStringConverter();
+    }
+
+    @Bean
+    public JSONObjectStringConverter jsonObjectStringConverter() {
+        return new JSONObjectStringConverter();
+    }
+
+    @Override
+    public void customize(DozerBeanMapperBuilder builder) {
+        builder.withCustomConverters(jsonArrayStringConverter(), jsonObjectStringConverter(), bigDecimalStringConverter(), bigDecimalStringConverter());
+
+    }
+
 }
