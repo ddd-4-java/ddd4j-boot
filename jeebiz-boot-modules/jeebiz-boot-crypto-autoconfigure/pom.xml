@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.hiwepy</groupId>
         <artifactId>jeebiz-boot-modules</artifactId>
-        <version>2.3.x.20240823-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>jeebiz-boot-crypto-autoconfigure</artifactId>
 
@@ -15,12 +15,12 @@
         <dependency>
             <groupId>io.hiwepy</groupId>
             <artifactId>jeebiz-boot-api</artifactId>
-            <version>${jeebiz-boot.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>io.hiwepy</groupId>
             <artifactId>jeebiz-boot-jackson-autoconfigure</artifactId>
-            <version>${jeebiz-boot.version}</version>
+            <version>${revision}</version>
         </dependency>
         <!-- For Okhttp3 -->
         <dependency>
