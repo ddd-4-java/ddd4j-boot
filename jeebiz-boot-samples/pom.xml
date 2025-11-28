@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>jeebiz-boot-samples</artifactId>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <properties>
