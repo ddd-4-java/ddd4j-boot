@@ -27,8 +27,8 @@ public class ProducerWrapper {
     public Future<RecordMetadata> send(ProducerRecord<String, String> record, Callback callback) {
         lock.lock();
         try {
-            if (transactionState == TransactionState.FATAL_ERROR || 
-                transactionState == TransactionState.ABORTABLE_ERROR) {
+            if (transactionState == TransactionState.FATAL_ERROR ||
+                    transactionState == TransactionState.ABORTABLE_ERROR) {
                 log.error("Cannot send message in error state: {}", transactionState);
                 throw new IllegalStateException("Producer is in error state: " + transactionState);
             }
@@ -106,17 +106,17 @@ public class ProducerWrapper {
     public synchronized boolean beginTransaction() {
         lock.lock();
         try {
-            if (transactionState == TransactionState.FATAL_ERROR || 
-                transactionState == TransactionState.ABORTABLE_ERROR) {
+            if (transactionState == TransactionState.FATAL_ERROR ||
+                    transactionState == TransactionState.ABORTABLE_ERROR) {
                 log.error("Cannot begin transaction in error state: {}", transactionState);
                 throw new IllegalStateException("Producer is in error state: " + transactionState);
             }
-            
+
             if (transactionState != TransactionState.READY) {
                 log.error("Invalid state transition from {} to {}", transactionState, TransactionState.IN_TRANSACTION);
                 return false;
             }
-            
+
             try {
                 log.info("Begin transaction");
                 producer.beginTransaction();
@@ -157,6 +157,7 @@ public class ProducerWrapper {
 
     /**
      * 中止事务
+     *
      * @return 是否成功
      */
     public synchronized boolean abortTransaction() {
@@ -166,13 +167,13 @@ public class ProducerWrapper {
                 log.error("Cannot abort transaction in fatal error state");
                 return false;
             }
-            
-            if (transactionState != TransactionState.IN_TRANSACTION && 
-                transactionState != TransactionState.ABORTABLE_ERROR) {
+
+            if (transactionState != TransactionState.IN_TRANSACTION &&
+                    transactionState != TransactionState.ABORTABLE_ERROR) {
                 log.error("Invalid state for abort: {}", transactionState);
                 return false;
             }
-            
+
             try {
                 transactionState = TransactionState.ABORTING_TRANSACTION;
                 producer.abortTransaction();
@@ -199,8 +200,8 @@ public class ProducerWrapper {
     public synchronized boolean isInErrorState() {
         lock.lock();
         try {
-            return transactionState == TransactionState.FATAL_ERROR || 
-                   transactionState == TransactionState.ABORTABLE_ERROR;
+            return transactionState == TransactionState.FATAL_ERROR ||
+                    transactionState == TransactionState.ABORTABLE_ERROR;
         } finally {
             lock.unlock();
         }
@@ -225,7 +226,7 @@ public class ProducerWrapper {
                 log.error("Can only retry commit from ABORTABLE_ERROR state, current state: {}", transactionState);
                 return false;
             }
-            
+
             try {
                 producer.commitTransaction();
                 transactionState = TransactionState.READY;

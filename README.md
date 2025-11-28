@@ -20,12 +20,12 @@
 
 **Maven模块**：
 
-| 模块  | 说明  |
-| ------------ | ------------ |
-| jeebiz-boot-dependencies | pom类型模块，负责配置项目公共依赖，便于依赖组件版本控制  |
-| jeebiz-boot-modules  |  项目基础模块，封装基础API、公共对象（BaseController、BaseService、BaseMapper、BaseMapper 等）、异常对象到jar中，以便复用 |
-| jeebiz-boot-parent  | pom类型模块，默认配置Maven插件相关参数和打包方式 |
-| jeebiz-boot-samples  |  具体服务示例，该模块下的各服务模块，均要继承 `jeebiz-boot-parent` |
+| 模块                       | 说明                                                                                     |
+|--------------------------|----------------------------------------------------------------------------------------|
+| jeebiz-boot-dependencies | pom类型模块，负责配置项目公共依赖，便于依赖组件版本控制                                                          |
+| jeebiz-boot-modules      | 项目基础模块，封装基础API、公共对象（BaseController、BaseService、BaseMapper、BaseMapper 等）、异常对象到jar中，以便复用 |
+| jeebiz-boot-parent       | pom类型模块，默认配置Maven插件相关参数和打包方式                                                           |
+| jeebiz-boot-samples      | 具体服务示例，该模块下的各服务模块，均要继承 `jeebiz-boot-parent`                                            |
 
 **注意事项**：
 
@@ -63,4 +63,5 @@
 ```
 
 #### Spring Docs
+
 https://docs.spring.io/spring-boot/docs/2.3.12.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-application

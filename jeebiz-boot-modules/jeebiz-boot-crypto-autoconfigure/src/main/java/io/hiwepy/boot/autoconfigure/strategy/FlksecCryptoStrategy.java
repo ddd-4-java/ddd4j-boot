@@ -48,7 +48,7 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
             // 1、序列化Value
             String valueAsString = getObjectMapper().writeValueAsString(value);
             // 2、如果 plainIsEncode =true 则对 valueAsString 进行 Base64 编码
-            if(plainIsEncode){
+            if (plainIsEncode) {
                 valueAsString = Base64.encode(valueAsString);
                 log.debug("Base64 Encode String to Encrypt : {}", value);
             }
@@ -123,7 +123,7 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
             // 1、序列化Value
             String valueAsString = getObjectMapper().writeValueAsString(value);
             // 2、如果 plainIsEncode =true 则对 valueAsString 进行 Base64 编码
-            if(plainIsEncode){
+            if (plainIsEncode) {
                 valueAsString = Base64.encode(valueAsString);
                 log.debug("Base64 Encode String to Hmac : {}", value);
             }

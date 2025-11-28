@@ -26,8 +26,9 @@ public class DemoServiceImplListener implements RocketMQLocalTransactionListener
 
     /**
      * 执行本地事务
+     *
      * @param message 消息对象
-     * @param arg 本地事务参数
+     * @param arg     本地事务参数
      * @return 本地事务状态
      */
     @Override
@@ -45,6 +46,7 @@ public class DemoServiceImplListener implements RocketMQLocalTransactionListener
 
     /**
      * 检查本地事务
+     *
      * @param msg 消息对象
      * @return 本地事务状态
      */

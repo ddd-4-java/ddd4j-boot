@@ -22,14 +22,14 @@ import java.util.stream.Collectors;
  * @author wandl
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass({ ObjectMapper.class})
+@ConditionalOnClass({ObjectMapper.class})
 @EnableConfigurationProperties(CryptoProperties.class)
 public class DefaultCryptoAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(CryptoProvider.class)
     public DefaultCryptoProvider cryptoProvider(ObjectProvider<CryptoStrategy> cryptoStrategyProvider, CryptoProperties cryptoProperties) {
-        return new DefaultCryptoProvider( cryptoStrategyProvider.stream().collect(Collectors.toList()), cryptoProperties);
+        return new DefaultCryptoProvider(cryptoStrategyProvider.stream().collect(Collectors.toList()), cryptoProperties);
     }
 
     @Bean

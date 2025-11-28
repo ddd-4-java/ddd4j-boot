@@ -31,7 +31,7 @@ public class NoOpCryptoStrategy implements CryptoStrategy {
     public <T> String encrypt(T value, SymmetricAlgorithmType algorithmType, String encMode, String padMode, String key, String iv, boolean plainIsEncode) {
         try {
             return getObjectMapper().writeValueAsString(value);
-        }  catch (Exception ex) {
+        } catch (Exception ex) {
             log.error("Json Processing Error : {}", ex.getMessage());
             throw new BizRuntimeException(ApiCode.SC_INTERNAL_SERVER_ERROR, "Json Processing Error");
         }
@@ -41,7 +41,7 @@ public class NoOpCryptoStrategy implements CryptoStrategy {
     public <T> T decrypt(String value, SymmetricAlgorithmType algorithmType, String encMode, String padMode, String key, String iv, boolean plainIsEncode, Class<T> rtType) {
         try {
             return getObjectMapper().readValue(value, rtType);
-        }  catch (Exception ex) {
+        } catch (Exception ex) {
             log.error("Json Processing Error : {}", ex.getMessage());
             throw new BizRuntimeException(ApiCode.SC_INTERNAL_SERVER_ERROR, "Json Processing Error");
         }

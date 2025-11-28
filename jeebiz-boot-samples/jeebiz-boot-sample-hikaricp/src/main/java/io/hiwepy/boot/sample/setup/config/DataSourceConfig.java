@@ -1,6 +1,6 @@
-/** 
+/**
  * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
- * All Rights Reserved. 
+ * All Rights Reserved.
  */
 package io.hiwepy.boot.sample.setup.config;
 
@@ -17,14 +17,14 @@ import javax.sql.DataSource;
  * 开启事务管理,确保在启动类中@component扫描到该类
  */
 @Configuration
-@EnableTransactionManagement 
+@EnableTransactionManagement
 public class DataSourceConfig {
-	
-	//注意: @Qualifier 按名称在IOC容器中找指定名称的bean，
-	@Bean //或者 @Bean("myTransactionManager")
-	public PlatformTransactionManager platformTransactionManager(
-			@Qualifier("dataSource") DataSource myDataSource) {
-		return new DataSourceTransactionManager(myDataSource);
-	}
-	
+
+    //注意: @Qualifier 按名称在IOC容器中找指定名称的bean，
+    @Bean //或者 @Bean("myTransactionManager")
+    public PlatformTransactionManager platformTransactionManager(
+            @Qualifier("dataSource") DataSource myDataSource) {
+        return new DataSourceTransactionManager(myDataSource);
+    }
+
 }

@@ -5,7 +5,6 @@
 package io.hiwepy.boot.sample.mapper;
 
 import io.hiwepy.boot.api.dao.BaseMapper;
-import io.hiwepy.boot.sample.entity.DemoEntity;
 import io.hiwepy.boot.sample.entity.TxLogEntity;
 import org.apache.ibatis.annotations.Mapper;
 

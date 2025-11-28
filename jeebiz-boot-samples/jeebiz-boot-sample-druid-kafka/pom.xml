@@ -5,7 +5,8 @@
     <parent>
         <groupId>io.hiwepy</groupId>
         <artifactId>jeebiz-boot-samples</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>jeebiz-boot-sample-druid-kafka</artifactId>

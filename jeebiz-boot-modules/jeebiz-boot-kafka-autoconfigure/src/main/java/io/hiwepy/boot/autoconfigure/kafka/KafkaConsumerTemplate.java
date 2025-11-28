@@ -46,39 +46,40 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 默认消费者配置
+     *
      * @return 消费者配置
      */
     public Map<String, Object> defaultConsumerConfigs() {
         // 使用 KafkaProperties 的 buildConsumerProperties 方法创建 KafkaConsumer 的配置参数
         Map<String, Object> propsMap = new HashMap<>(this.properties.buildConsumerProperties());
-        
+
         // 基础配置
         propsMap.putIfAbsent(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, Boolean.TRUE);
         propsMap.putIfAbsent(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 1000);
-        
+
         // 连接配置
         propsMap.putIfAbsent(ConsumerConfig.RECONNECT_BACKOFF_MS_CONFIG, 3000);      // 重连间隔，默认50ms
         propsMap.putIfAbsent(ConsumerConfig.RECONNECT_BACKOFF_MAX_MS_CONFIG, 10000); // 最大重连间隔，默认1000ms
         propsMap.putIfAbsent(ConsumerConfig.RETRY_BACKOFF_MS_CONFIG, 3000);          // 重试间隔，默认100ms
         propsMap.putIfAbsent(ConsumerConfig.REQUEST_TIMEOUT_MS_CONFIG, 30000);       // 请求超时时间，默认30s
         propsMap.putIfAbsent(ConsumerConfig.CONNECTIONS_MAX_IDLE_MS_CONFIG, 540000); // 连接最大空闲时间，默认9分钟
-        
+
         // 心跳和会话超时配置
         propsMap.putIfAbsent(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, 60000);       // 会话超时时间，默认30s, 设置为 60s, 必须大于心跳间隔
         propsMap.putIfAbsent(ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG, 15000);    // 心跳间隔时间，默认1s, 设置为 15s
         propsMap.putIfAbsent(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, 600000);    // 最大拉取间隔，10分钟
-        
+
         // 反序列化配置
         propsMap.putIfAbsent(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         propsMap.putIfAbsent(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        
+
         // 消费者性能调优
         propsMap.putIfAbsent(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 50);
         propsMap.putIfAbsent(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, 1);
         propsMap.putIfAbsent(ConsumerConfig.FETCH_MAX_BYTES_CONFIG, 52428800);       // 50MB
         propsMap.putIfAbsent(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, 5000);
         propsMap.putIfAbsent(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        
+
         // 压缩配置
         // 压缩可以减少数据的大小，从而提高网络传输效率和节省存储空间。
         // 常见的压缩类型：
@@ -88,17 +89,18 @@ public class KafkaConsumerTemplate implements DisposableBean {
         //  lz4：使用 LZ4 压缩，速度非常快，压缩率和速度之间有一个很好的平衡。
         //  zstd：使用 Zstandard 压缩，压缩率高，速度也较快。
         propsMap.putIfAbsent(TopicConfig.COMPRESSION_TYPE_CONFIG, "snappy");
-        
+
         // 信任包配置
         propsMap.putIfAbsent("spring.json.trusted.packages", "*");
-        
+
         // 移除客户端ID，避免客户端ID相同导致的问题
         propsMap.remove(ConsumerConfig.CLIENT_ID_CONFIG);
         return propsMap;
     }
-    
+
     /**
      * 创建普通消费者配置
+     *
      * @param groupId 消费组ID
      * @return 消费者配置
      */
@@ -111,6 +113,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 创建事务消费者配置
+     *
      * @return 事务消费者配置
      */
     public Map<String, Object> defaultTransactionConsumerConfigs() {
@@ -128,6 +131,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 创建指定消费组、主题和偏移量的普通消费者
+     *
      * @param groupId 消费组ID
      * @return 普通消费者
      */
@@ -140,6 +144,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 创建事务消费者
+     *
      * @param groupId 消费组ID
      * @return 事务消费者
      */
@@ -151,8 +156,9 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 为消费者分配主题分区和偏移量
-     * @param consumer 消费者
-     * @param topic 主题
+     *
+     * @param consumer   消费者
+     * @param topic      主题
      * @param fromOffset 起始偏移量
      */
     public void assignTopicPartition(KafkaConsumer<String, String> consumer, String topic, long fromOffset) {
@@ -164,6 +170,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 创建普通消费者工厂
+     *
      * @return 消费者工厂
      */
     public DefaultKafkaConsumerFactory<String, String> createConsumerFactory() {
@@ -175,6 +182,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 创建事务消息消费者工厂
+     *
      * @return 消费者工厂
      */
     public DefaultKafkaConsumerFactory<String, String> createTransactionConsumerFactory() {
@@ -189,6 +197,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 创建消费者工厂
+     *
      * @param propsMap 配置参数
      * @return 消费者工厂
      */
@@ -200,6 +209,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 创建Kafka监听容器工厂（普通消息）
+     *
      * @return Kafka监听容器工厂
      */
     public ConcurrentKafkaListenerContainerFactory<String, String> createKafkaListenerContainerFactory() {
@@ -208,6 +218,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 创建Kafka监听容器工厂（事务消息）
+     *
      * @return Kafka监听容器工厂
      */
     public ConcurrentKafkaListenerContainerFactory<String, String> createkafkaTsListenerContainerFactory() {
@@ -216,6 +227,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 创建Kafka监听容器工厂
+     *
      * @param propsMap 配置参数
      * @return Kafka监听容器工厂
      */
@@ -225,25 +237,26 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 创建Kafka监听容器工厂
+     *
      * @param consumerFactory 消费者工厂
      * @return Kafka监听容器工厂
      */
     public ConcurrentKafkaListenerContainerFactory<String, String> createKafkaListenerContainerFactory(ConsumerFactory<String, String> consumerFactory) {
 
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        
+
         // 设置消费者工厂
         factory.setConsumerFactory(consumerFactory);
-        
+
         // 默认的批量监听配置
         factory.setBatchListener(true);
         factory.setBatchErrorHandler((thrownException, data) -> {
             log.error("Batch error handler caught exception: {}", thrownException.getMessage(), thrownException);
         });
-        
+
         // 消息过滤
         factory.setRecordFilterStrategy(consumerRecord -> consumerRecord.value() == null);
-        
+
         return factory;
     }
 
@@ -252,6 +265,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 获取指定主题和偏移量的普通消费者
+     *
      * @param topic 主题
      * @return 普通消费者
      */
@@ -267,8 +281,9 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 获取指定消费组、主题和偏移量的普通消费者
-     * @param topic 主题
-     * @param groupId 消费组ID
+     *
+     * @param topic      主题
+     * @param groupId    消费组ID
      * @param fromOffset 起始偏移量
      * @return 普通消费者
      */
@@ -284,7 +299,8 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 获取事务消费者
-     * @param topic 主题
+     *
+     * @param topic   主题
      * @param groupId 消费组ID
      * @return 事务消费者
      */
@@ -300,8 +316,9 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 获取指定主题和偏移量的事务消费者
-     * @param topic 主题
-     * @param groupId 消费组ID
+     *
+     * @param topic      主题
+     * @param groupId    消费组ID
      * @param fromOffset 起始偏移量
      * @return 事务消费者
      */
@@ -315,7 +332,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
         return consumer;
     }
 
-    public <K, V>  Map<TopicPartition, ConsumerRecord<K, V>> getHighestOffsetRecords(List<ConsumerRecord<K, V>> records) {
+    public <K, V> Map<TopicPartition, ConsumerRecord<K, V>> getHighestOffsetRecords(List<ConsumerRecord<K, V>> records) {
         Map<TopicPartition, ConsumerRecord<K, V>> highestOffsetMap = new HashMap<>();
         for (ConsumerRecord<K, V> record : records) {
             TopicPartition topicPartition = new TopicPartition(record.topic(), record.partition());
@@ -327,7 +344,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
         return highestOffsetMap;
     }
 
-    public ErrorHandler createErrorHandler(KafkaTemplate<String, String> kafkaTemplate){
+    public ErrorHandler createErrorHandler(KafkaTemplate<String, String> kafkaTemplate) {
         KafkaEnhanceProperties.EnhanceListener listener = enhanceProperties.getListener();
         switch (listener.getErrorHandlerMode()) {
             case SEEK_TO_CURRENT:
@@ -357,7 +374,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
         }
     }
 
-    public BatchErrorHandler createBatchErrorHandler(KafkaTemplate<String, String> kafkaTemplate){
+    public BatchErrorHandler createBatchErrorHandler(KafkaTemplate<String, String> kafkaTemplate) {
         KafkaEnhanceProperties.EnhanceListener listener = enhanceProperties.getListener();
         switch (listener.getBatchErrorHandlerMode()) {
             case SEEK_TO_CURRENT:
@@ -384,6 +401,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 清理指定消费者
+     *
      * @param topic 消费主题
      */
     public void closeConsumer(String topic) {
@@ -395,6 +413,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 获取活跃消费者数量
+     *
      * @return 活跃消费者数量
      */
     public int getActiveConsumerCount() {
@@ -403,6 +422,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
 
     /**
      * 获取活跃消费者ID
+     *
      * @return 活跃消费者ID数组
      */
     public String[] getActiveConsumerIds() {
@@ -436,7 +456,7 @@ public class KafkaConsumerTemplate implements DisposableBean {
         long freeMemory = runtime.freeMemory();
         long usedMemory = totalMemory - freeMemory;
         double memoryUsageRatio = (double) usedMemory / maxMemory;
-        
+
         // 如果内存使用率超过85%，认为内存不足
         return memoryUsageRatio > 0.85;
     }
