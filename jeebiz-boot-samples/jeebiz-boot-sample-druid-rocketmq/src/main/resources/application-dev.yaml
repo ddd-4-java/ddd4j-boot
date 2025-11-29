@@ -66,3 +66,14 @@ rocketmq:
     group: Pro-Group
     namespace-v2: jeebiz-v2
     namespace: jeebiz
+
+################################################################################################################
+###Sms4j (RocketMQProperties) 配置：
+################################################################################################################
+sms:
+  config-type: yaml
+  account-max: 3
+  minute-max: 10000
+  core-pool-size: 8
+  max-pool-size: 64
+  queue-capacity: 10240

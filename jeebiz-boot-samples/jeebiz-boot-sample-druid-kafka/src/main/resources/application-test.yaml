@@ -64,8 +64,6 @@ spring:
       properties:
         max.request.size: 5242880 #5M
         linger.ms: 5
-        # 自定义分区器
-        # partitioner.class: com.uzx.kafka.kafkaPartitioner
     # Kafka 消费监听器配置
     listener:
       # 消费模式：批量消费

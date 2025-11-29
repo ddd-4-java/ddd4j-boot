@@ -4,21 +4,19 @@
  */
 package io.hiwepy.boot.sample.web.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-
-@ApiModel(value = "DemoNewDTO", description = "xxx数据传输对象")
+@Schema(description = "xxx数据传输对象")
 @Data
 public class DemoNewDTO {
 
-    @ApiModelProperty(value = "xx名称", required = true)
+    @Schema(description = "xx名称", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "名称必填")
     private String name;
 
-    @ApiModelProperty(value = "xx描述", required = true)
+    @Schema(description = "xx描述", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "描述必填")
     private String text;
 

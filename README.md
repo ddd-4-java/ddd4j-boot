@@ -1,6 +1,6 @@
-## Jeebiz Boot 简介：
+## Jeebiz Boot 2.x 简介：
 
-> [danger] Jeebiz Boot 1.x 是以 Spring Boot 2.3.x 为基础，构建的 Spring Boot 项目快速开发脚手架；
+> Jeebiz Boot 2.x 是以 Spring Boot 2.6.x 为基础，构建的 Spring Boot 项目快速开发脚手架；
 
 - 1、继承 Spring Boot ，具备 Spring Boot 的 所有特性
 
@@ -20,12 +20,12 @@
 
 **Maven模块**：
 
-| 模块                       | 说明                                                                                     |
-|--------------------------|----------------------------------------------------------------------------------------|
-| jeebiz-boot-dependencies | pom类型模块，负责配置项目公共依赖，便于依赖组件版本控制                                                          |
-| jeebiz-boot-modules      | 项目基础模块，封装基础API、公共对象（BaseController、BaseService、BaseMapper、BaseMapper 等）、异常对象到jar中，以便复用 |
-| jeebiz-boot-parent       | pom类型模块，默认配置Maven插件相关参数和打包方式                                                           |
-| jeebiz-boot-samples      | 具体服务示例，该模块下的各服务模块，均要继承 `jeebiz-boot-parent`                                            |
+| 模块  | 说明  |
+| ------------ | ------------ |
+| jeebiz-boot-dependencies | pom类型模块，负责配置项目公共依赖，便于依赖组件版本控制  |
+| jeebiz-boot-modules  |  项目基础模块，封装基础API、公共对象（BaseController、BaseService、BaseMapper、BaseMapper 等）、异常对象到jar中，以便复用 |
+| jeebiz-boot-parent  | pom类型模块，默认配置Maven插件相关参数和打包方式 |
+| jeebiz-boot-samples  |  具体服务示例，该模块下的各服务模块，均要继承 `jeebiz-boot-parent` |
 
 **注意事项**：
 
@@ -63,5 +63,4 @@
 ```
 
 #### Spring Docs
-
-https://docs.spring.io/spring-boot/docs/2.3.12.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-application
+https://docs.spring.io/spring-boot/docs/2.6.15/reference/html/features.html#features.spring-application

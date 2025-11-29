@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -7,6 +6,7 @@
         <groupId>io.hiwepy</groupId>
         <artifactId>jeebiz-boot-samples</artifactId>
         <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>jeebiz-boot-sample-hikaricp-war</artifactId>
@@ -137,9 +137,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
+        <!-- For Jooq -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>log4j2-plus-spring-boot-starter</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
         </dependency>
         <!-- For Mybatis -->
         <dependency>
@@ -188,19 +189,14 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc8dms</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
             <groupId>com.oracle.database.nls</groupId>
             <artifactId>orai18n</artifactId>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <!-- For Embed Tomcat : 用于开发阶段调试 -->
@@ -232,24 +228,23 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <executable>true</executable>
-                    <mainClass>io.hiwepy.boot.sample.DemoApplication</mainClass>
+                    <mainClass>io.hiwepy.boot.sample.MqttServerApplication</mainClass>
                 </configuration>
             </plugin>
-            <!-- 第三步：通过docker-maven插件构造Docker镜像 <plugin> <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId> </plugin> -->
-            <!-- 第四步：生成离线文档 -->
-            <!-- http://blog.didispace.com/swagger2markup-asciidoc/ -->
-            <!-- First, use the swagger2markup plugin to generate asciidoc
+            <!-- 第一步：生成可执行的启动脚本 -->
             <plugin>
-                <groupId>io.github.swagger2markup</groupId>
-                <artifactId>swagger2markup-maven-plugin</artifactId>
-            </plugin> -->
-            <!-- Run the generated asciidoc through Asciidoctor to generate other
-                documentation types, such as PDFs or HTML5
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+            </plugin>
+            <!-- 第一步：通过antrun插件拷贝文件 -->
             <plugin>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+            <!-- 第三步：通过docker-maven插件构造Docker镜像
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
             </plugin> -->
         </plugins>
     </build>

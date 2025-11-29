@@ -7,7 +7,7 @@
         <groupId>io.hiwepy</groupId>
         <artifactId>jeebiz-boot-parent</artifactId>
         <version>${revision}</version>
-        <relativePath>../jeebiz-boot-parent</relativePath>
+        <relativePath>../jeebiz-boot-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>jeebiz-boot-samples</artifactId>
@@ -29,6 +29,7 @@
         <module>jeebiz-boot-sample-hikaricp</module>
         <module>jeebiz-boot-sample-hikaricp-activemq</module>
         <module>jeebiz-boot-sample-hikaricp-amqp</module>
+        <module>jeebiz-boot-sample-hikaricp-kafka</module>
         <module>jeebiz-boot-sample-hikaricp-rocketmq</module>
         <module>jeebiz-boot-sample-hikaricp-war</module>
         <module>jeebiz-boot-sample-r2dbc-webflux</module>
