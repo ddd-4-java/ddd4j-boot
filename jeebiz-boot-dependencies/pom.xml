@@ -229,7 +229,6 @@
         <jakarta.jws-api.version>3.0.0</jakarta.jws-api.version>
         <jasypt.version>3.0.5</jasypt.version>
         <janino.version>3.1.12</janino.version>
-        <javalin.version>6.3.0</javalin.version>
         <javassist.version>3.30.2-GA</javassist.version>
         <javassist-plus.version>1.0.4.RELEASE</javassist-plus.version>
         <java-uuid-generator.version>5.1.1</java-uuid-generator.version>
@@ -624,15 +623,6 @@
         <spring-boot-starter-rocketmq.version>2.3.4</spring-boot-starter-rocketmq.version>
         <spring-boot-starter-schemacrawler.version>1.0.7.RELEASE</spring-boot-starter-schemacrawler.version>
         <spring-boot-starter-seata.version>${seata.version}</spring-boot-starter-seata.version>
-        <spring-boot-starter-security-biz.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-biz.version>
-        <spring-boot-starter-security-cas.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-cas.version>
-        <spring-boot-starter-security-dingtalk.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-dingtalk.version>
-        <spring-boot-starter-security-facebook.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-facebook.version>
-        <spring-boot-starter-security-google.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-google.version>
-        <spring-boot-starter-security-jwt.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-jwt.version>
-        <spring-boot-starter-security-line.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-line.version>
-        <spring-boot-starter-security-qrcode.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-qrcode.version>
-        <spring-boot-starter-security-weixin.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-weixin.version>
         <spring-boot-starter-shanyan.version>3.3.x.20240823.RELEASE</spring-boot-starter-shanyan.version>
         <spring-boot-starter-sigar.version>3.3.x.20240823.RELEASE</spring-boot-starter-sigar.version>
         <spring-boot-starter-soapui.version>3.3.x.20240823.RELEASE</spring-boot-starter-soapui.version>
@@ -3112,31 +3102,6 @@
                 <artifactId>jakarta.jws-api</artifactId>
                 <version>${jakarta.jws-api.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/io.javalin/javalin -->
-            <dependency>
-                <groupId>io.javalin</groupId>
-                <artifactId>javalin</artifactId>
-                <version>${javalin.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/io.javalin.community.openapi/javalin-openapi-plugin -->
-            <dependency>
-                <groupId>io.javalin.community.openapi</groupId>
-                <artifactId>javalin-openapi-plugin</artifactId>
-                <version>${javalin.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/io.javalin.community.openapi/javalin-swagger-plugin -->
-            <dependency>
-                <groupId>io.javalin.community.openapi</groupId>
-                <artifactId>javalin-swagger-plugin</artifactId>
-                <version>${javalin.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/io.javalin.community.openapi/javalin-redoc-plugin -->
-            <dependency>
-                <groupId>io.javalin.community.openapi</groupId>
-                <artifactId>javalin-redoc-plugin</artifactId>
-                <version>${javalin.version}</version>
-            </dependency>
-
             <!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
             <dependency>
                 <groupId>org.javassist</groupId>
