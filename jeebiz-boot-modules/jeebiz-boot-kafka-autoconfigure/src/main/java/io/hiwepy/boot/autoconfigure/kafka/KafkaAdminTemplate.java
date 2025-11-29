@@ -5,7 +5,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.kafka.clients.admin.*;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.boot.ssl.SslBundles;
 
@@ -25,6 +24,7 @@ public class KafkaAdminTemplate {
 
     /**
      * AdminClient 的配置参数
+     *
      * @return KafkaProducer 的配置参数
      */
     public Map<String, Object> defaultAdminConfigs() {

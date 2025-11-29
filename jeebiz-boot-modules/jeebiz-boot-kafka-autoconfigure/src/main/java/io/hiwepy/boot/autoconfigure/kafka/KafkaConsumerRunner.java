@@ -47,4 +47,4 @@ public class KafkaConsumerRunner implements Runnable {
         closed.set(true);
         consumer.wakeup();
     }
- }
+}

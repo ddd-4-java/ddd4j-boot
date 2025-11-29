@@ -5,32 +5,33 @@
 package io.hiwepy.boot.autoconfigure.weather;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.github.benmanes.caffeine.cache.*;
+import com.github.benmanes.caffeine.cache.CacheLoader;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClient;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
  * 免费天气查询
- * https://www.sojson.com/api/weather.html
+ * <a href="https://www.sojson.com/api/weather.html">接口文档</a>
  */
 @Slf4j
 public class WeatherTemplate {
 
     //请求连接地址
-	private final static String SOJSON_WEATHER_URL = "http://t.weather.sojson.com/api/weather/city/%s";
+    private final static String SOJSON_WEATHER_URL = "http://t.weather.sojson.com/api/weather/city/%s";
 
-	private final RestClient restClient;
+    private final RestClient restClient;
 
-	public WeatherTemplate(RestClient restClient) {
-		this.restClient = restClient;
+    public WeatherTemplate(RestClient restClient) {
+        this.restClient = restClient;
     }
 
     private final LoadingCache<String, Optional<JSONObject>> WEATHER_DATA_CACHES = Caffeine.newBuilder()
@@ -43,40 +44,33 @@ public class WeatherTemplate {
             // 设置要统计缓存的命中率
             .recordStats()
             // 设置缓存的移除通知
-            .removalListener(new RemovalListener<String, Optional<JSONObject>>() {
-
-                @Override
-                public void onRemoval(@Nullable String key, @Nullable Optional<JSONObject> value, @NonNull RemovalCause cause) {
-                    log.info("{} was removed, cause is {}", key, cause);
-                }
-
-            })
+            .removalListener((key, value, cause) -> log.info("{} was removed, cause is {}", key, cause))
             // build方法中可以指定CacheLoader，在缓存不存在时通过CacheLoader的实现自动加载缓存
-            .build(new CacheLoader<String, Optional<JSONObject>>() {
+            .build(new CacheLoader<>() {
 
                 @Override
                 public Optional<JSONObject> load(String city_code) throws Exception {
 
-					ResponseEntity<String> response = restClient.post()
-							.uri(String.format(SOJSON_WEATHER_URL, city_code))
-							.retrieve()
-							.toEntity(String.class);
-					if (response.getStatusCode().is2xxSuccessful()) {
-						String bodyString = response.getBody();
-						if(StringUtils.hasText(bodyString)){
-                        log.info("city_code {} >> weather :  {}", city_code, bodyString);
-                        JSONObject jsonObject = JSONObject.parseObject(bodyString);
-                        return Optional.ofNullable(jsonObject);
+                    ResponseEntity<String> response = restClient.post()
+                            .uri(String.format(SOJSON_WEATHER_URL, city_code))
+                            .retrieve()
+                            .toEntity(String.class);
+                    if (response.getStatusCode().is2xxSuccessful()) {
+                        String bodyString = response.getBody();
+                        if (StringUtils.hasText(bodyString)) {
+                            log.info("city_code {} >> weather :  {}", city_code, bodyString);
+                            JSONObject jsonObject = JSONObject.parseObject(bodyString);
+                            return Optional.ofNullable(jsonObject);
+                        }
                     }
-					}
-					log.error("Weather Query Error. Response Code >> {}, Body >> {}", response.getStatusCode().value(), response.getBody());
+                    log.error("Weather Query Error. Response Code >> {}, Body >> {}", response.getStatusCode().value(), response.getBody());
                     return Optional.empty();
                 }
             });
 
     public JSONObject getWeather(String city_code) throws ExecutionException {
         Optional<JSONObject> opt = WEATHER_DATA_CACHES.get(city_code);
-		return opt.orElse(null);
+        return Objects.isNull(opt) ? null : opt.orElse(null);
     }
 
 }

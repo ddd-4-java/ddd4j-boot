@@ -9,14 +9,15 @@ import io.hiwepy.boot.autoconfigure.crypto.enums.SymmetricAlgorithmType;
 import io.hiwepy.boot.autoconfigure.crypto.vo.FlkSecDecryptResponseVO;
 import io.hiwepy.boot.autoconfigure.crypto.vo.FlkSecEncryptResponseVO;
 import io.hiwepy.boot.autoconfigure.crypto.vo.FlkSecSignResponseVO;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClient;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 请求加解密服务实现
@@ -24,14 +25,13 @@ import java.util.Map;
 @Slf4j
 public class FlksecCryptoStrategy implements CryptoStrategy {
 
-    @Getter
-    private ObjectMapper objectMapper;
-    @Getter
-    private RestClient restClient;
-    private String address;
-    private String port;
+    private final ObjectMapper objectMapper;
+    private final RestClient restClient;
+    private final String address;
+    private final String port;
 
-    public FlksecCryptoStrategy(RestClient restClient, String address, String port) {
+    public FlksecCryptoStrategy(ObjectMapper objectMapper, RestClient restClient, String address, String port) {
+        this.objectMapper = objectMapper;
         this.restClient = restClient;
         this.address = address;
         this.port = port;
@@ -46,9 +46,9 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
     public <T> String encrypt(T value, SymmetricAlgorithmType algorithmType, String encMode, String padMode, String key, String iv, boolean plainIsEncode) {
         try {
             // 1、序列化Value
-            String valueAsString = getObjectMapper().writeValueAsString(value);
+            String valueAsString = objectMapper.writeValueAsString(value);
             // 2、如果 plainIsEncode =true 则对 valueAsString 进行 Base64 编码
-            if(plainIsEncode){
+            if (plainIsEncode) {
                 valueAsString = Base64.encode(valueAsString);
                 log.debug("Base64 Encode String to Encrypt : {}", value);
             }
@@ -69,13 +69,25 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
             bodyContent.put("plainIsEncode", String.valueOf(plainIsEncode));
             // 远程请求地址
             String url = String.format("https://%s:%s/api/crypto/sysEncrypt", address, port);
-            FlkSecEncryptResponseVO encryptResponse =  restClient.post().uri(url).body(bodyContent).retrieve().body(FlkSecEncryptResponseVO.class);
-            if (encryptResponse.getCode() == 200) {
-                String responseString = StringUtils.defaultString(encryptResponse.getData());
-                log.debug("Response Encrypt Value : {}", responseString);
-                return responseString;
+            ResponseEntity<FlkSecEncryptResponseVO> encryptResponse = restClient.post()
+                    .uri(url)
+                    .body(bodyContent)
+                    .retrieve()
+                    .toEntity(FlkSecEncryptResponseVO.class);
+            if (encryptResponse.getStatusCode().is2xxSuccessful()) {
+                FlkSecEncryptResponseVO encryptResponseVO = encryptResponse.getBody();
+                if (Objects.isNull(encryptResponseVO)) {
+                    throw new BizRuntimeException("调用远程接口加密失败，请稍后重试");
+                }
+                if (encryptResponseVO.getCode() == 200) {
+                    String responseString = StringUtils.defaultString(encryptResponseVO.getData());
+                    log.debug("Response Encrypt Value : {}", responseString);
+                    return responseString;
+                } else {
+                    throw new BizRuntimeException(encryptResponseVO.getMsg());
+                }
             } else {
-                throw new BizRuntimeException(encryptResponse.getMsg());
+                throw new BizRuntimeException("调用远程接口加密失败，StatusCode :" + encryptResponse.getStatusCode());
             }
         } catch (IOException e) {
             log.error("调用远程接口加密失败：{}", e.getMessage());
@@ -103,13 +115,25 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
             bodyContent.put("plainIsEncode", String.valueOf(plainIsEncode));
             // 远程请求地址
             String url = String.format("https://%s:%s/api/crypto/sysDecrypt", address, port);
-            FlkSecDecryptResponseVO decryptResponse =  restClient.post().uri(url).body(bodyContent).retrieve().body(FlkSecDecryptResponseVO.class);
-            if (decryptResponse.getCode() == 200) {
-                String responseString = StringUtils.defaultString(decryptResponse.getData());
-                log.debug("Response Decrypt Value : {}", responseString);
-                return getObjectMapper().readValue(value, rtType);
+            ResponseEntity<FlkSecDecryptResponseVO> decryptResponse = restClient.post()
+                    .uri(url)
+                    .body(bodyContent)
+                    .retrieve()
+                    .toEntity(FlkSecDecryptResponseVO.class);
+            if (decryptResponse.getStatusCode().is2xxSuccessful()) {
+                FlkSecDecryptResponseVO decryptResponseVO = decryptResponse.getBody();
+                if (Objects.isNull(decryptResponseVO)) {
+                    throw new BizRuntimeException("调用远程接口解密失败，请稍后重试");
+                }
+                if (decryptResponseVO.getCode() == 200) {
+                    String responseString = StringUtils.defaultString(decryptResponseVO.getData());
+                    log.debug("Response Decrypt Value : {}", responseString);
+                    return objectMapper.readValue(value, rtType);
+                } else {
+                    throw new BizRuntimeException(decryptResponseVO.getMsg());
+                }
             } else {
-                throw new BizRuntimeException(decryptResponse.getMsg());
+                throw new BizRuntimeException("调用远程接口解密失败，StatusCode :" + decryptResponse.getStatusCode());
             }
         } catch (IOException e) {
             log.error("调用远程接口解密失败：{}", e.getMessage());
@@ -121,9 +145,9 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
     public <T> String hmac(T value, HmacAlgorithm hmacAlgorithm, String key, String iv, boolean plainIsEncode) {
         try {
             // 1、序列化Value
-            String valueAsString = getObjectMapper().writeValueAsString(value);
+            String valueAsString = objectMapper.writeValueAsString(value);
             // 2、如果 plainIsEncode =true 则对 valueAsString 进行 Base64 编码
-            if(plainIsEncode){
+            if (plainIsEncode) {
                 valueAsString = Base64.encode(valueAsString);
                 log.debug("Base64 Encode String to Hmac : {}", value);
             }
@@ -136,11 +160,23 @@ public class FlksecCryptoStrategy implements CryptoStrategy {
             bodyContent.put("data", valueAsString);
             // 远程请求地址
             String url = String.format("https://%s:%s/api/hmac/sm3hmac", address, port);
-            FlkSecSignResponseVO signResponse =  restClient.post().uri(url).body(bodyContent).retrieve().body(FlkSecSignResponseVO.class);
-            if (signResponse.getCode() == 200) {
-                return StringUtils.defaultString(signResponse.getData());
+            ResponseEntity<FlkSecSignResponseVO> response = restClient.post()
+                    .uri(url)
+                    .body(bodyContent)
+                    .retrieve()
+                    .toEntity(FlkSecSignResponseVO.class);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                FlkSecSignResponseVO responseVO = response.getBody();
+                if (Objects.isNull(responseVO)) {
+                    throw new BizRuntimeException("调用远程接口签名失败，请稍后重试");
+                }
+                if (responseVO.getCode() == 200) {
+                    return StringUtils.defaultString(responseVO.getData());
+                } else {
+                    throw new BizRuntimeException(responseVO.getMsg());
+                }
             } else {
-                throw new BizRuntimeException(signResponse.getMsg());
+                throw new BizRuntimeException("调用远程接口签名失败，StatusCode :" + response.getStatusCode());
             }
         } catch (IOException e) {
             log.error("调用远程接口签名失败：{}", e.getMessage());

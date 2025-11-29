@@ -20,9 +20,17 @@
         <!-- 定义应用名称 -->
         <property name="APP_NAME">jeebiz-boot-sample</property>
         <!-- 日志输出格式:什么时间（日志时间）?什么应用（应用标记）?什么位置（线程、类、方法）?发送了什么（日志内容）? -->
-        <Property name="LOG_CONSOLE_LAYOUT">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{[${APP_NAME}]}{red} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n%xwEx</Property>
-        <Property name="LOG_CONSOLE_LAYOUT2">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{[${APP_NAME}]}{red} [%clr{%p} %clr{${sys:PID}}{magenta}] %clr{---}{faint} %clr{[%t]}{faint} %clr{[%C:%M:%L]}{cyan} %clr{:}{faint} %m%n%xwEx</Property>
-        <Property name="LOG_FILE_LAYOUT">%d{yyyy-MM-dd HH:mm:ss.SSS} [${APP_NAME}] %p ${sys:PID} [%X{X-B3-TraceId}] [%t] [%C:%M:%L] : %m%n%xwEx</Property>
+        <Property name="LOG_CONSOLE_LAYOUT">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{[${APP_NAME}]}{red} %clr{%5p}
+            %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint}
+            %m%n%xwEx
+        </Property>
+        <Property name="LOG_CONSOLE_LAYOUT2">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{[${APP_NAME}]}{red} [%clr{%p}
+            %clr{${sys:PID}}{magenta}] %clr{---}{faint} %clr{[%t]}{faint} %clr{[%C:%M:%L]}{cyan} %clr{:}{faint}
+            %m%n%xwEx
+        </Property>
+        <Property name="LOG_FILE_LAYOUT">%d{yyyy-MM-dd HH:mm:ss.SSS} [${APP_NAME}] %p ${sys:PID} [%X{X-B3-TraceId}] [%t]
+            [%C:%M:%L] : %m%n%xwEx
+        </Property>
         <!-- 日志文件主名称规则 -->
         <Property name="DEBUG_FILE_NAME">${LOG_HOME}/${APP_NAME}/debug.log</Property>
         <Property name="INFO_FILE_NAME">${LOG_HOME}/${APP_NAME}/info.log</Property>
@@ -47,24 +55,25 @@
 
         <!-- DEBUG级别日志文件输出配置 -->
         <!-- 实时日志放到logs/debug.log文件中,按天或者超过size则自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
-        <RollingRandomAccessFile name="RollingFileDebug" fileName="${DEBUG_FILE_NAME}" filePattern="${DEBUG_FILE_PATTERN}">
+        <RollingRandomAccessFile name="RollingFileDebug" fileName="${DEBUG_FILE_NAME}"
+                                 filePattern="${DEBUG_FILE_PATTERN}">
             <Filters>
                 <!--只接受DEBUG级别的日志，其余的全部拒绝处理-->
                 <ThresholdFilter level="DEBUG"/>
                 <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="NEUTRAL"/>
             </Filters>
-            <PatternLayout pattern="${LOG_FILE_LAYOUT}" />
+            <PatternLayout pattern="${LOG_FILE_LAYOUT}"/>
             <!-- <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"/> -->
             <Policies>
-                <SizeBasedTriggeringPolicy size="5GB" />
-                <TimeBasedTriggeringPolicy interval="1" modulate="true" /> <!-- 对应 filePattern维度，此处为天数 -->
+                <SizeBasedTriggeringPolicy size="5GB"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/> <!-- 对应 filePattern维度，此处为天数 -->
             </Policies>
 
             <!-- 只保留最近7天的日志 -->
             <DefaultRolloverStrategy max="5">
                 <Delete basePath="${LOG_HOME}/${APP_NAME}" maxDepth="1">
-                    <IfFileName glob="*.log" />
-                    <IfLastModified age="5d" />
+                    <IfFileName glob="*.log"/>
+                    <IfLastModified age="5d"/>
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingRandomAccessFile>
@@ -77,17 +86,17 @@
                 <ThresholdFilter level="INFO"/>
                 <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
             </Filters>
-            <PatternLayout pattern="${LOG_FILE_LAYOUT}" />
+            <PatternLayout pattern="${LOG_FILE_LAYOUT}"/>
             <!-- <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"/> -->
             <Policies>
-                <TimeBasedTriggeringPolicy />
+                <TimeBasedTriggeringPolicy/>
             </Policies>
 
             <!-- 只保留最近7天的日志 -->
             <DefaultRolloverStrategy max="5">
                 <Delete basePath="${LOG_HOME}/${APP_NAME}" maxDepth="1">
-                    <IfFileName glob="*.log" />
-                    <IfLastModified age="5d" />
+                    <IfFileName glob="*.log"/>
+                    <IfLastModified age="5d"/>
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
@@ -100,17 +109,17 @@
                 <ThresholdFilter level="WARN"/>
                 <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
             </Filters>
-            <PatternLayout pattern="${LOG_FILE_LAYOUT}" />
+            <PatternLayout pattern="${LOG_FILE_LAYOUT}"/>
             <!-- <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"/> -->
             <Policies>
-                <TimeBasedTriggeringPolicy />
+                <TimeBasedTriggeringPolicy/>
             </Policies>
 
             <!-- 只保留最近7天的日志 -->
             <DefaultRolloverStrategy max="5">
                 <Delete basePath="${LOG_HOME}/${APP_NAME}" maxDepth="1">
-                    <IfFileName glob="*.log" />
-                    <IfLastModified age="5d" />
+                    <IfFileName glob="*.log"/>
+                    <IfLastModified age="5d"/>
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
@@ -122,24 +131,24 @@
                 <!--只接受"ERROR"级别的日志，其余的全部拒绝处理-->
                 <ThresholdFilter level="ERROR"/>
             </Filters>
-            <PatternLayout pattern="${LOG_FILE_LAYOUT}" />
+            <PatternLayout pattern="${LOG_FILE_LAYOUT}"/>
             <!-- <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"/> -->
             <Policies>
-                <TimeBasedTriggeringPolicy />
+                <TimeBasedTriggeringPolicy/>
             </Policies>
 
             <!-- 只保留最近7天的日志 -->
             <DefaultRolloverStrategy max="5">
                 <Delete basePath="${LOG_HOME}/${APP_NAME}" maxDepth="1">
-                    <IfFileName glob="*.log" />
-                    <IfLastModified age="5d" />
+                    <IfFileName glob="*.log"/>
+                    <IfLastModified age="5d"/>
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
 
         <!--Druid的日志记录追加器-->
         <RollingFile name="RollingFileDruidSql" fileName="${DRUID_FILE_NAME}" filePattern="${DRUID_FILE_PATTERN}">
-            <PatternLayout pattern="${LOG_FILE_LAYOUT}" />
+            <PatternLayout pattern="${LOG_FILE_LAYOUT}"/>
             <!-- <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5level %L %M - %msg%xEx%n"/> -->
             <Policies>
                 <TimeBasedTriggeringPolicy/>
@@ -148,8 +157,8 @@
             <!-- 只保留最近7天的日志 -->
             <DefaultRolloverStrategy max="5">
                 <Delete basePath="${LOG_HOME}/${APP_NAME}" maxDepth="1">
-                    <IfFileName glob="*.log" />
-                    <IfLastModified age="5d" />
+                    <IfFileName glob="*.log"/>
+                    <IfLastModified age="5d"/>
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
@@ -206,8 +215,8 @@
         <Logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR" additivity="true"/>
         <Logger name="org.apache.catalina.util.LifecycleBase" level="ERROR" additivity="true"/>
         <Logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN" additivity="true"/>
-        <Logger name="org.apache.http" level="WARN" additivity="true" />
-        <Logger name="org.apache.shiro" level="WARN" additivity="true" />
+        <Logger name="org.apache.http" level="WARN" additivity="true"/>
+        <Logger name="org.apache.shiro" level="WARN" additivity="true"/>
         <Logger name="org.apache.ibatis" level="INFO" additivity="true"/>
         <Logger name="org.apache.ibatis.jdbc.ScriptRunner" level="INFO" additivity="true"/>
         <Logger name="org.apache.rocketmq" level="WARN" additivity="true"/>
@@ -215,11 +224,11 @@
         <Logger name="org.apache.struts2" level="WARN" additivity="true"/>
         <Logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN" additivity="true"/>
         <Logger name="org.dozer" level="WARN" additivity="true"/>
-        <Logger name="org.crsh.plugin" level="WARN" additivity="true" />
+        <Logger name="org.crsh.plugin" level="WARN" additivity="true"/>
         <logger name="org.crsh.ssh" level="WARN" additivity="true"/>
-        <Logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR" additivity="true" />
+        <Logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR" additivity="true"/>
         <Logger name="org.flywaydb" level="WARN" additivity="true"/>
-        <Logger name="org.hibernate.validator" level="WARN" additivity="true" />
+        <Logger name="org.hibernate.validator" level="WARN" additivity="true"/>
         <Logger name="org.mybatis" level="WARN" additivity="true"/>
         <Logger name="org.pac4j" level="WARN" additivity="true"/>
         <Logger name="org.quartz" level="WARN" additivity="true"/>
@@ -227,7 +236,8 @@
         <Logger name="org.springframework" level="WARN" additivity="true"/>
         <Logger name="org.springframework.data.redis" level="WARN" additivity="true"/>
         <Logger name="org.springframework.security" level="WARN" additivity="true"/>
-        <Logger name="org.springframework.boot.actuate.autoconfigure.CrshAutoConfiguration" level="WARN" additivity="true"/>
+        <Logger name="org.springframework.boot.actuate.autoconfigure.CrshAutoConfiguration" level="WARN"
+                additivity="true"/>
         <Logger name="org.springframework.boot.actuate.endpoint.jmx" level="WARN" additivity="true"/>
         <Logger name="org.thymeleaf" level="WARN" additivity="true"/>
         <Logger name="org.xnio" level="WARN" additivity="true"/>

@@ -39,10 +39,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-        </dependency>
         <!-- For Validation -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -166,22 +162,32 @@
             <groupId>org.springframework.integration</groupId>
             <artifactId>spring-integration-mqtt</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3 -->
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.mqttv5.client -->
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
+        </dependency>
 
         <!-- For Embed Tomcat -->
-        <!-- <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-        </dependency> -->
+        </dependency>
         <!-- For Embed Jetty -->
         <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jetty</artifactId>
         </dependency> -->
-        <!-- For Embed Undertow -->
+        <!-- For Embed Undertow
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 
@@ -191,7 +197,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <executable>true</executable>
                     <mainClass>io.hiwepy.boot.sample.MqttServerApplication</mainClass>
                 </configuration>
             </plugin>
@@ -210,19 +215,6 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
             </plugin> -->
-            <!-- 第四步：生成离线文档-->
-            <!-- http://blog.didispace.com/swagger2markup-asciidoc/ -->
-            <!-- First, use the swagger2markup plugin to generate asciidoc
-            <plugin>
-                <groupId>io.github.swagger2markup</groupId>
-                <artifactId>swagger2markup-maven-plugin</artifactId>
-            </plugin>-->
-            <!-- Run the generated asciidoc through Asciidoctor to generate other
-                documentation types, such as PDFs or HTML5
-            <plugin>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctor-maven-plugin</artifactId>
-            </plugin>-->
         </plugins>
     </build>
 

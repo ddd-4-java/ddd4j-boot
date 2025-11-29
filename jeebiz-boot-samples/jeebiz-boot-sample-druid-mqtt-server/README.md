@@ -1,8 +1,11 @@
 # jeebiz-boot-sample-druid-mqtt-server
 
-> MQTT（消息队列遥测传输）是一种轻量级的消息协议，专为低带宽、高延迟和不可靠的网络环境设计。它支持三种消息服务质量（QoS）级别，能够灵活应对不同的业务需求。在工业物联网场景中，设备数量众多且分布广泛，网络环境复杂多变。MQTT 的这些特性，使其成为工业物联网通信的首选协议。
+> MQTT（消息队列遥测传输）是一种轻量级的消息协议，专为低带宽、高延迟和不可靠的网络环境设计。它支持三种消息服务质量（QoS）级别，能够灵活应对不同的业务需求。在工业物联网场景中，设备数量众多且分布广泛，网络环境复杂多变。MQTT
+> 的这些特性，使其成为工业物联网通信的首选协议。
 
-> 基于 [Spring Boot 3.x](https://docs.spring.io/spring-boot/index.html) 、[Mica-Mqtt](https://gitee.com/dromara/mica-mqtt)、[Mybatis Plus](https://baomidou.com/introduce/)、[Druid](https://github.com/alibaba/druid) 技术为主的 Demo 功能示例。
+>
+基于 [Spring Boot 3.x](https://docs.spring.io/spring-boot/index.html) 、[Mica-Mqtt](https://gitee.com/dromara/mica-mqtt)、[Mybatis Plus](https://baomidou.com/introduce/)、[Druid](https://github.com/alibaba/druid)
+技术为主的 Demo 功能示例。
 
 ### 技术栈
 
@@ -75,10 +78,10 @@ mqtt:
 
 注意：**ssl** 存在三种情况
 
-| 服务端开启ssl                            | 客户端                                        |
-| ---------------------------------------- | --------------------------------------------- |
-| ClientAuth 为 NONE（不需要客户端验证）   | 仅仅需要开启 ssl 即可不用配置证书             |
-| ClientAuth 为 OPTIONAL（与客户端协商）   | 需开启 ssl 并且配置 truststore 证书           |
+| 服务端开启ssl                        | 客户端                                 |
+|---------------------------------|-------------------------------------|
+| ClientAuth 为 NONE（不需要客户端验证）     | 仅仅需要开启 ssl 即可不用配置证书                 |
+| ClientAuth 为 OPTIONAL（与客户端协商）   | 需开启 ssl 并且配置 truststore 证书          |
 | ClientAuth 为 REQUIRE (必须的客户端验证) | 需开启 ssl 并且配置 truststore、 keystore证书 |
 
 ### 2.2 可实现接口（注册成 Spring Bean 即可）
@@ -155,6 +158,7 @@ public class ServerService {
 ```
 
 ### 2.6 客户端上下线监听
+
 使用 Spring event 解耦客户端上下线监听，注意： `1.3.4` 开始支持。会跟自定义的 `IMqttConnectStatusListener` 实现冲突，取一即可。
 
 ```java
@@ -180,6 +184,7 @@ public class MqttConnectStatusListener {
 详见: [mica-mqtt-broker](../../mica-mqtt-broker)
 
 ### 2.8 Prometheus + Grafana 监控对接
+
 ```xml
 <!-- 开启 prometheus 指标收集 -->
 <dependency>
@@ -192,14 +197,14 @@ public class MqttConnectStatusListener {
 </dependency>
 ```
 
-| 支持得指标                     | 说明             |
-| ------------------------------ | ---------------- |
-| mqtt_connections_accepted      | 共接受过连接数   |
-| mqtt_connections_closed        | 关闭过的连接数   |
-| mqtt_connections_size          | 当前连接数       |
-| mqtt_messages_handled_packets  | 已处理消息数     |
-| mqtt_messages_handled_bytes    | 已处理消息字节数  |
-| mqtt_messages_received_packets | 已接收消息数      |
+| 支持得指标                          | 说明       |
+|--------------------------------|----------|
+| mqtt_connections_accepted      | 共接受过连接数  |
+| mqtt_connections_closed        | 关闭过的连接数  |
+| mqtt_connections_size          | 当前连接数    |
+| mqtt_messages_handled_packets  | 已处理消息数   |
+| mqtt_messages_handled_bytes    | 已处理消息字节数 |
+| mqtt_messages_received_packets | 已接收消息数   |
 | mqtt_messages_received_bytes   | 已处理消息字节数 |
-| mqtt_messages_send_packets     | 已发送消息数      |
-| mqtt_messages_send_bytes       | 已发送消息字节数  |
+| mqtt_messages_send_packets     | 已发送消息数   |
+| mqtt_messages_send_bytes       | 已发送消息字节数 |

@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.redis.core.RedisOperationTemplate;
@@ -65,11 +64,11 @@ public class GlobalSequenceConfiguration {
         String scriptText = StreamUtils.copyToString(in, StandardCharsets.UTF_8);
         // 3. 配置：数据中心ID, 节点ID, 起始时间戳, 批次大小
         long datacenterId = IdUtil.getDataCenterId(31);
-        long workerId =  IdUtil.getWorkerId(datacenterId,31);
+        long workerId = IdUtil.getWorkerId(datacenterId, 31);
         long epoch = 1288834974657L;
         long batchSize = 1000L;
-        System.out.println("datacenterId:"+datacenterId);
-        System.out.println("workerId:"+workerId);
+        System.out.println("datacenterId:" + datacenterId);
+        System.out.println("workerId:" + workerId);
         // 4. 返回实例
         // return new Sequence(redisTemplate, scriptText, datacenterId, workerId, epoch, batchSize);
         return null;

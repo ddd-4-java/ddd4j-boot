@@ -21,14 +21,14 @@ import java.util.stream.Collectors;
  * @author wandl
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass({ ObjectMapper.class})
+@ConditionalOnClass({ObjectMapper.class})
 @EnableConfigurationProperties(CryptoProperties.class)
 public class DefaultCryptoAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(CryptoProvider.class)
     public DefaultCryptoProvider cryptoProvider(ObjectProvider<CryptoStrategy> cryptoStrategyProvider, CryptoProperties cryptoProperties) {
-        return new DefaultCryptoProvider( cryptoStrategyProvider.stream().collect(Collectors.toList()), cryptoProperties);
+        return new DefaultCryptoProvider(cryptoStrategyProvider.stream().collect(Collectors.toList()), cryptoProperties);
     }
 
     @Bean
@@ -48,9 +48,11 @@ public class DefaultCryptoAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(FlksecCryptoStrategy.class)
     public FlksecCryptoStrategy flksecCryptoStrategy(ObjectProvider<ObjectMapper> objectMapperProvider,
-                                                     ObjectProvider<RestClient> restClientProvider, CryptoProperties cryptoProperties) {
-
-        return new FlksecCryptoStrategy(restClientProvider.getIfAvailable(), cryptoProperties.getFlksecAddress(), cryptoProperties.getFlksecPort());
+                                                     ObjectProvider<RestClient> restClientObjectProvider,
+                                                     CryptoProperties cryptoProperties) {
+        ObjectMapper objectMapper = objectMapperProvider.getIfAvailable(ObjectMapper::new);
+        RestClient restClient = restClientObjectProvider.getIfAvailable();
+        return new FlksecCryptoStrategy(objectMapper, restClient, cryptoProperties.getFlksecAddress(), cryptoProperties.getFlksecPort());
     }
 
 }

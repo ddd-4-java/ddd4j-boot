@@ -60,8 +60,8 @@ public class KafkaBackupConsumer implements DisposableBean {
     // 备份操作的信号量，限制并发备份数量
     private final Semaphore backupSemaphore = new Semaphore(1);
 
-   // 记录最后成功提交的偏移量，key 为 "topic:partition"
-   private final Map<String, Long> lastCommittedOffsetMap = new ConcurrentHashMap<>();
+    // 记录最后成功提交的偏移量，key 为 "topic:partition"
+    private final Map<String, Long> lastCommittedOffsetMap = new ConcurrentHashMap<>();
 
     // 备份状态映射，key 为 "topic:partition"
     private final Map<String, BackupStatus> backupStatusMap = new ConcurrentHashMap<>();
@@ -70,12 +70,14 @@ public class KafkaBackupConsumer implements DisposableBean {
     private final Map<String, Long> lastBackupOffsetMap = new ConcurrentHashMap<>();
 
     private final KafkaBackupProperties backupProperties;
+
     /**
      * 构造函数
+     *
      * @param kafkaConsumerTemplate 消费者模板
-     * @param topic 执行主题
-     * @param consumerGroupId 消费者组ID
-     * @param consumer 消息处理器
+     * @param topic                 执行主题
+     * @param consumerGroupId       消费者组ID
+     * @param consumer              消息处理器
      */
     public KafkaBackupConsumer(KafkaConsumerTemplate kafkaConsumerTemplate,
                                KafkaBackupProperties backupProperties,
@@ -140,8 +142,9 @@ public class KafkaBackupConsumer implements DisposableBean {
 
     /**
      * 获取备份消费偏移量
-     * @param topic 主题
-     * @param partition 分区
+     *
+     * @param topic      主题
+     * @param partition  分区
      * @param loadOffset 加载偏移量
      * @return 备份消费偏移量
      */
@@ -184,8 +187,8 @@ public class KafkaBackupConsumer implements DisposableBean {
             ensureBackupDir();
 
             // 查找备份索引文件
-            File[] files = new File(backupProperties.getBackupDir()).listFiles( file ->
-                            file.getName().startsWith(topic) && file.getName().endsWith("-index.json") );
+            File[] files = new File(backupProperties.getBackupDir()).listFiles(file ->
+                    file.getName().startsWith(topic) && file.getName().endsWith("-index.json"));
 
             if (ArrayUtils.isEmpty(files)) {
 
@@ -206,7 +209,8 @@ public class KafkaBackupConsumer implements DisposableBean {
 
                     // 读取索引文件内容
                     String jsonContent = FileUtils.readFileToString(indexFile, StandardCharsets.UTF_8);
-                    Map<String, Object> indexData = JSON.parseObject(jsonContent, new TypeReference<Map<String, Object>>() {});
+                    Map<String, Object> indexData = JSON.parseObject(jsonContent, new TypeReference<Map<String, Object>>() {
+                    });
 
                     // 加载最后提交的偏移量
                     String partitionKey = getPartitionKey(parts[0], Integer.parseInt(parts[1]));
@@ -218,7 +222,8 @@ public class KafkaBackupConsumer implements DisposableBean {
                     // 加载最后备份的偏移量映射
                     Map<String, Long> loadedLastBackupOffsetMap = JSON.parseObject(
                             JSON.toJSONString(indexData.get("lastBackupOffsetMap")),
-                            new TypeReference<Map<String, Long>>() {});
+                            new TypeReference<Map<String, Long>>() {
+                            });
                     if (loadedLastBackupOffsetMap != null) {
                         lastBackupOffsetMap.putAll(loadedLastBackupOffsetMap);
                     }
@@ -226,7 +231,8 @@ public class KafkaBackupConsumer implements DisposableBean {
                     // 加载备份状态映射
                     Map<String, Map<String, Object>> loadedStatusMap = JSON.parseObject(
                             JSON.toJSONString(indexData.get("backupStatusMap")),
-                            new TypeReference<Map<String, Map<String, Object>>>() {});
+                            new TypeReference<Map<String, Map<String, Object>>>() {
+                            });
 
                     if (loadedStatusMap != null) {
                         for (Map.Entry<String, Map<String, Object>> entry : loadedStatusMap.entrySet()) {
@@ -302,7 +308,7 @@ public class KafkaBackupConsumer implements DisposableBean {
                         lastConsumedOffset = recordList.get(recordSize - 1).offset();
 
                         // 消费前先备份消息
-                        boolean backupSuccess = backupMessagesSynchronously( partition, lastConsumedOffset, recordList);
+                        boolean backupSuccess = backupMessagesSynchronously(partition, lastConsumedOffset, recordList);
 
                         if (!backupSuccess) {
                             log.error("备份失败，跳过此批次消息处理: topic={}, partition={}, offset={}",
@@ -363,7 +369,7 @@ public class KafkaBackupConsumer implements DisposableBean {
      * 同步备份消息
      */
     private boolean backupMessagesSynchronously(TopicPartition partition, long lastConsumedOffset,
-                                              List<ConsumerRecord<String, String>> recordList) {
+                                                List<ConsumerRecord<String, String>> recordList) {
         boolean acquired = false;
 
         try {
@@ -386,7 +392,7 @@ public class KafkaBackupConsumer implements DisposableBean {
                         lastConsumedOffset, jsonList);
                 return true;
             } catch (Exception e) {
-                log.error("备份失败: topic={}, partition={}, offset={}", 
+                log.error("备份失败: topic={}, partition={}, offset={}",
                         partition.topic(), partition.partition(), lastConsumedOffset, e);
 
                 // 备份失败，尝试重试
@@ -486,7 +492,8 @@ public class KafkaBackupConsumer implements DisposableBean {
 
     /**
      * 获取备份记录
-     * @param topic 主题
+     *
+     * @param topic     主题
      * @param partition 分区
      * @return 备份记录
      * @throws IOException IO异常
@@ -581,7 +588,7 @@ public class KafkaBackupConsumer implements DisposableBean {
     private void saveCompressedBackup(File backupFile, List<Object> jsonList) throws IOException {
         try (GZIPOutputStream gzipOut = new GZIPOutputStream(FileUtils.openOutputStream(backupFile))) {
             for (Object json : jsonList) {
-                gzipOut.write( JSON.toJSONString(json).getBytes(StandardCharsets.UTF_8));
+                gzipOut.write(JSON.toJSONString(json).getBytes(StandardCharsets.UTF_8));
                 gzipOut.write('\n');
             }
         }
@@ -638,6 +645,7 @@ public class KafkaBackupConsumer implements DisposableBean {
             throw e;
         }
     }
+
     /**
      * 初始化消费偏移量
      */
@@ -648,7 +656,7 @@ public class KafkaBackupConsumer implements DisposableBean {
         long loadOffset = metadata != null ? metadata.offset() - 1 : -1;
         String partitionKey = getPartitionKey(topicPartition.topic(), topicPartition.partition());
         // 检查是否有备份，并从合适的位置开始消费
-        if ( this.hasBackup(topicPartition.topic(), topicPartition.partition())) {
+        if (this.hasBackup(topicPartition.topic(), topicPartition.partition())) {
             try {
                 // 获取备份记录
                 BackupRecord backupRecord = this.getBackupRecord(topicPartition.topic(), topicPartition.partition());
@@ -817,6 +825,7 @@ public class KafkaBackupConsumer implements DisposableBean {
 
     /**
      * 获取当前消费者状态信息
+     *
      * @return 状态信息
      */
     public Map<String, Object> getStatus() {
@@ -846,10 +855,10 @@ public class KafkaBackupConsumer implements DisposableBean {
      */
     private void startBackupCleanupTask() {
         cleanupExecutor.scheduleAtFixedRate(
-            this::cleanupBackups,
-            backupProperties.getCleanupIntervalMs(),
-            backupProperties.getCleanupIntervalMs(),
-            TimeUnit.MILLISECONDS
+                this::cleanupBackups,
+                backupProperties.getCleanupIntervalMs(),
+                backupProperties.getCleanupIntervalMs(),
+                TimeUnit.MILLISECONDS
         );
         log.info("备份清理任务已启动: topic={}, interval={}ms", topic, backupProperties.getCleanupIntervalMs());
     }
@@ -884,8 +893,8 @@ public class KafkaBackupConsumer implements DisposableBean {
                 // 2. 偏移量小于等于已提交的偏移量
                 // 3. 超过保留时间的备份文件
                 boolean shouldCleanup = status.isConsumed() ||
-                                       (committedOffset >= 0 && status.getOffset() <= committedOffset) ||
-                                       (currentTime - status.getCreateTime() > backupProperties.getBackupRetentionMs());
+                        (committedOffset >= 0 && status.getOffset() <= committedOffset) ||
+                        (currentTime - status.getCreateTime() > backupProperties.getBackupRetentionMs());
 
                 if (shouldCleanup) {
 
@@ -906,7 +915,7 @@ public class KafkaBackupConsumer implements DisposableBean {
                     }
                 }
             }
-            log.debug("备份文件清理完成: topic={}, remainingFiles={}",  topic, backupStatusMap.size());
+            log.debug("备份文件清理完成: topic={}, remainingFiles={}", topic, backupStatusMap.size());
         } catch (Exception e) {
             log.error("清理备份文件异常: topic={}, exception={}", topic, e.getMessage(), e);
         }
@@ -933,7 +942,7 @@ public class KafkaBackupConsumer implements DisposableBean {
         log.info("删除备份成功: {}", backupFilePath);
     }
 
-    private void saveBackupIndexs(){
+    private void saveBackupIndexs() {
         for (String key : backupStatusMap.keySet()) {
             String[] parts = key.split(":");
             int partition = Integer.parseInt(parts[1]);
@@ -982,7 +991,7 @@ public class KafkaBackupConsumer implements DisposableBean {
 
             log.debug("备份索引已保存: topic={}, partition={}, entries={}", topic, 0, backupStatusMap.size());
         } catch (Exception e) {
-            log.error("保存备份索引失败: topic={}, partition={}, exception={}",  topic, 0, e.getMessage(), e);
+            log.error("保存备份索引失败: topic={}, partition={}, exception={}", topic, 0, e.getMessage(), e);
         }
     }
 
@@ -991,10 +1000,10 @@ public class KafkaBackupConsumer implements DisposableBean {
      */
     private void startIndexSaveTask() {
         cleanupExecutor.scheduleAtFixedRate(
-            this::saveBackupIndexs,
+                this::saveBackupIndexs,
                 backupProperties.getIndexSaveIntervalMs(),
                 backupProperties.getIndexSaveIntervalMs(),
-            TimeUnit.MILLISECONDS
+                TimeUnit.MILLISECONDS
         );
         log.info("备份索引保存任务已启动: topic={}, interval={}ms", topic, backupProperties.getIndexSaveIntervalMs());
     }
@@ -1050,55 +1059,57 @@ public class KafkaBackupConsumer implements DisposableBean {
 
     /**
      * 执行健康检查
+     *
      * @return 健康状态
      */
     public Map<String, Object> healthCheck() {
         Map<String, Object> health = new HashMap<>();
         health.put("status", "UP");
         health.put("details", new HashMap<String, Object>());
-        
+
         try {
             // 检查备份目录
             String backupDir = backupProperties.getBackupDir();
             File dir = new File(backupDir);
             if (!dir.exists() || !dir.isDirectory() || !dir.canWrite()) {
                 health.put("status", "DOWN");
-                ((Map<String, Object>)health.get("details")).put("backupDir", 
+                ((Map<String, Object>) health.get("details")).put("backupDir",
                         "备份目录不存在或无法写入: " + backupDir);
             }
-            
+
             // 检查内存状态
             if (isLowMemory()) {
                 health.put("status", "WARN");
-                ((Map<String, Object>)health.get("details")).put("memory",   "内存使用率过高");
+                ((Map<String, Object>) health.get("details")).put("memory", "内存使用率过高");
             }
-            
+
             // 检查备份索引
             File indexFile = new File(backupDir + File.separator + topic + "-0-index.json");
             if (!indexFile.exists() || !indexFile.canRead()) {
                 health.put("status", "WARN");
-                ((Map<String, Object>)health.get("details")).put("indexFile", 
+                ((Map<String, Object>) health.get("details")).put("indexFile",
                         "备份索引文件不存在或无法读取");
             }
-            
+
             // 检查消费者状态
             if (!running.get()) {
                 health.put("status", "DOWN");
-                ((Map<String, Object>)health.get("details")).put("consumer", 
+                ((Map<String, Object>) health.get("details")).put("consumer",
                         "消费者未运行");
             }
-            
+
         } catch (Exception e) {
             health.put("status", "DOWN");
-            ((Map<String, Object>)health.get("details")).put("exception", 
+            ((Map<String, Object>) health.get("details")).put("exception",
                     e.getMessage());
         }
-        
+
         return health;
     }
 
     /**
      * 检查系统内存状态
+     *
      * @return 是否内存不足
      */
     private boolean isLowMemory() {
@@ -1108,21 +1119,21 @@ public class KafkaBackupConsumer implements DisposableBean {
         long freeMemory = runtime.freeMemory();
         long usedMemory = totalMemory - freeMemory;
         double memoryUsageRatio = (double) usedMemory / maxMemory;
-        
+
         // 添加更多内存指标
         long directMemory = getDirectMemoryUsage(); // 需要实现此方法
-        
+
         // 记录内存使用情况
         if (memoryUsageRatio > 0.7) {
-            log.warn("内存使用率较高: topic={}, memoryUsage={}, directMemory={}MB", 
-                    topic, String.format("%.2f%%", memoryUsageRatio * 100), 
+            log.warn("内存使用率较高: topic={}, memoryUsage={}, directMemory={}MB",
+                    topic, String.format("%.2f%%", memoryUsageRatio * 100),
                     directMemory / (1024 * 1024));
         }
-        
+
         // 多级内存警告
         if (memoryUsageRatio > 0.9) {
             // 严重内存不足
-            log.error("严重内存不足，立即触发GC: topic={}, memoryUsage={}", 
+            log.error("严重内存不足，立即触发GC: topic={}, memoryUsage={}",
                     topic, String.format("%.2f%%", memoryUsageRatio * 100));
             System.gc();
             return true;
@@ -1130,7 +1141,7 @@ public class KafkaBackupConsumer implements DisposableBean {
             // 内存不足
             return true;
         }
-        
+
         return false;
     }
 

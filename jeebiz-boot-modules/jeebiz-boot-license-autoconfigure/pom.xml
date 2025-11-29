@@ -13,12 +13,6 @@
     <artifactId>jeebiz-boot-license-autoconfigure</artifactId>
 
     <dependencies>
-
-        <!-- For Servlet Api -->
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-        </dependency>
         <!-- For Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

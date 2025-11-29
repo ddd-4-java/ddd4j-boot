@@ -3,6 +3,9 @@ package io.hiwepy.boot.autoconfigure.aspect;
 import io.hiwepy.boot.api.Constants;
 import io.hiwepy.boot.api.utils.WebUtils;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -11,9 +14,6 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.StopWatch;
 import springfox.documentation.annotations.ApiIgnore;
 
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +35,7 @@ public class DefaultApiOperationLogProvider implements ApiOperationLogProvider {
 
     @Override
     public void afterThrowing(JoinPoint joinPoint, Operation apiOperation, Throwable ex, StopWatch stopWatch) {
-        this.doApiOperationLog(joinPoint, apiOperation,null, ex, stopWatch);
+        this.doApiOperationLog(joinPoint, apiOperation, null, ex, stopWatch);
     }
 
     protected void doApiOperationLog(JoinPoint joinPoint, Operation apiOperation, Object rt, Throwable ex, StopWatch stopWatch) {
@@ -89,7 +89,7 @@ public class DefaultApiOperationLogProvider implements ApiOperationLogProvider {
         log.info(Constants.accessMarker, stopWatch.prettyPrint());
     }
 
-    protected void saveLog(JoinPoint joinPoint, Method method, Operation apiOperation, Object rt, Throwable ex, StopWatch stopWatch){
+    protected void saveLog(JoinPoint joinPoint, Method method, Operation apiOperation, Object rt, Throwable ex, StopWatch stopWatch) {
         // do nothing
     }
 

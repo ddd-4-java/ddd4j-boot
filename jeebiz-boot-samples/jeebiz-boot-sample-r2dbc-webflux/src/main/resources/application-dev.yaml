@@ -1,9 +1,9 @@
 ################################################################################################################  
 ###Spring Boot 相关组件（SpringMVC、Freemarker、Session、Cache、DataSource）配置：  
 ################################################################################################################
-spring: 
+spring:
   # 缓存配置：
-  cache: 
+  cache:
     type: ehcache
     ehcache:
       config: classpath:/conf/ehcache/ehcache.xml
@@ -42,5 +42,5 @@ spring:
 ###logging (log4j2) 基本配置：  
 ###http://www.cnblogs.com/yhtboke/p/Mybatis.html
 ################################################################################################################
-logging: 
+logging:
   config: classpath:conf/log4j2.xml

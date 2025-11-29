@@ -12,7 +12,8 @@ public class DataScopeAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public DataScopeProvider dataScopeProvider() {
-        return new DataScopeProvider(){};
+        return new DataScopeProvider() {
+        };
     }
 
     @Bean

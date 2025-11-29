@@ -3,7 +3,6 @@ package io.hiwepy.boot.sample.service.impl;
 import com.alibaba.fastjson2.JSON;
 import io.hiwepy.boot.sample.service.MQProducerService;
 import io.hiwepy.boot.sample.setup.TopicConstant;
-import io.hiwepy.boot.sample.web.dto.MessageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
@@ -84,7 +83,7 @@ public class MQProducerServiceImpl implements MQProducerService {
     public SendResult sendTagMsg(String msgBody) {
         try {
             // 发送带tag的消息
-            SendResult result =  rocketMQTemplate.syncSend(TopicConstant.DEMO_TOPIC + ":tag2", MessageBuilder.withPayload(msgBody).build());
+            SendResult result = rocketMQTemplate.syncSend(TopicConstant.DEMO_TOPIC + ":tag2", MessageBuilder.withPayload(msgBody).build());
             System.out.printf("发送成功: %s ", result.getSendStatus());
             return result;
         } catch (Exception e) {

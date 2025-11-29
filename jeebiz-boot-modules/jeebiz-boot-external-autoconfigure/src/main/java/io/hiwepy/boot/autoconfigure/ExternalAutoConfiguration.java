@@ -9,8 +9,8 @@ import io.hiwepy.boot.autoconfigure.region.BaiduRegionTemplate;
 import io.hiwepy.boot.autoconfigure.region.NestedRegionTemplate;
 import io.hiwepy.boot.autoconfigure.region.PconlineRegionTemplate;
 import io.hiwepy.boot.autoconfigure.weather.WeatherTemplate;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,38 +18,39 @@ import org.springframework.data.redis.core.RedisOperationTemplate;
 import org.springframework.web.client.RestClient;
 
 /**
+ *
  */
 @Configuration
 @EnableConfigurationProperties({ExternalProperties.class, SequenceProperties.class})
 public class ExternalAutoConfiguration {
 
-	@Bean
-	@ConditionalOnMissingBean
-	public RestClient restClient(){
-		return RestClient.builder().build();
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public RestClient restClient() {
+        return RestClient.builder().build();
+    }
 
-	@Bean
-	public BaiduRegionTemplate baiduRegionTemplate(ExternalProperties properties, RestClient restClient) {
-		return new BaiduRegionTemplate(properties.getBaiduAk(), restClient);
-	}
- 
-	@Bean
-	public PconlineRegionTemplate pconlineRegionTemplate(RestClient restClient) {
-		return new PconlineRegionTemplate(restClient);
-	}
+    @Bean
+    public BaiduRegionTemplate baiduRegionTemplate(ExternalProperties properties, RestClient restClient) {
+        return new BaiduRegionTemplate(properties.getBaiduAk(), restClient);
+    }
 
-	@Bean
-	public NestedRegionTemplate nestedRegionTemplate(ObjectProvider<RedisOperationTemplate> redisOperationProvider,
-													 ObjectProvider<IP2regionTemplate> ip2RegionTemplateProvider,
-													 PconlineRegionTemplate pconlineRegionTemplate) {
-		return new NestedRegionTemplate( redisOperationProvider.getIfAvailable(), ip2RegionTemplateProvider.getIfAvailable(), pconlineRegionTemplate);
-	}
+    @Bean
+    public PconlineRegionTemplate pconlineRegionTemplate(RestClient restClient) {
+        return new PconlineRegionTemplate(restClient);
+    }
 
-	@Bean
-	public WeatherTemplate weatherTemplate(RestClient restClient) {
-		return new WeatherTemplate(restClient);
-	}
+    @Bean
+    public NestedRegionTemplate nestedRegionTemplate(ObjectProvider<RedisOperationTemplate> redisOperationProvider,
+                                                     ObjectProvider<IP2regionTemplate> ip2RegionTemplateProvider,
+                                                     PconlineRegionTemplate pconlineRegionTemplate) {
+        return new NestedRegionTemplate(redisOperationProvider.getIfAvailable(), ip2RegionTemplateProvider.getIfAvailable(), pconlineRegionTemplate);
+    }
+
+    @Bean
+    public WeatherTemplate weatherTemplate(RestClient restClient) {
+        return new WeatherTemplate(restClient);
+    }
 /*
 	@Bean
 	public Sequence sequence(RedisOperationTemplate redisOperation, SequenceProperties properties) {

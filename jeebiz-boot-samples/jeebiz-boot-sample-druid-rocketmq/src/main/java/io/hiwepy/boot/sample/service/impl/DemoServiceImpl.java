@@ -34,15 +34,15 @@ import java.util.UUID;
  * @since 2023-08-06
  */
 @RocketMQMessageListener(
-    consumerGroup = "demo",// 消费者分组
-    topic = TopicConstant.DEMO_TOPIC,// 要消费的主题
-    selectorExpression = "tag1",// 要消费的标签
-    consumeMode = ConsumeMode.CONCURRENTLY, // 消费模式:无序和有序
-    messageModel = MessageModel.CLUSTERING // 消息模式:广播和集群,默认是集群
+        consumerGroup = "demo",// 消费者分组
+        topic = TopicConstant.DEMO_TOPIC,// 要消费的主题
+        selectorExpression = "tag1",// 要消费的标签
+        consumeMode = ConsumeMode.CONCURRENTLY, // 消费模式:无序和有序
+        messageModel = MessageModel.CLUSTERING // 消息模式:广播和集群,默认是集群
 )
 @Service
 @Slf4j
-public class DemoServiceImpl extends BaseServiceImpl<DemoMapper, DemoEntity> implements RocketMQListener<DemoEntity>,IDemoService {
+public class DemoServiceImpl extends BaseServiceImpl<DemoMapper, DemoEntity> implements RocketMQListener<DemoEntity>, IDemoService {
 
     @Autowired
     private TxLogMapper txLogMapper;
@@ -58,15 +58,15 @@ public class DemoServiceImpl extends BaseServiceImpl<DemoMapper, DemoEntity> imp
     public boolean save(DemoEntity demo) {
         // 创建事物消息
         String txId = UUID.randomUUID().toString();
-        Message<DemoEntity> message =  MessageBuilder.withPayload(demo).setHeader("txId", txId).build();
+        Message<DemoEntity> message = MessageBuilder.withPayload(demo).setHeader("txId", txId).build();
         // 发送半事务消息
         //destination formats: `topicName:tags` message – message Message arg – ext arg
         TransactionSendResult res = rocketMQTemplate.sendMessageInTransaction(TopicConstant.DEMO_TOPIC_TS + ":tag1", message, demo);
         if (res.getLocalTransactionState().equals(LocalTransactionState.COMMIT_MESSAGE) && res.getSendStatus().equals(SendStatus.SEND_OK)) {
-            log.info("【生产者】事物消息发送成功；成功结果：{}",res);
+            log.info("【生产者】事物消息发送成功；成功结果：{}", res);
             return true;
-        }else{
-            log.info("【生产者】事务发送失败：失败原因：{}",res);
+        } else {
+            log.info("【生产者】事务发送失败：失败原因：{}", res);
             return false;
         }
     }

@@ -4,7 +4,7 @@
  */
 package io.hiwepy.boot.api.param;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
@@ -13,7 +13,7 @@ public abstract class BaseParam {
     /**
      * 请求发生的时间
      */
-    @ApiModelProperty(value = "请求发生的时间", hidden = true)
+    @Schema(description = "请求发生的时间", hidden = true)
     private long currentTimeMillis;
 
 }

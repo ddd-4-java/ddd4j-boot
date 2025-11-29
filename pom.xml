@@ -1,5 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <!-- POM的模型版本 -->
     <modelVersion>4.0.0</modelVersion>
 
@@ -29,51 +31,16 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <revision>3.4.x.20250405-SNAPSHOT</revision>
+        <revision>3.4.x.20251201-SNAPSHOT</revision>
         <java.version>17</java.version>
         <!-- Maven Plugin versions -->
-        <maven.version>3.9.9</maven.version>
+        <maven.version>3.6.3</maven.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
-        <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
-        <maven-clean-plugin.version>3.4.1</maven-clean-plugin.version>
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-        <maven-dependency-plugin.version>3.8.1</maven-dependency-plugin.version>
-        <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
-        <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
-        <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
+        <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
         <maven-flatten-plugin.version>1.7.3</maven-flatten-plugin.version>
-        <maven-gpg-plugin.version>3.2.6</maven-gpg-plugin.version>
-        <maven-help-plugin.version>3.5.1</maven-help-plugin.version>
-        <maven-install-plugin.version>3.1.4</maven-install-plugin.version>
-        <maven-invoker-plugin.version>3.8.1</maven-invoker-plugin.version>
-        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
-        <maven-javadoc-plugin.version>3.10.1</maven-javadoc-plugin.version>
         <maven-nexus-staging-plugin.version>1.7.0</maven-nexus-staging-plugin.version>
         <maven-release-plugin.version>3.2.0</maven-release-plugin.version>
-        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-        <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
-        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
-        <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
-        <!-- Spring -->
-        <spring-amqp.version>3.2.4</spring-amqp.version>
-        <spring-authorization-server.version>1.4.2</spring-authorization-server.version>
-        <spring-batch.version>5.2.2</spring-batch.version>
-        <spring-data-bom.version>2024.1.4</spring-data-bom.version>
-        <spring-framework.version>6.2.5</spring-framework.version>
-        <spring-graphql.version>1.3.4</spring-graphql.version>
-        <spring-hateoas.version>2.4.1</spring-hateoas.version>
-        <spring-integration.version>6.4.3</spring-integration.version>
-        <spring-kafka.version>3.3.4</spring-kafka.version>
-        <spring-ldap.version>3.2.11</spring-ldap.version>
-        <spring-pulsar.version>1.2.4</spring-pulsar.version>
-        <spring-restdocs.version>3.0.3</spring-restdocs.version>
-        <spring-retry.version>2.0.11</spring-retry.version>
-        <spring-security.version>6.4.4</spring-security.version>
-        <spring-session.version>3.4.2</spring-session.version>
-        <spring-ws.version>4.0.12</spring-ws.version>
     </properties>
 
     <modules>
@@ -129,6 +96,40 @@
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring-framework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-bom</artifactId>
+                <version>${spring-security.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.projectreactor/reactor-bom -->
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-bom</artifactId>
+                <version>${reactor-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <repositories>
         <repository>

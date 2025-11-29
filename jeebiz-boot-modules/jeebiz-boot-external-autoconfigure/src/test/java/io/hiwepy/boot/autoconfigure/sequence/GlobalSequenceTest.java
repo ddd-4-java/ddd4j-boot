@@ -1,8 +1,8 @@
 package io.hiwepy.boot.autoconfigure.sequence;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.redis.core.RedisOperationTemplate;
@@ -15,8 +15,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 
 /**
  * GlobalSequence 测试类
@@ -25,12 +25,12 @@ public class GlobalSequenceTest {
 
     @Mock
     private RedisOperationTemplate redisOperation;
-    
+
     private GlobalSequence globalSequence;
 
     @BeforeEach
     void setUp() {
-       MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.initMocks(this);
         globalSequence = new GlobalSequence(redisOperation, 1L, 1L);
     }
 
@@ -45,14 +45,14 @@ public class GlobalSequenceTest {
     void testNextId_ShouldGenerateUniqueIds() {
         // 测试生成的ID是唯一的
         Set<Long> generatedIds = new HashSet<>();
-        
+
         for (int i = 0; i < 1000; i++) {
             Long id = globalSequence.nextId();
             assertNotNull(id);
             assertTrue(id > 0);
             assertTrue(generatedIds.add(id), "Generated duplicate ID: " + id);
         }
-        
+
         assertEquals(1000, generatedIds.size());
     }
 
@@ -62,7 +62,7 @@ public class GlobalSequenceTest {
         Long id1 = globalSequence.nextId();
         Long id2 = globalSequence.nextId();
         Long id3 = globalSequence.nextId();
-        
+
         assertEquals(123456789L, id1);
         assertEquals(123456790L, id2);
         assertNotNull(id3);
@@ -77,12 +77,12 @@ public class GlobalSequenceTest {
         assertNotNull(id);
         assertTrue(id > 0);
     }
-    
+
     @Test
     void testTriggerPreGeneration() {
 
         Long id = globalSequence.nextId();
-        
+
         assertEquals(123456789L, id);
         // 验证触发了剩余数量检查
         verify(redisOperation).lSize(anyString());
@@ -96,7 +96,7 @@ public class GlobalSequenceTest {
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         CountDownLatch latch = new CountDownLatch(threadCount);
         Set<Long> allIds = new HashSet<>();
-        
+
         for (int i = 0; i < threadCount; i++) {
             executor.submit(() -> {
                 try {
@@ -105,7 +105,7 @@ public class GlobalSequenceTest {
                         Long id = globalSequence.nextId();
                         threadIds.add(id);
                     }
-                    
+
                     synchronized (allIds) {
                         allIds.addAll(threadIds);
                     }
@@ -114,10 +114,10 @@ public class GlobalSequenceTest {
                 }
             });
         }
-        
+
         assertTrue(latch.await(10, TimeUnit.SECONDS));
         executor.shutdown();
-        
+
         // 验证所有ID都是唯一的
         assertEquals(threadCount * idsPerThread, allIds.size());
     }
@@ -126,7 +126,7 @@ public class GlobalSequenceTest {
     void testShutdown() {
         // 测试资源清理
         assertDoesNotThrow(() -> globalSequence.shutdown());
-        
+
         // 多次调用shutdown应该是安全的
         assertDoesNotThrow(() -> globalSequence.shutdown());
     }
@@ -136,10 +136,10 @@ public class GlobalSequenceTest {
         // 测试生成的ID格式（Snowflake格式）
         Long id = globalSequence.nextId();
         assertNotNull(id);
-        
+
         // Snowflake ID应该是正数且足够大
         assertTrue(id > 0);
-        
+
         // 转换为二进制字符串检查长度（Snowflake ID通常是64位）
         String binaryString = Long.toBinaryString(id);
         assertTrue(binaryString.length() <= 64);

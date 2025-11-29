@@ -20,7 +20,7 @@ public class HMACUtil {
      * @param salt，加盐
      * @return HMac
      */
-    public static HMac getHMac( String algorithm, String salt) {
+    public static HMac getHMac(String algorithm, String salt) {
         return hMacMap.computeIfAbsent(salt, k -> new HMac(algorithm, salt.getBytes(CharsetUtil.CHARSET_UTF_8)));
     }
 

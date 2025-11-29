@@ -157,20 +157,20 @@
         </dependency>
 
         <!-- For Embed Tomcat -->
-        <!-- <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-        </dependency> -->
+        </dependency>
         <!-- For Embed Jetty -->
         <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jetty</artifactId>
         </dependency> -->
-        <!-- For Embed Undertow -->
+        <!-- For Embed Undertow
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 
@@ -180,10 +180,24 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <executable>true</executable>
                     <mainClass>io.hiwepy.boot.sample.MqttServerApplication</mainClass>
                 </configuration>
             </plugin>
+            <!-- 第一步：生成可执行的启动脚本 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+            </plugin>
+            <!-- 第一步：通过antrun插件拷贝文件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+            <!-- 第三步：通过docker-maven插件构造Docker镜像
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+            </plugin> -->
         </plugins>
     </build>
 

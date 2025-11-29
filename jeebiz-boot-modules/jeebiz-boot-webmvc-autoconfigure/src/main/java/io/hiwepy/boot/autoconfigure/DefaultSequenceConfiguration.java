@@ -24,7 +24,7 @@ public class DefaultSequenceConfiguration {
     @ConditionalOnMissingBean
     public Sequence sequence(SequenceProperties properties) {
         long dataCenterId = IdUtil.getDataCenterId(31);
-        long workerId = IdUtil.getWorkerId( dataCenterId,31);
+        long workerId = IdUtil.getWorkerId(dataCenterId, 31);
         long timeOffset = Objects.isNull(properties.getTimeOffset()) ? 5L : properties.getTimeOffset();
         long randomSequenceLimit = Objects.isNull(properties.getRandomSequenceLimit()) ? 0L : properties.getRandomSequenceLimit();
         return new Sequence(workerId, dataCenterId, properties.isUseSystemClock(), timeOffset, randomSequenceLimit);

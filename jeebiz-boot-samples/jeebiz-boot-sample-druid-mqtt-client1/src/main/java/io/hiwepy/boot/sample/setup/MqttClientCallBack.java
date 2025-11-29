@@ -1,12 +1,12 @@
 package io.hiwepy.boot.sample.setup;
 
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.springframework.stereotype.Component;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
@@ -28,10 +28,10 @@ public class MqttClientCallBack implements MqttCallback {
      */
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        System.out.printf("接收消息主题 : %s%n",topic);
-        System.out.printf("接收消息Qos : %d%n",message.getQos());
-        System.out.printf("接收消息内容 : %s%n",new String(message.getPayload()));
-        System.out.printf("接收消息retained : %b%n",message.isRetained());
+        System.out.printf("接收消息主题 : %s%n", topic);
+        System.out.printf("接收消息Qos : %d%n", message.getQos());
+        System.out.printf("接收消息内容 : %s%n", new String(message.getPayload()));
+        System.out.printf("接收消息retained : %b%n", message.isRetained());
     }
 
     /**

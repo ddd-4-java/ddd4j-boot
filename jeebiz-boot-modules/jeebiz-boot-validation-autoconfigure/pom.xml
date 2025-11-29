@@ -13,11 +13,6 @@
     <artifactId>jeebiz-boot-validation-autoconfigure</artifactId>
 
     <dependencies>
-        <!-- For Jakarta Validation Api -->
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-        </dependency>
         <!-- For Validation -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,9 +1,9 @@
 package io.hiwepy.boot.autoconfigure.datascope.annotation;
 
 import io.hiwepy.boot.autoconfigure.datascope.RequiresDataPermissionsValidator;
-
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+
 import java.lang.annotation.*;
 
 /**
@@ -14,13 +14,14 @@ import java.lang.annotation.*;
  * @since 2024.10.09
  */
 @Documented
-@Constraint( validatedBy = {RequiresDataPermissionsValidator.class})
+@Constraint(validatedBy = {RequiresDataPermissionsValidator.class})
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RequiresDataPermissions {
 
     /**
      * 数据类型
+     *
      * @return the data type
      */
     String dataType();

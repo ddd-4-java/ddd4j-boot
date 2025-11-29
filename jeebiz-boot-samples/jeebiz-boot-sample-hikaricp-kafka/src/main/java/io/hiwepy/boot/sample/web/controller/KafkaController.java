@@ -3,14 +3,13 @@ package io.hiwepy.boot.sample.web.controller;
 import com.alibaba.fastjson2.JSON;
 import io.hiwepy.boot.api.ApiRestResponse;
 import io.hiwepy.boot.sample.setup.TopicConstant;
+import jakarta.annotation.Resource;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.kafka.core.KafkaOperations;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import jakarta.annotation.Resource;
-import jakarta.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/kafka")

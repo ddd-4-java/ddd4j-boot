@@ -226,25 +226,24 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <executable>true</executable>
                     <mainClass>io.hiwepy.boot.sample.MqttServerApplication</mainClass>
                 </configuration>
             </plugin>
-            <!-- 第三步：通过docker-maven插件构造Docker镜像 <plugin> <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId> </plugin> -->
-            <!-- 第四步：生成离线文档 -->
-            <!-- http://blog.didispace.com/swagger2markup-asciidoc/ -->
-            <!-- First, use the swagger2markup plugin to generate asciidoc
+            <!-- 第一步：生成可执行的启动脚本 -->
             <plugin>
-                <groupId>io.github.swagger2markup</groupId>
-                <artifactId>swagger2markup-maven-plugin</artifactId>
-            </plugin>-->
-            <!-- Run the generated asciidoc through Asciidoctor to generate other
-                documentation types, such as PDFs or HTML5
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+            </plugin>
+            <!-- 第一步：通过antrun插件拷贝文件 -->
             <plugin>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctor-maven-plugin</artifactId>
-            </plugin>-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+            <!-- 第三步：通过docker-maven插件构造Docker镜像
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+            </plugin> -->
         </plugins>
     </build>
 

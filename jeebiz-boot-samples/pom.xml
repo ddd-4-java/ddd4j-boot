@@ -37,7 +37,6 @@
         <module>jeebiz-boot-sample-hikaricp-kafka</module>
         <module>jeebiz-boot-sample-hikaricp-rocketmq</module>
         <module>jeebiz-boot-sample-hikaricp-war</module>
-        <module>jeebiz-boot-sample-openai</module>
         <module>jeebiz-boot-sample-r2dbc-webflux</module>
     </modules>
 

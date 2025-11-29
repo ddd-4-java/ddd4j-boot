@@ -45,7 +45,7 @@ public class DefaultCryptoStrategy implements CryptoStrategy {
             // 2、获取加密器
             SymmetricCrypto crypto = SymmetricCryptoUtil.getSymmetricCrypto(algorithmType.getName(), encMode, padMode, Base64.decodeStr(key), Objects.isNull(iv) ? null : Base64.decodeStr(iv));
             // 3、加密Value，如果 plainIsEncode =true 则对加密结果进行Base64
-            if(plainIsEncode){
+            if (plainIsEncode) {
                 valueAsString = crypto.encryptBase64(valueAsString);
             } else {
                 valueAsString = new String(crypto.encrypt(valueAsString), StandardCharsets.UTF_8);
@@ -80,7 +80,7 @@ public class DefaultCryptoStrategy implements CryptoStrategy {
             log.debug("Plain Value to {} HMAC : {}", hmacAlgorithm.name(), value);
             HMac hMac = SymmetricCryptoUtil.getHmac(hmacAlgorithm, Base64.decodeStr(key));
             String hmacValue;
-            if(plainIsEncode){
+            if (plainIsEncode) {
                 hmacValue = hMac.digestBase64(getObjectMapper().writeValueAsString(value), StandardCharsets.UTF_8, Boolean.TRUE);
             } else {
                 hmacValue = new String(hMac.digest(getObjectMapper().writeValueAsString(value)), StandardCharsets.UTF_8);

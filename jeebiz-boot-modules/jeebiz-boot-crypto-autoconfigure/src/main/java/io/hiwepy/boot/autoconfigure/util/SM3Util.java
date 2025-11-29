@@ -15,10 +15,11 @@ public class SM3Util {
 
     /**
      * 获取SM3
+     *
      * @param salt，加盐
      * @return SM3
      */
-    public static SM3 getSm3( String salt) {
+    public static SM3 getSm3(String salt) {
         return sm3Map.computeIfAbsent(salt, k -> new SM3(salt.getBytes(CharsetUtil.CHARSET_UTF_8)));
     }
 

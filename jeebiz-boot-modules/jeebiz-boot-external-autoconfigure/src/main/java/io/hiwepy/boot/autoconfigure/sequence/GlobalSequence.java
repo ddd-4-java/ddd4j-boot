@@ -109,11 +109,11 @@ public class GlobalSequence extends Sequence {
         } catch (Exception e) {
             log.warn("从Redis获取ID失败，使用Snowflake生成: {}", e.getMessage());
         }
-        
+
         // Redis中没有可用ID，直接使用snowflake生成
         return this.getSnowflake().nextId();
     }
-    
+
     /**
      * 检查剩余ID数量并触发预生成
      */

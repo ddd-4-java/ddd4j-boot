@@ -2,7 +2,7 @@ package io.hiwepy.boot.sample.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.mica.mqtt.codec.MqttQoS;
-import org.dromara.mica.mqtt.spring.client.MqttClientSubscribe;
+import org.dromara.mica.mqtt.core.annotation.MqttClientSubscribe;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -13,12 +13,12 @@ public class MqttClientSubscribeListener {
 
     @MqttClientSubscribe("/test/#")
     public void subQos0(String topic, byte[] payload) {
-        log.info("topic:{} payload:{}", topic, new String(payload, StandardCharsets.UTF_8));
+        log.info("subQos0 topic:{} payload:{}", topic, new String(payload, StandardCharsets.UTF_8));
     }
 
     @MqttClientSubscribe(value = "/qos1/#", qos = MqttQoS.QOS1)
     public void subQos1(String topic, byte[] payload) {
-        log.info("topic:{} payload:{}", topic, new String(payload, StandardCharsets.UTF_8));
+        log.info("subQos1 topic:{} payload:{}", topic, new String(payload, StandardCharsets.UTF_8));
     }
 
     @MqttClientSubscribe("/sys/${productKey}/${deviceName}/thing/sub/register")

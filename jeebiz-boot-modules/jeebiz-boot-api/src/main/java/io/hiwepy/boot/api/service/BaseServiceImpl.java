@@ -10,8 +10,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.github.dozermapper.core.Mapper;
-import io.hiwepy.boot.api.mybatis.mapper.BaseMapper;
 import io.hiwepy.boot.api.entity.PaginationEntity;
+import io.hiwepy.boot.api.mybatis.mapper.BaseMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import org.springframework.beans.BeansException;
@@ -85,6 +85,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Model<?>> extend
 
     /**
      * 分页查询
+     *
      * @param entity 查询参数
      * @return 分页数据
      */
@@ -105,7 +106,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Model<?>> extend
 
     /**
      * 分页查询
-     * @param page 分页参数
+     *
+     * @param page   分页参数
      * @param entity 查询参数
      * @return 分页数据
      */

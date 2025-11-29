@@ -1,16 +1,13 @@
 # jeebiz-boot-sample-druid-mqtt
 
-> 基于 [Spring Boot 3.x](https://docs.spring.io/spring-boot/index.html) 、[Mybatis Plus](https://baomidou.com/introduce/)、[Druid](https://github.com/alibaba/druid) 技术为主的 Demo 功能示例。
-
+>
+基于 [Spring Boot 3.x](https://docs.spring.io/spring-boot/index.html) 、[Mybatis Plus](https://baomidou.com/introduce/)、[Druid](https://github.com/alibaba/druid)
+技术为主的 Demo 功能示例。
 
 #### 为什么选择 MQTT ？
 
-MQTT（消息队列遥测传输）是一种轻量级的消息协议，专为低带宽、高延迟和不可靠的网络环境设计。它支持三种消息服务质量（QoS）级别，能够灵活应对不同的业务需求。在工业物联网场景中，设备数量众多且分布广泛，网络环境复杂多变。MQTT 的这些特性，使其成为工业物联网通信的首选协议。
-
- 
-
-
-
+MQTT（消息队列遥测传输）是一种轻量级的消息协议，专为低带宽、高延迟和不可靠的网络环境设计。它支持三种消息服务质量（QoS）级别，能够灵活应对不同的业务需求。在工业物联网场景中，设备数量众多且分布广泛，网络环境复杂多变。MQTT
+的这些特性，使其成为工业物联网通信的首选协议。
 
 ### 技术栈
 
@@ -22,7 +19,9 @@ MQTT（消息队列遥测传输）是一种轻量级的消息协议，专为低�
 
 ### 先决条件
 
-您首先需要一个 RocketMQ 服务端。请参阅官方 [本地部署 RocketMQ](https://rocketmq.apache.org/zh/docs/quickStart/01quickstart "本地部署 RocketMQ")，开始在本地计算机上运行 RocketMQ 服务。
+您首先需要一个 RocketMQ
+服务端。请参阅官方 [本地部署 RocketMQ](https://rocketmq.apache.org/zh/docs/quickStart/01quickstart "本地部署 RocketMQ")
+，开始在本地计算机上运行 RocketMQ 服务。
 
 **注意**: 开发调试，推荐使用 Docker 部署 RocketMQ。
 
@@ -248,19 +247,18 @@ mqtt:
 
 注意：**ssl** 存在三种情况
 
-| 服务端开启ssl                            | 客户端                                        |
-| ---------------------------------------- | --------------------------------------------- |
-| ClientAuth 为 NONE（不需要客户端验证）   | 仅仅需要开启 ssl 即可不用配置证书             |
-| ClientAuth 为 OPTIONAL（与客户端协商）   | 需开启 ssl 并且配置 truststore 证书           |
+| 服务端开启ssl                        | 客户端                                 |
+|---------------------------------|-------------------------------------|
+| ClientAuth 为 NONE（不需要客户端验证）     | 仅仅需要开启 ssl 即可不用配置证书                 |
+| ClientAuth 为 OPTIONAL（与客户端协商）   | 需开启 ssl 并且配置 truststore 证书          |
 | ClientAuth 为 REQUIRE (必须的客户端验证) | 需开启 ssl 并且配置 truststore、 keystore证书 |
-
 
 ##### 2.2 可实现接口（注册成 Spring Bean 即可）
 
-| 接口                           | 是否必须 | 说明                             |
-| ---------------------------   |------|--------------------------------|
-| IMqttClientConnectListener    | 否    | 客户端连接成功监听                      |
-| IMqttClientGlobalMessageListener    | 否    | 全局消息监听，可以监听到所有订阅消息。（2.2.9开始支持） |
+| 接口                               | 是否必须 | 说明                             |
+|----------------------------------|------|--------------------------------|
+| IMqttClientConnectListener       | 否    | 客户端连接成功监听                      |
+| IMqttClientGlobalMessageListener | 否    | 全局消息监听，可以监听到所有订阅消息。（2.2.9开始支持） |
 
 ##### 2.3 客户端上下线监听
 
@@ -349,9 +347,11 @@ public class MqttClientSubscribeListener {
 mica-mqtt 支持两种**共享订阅**方式：
 
 1. 共享订阅：订阅前缀 `$queue/`，多个客户端订阅了 `$queue/topic`，发布者发布到 `topic`，则只有一个客户端会接收到消息。
-2. 分组订阅：订阅前缀 `$share/<group>/`，组客户端订阅了 `$share/group1/topic`、`$share/group2/topic`..，发布者发布到 `topic`，则消息会发布到每个 **group** 中，但是每个 **group** 中只有一个客户端会接收到消息。
+2. 分组订阅：订阅前缀 `$share/<group>/`，组客户端订阅了 `$share/group1/topic`、`$share/group2/topic`..，发布者发布到 `topic`
+   ，则消息会发布到每个 **group** 中，但是每个 **group** 中只有一个客户端会接收到消息。
 
-**注意：** 如果发布的 `topic` 以 `/` 开头，例如：`/topic/test`，需要订阅 `$share/group1//topic/test`，另外 mica-mqtt 默认随机消息路由，共享订阅的多个客户端会随机收到消息。
+**注意：** 如果发布的 `topic` 以 `/` 开头，例如：`/topic/test`，需要订阅 `$share/group1//topic/test`，另外 mica-mqtt
+默认随机消息路由，共享订阅的多个客户端会随机收到消息。
 
 ##### 2.7 MqttClientTemplate 使用示例
 
@@ -411,7 +411,8 @@ public class OtherMqttClientConfiguration {
 
 ##### 3.2 修改 starter 自带的 MqttClientTemplate Bean 引入
 
-由于现在加入了一个新的名为 `mqttClientTemplate1` MqttClientTemplate，老的 starter 内置的 MqttClientTemplate 引入也需要添加 bean name。
+由于现在加入了一个新的名为 `mqttClientTemplate1` MqttClientTemplate，老的 starter 内置的 MqttClientTemplate 引入也需要添加
+bean name。
 
 ```java
 @Autowired
@@ -429,7 +430,8 @@ private MqttClientTemplate mqttClientTemplate;
 
 ##### 3.4 新加入的 mqttClientTemplate1 注解订阅
 
-注意：由于 `@MqttClientSubscribe` clientTemplateBean 默认是 `MqttClientTemplate.DEFAULT_CLIENT_TEMPLATE_BEAN`，所以新增的 `mqttClientTemplate1` 注解订阅的时候也需要配置。
+注意：由于 `@MqttClientSubscribe` clientTemplateBean 默认是 `MqttClientTemplate.DEFAULT_CLIENT_TEMPLATE_BEAN`，所以新增的
+`mqttClientTemplate1` 注解订阅的时候也需要配置。
 
 ```java
 @MqttClientSubscribe(

@@ -1,18 +1,19 @@
 package io.hiwepy.boot.autoconfigure.datascope;
 
 import io.hiwepy.boot.autoconfigure.datascope.annotation.RequiresDataPermissions;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.biz.utils.SpringContextUtils;
 
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
 import java.util.Objects;
 
 /**
  * 数据权限校验
  * Data permission verification
- * @see RequiresDataPermissions
+ *
  * @author wandl
+ * @see RequiresDataPermissions
  */
 @Slf4j
 public class RequiresDataPermissionsValidator implements ConstraintValidator<RequiresDataPermissions, Object> {

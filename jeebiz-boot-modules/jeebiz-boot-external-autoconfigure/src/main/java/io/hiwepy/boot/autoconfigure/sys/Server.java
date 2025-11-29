@@ -2,10 +2,7 @@ package io.hiwepy.boot.autoconfigure.sys;
 
 import hitool.core.lang3.network.InetAddressUtils;
 import io.hiwepy.boot.api.utils.Arith;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;

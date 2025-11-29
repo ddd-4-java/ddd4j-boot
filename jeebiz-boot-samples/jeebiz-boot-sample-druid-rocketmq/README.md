@@ -1,6 +1,8 @@
 # jeebiz-boot-sample-druid-rocketmq
 
-> 基于 [Spring Boot 2.x](https://docs.spring.io/spring-boot/index.html) 、[Apache RocketMQ](https://rocketmq.apache.org/zh/)、[Mybatis Plus](https://baomidou.com/introduce/)、[Druid](https://github.com/alibaba/druid) 技术为主的 Demo 功能示例。
+>
+基于 [Spring Boot 2.x](https://docs.spring.io/spring-boot/index.html) 、[Apache RocketMQ](https://rocketmq.apache.org/zh/)、[Mybatis Plus](https://baomidou.com/introduce/)、[Druid](https://github.com/alibaba/druid)
+技术为主的 Demo 功能示例。
 
 ### 技术栈
 
@@ -12,7 +14,9 @@
 
 ### 先决条件
 
-您首先需要一个 RocketMQ 服务端。请参阅官方 [本地部署 RocketMQ](https://rocketmq.apache.org/zh/docs/quickStart/01quickstart "本地部署 RocketMQ")，开始在本地计算机上运行 RocketMQ 服务。
+您首先需要一个 RocketMQ
+服务端。请参阅官方 [本地部署 RocketMQ](https://rocketmq.apache.org/zh/docs/quickStart/01quickstart "本地部署 RocketMQ")
+，开始在本地计算机上运行 RocketMQ 服务。
 
 **注意**: 开发调试，推荐使用 Docker 部署 RocketMQ。
 
@@ -46,7 +50,7 @@ dependencies {
 ### 示例代码
 
 在已创建的Java工程中，创建发送普通消息程序并运行，示例代码如下：
- 
+
 ```shell
 import org.apache.rocketmq.client.apis.ClientConfiguration;
 import org.apache.rocketmq.client.apis.ClientConfigurationBuilder;

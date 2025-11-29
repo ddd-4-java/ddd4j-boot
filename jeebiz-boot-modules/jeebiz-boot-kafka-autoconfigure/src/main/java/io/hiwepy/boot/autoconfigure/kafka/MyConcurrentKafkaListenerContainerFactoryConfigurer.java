@@ -12,7 +12,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.*;
 import org.springframework.kafka.listener.adapter.RecordFilterStrategy;
 import org.springframework.kafka.support.converter.BatchMessageConverter;
-import org.springframework.kafka.support.converter.MessageConverter;
 import org.springframework.kafka.support.converter.RecordMessageConverter;
 import org.springframework.kafka.transaction.KafkaAwareTransactionManager;
 
@@ -72,6 +71,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link KafkaProperties} to use.
+     *
      * @param properties the properties
      */
     void setKafkaProperties(KafkaProperties properties) {
@@ -80,6 +80,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link BatchMessageConverter} to use.
+     *
      * @param batchMessageConverter the message converter
      */
     void setBatchMessageConverter(BatchMessageConverter batchMessageConverter) {
@@ -88,6 +89,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link RecordMessageConverter} to use.
+     *
      * @param recordMessageConverter the message converter
      */
     void setRecordMessageConverter(RecordMessageConverter recordMessageConverter) {
@@ -96,6 +98,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link RecordFilterStrategy} to use to filter incoming records.
+     *
      * @param recordFilterStrategy the record filter strategy
      */
     void setRecordFilterStrategy(RecordFilterStrategy<String, String> recordFilterStrategy) {
@@ -104,6 +107,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link KafkaTemplate} to use to send replies.
+     *
      * @param replyTemplate the reply template
      */
     void setReplyTemplate(KafkaTemplate<String, String> replyTemplate) {
@@ -112,6 +116,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link KafkaAwareTransactionManager} to use.
+     *
      * @param transactionManager the transaction manager
      */
     void setTransactionManager(KafkaAwareTransactionManager<String, String> transactionManager) {
@@ -120,6 +125,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link ConsumerAwareRebalanceListener} to use.
+     *
      * @param rebalanceListener the rebalance listener.
      * @since 2.2
      */
@@ -129,6 +135,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link CommonErrorHandler} to use.
+     *
      * @param commonErrorHandler the error handler.
      * @since 2.6.0
      */
@@ -138,6 +145,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link AfterRollbackProcessor} to use.
+     *
      * @param afterRollbackProcessor the after rollback processor
      */
     void setAfterRollbackProcessor(AfterRollbackProcessor<String, String> afterRollbackProcessor) {
@@ -146,6 +154,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link RecordInterceptor} to use.
+     *
      * @param recordInterceptor the record interceptor.
      */
     void setRecordInterceptor(RecordInterceptor<String, String> recordInterceptor) {
@@ -154,6 +163,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the {@link BatchInterceptor} to use.
+     *
      * @param batchInterceptor the batch interceptor.
      */
     void setBatchInterceptor(BatchInterceptor<String, String> batchInterceptor) {
@@ -162,6 +172,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the thread name supplier to use.
+     *
      * @param threadNameSupplier the thread name supplier to use
      */
     void setThreadNameSupplier(Function<MessageListenerContainer, String> threadNameSupplier) {
@@ -170,6 +181,7 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
 
     /**
      * Set the executor for threads that poll the consumer.
+     *
      * @param listenerTaskExecutor task executor
      */
     void setListenerTaskExecutor(SimpleAsyncTaskExecutor listenerTaskExecutor) {
@@ -184,12 +196,13 @@ public class MyConcurrentKafkaListenerContainerFactoryConfigurer extends Concurr
     /**
      * Configure the specified Kafka listener container factory. The factory can be
      * further tuned and default settings can be overridden.
+     *
      * @param listenerFactory the {@link ConcurrentKafkaListenerContainerFactory} instance
-     * to configure
+     *                        to configure
      * @param consumerFactory the {@link ConsumerFactory} to use
      */
     public void configure2(ConcurrentKafkaListenerContainerFactory<String, String> listenerFactory,
-                          ConsumerFactory<String, String> consumerFactory) {
+                           ConsumerFactory<String, String> consumerFactory) {
         listenerFactory.setConsumerFactory(consumerFactory);
         configureListenerFactory2(listenerFactory);
         configureContainer(consumerFactory, listenerFactory.getContainerProperties());

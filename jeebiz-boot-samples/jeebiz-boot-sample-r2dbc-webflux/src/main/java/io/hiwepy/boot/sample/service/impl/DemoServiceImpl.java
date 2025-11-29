@@ -5,8 +5,8 @@
 package io.hiwepy.boot.sample.service.impl;
 
 import io.hiwepy.boot.api.service.BaseServiceImpl;
-import io.hiwepy.boot.sample.mapper.DemoMapper;
 import io.hiwepy.boot.sample.entity.DemoEntity;
+import io.hiwepy.boot.sample.mapper.DemoMapper;
 import io.hiwepy.boot.sample.service.IDemoService;
 import org.springframework.stereotype.Service;
 

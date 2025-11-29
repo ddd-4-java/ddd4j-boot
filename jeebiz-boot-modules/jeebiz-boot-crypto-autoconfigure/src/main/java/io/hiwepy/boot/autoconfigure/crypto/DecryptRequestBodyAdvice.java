@@ -4,10 +4,10 @@ import cn.hutool.crypto.symmetric.AES;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.hiwepy.boot.api.ApiCode;
-import io.hiwepy.boot.api.param.BaseParam;
-import io.hiwepy.boot.api.param.RequestData;
 import io.hiwepy.boot.api.exception.BizRuntimeException;
 import io.hiwepy.boot.api.exception.ParamException;
+import io.hiwepy.boot.api.param.BaseParam;
+import io.hiwepy.boot.api.param.RequestData;
 import io.hiwepy.boot.autoconfigure.CryptoConstant;
 import io.hiwepy.boot.autoconfigure.crypto.annotation.RequestDecryption;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,9 +38,10 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
     /**
      * 方法上有RequestDecryption注解的，进入此拦截器
+     *
      * @param methodParameter 方法参数对象
-     * @param targetType 参数的类型
-     * @param converterType 消息转换器
+     * @param targetType      参数的类型
+     * @param converterType   消息转换器
      * @return true，进入，false，跳过
      */
     @Override
@@ -50,10 +51,11 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
     /**
      * 转换之后，执行此方法，解密，赋值
-     * @param body spring解析完的参数
-     * @param inputMessage 输入参数
-     * @param parameter 参数对象
-     * @param targetType 参数类型
+     *
+     * @param body          spring解析完的参数
+     * @param inputMessage  输入参数
+     * @param parameter     参数对象
+     * @param targetType    参数类型
      * @param converterType 消息转换类型
      * @return 真实的参数
      */
@@ -134,10 +136,11 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
     /**
      * 如果body为空，转为空对象
-     * @param body spring解析完的参数
-     * @param inputMessage 输入参数
-     * @param parameter 参数对象
-     * @param targetType 参数类型
+     *
+     * @param body          spring解析完的参数
+     * @param inputMessage  输入参数
+     * @param parameter     参数对象
+     * @param targetType    参数类型
      * @param converterType 消息转换类型
      * @return 真实的参数
      */
