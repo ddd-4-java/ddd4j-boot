@@ -26,6 +26,11 @@
             <!-- Ddd4j Boot Components -->
             <dependency>
                 <groupId>com.github.hiwepy</groupId>
+                <artifactId>ddd4j-boot-cmpt-akka</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
                 <artifactId>ddd4j-boot-cmpt-cola</artifactId>
                 <version>${revision}</version>
             </dependency>

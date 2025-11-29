@@ -12,12 +12,14 @@
     <artifactId>ddd4j-boot-cmpt-cola</artifactId>
     <description>Ddd4j Boot COLA Component</description>
     <dependencies>
-        <!-- For SLF4J -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        <!-- For Servlet API -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>

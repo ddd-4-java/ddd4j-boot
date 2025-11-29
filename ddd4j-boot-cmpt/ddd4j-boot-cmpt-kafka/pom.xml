@@ -13,6 +13,19 @@
     <artifactId>ddd4j-boot-cmpt-kafka</artifactId>
 
     <dependencies>
+
+        <!-- For SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <!-- For Servlet Api -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!-- For Jeebiz API -->
         <dependency>
             <groupId>com.github.hiwepy</groupId>
@@ -40,8 +53,8 @@
         </dependency>
         <!-- For Kafka -->
         <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-kafka</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>

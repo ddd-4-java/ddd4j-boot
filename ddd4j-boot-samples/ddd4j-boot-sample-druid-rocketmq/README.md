@@ -1,4 +1,4 @@
-# jeebiz-boot-sample-druid-rocketmq
+# ddd4j-boot-sample-druid-rocketmq
 
 >
 基于 [Spring Boot 2.x](https://docs.spring.io/spring-boot/index.html) 、[Apache RocketMQ](https://rocketmq.apache.org/zh/)、[Mybatis Plus](https://baomidou.com/introduce/)、[Druid](https://github.com/alibaba/druid)

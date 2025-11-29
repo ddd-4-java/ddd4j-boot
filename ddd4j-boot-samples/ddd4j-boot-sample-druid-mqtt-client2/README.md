@@ -1,4 +1,4 @@
-# jeebiz-boot-sample-druid-mqtt
+# ddd4j-boot-sample-druid-mqtt
 
 >
 基于 [Spring Boot 3.x](https://docs.spring.io/spring-boot/index.html) 、[Mybatis Plus](https://baomidou.com/introduce/)、[Druid](https://github.com/alibaba/druid)

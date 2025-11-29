@@ -29,7 +29,7 @@ public class DemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.err.println("Spring Boot Application（Jeebiz-Boot-Demo） Started !");
+        System.err.println("Spring Boot Application（ddd4j-boot-Demo） Started !");
     }
 
 }

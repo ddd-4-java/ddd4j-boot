@@ -109,6 +109,7 @@ public class DefaultKafkaAutoConfiguration {
     */
 /**
  * 自定义一个Kafka事务生产者工厂（专用于事务消息的发送）
+ *
  * @param customizers 自定义生产者工厂的配置
  * @return 自定义的Kafka事务生产者工厂
  *//*
@@ -125,6 +126,7 @@ public class DefaultKafkaAutoConfiguration {
     */
 /**
  * 自定义一个Kafka事务模板（专用于事务消息的发送）
+ *
  * @param kafkaProducerFactory 事务生产者工厂
  * @return 自定义的Kafka事务模板
  *//*

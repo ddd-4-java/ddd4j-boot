@@ -13,7 +13,7 @@ class MapperGenerator {
     // 设置你的昵称
     private static String AUTHOR = "wandl";
     // 设置项目名称
-    private static String PROJECT_NAME = "jeebiz-boot-samples/jeebiz-boot-sample-druid";
+    private static String PROJECT_NAME = "ddd4j-boot-samples/ddd4j-boot-sample-druid";
     // 设置项目包路径
     private static String PROJECT_PACKAGE = "io.hiwepy.boot.sample";
 

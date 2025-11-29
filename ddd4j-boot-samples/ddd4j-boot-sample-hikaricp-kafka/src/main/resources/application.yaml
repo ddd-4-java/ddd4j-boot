@@ -186,7 +186,7 @@ swagger:
 spring:
   # 应用信息配置
   application:
-    name: jeebiz-boot-sample-druid
+    name: ddd4j-boot-sample-druid
   # 缓存配置：
   cache:
     type: none

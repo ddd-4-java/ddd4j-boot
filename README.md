@@ -1,6 +1,6 @@
 ## Ddd4j Boot 3.x 简介：
 
-> Ddd4j Boot 3.x 是以 Spring Boot 3.4.x 为基础，构建的 Spring Boot 项目快速开发脚手架；
+> Ddd4j Boot 3.x 是以 Spring Boot 3.5.x 为基础，构建的 Spring Boot 项目快速开发脚手架；
 
 - 1、继承 Spring Boot ，具备 Spring Boot 的 所有特性
 
@@ -20,14 +20,14 @@
 
 **Maven模块**：
 
-| 模块                       | 说明                                                                                     |
-|--------------------------|----------------------------------------------------------------------------------------|
-| ddd4j-boot-bom            | pom类型模块，BOM依赖管理，用于外部项目引用 ddd4j-boot 模块版本管理                        |
-| ddd4j-boot-dependencies   | pom类型模块，负责配置项目公共依赖，便于依赖组件版本控制                                                          |
-| ddd4j-boot-core           | 项目核心模块，封装基础API、公共对象（BaseController、BaseService、BaseMapper 等）、异常对象到jar中，以便复用 |
-| ddd4j-boot-cmpt           | 组件模块父模块，包含各类功能组件的自动配置模块                                           |
-| ddd4j-boot-parent         | pom类型模块，默认配置Maven插件相关参数和打包方式                                                           |
-| ddd4j-boot-samples        | 具体服务示例，该模块下的各服务模块，均要继承 `ddd4j-boot-parent`                                            |
+| 模块                      | 说明                                                                          |
+|-------------------------|-----------------------------------------------------------------------------|
+| ddd4j-boot-bom          | pom类型模块，BOM依赖管理，用于外部项目引用 ddd4j-boot 模块版本管理                                  |
+| ddd4j-boot-dependencies | pom类型模块，负责配置项目公共依赖，便于依赖组件版本控制                                               |
+| ddd4j-boot-core         | 项目核心模块，封装基础API、公共对象（BaseController、BaseService、BaseMapper 等）、异常对象到jar中，以便复用 |
+| ddd4j-boot-cmpt         | 组件模块父模块，包含各类功能组件的自动配置模块                                                     |
+| ddd4j-boot-parent       | pom类型模块，默认配置Maven插件相关参数和打包方式                                                |
+| ddd4j-boot-samples      | 具体服务示例，该模块下的各服务模块，均要继承 `ddd4j-boot-parent`                                  |
 
 **注意事项**：
 
@@ -127,22 +127,22 @@
 
 ### 3. 组件模块说明
 
-| 组件模块 | 说明 |
-|---------|------|
-| ddd4j-boot-cmpt-crypto | 加解密组件，支持 AES、SM3、SM4 等加密算法 |
-| ddd4j-boot-cmpt-datascope | 数据权限组件，支持数据范围权限控制 |
-| ddd4j-boot-cmpt-license | License 组件，支持 TrueLicense 许可证管理 |
-| ddd4j-boot-cmpt-logs | 日志组件，支持 API 操作日志记录 |
-| ddd4j-boot-cmpt-pf4j | PF4J 插件组件，支持插件化开发 |
-| ddd4j-boot-cmpt-cola | COLA 组件，支持 COLA 架构模式 |
-| ddd4j-boot-cmpt-satoken | SaToken 组件，支持 SaToken 权限认证 |
-| ddd4j-boot-cmpt-jackson | Jackson 组件，支持 Jackson 序列化配置 |
-| ddd4j-boot-cmpt-webmvc | WebMVC 组件，支持 Spring MVC 自动配置 |
-| ddd4j-boot-cmpt-webflux | WebFlux 组件，支持 Spring WebFlux 自动配置 |
-| ddd4j-boot-cmpt-kafka | Kafka 组件，支持 Kafka 消息队列集成 |
-| ddd4j-boot-cmpt-external | 外部 API 集成组件，支持外部服务调用 |
-| ddd4j-boot-cmpt-validation | 验证组件，支持自定义验证规则 |
+| 组件模块                       | 说明                                |
+|----------------------------|-----------------------------------|
+| ddd4j-boot-cmpt-crypto     | 加解密组件，支持 AES、SM3、SM4 等加密算法        |
+| ddd4j-boot-cmpt-datascope  | 数据权限组件，支持数据范围权限控制                 |
+| ddd4j-boot-cmpt-license    | License 组件，支持 TrueLicense 许可证管理   |
+| ddd4j-boot-cmpt-logs       | 日志组件，支持 API 操作日志记录                |
+| ddd4j-boot-cmpt-pf4j       | PF4J 插件组件，支持插件化开发                 |
+| ddd4j-boot-cmpt-cola       | COLA 组件，支持 COLA 架构模式              |
+| ddd4j-boot-cmpt-satoken    | SaToken 组件，支持 SaToken 权限认证        |
+| ddd4j-boot-cmpt-jackson    | Jackson 组件，支持 Jackson 序列化配置       |
+| ddd4j-boot-cmpt-webmvc     | WebMVC 组件，支持 Spring MVC 自动配置      |
+| ddd4j-boot-cmpt-webflux    | WebFlux 组件，支持 Spring WebFlux 自动配置 |
+| ddd4j-boot-cmpt-kafka      | Kafka 组件，支持 Kafka 消息队列集成          |
+| ddd4j-boot-cmpt-external   | 外部 API 集成组件，支持外部服务调用              |
+| ddd4j-boot-cmpt-validation | 验证组件，支持自定义验证规则                    |
 
 #### Spring Docs
 
-https://docs.spring.io/spring-boot/docs/3.4.5/reference/html/features.html#features.spring-application
+https://docs.spring.io/spring-boot/docs/3.5.x/reference/html/features.html#features.spring-application

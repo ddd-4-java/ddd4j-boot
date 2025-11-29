@@ -1,4 +1,4 @@
-# jeebiz-boot-sample-druid-mqtt-server
+# ddd4j-boot-sample-druid-mqtt-server
 
 > MQTT（消息队列遥测传输）是一种轻量级的消息协议，专为低带宽、高延迟和不可靠的网络环境设计。它支持三种消息服务质量（QoS）级别，能够灵活应对不同的业务需求。在工业物联网场景中，设备数量众多且分布广泛，网络环境复杂多变。MQTT
 > 的这些特性，使其成为工业物联网通信的首选协议。
