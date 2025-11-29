@@ -1,0 +1,61 @@
+################################################################################################################
+###Spring Boot 相关组件（SpringMVC、Freemarker、Session、Cache、DataSource）配置：
+################################################################################################################
+spring:
+  # 缓存配置：
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=500,expireAfterAccess=600s
+    redis:
+      key-prefix: demo
+      time-to-live: 600s
+      cache-null-values: false
+      use-key-prefix: true
+  # 数据源配置：
+  datasource:
+    name: demo
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.1.170:13306/demo?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: demo
+    password: hSy5aj8dD8ttTcjt
+  # Redis相关配置
+  redis:
+    # Redis服务器地址
+    host: 192.168.1.170
+    # Redis服务器连接端口
+    port: 16379
+    # Database 索引；和其他服务区别开
+    database: 0
+    # Redis服务器连接密码（默认为空）
+    password: hpkRzkC7pcDnYp3e
+
+################################################################################################################
+###logging (log4j2) 基本配置：
+###http://www.cnblogs.com/yhtboke/p/Mybatis.html
+################################################################################################################
+logging:
+  config: classpath:conf/log4j2-dev.xml
+
+################################################################################################################
+###RocketMQ (RocketMQProperties) 配置：
+################################################################################################################
+rocketmq:
+  # 访问地址
+  name-server: 192.168.1.224:9876
+  producer:
+    # 必须指定group
+    group: Pro_Group
+    # 消息发送超时时长，默认3s
+    send-message-timeout: 3000
+    # 同步发送消息失败重试次数，默认2
+    retry-times-when-send-failed: 3
+    # 异步发送消息失败重试次数，默认2
+    retry-times-when-send-async-failed: 3
+  consumer:
+    group: Pro_Group
+    # 消费者线程池数量，默认20
+    consume-thread-max: 20
+    # 消息消费失败重试次数，默认16
+    retry-times-when-consume-failed: 16
