@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.hiwepy</groupId>
+        <groupId>com.github.hiwepy</groupId>
         <artifactId>jeebiz-boot-parent</artifactId>
         <version>${revision}</version>
         <relativePath>../jeebiz-boot-parent/pom.xml</relativePath>

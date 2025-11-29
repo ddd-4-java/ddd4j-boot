@@ -13,7 +13,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>io.hiwepy</groupId>
+    <groupId>com.github.hiwepy</groupId>
     <artifactId>jeebiz-boot</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
