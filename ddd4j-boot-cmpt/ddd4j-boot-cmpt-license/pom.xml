@@ -12,17 +12,6 @@
     <artifactId>ddd4j-boot-cmpt-license</artifactId>
 
     <dependencies>
-
-        <!-- For Servlet Api -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
-        <!-- For Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
         <!-- For TrueLicense -->
         <dependency>
             <groupId>de.schlichtherle.truelicense</groupId>
@@ -39,7 +28,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
-
     </dependencies>
 
 </project>
