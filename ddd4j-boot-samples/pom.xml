@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.hiwepy</groupId>
+        <artifactId>ddd4j-boot-parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../ddd4j-boot-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ddd4j-boot-samples</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <modules>
+        <module>ddd4j-boot-sample-druid</module>
+        <module>ddd4j-boot-sample-druid-activemq</module>
+        <module>ddd4j-boot-sample-druid-amqp</module>
+        <module>ddd4j-boot-sample-druid-kafka</module>
+        <module>ddd4j-boot-sample-druid-rocketmq</module>
+        <module>ddd4j-boot-sample-druid-war</module>
+        <module>ddd4j-boot-sample-hikaricp</module>
+        <module>ddd4j-boot-sample-hikaricp-activemq</module>
+        <module>ddd4j-boot-sample-hikaricp-amqp</module>
+        <module>ddd4j-boot-sample-hikaricp-kafka</module>
+        <module>ddd4j-boot-sample-hikaricp-rocketmq</module>
+        <module>ddd4j-boot-sample-hikaricp-war</module>
+        <module>ddd4j-boot-sample-r2dbc-webflux</module>
+    </modules>
+
+</project>
