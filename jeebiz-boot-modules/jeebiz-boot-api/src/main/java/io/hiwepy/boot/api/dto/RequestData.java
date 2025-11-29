@@ -1,4 +1,4 @@
-package io.hiwepy.boot.api.param;
+package io.hiwepy.boot.api.dto;
 
 import lombok.Data;
 

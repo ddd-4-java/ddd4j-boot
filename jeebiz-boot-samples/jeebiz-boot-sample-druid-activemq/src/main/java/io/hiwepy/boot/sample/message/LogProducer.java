@@ -1,6 +1,6 @@
 package io.hiwepy.boot.sample.message;
 
-import jakarta.jms.Queue;
+import javax.jms.Queue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

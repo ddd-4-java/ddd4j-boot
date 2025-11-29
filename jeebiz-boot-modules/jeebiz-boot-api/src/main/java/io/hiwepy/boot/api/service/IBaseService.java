@@ -4,12 +4,21 @@
  */
 package io.hiwepy.boot.api.service;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import io.hiwepy.boot.api.entity.PaginationEntity;
+import io.hiwepy.boot.api.dao.entities.PaginationEntity;
+import io.hiwepy.boot.api.dao.entities.PairModel;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 通用Service接口
+ *
+ * @author <a href="https://github.com/wandl">wandl</a>
+ * @param <T> 持有的实体对象
+ */
 
 /**
  * 通用Service接口
@@ -17,75 +26,104 @@ import java.io.Serializable;
  * @param <T> 持有的实体对象
  * @author <a href="https://github.com/wandl">wandl</a>
  */
-public interface IBaseService<T extends Model<?>> extends IService<T> {
+public interface IBaseService<T> extends IService<T> {
 
     /**
      * 更新数据状态
      *
-     * @param id     数据ID
-     * @param status 数据状态
-     * @return 更新结果
+     * @param id
+     * @param status
+     * @return
      */
     boolean setStatus(Serializable id, Serializable status);
 
     /**
      * 分页查询
      *
-     * @param entity 分页查询参数
-     * @return 分页查询结果
+     * @param model
+     * @return
      */
-    Page<T> getPagedList(PaginationEntity<T> entity);
+    Page<T> getPagedList(PaginationEntity<T> model);
+
+    Page<T> getPagedList(Page<T> page, PaginationEntity<T> model);
 
     /**
-     * 分页查询
+     * 无分页查询
      *
-     * @param page   分页查询参数
-     * @param entity 分页查询参数
-     * @return 分页查询结果
+     * @param t
+     * @return
      */
-    Page<T> getPagedList(Page<T> page, PaginationEntity<T> entity);
+    List<T> getEntityList(T t);
+
+    /**
+     * 统计记录数
+     *
+     * @param t
+     * @return
+     */
+    Long getCount(T t);
 
     /**
      * 根据唯一ID编码获取记录数
      *
-     * @param uid 唯一ID编码
-     * @return 统计记录数
+     * @param uid
+     * @return
      */
     Long getCountByUid(Serializable uid);
 
     /**
      * 根据编码获取记录数
      *
-     * @param code   编码
-     * @param origin 来源
-     * @return 统计记录数
+     * @param code
+     * @param origin
+     * @return
      */
     Long getCountByCode(String code, Object origin);
 
     /**
      * 根据名称获取记录数
      *
-     * @param name   名称
-     * @param origin 来源
-     * @return 统计记录数
+     * @param name
+     * @param origin
+     * @return
      */
     Long getCountByName(String name, Object origin);
 
-    /**
-     * 根据父级ID获取记录数
-     *
-     * @param parent 父级ID
-     * @return 统计记录数
-     */
     Long getCountByParent(Object parent);
 
     /**
      *
      * 通过指定key查询对应的唯一值
      *
-     * @param key 键
-     * @return 值
+     * @param key
+     * @return
      */
     String getValue(String key);
+
+    /**
+     * 通过指定key查询多个值
+     *
+     * @param key
+     * @return
+     */
+    Map<String, String> getValues(String key);
+
+    /**
+     * 根据key查询该分组下的基础数据
+     *
+     * @param key
+     * @return
+     */
+    List<PairModel> getPairValues(String key);
+
+
+    Map<String, List<PairModel>> getPairValues(String[] keyArr);
+
+    /**
+     * 查询一组键值对数据
+     *
+     * @return
+     */
+    List<PairModel> getPairList();
 
 }

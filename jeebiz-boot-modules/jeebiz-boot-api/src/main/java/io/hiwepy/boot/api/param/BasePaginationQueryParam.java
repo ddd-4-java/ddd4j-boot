@@ -1,37 +1,40 @@
 package io.hiwepy.boot.api.param;
 
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Min;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import io.swagger.annotations.ApiModelProperty;
 
-import java.util.List;
+import javax.validation.constraints.Min;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-public abstract class BasePaginationQueryParam extends BaseTimeRangeQueryParam {
+public abstract class BasePaginationQueryParam extends BaseQueryParam {
 
     /**
      * 当前页码
      */
-    @Schema(example = "1", description = "当前页码")
+    @ApiModelProperty(example = "1", value = "当前页码")
     @Min(value = 1, message = "最小页码不能小于1")
     private int pageNo = 1;
 
     /**
      * 每页记录数
      */
-    @Schema(example = "15", description = "每页记录数")
+    @ApiModelProperty(example = "15", value = "每页记录数")
     @Min(value = 2, message = "每页至少2条数据")
     private int limit = 15;
 
-    /**
-     * 排序信息
-     */
-    @Schema(description = "排序信息")
-    private List<OrderItem> orders;
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
 
 }

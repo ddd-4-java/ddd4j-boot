@@ -1,8 +1,8 @@
 package io.hiwepy.boot.api.message;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
+import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotBlank;
 import java.awt.TrayIcon.MessageType;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -31,7 +31,7 @@ public class MessagePayload implements Serializable {
     /**
      * 消息体内容
      */
-    @Schema(name = "body", requiredMode = Schema.RequiredMode.REQUIRED, type = "string", description = "消息内容")
+    @ApiModelProperty(value = "body", required = true, dataType = "String", notes = "消息内容")
     @NotBlank(message = "消息内容必填")
     private String body;
 

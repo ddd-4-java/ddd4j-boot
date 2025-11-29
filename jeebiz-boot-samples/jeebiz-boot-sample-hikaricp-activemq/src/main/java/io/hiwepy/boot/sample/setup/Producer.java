@@ -1,8 +1,8 @@
 package io.hiwepy.boot.sample.setup;
 
-import jakarta.jms.Destination;
-import jakarta.jms.Queue;
-import jakarta.jms.Topic;
+import javax.jms.Destination;
+import javax.jms.Queue;
+import javax.jms.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.jms.core.JmsMessagingTemplate;

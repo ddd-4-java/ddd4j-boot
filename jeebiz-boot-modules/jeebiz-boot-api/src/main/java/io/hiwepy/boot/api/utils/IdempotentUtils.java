@@ -2,8 +2,6 @@ package io.hiwepy.boot.api.utils;
 
 import com.alibaba.fastjson2.JSONObject;
 import io.hiwepy.boot.api.annotation.ApiIdempotent;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -18,6 +16,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

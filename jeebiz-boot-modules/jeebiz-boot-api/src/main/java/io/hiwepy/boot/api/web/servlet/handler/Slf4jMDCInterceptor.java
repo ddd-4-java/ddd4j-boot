@@ -2,14 +2,14 @@ package io.hiwepy.boot.api.web.servlet.handler;
 
 import io.hiwepy.boot.api.XHeaders;
 import io.hiwepy.boot.api.sequence.Sequence;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.biz.utils.WebUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class Slf4jMDCInterceptor implements HandlerInterceptor {
 
@@ -24,7 +24,7 @@ public class Slf4jMDCInterceptor implements HandlerInterceptor {
 
             throws Exception {
 
-        MDC.put("requestId", Objects.toString(request.getHeader(XHeaders.X_REQUEST_ID), sequence.nextId().toString()));
+        MDC.put("requestId", StringUtils.defaultString(request.getHeader(XHeaders.X_REQUEST_ID), sequence.nextId().toString()));
         MDC.put("requestURL", request.getRequestURL().toString());
         MDC.put("requestURI", request.getRequestURI());
         MDC.put("queryString", request.getQueryString());

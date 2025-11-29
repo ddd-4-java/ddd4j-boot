@@ -1,8 +1,8 @@
 package io.hiwepy.boot.autoconfigure.datascope.annotation;
 
 import io.hiwepy.boot.autoconfigure.datascope.RequiresDataPermissionsValidator;
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
+import javax.validation.Constraint;
+import javax.validation.Payload;
 
 import java.lang.annotation.*;
 

@@ -9,7 +9,7 @@ import io.hiwepy.boot.api.utils.HttpStatus;
 /**
  * Enumeration of Api Code.
  */
-public enum ApiCode implements CustomApiCode {
+public enum ApiCode {
 
     // --- 2xx Client Error ---
 
@@ -249,7 +249,7 @@ public enum ApiCode implements CustomApiCode {
     private final String status;
     private final String reason;
 
-    ApiCode(int code, String status, String reason) {
+    private ApiCode(int code, String status, String reason) {
         this.code = code;
         this.status = status;
         this.reason = reason;
@@ -260,17 +260,14 @@ public enum ApiCode implements CustomApiCode {
         return String.valueOf(code);
     }
 
-    @Override
     public int getCode() {
         return code;
     }
 
-    @Override
     public String getStatus() {
         return status;
     }
 
-    @Override
     public String getReason() {
         return reason;
     }
