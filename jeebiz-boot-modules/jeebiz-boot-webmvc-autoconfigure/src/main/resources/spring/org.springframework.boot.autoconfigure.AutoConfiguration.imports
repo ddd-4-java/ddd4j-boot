@@ -1,4 +1,0 @@
-io.hiwepy.boot.autoconfigure.DefaultMessageSourceAutoConfiguration
-io.hiwepy.boot.autoconfigure.DefaultSequenceConfiguration
-io.hiwepy.boot.autoconfigure.DefaultSpringContextConfiguration
-io.hiwepy.boot.autoconfigure.DefaultWebMvcConfiguration
