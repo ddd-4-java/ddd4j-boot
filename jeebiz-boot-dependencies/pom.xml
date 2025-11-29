@@ -4561,6 +4561,11 @@
                 <version>${r2dbc-mssql.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.asyncer</groupId>
+                <artifactId>r2dbc-mysql</artifactId>
+                <version>${r2dbc-mysql.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>r2dbc-postgresql</artifactId>
                 <version>${r2dbc-postgresql.version}</version>
