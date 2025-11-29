@@ -7,6 +7,7 @@
         <groupId>io.hiwepy</groupId>
         <artifactId>jeebiz-boot-modules</artifactId>
         <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>jeebiz-boot-kafka-autoconfigure</artifactId>
