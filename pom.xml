@@ -20,10 +20,12 @@
 
     <name>jeebiz-boot</name>
     <description>Jeebiz Projects For Spring Boot</description>
-    <url>https://boot.jeebiz.net</url>
 
     <scm>
-        <url>https://github.com/Jeebiz/jeebiz-boot</url>
+        <connection>scm:git:https:e.coding.net/wans-hz/base-platform/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:https:e.coding.net/wans-hz/base-platform/${project.artifactId}.git</developerConnection>
+        <url>https://e.coding.net/wans-hz/base-platform/${project.artifactId}</url>
+        <tag>${project.artifactId}</tag>
     </scm>
 
     <properties>
@@ -62,7 +64,7 @@
         <module>jeebiz-boot-dependencies</module>
         <module>jeebiz-boot-modules</module>
         <module>jeebiz-boot-parent</module>
-        <!--<module>jeebiz-boot-samples</module>-->
+        <module>jeebiz-boot-samples</module>
     </modules>
 
     <!--开源协议采用Apache 2.0协议-->

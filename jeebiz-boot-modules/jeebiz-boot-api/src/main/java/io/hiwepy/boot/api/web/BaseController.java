@@ -6,6 +6,11 @@ package io.hiwepy.boot.api.web;
 
 import io.hiwepy.boot.api.ApiRestResponse;
 import io.hiwepy.boot.api.exception.PayloadExceptionEvent;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.Getter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.biz.context.NestedMessageSource;
@@ -13,16 +18,30 @@ import org.springframework.context.*;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.StringValueResolver;
 
+@ApiResponses({
+        @ApiResponse(responseCode = "400", description = "参数类型不匹配或格式不正确", content = @Content(schema = @Schema(implementation = ApiRestResponse.class))),
+        @ApiResponse(responseCode = "401", description = "不允许访问（功能未授权）", content = @Content(schema = @Schema(implementation = ApiRestResponse.class))),
+        @ApiResponse(responseCode = "403", description = "服务器拒绝请求", content = @Content(schema = @Schema(implementation = ApiRestResponse.class))),
+        @ApiResponse(responseCode = "404", description = "请求地址不存在", content = @Content(schema = @Schema(implementation = ApiRestResponse.class))),
+        @ApiResponse(responseCode = "405", description = "不支持的请求方法", content = @Content(schema = @Schema(implementation = ApiRestResponse.class))),
+        @ApiResponse(responseCode = "406", description = "不匹配的媒体类型", content = @Content(schema = @Schema(implementation = ApiRestResponse.class))),
+        @ApiResponse(responseCode = "415", description = "不支持的媒体类型", content = @Content(schema = @Schema(implementation = ApiRestResponse.class))),
+        @ApiResponse(responseCode = "413", description = "请求实体过大", content = @Content(schema = @Schema(implementation = ApiRestResponse.class))),
+        @ApiResponse(responseCode = "500", description = "服务器内部错误", content = @Content(schema = @Schema(implementation = ApiRestResponse.class))),
+        @ApiResponse(responseCode = "502", description = "错误网关", content = @Content(schema = @Schema(implementation = ApiRestResponse.class))),
+        @ApiResponse(responseCode = "503", description = "服务不可用", content = @Content(schema = @Schema(implementation = ApiRestResponse.class))),
+        @ApiResponse(responseCode = "504", description = "网关访问超时", content = @Content(schema = @Schema(implementation = ApiRestResponse.class)))
+})
 public class BaseController implements ApplicationEventPublisherAware, ApplicationContextAware, EmbeddedValueResolverAware {
 
-    protected static final String STATUS_SUCCESS = "success";
-    protected static final String STATUS_FAIL = "fail";
-    protected static final String STATUS_ERROR = "error";
-
+    @Getter
     private StringValueResolver valueResolver;
+    @Getter
     private ApplicationEventPublisher eventPublisher;
+    @Getter
     private ApplicationContext context;
-    @Autowired
+    @Autowired(required = false)
+    @Getter
     private NestedMessageSource messageSource;
 
     /**
@@ -53,34 +72,6 @@ public class BaseController implements ApplicationEventPublisherAware, Applicati
 
     protected <T> ApiRestResponse<T> error(String key, Object... args) {
         return ApiRestResponse.error(getMessage(key, args));
-    }
-
-    public StringValueResolver getValueResolver() {
-        return valueResolver;
-    }
-
-    public void setValueResolver(StringValueResolver valueResolver) {
-        this.valueResolver = valueResolver;
-    }
-
-    public ApplicationEventPublisher getEventPublisher() {
-        return eventPublisher;
-    }
-
-    public void setEventPublisher(ApplicationEventPublisher eventPublisher) {
-        this.eventPublisher = eventPublisher;
-    }
-
-    public ApplicationContext getContext() {
-        return context;
-    }
-
-    public void setContext(ApplicationContext context) {
-        this.context = context;
-    }
-
-    public NestedMessageSource getMessageSource() {
-        return messageSource;
     }
 
     @Override

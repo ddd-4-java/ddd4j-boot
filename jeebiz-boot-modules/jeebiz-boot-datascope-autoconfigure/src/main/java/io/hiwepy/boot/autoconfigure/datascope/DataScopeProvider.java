@@ -14,9 +14,9 @@ public interface DataScopeProvider {
      *
      * @param dataType 数据类型
      * @param data     数据，被注解标注的数据
-     * @return
+     * @return 是否有数据权限
      */
-    default boolean hasPermissions(DataType dataType, Object data) {
+    default boolean hasPermissions(String dataType, Object data) {
         return Objects.nonNull(data);
     }
 

@@ -2,6 +2,7 @@ package io.hiwepy.boot.api.sequence;
 
 
 import cn.hutool.core.lang.Snowflake;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;
@@ -13,6 +14,7 @@ import java.net.InetAddress;
 @Slf4j
 public class Sequence {
 
+    @Getter
     private final Snowflake snowflake;
     private static byte LAST_IP = 0;
 
@@ -32,10 +34,9 @@ public class Sequence {
      * 最后12位是毫秒内的计数（12位的计数顺序号支持每个节点每毫秒产生4096个ID序号）
      *
      * <p>
-     * 参考：http://www.cnblogs.com/relucent/p/4955340.html
+     * 参考：<a href="http://www.cnblogs.com/relucent/p/4955340.html">...</a>
      *
      * @param workerId 工作机器节点id,数据范围为0~31
-     * @return {@link Sequence}
      * @since 1.0.0
      */
     public Sequence(long workerId) {
@@ -58,11 +59,10 @@ public class Sequence {
      * 最后12位是毫秒内的计数（12位的计数顺序号支持每个节点每毫秒产生4096个ID序号）
      *
      * <p>
-     * 参考：http://www.cnblogs.com/relucent/p/4955340.html
+     * 参考：<a href="http://www.cnblogs.com/relucent/p/4955340.html">...</a>
      *
      * @param workerId     工作机器节点id,数据范围为0~31
      * @param dataCenterId 数据中心id,数据范围为0~31
-     * @return {@link Sequence}
      * @since 1.0.0
      */
     public Sequence(long workerId, long dataCenterId) {
@@ -85,12 +85,11 @@ public class Sequence {
      * 最后12位是毫秒内的计数（12位的计数顺序号支持每个节点每毫秒产生4096个ID序号）
      *
      * <p>
-     * 参考：http://www.cnblogs.com/relucent/p/4955340.html
+     * 参考：<a href="http://www.cnblogs.com/relucent/p/4955340.html">...</a>
      *
      * @param workerId         工作机器节点id,数据范围为0~31
      * @param dataCenterId     数据中心id,数据范围为0~31
      * @param isUseSystemClock 是否使用{@link cn.hutool.core.date.SystemClock} 获取当前时间戳
-     * @return {@link Sequence}
      * @since 1.0.0
      */
     public Sequence(long workerId, long dataCenterId, boolean isUseSystemClock) {
@@ -113,13 +112,12 @@ public class Sequence {
      * 最后12位是毫秒内的计数（12位的计数顺序号支持每个节点每毫秒产生4096个ID序号）
      *
      * <p>
-     * 参考：http://www.cnblogs.com/relucent/p/4955340.html
+     * 参考：<a href="http://www.cnblogs.com/relucent/p/4955340.html">...</a>
      *
      * @param workerId         工作机器节点id,数据范围为0~31
      * @param dataCenterId     数据中心id,数据范围为0~31
      * @param isUseSystemClock 是否使用{@link cn.hutool.core.date.SystemClock} 获取当前时间戳
      * @param timeOffset       允许时间回拨的毫秒数
-     * @return {@link Sequence}
      * @since 1.0.0
      */
     public Sequence(long workerId, long dataCenterId, boolean isUseSystemClock, long timeOffset) {
@@ -142,14 +140,13 @@ public class Sequence {
      * 最后12位是毫秒内的计数（12位的计数顺序号支持每个节点每毫秒产生4096个ID序号）
      *
      * <p>
-     * 参考：http://www.cnblogs.com/relucent/p/4955340.html
+     * 参考：<a href="http://www.cnblogs.com/relucent/p/4955340.html">...</a>
      *
      * @param workerId            工作机器节点id,数据范围为0~31
      * @param dataCenterId        数据中心id,数据范围为0~31
      * @param isUseSystemClock    是否使用{@link cn.hutool.core.date.SystemClock} 获取当前时间戳
      * @param timeOffset          允许时间回拨的毫秒数
      * @param randomSequenceLimit 限定一个随机上限，在不同毫秒下生成序号时，给定一个随机数，避免偶数问题，0表示无随机，上限不包括值本身。
-     * @return {@link Sequence}
      * @since 1.0.0
      */
     public Sequence(long workerId, long dataCenterId, boolean isUseSystemClock, long timeOffset, long randomSequenceLimit) {
@@ -163,13 +160,7 @@ public class Sequence {
      */
     public synchronized Long nextId() {
         // 使用snowflake获取ID
-        long nextId = this.snowflake.nextId();
-        // 直接返回ID
-        return nextId;
-    }
-
-    public Snowflake getSnowflake() {
-        return snowflake;
+        return this.snowflake.nextId();
     }
 
     /**

@@ -4,7 +4,7 @@
  */
 package io.hiwepy.boot.sample.entity;
 
-import io.hiwepy.boot.api.dao.entities.BaseEntity;
+import io.hiwepy.boot.api.entity.BaseEntity;
 
 public class DemoEntity extends BaseEntity<DemoEntity> {
 

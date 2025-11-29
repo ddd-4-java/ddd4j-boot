@@ -285,7 +285,7 @@
         <mybatis-plus.version>3.5.8</mybatis-plus.version>
         <mybatis-plus-generator.version>${mybatis-plus.version}</mybatis-plus-generator.version>
         <mybatis-plus-join.version>1.4.13</mybatis-plus-join.version>
-        <mybatis-plus-enhance.version>1.0.1-SNAPSHOT</mybatis-plus-enhance.version>
+        <mybatis-plus-enhance.version>2.3.x.20250930-SNAPSHOT</mybatis-plus-enhance.version>
         <mybatis-plus-ext.version>1.7.4-RELEASE</mybatis-plus-ext.version>
         <mybatis-r2dbc.version>3.0.6.RELEASE</mybatis-r2dbc.version>
         <mybatis-spring.version>2.1.2</mybatis-spring.version>
@@ -599,26 +599,7 @@
         <spring-boot-starter-rocketmq.version>2.2.3</spring-boot-starter-rocketmq.version>
         <spring-boot-starter-schemacrawler.version>1.0.7.RELEASE</spring-boot-starter-schemacrawler.version>
         <spring-boot-starter-seata.version>${seata.version}</spring-boot-starter-seata.version>
-        <spring-boot-starter-security-biz.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-biz.version>
-        <spring-boot-starter-security-cas.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-cas.version>
-        <spring-boot-starter-security-dingtalk.version>2.7.x.20241004.RELEASE</spring-boot-starter-security-dingtalk.version>
-        <spring-boot-starter-security-facebook.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-facebook.version>
-        <spring-boot-starter-security-google.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-google.version>
-        <spring-boot-starter-security-jwt.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-jwt.version>
-        <spring-boot-starter-security-line.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-line.version>
-        <spring-boot-starter-security-pac4j.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-pac4j.version>
-        <spring-boot-starter-security-qrcode.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-qrcode.version>
-        <spring-boot-starter-security-weixin.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-weixin.version>
-        <spring-boot-starter-shanyan.version>2.7.x.20240823.RELEASE</spring-boot-starter-shanyan.version>
         <spring-boot-starter-shardingsphere-jdbc.version>5.2.1</spring-boot-starter-shardingsphere-jdbc.version>
-        <spring-boot-starter-shiro-biz.version>2.7.x.20241003.RELEASE</spring-boot-starter-shiro-biz.version>
-        <spring-boot-starter-shiro-cas.version>2.7.x.20241003.RELEASE</spring-boot-starter-shiro-cas.version>
-        <spring-boot-starter-shiro-csrfguard.version>2.7.x.20240823.RELEASE</spring-boot-starter-shiro-csrfguard.version>
-        <spring-boot-starter-shiro-dingtalk.version>2.7.x.20241003.RELEASE</spring-boot-starter-shiro-dingtalk.version>
-        <spring-boot-starter-shiro-jwt.version>2.7.x.20241003.RELEASE</spring-boot-starter-shiro-jwt.version>
-        <spring-boot-starter-shiro-kisso.version>2.7.x.20241003.RELEASE</spring-boot-starter-shiro-kisso.version>
-        <spring-boot-starter-shiro-pac4j.version>2.7.x.20241003.RELEASE</spring-boot-starter-shiro-pac4j.version>
-        <spring-boot-starter-shiro-weixin.version>2.7.x.20241003.RELEASE</spring-boot-starter-shiro-weixin.version>
         <spring-boot-starter-sigar.version>2.7.x.20240824.RELEASE</spring-boot-starter-sigar.version>
         <spring-boot-starter-simplecaptcha.version>2.7.x.20240823.RELEASE</spring-boot-starter-simplecaptcha.version>
         <spring-boot-starter-smartcaptcha.version>2.7.x.20240824.RELEASE</spring-boot-starter-smartcaptcha.version>
@@ -7042,66 +7023,6 @@
                 <groupId>io.seata</groupId>
                 <artifactId>seata-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-seata.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-biz-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-biz-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-biz.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-cas-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-cas-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-cas.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-dingtalk-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-dingtalk-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-dingtalk.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-facebook-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-facebook-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-facebook.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-google-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-google-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-google.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-jwt-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-jwt-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-jwt.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-line-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-line-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-line.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-pac4j-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-pac4j-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-pac4j.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-qrcode-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-qrcode-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-qrcode.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-weixin-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-weixin-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-weixin.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/shanyan-spring-boot-starter -->
             <dependency>
