@@ -2,22 +2,24 @@
  * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
  * All Rights Reserved.
  */
-package io.hiwepy.boot.api.service;
+package io.hiwepy.boot.api.mybatis.mapper;
+
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
 import io.hiwepy.boot.api.entity.PaginationEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * 通用Service接口
+ * 通用Dao接口
  *
  * @param <T> 持有的实体对象
  * @author <a href="https://github.com/wandl">wandl</a>
  */
-public interface IBaseService<T extends Model<?>> extends IService<T> {
+public interface BaseMapper<T extends Model<?>> extends com.baomidou.mybatisplus.core.mapper.BaseMapper<T> {
 
     /**
      * 更新数据状态
@@ -26,15 +28,7 @@ public interface IBaseService<T extends Model<?>> extends IService<T> {
      * @param status 数据状态
      * @return 更新结果
      */
-    boolean setStatus(Serializable id, Serializable status);
-
-    /**
-     * 分页查询
-     *
-     * @param entity 分页查询参数
-     * @return 分页查询结果
-     */
-    Page<T> getPagedList(PaginationEntity<T> entity);
+    int setStatus(@Param("id") Serializable id, @Param("status") Serializable status);
 
     /**
      * 分页查询
@@ -43,7 +37,7 @@ public interface IBaseService<T extends Model<?>> extends IService<T> {
      * @param entity 分页查询参数
      * @return 分页查询结果
      */
-    Page<T> getPagedList(Page<T> page, PaginationEntity<T> entity);
+    List<T> getPagedList(Page<T> page, @Param("model") PaginationEntity<T> entity);
 
     /**
      * 根据唯一ID编码获取记录数
@@ -51,7 +45,7 @@ public interface IBaseService<T extends Model<?>> extends IService<T> {
      * @param uid 唯一ID编码
      * @return 统计记录数
      */
-    Long getCountByUid(Serializable uid);
+    Long getCountByUid(@Param("uid") Serializable uid);
 
     /**
      * 根据编码获取记录数
@@ -60,7 +54,7 @@ public interface IBaseService<T extends Model<?>> extends IService<T> {
      * @param origin 来源
      * @return 统计记录数
      */
-    Long getCountByCode(String code, Object origin);
+    Long getCountByCode(@Param("code") String code, @Param("origin") Object origin);
 
     /**
      * 根据名称获取记录数
@@ -69,7 +63,7 @@ public interface IBaseService<T extends Model<?>> extends IService<T> {
      * @param origin 来源
      * @return 统计记录数
      */
-    Long getCountByName(String name, Object origin);
+    Long getCountByName(@Param("name") String name, @Param("origin") Object origin);
 
     /**
      * 根据父级ID获取记录数
@@ -77,7 +71,7 @@ public interface IBaseService<T extends Model<?>> extends IService<T> {
      * @param parent 父级ID
      * @return 统计记录数
      */
-    Long getCountByParent(Object parent);
+    Long getCountByParent(@Param("parent") Object parent);
 
     /**
      *
@@ -86,6 +80,6 @@ public interface IBaseService<T extends Model<?>> extends IService<T> {
      * @param key 键
      * @return 值
      */
-    String getValue(String key);
+    String getValue(@Param("key") String key);
 
 }

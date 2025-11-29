@@ -2,9 +2,6 @@ package io.hiwepy.boot.api.annotation;
 
 import java.lang.annotation.*;
 
-/**
- * @author wandl
- */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
@@ -35,17 +32,7 @@ public @interface ApiIdempotent {
     /**
      * 幂等过期时间，默认 2000 毫秒，即：在此时间段内，对API进行幂等处理。
      */
-    long expireMillis() default 200;
-
-    /**
-     * 是否等待，默认：false
-     */
-    boolean await() default false;
-
-    /**
-     * 是否重试，默认：false
-     */
-    boolean retry() default false;
+    long expireMillis() default 2000;
 
     /**
      * 重试次数，默认0
