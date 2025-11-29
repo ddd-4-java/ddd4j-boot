@@ -430,6 +430,7 @@
 
                 <!-- Spring Boot 代码质量检查 -->
 
+                <!-- 代码格式检查  -->
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
