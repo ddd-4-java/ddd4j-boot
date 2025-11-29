@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -6,6 +7,7 @@
         <groupId>io.hiwepy</groupId>
         <artifactId>jeebiz-boot</artifactId>
         <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>jeebiz-boot-dependencies</artifactId>
@@ -505,11 +507,7 @@
         <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
         <maven-dependency-plugin.version>3.8.0</maven-dependency-plugin.version>
         <maven-dependency-check-plugin.version>10.0.4</maven-dependency-check-plugin.version>
-        <maven-docker-plugin.version>1.2.0</maven-docker-plugin.version>
-        <maven-dockerfile-plugin.version>1.4.13</maven-dockerfile-plugin.version>
-        <maven-docker-fabric8-plugin.version>0.39.0</maven-docker-fabric8-plugin.version>
-        <maven-fabric8-plugin.version>4.1.0</maven-fabric8-plugin.version>
-        <maven-flatten-plugin.version>1.7.3</maven-flatten-plugin.version>
+        <maven-docker-plugin.version>0.48.0</maven-docker-plugin.version>
         <maven-findbugs-plugin.version>3.0.5</maven-findbugs-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
         <maven-gwt-plugin.version>2.8.2</maven-gwt-plugin.version>
@@ -2605,16 +2603,34 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>hitool-core</artifactId>
                 <version>${hitool.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>hitool-crypto</artifactId>
                 <version>${hitool.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>hitool-mail</artifactId>
                 <version>${hitool.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.apache.hive/hive-exec -->
@@ -2918,31 +2934,6 @@
                 <groupId>org.codehaus.janino</groupId>
                 <artifactId>janino</artifactId>
                 <version>${janino.version}</version>
-            </dependency>
-
-            <!-- https://mvnrepository.com/artifact/io.javalin/javalin -->
-            <dependency>
-                <groupId>io.javalin</groupId>
-                <artifactId>javalin</artifactId>
-                <version>${javalin.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/io.javalin.community.openapi/javalin-openapi-plugin -->
-            <dependency>
-                <groupId>io.javalin.community.openapi</groupId>
-                <artifactId>javalin-openapi-plugin</artifactId>
-                <version>${javalin.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/io.javalin.community.openapi/javalin-swagger-plugin -->
-            <dependency>
-                <groupId>io.javalin.community.openapi</groupId>
-                <artifactId>javalin-swagger-plugin</artifactId>
-                <version>${javalin.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/io.javalin.community.openapi/javalin-redoc-plugin -->
-            <dependency>
-                <groupId>io.javalin.community.openapi</groupId>
-                <artifactId>javalin-redoc-plugin</artifactId>
-                <version>${javalin.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
@@ -3746,16 +3737,6 @@
                 <version>${mybatis.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>mybatis-biz</artifactId>
-                <version>${mybatis-biz.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>mybatis-dbperms</artifactId>
-                <version>${mybatis-dbperms.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.mybatis.dynamic-sql</groupId>
                 <artifactId>mybatis-dynamic-sql</artifactId>
                 <version>${mybatis-dynamic-sql.version}</version>
@@ -3840,6 +3821,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/tk.mybatis/mapper -->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper</artifactId>
+                <version>${mybatis-tk.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/pro.chenggang/mybatis-r2dbc -->
             <dependency>
                 <groupId>pro.chenggang</groupId>
@@ -3867,6 +3854,18 @@
                 <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+            <!-- jdk 8+ 引入可选模块 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser-4.9</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- jdk 11+ 引入可选模块 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
@@ -3876,6 +3875,12 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>mybatis-plus-enhance</artifactId>
                 <version>${mybatis-plus-enhance.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.jeffreyning/mybatisplus-plus -->
             <dependency>
@@ -3906,7 +3911,7 @@
             <dependency>
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
-                <version>${mysql-j.version}</version>
+                <version>${mysql.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-client -->
@@ -5383,16 +5388,6 @@
                 <artifactId>shiro-redis</artifactId>
                 <version>2.5.0</version>
             </dependency>
-            <dependency>
-                <groupId>win.zqxu.shiro</groupId>
-                <artifactId>shiro-oltu-client</artifactId>
-                <version>${shiro-oltu.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>win.zqxu.shiro</groupId>
-                <artifactId>shiro-oltu-web</artifactId>
-                <version>${shiro-oltu.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.streamone/shiro-redisson -->
             <dependency>
                 <groupId>com.github.streamone</groupId>
@@ -5405,18 +5400,6 @@
                 <groupId>com.github.theborakompanioni</groupId>
                 <artifactId>thymeleaf-extras-shiro</artifactId>
                 <version>${shiro-thymeleaf.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.xfslove/shiro-uaa-auth-server -->
-            <dependency>
-                <groupId>com.github.xfslove</groupId>
-                <artifactId>shiro-uaa-auth-server</artifactId>
-                <version>${shiro-uaa.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.xfslove/shiro-uaa-resource-server -->
-            <dependency>
-                <groupId>com.github.xfslove</groupId>
-                <artifactId>shiro-uaa-resource-server</artifactId>
-                <version>${shiro-uaa.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
@@ -5519,6 +5502,12 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>spring-biz</artifactId>
                 <version>${spring-biz.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.github.hiwepy</groupId>
@@ -5702,14 +5691,6 @@
                 <version>${swagger-butler.version}</version>
             </dependency>
 
-            <!-- http://mvnrepository.com/artifact/org.sitemesh/sitemesh -->
-
-            <dependency>
-                <groupId>org.sitemesh</groupId>
-                <artifactId>sitemesh</artifactId>
-                <version>${sitemesh3.version}</version>
-            </dependency>
-
             <!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-toolkit-trace -->
             <dependency>
                 <groupId>org.apache.skywalking</groupId>
@@ -5760,6 +5741,13 @@
                 <version>${tencentcloud-tls-sig-api-v2.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
             <!-- Thumbnailator是一个用来生成图像缩略图的 Java类库，通过很简单的代码即可生成图片缩略图，也可直接对一整个目录的图片生成缩略图。 -->
             <!--
@@ -5873,6 +5861,19 @@
                 <version>${transmittable-thread-local.version}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.apache.tika/tika-core -->
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${tika.version}</version>
+            </dependency>
+            <!-- tika文件解析器整合包 -->
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-parsers-standard-package</artifactId>
+                <version>${tika.version}</version>
+            </dependency>
+
             <!-- 使用参考: https://blog.csdn.net/wuyuxing24/article/details/99692762-->
             <!-- https://mvnrepository.com/artifact/de.schlichtherle.truelicense/truelicense-core -->
             <dependency>
@@ -5905,6 +5906,12 @@
                 <artifactId>velocity-engine-core</artifactId>
                 <version>${velocity.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-scripting -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-scripting</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
 
             <!-- https://mvnrepository.com/artifact/cn.edu.hfut.dmic.webcollector/WebCollector -->
             <dependency>
@@ -5914,7 +5921,6 @@
             </dependency>
 
             <!-- http://mvnrepository.com/artifact/org.webjars/swagger-ui -->
-
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>swagger-ui</artifactId>
@@ -5939,7 +5945,18 @@
                 <artifactId>webjars-locator</artifactId>
                 <version>${webjars-locator.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/org.wildfly.openssl/wildfly-openssl -->
+            <dependency>
+                <groupId>org.wildfly.openssl</groupId>
+                <artifactId>wildfly-openssl</artifactId>
+                <version>${wildfly-openssl.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.wildfly.openssl/wildfly-openssl-java -->
+            <dependency>
+                <groupId>org.wildfly.openssl</groupId>
+                <artifactId>wildfly-openssl-java</artifactId>
+                <version>${wildfly-openssl.version}</version>
+            </dependency>
             <!-- 微信公众号、企业号Java SDK Common : https://mvnrepository.com/artifact/com.github.binarywang/weixin-java-common -->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
@@ -6424,27 +6441,11 @@
                 <artifactId>arthas-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-arthas.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>axis2-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-axis2.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>axis2-client-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-axis2-client.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/baiduapi-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>baiduapi-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-baiduapi.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.ibeetl/beetl-framework-starter -->
-            <dependency>
-                <groupId>com.ibeetl</groupId>
-                <artifactId>beetl-framework-starter</artifactId>
-                <version>${spring-boot-starter-beetl.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.camel.springboot/camel-spring-boot-starter -->
             <dependency>
@@ -6561,6 +6562,12 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-dynamic-datasource.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot3-starter -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
                 <version>${spring-boot-starter-dynamic-datasource.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/cn.afterturn/easypoi-spring-boot-starter -->
@@ -6884,12 +6891,6 @@
                         <artifactId>spring-boot-starter-logging</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/tk.mybatis/mapper -->
-            <dependency>
-                <groupId>tk.mybatis</groupId>
-                <artifactId>mapper</artifactId>
-                <version>${mybatis-tk.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/spring-boot-starter-minio -->
             <dependency>
@@ -7237,32 +7238,12 @@
                     <artifactId>cobertura-maven-plugin</artifactId>
                     <version>${maven-cobertura-plugin.version}</version>
                 </plugin>
-                <!-- https://mvnrepository.com/artifact/com.spotify/docker-maven-plugin -->
-                <!-- https://github.com/spotify/docker-maven-plugin -->
-                <!-- http://blog.csdn.net/qq_22841811/article/details/67369530 -->
-                <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>docker-maven-plugin</artifactId>
-                    <version>${maven-docker-plugin.version}</version>
-                </plugin>
-                <!-- https://mvnrepository.com/artifact/com.spotify/dockerfile-maven-plugin -->
-                <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>dockerfile-maven-plugin</artifactId>
-                    <version>${maven-dockerfile-plugin.version}</version>
-                </plugin>
                 <!-- https://mvnrepository.com/artifact/io.fabric8/docker-maven-plugin -->
                 <!-- http://dmp.fabric8.io -->
                 <plugin>
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>${maven-docker-fabric8-plugin.version}</version>
-                </plugin>
-                <!-- https://mvnrepository.com/artifact/io.fabric8/fabric8-maven-plugin -->
-                <plugin>
-                    <groupId>io.fabric8</groupId>
-                    <artifactId>fabric8-maven-plugin</artifactId>
-                    <version>${maven-fabric8-plugin.version}</version>
+                    <version>${maven-docker-plugin.version}</version>
                 </plugin>
                 <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/findbugs-maven-plugin -->
                 <plugin>
