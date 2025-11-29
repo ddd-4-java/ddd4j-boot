@@ -6,7 +6,7 @@ package io.hiwepy.boot.sample.setup.config;
 
 
 import io.springfox.spring.boot.Swagger2WebMvcProperties;
-import io.swagger.v3.oas.annotations.Hidden;
+import springfox.documentation.annotations.ApiIgnore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ public class WebMvcSwagger2Configuration {
     @Controller
     class HomepageController {
 
-        @Hidden
+        @ApiIgnore
         @GetMapping("/")
         public String index() {
             return "forward:/doc.html";

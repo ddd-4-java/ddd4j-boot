@@ -1,6 +1,6 @@
 package io.hiwepy.boot.api.param;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,19 +11,19 @@ public abstract class BaseTimeRangeQueryParam {
     /**
      * 开始时间
      */
-    @Schema(description = "开始时间")
+    @ApiModelProperty(value = "开始时间")
     private LocalDateTime beginTime;
 
     /**
      * 结束时间
      */
-    @Schema(description = "结束时间")
+    @ApiModelProperty(value = "结束时间")
     private LocalDateTime endTime;
 
     /**
      * 搜索关键字
      */
-    @Schema(description = "搜索关键字")
+    @ApiModelProperty(value = "搜索关键字")
     private String keywords;
 
 

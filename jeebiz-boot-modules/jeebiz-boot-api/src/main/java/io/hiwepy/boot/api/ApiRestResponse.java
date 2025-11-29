@@ -6,7 +6,8 @@ package io.hiwepy.boot.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -17,28 +18,28 @@ import java.util.Map;
 /**
  * model for interacting with client.
  */
-@Schema(name = "ApiRestResponse", description = "接口响应对象")
+@ApiModel(value = "ApiRestResponse", description = "接口响应对象")
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiRestResponse<T> {
 
-    @Schema(name = "code", type = "integer", description = "成功或异常编码")
+    @ApiModelProperty(name = "code", dataType = "Integer", value = "成功或异常编码")
     @Getter
     private final int code;
 
-    @Schema(name = "status", type = "string", description = "旧接口成功、失败或异常辅助判断标记:success、fail、error", allowableValues = {"success", "fail", "error"})
+    @ApiModelProperty(name = "status", dataType = "String", value = "旧接口成功、失败或异常辅助判断标记:success、fail、error", allowableValues = "success,fail,error")
     @Getter
     private final String status;
 
-    @Schema(name = "message", type = "string", description = "成功或异常消息")
+    @ApiModelProperty(name = "message", dataType = "String", value = "成功或异常消息")
     @Getter
     private final String message;
 
-    @Schema(name = "data", description = "成功或异常数据")
+    @ApiModelProperty(name = "data", dataType = "java.lang.Object", value = "成功或异常数据")
     @Getter
     private T data;
 
-    @Schema(name = "error", description = "校验失败信息")
+    @ApiModelProperty(name = "error", dataType = "java.util.List<Map<String, String>>", value = "校验失败信息")
     private List<Map<String, String>> error;
 
     public ApiRestResponse() {
