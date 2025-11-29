@@ -229,7 +229,7 @@
         <jakarta.jws-api.version>3.0.0</jakarta.jws-api.version>
         <jasypt.version>3.0.5</jasypt.version>
         <janino.version>3.1.12</janino.version>
-        <javalin.version>7.0.0-alpha.1</javalin.version>
+        <javalin.version>6.3.0</javalin.version>
         <javassist.version>3.30.2-GA</javassist.version>
         <javassist-plus.version>1.0.4.RELEASE</javassist-plus.version>
         <java-uuid-generator.version>5.1.1</java-uuid-generator.version>

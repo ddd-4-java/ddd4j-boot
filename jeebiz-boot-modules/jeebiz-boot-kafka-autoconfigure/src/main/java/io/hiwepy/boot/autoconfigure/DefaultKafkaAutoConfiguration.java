@@ -70,6 +70,7 @@ public class DefaultKafkaAutoConfiguration {
     */
 /**
  * 自定义一个Kafka生产者工厂（非事务消息,覆盖默认的Kafka生产者工厂）
+ *
  * @param customizers 自定义生产者工厂的配置
  * @return 自定义的Kafka生产者工厂
  *//*
@@ -86,6 +87,7 @@ public class DefaultKafkaAutoConfiguration {
     */
 /**
  * 自定义Kafka模板（覆盖默认的Kafka模板）
+ *
  * @param kafkaProducerListener 生产者监听器
  * @param messageConverter 消息转换器
  * @return Kafka模板
