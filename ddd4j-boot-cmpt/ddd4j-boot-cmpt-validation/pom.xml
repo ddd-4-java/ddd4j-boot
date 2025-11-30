@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>ddd4j-boot-cmpt-validation</artifactId>
+    <description>Ddd4j Boot Validation Component</description>
 
     <dependencies>
 

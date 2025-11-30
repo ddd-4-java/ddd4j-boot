@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>ddd4j-boot-cmpt-kafka</artifactId>
+    <description>Ddd4j Boot Kafka Component</description>
 
     <dependencies>
 

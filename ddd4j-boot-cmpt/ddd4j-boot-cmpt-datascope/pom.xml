@@ -11,18 +11,28 @@
     </parent>
 
     <artifactId>ddd4j-boot-cmpt-datascope</artifactId>
+    <description>Ddd4j Boot DataScope Component</description>
 
     <dependencies>
+
+        <!-- For SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
         <!-- For Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
-        <!-- For Ddd4j -->
+
+        <!-- For Servlet Api -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>${revision}</version>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>
         </dependency>
         <!-- For Validation -->
         <dependency>

@@ -44,6 +44,7 @@
 |----ddd4j-boot-dependencies              #公共依赖，便于依赖组件版本控制
 |----ddd4j-boot-core                      #核心模块，基础API、公共对象（BaseController、BaseService、BaseMapper等）、异常对象
 |----ddd4j-boot-cmpt                      #组件模块父模块
+|------ddd4j-boot-cmpt-akka               #Akka组件
 |------ddd4j-boot-cmpt-crypto             #加解密组件
 |------ddd4j-boot-cmpt-datascope          #数据权限组件
 |------ddd4j-boot-cmpt-license            #License组件
@@ -129,6 +130,7 @@
 
 | 组件模块                       | 说明                                |
 |----------------------------|-----------------------------------|
+| ddd4j-boot-cmpt-akka       | Akka 组件，支持 Akka 3 Actor 系统          |
 | ddd4j-boot-cmpt-crypto     | 加解密组件，支持 AES、SM3、SM4 等加密算法        |
 | ddd4j-boot-cmpt-datascope  | 数据权限组件，支持数据范围权限控制                 |
 | ddd4j-boot-cmpt-license    | License 组件，支持 TrueLicense 许可证管理   |
@@ -138,7 +140,7 @@
 | ddd4j-boot-cmpt-satoken    | SaToken 组件，支持 SaToken 权限认证        |
 | ddd4j-boot-cmpt-jackson    | Jackson 组件，支持 Jackson 序列化配置       |
 | ddd4j-boot-cmpt-webmvc     | WebMVC 组件，支持 Spring MVC 自动配置      |
-| ddd4j-boot-cmpt-webflux    | WebFlux 组件，支持 Spring WebFlux 自动配置 |
+| ddd4j-boot-cmpt-webflux    | WebFlux 组件，支持 Spring WebFlux 自动配置 | 
 | ddd4j-boot-cmpt-kafka      | Kafka 组件，支持 Kafka 消息队列集成          |
 | ddd4j-boot-cmpt-external   | 外部 API 集成组件，支持外部服务调用              |
 | ddd4j-boot-cmpt-validation | 验证组件，支持自定义验证规则                    |

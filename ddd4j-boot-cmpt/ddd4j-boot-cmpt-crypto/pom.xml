@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>ddd4j-boot-cmpt-crypto</artifactId>
+    <description>Ddd4j Boot Crypto Component</description>
 
     <dependencies>
 

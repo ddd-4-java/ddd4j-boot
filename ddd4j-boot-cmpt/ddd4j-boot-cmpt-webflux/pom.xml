@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>ddd4j-boot-cmpt-webflux</artifactId>
+    <description>Ddd4j Boot WebFlux Component</description>
 
     <dependencies>
 

@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>ddd4j-boot-cmpt-license</artifactId>
+    <description>Ddd4j Boot License Component</description>
 
     <dependencies>
 
