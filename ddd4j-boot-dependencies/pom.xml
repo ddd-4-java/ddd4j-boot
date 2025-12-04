@@ -18,7 +18,9 @@
         <!-- Dependency versions -->
         <activemq.version>5.16.7</activemq.version>
         <activation.version>1.1.1</activation.version>
-        <akka.version>2.8.7</akka.version>
+        <artemis.version>2.44.0</artemis.version>
+        <akka.version>2.8.8</akka.version>
+        <akka-http.version>10.5.3</akka-http.version>
         <alipay-sdk.version>4.38.221.ALL</alipay-sdk.version>
         <alipay-easysdk.version>2.2.3</alipay-easysdk.version>
         <aliyun-java-sdk-core.version>4.6.3</aliyun-java-sdk-core.version>
@@ -622,6 +624,43 @@
         <dependencies>
 
             <!-- Third Party -->
+
+            <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-actor -->
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-actor_3</artifactId>
+                <version>${akka.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-cluster -->
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-cluster_3</artifactId>
+                <version>${akka.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-remote -->
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-remote_3</artifactId>
+                <version>${akka.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-stream -->
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-stream_3</artifactId>
+                <version>${akka.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-slf4j -->
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-slf4j_3</artifactId>
+                <version>${akka.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-http -->
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-http_3</artifactId>
+                <version>${akka-http.version}</version>
+            </dependency>
 
             <!-- The JavaBeans(TM) Activation Framework is used by the JavaMail(TM)
 				API to manage MIME data -->
