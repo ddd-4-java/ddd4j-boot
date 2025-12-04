@@ -582,7 +582,6 @@
         <spring-boot-starter-maven-embedder.version>2.7.x.20240823.RELEASE</spring-boot-starter-maven-embedder.version>
         <spring-boot-starter-maven-invoker.version>2.7.x.20240823.RELEASE</spring-boot-starter-maven-invoker.version>
         <spring-boot-starter-mybatis.version>3.0.3</spring-boot-starter-mybatis.version>
-        <spring-boot-starter-mybatis-plus.version>${mybatis-plus.version}</spring-boot-starter-mybatis-plus.version>
         <spring-boot-starter-mybatis-tk.version>${mybatis-tk.version}</spring-boot-starter-mybatis-tk.version>
         <spring-boot-starter-minio.version>2.7.x.20240823.RELEASE</spring-boot-starter-minio.version>
         <spring-boot-starter-nacos-config.version>0.3.0-RC</spring-boot-starter-nacos-config.version>
@@ -6927,7 +6926,13 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${spring-boot-starter-mybatis-plus.version}</version>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-spring-boot-autoconfigure -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot-autoconfigure</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.yulichang/mybatis-plus-join-boot-starter -->
             <dependency>

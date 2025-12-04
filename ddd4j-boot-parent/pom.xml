@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.module>${project.artifactId}</project.module>
-        <jacocoArgLine></jacocoArgLine>
+        <jacocoArgLine> </jacocoArgLine>
 
         <addClasspath>false</addClasspath>
         <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -30,7 +30,7 @@
         <!-- 生成部署脚本参数 -->
         <appassembler-dir>${project.build.directory}/generated-resources/appassembler</appassembler-dir>
         <appassembler-jsw-dir>${project.build.directory}/generated-resources/appassembler/jsw</appassembler-jsw-dir>
-        <appassembler-bin-fileName>jeebiz-boot</appassembler-bin-fileName>
+        <appassembler-bin-fileName>ddd4j-boot</appassembler-bin-fileName>
 
         <!-- 生成Docker镜像参数: docker build、push地址-->
         <docker.workdir>/u01/boot/${project.artifactId}</docker.workdir>
