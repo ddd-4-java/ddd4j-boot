@@ -335,8 +335,7 @@
         <mybatis-velocity.version>2.3.0</mybatis-velocity.version>
         <mybatis-generator.version>1.4.2</mybatis-generator.version>
         <mybatis-tk.version>3.5.3</mybatis-tk.version>
-        <mysql.version>8.0.33</mysql.version>
-        <mysql-j.version>9.2.0</mysql-j.version>
+        <mysql.version>9.5.0</mysql.version>
         <minio.version>8.6.0</minio.version>
         <nacos-client.version>3.1.1</nacos-client.version>
         <neethi.version>3.2.1</neethi.version>
@@ -459,7 +458,7 @@
         <soapui-template.version>1.0.2.RELEASE</soapui-template.version>
         <socket-io.version>2.1.2</socket-io.version>
         <!--<spring-framework.version>5.3.39</spring-framework.version>-->
-        <springfox.version>2.10.5</springfox.version>
+        <springfox.version>3.0.0</springfox.version>
         <spring-biz.version>1.1.5.RELEASE</spring-biz.version>
         <spring-bytebuddy.version>1.0.0.RELEASE</spring-bytebuddy.version>
         <spring-plugin.version>3.0.0</spring-plugin.version>
@@ -4634,7 +4633,12 @@
                 <artifactId>owasp-java-html-sanitizer</artifactId>
                 <version>${owasp-html-sanitizer.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>${p6spy.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.pac4j -->
             <dependency>
                 <groupId>org.pac4j</groupId>
