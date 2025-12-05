@@ -9,7 +9,7 @@
 
     <servers>
         <server>
-            <id>jeebiz-platform-maven</id>
+            <id>ddd4j-platform-maven</id>
             <username>${env.CODING_ARTIFACTS_USERNAME}</username>
             <password>${env.CODING_ARTIFACTS_PASSWORD}</password>
         </server>
@@ -19,7 +19,7 @@
         <mirror>
             <id>nexus-tencentyun</id>
             <!-- 此配置避免了本仓库制品的拉取流量被切换到腾讯云镜像源，保证您在使用镜像加速的同时可以从本仓库拉取制品 -->
-            <mirrorOf>!jeebiz-platform-maven</mirrorOf>
+            <mirrorOf>!ddd4j-platform-maven</mirrorOf>
             <name>Nexus tencentyun</name>
             <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
         </mirror>
@@ -33,9 +33,9 @@
             </activation>
             <repositories>
                 <repository>
-                    <id>jeebiz-platform-maven</id>
+                    <id>ddd4j-platform-maven</id>
                     <name>maven</name>
-                    <url>https://jeebiz-maven.pkg.coding.net/repository/platform/maven/</url>
+                    <url>https://ddd4j-maven.pkg.coding.net/repository/platform/maven/</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>

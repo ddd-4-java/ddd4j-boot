@@ -1,20 +1,12 @@
 package io.hiwepy.boot.autoconfigure.sys;
 
 import io.hiwepy.boot.api.utils.Arith;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * CPU相关信息
- *
- * @author:
  */
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class Cpu {
     /**
      * 核心数

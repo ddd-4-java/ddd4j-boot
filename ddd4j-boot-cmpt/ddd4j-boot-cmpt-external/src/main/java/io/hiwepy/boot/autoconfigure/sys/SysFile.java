@@ -1,19 +1,11 @@
 package io.hiwepy.boot.autoconfigure.sys;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 系统文件相关信息
- *
- * @author:
  */
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class SysFile {
     /**
      * 盘符路径

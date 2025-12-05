@@ -9,17 +9,11 @@
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+
     <artifactId>ddd4j-boot-cmpt-cola</artifactId>
     <description>Ddd4j Boot COLA Component</description>
 
     <dependencies>
-        <!-- For Ddd4j Core -->
-        <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
         <!-- For Alibaba Cola -->
         <dependency>
             <groupId>com.alibaba.cola</groupId>
@@ -45,7 +39,5 @@
             <groupId>com.alibaba.cola</groupId>
             <artifactId>cola-component-catchlog-starter</artifactId>
         </dependency>
-
     </dependencies>
-
 </project>

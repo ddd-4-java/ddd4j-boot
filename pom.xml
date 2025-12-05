@@ -66,7 +66,7 @@
         <module>ddd4j-boot-core</module>
         <module>ddd4j-boot-cmpt</module>
         <module>ddd4j-boot-parent</module>
-        <!--<module>ddd4j-boot-samples</module>-->
+        <module>ddd4j-boot-samples</module>
     </modules>
 
     <!--开源协议采用Apache 2.0协议-->

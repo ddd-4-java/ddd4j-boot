@@ -37,7 +37,7 @@
         <docker.push.repostory>127.0.0.1</docker.push.repostory>
         <docker.build.repostory>http://127.0.0.1:2376</docker.build.repostory>
         <!--push镜像到私有库项目的名称-->
-        <docker.registry.name>jeebiz</docker.registry.name>
+        <docker.registry.name>ddd4j</docker.registry.name>
 
         <!-- 生成API离线文参数-->
         <swagger.input>http://localhost:8080/v2/api-docs</swagger.input>
@@ -74,20 +74,27 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-
-        <!-- Java Servlet API -->
-        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+        <!-- For Servlet Api -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <optional>true</optional>
         </dependency>
-        <!-- Java Websocket API -->
-        <!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+        <!-- For Validation Api -->
         <dependency>
-            <groupId>javax.websocket</groupId>
-            <artifactId>javax.websocket-api</artifactId>
-            <optional>true</optional>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.expressly</groupId>
+            <artifactId>expressly</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
         </dependency>
         <!-- Bouncy Castle -->
         <dependency>
@@ -148,7 +155,6 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -467,6 +473,7 @@
                     <groupId>org.owasp</groupId>
                     <artifactId>dependency-check-maven</artifactId>
                     <configuration>
+                        <!-- 默认跳过 -->
                         <skip>true</skip>
                         <!-- 项目中不涉及 JavaScript 依赖项或无需检查相关漏洞，通过以下方式禁用 RetireJS 扫描 -->
                         <retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
@@ -1199,7 +1206,6 @@
                         <processStartTag>&lt;&lt;</processStartTag>
                         <processEndTag>&gt;&gt;</processEndTag>
                         <sectionDelimiter>==</sectionDelimiter>
-
                         <!-- config for mvn license:update-project-license -->
                         <licenseFile>${project.basedir}/LICENSE</licenseFile>
                     </configuration>
@@ -1245,7 +1251,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
-            <!-- 代码质量检查 ：检查 Bugs
+            <!-- 代码质量检查 ：检查 Bugs，默认未启用
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
@@ -1270,6 +1276,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
             </plugin>
+            <!-- 模块版本管理插件 ：替换 ${revision}，默认未启用
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+            </plugin> -->
             <!-- 发布插件 ：将项目输出构件部署到远程仓库 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -7,8 +7,9 @@
         <groupId>com.github.hiwepy</groupId>
         <artifactId>ddd4j-boot-dependencies</artifactId>
         <version>${revision}</version>
-        <relativePath>../ddd4j-boot-dependencies</relativePath>
+        <relativePath>../ddd4j-boot-dependencies/pom.xml</relativePath>
     </parent>
+
     <artifactId>ddd4j-boot-core</artifactId>
 
     <dependencies>
