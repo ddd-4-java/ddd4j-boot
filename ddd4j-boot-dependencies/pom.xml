@@ -550,6 +550,7 @@
         <maven-docker-plugin.version>0.48.0</maven-docker-plugin.version>
         <maven-findbugs-plugin.version>3.0.5</maven-findbugs-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+        <maven-git-commit-id-plugin.version>4.9.10</maven-git-commit-id-plugin.version>
         <maven-gwt-plugin.version>2.8.2</maven-gwt-plugin.version>
         <maven-jarsigner-plugin.version>3.0.0</maven-jarsigner-plugin.version>
         <maven-mybatis-generator-plugin.version>1.3.7</maven-mybatis-generator-plugin.version>
@@ -7632,6 +7633,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>${maven-gpg-plugin.version}</version>
+                </plugin>
+                <!-- https://mvnrepository.com/artifact/pl.project13.maven/git-commit-id-plugin -->
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>${maven-git-commit-id-plugin.version}</version>
                 </plugin>
                 <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/gwt-maven-plugin -->
                 <plugin>
