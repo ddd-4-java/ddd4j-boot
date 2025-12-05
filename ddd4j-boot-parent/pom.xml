@@ -517,6 +517,31 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- 版本统一管理插件 ：替换 ${revision}，默认未启用 -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <configuration>
+                        <updatePomFile>true</updatePomFile>
+                        <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>flatten</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>flatten</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>flatten.clean</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <!-- 代码检查：检查类或者 JAR 文件 -->
                 <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/findbugs-maven-plugin -->
                 <plugin>
