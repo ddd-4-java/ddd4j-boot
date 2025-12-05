@@ -1,13 +1,19 @@
-package io.hiwepy.boot.api.validation;
+package io.hiwepy.boot.autoconfigure.validation.constraintvalidators;
 
-import io.hiwepy.boot.api.annotation.AllowableValues;
-import org.springframework.util.StringUtils;
-
+import io.hiwepy.boot.autoconfigure.validation.constraints.AllowableValues;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import org.springframework.util.StringUtils;
+
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 验证值是否在指定范围内
+ *
+ * @author hiwepy
+ * @since 2021-03-08
+ */
 public class AllowedValuesValidator implements ConstraintValidator<AllowableValues, String> {
 
     List<String> allows;
@@ -16,7 +22,7 @@ public class AllowedValuesValidator implements ConstraintValidator<AllowableValu
     @Override
     public void initialize(AllowableValues annotation) {
         nullable = annotation.nullable();
-        allows = Arrays.asList(annotation.allows().split(","));
+        allows = Arrays.asList(StringUtils.tokenizeToStringArray(annotation.allows(), ","));
     }
 
     @Override

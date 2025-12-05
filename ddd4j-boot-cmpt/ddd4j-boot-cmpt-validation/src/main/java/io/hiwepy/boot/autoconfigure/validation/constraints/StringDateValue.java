@@ -1,9 +1,9 @@
-package io.hiwepy.boot.api.annotation;
+package io.hiwepy.boot.autoconfigure.validation.constraints;
 
-import io.hiwepy.boot.api.validation.StringDateValueValidator;
-
+import io.hiwepy.boot.autoconfigure.validation.constraintvalidators.StringDateValueValidator;
 import javax.validation.Constraint;
 import javax.validation.Payload;
+
 import java.lang.annotation.*;
 
 @Documented
