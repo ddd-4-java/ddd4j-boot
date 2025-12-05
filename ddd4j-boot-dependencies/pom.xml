@@ -3649,20 +3649,6 @@
                 <artifactId>jwt-issuer-with-nimbus</artifactId>
                 <version>${jwt-issuer.version}</version>
             </dependency>
-
-            <!-- JDBC Driver For KingBase8 -->
-            <dependency>
-                <groupId>com.kingbase8.jdbc</groupId>
-                <artifactId>kingbase8</artifactId>
-                <version>${kingbase8.version}</version>
-            </dependency>
-
-            <!-- https://mvnrepository.com/artifact/com.baomidou/kisso -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>kisso</artifactId>
-                <version>${kisso.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.axet/kaptcha -->
             <dependency>
                 <groupId>com.github.axet</groupId>
