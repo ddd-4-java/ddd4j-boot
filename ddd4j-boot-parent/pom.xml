@@ -336,6 +336,8 @@
                             <nonFilteredFileExtension>woff</nonFilteredFileExtension>
                             <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
                             <nonFilteredFileExtension>otf</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>p12</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>pfx</nonFilteredFileExtension>
                         </nonFilteredFileExtensions>
                     </configuration>
                     <!-- 配置文件变量替换 -->
