@@ -19,6 +19,7 @@
         <module>ddd4j-boot-cmpt-cola</module>
         <module>ddd4j-boot-cmpt-crypto</module>
         <module>ddd4j-boot-cmpt-datascope</module>
+        <module>ddd4j-boot-cmpt-excel</module>
         <module>ddd4j-boot-cmpt-external</module>
         <module>ddd4j-boot-cmpt-jackson</module>
         <module>ddd4j-boot-cmpt-kafka</module>
@@ -38,15 +39,19 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <!-- For Slf4j Api -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+        <!-- For Servlet Api -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
         </dependency>
         <!-- For Spring Boot Test-->
         <dependency>
@@ -322,6 +327,13 @@
                     <groupId>org.owasp</groupId>
                     <artifactId>dependency-check-maven</artifactId>
                     <configuration>
+                        <!-- 默认跳过 -->
+                        <skip>true</skip>
+                        <!-- 项目中不涉及 JavaScript 依赖项或无需检查相关漏洞，通过以下方式禁用 RetireJS 扫描 -->
+                        <retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
+                        <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                        <!-- 获取 NVD API 密钥： 访问 https://nvd.nist.gov/developers/request-an-api-key -->
+                        <nvdApiKey>3b8d0853-cc28-4b91-bfe2-a01c65870443</nvdApiKey>
                         <format>HTML</format>
                         <outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
                     </configuration>
@@ -345,8 +357,8 @@
                         <threshold>Medium</threshold>
                         <failOnError>true</failOnError>
                         <includeTests>true</includeTests>
-                        <!--findbugs需要忽略的错误的配置文件-->
-                        <excludeFilterFile>findbugs/findbugs-exclude-filter.xml</excludeFilterFile>
+                        <!--findbugs需要忽略的错误的配置文件
+                        <excludeFilterFile>findbugs/findbugs-exclude-filter.xml</excludeFilterFile>-->
                     </configuration>
                     <executions>
                         <execution>
@@ -394,11 +406,11 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
             </plugin> -->
-            <!-- dependency-check 插件 ：依赖检查
+            <!-- dependency-check 插件 ：依赖检查 -->
             <plugin>
-			    <groupId>org.owasp</groupId>
-			    <artifactId>dependency-check-maven</artifactId>
-		    </plugin>-->
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+            </plugin>
             <!-- jar包生成插件 ：创建项目jar包 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

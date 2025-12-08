@@ -96,6 +96,11 @@
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
         </dependency>
+        <!-- For Websocket Api -->
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+        </dependency>
         <!-- Bouncy Castle -->
         <dependency>
             <groupId>org.bouncycastle</groupId>
@@ -1287,7 +1292,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
             </plugin>
-            <!-- 资源插件：复制主资源文件至主输出目录 -->
+            <!-- 编译插件：编译主代码至主输出目录 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
