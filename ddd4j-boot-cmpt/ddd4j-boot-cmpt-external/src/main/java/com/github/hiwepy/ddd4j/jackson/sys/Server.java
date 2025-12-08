@@ -1,7 +1,7 @@
 package com.github.hiwepy.ddd4j.jackson.sys;
 
 import hitool.core.lang3.network.InetAddressUtils;
-import io.hiwepy.boot.api.utils.Arith;
+import io.ddd4j.boot.core.utils.Arith;
 import lombok.Data;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;

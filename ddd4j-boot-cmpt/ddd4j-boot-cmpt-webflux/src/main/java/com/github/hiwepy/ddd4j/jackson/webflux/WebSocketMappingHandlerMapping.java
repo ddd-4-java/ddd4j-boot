@@ -1,7 +1,7 @@
 package com.github.hiwepy.ddd4j.jackson.webflux;
 
-import io.hiwepy.boot.api.annotation.WebSocketMapping;
-import io.hiwepy.boot.api.exception.BizRuntimeException;
+import io.ddd4j.boot.core.annotation.WebSocketMapping;
+import io.ddd4j.boot.core.exception.BizRuntimeException;
 import org.springframework.beans.BeansException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.AnnotationUtils;

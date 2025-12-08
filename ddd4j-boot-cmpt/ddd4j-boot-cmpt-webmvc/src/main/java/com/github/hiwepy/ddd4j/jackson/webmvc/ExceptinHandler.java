@@ -4,7 +4,7 @@
  */
 package com.github.hiwepy.ddd4j.jackson.webmvc;
 
-import io.hiwepy.boot.api.utils.WebUtils;
+import io.ddd4j.boot.core.utils.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;

@@ -1,7 +1,7 @@
 package io.hiwepy.boot.sample.web.controller;
 
 import com.alibaba.fastjson2.JSON;
-import io.hiwepy.boot.api.ApiRestResponse;
+import io.ddd4j.boot.core.ApiRestResponse;
 import io.hiwepy.boot.sample.setup.TopicConstant;
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;

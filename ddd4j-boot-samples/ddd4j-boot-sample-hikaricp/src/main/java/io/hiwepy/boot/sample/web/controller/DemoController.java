@@ -3,10 +3,10 @@
  */
 package io.hiwepy.boot.sample.web.controller;
 
-import io.hiwepy.boot.api.ApiRestResponse;
-import io.hiwepy.boot.api.annotation.ApiOperationLog;
-import io.hiwepy.boot.api.annotation.BusinessType;
-import io.hiwepy.boot.api.web.BaseMapperController;
+import io.ddd4j.boot.core.ApiRestResponse;
+import io.ddd4j.boot.core.annotation.ApiOperationLog;
+import io.ddd4j.boot.core.annotation.BusinessType;
+import io.ddd4j.boot.core.web.BaseMapperController;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 import io.hiwepy.boot.sample.service.IDemoService;
 import io.hiwepy.boot.sample.setup.LogConstant;

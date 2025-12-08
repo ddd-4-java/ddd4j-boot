@@ -1,8 +1,8 @@
 package com.github.hiwepy.ddd4j.jackson.aspect;
 
-import io.hiwepy.boot.api.XHeaders;
-import io.hiwepy.boot.api.sequence.Sequence;
-import io.hiwepy.boot.api.utils.WebUtils;
+import io.ddd4j.boot.core.XHeaders;
+import io.ddd4j.boot.core.sequence.Sequence;
+import io.ddd4j.boot.core.utils.WebUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

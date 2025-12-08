@@ -1,7 +1,7 @@
 package com.github.hiwepy.ddd4j.jackson.sequence;
 
 import cn.hutool.core.util.IdUtil;
-import io.hiwepy.boot.api.sequence.Sequence;
+import io.ddd4j.boot.core.sequence.Sequence;
 import com.github.hiwepy.ddd4j.jackson.SequenceProperties;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

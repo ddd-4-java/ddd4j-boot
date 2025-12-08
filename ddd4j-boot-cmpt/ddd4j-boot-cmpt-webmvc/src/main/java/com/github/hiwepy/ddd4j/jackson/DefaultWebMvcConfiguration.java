@@ -4,9 +4,9 @@
  */
 package com.github.hiwepy.ddd4j.jackson;
 
-import io.hiwepy.boot.api.Constants;
-import io.hiwepy.boot.api.sequence.Sequence;
-import io.hiwepy.boot.api.web.servlet.handler.Slf4jMDCInterceptor;
+import io.ddd4j.boot.core.Constants;
+import io.ddd4j.boot.core.sequence.Sequence;
+import io.ddd4j.boot.core.web.servlet.handler.Slf4jMDCInterceptor;
 import com.github.hiwepy.ddd4j.jackson.config.LocalResourceProperteis;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.biz.context.NestedMessageSource;

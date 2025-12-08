@@ -2,10 +2,10 @@ package com.github.hiwepy.ddd4j.crypto.advice;
 
 import cn.hutool.crypto.symmetric.AES;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.hiwepy.boot.api.ApiCode;
-import io.hiwepy.boot.api.dto.BaseDTO;
-import io.hiwepy.boot.api.dto.RequestData;
-import io.hiwepy.boot.api.exception.ParamException;
+import io.ddd4j.boot.core.ApiCode;
+import io.ddd4j.boot.core.dto.BaseDTO;
+import io.ddd4j.boot.core.dto.RequestData;
+import io.ddd4j.boot.core.exception.ParamException;
 import com.github.hiwepy.ddd4j.crypto.CryptoConstant;
 import com.github.hiwepy.ddd4j.crypto.domain.annotation.RequestDecryption;
 import lombok.SneakyThrows;

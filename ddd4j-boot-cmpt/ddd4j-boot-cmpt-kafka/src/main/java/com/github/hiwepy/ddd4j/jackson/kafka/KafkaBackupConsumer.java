@@ -3,7 +3,7 @@ package com.github.hiwepy.ddd4j.jackson.kafka;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import com.google.common.collect.Lists;
-import io.hiwepy.boot.api.exception.BizRuntimeException;
+import io.ddd4j.boot.core.exception.BizRuntimeException;
 import com.github.hiwepy.ddd4j.jackson.KafkaBackupProperties;
 import com.github.hiwepy.ddd4j.jackson.kafka.backup.BackupRecord;
 import com.github.hiwepy.ddd4j.jackson.kafka.backup.BackupStatus;

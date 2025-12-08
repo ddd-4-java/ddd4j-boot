@@ -1,6 +1,6 @@
 package com.github.hiwepy.ddd4j.jackson.sys;
 
-import io.hiwepy.boot.api.utils.Arith;
+import io.ddd4j.boot.core.utils.Arith;
 import lombok.Data;
 
 /**

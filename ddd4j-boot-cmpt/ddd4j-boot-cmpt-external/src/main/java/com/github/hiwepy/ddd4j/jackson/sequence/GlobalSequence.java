@@ -1,6 +1,6 @@
 package com.github.hiwepy.ddd4j.jackson.sequence;
 
-import io.hiwepy.boot.api.sequence.Sequence;
+import io.ddd4j.boot.core.sequence.Sequence;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisOperationTemplate;
 

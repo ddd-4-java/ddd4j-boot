@@ -2,8 +2,8 @@ package com.github.hiwepy.ddd4j.jackson.sys;
 
 import hitool.core.lang3.time.DateFormats;
 import hitool.core.lang3.time.LocalDateTimes;
-import io.hiwepy.boot.api.utils.Arith;
-import io.hiwepy.boot.api.utils.DateUtils;
+import io.ddd4j.boot.core.utils.Arith;
+import io.ddd4j.boot.core.utils.DateUtils;
 import lombok.Data;
 
 import java.lang.management.ManagementFactory;

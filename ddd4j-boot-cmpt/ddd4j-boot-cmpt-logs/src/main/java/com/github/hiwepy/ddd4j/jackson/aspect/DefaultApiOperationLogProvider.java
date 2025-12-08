@@ -1,7 +1,7 @@
 package com.github.hiwepy.ddd4j.jackson.aspect;
 
-import io.hiwepy.boot.api.Constants;
-import io.hiwepy.boot.api.utils.WebUtils;
+import io.ddd4j.boot.core.Constants;
+import io.ddd4j.boot.core.utils.WebUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;

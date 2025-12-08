@@ -1,9 +1,9 @@
 package io.hiwepy.boot.sample.exception;
 
-import io.hiwepy.boot.api.ApiRestResponse;
-import io.hiwepy.boot.api.Constants;
-import io.hiwepy.boot.api.CustomApiCode;
-import io.hiwepy.boot.api.exception.BizRuntimeException;
+import io.ddd4j.boot.core.ApiRestResponse;
+import io.ddd4j.boot.core.Constants;
+import io.ddd4j.boot.core.CustomApiCode;
+import io.ddd4j.boot.core.exception.BizRuntimeException;
 import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.biz.utils.SpringContextUtils;
 import org.springframework.context.i18n.LocaleContextHolder;

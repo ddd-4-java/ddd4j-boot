@@ -1,6 +1,6 @@
 package io.hiwepy.boot.sample.service;
 
-import io.hiwepy.boot.api.service.IBaseService;
+import io.ddd4j.boot.core.service.IBaseService;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 
 /**

@@ -1,6 +1,6 @@
 package io.hiwepy.boot.sample.web.controller;
 
-import io.hiwepy.boot.api.ApiRestResponse;
+import io.ddd4j.boot.core.ApiRestResponse;
 import io.hiwepy.boot.sample.service.MQProducerService;
 import io.hiwepy.boot.sample.web.dto.MessageDTO;
 import org.apache.rocketmq.client.producer.SendResult;

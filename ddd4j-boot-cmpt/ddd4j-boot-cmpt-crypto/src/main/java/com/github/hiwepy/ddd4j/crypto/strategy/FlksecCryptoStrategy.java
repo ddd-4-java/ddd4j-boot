@@ -3,7 +3,7 @@ package com.github.hiwepy.ddd4j.crypto.strategy;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.crypto.digest.HmacAlgorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.hiwepy.boot.api.exception.BizRuntimeException;
+import io.ddd4j.boot.core.exception.BizRuntimeException;
 import com.github.hiwepy.ddd4j.crypto.domain.enums.CryptoType;
 import com.github.hiwepy.ddd4j.crypto.domain.enums.SymmetricAlgorithmType;
 import com.github.hiwepy.ddd4j.crypto.domain.vo.FlkSecDecryptResponseVO;
