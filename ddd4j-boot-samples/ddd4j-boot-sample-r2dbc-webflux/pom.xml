@@ -144,6 +144,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
+        </dependency>
         <!-- For Mybatis-r2dbc -->
         <dependency>
             <groupId>pro.chenggang</groupId>

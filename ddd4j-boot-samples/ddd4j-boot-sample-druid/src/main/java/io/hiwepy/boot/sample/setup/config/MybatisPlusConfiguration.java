@@ -51,8 +51,7 @@ public class MybatisPlusConfiguration {
 
     @Bean
     public BlockAttackInnerInterceptor blockAttackInnerInterceptor() {
-        BlockAttackInnerInterceptor sqlExplainInterceptor = new BlockAttackInnerInterceptor();
-        return sqlExplainInterceptor;
+        return new BlockAttackInnerInterceptor();
     }
 
     /**
@@ -65,7 +64,8 @@ public class MybatisPlusConfiguration {
 
     /**
      * 注入主键生成器
-     @Bean public IKeyGenerator keyGenerator() {
+     @Bean
+     public IKeyGenerator keyGenerator() {
      return new H2KeyGenerator();
      }
      */
