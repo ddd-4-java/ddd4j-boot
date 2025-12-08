@@ -37,12 +37,12 @@
         <ant-jsch.version>1.10.15</ant-jsch.version>
         <apiguardian-api.version>1.1.2</apiguardian-api.version>
         <appium.version>9.3.0</appium.version>
-        <aspectj.version>1.9.22.1</aspectj.version>
+        <aspectj.version>1.9.25</aspectj.version>
         <assertj.version>3.26.3</assertj.version>
         <asciidoctorj.version>3.0.0</asciidoctorj.version>
         <asciidoctorj.pdf.version>2.3.18</asciidoctorj.pdf.version>
         <asmsupport.version>0.4.3</asmsupport.version>
-        <async-http-client.version>3.0.0</async-http-client.version>
+        <async-http-client.version>3.0.4</async-http-client.version>
         <auth0-java-jwt.version>4.5.0</auth0-java-jwt.version>
         <auth0-jwks-rsa.version>0.23.0</auth0-jwks-rsa.version>
         <aws-java-sdk.version>1.12.794</aws-java-sdk.version>
@@ -395,6 +395,8 @@
         <protostuff.version>1.8.0</protostuff.version>
         <protobuf-java.version>4.30.2</protobuf-java.version>
         <proxool.version>0.9.1</proxool.version>
+        <pulsar.version>4.1.2</pulsar.version>
+        <pulsar-reactive.version>0.7.0</pulsar-reactive.version>
         <qcloud-cos-api.version>5.6.259</qcloud-cos-api.version>
         <qcloud-cos-api-bundle.version>5.6.246.3</qcloud-cos-api-bundle.version>
         <qiniu-java-sdk.version>7.19.0</qiniu-java-sdk.version>
@@ -858,7 +860,26 @@
                 <artifactId>java-client</artifactId>
                 <version>${appium.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjtools</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/cn.wensiqun/asmsupport-core -->
             <dependency>
                 <groupId>cn.wensiqun</groupId>
