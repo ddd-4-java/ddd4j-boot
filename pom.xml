@@ -13,7 +13,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.github.hiwepy</groupId>
+    <groupId>io.ddd4j.boot</groupId>
     <artifactId>ddd4j-boot</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>

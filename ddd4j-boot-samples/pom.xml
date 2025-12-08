@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.github.hiwepy</groupId>
+        <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-parent</artifactId>
         <version>${revision}</version>
         <relativePath>../ddd4j-boot-parent/pom.xml</relativePath>
