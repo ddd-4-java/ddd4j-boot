@@ -1006,8 +1006,8 @@
 
                                     <!-- 处理脚本模式依赖资源 -->
 
-                                    <!-- 步骤1、拷贝应用程序Jar文件 -->
-                                    <copy file="${project.build.directory}/${project.build.finalName}.jar"
+                                    <!-- 步骤1、拷贝应用程序文件 -->
+                                    <copy file="${project.build.directory}/${project.build.finalName}.${project.packaging}"
                                           todir="${appassembler-dir}/${project.artifactId}/lib"/>
 
                                     <!-- 步骤2、创建生产环境配置文件夹：拷贝配置文件以便覆盖默认配置 -->
@@ -1077,8 +1077,8 @@
 
                                     <!-- 处理服务模式依赖资源 -->
 
-                                    <!-- 步骤1、拷贝应用程序Jar文件 -->
-                                    <copy file="${project.build.directory}/${project.build.finalName}.jar"
+                                    <!-- 步骤1、拷贝应用程序文件 -->
+                                    <copy file="${project.build.directory}/${project.build.finalName}.${project.packaging}"
                                           todir="${appassembler-jsw-dir}/${project.artifactId}/lib"/>
                                     <!-- 步骤2、创建生产环境配置文件夹：拷贝配置文件以便覆盖默认配置 -->
 
