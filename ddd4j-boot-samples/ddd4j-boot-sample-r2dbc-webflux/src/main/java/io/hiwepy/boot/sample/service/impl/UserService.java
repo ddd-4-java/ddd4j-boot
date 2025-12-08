@@ -2,7 +2,7 @@
  * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
  * All Rights Reserved.
  */
-package io.hiwepy.boot.sample.service;
+package io.hiwepy.boot.sample.service.impl;
 
 import io.hiwepy.boot.sample.entity.User;
 import io.hiwepy.boot.sample.repository.UserRepository;
