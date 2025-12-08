@@ -16,12 +16,12 @@
     <dependencies>
         <!-- For DDD4j -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-cmpt-jackson</artifactId>
             <version>${revision}</version>
         </dependency>
