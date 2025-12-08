@@ -19,7 +19,7 @@ public class License_Test {
 
     @Test
     public void licenseVerify() {
-        System.out.println("licese是否有效：" + licenseVerify.verify());
+        System.out.println("license是否有效：" + licenseVerify.verify());
     }
 
     @Test

@@ -80,7 +80,7 @@ public class LicenseVerify {
             log.info(MessageFormat.format("证书有效期：{0} - {1}", format.format(licenseContent.getNotBefore()), format.format(licenseContent.getNotAfter())));
         } catch (Exception e) {
             installSuccess = false;
-            log.error("------------------------------- 证书安装成功 -------------------------------");
+            log.error("------------------------------- 证书安装失败 -------------------------------");
             log.error(e.getMessage());
         }
     }
