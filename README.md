@@ -147,3 +147,30 @@
 
 #### Spring Docs
 https://docs.spring.io/spring-boot/docs/2.6.15/reference/html/features.html#features.spring-application
+
+上层业务：业务系统、SCRM、B2B2C 商城、直播平台
+基础服务：
+服务网关：ddd4j-gateway
+认证授权：ddd4j-auth
+ddd4j-auth-api
+ddd4j-auth-common
+后台管理：ddd4j-admin
+ddd4j-admin-api
+ddd4j-admin-common
+开放平台：ddd4j-open
+ddd4j-open-api : 接口
+ddd4j-open-admin：应用管理、秘钥管理、接口授权
+ddd4j-open-common:
+ddd4j-open-standard：标准数据
+微信服务：ddd4j-weixin
+ddd4j-weixin-api
+ddd4j-weixin-common
+钉钉服务：ddd4j-dingtalk
+ddd4j-dingtalk-api
+ddd4j-dingtalk-common
+字节服务：ddd4j-bytedance
+ddd4j-bytedance-api
+ddd4j-bytedance-common
+业务组件：ddd4j-cloud
+基础框架：ddd4j-boot
+基础工具：ddd4j-tool

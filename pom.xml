@@ -22,9 +22,9 @@
     <description>Ddd4j Projects For Spring Boot</description>
 
     <scm>
-        <connection>scm:git:https:e.coding.net/wans-hz/base-platform/${project.artifactId}.git</connection>
-        <developerConnection>scm:git:https:e.coding.net/wans-hz/base-platform/${project.artifactId}.git</developerConnection>
-        <url>https://e.coding.net/wans-hz/base-platform/${project.artifactId}</url>
+        <connection>scm:git:https:codeup.aliyun.com/5fdc0afd99b59ba3c5ead757/ddd4j/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:https:codeup.aliyun.com/5fdc0afd99b59ba3c5ead757/ddd4j/${project.artifactId}.git</developerConnection>
+        <url>https://codeup.aliyun.com/5fdc0afd99b59ba3c5ead757/ddd4j/${project.artifactId}</url>
         <tag>${project.artifactId}</tag>
     </scm>
 
