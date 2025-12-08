@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.hiwepy</groupId>
+        <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-samples</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
@@ -14,12 +14,12 @@
 
         <!-- For Jeebiz -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-cmpt-webflux</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -57,8 +57,8 @@
         </dependency>
         <!-- For Swagger -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>webflux-swagger2-spring-boot-starter</artifactId>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-webflux-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>

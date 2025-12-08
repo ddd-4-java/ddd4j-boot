@@ -148,3 +148,79 @@
 #### Spring Docs
 
 https://docs.spring.io/spring-boot/docs/3.5.x/reference/html/features.html#features.spring-application
+
+
+核心模块，按 DDD分层思想组织代码结构：
+
+```
+ddd4j-boot-core/
+├── src/main/java/io/ddd4j/boot/core
+│   ├── application/           // 应用层
+│   │   ├── command/           // 命令对象
+│   │   ├── dto/               // 数据传输对象
+│   │   ├── service/           // 应用服务
+│   │   └── mapper/            // DTO与领域对象映射
+│   ├── domain/                // 领域层
+│   │   ├── model/             // 领域模型
+│   │   │   ├── entity/        // 实体
+│   │   │   ├── vo/            // 值对象
+│   │   │   └── aggregate/     // 聚合根
+│   │   ├── repository/        // 仓储接口
+│   │   └── service/           // 领域服务
+│   ├── infrastructure/        // 基础设施层
+│   │   ├── persistence/       // 持久化实现
+│   │   ├── messaging/         // 消息组件
+│   │   └── config/            // 配置类
+│   └── interfaces/            // 用户接口层
+│       ├── rest/              // REST接口
+│       └── facade/            // 外部服务接口
+└── src/main/resources/
+```
+
+基于菱形架构（COLA）对 代码结构进行调整：
+
+1 结构
+Adapter（入口/出入口适配器：Web/Job/Schedule）
+│      ↑DTO/Assembler        ↓RPC/HTTP 调用
+Application（用例编排：Command/Query、事务、权限、日志）
+│      ↑Domain Event         ↓Repository/SPI
+Domain（聚合/实体/值对象/领域服务/领域事件）
+│      ↑仓储接口             ↓技术实现
+Infrastructure（DB/MQ/Cache/三方 SDK 实现、配置、SPI 扩展）
+
+2 工程约定（常见包结构）
+com.xxx.pay
+├─ adapter.web   // Controller, VO
+├─ app           // Command, Query, Service, Assembler
+├─ domain        // model(aggregate), service, event, repository
+└─ infra         // repo impl, mapper, gateway impl, config
+Command/Query：明确用例输入（比“方法参数”更可观测、可审计）。
+Assembler：DTO ⇆ DO/Entity 映射集中管理。
+SPI 扩展点：在 infra 定义接口实现 + 装配；在 app 通过接口使用，方便替换/灰度。
+
+组件模块，按 DDD分层思想组织代码结构：
+
+```
+ddd4j-boot-cmpt-{模块}/
+├── src/main/java/io/ddd4j/boot/{模块}
+│   ├── application/           // 应用层
+│   │   ├── command/           // 命令对象
+│   │   ├── dto/               // 数据传输对象
+│   │   ├── service/           // 应用服务
+│   │   └── mapper/            // DTO与领域对象映射
+│   ├── domain/                // 领域层
+│   │   ├── model/             // 领域模型
+│   │   │   ├── entity/        // 实体
+│   │   │   ├── vo/            // 值对象
+│   │   │   └── aggregate/     // 聚合根
+│   │   ├── repository/        // 仓储接口
+│   │   └── service/           // 领域服务
+│   ├── infrastructure/        // 基础设施层
+│   │   ├── persistence/       // 持久化实现
+│   │   ├── messaging/         // 消息组件
+│   │   └── config/            // 配置类
+│   └── interfaces/            // 用户接口层
+│       ├── rest/              // REST接口
+│       └── facade/            // 外部服务接口
+└── src/main/resources/
+```

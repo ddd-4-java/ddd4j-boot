@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.hiwepy</groupId>
+        <groupId>io.ddd4j.boot</groupId>
         <!-- 特别注意：真实的业务系统应继承 ddd4j-boot-parent -->
         <artifactId>ddd4j-boot-samples</artifactId>
         <version>${revision}</version>
@@ -14,12 +14,12 @@
 
         <!-- For Jeebiz -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -56,12 +56,8 @@
         </dependency>
         <!-- For Swagger -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>webmvc-swagger2-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>swagger-bootstrap-ui</artifactId>
+            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
         </dependency>
         <!-- For Validation -->
         <dependency>

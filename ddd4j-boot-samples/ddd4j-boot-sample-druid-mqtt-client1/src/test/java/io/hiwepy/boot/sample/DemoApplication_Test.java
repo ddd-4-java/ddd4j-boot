@@ -4,8 +4,7 @@
  */
 package io.hiwepy.boot.sample;
 
-import com.google.common.collect.ImmutableMap;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,7 +29,7 @@ public class DemoApplication_Test {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws Exception {
         String url = String.format("http://localhost:%d/", port);
         System.out.println(String.format("port is : [%d]", port));
@@ -45,9 +44,7 @@ public class DemoApplication_Test {
     @Test
     public void test1() throws Exception {
 
-        Map<String, Object> requestBody = new ImmutableMap.Builder<String, Object>()
-                .put("name", 1)
-                .put("text", 60).build();
+        Map<String, Object> requestBody = Map.of("name", 1, "text", 60);
 
         ResponseEntity<String> response = this.restTemplate.postForEntity(
                 this.base.toString() + "/demo/new", requestBody, String.class);

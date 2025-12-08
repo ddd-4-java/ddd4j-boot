@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.hiwepy.boot.autoconfigure.AkkaAutoConfiguration
+io.ddd4j.boot.cmpt.akka.AkkaAutoConfiguration

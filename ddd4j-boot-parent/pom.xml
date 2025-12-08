@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.hiwepy</groupId>
+        <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-dependencies</artifactId>
         <version>${revision}</version>
-        <relativePath>../ddd4j-boot-dependencies/pom.xml</relativePath>
+        <relativePath>../ddd4j-boot-dependencies</relativePath>
     </parent>
 
     <artifactId>ddd4j-boot-parent</artifactId>
@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.module>${project.artifactId}</project.module>
-        <jacocoArgLine></jacocoArgLine>
+        <jacocoArgLine> </jacocoArgLine>
 
         <addClasspath>false</addClasspath>
         <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -37,7 +37,7 @@
         <docker.push.repostory>127.0.0.1</docker.push.repostory>
         <docker.build.repostory>http://127.0.0.1:2376</docker.build.repostory>
         <!--push镜像到私有库项目的名称-->
-        <docker.registry.name>jeebiz</docker.registry.name>
+        <docker.registry.name>ddd4j</docker.registry.name>
 
         <!-- 生成API离线文参数-->
         <swagger.input>http://localhost:8080/v2/api-docs</swagger.input>
@@ -340,6 +340,8 @@
                             <nonFilteredFileExtension>woff</nonFilteredFileExtension>
                             <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
                             <nonFilteredFileExtension>otf</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>p12</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>pfx</nonFilteredFileExtension>
                         </nonFilteredFileExtensions>
                     </configuration>
                     <!-- 配置文件变量替换 -->
@@ -427,9 +429,33 @@
                         </execution>
                     </executions>
                 </plugin>
-
+                <!-- https://mvnrepository.com/artifact/pl.project13.maven/git-commit-id-plugin -->
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+                        <!-- 生成git属性文件，默认false：不生成 -->
+                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                        <includeOnlyProperties>
+                            <includeOnlyProperty>^git.branch$</includeOnlyProperty>
+                            <includeOnlyProperty>^git.build.time$</includeOnlyProperty>
+                            <includeOnlyProperty>^git.commit.time$</includeOnlyProperty>
+                            <includeOnlyProperty>^git.commit.id$</includeOnlyProperty>
+                            <includeOnlyProperty>^git.build.version$</includeOnlyProperty>
+                            <includeOnlyProperty>^git.commit.user.name$</includeOnlyProperty>
+                            <includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
+                        </includeOnlyProperties>
+                    </configuration>
+                </plugin>
                 <!-- Spring Boot 代码质量检查 -->
-
                 <!-- 代码格式检查  -->
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin -->
                 <plugin>
@@ -493,6 +519,31 @@
                         <execution>
                             <goals>
                                 <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 版本统一管理插件 ：替换 ${revision}，默认未启用 -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <configuration>
+                        <updatePomFile>true</updatePomFile>
+                        <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>flatten</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>flatten</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>flatten.clean</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -954,8 +1005,8 @@
 
                                     <!-- 处理脚本模式依赖资源 -->
 
-                                    <!-- 步骤1、拷贝应用程序Jar文件 -->
-                                    <copy file="${project.build.directory}/${project.build.finalName}.jar"
+                                    <!-- 步骤1、拷贝应用程序文件 -->
+                                    <copy file="${project.build.directory}/${project.build.finalName}.${project.packaging}"
                                           todir="${appassembler-dir}/${project.artifactId}/lib"/>
 
                                     <!-- 步骤2、创建生产环境配置文件夹：拷贝配置文件以便覆盖默认配置 -->
@@ -1025,8 +1076,8 @@
 
                                     <!-- 处理服务模式依赖资源 -->
 
-                                    <!-- 步骤1、拷贝应用程序Jar文件 -->
-                                    <copy file="${project.build.directory}/${project.build.finalName}.jar"
+                                    <!-- 步骤1、拷贝应用程序文件 -->
+                                    <copy file="${project.build.directory}/${project.build.finalName}.${project.packaging}"
                                           todir="${appassembler-jsw-dir}/${project.artifactId}/lib"/>
                                     <!-- 步骤2、创建生产环境配置文件夹：拷贝配置文件以便覆盖默认配置 -->
 
@@ -1243,12 +1294,22 @@
             <!-- 编译插件：编译主代码至主输出目录 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
-            <!-- 资源插件：复制主资源文件至主输出目录 -->
+            <!-- 版本统一管理插件 ：替换 ${revision}，默认未启用
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+            </plugin> -->
+            <!-- GIT信息插件，默认未启用
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+            </plugin> -->
+            <!-- 编译插件：编译主代码至主输出目录 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
+                <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
             <!-- 单元测试插件 ：执行测试用例 -->
             <plugin>
@@ -1280,11 +1341,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
             </plugin>
-            <!-- 模块版本管理插件 ：替换 ${revision}，默认未启用
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-            </plugin> -->
             <!-- 发布插件 ：将项目输出构件部署到远程仓库 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -1345,8 +1401,10 @@
     <reporting>
         <plugins>
             <plugin>
+                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-project-info-reports-plugin -->
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.0.1</version>
+                <version>3.9.0</version>
                 <reportSets>
                     <reportSet>
                         <id>sunlink</id>

@@ -13,7 +13,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.github.hiwepy</groupId>
+    <groupId>io.ddd4j.boot</groupId>
     <artifactId>ddd4j-boot</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
@@ -22,9 +22,9 @@
     <description>Ddd4j Projects For Spring Boot</description>
 
     <scm>
-        <connection>scm:git:https:e.coding.net/wans-hz/base-platform/${project.artifactId}.git</connection>
-        <developerConnection>scm:git:https:e.coding.net/wans-hz/base-platform/${project.artifactId}.git</developerConnection>
-        <url>https://e.coding.net/wans-hz/base-platform/${project.artifactId}</url>
+        <connection>scm:git:https:codeup.aliyun.com/5fdc0afd99b59ba3c5ead757/ddd4j/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:https:codeup.aliyun.com/5fdc0afd99b59ba3c5ead757/ddd4j/${project.artifactId}.git</developerConnection>
+        <url>https://codeup.aliyun.com/5fdc0afd99b59ba3c5ead757/ddd4j/${project.artifactId}</url>
         <tag>${project.artifactId}</tag>
     </scm>
 
@@ -78,40 +78,61 @@
         </license>
     </licenses>
 
-    <!-- <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <name>Nexus Release Repository</name>
-            <url>https://nexus.hiwepy.com/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>https://nexus.hiwepy.com/repository/maven-snapshots/</url>
-            <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement> -->
+    <!-- 组织信息 -->
+    <organization>
+        <name>Hiwepy</name>
+        <url>https://wiki.hiwepy.com</url>
+    </organization>
 
-    <!-- omitted xml
+    <!-- 开发者信息 -->
+    <developers>
+        <developer>
+            <name>wandl</name>
+            <email>hiwepy@gmail.com</email>
+            <organization>hiwepy</organization>
+            <organizationUrl>https://wiki.hiwepy.com</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <!--    <distributionManagement>
+            <repository>
+                &lt;!&ndash;必须与 settings.xml 的 id 一致&ndash;&gt;
+                <id>wans-hz-base-platform-maven</id>
+                <name>maven</name>
+                <url>https://wans-hz-maven.pkg.coding.net/repository/base-platform/maven/</url>
+            </repository>
+            <snapshotRepository>
+                <id>wans-hz-base-platform-maven</id>
+                <name>maven</name>
+                <url>https://wans-hz-maven.pkg.coding.net/repository/base-platform/maven/</url>
+                <uniqueVersion>true</uniqueVersion>
+            </snapshotRepository>
+        </distributionManagement>-->
+
     <distributionManagement>
         <repository>
-            <id>jeebiz-platform-maven</id>
-            <name>maven</name>
-            <url>https://jeebiz-maven.pkg.coding.net/repository/platform/maven/</url>
-        </repository>
-    </distributionManagement> -->
-
-    <distributionManagement>
-        <repository>
-            <!--必须与 settings.xml 的 id 一致-->
-            <id>wans-hz-base-platform-maven</id>
-            <name>maven</name>
-            <url>https://wans-hz-maven.pkg.coding.net/repository/base-platform/maven/</url>
+            <id>2624322-release-6F6h6R</id>
+            <url>https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-release-6f6h6r</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
         <snapshotRepository>
-            <id>wans-hz-base-platform-maven</id>
-            <name>maven</name>
-            <url>https://wans-hz-maven.pkg.coding.net/repository/base-platform/maven/</url>
+            <id>2624322-snapshot-3EoOv3</id>
+            <url>https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-snapshot-3eoov3</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>

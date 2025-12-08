@@ -49,7 +49,7 @@ server:
       # 不要设置过大，如果过大，启动项目会报错：打开文件数过多
       #io: 16
       # 阻塞任务线程池, 当执行类似servlet请求阻塞IO操作, undertow会从这个线程池中取得线程
-    # 它的值设置取决于系统线程执行任务的阻塞系数，默认值是IO线程数*8
+      # 它的值设置取决于系统线程执行任务的阻塞系数，默认值是IO线程数*8
     #worker: 256
 
 ################################################################################################################
@@ -66,7 +66,7 @@ swagger:
     name: 杭州极蚁网络科技有限公司
     email: hiwepy@163.com
     url: http://www.hiwepy.com/
-  base-package: io.hiwepy
+  base-package: com.github.hiwepy
   base-path-pattern: /**
   apply-default-response-messages: true
 
@@ -130,7 +130,7 @@ spring:
       routable: true
       # Druid监控配置
       aop-patterns:
-        - io.hiwepy.boot.demo.web.mvc
+        - com.github.hiwepy.boot.demo.web.mvc
       stat-view-servlet:
         enabled: true
         reset-enable: false
@@ -219,7 +219,7 @@ mybatis-plus:
   # MySQL数据库对应的Mybatis脚本
   mapper-locations: classpath*:mapper/mysql/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  type-aliases-package: io.hiwepy.**.dao.entities
+  type-aliases-package: com.github.hiwepy.**.dao.entities
   # 初始配置文件
   check-config-location: true
   # config-location: classpath:/conf/mybatis/sqlMapConfig.xml    

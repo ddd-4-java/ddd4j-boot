@@ -4,7 +4,7 @@
  */
 package io.hiwepy.boot.sample.repository.entities;
 
-import io.hiwepy.boot.api.entity.BaseEntity;
+import io.ddd4j.boot.core.entity.BaseEntity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
