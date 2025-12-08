@@ -1,6 +1,6 @@
 package io.ddd4j.boot.cmpt.license.creator;
 
-import io.ddd4j.boot.cmpt.jackson.license.LicenseExtraModel;
+import io.ddd4j.boot.cmpt.license.LicenseExtraModel;
 import lombok.Data;
 
 import java.io.Serializable;

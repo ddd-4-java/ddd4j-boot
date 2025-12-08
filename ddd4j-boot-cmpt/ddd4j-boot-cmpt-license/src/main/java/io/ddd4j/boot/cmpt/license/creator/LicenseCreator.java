@@ -1,8 +1,8 @@
 package io.ddd4j.boot.cmpt.license.creator;
 
 import de.schlichtherle.license.*;
-import io.ddd4j.boot.cmpt.jackson.license.CustomKeyStoreParam;
-import io.ddd4j.boot.cmpt.jackson.license.manager.CustomLicenseManager;
+import io.ddd4j.boot.cmpt.license.CustomKeyStoreParam;
+import io.ddd4j.boot.cmpt.license.manager.CustomLicenseManager;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.security.auth.x500.X500Principal;

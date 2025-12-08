@@ -1,7 +1,7 @@
 package io.ddd4j.boot.cmpt.license;
 
 import de.schlichtherle.license.*;
-import io.ddd4j.boot.cmpt.jackson.license.manager.CustomLicenseManager;
+import io.ddd4j.boot.cmpt.license.manager.CustomLicenseManager;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
