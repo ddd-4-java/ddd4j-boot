@@ -12,21 +12,22 @@ import org.apache.poi.ss.usermodel.Cell;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 public class CellWidthStyleStrategy extends AbstractColumnWidthStyleStrategy {
-    private Map<Integer, Map<Integer, Integer>> CACHE = new HashMap<>();
+    private final Map<Integer, Map<Integer, Integer>> CACHE = new HashMap<>();
 
     @Override
     protected void setColumnWidth(WriteSheetHolder writeSheetHolder, List<WriteCellData<?>> cellDataList, Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {
         Map<Integer, Integer> maxColumnWidthMap = CACHE.get(writeSheetHolder.getSheetNo());
-        if (maxColumnWidthMap == null) {
+        if (Objects.isNull(maxColumnWidthMap)) {
             maxColumnWidthMap = new HashMap<>();
             CACHE.put(writeSheetHolder.getSheetNo(), maxColumnWidthMap);
         }
         if (isHead) {
-            if (relativeRowIndex.intValue() == 1) {
-                Integer length = cell.getStringCellValue().getBytes().length;
+            if (relativeRowIndex == 1) {
+                int length = cell.getStringCellValue().getBytes().length;
                 Integer maxColumnWidth = maxColumnWidthMap.get(cell.getColumnIndex());
                 if (maxColumnWidth == null || length > maxColumnWidth) {
                     maxColumnWidthMap.put(cell.getColumnIndex(), length);
@@ -52,7 +53,7 @@ public class CellWidthStyleStrategy extends AbstractColumnWidthStyleStrategy {
         if (isHead) {
             return cell.getStringCellValue().getBytes().length;
         } else {
-            CellData cellData = cellDataList.get(0);
+            CellData<?> cellData = cellDataList.get(0);
             CellDataTypeEnum type = cellData.getType();
             if (type == null) {
                 return -1;
