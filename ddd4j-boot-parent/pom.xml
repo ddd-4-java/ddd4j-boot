@@ -343,6 +343,13 @@
                             <nonFilteredFileExtension>otf</nonFilteredFileExtension>
                             <nonFilteredFileExtension>p12</nonFilteredFileExtension>
                             <nonFilteredFileExtension>pfx</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>ftl</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>zip</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>docx</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>otf</nonFilteredFileExtension>
                         </nonFilteredFileExtensions>
                     </configuration>
                     <!-- 配置文件变量替换 -->

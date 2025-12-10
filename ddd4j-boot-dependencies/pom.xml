@@ -347,7 +347,7 @@
         <minio.version>8.6.0</minio.version>
         <nacos-client.version>3.1.1</nacos-client.version>
         <neethi.version>3.2.1</neethi.version>
-        <netty.version>4.1.119.Final</netty.version>
+        <netty.version>4.1.128.Final</netty.version>
         <netty-socketio.version>2.0.13</netty-socketio.version>
         <netty-tcnative.version>2.0.74.Final</netty-tcnative.version>
         <micrometer.version>1.14.4</micrometer.version>
@@ -410,7 +410,7 @@
         <r2dbc-pool.version>1.0.2.RELEASE</r2dbc-pool.version>
         <r2dbc-proxy.version>1.1.6.RELEASE</r2dbc-proxy.version>
         <r2dbc-postgresql.version>1.1.1.RELEASE</r2dbc-postgresql.version>
-        <reactor-bom.version>2024.0.3</reactor-bom.version>
+        <reactor-bom.version>2023.0.19</reactor-bom.version>
         <rabbit-amqp-client.version>5.22.0</rabbit-amqp-client.version>
         <redisson.version>3.22.1</redisson.version>
         <resilience4j.version>2.3.0</resilience4j.version>
