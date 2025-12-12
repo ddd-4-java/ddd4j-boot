@@ -306,7 +306,9 @@
         <lock4j.version>2.2.7</lock4j.version>
         <lombok.version>1.18.30</lombok.version>
         <log4j2.version>2.23.1</log4j2.version>
-        <logback.version>1.3.16</logback.version>
+        <!-- Logback 版本：Spring Boot 2.7.x 需要 Logback 1.2.x，1.3.x+ 移除了 StaticLoggerBinder -->
+        <!-- 注意：必须使用 1.2.x，1.3+ 版本需要 SLF4J 2.x，而 Spring Boot 2.7.x 使用 SLF4J 1.x -->
+        <logback.version>1.2.13</logback.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <markdown.version>1.11.1</markdown.version>
         <mariadb.version>3.5.6</mariadb.version>
@@ -320,7 +322,7 @@
         <mssql-jdbc.version>12.6.3.jre8</mssql-jdbc.version>
         <mybatis.version>3.5.19</mybatis.version>
         <mybatis-dynamic-sql.version>1.5.2</mybatis-dynamic-sql.version>
-        <mybatis-plus.version>3.5.15</mybatis-plus.version>
+        <mybatis-plus.version>3.5.8</mybatis-plus.version> <!-- 这是JDK 1.8目前能使用的最高版本了 -->
         <mybatis-plus-generator.version>${mybatis-plus.version}</mybatis-plus-generator.version>
         <mybatis-plus-join.version>1.5.4</mybatis-plus-join.version>
         <mybatis-plus-enhance.version>2.7.x.20251205-SNAPSHOT</mybatis-plus-enhance.version>
@@ -501,7 +503,7 @@
         <thymeleaf-extras-java8time.version>3.0.4.RELEASE</thymeleaf-extras-java8time.version>
         <thymeleaf-extras-springsecurity.version>3.1.3.RELEASE</thymeleaf-extras-springsecurity.version>
         <thymeleaf-layout-dialect.version>3.4.0</thymeleaf-layout-dialect.version>
-        <tomcat.version>9.0.100</tomcat.version>
+        <tomcat.version>9.0.113</tomcat.version>
         <tongweb.version>7.0.E.6_P5</tongweb.version>
         <tongweb-license-client.version>4.4.1.3</tongweb-license-client.version>
         <tongweb-gmssl.version>1.0.0</tongweb-gmssl.version>
