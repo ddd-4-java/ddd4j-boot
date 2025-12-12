@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DDD 经典架构图</title>
+  <style>
+    :root { color-scheme: light; }
+    body { margin:0; background:#ffffff; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial }
+    header { height:56px; display:flex; align-items:center; justify-content:space-between; padding:0 16px; border-bottom:1px solid #eee }
+    header h1 { font-size:16px; font-weight:700; color:#0F172A; margin:0 }
+    .actions { display:flex; gap:8px }
+    .btn { appearance:none; border:1px solid #E5E7EB; background:#ffffff; color:#111827; padding:8px 12px; border-radius:10px; font-weight:600 }
+    .btn:hover { border-color:#D1D5DB; background:#F9FAFB }
+    .layout { display:flex; min-height:calc(100vh - 56px) }
+    .sidebar { width:240px; padding:20px; box-shadow:inset -1px 0 0 #eee; display:flex; flex-direction:column; gap:12px }
+    .side-item { border-radius:12px; padding:12px; text-align:center; font-weight:600 }
+    .content { flex:1; display:flex; align-items:center; justify-content:center; padding:10px }
+    .mermaid { width:100%; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>DDD 经典架构图（分层）</h1>
+    <div class="actions">
+      <button class="btn" id="exportSvgBtn">导出SVG</button>
+      <button class="btn" id="exportPngBtn">导出PNG</button>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="side-item" style="background:#E6F0FF;color:#0B5FFF">接口层</div>
+      <div class="side-item" style="background:#E6F0FF;color:#0B5FFF">应用层</div>
+      <div class="side-item" style="background:#E6FAF2;color:#10B981">领域层</div>
+      <div class="side-item" style="background:#FFF6E5;color:#F59E0B">基础设施层</div>
+    </aside>
+    <main class="content">
+      <div id="diagramHost" class="mermaid">
+      flowchart TB
+        classDef interfaceStyle fill:#E6F0FF,stroke:#0B5FFF,stroke-width:2px,color:#0F172A,font-weight:600,font-size:14px
+        classDef applicationStyle fill:#E6F0FF,stroke:#0B5FFF,stroke-width:2px,color:#0F172A,font-weight:600,font-size:14px
+        classDef domainStyle fill:#E6FAF2,stroke:#10B981,stroke-width:2px,color:#0F172A,font-weight:600,font-size:14px
+        classDef infraStyle fill:#FFF6E5,stroke:#F59E0B,stroke-width:2px,color:#0F172A,font-weight:600,font-size:14px
+        
+        subgraph IF["接口层 (Interface Layer)"]
+          direction TB
+          UI["用户界面<br/>(User Interface)"]
+          API["API端点<br/>(API Endpoints)"]
+          DTO["DTO转换<br/>(DTO Converter)"]
+          VALID["输入验证<br/>(Input Validation)"]
+        end
+        
+        subgraph APP["应用层 (Application Layer)"]
+          direction TB
+          UC["用例协调<br/>(Use Case Coordinator)"]
+          ORCH["业务流程编排<br/>(Business Process Orchestration)"]
+          TX["事务管理<br/>(Transaction Management)"]
+          SEC["安全性检查<br/>(Security Check)"]
+        end
+        
+        subgraph DOM["领域层 - 核心 (Domain Layer - Core)"]
+          direction TB
+          ENT["实体<br/>(Entity)"]
+          VO["值对象<br/>(Value Object)"]
+          AGG["聚合<br/>(Aggregate)"]
+          DS["领域服务<br/>(Domain Service)"]
+          DE["领域事件<br/>(Domain Event)"]
+        end
+        
+        subgraph INF["基础设施层 (Infrastructure Layer)"]
+          direction TB
+          PERSIST["持久化<br/>(Persistence)"]
+          MSG["消息/事件总线<br/>(Message/Event Bus)"]
+          CACHE["缓存<br/>(Cache)"]
+          EXT["外部服务集成<br/>(External Service Integration)"]
+        end
+        
+        IF --> APP
+        APP --> DOM
+        INF --> DOM
+        
+        class IF,UI,API,DTO,VALID interfaceStyle
+        class APP,UC,ORCH,TX,SEC applicationStyle
+        class DOM,ENT,VO,AGG,DS,DE domainStyle
+        class INF,PERSIST,MSG,CACHE,EXT infraStyle
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function ensureMermaid(ready){
+      if (window.mermaid) return ready();
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js';
+      s.onload = ready; s.onerror = function(){
+        const f = document.createElement('script');
+        f.src = 'https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js';
+        f.onload = ready; f.onerror = ready;
+        document.head.appendChild(f);
+      };
+      document.head.appendChild(s);
+    }
+    function attachExport(svgEl){
+      const exportSvgBtn = document.getElementById('exportSvgBtn');
+      const exportPngBtn = document.getElementById('exportPngBtn');
+      exportSvgBtn.onclick = () => {
+        const s = new XMLSerializer().serializeToString(svgEl);
+        const blob = new Blob([s], { type: 'image/svg+xml;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'ddd-architecture.svg';
+        a.click(); URL.revokeObjectURL(a.href);
+      };
+      exportPngBtn.onclick = () => {
+        const s = new XMLSerializer().serializeToString(svgEl);
+        const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+        const img = new Image();
+        img.onload = () => {
+          const bbox = svgEl.viewBox ? svgEl.viewBox.baseVal : { width: svgEl.clientWidth, height: svgEl.clientHeight };
+          const w = Math.max(1200, bbox.width || 1200);
+          const h = Math.max(800, bbox.height || 800);
+          const canvas = document.createElement('canvas'); canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d'); ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,w,h);
+          ctx.drawImage(img,0,0,w,h);
+          canvas.toBlob((blob) => { const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='ddd-architecture.png'; a.click(); URL.revokeObjectURL(a.href); }, 'image/png');
+        };
+        img.src = url;
+      };
+    }
+    function renderFallback(){
+      const host = document.getElementById('diagramHost');
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const w = 1400, h = 900; const svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      svg.style.width = '100%'; svg.style.height = '100%';
+      const title = document.createElementNS(svgNS,'text'); title.setAttribute('x', w/2); title.setAttribute('y', 48);
+      title.setAttribute('text-anchor','middle'); title.setAttribute('font-size','20'); title.setAttribute('font-weight','700'); title.setAttribute('fill','#0F172A'); title.textContent='DDD 经典架构图（分层）'; svg.appendChild(title);
+      function box(x,y,width,height,fill,stroke,strokeWidth=2){ const r=document.createElementNS(svgNS,'rect'); r.setAttribute('x',x); r.setAttribute('y',y); r.setAttribute('width',width); r.setAttribute('height',height); r.setAttribute('rx',12); r.setAttribute('ry',12); r.setAttribute('fill',fill); r.setAttribute('stroke',stroke); r.setAttribute('stroke-width',strokeWidth); r.setAttribute('filter','drop-shadow(0 4px 12px rgba(0,0,0,0.06))'); return r; }
+      function text(x,y,t,size=16){ const tx=document.createElementNS(svgNS,'text'); tx.setAttribute('x',x); tx.setAttribute('y',y); tx.setAttribute('fill','#111827'); tx.setAttribute('font-size',size); tx.setAttribute('font-weight','700'); tx.setAttribute('text-anchor','middle'); tx.textContent=t; return tx; }
+      const colW = 280, colGap = 28, startX = 80, startY = 100, height = 680; const cols = 4;
+      const fills = ['#E6F0FF','#E6F0FF','#E6FAF2','#FFF6E5'];
+      const strokes = ['#0B5FFF','#0B5FFF','#10B981','#F59E0B'];
+      const names = ['接口层','应用层','领域层（核心）','基础设施层'];
+      for(let i=0;i<cols;i++){ const x = startX + i*(colW + colGap); const rect = box(x,startY,colW,height,fills[i],strokes[i]); svg.appendChild(rect); svg.appendChild(text(x+colW/2,startY+32,names[i],16)); }
+      function list(x,y,items){ let ly=y; items.forEach(s=>{ const t=document.createElementNS(svgNS,'text'); t.setAttribute('x',x); t.setAttribute('y',ly); t.setAttribute('fill','#374151'); t.setAttribute('font-size','14'); t.setAttribute('font-weight','600'); t.textContent='• '+s; svg.appendChild(t); ly+=22; }); }
+      list(startX+20, startY+70, ['用户界面','API端点','DTO转换','输入验证']);
+      list(startX+colW+colGap+20, startY+70, ['用例协调','业务流程编排','事务管理','安全性检查']);
+      list(startX+2*(colW+colGap)+20, startY+70, ['实体','值对象','聚合','领域服务','领域事件']);
+      list(startX+3*(colW+colGap)+20, startY+70, ['持久化','消息/事件总线','缓存','外部服务集成']);
+      const hostBox = document.createElement('div'); host.innerHTML=''; host.appendChild(svg); attachExport(svg);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      ensureMermaid(() => {
+        if (!window.mermaid) { renderFallback(); return; }
+        window.mermaid.initialize({ 
+          startOnLoad: false, 
+          theme: 'default',
+          themeVariables: { 
+            primaryColor: '#E6F0FF',
+            primaryTextColor: '#0F172A',
+            primaryBorderColor: '#0B5FFF',
+            lineColor: '#94A3B8',
+            secondaryColor: '#E6FAF2',
+            secondaryBorderColor: '#10B981',
+            tertiaryColor: '#FFF6E5',
+            tertiaryBorderColor: '#F59E0B',
+            background: '#FFFFFF',
+            mainBkg: '#FFFFFF',
+            secondBkg: '#FFFFFF',
+            textColor: '#0F172A',
+            fontSize: '14px',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif'
+          },
+          flowchart: {
+            curve: 'basis',
+            padding: 10,
+            nodeSpacing: 50,
+            rankSpacing: 80,
+            useMaxWidth: true,
+            htmlLabels: true
+          }
+        });
+        try {
+          window.mermaid.run({ querySelector: '#diagramHost' }).then(({ svg }) => { const el = document.querySelector('#diagramHost svg'); attachExport(el); }).catch(() => { renderFallback(); });
+        } catch(e) { renderFallback(); }
+      });
+    });
+  </script>
+</body>
+</html>
