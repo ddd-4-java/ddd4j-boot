@@ -173,7 +173,7 @@
         <feign-form.version>3.8.0</feign-form.version>
         <findbugs-annotations.version>3.0.1u2</findbugs-annotations.version>
         <findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
-        <flyway.version>8.5.13</flyway.version>
+        <flyway.version>9.22.3</flyway.version>
         <flowable.version>7.2.0</flowable.version>
         <formio.version>1.7.0</formio.version>
         <forest.version>1.5.28</forest.version>
