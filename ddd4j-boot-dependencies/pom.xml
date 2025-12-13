@@ -4987,13 +4987,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.reactivestreams/reactive-streams -->
-            <dependency>
-                <groupId>org.reactivestreams</groupId>
-                <artifactId>reactive-streams</artifactId>
-                <version>1.0.3</version>
-            </dependency>
-
             <!-- https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-bom -->
             <!--
             <dependency>
