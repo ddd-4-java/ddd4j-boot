@@ -13,7 +13,7 @@
 
     <dependencies>
 
-        <!-- For Jeebiz -->
+        <!-- For ddd4j -->
         <dependency>
             <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>
@@ -55,10 +55,15 @@
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator</artifactId>
         </dependency>
-        <!-- For Swagger -->
+        <!-- For Swagger3 (OpenAPI 3) -->
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+        <!-- Swagger3 Annotations -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations-jakarta</artifactId>
         </dependency>
         <!-- For Validation -->
         <dependency>
@@ -193,6 +198,10 @@
             <groupId>com.github.hiwepy</groupId>
             <artifactId>druid-plus-spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <!-- JDBC Driver For MySQL -->
         <dependency>
             <groupId>com.mysql</groupId>
@@ -211,6 +220,16 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- For MapStruct -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!-- For Embed Tomcat -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

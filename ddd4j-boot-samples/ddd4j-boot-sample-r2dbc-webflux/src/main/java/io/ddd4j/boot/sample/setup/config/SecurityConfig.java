@@ -1,0 +1,20 @@
+package io.ddd4j.boot.sample.setup.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+
+@Configuration
+@EnableWebFluxSecurity
+public class SecurityConfig {
+
+    @Bean
+    SecurityWebFilterChain webFluxSecurityFilterChain(ServerHttpSecurity http) throws Exception {
+        http.authorizeExchange((exchange) -> {
+            exchange.pathMatchers("/actuator/**").permitAll();
+        });
+        return http.build();
+    }
+}

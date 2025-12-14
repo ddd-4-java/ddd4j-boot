@@ -211,10 +211,10 @@
         <!--log4j2 自带过滤日志-->
 
         <!-- 应用系统日志过滤 -->
-        <Logger name="net.jeebiz" level="DEBUG" additivity="true"/>
-        <Logger name="net.jeebiz.authz" level="DEBUG" additivity="true"/>
-        <Logger name="net.jeebiz.biz" level="DEBUG" additivity="true"/>
-        <Logger name="[Mybatis]net.jeebiz" level="DEBUG" additivity="true"/>
+        <Logger name="net.ddd4j" level="DEBUG" additivity="true"/>
+        <Logger name="net.ddd4j.authz" level="DEBUG" additivity="true"/>
+        <Logger name="net.ddd4j.biz" level="DEBUG" additivity="true"/>
+        <Logger name="[Mybatis]net.ddd4j" level="DEBUG" additivity="true"/>
 
     </Loggers>
 </Configuration>
