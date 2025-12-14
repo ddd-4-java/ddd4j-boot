@@ -3472,13 +3472,6 @@
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
             </dependency>
-
-            <!-- https://mvnrepository.com/artifact/org.scijava/jep -->
-            <dependency>
-                <groupId>org.scijava</groupId>
-                <artifactId>jep</artifactId>
-                <version>${jep.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/org.jetbrains/annotations -->
             <dependency>
                 <groupId>org.jetbrains</groupId>
