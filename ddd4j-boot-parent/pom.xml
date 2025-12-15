@@ -1009,8 +1009,6 @@
                             </goals>
                             <configuration>
                                 <target>
-                                    <echo message="antrun copy resources"/>
-
                                     <!-- 处理脚本模式依赖资源 -->
 
                                     <!-- 步骤1、拷贝应用程序文件 -->
