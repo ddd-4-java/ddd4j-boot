@@ -177,6 +177,8 @@
         <flowable.version>7.2.0</flowable.version>
         <formio.version>1.7.0</formio.version>
         <forest.version>1.5.28</forest.version>
+        <fuin-ddd4j.version>0.7.0</fuin-ddd4j.version>
+        <fuin-cqrs4j.version>0.6.0</fuin-cqrs4j.version>
         <geodesy.version>1.1.3</geodesy.version>
         <glassfish-el.version>3.0.4</glassfish-el.version>
         <glassfish-jstl.version>3.0.1</glassfish-jstl.version>
@@ -185,13 +187,15 @@
         <google-libraries-bom.version>26.72.0</google-libraries-bom.version>
         <google-api-client.version>2.8.1</google-api-client.version>
         <google-api-services-androidpublisher.version>v3-rev142-1.25.0</google-api-services-androidpublisher.version>
-        <google-auth-library.version>1.8.1</google-auth-library.version>
+        <google-auth-library.version>1.41.0</google-auth-library.version>
         <google-code-aviator.version>5.4.3</google-code-aviator.version>
         <google-cloud-translate.version>2.3.2</google-cloud-translate.version>
         <google-crypto-tink.version>1.19.0</google-crypto-tink.version>
         <google-error_prone_annotations.version>2.36.0</google-error_prone_annotations.version>
         <google-http-client.version>1.42.2</google-http-client.version>
+        <google-j2objc-annotations.version>3.1</google-j2objc-annotations.version>
         <google-oauth-client.version>1.39.0</google-oauth-client.version>
+        <grpc-bom.version>1.77.0</grpc-bom.version>
         <groovy.version>3.0.25</groovy.version>
         <guava.version>33.5.0-jre</guava.version>
         <guerlab-sms.version>2.5.0</guerlab-sms.version>
@@ -235,6 +239,7 @@
         <istio-client.version>1.7.7.1</istio-client.version>
         <jackson.version>2.13.5</jackson.version>
         <jackson-bom.version>${jackson.version}</jackson-bom.version>
+        <jandex.version>3.5.3</jandex.version>
         <janino.version>3.1.12</janino.version>
         <jasypt.version>1.9.3</jasypt.version>
         <javassist.version>3.30.2-GA</javassist.version>
@@ -308,6 +313,7 @@
         <!-- Logback 版本：Spring Boot 2.7.x 需要 Logback 1.2.x，1.3.x+ 移除了 StaticLoggerBinder -->
         <!-- 注意：必须使用 1.2.x，1.3+ 版本需要 SLF4J 2.x，而 Spring Boot 2.7.x 使用 SLF4J 1.x -->
         <logback.version>1.2.13</logback.version>
+        <lz4-java.version>1.8.1</lz4-java.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <markdown.version>1.11.1</markdown.version>
         <mariadb.version>3.5.6</mariadb.version>
@@ -316,6 +322,7 @@
         <metadata-extractor.version>2.19.0</metadata-extractor.version>
         <mica-mqtt.version>2.5.9</mica-mqtt.version>
         <mockito.version>5.20.0</mockito.version>
+        <minio.version>8.6.0</minio.version>
         <mongodb.version>5.5.0</mongodb.version>
         <mongo-java-driver.version>3.12.14</mongo-java-driver.version>
         <mssql-jdbc.version>12.6.3.jre8</mssql-jdbc.version>
@@ -412,6 +419,7 @@
         <r2dbc-proxy.version>1.1.6.RELEASE</r2dbc-proxy.version>
         <r2dbc-postgresql.version>1.1.1.RELEASE</r2dbc-postgresql.version>
         <reactor-bom.version>2023.0.19</reactor-bom.version>
+        <reactive-streams.version>1.0.4</reactive-streams.version>
         <rabbit-amqp-client.version>5.22.0</rabbit-amqp-client.version>
         <redisson.version>3.22.1</redisson.version>
         <resilience4j.version>2.3.0</resilience4j.version>
@@ -425,7 +433,9 @@
         <sa-token.version>1.44.0</sa-token.version>
         <seata.version>2.0.0</seata.version>
         <scala3.version>3.3.5</scala3.version>
-        <schemacrawler.version>17.1.6</schemacrawler.version>
+        <scijava-jep.version>2.4.2</scijava-jep.version>
+        <scijava-native.version>2.5.0</scijava-native.version>
+        <schemacrawler.version>17.1.7</schemacrawler.version>
         <schemacrawler-diff.version>16.21.4</schemacrawler-diff.version>
         <schemacrawler-db2.version>${schemacrawler.version}</schemacrawler-db2.version>
         <schemacrawler-mysql.version>${schemacrawler.version}</schemacrawler-mysql.version>
@@ -441,7 +451,8 @@
         <scribe-up.version>1.3.1</scribe-up.version>
         <scribejava.version>8.3.3</scribejava.version>
         <scribejava-apis-ext.version>1.0.1.RELEASE</scribejava-apis-ext.version>
-        <selenium.version>4.38.0</selenium.version>
+        <selenium.version>4.39.0</selenium.version>
+        <selenium-htmlunit.version>${selenium.version}</selenium-htmlunit.version>
         <sequoiadb-driver.version>5.10</sequoiadb-driver.version>
         <sevenzipjbinding.version>16.02-2.01</sevenzipjbinding.version>
         <sfntly.version>1.0.0</sfntly.version>
@@ -563,6 +574,7 @@
         <maven-dependency-plugin.version>3.8.0</maven-dependency-plugin.version>
         <maven-dependency-check-plugin.version>10.0.4</maven-dependency-check-plugin.version>
         <maven-docker-plugin.version>0.48.0</maven-docker-plugin.version>
+        <maven-exec-plugin.version>3.6.2</maven-exec-plugin.version>
         <maven-findbugs-plugin.version>3.0.5</maven-findbugs-plugin.version>
         <maven-flatten-plugin.version>1.7.3</maven-flatten-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
@@ -1295,35 +1307,13 @@
             </dependency>
 
             <!-- For Alibaba Cola -->
+            <!-- https://mvnrepository.com/artifact/com.alibaba.cola/cola-components-bom -->
             <dependency>
                 <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-dto</artifactId>
+                <artifactId>cola-components-bom</artifactId>
                 <version>${cola.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-exception</artifactId>
-                <version>${cola.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-statemachine</artifactId>
-                <version>${cola.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-domain-starter</artifactId>
-                <version>${cola.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-extension-starter</artifactId>
-                <version>${cola.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-catchlog-starter</artifactId>
-                <version>${cola.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!-- A precompiler for java that enables the use of attributes as seen
 				in C#. -->
@@ -1494,7 +1484,7 @@
                 <artifactId>commons-lang</artifactId>
                 <version>${commons-lang.version}</version>
             </dependency>
-            <!-- javax Commons Logging (JCL) 提供的是一个日志 (Log) 接口 (interface) ，同时兼顾轻量级和不依赖于具体的日志实现工具
+            <!-- Javax Commons Logging (JCL) 提供的是一个日志 (Log) 接口 (interface) ，同时兼顾轻量级和不依赖于具体的日志实现工具
 				。 它提供给中间件 / 日志工具开发者一个简单的日志操作抽象，允许程序开发人员使用不同的具体日志实现工具。用户被假定已熟悉某种日志实现工具的更高级别的细节。
 				JCL 提供的接口，对其它一些日志工具，包括 Log4J, Avalon LogKit, and JDK 1.4 等，进行了简单的包装，此接口更接近于
 				Log4J 和 LogKit 的实现。 -->
@@ -2073,7 +2063,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
             <!-- JDBC Driver For Apache Derby -->
             <!-- http://mvnrepository.com/artifact/org.apache.derby -->
             <dependency>
@@ -2276,7 +2265,14 @@
                 <artifactId>disruptor</artifactId>
                 <version>${disruptor.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo-bom -->
+            <!--<dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>dubbo</artifactId>
@@ -2415,35 +2411,84 @@
                 <artifactId>jsr305</artifactId>
                 <version>${findbugs-jsr305.version}</version>
             </dependency>
-
             <!-- https://mvnrepository.com/artifact/org.flowable/flowable-process-engine-mongodb -->
             <dependency>
                 <groupId>org.flowable</groupId>
                 <artifactId>flowable-process-engine-mongodb</artifactId>
                 <version>6.4.0.alpha1</version>
             </dependency>
-
             <!-- Java Image Processing Pages : https://mvnrepository.com/artifact/com.jhlabs/filters -->
             <dependency>
                 <groupId>com.jhlabs</groupId>
                 <artifactId>filters</artifactId>
                 <version>2.0.235-1</version>
             </dependency>
-
             <!-- https://mvnrepository.com/artifact/net.formio/formio -->
             <dependency>
                 <groupId>net.formio</groupId>
                 <artifactId>formio</artifactId>
                 <version>${formio.version}</version>
             </dependency>
-
             <!-- https://mvnrepository.com/artifact/com.dtflys.forest/forest-spring-boot-starter -->
             <dependency>
                 <groupId>com.dtflys.forest</groupId>
                 <artifactId>forest-spring-boot-starter</artifactId>
                 <version>${forest.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/org.fuin.ddd4j/ddd-4-java-core -->
+            <dependency>
+                <groupId>org.fuin.ddd4j</groupId>
+                <artifactId>ddd-4-java-core</artifactId>
+                <version>${fuin-ddd4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.fuin.ddd4j/ddd-4-java-esc -->
+            <dependency>
+                <groupId>org.fuin.ddd4j</groupId>
+                <artifactId>ddd-4-java-esc</artifactId>
+                <version>${fuin-ddd4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.fuin.ddd4j/ddd-4-java-jsonb -->
+            <dependency>
+                <groupId>org.fuin.ddd4j</groupId>
+                <artifactId>ddd-4-java-jsonb</artifactId>
+                <version>${fuin-ddd4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.fuin.ddd4j/ddd-4-java-jackson -->
+            <dependency>
+                <groupId>org.fuin.ddd4j</groupId>
+                <artifactId>ddd-4-java-jackson</artifactId>
+                <version>${fuin-ddd4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.fuin.ddd4j/ddd-4-java-jaxb -->
+            <dependency>
+                <groupId>org.fuin.ddd4j</groupId>
+                <artifactId>ddd-4-java-jaxb</artifactId>
+                <version>${fuin-ddd4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.fuin.cqrs4j/cqrs-4-java-core -->
+            <dependency>
+                <groupId>org.fuin.cqrs4j</groupId>
+                <artifactId>cqrs-4-java-core</artifactId>
+                <version>${fuin-cqrs4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.fuin.cqrs4j/cqrs-4-java-jsonb -->
+            <dependency>
+                <groupId>org.fuin.cqrs4j</groupId>
+                <artifactId>cqrs-4-java-jsonb</artifactId>
+                <version>${fuin-cqrs4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.fuin.cqrs4j/cqrs-4-java-jackson -->
+            <dependency>
+                <groupId>org.fuin.cqrs4j</groupId>
+                <artifactId>cqrs-4-java-jackson</artifactId>
+                <version>${fuin-cqrs4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.fuin.cqrs4j/cqrs-4-java-springboot -->
+            <dependency>
+                <groupId>org.fuin.cqrs4j</groupId>
+                <artifactId>cqrs-4-java-springboot</artifactId>
+                <version>${fuin-cqrs4j.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client -->
             <dependency>
                 <groupId>com.google.oauth-client</groupId>
@@ -2527,6 +2572,14 @@
                 <artifactId>aviator</artifactId>
                 <version>${google-code-aviator.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-translate -->
+            <dependency>
+                <groupId>com.google.cloud</groupId>
+                <artifactId>google-cloud-translate-bom</artifactId>
+                <version>${google-cloud-translate.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.google.crypto.tink/tink -->
             <dependency>
                 <groupId>com.google.crypto.tink</groupId>
@@ -2541,13 +2594,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-translate -->
+            <!-- https://mvnrepository.com/artifact/com.google.j2objc/j2objc-annotations -->
             <dependency>
-                <groupId>com.google.cloud</groupId>
-                <artifactId>google-cloud-translate-bom</artifactId>
-                <version>${google-cloud-translate.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>com.google.j2objc</groupId>
+                <artifactId>j2objc-annotations</artifactId>
+                <version>${google-j2objc-annotations.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.google.errorprone/error_prone_annotations -->
             <dependency>
@@ -2555,7 +2606,6 @@
                 <artifactId>error_prone_annotations</artifactId>
                 <version>${google-error_prone_annotations.version}</version>
             </dependency>
-
             <!-- http://mvnrepository.com/artifact/com.google.guava/guava -->
             <dependency>
                 <groupId>com.google.guava</groupId>
@@ -2568,16 +2618,15 @@
                 <artifactId>guice</artifactId>
                 <version>${guice.version}</version>
             </dependency>
-
-            <!-- https://mvnrepository.com/artifact/com.google.j2objc/j2objc-annotations -->
+            <!-- https://mvnrepository.com/artifact/io.grpc/grpc-bom -->
             <dependency>
-                <groupId>com.google.j2objc</groupId>
-                <artifactId>j2objc-annotations</artifactId>
-                <version>1.3</version>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-bom</artifactId>
+                <version>${grpc-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
-
             <!-- http://mvnrepository.com/artifact/org.glassfish.grizzly -->
-
             <!-- Grizzly： Grizzly是一种应用程序框架，专门解决编写成千上万用户访问服务器时候产生的各种问题。 使用JAVA NIO作为基础，并隐藏其编程的复杂性。容易使用的高性能的API。带来非阻塞socketd到协议处理层。利用高性能的缓冲和缓冲管理使用高性能的线程池。 -->
             <dependency>
                 <groupId>org.glassfish.grizzly</groupId>
@@ -2631,7 +2680,7 @@
             <dependency>
                 <groupId>org.glassfish.grizzly</groupId>
                 <artifactId>grizzly-http-client</artifactId>
-                <version>1.14</version>
+                <version>1.16</version>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.grizzly</groupId>
@@ -3235,7 +3284,12 @@
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/io.smallrye/jandex -->
+            <dependency>
+                <groupId>io.smallrye</groupId>
+                <artifactId>jandex</artifactId>
+                <version>${jandex.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.codehaus.janino/janino -->
             <dependency>
                 <groupId>org.codehaus.janino</groupId>
@@ -3430,13 +3484,6 @@
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
-            </dependency>
-
-            <!-- https://mvnrepository.com/artifact/org.scijava/jep -->
-            <dependency>
-                <groupId>org.scijava</groupId>
-                <artifactId>jep</artifactId>
-                <version>${jep.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.jetbrains/annotations -->
             <dependency>
@@ -4020,7 +4067,12 @@
                 <artifactId>geocoder</artifactId>
                 <version>${libphonenumber-geocoder.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/org.lz4/lz4-java -->
+            <dependency>
+                <groupId>org.lz4</groupId>
+                <artifactId>lz4-java</artifactId>
+                <version>${lz4-java.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-jdk8 -->
             <dependency>
                 <groupId>org.mapstruct</groupId>
@@ -4987,6 +5039,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.reactivestreams/reactive-streams -->
+            <dependency>
+                <groupId>org.reactivestreams</groupId>
+                <artifactId>reactive-streams</artifactId>
+                <version>${reactive-streams.version}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-bom -->
             <!--
             <dependency>
@@ -5365,14 +5424,24 @@
                 <artifactId>seata-metrics-exporter-prometheus</artifactId>
                 <version>${seata.version}</version>
             </dependency>
-
             <!-- https://mvnrepository.com/artifact/org.scala-lang/scala3-library -->
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala3-library_3</artifactId>
                 <version>${scala3.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/org.scijava/jep -->
+            <dependency>
+                <groupId>org.scijava</groupId>
+                <artifactId>jep</artifactId>
+                <version>${scijava-jep.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.scijava/native-lib-loader -->
+            <dependency>
+                <groupId>org.scijava</groupId>
+                <artifactId>native-lib-loader</artifactId>
+                <version>${scijava-native.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/us.fatehi/schemacrawler -->
             <!-- SchemaCrawler提供一组用于增强标准JDBC Metadata的API.SchemaCrawler还包含一个命令行工具能够将数据库结构和数据以一种易读的形式输出. -->
             <dependency>
@@ -5506,7 +5575,6 @@
                 <artifactId>sunposition</artifactId>
                 <version>4.0</version>
             </dependency>
-
             <!-- JDBC Driver For SequoiaDB : https://mvnrepository.com/artifact/com.sequoiadb/sequoiadb-driver -->
             <dependency>
                 <groupId>com.sequoiadb</groupId>
@@ -6423,7 +6491,7 @@
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>qrcode-utils</artifactId>
-                <version>1.1</version>
+                <version>1.3</version>
             </dependency>
             <!-- 微信小程序Java SDK : https://mvnrepository.com/artifact/com.github.binarywang/weixin-java-miniapp -->
             <dependency>
@@ -6441,7 +6509,7 @@
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>java-emoji-converter</artifactId>
-                <version>0.1.1</version>
+                <version>1.0.2</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.github.rcarlosdasilva/weixin -->
             <dependency>
@@ -7306,6 +7374,18 @@
                 <artifactId>maven-invoker-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-maven-invoker.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.dromara.mica-mqtt/mica-mqtt-client-spring-boot-starter -->
+            <dependency>
+                <groupId>org.dromara.mica-mqtt</groupId>
+                <artifactId>mica-mqtt-client-spring-boot-starter</artifactId>
+                <version>${mica-mqtt.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.dromara.mica-mqtt/mica-mqtt-server-spring-boot-starter -->
+            <dependency>
+                <groupId>org.dromara.mica-mqtt</groupId>
+                <artifactId>mica-mqtt-server-spring-boot-starter</artifactId>
+                <version>${mica-mqtt.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
@@ -7706,6 +7786,12 @@
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>${maven-docker-plugin.version}</version>
+                </plugin>
+                <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>${maven-exec-plugin.version}</version>
                 </plugin>
                 <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/findbugs-maven-plugin -->
                 <plugin>
