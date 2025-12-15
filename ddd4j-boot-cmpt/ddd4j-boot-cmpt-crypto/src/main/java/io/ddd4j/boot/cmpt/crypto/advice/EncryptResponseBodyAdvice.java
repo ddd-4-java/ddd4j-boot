@@ -1,5 +1,6 @@
 package io.ddd4j.boot.cmpt.crypto.advice;
 
+import cn.hutool.core.lang.ParameterizedTypeImpl;
 import cn.hutool.crypto.symmetric.AES;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ddd4j.boot.core.ApiCode;
@@ -18,7 +19,6 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 import java.lang.reflect.Type;
 import java.util.Objects;
