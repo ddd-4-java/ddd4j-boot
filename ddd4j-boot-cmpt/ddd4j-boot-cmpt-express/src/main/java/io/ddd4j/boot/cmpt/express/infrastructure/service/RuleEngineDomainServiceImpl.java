@@ -1,7 +1,9 @@
 package io.ddd4j.boot.cmpt.express.infrastructure.service;
 
-import com.ql.util.express.DefaultContext;
-import com.ql.util.express.ExpressRunner;
+import com.alibaba.qlexpress4.CheckOptions;
+import com.alibaba.qlexpress4.Express4Runner;
+import com.alibaba.qlexpress4.runtime.context.ExpressContext;
+import com.alibaba.qlexpress4.runtime.context.MapExpressContext;
 import io.ddd4j.boot.cmpt.express.domain.model.entity.RuleDefinition;
 import io.ddd4j.boot.cmpt.express.domain.model.vo.RuleExecutionResult;
 import io.ddd4j.boot.cmpt.express.domain.model.vo.RuleValidationResult;
@@ -21,9 +23,9 @@ public class RuleEngineDomainServiceImpl implements RuleEngineDomainService {
 
     private static final Logger log = LoggerFactory.getLogger(RuleEngineDomainServiceImpl.class);
 
-    private final ExpressRunner expressRunner;
+    private final Express4Runner expressRunner;
 
-    public RuleEngineDomainServiceImpl(ExpressRunner expressRunner) {
+    public RuleEngineDomainServiceImpl(Express4Runner expressRunner) {
         this.expressRunner = expressRunner;
     }
 
@@ -31,11 +33,10 @@ public class RuleEngineDomainServiceImpl implements RuleEngineDomainService {
     public RuleExecutionResult executeRule(RuleDefinition rule, Map<String, Object> context) {
         try {
             // 创建执行上下文
-            DefaultContext<String, Object> expressContext = new DefaultContext<>();
-            expressContext.putAll(context);
+            ExpressContext expressContext = new MapExpressContext(context);
 
             // 执行表达式
-            Object result = expressRunner.execute(rule.getRuleExpression(), expressContext, null, true, false);
+            Object result = expressRunner.execute(rule.getRuleExpression(), expressContext, null);
 
             return RuleExecutionResult.builder()
                     .success(true)
@@ -58,7 +59,7 @@ public class RuleEngineDomainServiceImpl implements RuleEngineDomainService {
     @Override
     public RuleValidationResult validateExpression(String expression) {
         try {
-            expressRunner.checkSyntax(expression);
+            expressRunner.check(expression, CheckOptions.DEFAULT_OPTIONS.);
             return RuleValidationResult.builder()
                     .valid(true)
                     .message("规则语法正确")

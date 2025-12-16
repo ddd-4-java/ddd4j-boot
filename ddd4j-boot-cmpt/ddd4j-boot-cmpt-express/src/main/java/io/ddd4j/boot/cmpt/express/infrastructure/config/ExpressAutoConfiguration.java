@@ -1,5 +1,6 @@
 package io.ddd4j.boot.cmpt.express.infrastructure.config;
 
+import com.alibaba.qlexpress4.Express4Runner;
 import io.ddd4j.boot.cmpt.express.application.service.RuleCacheService;
 import io.ddd4j.boot.cmpt.express.application.service.RuleEngineApplicationService;
 import io.ddd4j.boot.cmpt.express.domain.repository.RuleDefinitionRepository;
@@ -25,7 +26,7 @@ public class ExpressAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    public RuleEngineDomainService ruleEngineDomainService(Object expressRunner) {
+    public RuleEngineDomainService ruleEngineDomainService(Express4Runner expressRunner) {
         return new RuleEngineDomainServiceImpl(expressRunner);
     }
 
