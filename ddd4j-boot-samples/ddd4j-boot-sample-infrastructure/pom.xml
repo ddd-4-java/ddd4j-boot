@@ -6,7 +6,8 @@
     <parent>
         <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-samples</artifactId>
-        <version>3.3.x.20251201-SNAPSHOT</version>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>ddd4j-boot-sample-infrastructure</artifactId>

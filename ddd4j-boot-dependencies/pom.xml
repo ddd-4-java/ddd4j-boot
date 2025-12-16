@@ -247,7 +247,6 @@
         <jakarta-servlet.version>6.2.0-M1</jakarta-servlet.version>
         <jakarta-validation.version>4.0.0-M1</jakarta-validation.version>
         <jakarta-websocket.version>2.2.0</jakarta-websocket.version>
-        <jasypt.version>3.0.5</jasypt.version>
         <jandex.version>3.5.3</jandex.version>
         <janino.version>3.1.12</janino.version>
         <jasypt.version>1.9.3</jasypt.version>
@@ -417,6 +416,7 @@
         <qcloud-cos-api.version>5.6.259</qcloud-cos-api.version>
         <qcloud-cos-api-bundle.version>5.6.246.3</qcloud-cos-api-bundle.version>
         <qiniu-java-sdk.version>7.19.0</qiniu-java-sdk.version>
+        <qlexpress.version>4.0.7</qlexpress.version>
         <quartz.version>2.5.2</quartz.version>
         <r2dbc-h2.version>1.1.0.RELEASE</r2dbc-h2.version>
         <r2dbc-spi.version>1.0.0.RELEASE</r2dbc-spi.version>
@@ -581,6 +581,7 @@
         <maven-dependency-plugin.version>3.8.0</maven-dependency-plugin.version>
         <maven-dependency-check-plugin.version>10.0.4</maven-dependency-check-plugin.version>
         <maven-docker-plugin.version>0.48.0</maven-docker-plugin.version>
+        <maven-exec-plugin.version>3.6.2</maven-exec-plugin.version>
         <maven-findbugs-plugin.version>3.0.5</maven-findbugs-plugin.version>
         <maven-flatten-plugin.version>1.7.3</maven-flatten-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
@@ -5269,6 +5270,12 @@
                 <artifactId>qiniu-java-sdk</artifactId>
                 <version>${qiniu-java-sdk.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/qlexpress4 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>qlexpress4</artifactId>
+                <version>${qlexpress.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
             <dependency>
                 <groupId>org.quartz-scheduler</groupId>
@@ -5281,7 +5288,6 @@
                 <artifactId>quartz-jobs</artifactId>
                 <version>${quartz.version}</version>
             </dependency>
-
             <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
             <dependency>
                 <groupId>org.apache.pdfbox</groupId>
@@ -7741,6 +7747,12 @@
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>${maven-docker-plugin.version}</version>
+                </plugin>
+                <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>${maven-exec-plugin.version}</version>
                 </plugin>
                 <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/findbugs-maven-plugin -->
                 <plugin>

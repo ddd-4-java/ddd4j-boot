@@ -30,6 +30,7 @@
         <module>ddd4j-boot-cmpt-validation</module>
         <module>ddd4j-boot-cmpt-webflux</module>
         <module>ddd4j-boot-cmpt-webmvc</module>
+        <module>ddd4j-boot-cmpt-express</module>
     </modules>
 
     <dependencies>
@@ -48,6 +49,27 @@
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+        <!-- For Validation Api -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.el</groupId>
+            <artifactId>jakarta.el-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.expressly</groupId>
+            <artifactId>expressly</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
         <!-- For Spring Boot Test-->
         <dependency>
