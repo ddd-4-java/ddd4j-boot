@@ -408,6 +408,7 @@
         <qcloud-cos-api.version>5.6.259</qcloud-cos-api.version>
         <qcloud-cos-api-bundle.version>5.6.246.3</qcloud-cos-api-bundle.version>
         <qiniu-java-sdk.version>7.19.0</qiniu-java-sdk.version>
+        <qlexpress.version>4.0.7</qlexpress.version>
         <quartz.version>2.3.2</quartz.version>
         <r2dbc-h2.version>1.1.0.RELEASE</r2dbc-h2.version>
         <r2dbc-spi.version>1.0.0.RELEASE</r2dbc-spi.version>
@@ -477,7 +478,7 @@
         <smslib.version>3.5.4</smslib.version>
         <sms4j.version>3.3.5</sms4j.version>
         <!-- 1.33 版本已经是当前Spring Boot版本能兼容的最高版本 -->
-        <snakeyaml.version>2.4</snakeyaml.version>
+        <snakeyaml.version>1.33</snakeyaml.version>
         <snmp4j.version>3.9.6</snmp4j.version>
         <snmp4j-agent.version>3.8.3</snmp4j-agent.version>
         <soapui-template.version>1.0.2.RELEASE</soapui-template.version>
@@ -4276,18 +4277,6 @@
                 <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
-            <!-- jdk 8+ 引入可选模块 -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-jsqlparser-4.9</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-            <!-- jdk 11+ 引入可选模块 -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-jsqlparser</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
@@ -5257,6 +5246,12 @@
                 <artifactId>qiniu-java-sdk</artifactId>
                 <version>${qiniu-java-sdk.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/qlexpress4 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>qlexpress4</artifactId>
+                <version>${qlexpress.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
             <dependency>
                 <groupId>org.quartz-scheduler</groupId>
@@ -5269,7 +5264,6 @@
                 <artifactId>quartz-jobs</artifactId>
                 <version>${quartz.version}</version>
             </dependency>
-
             <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
             <dependency>
                 <groupId>org.apache.pdfbox</groupId>
