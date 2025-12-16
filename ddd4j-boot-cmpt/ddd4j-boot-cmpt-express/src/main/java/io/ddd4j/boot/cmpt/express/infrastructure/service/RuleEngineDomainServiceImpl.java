@@ -59,7 +59,7 @@ public class RuleEngineDomainServiceImpl implements RuleEngineDomainService {
     @Override
     public RuleValidationResult validateExpression(String expression) {
         try {
-            expressRunner.check(expression, CheckOptions.DEFAULT_OPTIONS.);
+            expressRunner.check(expression, CheckOptions.DEFAULT_OPTIONS);
             return RuleValidationResult.builder()
                     .valid(true)
                     .message("规则语法正确")
