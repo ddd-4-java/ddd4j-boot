@@ -18,7 +18,10 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>qlexpress4</artifactId>
-            <version>4.0.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
         </dependency>
         <!-- Redis（用于规则缓存） -->
         <dependency>

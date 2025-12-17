@@ -1,6 +1,8 @@
 # DDD4J Boot QL-Express Component
 
-基于QLExpress的动态规则引擎组件，采用DDD（领域驱动设计）架构。
+基于[Alibaba QLExpress](https://github.com/alibaba/QLExpress)的动态规则引擎组件，采用DDD（领域驱动设计）架构。
+
+> 说明：本文中部分逻辑来自 [基于SpringBoot + QLExpress打造动态规则引擎：让业务规则不再束缚代码！](https://mp.weixin.qq.com/s/h2XXYiq7Ty5-xqulFfxwug) 一文。
 
 ## 架构说明
 

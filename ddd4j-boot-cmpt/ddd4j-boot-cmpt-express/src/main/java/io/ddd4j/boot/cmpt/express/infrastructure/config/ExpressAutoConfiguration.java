@@ -3,6 +3,7 @@ package io.ddd4j.boot.cmpt.express.infrastructure.config;
 import com.alibaba.qlexpress4.Express4Runner;
 import io.ddd4j.boot.cmpt.express.application.service.RuleCacheService;
 import io.ddd4j.boot.cmpt.express.application.service.RuleEngineApplicationService;
+import io.ddd4j.boot.cmpt.express.application.service.RuleManagementService;
 import io.ddd4j.boot.cmpt.express.domain.repository.RuleDefinitionRepository;
 import io.ddd4j.boot.cmpt.express.domain.service.RuleEngineDomainService;
 import io.ddd4j.boot.cmpt.express.infrastructure.cache.RedisRuleCacheService;
@@ -40,6 +41,7 @@ public class ExpressAutoConfiguration {
         return new RedisRuleCacheService(redisTemplate);
     }
 
+
     /**
      * 规则引擎应用服务
      */
@@ -54,5 +56,21 @@ public class ExpressAutoConfiguration {
                 ruleRepository,
                 ruleCacheService);
     }
+
+    /**
+     * 规则管理服务
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public RuleManagementService ruleManagementService(
+            RuleDefinitionRepository ruleRepository,
+            RuleCacheService ruleCacheService,
+            RuleEngineDomainService ruleEngineDomainService) {
+        return new RuleManagementService(
+                ruleRepository,
+                ruleCacheService,
+                ruleEngineDomainService);
+    }
+
 }
 
