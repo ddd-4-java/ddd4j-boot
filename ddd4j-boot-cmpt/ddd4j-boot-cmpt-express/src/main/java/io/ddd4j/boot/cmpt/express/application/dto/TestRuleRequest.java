@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 测试规则请求DTO
  * 
- * <p>应用层DTO：用于规则测试接口的请求参数。
+ * <p>应用层DTO：用于规则测试接口的请求数据传输对象。
  * 
  * @author ddd4j-boot
  * @version 1.0

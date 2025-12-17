@@ -1,6 +1,6 @@
 # DDD4J Boot QL-Express Component
 
-基于[Alibaba QLExpress](https://github.com/alibaba/QLExpress)的动态规则引擎组件，采用DDD（领域驱动设计）架构。
+基于 [Alibaba QLExpress](https://github.com/alibaba/QLExpress)、[JetCache](https://github.com/alibaba/jetcache) 的动态规则引擎组件，采用DDD（领域驱动设计）架构。
 
 > 说明：本文中部分逻辑来自 [基于SpringBoot + QLExpress打造动态规则引擎：让业务规则不再束缚代码！](https://mp.weixin.qq.com/s/h2XXYiq7Ty5-xqulFfxwug) 一文。
 
@@ -19,6 +19,7 @@
 
 确保项目中已添加以下依赖：
 - `qlexpress4` - QLExpress表达式引擎
+- `jetcache` - JetCache 多级缓存
 - `spring-boot-starter-data-redis` - Redis缓存（可选）
 - `spring-boot-starter-web` - Web支持（可选，仅在使用REST接口时需要）
 - `spring-boot-starter-data-jpa` - JPA支持（可选，仅在使用JPA持久化时需要）

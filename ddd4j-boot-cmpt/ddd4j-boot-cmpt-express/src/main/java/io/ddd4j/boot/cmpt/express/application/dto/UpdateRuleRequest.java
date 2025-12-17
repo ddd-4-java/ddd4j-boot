@@ -9,8 +9,8 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * 更新规则请求DTO
  * 
- * <p>应用层DTO：用于接口层接收更新规则的请求参数。
- * 不直接使用领域实体，只包含更新规则所需的字段。
+ * <p>应用层DTO：用于接口层接收更新规则的请求数据传输对象。
+ * 遵循DDD规范，不直接使用领域实体，只包含更新规则所需的字段。
  * 
  * @author ddd4j-boot
  * @version 1.0
