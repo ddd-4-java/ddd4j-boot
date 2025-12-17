@@ -32,6 +32,7 @@
         <aliyun-sdk-oss.version>3.18.3</aliyun-sdk-oss.version>
         <aliyun-sdk-mts.version>3.3.63</aliyun-sdk-mts.version>
         <anyline.version>8.7.3-20251120</anyline.version>
+        <antlr4.version>4.13.2</antlr4.version>
         <antlr-st4.version>4.3.4</antlr-st4.version>
         <antlr-runtime.version>3.5.3</antlr-runtime.version>
         <ant-jsch.version>1.10.15</ant-jsch.version>
@@ -301,6 +302,7 @@
         <kotlin-stdlib.version>${kotlin.version}</kotlin-stdlib.version>
         <kubernetes-client.version>6.13.3</kubernetes-client.version>
         <kylin-jdbc.version>4.0.4</kylin-jdbc.version>
+        <lettuce.version>6.3.2.RELEASE</lettuce.version>
         <liteflow.version>2.15.1</liteflow.version>
         <libphonenumber.version>9.0.19</libphonenumber.version>
         <libphonenumber-carrier.version>2.19</libphonenumber-carrier.version>
@@ -845,16 +847,24 @@
                 <artifactId>anyline-environment-spring-data-jdbc</artifactId>
                 <version>${anyline.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.antlr/antlr4 -->
+            <dependency>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4</artifactId>
+                <version>${antlr4.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.antlr/antlr4-runtime -->
+            <dependency>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-runtime</artifactId>
+                <version>${antlr.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.antlr/ST4 -->
             <dependency>
                 <groupId>org.antlr</groupId>
                 <artifactId>ST4</artifactId>
                 <version>${antlr-st4.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr-runtime</artifactId>
-                <version>${antlr-runtime.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.ant/ant-jsch -->
             <dependency>
