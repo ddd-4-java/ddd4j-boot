@@ -12,10 +12,10 @@ import io.hiwepy.boot.sample.service.IDemoService;
 import io.hiwepy.boot.sample.setup.LogConstant;
 import io.hiwepy.boot.sample.web.dto.DemoDTO;
 import io.hiwepy.boot.sample.web.dto.DemoNewDTO;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.biz.utils.StringUtils;
@@ -42,8 +42,8 @@ public class DemoController extends BaseMapperController {
     /**
      * 增加逻辑实现
      */
-    @ApiOperation(value = "创建xxx信息", notes = "根据DemoVo创建xxx", httpMethod = "POST")
-    @ApiImplicitParam(name = "demoVo", value = "xxx数据传输对象", required = true, dataType = "DemoNewDTO")
+    @Operation(summary = "创建xxx信息", description = "根据DemoVo创建xxx")
+    @Parameter(name = "demoVo", description = "xxx数据传输对象", required = true)
     @ApiOperationLog(module = LogConstant.Module.N01, business = LogConstant.BUSINESS.N010001, opt = BusinessType.INSERT)
     @PostMapping("new")
     @ResponseBody
@@ -68,8 +68,8 @@ public class DemoController extends BaseMapperController {
     /**
      * 修改逻辑实现
      */
-    @ApiOperation(value = "修改xxx信息", notes = "修改xxx", httpMethod = "POST")
-    @ApiImplicitParam(name = "demoVo", value = "xxx数据传输对象", required = true, dataType = "DemoVo")
+    @Operation(summary = "修改xxx信息", description = "修改xxx")
+    @Parameter(name = "demoVo", description = "xxx数据传输对象", required = true)
     @ApiOperationLog(module = LogConstant.Module.N01, business = LogConstant.BUSINESS.N010001, opt = BusinessType.UPDATE)
     @PostMapping("renew")
     @ResponseBody
@@ -94,8 +94,8 @@ public class DemoController extends BaseMapperController {
     /**
      * 删除逻辑实现
      */
-    @ApiOperation(value = "删除xxx信息", notes = "根据ID删除xxx", httpMethod = "POST")
-    @ApiImplicitParam(name = "ids", value = "ID集合，多个使用,拼接", required = true, dataType = "String")
+    @Operation(summary = "删除xxx信息", description = "根据ID删除xxx")
+    @Parameter(name = "ids", description = "ID集合，多个使用,拼接", required = true)
     @ApiOperationLog(module = LogConstant.Module.N01, business = LogConstant.BUSINESS.N010001, opt = BusinessType.DELETE)
     @PostMapping("delete")
     @ResponseBody

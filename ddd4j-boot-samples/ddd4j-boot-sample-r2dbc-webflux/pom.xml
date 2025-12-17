@@ -23,15 +23,7 @@
             <artifactId>ddd4j-boot-cmpt-webflux</artifactId>
             <version>${revision}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5 -->
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring6</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator-core</artifactId>
-        </dependency>
+
         <!-- For WebFlux -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -65,8 +57,8 @@
         </dependency>
         <!-- For Swagger -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>webflux-swagger2-spring-boot-starter</artifactId>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-webflux-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
@@ -136,7 +128,7 @@
         <!-- For Mybatis -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.freemarker</groupId>
@@ -145,8 +137,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.github.jsqlparser</groupId>
-            <artifactId>jsqlparser</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
         </dependency>
         <!-- For Mybatis-r2dbc -->
         <dependency>

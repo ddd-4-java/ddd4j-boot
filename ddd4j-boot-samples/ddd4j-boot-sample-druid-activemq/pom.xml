@@ -57,12 +57,8 @@
         </dependency>
         <!-- For Swagger -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>webmvc-swagger2-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>swagger-bootstrap-ui</artifactId>
+            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
         </dependency>
         <!-- For Validation -->
         <dependency>
@@ -125,7 +121,7 @@
         <!-- For Mybatis -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.freemarker</groupId>
@@ -134,8 +130,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.github.jsqlparser</groupId>
-            <artifactId>jsqlparser</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
         </dependency>
         <!-- For Mybatis Plus Generator -->
         <dependency>
@@ -188,6 +184,10 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- For Embed Tomcat -->

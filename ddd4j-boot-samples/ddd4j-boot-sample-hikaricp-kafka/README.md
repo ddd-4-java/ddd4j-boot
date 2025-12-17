@@ -1,4 +1,4 @@
-# jeebiz-boot-sample-druid-kafka
+# ddd4j-boot-sample-druid-kafka
 
 >
 基于 [Spring Boot 2.x](https://docs.spring.io/spring-boot/index.html) 、[Apache Kafka](https://kafka.apache.org/)、[Mybatis Plus](https://baomidou.com/introduce/)、[Druid](https://github.com/alibaba/druid)

@@ -18,7 +18,7 @@
         <!-- 定义LOG存储位置 -->
         <Property name="LOG_HOME">./logs</Property>
         <!-- 定义应用名称 -->
-        <property name="APP_NAME">jeebiz-boot-sample</property>
+        <property name="APP_NAME">ddd4j-boot-sample</property>
         <!-- 日志输出格式:什么时间（日志时间）?什么应用（应用标记）?什么位置（线程、类、方法）?发送了什么（日志内容）? -->
         <Property name="LOG_CONSOLE_LAYOUT">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{[${APP_NAME}]}{red} %clr{%5p}
             %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint}

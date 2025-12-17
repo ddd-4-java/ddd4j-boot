@@ -130,7 +130,7 @@ spring:
       routable: true
       # Druid监控配置
       aop-patterns:
-        - com.github.hiwepy.boot.demo.web.mvc
+        - io.hiwepy.boot.demo.web.mvc
       stat-view-servlet:
         enabled: true
         reset-enable: false
@@ -231,7 +231,7 @@ mybatis-plus:
   # MySQL数据库对应的Mybatis脚本
   mapper-locations: classpath*:mapper/mysql/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  type-aliases-package: com.github.hiwepy.**.dao.entities
+  type-aliases-package: io.hiwepy.**.dao.entities
   # 初始配置文件
   check-config-location: true
   # config-location: classpath:/conf/mybatis/sqlMapConfig.xml    

@@ -2,13 +2,26 @@
 ###Spring Boot 监控（安全、开放信息等）配置：
 ################################################################################################################
 management:
+  server:
+    # 启用独立运维端口
+    port: 50000
+  metrics:
+    tags:
+      # 在统计信息中添加自定义的标签
+      application: ${spring.application.name}
+  # 开启shutdown和health端点
+  endpoint:
+    shutdown:
+      access: read_only
+    health:
+      probes:
+        enabled: true
   endpoints:
     web:
+      # 指定上下文路径，启用相应端点
+      base-path: /actuator
       exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
+        include: health,shutdown,metrics,prometheus
 
 ################################################################################################################
 ###内置应用容器（Tomcat、Jetty、Undertow）配置：
@@ -16,59 +29,47 @@ management:
 server:
   compression:
     enabled: true
-  port: 8090
-  # 设置webflux netty的请求头大小为100kb
-  max-http-header-size: 102400
+  # 默认为IMMEDIATE，表示立即关机；GRACEFUL表示优雅关机
+  shutdown: graceful
+  port: 8080
   servlet:
-    #context-path: /authz
     session:
       timeout: 60m
   undertow:
-    # 访问日志配置
-    accesslog:
-      enabled: true
     # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
     # 每块buffer的空间大小,越小的空间被利用越充分，不要设置太大，以免影响其他应用，合适即可
-    buffer-size: 2048
+    buffer-size: 512
     # 是否分配的直接内存(NIO直接分配的堆外内存)
     direct-buffers: true
-      # 线程优化：
-      # 《Java Concurrency in Practice》一书中，给出了估算线程池大小的公式：
-      # Nthreads = Ncpu x Ucpu x (1 + W/C)
-      # 《Programming Concurrency on the JVM Mastering》一书中，给出了估算线程池大小的公式：
-      # Nthreads = Ncpu / (1 - 阻塞系数)
-      # 概念：
-      # Ncpu = CPU核心数
-      # Ucpu = CPU使用率，0~1
-      # W/C = 等待时间与计算时间的比率
-      # 实际：
-      # IO密集型 = 2Ncpu（可以测试后自己控制大小，2Ncpu一般没问题）（常出现于线程中：数据库数据交互、文件上传下载、网络数据传输等等）
-      # 计算密集型 = Ncpu（常出现于线程中：复杂算法）
-      #threads:
+    # 线程优化：
+    # 《Java Concurrency in Practice》一书中，给出了估算线程池大小的公式：
+    # Nthreads = Ncpu x Ucpu x (1 + W/C)
+    # 《Programming Concurrency on the JVM Mastering》一书中，给出了估算线程池大小的公式：
+    # Nthreads = Ncpu / (1 - 阻塞系数)
+    # 概念：
+    # Ncpu = CPU核心数
+    # Ucpu = CPU使用率，0~1
+    # W/C = 等待时间与计算时间的比率
+    # 实际：
+    # IO密集型 = 2Ncpu（可以测试后自己控制大小，2Ncpu一般没问题）（常出现于线程中：数据库数据交互、文件上传下载、网络数据传输等等）
+    # 计算密集型 = Ncpu（常出现于线程中：复杂算法）
+    threads:
       # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
       # 不要设置过大，如果过大，启动项目会报错：打开文件数过多
-      #io: 16
+      io: 2
       # 阻塞任务线程池, 当执行类似servlet请求阻塞IO操作, undertow会从这个线程池中取得线程
       # 它的值设置取决于系统线程执行任务的阻塞系数，默认值是IO线程数*8
-    #worker: 256
-
-################################################################################################################
-###接口文档（Swagger UI）配置：
-################################################################################################################
-swagger:
-  enabled: true
-  title: Jeebiz Boot Demo
-  description: Jeebiz Boot Demo
-  version: 0.0.1-SNAPSHOT
-  license: Apache License, Version 2.0
-  license-url: https://www.apache.org/licenses/LICENSE-2.0.html
-  contact:
-    name: 杭州极蚁网络科技有限公司
-    email: hiwepy@163.com
-    url: http://www.hiwepy.com/
-  base-package: com.github.hiwepy
-  base-path-pattern: /**
-  apply-default-response-messages: true
+      worker: 8
+  jetty:
+    threads:
+      acceptors: 2
+      selectors: 8
+  tomcat:
+    max-connections: 8192
+    threads:
+      max: 200
+      min-spare: 64
+    accept-count: 65535
 
 ################################################################################################################
 ###Spring Boot 相关组件（SpringMVC、Freemarker、Session、Cache、DataSource）配置：
@@ -79,12 +80,10 @@ spring:
     name: ddd4j-boot-sample-druid
   # 缓存配置：
   cache:
-    type: ehcache
-    ehcache:
-      config: classpath:/conf/ehcache/ehcache.xml
+    type: none
   # 数据源配置：
   datasource:
-    name: jeebiz_demo
+    name: ddd4j_demo
     type: com.alibaba.druid.pool.DruidDataSource
     # Druid的数据源配置：
     druid:
@@ -130,7 +129,7 @@ spring:
       routable: true
       # Druid监控配置
       aop-patterns:
-        - com.github.hiwepy.boot.demo.web.mvc
+        - io.hiwepy.boot.demo.web.mvc
       stat-view-servlet:
         enabled: true
         reset-enable: false
@@ -170,15 +169,6 @@ spring:
     basename: i18n/*/messages,i18n/messages
     #设定Message bundles的编码，默认: UTF-8
     encoding: UTF-8
-  #出现错误时, 直接抛出异常
-  mvc:
-    throw-exception-if-no-handler-found: true
-    #不要为我们工程中的资源文件建立映射
-  resources:
-    add-mappings: true
-  # 会话配置（交个Shiro管理，此处不再指定）：
-  session:
-    store-type: none
   #thymelea模板配置：https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
   thymeleaf:
     cache: false
@@ -202,8 +192,6 @@ spring:
     out-of-order: false
     #在进行版本升级前是否进行SQL版本信息校验
     validate-on-migrate: true
-    #设置如果验证失败是否删除表结构
-    clean-on-validation-error: true
     #禁止对数据库进行相关清除操作
     clean-disabled: true
 
@@ -219,12 +207,12 @@ mybatis-plus:
   # MySQL数据库对应的Mybatis脚本
   mapper-locations: classpath*:mapper/mysql/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  type-aliases-package: com.github.hiwepy.**.dao.entities
+  type-aliases-package: io.hiwepy.**.dao.entities
   # 初始配置文件
   check-config-location: true
   # config-location: classpath:/conf/mybatis/sqlMapConfig.xml    
   configuration-properties:
-    [ 'table-prefix' ]: jeebiz_ # 自定义sql中表名带前缀
+    [ 'table-prefix' ]: ddd4j_ # 自定义sql中表名带前缀
   # 初始配置参数 : https://my.oschina.net/tobeexpertismydream/blog/2983483
   configuration:
     # MyBatis 自动映射策略，通过该配置可指定 MyBatis 是否并且如何来自动映射数据表字段与对象的属性，总共有 3 种可选值：
@@ -283,7 +271,7 @@ mybatis-plus:
       id-type: auto
       #      field-strategy: not-empty
       #mp2.3+ 全局表前缀 mp_
-      table-prefix: jeebiz_
+      table-prefix: ddd4j_
       #是否自动刷新 Mapper 对应的 XML 文件，默认不自动刷新。如果配置了该属性，Mapper 对应的 XML 文件会自动刷新，更改 XML 文件后，无需再次重启工程，由此节省大量时间。
       #refresh-mapper: true
       #是否开启数据库大写命名，默认不开启
