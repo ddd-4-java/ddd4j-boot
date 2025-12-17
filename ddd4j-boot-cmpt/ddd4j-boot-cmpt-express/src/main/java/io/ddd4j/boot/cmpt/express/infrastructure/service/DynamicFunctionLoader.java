@@ -1,6 +1,8 @@
 package io.ddd4j.boot.cmpt.express.infrastructure.service;
 
 import com.alibaba.qlexpress4.Express4Runner;
+import com.alibaba.qlexpress4.runtime.Parameters;
+import com.alibaba.qlexpress4.runtime.QContext;
 import com.alibaba.qlexpress4.runtime.function.CustomFunction;
 import io.ddd4j.boot.cmpt.express.application.service.RuleManagementService;
 import io.ddd4j.boot.cmpt.express.domain.model.entity.RuleDefinition;
@@ -135,23 +137,48 @@ public class DynamicFunctionLoader {
 
     /**
      * 创建方法包装器
+     * 
+     * <p>将静态方法包装为 CustomFunction，用于动态加载函数规则。
+     * 
+     * @param clazz 函数类
+     * @param method 静态方法
+     * @return 包装后的 CustomFunction
      */
     private CustomFunction createMethodWrapper(Class<?> clazz, Method method) {
         return (qContext, parameters) -> {
             try {
                 // QLExpress 4.x 中 Parameters 可能是一个数组或者有 size() 方法
-                // 这里使用反射或者直接处理 parameters
-                // 注意：具体实现需要根据 QLExpress 4.x 的实际 API 调整
+                // 使用反射方式获取参数值，兼容不同的 API 版本
                 int paramCount = parameters.size();
                 Object[] args = new Object[paramCount];
                 for (int i = 0; i < paramCount; i++) {
-                    args[i] = parameters.get(i).getObject(qContext);
+                    args[i] = getParameterValue(parameters, i, qContext);
                 }
                 return method.invoke(null, (Object) args);
             } catch (Exception e) {
                 throw new RuntimeException("执行函数方法失败", e);
             }
         };
+    }
+    
+    /**
+     * 获取参数值（兼容不同的 QLExpress 版本）
+     */
+    private Object getParameterValue(Parameters parameters, int index, QContext qContext) throws Throwable {
+        try {
+            if (parameters.get(index) != null) {
+                Object param = parameters.get(index);
+                try {
+                    java.lang.reflect.Method getObjectMethod = param.getClass().getMethod("getObject", QContext.class);
+                    return getObjectMethod.invoke(param, qContext);
+                } catch (NoSuchMethodException e) {
+                    return param;
+                }
+            }
+        } catch (Exception e) {
+            // 忽略
+        }
+        throw new IllegalArgumentException("无法获取参数值，索引: " + index);
     }
 
     /**

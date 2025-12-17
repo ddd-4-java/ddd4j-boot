@@ -1,10 +1,8 @@
 package io.ddd4j.boot.cmpt.express.interfaces.web;
 
-import io.ddd4j.boot.cmpt.express.application.dto.TestRuleRequest;
-import io.ddd4j.boot.cmpt.express.application.dto.ValidateRuleRequest;
+import io.ddd4j.boot.cmpt.express.application.dto.*;
 import io.ddd4j.boot.cmpt.express.application.service.RuleEngineApplicationService;
 import io.ddd4j.boot.cmpt.express.application.service.RuleManagementService;
-import io.ddd4j.boot.cmpt.express.domain.model.entity.RuleDefinition;
 import io.ddd4j.boot.cmpt.express.domain.model.vo.RuleExecutionResult;
 import io.ddd4j.boot.cmpt.express.domain.model.vo.RuleValidationResult;
 import lombok.extern.slf4j.Slf4j;
@@ -14,11 +12,19 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 规则管理Controller
- * 接口层：提供规则管理的REST API
+ * 
+ * <p>接口层：提供规则管理的REST API。
+ * 提供规则的增删改查、启用禁用、测试执行、语法验证等功能。
+ * 
+ * <p>API路径：/api/rules
+ * 
+ * @author ddd4j-boot
+ * @version 1.0
+ * @since 1.0
  */
 @RestController
 @RequestMapping("/api/rules")
@@ -30,61 +36,92 @@ public class RuleManagementController {
 
     @Autowired
     private RuleManagementService ruleManagementService;
+    
+    @Autowired
+    private RuleMapper ruleMapper;
 
     /**
      * 查询规则列表
+     * 
+     * @param ruleType 规则类型（可选），如果提供则按类型过滤
+     * @return 规则列表
      */
     @GetMapping
-    public ResponseEntity<List<RuleDefinition>> listRules(
+    public ResponseEntity<List<RuleResponse>> listRules(
             @RequestParam(required = false) String ruleType) {
-        List<RuleDefinition> rules;
+        List<RuleResponse> rules;
         if (StringUtils.hasText(ruleType)) {
-            rules = ruleManagementService.getRulesByType(ruleType);
+            rules = ruleManagementService.getRulesByType(ruleType).stream()
+                    .map(ruleMapper::toResponse)
+                    .collect(Collectors.toList());
         } else {
-            rules = ruleManagementService.getAllRules();
+            rules = ruleManagementService.getAllRules().stream()
+                    .map(ruleMapper::toResponse)
+                    .collect(Collectors.toList());
         }
         return ResponseEntity.ok(rules);
     }
 
     /**
      * 获取规则详情
+     * 
+     * @param id 规则ID
+     * @return 规则详情
      */
     @GetMapping("/{id}")
-    public ResponseEntity<RuleDefinition> getRule(@PathVariable Long id) {
-        Optional<RuleDefinition> rule = ruleManagementService.getRuleById(id);
-        return rule.map(ResponseEntity::ok)
+    public ResponseEntity<RuleResponse> getRule(@PathVariable Long id) {
+        return ruleManagementService.getRuleById(id)
+                .map(ruleMapper::toResponse)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     /**
      * 根据规则编码获取规则详情（带缓存）
+     * 
+     * @param ruleCode 规则编码
+     * @return 规则详情
      */
     @GetMapping("/code/{ruleCode}")
-    public ResponseEntity<RuleDefinition> getRuleByCode(@PathVariable String ruleCode) {
-        Optional<RuleDefinition> rule = ruleManagementService.getRuleByCode(ruleCode);
-        return rule.map(ResponseEntity::ok)
+    public ResponseEntity<RuleResponse> getRuleByCode(@PathVariable String ruleCode) {
+        return ruleManagementService.getRuleByCode(ruleCode)
+                .map(ruleMapper::toResponse)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     /**
      * 创建规则
-     * 自动验证规则语法，保存到数据库，并同步更新缓存
+     * 
+     * <p>自动验证规则语法，保存到数据库，并同步更新缓存。
+     * 
+     * @param request 创建规则请求DTO
+     * @return 创建后的规则信息
      */
     @PostMapping
-    public ResponseEntity<RuleDefinition> createRule(@RequestBody RuleDefinition rule) {
-        RuleDefinition savedRule = ruleManagementService.createRule(rule);
-        return ResponseEntity.ok(savedRule);
+    public ResponseEntity<RuleResponse> createRule(@RequestBody CreateRuleRequest request) {
+        var rule = ruleMapper.toEntity(request);
+        var savedRule = ruleManagementService.createRule(rule);
+        return ResponseEntity.ok(ruleMapper.toResponse(savedRule));
     }
 
     /**
      * 更新规则
-     * 自动验证规则语法，更新数据库，并同步更新缓存
+     * 
+     * <p>自动验证规则语法，更新数据库，并同步更新缓存。
+     * 
+     * @param id 规则ID
+     * @param request 更新规则请求DTO
+     * @return 更新后的规则信息
      */
     @PutMapping("/{id}")
-    public ResponseEntity<RuleDefinition> updateRule(@PathVariable Long id, @RequestBody RuleDefinition rule) {
+    public ResponseEntity<RuleResponse> updateRule(@PathVariable Long id, @RequestBody UpdateRuleRequest request) {
         try {
-            RuleDefinition updatedRule = ruleManagementService.updateRule(id, rule);
-            return ResponseEntity.ok(updatedRule);
+            var rule = ruleManagementService.getRuleById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("规则不存在: " + id));
+            ruleMapper.updateEntity(rule, request);
+            var updatedRule = ruleManagementService.updateRule(id, rule);
+            return ResponseEntity.ok(ruleMapper.toResponse(updatedRule));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -106,13 +143,17 @@ public class RuleManagementController {
 
     /**
      * 启用规则
-     * 同步更新缓存
+     * 
+     * <p>同步更新缓存。
+     * 
+     * @param id 规则ID
+     * @return 启用后的规则信息
      */
     @PostMapping("/{id}/enable")
-    public ResponseEntity<RuleDefinition> enableRule(@PathVariable Long id) {
+    public ResponseEntity<RuleResponse> enableRule(@PathVariable Long id) {
         try {
-            RuleDefinition rule = ruleManagementService.enableRule(id);
-            return ResponseEntity.ok(rule);
+            var rule = ruleManagementService.enableRule(id);
+            return ResponseEntity.ok(ruleMapper.toResponse(rule));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
@@ -120,13 +161,17 @@ public class RuleManagementController {
 
     /**
      * 禁用规则
-     * 同步清除缓存
+     * 
+     * <p>同步清除缓存。
+     * 
+     * @param id 规则ID
+     * @return 禁用后的规则信息
      */
     @PostMapping("/{id}/disable")
-    public ResponseEntity<RuleDefinition> disableRule(@PathVariable Long id) {
+    public ResponseEntity<RuleResponse> disableRule(@PathVariable Long id) {
         try {
-            RuleDefinition rule = ruleManagementService.disableRule(id);
-            return ResponseEntity.ok(rule);
+            var rule = ruleManagementService.disableRule(id);
+            return ResponseEntity.ok(ruleMapper.toResponse(rule));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }

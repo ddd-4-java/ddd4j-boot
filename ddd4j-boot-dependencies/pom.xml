@@ -3486,6 +3486,18 @@
                 <artifactId>annotations</artifactId>
                 <version>${jetbrains-annotations.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alicp.jetcache/jetcache-anno -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-anno</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alicp.jetcache/jetcache-core -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-core</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.alicp.jetcache/jetcache-starter-redis -->
             <dependency>
                 <groupId>com.alicp.jetcache</groupId>
@@ -3504,7 +3516,6 @@
                 <artifactId>jetcache-starter-redis-lettuce</artifactId>
                 <version>${jetcache.version}</version>
             </dependency>
-
             <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>

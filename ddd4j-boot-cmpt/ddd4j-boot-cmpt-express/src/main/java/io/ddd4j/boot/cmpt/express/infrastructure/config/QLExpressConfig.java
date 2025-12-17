@@ -20,10 +20,20 @@ import java.util.Objects;
 
 /**
  * QLExpress配置类
- * 基础设施层：技术框架配置
  * 
- * 负责注册硬编码格式的函数（放置在 infrastructure.function 目录）
- * 以及通过注解方式声明的自定义函数
+ * <p>基础设施层：技术框架配置。
+ * 负责初始化 QLExpress 引擎并注册自定义函数。
+ * 
+ * <p>函数注册策略：
+ * <ol>
+ *   <li>硬编码格式的函数：放置在 infrastructure.function 目录，逻辑固定</li>
+ *   <li>注解方式声明的函数：通过 @QLAlias 注解自动发现和注册</li>
+ *   <li>动态加载的函数：通过 DynamicFunctionLoader 从数据库加载</li>
+ * </ol>
+ * 
+ * @author ddd4j-boot
+ * @version 1.0
+ * @since 1.0
  */
 @Configuration
 @ConditionalOnClass(name = "com.alibaba.qlexpress4.Express4Runner")
@@ -31,6 +41,14 @@ public class QLExpressConfig {
 
     private static final Logger log = LoggerFactory.getLogger(QLExpressConfig.class);
 
+    /**
+     * 创建并配置 QLExpress 运行器
+     * 
+     * <p>初始化 Express4Runner，并注册所有自定义函数。
+     * 
+     * @param functionProvider 自定义函数提供者，用于自动发现通过注解声明的函数
+     * @return 配置好的 Express4Runner 实例
+     */
     @Bean
     public Express4Runner expressRunner(ObjectProvider<CustomFunction> functionProvider) {
         Express4Runner runner = new Express4Runner(InitOptions.DEFAULT_OPTIONS);
@@ -53,7 +71,12 @@ public class QLExpressConfig {
 
     /**
      * 注册硬编码格式的函数
-     * 这些函数逻辑固定，放置在 infrastructure.function 目录
+     * 
+     * <p>这些函数逻辑固定，放置在 infrastructure.function 目录。
+     * 包括字符串处理函数和日期处理函数等。
+     * 
+     * @param runner QLExpress 运行器
+     * @throws Exception 如果注册失败
      */
     private void registerHardcodedFunctions(Express4Runner runner) throws Exception {
         // 字符串处理函数
@@ -70,7 +93,11 @@ public class QLExpressConfig {
 
     /**
      * 注册通过注解方式声明的自定义函数
-     * 支持 @QLAlias 注解的函数
+     * 
+     * <p>支持 @QLAlias 注解的函数，自动发现并注册。
+     * 
+     * @param runner QLExpress 运行器
+     * @param functionProvider 自定义函数提供者
      */
     private void registerAnnotatedFunctions(Express4Runner runner, ObjectProvider<CustomFunction> functionProvider) {
         functionProvider.forEach(function -> {

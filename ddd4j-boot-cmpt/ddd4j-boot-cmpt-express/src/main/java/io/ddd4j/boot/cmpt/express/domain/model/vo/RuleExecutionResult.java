@@ -4,17 +4,36 @@ import java.time.LocalDateTime;
 
 /**
  * 规则执行结果值对象
- * 不可变的值对象，表示规则执行的结果
+ * 
+ * <p>领域模型：不可变的值对象，表示规则执行的结果。
+ * 使用Builder模式构建，确保不可变性。
+ * 
+ * @author ddd4j-boot
+ * @version 1.0
+ * @since 1.0
  */
 public class RuleExecutionResult {
 
+    /** 执行是否成功 */
     private final boolean success;
+    
+    /** 错误代码，执行失败时使用 */
     private final String errorCode;
+    
+    /** 错误消息，执行失败时使用 */
     private final String errorMessage;
+    
+    /** 执行结果值，执行成功时返回 */
     private final Object result;
+    
+    /** 规则编码 */
     private final String ruleCode;
+    
+    /** 执行时间 */
     private final LocalDateTime executedAt;
-    private final long executionTime; // 执行耗时（毫秒）
+    
+    /** 执行耗时（毫秒） */
+    private final long executionTime;
 
     private RuleExecutionResult(Builder builder) {
         this.success = builder.success;
@@ -26,6 +45,11 @@ public class RuleExecutionResult {
         this.executionTime = builder.executionTime;
     }
 
+    /**
+     * 创建Builder实例
+     * 
+     * @return Builder实例
+     */
     public static Builder builder() {
         return new Builder();
     }

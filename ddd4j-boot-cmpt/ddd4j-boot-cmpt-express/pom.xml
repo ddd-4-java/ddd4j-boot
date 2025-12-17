@@ -23,10 +23,16 @@
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
         </dependency>
-        <!-- Redis（用于规则缓存） -->
+        <!-- For Caffeine -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+        <!-- For JetCache -->
+        <!-- https://mvnrepository.com/artifact/com.alicp.jetcache/jetcache-starter-redis -->
+        <dependency>
+            <groupId>com.alicp.jetcache</groupId>
+            <artifactId>jetcache-starter-redis-lettuce</artifactId>
         </dependency>
         <!-- Spring Web（用于REST接口，可选） -->
         <dependency>
