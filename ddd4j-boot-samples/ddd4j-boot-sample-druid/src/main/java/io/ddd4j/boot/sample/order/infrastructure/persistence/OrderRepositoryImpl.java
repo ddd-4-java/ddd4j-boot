@@ -82,7 +82,7 @@ public class OrderRepositoryImpl implements OrderRepository {
                         // 创建新事件，包含订单ID
                         domainEventPublisher.publish(new io.ddd4j.boot.sample.order.domain.event.OrderCreatedEvent(
                             savedOrder.getId(), savedOrder.getOrderNo(), savedOrder.getUserId(), 
-                            savedOrder.getTotalAmount().amount().toString()));
+                            savedOrder.getTotalAmount().getAmount().toString()));
                     } else {
                         domainEventPublisher.publish(event);
                     }

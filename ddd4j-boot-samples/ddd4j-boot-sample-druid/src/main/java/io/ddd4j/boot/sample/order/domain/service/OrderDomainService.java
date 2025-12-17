@@ -46,7 +46,7 @@ public class OrderDomainService {
             return false;
         }
         // 订单金额必须大于0
-        return order.getTotalAmount().amount().compareTo(java.math.BigDecimal.ZERO) > 0;
+        return order.getTotalAmount().getAmount().compareTo(java.math.BigDecimal.ZERO) > 0;
     }
 }
 

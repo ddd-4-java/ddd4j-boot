@@ -68,7 +68,7 @@ public class OrderSpecification {
     public static boolean isAmountGreaterThan(Order order, java.math.BigDecimal amount) {
         return order != null 
             && order.getTotalAmount() != null 
-            && order.getTotalAmount().amount().compareTo(amount) > 0;
+            && order.getTotalAmount().getAmount().compareTo(amount) > 0;
     }
 }
 

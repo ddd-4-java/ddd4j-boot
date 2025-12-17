@@ -31,16 +31,16 @@ public class OrderConverter {
         entity.setOrderNo(order.getOrderNo());
         entity.setUserId(order.getUserId());
         entity.setStatus(order.getStatus() != null ? order.getStatus().getCode() : null);
-        entity.setTotalAmount(order.getTotalAmount() != null ? order.getTotalAmount().amount() : null);
-        entity.setCurrency(order.getTotalAmount() != null ? order.getTotalAmount().currency() : null);
+        entity.setTotalAmount(order.getTotalAmount() != null ? order.getTotalAmount().getAmount() : null);
+        entity.setCurrency(order.getTotalAmount() != null ? order.getTotalAmount().getCurrency() : null);
         
         if (order.getShippingAddress() != null) {
             Address address = order.getShippingAddress();
-            entity.setProvince(address.province());
-            entity.setCity(address.city());
-            entity.setDistrict(address.district());
-            entity.setDetail(address.detail());
-            entity.setZipCode(address.zipCode());
+            entity.setProvince(address.getProvince());
+            entity.setCity(address.getCity());
+            entity.setDistrict(address.getDistrict());
+            entity.setDetail(address.getDetail());
+            entity.setZipCode(address.getZipCode());
         }
         
         entity.setRemark(order.getRemark());
@@ -99,9 +99,9 @@ public class OrderConverter {
         entity.setProductId(item.getProductId());
         entity.setProductName(item.getProductName());
         entity.setQuantity(item.getQuantity());
-        entity.setUnitPrice(item.getUnitPrice() != null ? item.getUnitPrice().amount() : null);
-        entity.setTotalPrice(item.getTotalPrice() != null ? item.getTotalPrice().amount() : null);
-        entity.setCurrency(item.getUnitPrice() != null ? item.getUnitPrice().currency() : null);
+        entity.setUnitPrice(item.getUnitPrice() != null ? item.getUnitPrice().getAmount() : null);
+        entity.setTotalPrice(item.getTotalPrice() != null ? item.getTotalPrice().getAmount() : null);
+        entity.setCurrency(item.getUnitPrice() != null ? item.getUnitPrice().getCurrency() : null);
         
         return entity;
     }

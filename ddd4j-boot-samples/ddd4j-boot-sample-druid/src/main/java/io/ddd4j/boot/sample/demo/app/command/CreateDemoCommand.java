@@ -3,7 +3,7 @@ package io.ddd4j.boot.sample.demo.app.command;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 创建Demo命令

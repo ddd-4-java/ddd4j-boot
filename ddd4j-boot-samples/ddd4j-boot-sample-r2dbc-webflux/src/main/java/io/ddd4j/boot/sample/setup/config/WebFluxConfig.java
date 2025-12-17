@@ -9,11 +9,10 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.ViewResolverRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
-import org.springframework.web.reactive.resource.LiteWebJarsResourceResolver;
 import org.springframework.web.reactive.resource.PathResourceResolver;
-import org.thymeleaf.spring6.SpringWebFluxTemplateEngine;
-import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring6.view.reactive.ThymeleafReactiveViewResolver;
+import org.thymeleaf.spring5.SpringWebFluxTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.reactive.ThymeleafReactiveViewResolver;
 
 /**
  * https://www.cnblogs.com/niechen/p/9303451.html
@@ -60,7 +59,7 @@ public class WebFluxConfig implements WebFluxConfigurer, ApplicationContextAware
         registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/static/assets/");
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
-                .resourceChain(false).addResolver(new LiteWebJarsResourceResolver())
+                .resourceChain(false)
                 .addResolver(new PathResourceResolver());
     }
 

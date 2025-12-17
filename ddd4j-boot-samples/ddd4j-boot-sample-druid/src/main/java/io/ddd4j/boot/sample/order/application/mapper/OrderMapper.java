@@ -59,8 +59,8 @@ public interface OrderMapper {
         dto.setUserId(order.getUserId());
         dto.setStatus(order.getStatus());
         dto.setStatusDescription(order.getStatus() != null ? order.getStatus().getDescription() : null);
-        dto.setTotalAmount(order.getTotalAmount() != null ? order.getTotalAmount().amount() : null);
-        dto.setCurrency(order.getTotalAmount() != null ? order.getTotalAmount().currency() : null);
+        dto.setTotalAmount(order.getTotalAmount() != null ? order.getTotalAmount().getAmount() : null);
+        dto.setCurrency(order.getTotalAmount() != null ? order.getTotalAmount().getCurrency() : null);
         dto.setShippingAddress(toAddressDTO(order.getShippingAddress()));
         dto.setRemark(order.getRemark());
         dto.setPaidTime(order.getPaidTime());
@@ -84,11 +84,11 @@ public interface OrderMapper {
             return null;
         }
         OrderDTO.AddressDTO dto = new OrderDTO.AddressDTO();
-        dto.setProvince(address.province());
-        dto.setCity(address.city());
-        dto.setDistrict(address.district());
-        dto.setDetail(address.detail());
-        dto.setZipCode(address.zipCode());
+        dto.setProvince(address.getProvince());
+        dto.setCity(address.getCity());
+        dto.setDistrict(address.getDistrict());
+        dto.setDetail(address.getDetail());
+        dto.setZipCode(address.getZipCode());
         dto.setFullAddress(address.getFullAddress());
         return dto;
     }
@@ -105,9 +105,9 @@ public interface OrderMapper {
         dto.setProductId(item.getProductId());
         dto.setProductName(item.getProductName());
         dto.setQuantity(item.getQuantity());
-        dto.setUnitPrice(item.getUnitPrice() != null ? item.getUnitPrice().amount() : null);
-        dto.setTotalPrice(item.getTotalPrice() != null ? item.getTotalPrice().amount() : null);
-        dto.setCurrency(item.getUnitPrice() != null ? item.getUnitPrice().currency() : null);
+        dto.setUnitPrice(item.getUnitPrice() != null ? item.getUnitPrice().getAmount() : null);
+        dto.setTotalPrice(item.getTotalPrice() != null ? item.getTotalPrice().getAmount() : null);
+        dto.setCurrency(item.getUnitPrice() != null ? item.getUnitPrice().getCurrency() : null);
         return dto;
     }
     
