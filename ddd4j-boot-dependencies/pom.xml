@@ -262,7 +262,7 @@
         <jetty.version>9.4.57.v20241219</jetty.version>
         <jetty-websocket.version>${jetty.version}</jetty-websocket.version>
         <jetty-version>${jetty.version}</jetty-version>
-        <jedis.version>5.1.5</jedis.version>
+        <jedis.version>4.4.8</jedis.version>
         <jep.version>2.4.2</jep.version>
         <jetbrains-annotations.version>26.0.2-1</jetbrains-annotations.version>
         <jetcache.version>2.7.8</jetcache.version>
@@ -330,7 +330,7 @@
         <mongodb.version>5.5.0</mongodb.version>
         <mongo-java-driver.version>3.12.14</mongo-java-driver.version>
         <mssql-jdbc.version>12.6.3.jre8</mssql-jdbc.version>
-        <mybatis.version>3.5.19</mybatis.version>
+        <mybatis.version>3.5.13</mybatis.version>
         <mybatis-dynamic-sql.version>1.5.2</mybatis-dynamic-sql.version>
         <mybatis-plus.version>3.5.8</mybatis-plus.version> <!-- 这是JDK 1.8目前能使用的最高版本了 -->
         <mybatis-plus-generator.version>${mybatis-plus.version}</mybatis-plus-generator.version>
@@ -489,10 +489,10 @@
         <soapui-template.version>1.0.2.RELEASE</soapui-template.version>
         <socket-io.version>2.1.2</socket-io.version>
         <!--<spring-framework.version>5.3.39</spring-framework.version>-->
-        <springfox.version>3.0.0</springfox.version>
+        <springfox.version>2.9.2</springfox.version> <!-- 兼容 5.3.x -->
         <spring-biz.version>1.1.5.RELEASE</spring-biz.version>
         <spring-bytebuddy.version>1.0.0.RELEASE</spring-bytebuddy.version>
-        <spring-plugin.version>3.0.0</spring-plugin.version>
+        <spring-plugin.version>2.0.0.RELEASE</spring-plugin.version> <!-- 兼容 5.3.x -->
         <spring-javassist.version>1.0.7.RELEASE</spring-javassist.version>
         <spring-initializr.version>0.10.1</spring-initializr.version>
         <sqlite-jdbc.version>3.51.0.0</sqlite-jdbc.version>
@@ -6019,7 +6019,12 @@
                 <artifactId>spring-plugin-core</artifactId>
                 <version>${spring-plugin.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/org.springframework.plugin/spring-plugin-metadata -->
+            <dependency>
+                <groupId>org.springframework.plugin</groupId>
+                <artifactId>spring-plugin-metadata</artifactId>
+                <version>${spring-plugin.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/io.spring.initializr/initializr-bom -->
             <dependency>
                 <groupId>io.spring.initializr</groupId>
