@@ -21,17 +21,17 @@
         <artemis.version>2.44.0</artemis.version>
         <akka.version>2.8.8</akka.version>
         <akka-http.version>10.5.3</akka-http.version>
-        <alipay-sdk.version>4.40.560.ALL</alipay-sdk.version>
+        <alipay-sdk.version>4.40.572.ALL</alipay-sdk.version>
         <alipay-easysdk.version>2.2.3</alipay-easysdk.version>
         <aliyun-cloud-auth20190307.version>3.12.0</aliyun-cloud-auth20190307.version>
         <aliyun-java-sdk-core.version>4.7.6</aliyun-java-sdk-core.version>
         <aliyun-java-sdk-dm.version>3.3.2</aliyun-java-sdk-dm.version>
         <aliyun-java-sdk-green.version>3.6.6</aliyun-java-sdk-green.version>
-        <aliyun-java-sdk-vod.version>2.16.33</aliyun-java-sdk-vod.version>
+        <aliyun-java-sdk-vod.version>2.16.34</aliyun-java-sdk-vod.version>
         <aliyun-sdk-dm20151123.version>1.8.1</aliyun-sdk-dm20151123.version>
         <aliyun-sdk-oss.version>3.18.3</aliyun-sdk-oss.version>
-        <aliyun-sdk-mts.version>3.3.63</aliyun-sdk-mts.version>
-        <anyline.version>8.7.2-20250212</anyline.version>
+        <aliyun-sdk-mts.version>3.3.67</aliyun-sdk-mts.version>
+        <anyline.version>8.7.3-20251206</anyline.version>
         <antlr4.version>4.13.2</antlr4.version>
         <antlr.version>${antlr4.version}</antlr.version>
         <antlr-st4.version>4.3.4</antlr-st4.version>
