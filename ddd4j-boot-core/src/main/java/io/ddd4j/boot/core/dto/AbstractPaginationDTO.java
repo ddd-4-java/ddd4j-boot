@@ -5,7 +5,6 @@
 package io.ddd4j.boot.core.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import jakarta.validation.constraints.Min;
 
 public abstract class AbstractPaginationDTO {

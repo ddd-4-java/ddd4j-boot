@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.app.order.query;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.ddd4j.boot.sample.domain.order.model.vo.OrderStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;

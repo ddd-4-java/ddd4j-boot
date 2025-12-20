@@ -6,11 +6,11 @@ import com.alibaba.qlexpress4.runtime.QContext;
 import com.alibaba.qlexpress4.runtime.function.CustomFunction;
 import io.ddd4j.boot.cmpt.express.application.service.RuleManagementService;
 import io.ddd4j.boot.cmpt.express.domain.model.entity.RuleDefinition;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import jakarta.annotation.PostConstruct;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;

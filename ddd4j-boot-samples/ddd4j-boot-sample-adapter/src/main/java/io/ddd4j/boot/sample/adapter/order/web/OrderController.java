@@ -1,7 +1,10 @@
 package io.ddd4j.boot.sample.adapter.order.web;
 
 import io.ddd4j.boot.core.ApiRestResponse;
-import io.ddd4j.boot.sample.app.order.command.*;
+import io.ddd4j.boot.sample.app.order.command.CancelOrderCommand;
+import io.ddd4j.boot.sample.app.order.command.CreateOrderCommand;
+import io.ddd4j.boot.sample.app.order.command.PayOrderCommand;
+import io.ddd4j.boot.sample.app.order.command.ShipOrderCommand;
 import io.ddd4j.boot.sample.app.order.dto.OrderDTO;
 import io.ddd4j.boot.sample.app.order.query.OrderQuery;
 import io.ddd4j.boot.sample.app.order.response.OrderPageResponse;
@@ -9,10 +12,10 @@ import io.ddd4j.boot.sample.app.order.service.OrderApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**

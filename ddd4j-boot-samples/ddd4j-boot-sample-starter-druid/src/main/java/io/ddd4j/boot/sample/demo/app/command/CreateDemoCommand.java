@@ -1,9 +1,8 @@
 package io.ddd4j.boot.sample.demo.app.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
 /**
  * 创建Demo命令

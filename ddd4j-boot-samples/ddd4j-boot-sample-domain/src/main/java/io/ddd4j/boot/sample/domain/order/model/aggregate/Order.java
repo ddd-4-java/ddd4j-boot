@@ -1,11 +1,7 @@
 package io.ddd4j.boot.sample.domain.order.model.aggregate;
 
 import io.ddd4j.boot.core.entity.BaseEntity;
-import io.ddd4j.boot.sample.domain.order.event.DomainEvent;
-import io.ddd4j.boot.sample.domain.order.event.OrderCancelledEvent;
-import io.ddd4j.boot.sample.domain.order.event.OrderCreatedEvent;
-import io.ddd4j.boot.sample.domain.order.event.OrderPaidEvent;
-import io.ddd4j.boot.sample.domain.order.event.OrderShippedEvent;
+import io.ddd4j.boot.sample.domain.order.event.*;
 import io.ddd4j.boot.sample.domain.order.model.entity.OrderItem;
 import io.ddd4j.boot.sample.domain.order.model.vo.Address;
 import io.ddd4j.boot.sample.domain.order.model.vo.Money;

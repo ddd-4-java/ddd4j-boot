@@ -1,10 +1,9 @@
 package io.ddd4j.boot.cmpt.express.application.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import jakarta.validation.constraints.NotBlank;
 
 /**
  * 更新规则请求DTO

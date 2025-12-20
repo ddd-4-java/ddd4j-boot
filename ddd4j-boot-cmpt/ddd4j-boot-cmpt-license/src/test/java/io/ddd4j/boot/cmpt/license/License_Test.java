@@ -1,6 +1,5 @@
 package io.ddd4j.boot.cmpt.license;
 
-import io.ddd4j.boot.cmpt.license.LicenseVerify;
 import io.ddd4j.boot.cmpt.license.creator.LicenseCreator;
 import io.ddd4j.boot.cmpt.license.creator.LicenseCreatorParam;
 import org.junit.jupiter.api.Test;

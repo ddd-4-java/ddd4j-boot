@@ -1,8 +1,8 @@
 package io.ddd4j.boot.cmpt.external.sequence;
 
 import cn.hutool.core.util.IdUtil;
-import io.ddd4j.boot.core.sequence.Sequence;
 import io.ddd4j.boot.cmpt.external.SequenceProperties;
+import io.ddd4j.boot.core.sequence.Sequence;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.app.order.response;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.ddd4j.boot.sample.app.order.dto.OrderDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

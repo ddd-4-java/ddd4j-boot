@@ -4,6 +4,7 @@ import io.ddd4j.boot.core.XHeaders;
 import io.ddd4j.boot.core.sequence.Sequence;
 import io.ddd4j.boot.core.utils.WebUtils;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 @Aspect
