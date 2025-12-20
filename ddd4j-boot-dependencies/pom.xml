@@ -23,7 +23,7 @@
         <akka-http.version>10.5.3</akka-http.version>
         <alipay-sdk.version>4.40.560.ALL</alipay-sdk.version>
         <alipay-easysdk.version>2.2.3</alipay-easysdk.version>
-        <aliyun-cloud-auth20190307.version>1.0.0</aliyun-cloud-auth20190307.version>
+        <aliyun-cloud-auth20190307.version>3.12.0</aliyun-cloud-auth20190307.version>
         <aliyun-java-sdk-core.version>4.7.6</aliyun-java-sdk-core.version>
         <aliyun-java-sdk-dm.version>3.3.2</aliyun-java-sdk-dm.version>
         <aliyun-java-sdk-green.version>3.6.6</aliyun-java-sdk-green.version>
