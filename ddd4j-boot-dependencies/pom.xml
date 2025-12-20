@@ -103,12 +103,12 @@
         <commons-discovery.version>0.5</commons-discovery.version>
         <commons-email.version>1.6.0</commons-email.version>
         <commons-email2.version>2.0.0-M1</commons-email2.version>
-        <commons-exec.version>1.5.0</commons-exec.version>
+        <commons-exec.version>1.6.0</commons-exec.version>
         <commons-fileupload.version>1.6.0</commons-fileupload.version>
         <commons-fileupload2.version>2.0.0-M4</commons-fileupload2.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
         <commons-imaging.version>1.0.0-alpha6</commons-imaging.version>
-        <commons-io.version>2.20.0</commons-io.version>
+        <commons-io.version>2.21.0</commons-io.version>
         <commons-jci.version>1.1</commons-jci.version>
         <commons-jexl.version>2.1.1</commons-jexl.version>
         <commons-jexl3.version>3.6.0</commons-jexl3.version>
@@ -121,11 +121,11 @@
         <commons-math4.version>4.0-beta1</commons-math4.version>
         <commons-net.version>3.11.1</commons-net.version>
         <commons-pool.version>1.6</commons-pool.version>
-        <commons-pool2.version>2.12.0</commons-pool2.version>
+        <commons-pool2.version>2.12.1</commons-pool2.version>
         <commons-proxy.version>1.0</commons-proxy.version>
         <commons-rdf.version>0.5.0</commons-rdf.version>
         <commons-ssl.version>0.3.9</commons-ssl.version>
-        <commons-text.version>1.14.0</commons-text.version>
+        <commons-text.version>1.15.0</commons-text.version>
         <commons-validator.version>1.10.1</commons-validator.version>
         <commons-vfs2.version>2.10.0</commons-vfs2.version>
         <checker-framework.version>3.52.0</checker-framework.version>
