@@ -20,6 +20,7 @@
         <module>ddd4j-boot-cmpt-crypto</module>
         <module>ddd4j-boot-cmpt-datascope</module>
         <module>ddd4j-boot-cmpt-excel</module>
+        <module>ddd4j-boot-cmpt-express</module>
         <module>ddd4j-boot-cmpt-external</module>
         <module>ddd4j-boot-cmpt-jackson</module>
         <module>ddd4j-boot-cmpt-kafka</module>
@@ -30,7 +31,6 @@
         <module>ddd4j-boot-cmpt-validation</module>
         <module>ddd4j-boot-cmpt-webflux</module>
         <module>ddd4j-boot-cmpt-webmvc</module>
-        <module>ddd4j-boot-cmpt-express</module>
     </modules>
 
     <dependencies>
