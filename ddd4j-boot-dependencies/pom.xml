@@ -490,7 +490,7 @@
         <soapui-template.version>1.0.2.RELEASE</soapui-template.version>
         <socket-io.version>2.1.2</socket-io.version>
         <!--<spring-framework.version>5.3.39</spring-framework.version>-->
-        <springfox.version>2.9.2</springfox.version> <!-- 兼容 5.3.x -->
+        <springfox.version>2.10.5</springfox.version> <!-- 兼容 5.3.x -->
         <spring-biz.version>1.1.5.RELEASE</spring-biz.version>
         <spring-bytebuddy.version>1.0.0.RELEASE</spring-bytebuddy.version>
         <spring-plugin.version>2.0.0.RELEASE</spring-plugin.version> <!-- 兼容 5.3.x -->
