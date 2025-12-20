@@ -79,9 +79,6 @@ spring:
     name: ddd4j-boot-sample-druid
   # 缓存配置：
   cache:
-    type: ehcache
-    ehcache:
-      config: classpath:/conf/ehcache/ehcache.xml
   # 数据源配置：
   datasource:
     name: jeebiz_demo

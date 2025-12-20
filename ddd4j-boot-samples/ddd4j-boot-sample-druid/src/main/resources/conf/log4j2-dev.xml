@@ -57,7 +57,6 @@
         <Logger name="de.codecentric.boot" level="WARN" additivity="true"/>
         <Logger name="io.lettuce" level="WARN" additivity="true"/>
         <Logger name="io.undertow" level="WARN" additivity="true"/>
-        <Logger name="net.sf.ehcache" level="WARN" additivity="true"/>
         <Logger name="java.sql" level="DEBUG" additivity="true"/>
         <Logger name="java.sql.Connection" level="WARN" additivity="true"/>
         <Logger name="java.sql.Statement" level="WARN" additivity="true"/>

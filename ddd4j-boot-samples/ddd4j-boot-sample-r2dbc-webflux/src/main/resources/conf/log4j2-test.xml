@@ -205,7 +205,6 @@
         <Logger name="io.lettuce" level="WARN" additivity="true"/>
         <Logger name="io.undertow" level="WARN" additivity="true"/>
         <Logger name="io.netty" level="WARN" additivity="true"/>
-        <Logger name="net.sf.ehcache" level="WARN" additivity="true"/>
         <Logger name="java.sql" level="INFO" additivity="true"/>
         <Logger name="java.sql.Connection" level="WARN" additivity="true"/>
         <Logger name="java.sql.Statement" level="WARN" additivity="true"/>

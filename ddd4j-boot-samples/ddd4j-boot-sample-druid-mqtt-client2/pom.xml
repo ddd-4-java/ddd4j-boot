@@ -121,22 +121,17 @@
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!-- JDBC Driver For Oracle
+        <!-- JDBC Driver For Oracle -->
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc8</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-       <dependency>
-            <groupId>com.oracle.database.observability</groupId>
-            <artifactId>ojdbc8dms</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.oracle.database.nls</groupId>
             <artifactId>orai18n</artifactId>
             <scope>runtime</scope>
-        </dependency> -->
+        </dependency>
 
         <!-- For MQTT Client -->
         <dependency>

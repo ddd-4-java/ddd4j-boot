@@ -104,43 +104,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-actor -->
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-actor_3</artifactId>
-            <version>${akka.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-cluster -->
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-cluster_3</artifactId>
-            <version>${akka.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-remote -->
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-remote_3</artifactId>
-            <version>${akka.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-stream -->
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-stream_3</artifactId>
-            <version>${akka.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-slf4j -->
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-slf4j_3</artifactId>
-            <version>${akka.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-http
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-http_3</artifactId>
-            <version>10.7.0</version>
-        </dependency>-->
         <!-- For Cache Support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
