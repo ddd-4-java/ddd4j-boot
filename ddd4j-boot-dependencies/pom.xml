@@ -358,7 +358,7 @@
         <mysql.version>8.0.33</mysql.version>
         <mysql-binlog-connector-java.version>0.30.1</mysql-binlog-connector-java.version>
         <minio.version>8.6.0</minio.version>
-        <nacos-client.version>2.4.0</nacos-client.version>
+        <nacos.client.version>2.2.0</nacos.client.version>
         <neethi.version>3.2.1</neethi.version>
         <netty.version>4.1.128.Final</netty.version>
         <netty-socketio.version>2.0.13</netty-socketio.version>
@@ -4372,7 +4372,7 @@
             <dependency>
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>
-                <version>${nacos-client.version}</version>
+                <version>${nacos.client.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.neethi -->
             <!-- Apache Neethi该组件为Axis2提供了非完整的WS-Policy实现，允许 Axis2用户操作和组合策略文档。 是Axis2用于创建策略文档的运行时表示形式、以及对策略文档执行规范化、合并和求交操作的工具。
