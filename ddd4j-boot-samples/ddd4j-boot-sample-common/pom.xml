@@ -21,6 +21,18 @@
             <groupId>com.alibaba.cola</groupId>
             <artifactId>cola-component-exception</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-core</artifactId>
+            <version>3.5.x.20251201-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
+            <version>3.5.x.20251201-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>
