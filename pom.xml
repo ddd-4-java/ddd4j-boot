@@ -9,7 +9,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.5</version>
+        <version>3.4.8</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -31,7 +31,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <revision>3.4.x.20251201-SNAPSHOT</revision>
+        <revision>3.4.x.20251215-SNAPSHOT</revision>
         <java.version>17</java.version>
         <!-- Maven Plugin versions -->
         <maven.version>3.6.3</maven.version>
