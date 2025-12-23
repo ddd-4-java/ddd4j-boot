@@ -14,6 +14,12 @@
     <description>Ddd4j Boot Sa-Token Component</description>
 
     <dependencies>
+        <!-- For DDD4j Core -->
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
         <dependency>
             <groupId>cn.dev33</groupId>
