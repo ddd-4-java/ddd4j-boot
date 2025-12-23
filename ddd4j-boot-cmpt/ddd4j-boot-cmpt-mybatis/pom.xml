@@ -20,6 +20,11 @@
             <artifactId>ddd4j-boot-core</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-cmpt-jackson</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <!--For Mybatis & Mybatis Plus -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
