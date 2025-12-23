@@ -1,4 +1,4 @@
-package io.ddd4j.boot.cmpt.pf4j.utils;
+package io.ddd4j.boot.cmpt.pf4j.util;
 
 import io.ddd4j.boot.cmpt.pf4j.annotation.ExtensionMapping;
 import io.ddd4j.boot.cmpt.pf4j.exception.PluginInvokeException;
