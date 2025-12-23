@@ -2,23 +2,22 @@
  * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
  * All Rights Reserved.
  */
-package io.ddd4j.boot.cmpt.webmvc.error;
+package io.ddd4j.boot.core.exception;
 
 import io.ddd4j.boot.core.utils.WebUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Objects;
 
+@Slf4j
 public abstract class ExceptinHandler {
 
     public static final String STATUS_FAIL = "fail";
     public static final String STATUS_ERROR = "error";
 
-    protected static final Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
     protected static final String XML_HTTP_REQUEST = "XMLHttpRequest";
     protected static final String X_REQUESTED_WITH = "X-Requested-With";
 
@@ -29,15 +28,15 @@ public abstract class ExceptinHandler {
     protected void logException(Exception ex) {
         HttpServletRequest request = WebUtils.getHttpServletRequest();
         if (Objects.nonNull(request)) {
-            LOG.error("URI : {} Request Fail. IP >> {} ", request.getRequestURI(), WebUtils.getRemoteAddr(request));
+            log.error("URI : {} Request Fail. IP >> {} ", request.getRequestURI(), WebUtils.getRemoteAddr(request));
         }
-        LOG.error(ex.getMessage(), ex);
+        log.error(ex.getMessage(), ex);
     }
 
     protected void logException(Exception ex, Map<String, Object> detailMap) {
         HttpServletRequest request = WebUtils.getHttpServletRequest();
         if (Objects.nonNull(request)) {
-            LOG.error("URI : {} Request Fail. IP >> {} ", request.getRequestURI(), WebUtils.getRemoteAddr(request));
+            log.error("URI : {} Request Fail. IP >> {} ", request.getRequestURI(), WebUtils.getRemoteAddr(request));
         }
         for (final Map.Entry<String, Object> entry : detailMap.entrySet()) {
             Object val = entry.getValue();
@@ -45,7 +44,7 @@ public abstract class ExceptinHandler {
                 MDC.put(entry.getKey(), String.valueOf(entry.getValue()));
             }
         }
-        LOG.error(ex.getMessage(), ex);
+        log.error(ex.getMessage(), ex);
     }
 
 }

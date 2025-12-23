@@ -62,7 +62,7 @@ import java.util.*;
 @ControllerAdvice
 @ResponseBody
 @Slf4j
-public class GlobalExceptionHandler extends ExceptinHandler {
+public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.ExceptinHandler {
 
     @Autowired
     private NestedMessageSource messageSource;
@@ -286,7 +286,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
                 Map<String, String> errorMap = Maps.newHashMap();
                 errorMap.put("field", error.getField());
                 errorMap.put("msg", error.getDefaultMessage());
-                LOG.error(error.getField() + ":" + error.getDefaultMessage());
+                log.error(error.getField() + ":" + error.getDefaultMessage());
                 errorList.add(errorMap);
             }
 

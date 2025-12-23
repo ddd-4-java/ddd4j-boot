@@ -4,7 +4,7 @@
  */
 package io.hiwepy.boot.sample.exception;
 
-import io.ddd4j.boot.cmpt.webmvc.error.ExceptinHandler;
+import io.ddd4j.boot.core.exception.ExceptinHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.web.bind.annotation.ControllerAdvice;
