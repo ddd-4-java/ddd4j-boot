@@ -33,6 +33,7 @@
         <module>ddd4j-boot-cmpt-express</module>
         <module>ddd4j-boot-cmpt-dubbo</module>
         <module>ddd4j-boot-cmpt-mybatis</module>
+        <module>ddd4j-boot-cmpt-security</module>
     </modules>
 
     <dependencies>

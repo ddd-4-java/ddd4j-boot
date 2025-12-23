@@ -10,8 +10,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>ddd4j-boot-cmpt-mybatis</artifactId>
-    <description>Ddd4j Boot Mybatis Component</description>
+    <artifactId>ddd4j-boot-cmpt-security</artifactId>
+    <description>Ddd4j Boot Security Component</description>
 
     <dependencies>
         <!-- For DDD4j Core -->
@@ -20,20 +20,34 @@
             <artifactId>ddd4j-boot-core</artifactId>
             <version>${revision}</version>
         </dependency>
-        <!--For Mybatis & Mybatis Plus -->
+        <!-- For Spring Security -->
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-logging</artifactId>
+                    <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <groupId>com.github.hiwepy</groupId>
+            <artifactId>security-biz-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.hiwepy</groupId>
+            <artifactId>security-jwt-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- For Redis -->
+        <dependency>
+            <groupId>com.github.hiwepy</groupId>
+            <artifactId>redistpl-plus-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- Compile dependencies -->
+        <dependency>
+            <groupId>com.github.hiwepy</groupId>
+            <artifactId>jwt-issuer-with-jjwt</artifactId>
         </dependency>
     </dependencies>
 
