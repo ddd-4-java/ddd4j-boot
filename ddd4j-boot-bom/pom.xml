@@ -16,13 +16,13 @@
 
     <dependencyManagement>
         <dependencies>
+
             <!-- Ddd4j Boot Core -->
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-core</artifactId>
                 <version>${revision}</version>
             </dependency>
-
             <!-- Ddd4j Boot Components -->
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
@@ -42,6 +42,21 @@
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-datascope</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-dubbo</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-excel</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-express</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -76,7 +91,17 @@
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-satoken</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-security</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -94,7 +119,6 @@
                 <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
                 <version>${revision}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
