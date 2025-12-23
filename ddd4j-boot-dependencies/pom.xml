@@ -7650,12 +7650,6 @@
                 <artifactId>shanyan-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-shanyan.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/shanyan-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>shanyan-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-shanyan.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/org.dromara.sms4j/sms4j-spring-boot-starter -->
             <dependency>
                 <groupId>org.dromara.sms4j</groupId>
