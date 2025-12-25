@@ -5,6 +5,7 @@
 package io.ddd4j.boot.cmpt.webmvc;
 
 import io.ddd4j.boot.cmpt.webmvc.error.I18nResourceBasenameHandler;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.biz.context.support.MultiResourceBundleMessageSource;
@@ -122,9 +123,9 @@ public class DefaultMessageSourceAutoConfiguration {
     }
 
     @Bean
-    public NestedMessageSource nestedMessageSource(List<MessageSource> sources) {
-        return new NestedMessageSource(sources.toArray(new MessageSource[0]));
+    public NestedMessageSource nestedMessageSource(ObjectProvider<MessageSource> messageSourceProvider) {
+        MessageSource[] messageSources = messageSourceProvider.orderedStream().toArray(MessageSource[]::new);
+        return new NestedMessageSource(messageSources);
     }
-
 
 }
