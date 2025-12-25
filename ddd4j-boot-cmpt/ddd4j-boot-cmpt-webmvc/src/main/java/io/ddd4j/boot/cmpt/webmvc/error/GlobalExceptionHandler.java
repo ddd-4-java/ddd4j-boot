@@ -14,6 +14,7 @@ import io.ddd4j.boot.core.exception.BizIOException;
 import io.ddd4j.boot.core.exception.BizRuntimeException;
 import io.ddd4j.boot.core.exception.IdempotentException;
 import io.ddd4j.boot.core.utils.WebUtils;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.ConversionNotSupportedException;
@@ -23,7 +24,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.biz.web.multipart.MaxUploadSizePerFileExceededException;
 import org.springframework.biz.web.servlet.support.RequestContextUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +47,8 @@ import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.support.WebExchangeBindException;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.method.annotation.MethodArgumentConversionNotSupportedException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -63,11 +66,13 @@ import java.util.*;
  * 异常增强类型：NullPointerException,RunTimeException,ClassCastException,
  * NoSuchMethodException,IOException,IndexOutOfBoundsException
  */
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ControllerAdvice
 @ResponseBody
 @Slf4j
 public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.ExceptinHandler {
 
+    @Getter
     @Autowired
     private NestedMessageSource messageSource;
     @Autowired
@@ -79,163 +84,220 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
      * 404 (Not Found)
      */
     @ExceptionHandler({NoHandlerFoundException.class})
-    public ResponseEntity<ApiRestResponse<String>> noHandlerFoundException(NoHandlerFoundException ex) {
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiRestResponse<String> noHandlerFoundException(NoHandlerFoundException ex) {
         this.logException(ex);
-        String message = String.format("没有找到请求地址 [%s],请求方式 [%s]对应的处理对象.", ex.getRequestURL(), ex.getHttpMethod());
-        ApiRestResponse<String> resp = ApiCode.SC_NOT_FOUND.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.NOT_FOUND);
+        String defaultMessage = String.format("没有找到请求地址 [%s],请求方式 [%s]对应的处理对象.", ex.getRequestURL(), ex.getHttpMethod());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "not.found", defaultMessage);
+            return ApiCode.SC_NOT_FOUND.toResponse(message);
+        }
+        return ApiCode.SC_NOT_FOUND.toResponse(defaultMessage);
     }
 
     /**
      * 405 (Method Not Allowed)
      */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
-    public ResponseEntity<ApiRestResponse<String>> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public ApiRestResponse<String> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
         this.logException(ex);
-        String message = String.format("不支持的请求方法, 仅支持 [%s].", StringUtils.join(ex.getSupportedMethods()));
-        ApiRestResponse<String> resp = ApiCode.SC_METHOD_NOT_ALLOWED.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.METHOD_NOT_ALLOWED);
+        String defaultMessage = String.format("[%s] 不支持的请求方法, 请使用 [%s].", ex.getMethod(), StringUtils.join(ex.getSupportedMethods()));
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "method.not.allowed", defaultMessage);
+            return ApiCode.SC_METHOD_NOT_ALLOWED.toResponse(message);
+        }
+        return ApiCode.SC_METHOD_NOT_ALLOWED.toResponse(defaultMessage);
     }
 
     /**
      * 406 (Not Acceptable)
      */
     @ExceptionHandler({HttpMediaTypeNotAcceptableException.class})
-    public ResponseEntity<ApiRestResponse<String>> httpMediaTypeNotAcceptableException(HttpMediaTypeNotAcceptableException ex) {
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    public ApiRestResponse<String> httpMediaTypeNotAcceptableException(HttpMediaTypeNotAcceptableException ex) {
         this.logException(ex);
         String[] supportedMediaTypes = new String[ex.getSupportedMediaTypes().size()];
         for (int i = 0; i < ex.getSupportedMediaTypes().size(); i++) {
             MediaType mediaType = ex.getSupportedMediaTypes().get(i);
             supportedMediaTypes[i] = mediaType.toString();
         }
-        String message = String.format("不匹配的媒体类型, 仅匹配 [%s].", StringUtils.join(supportedMediaTypes));
-        ApiRestResponse<String> resp = ApiCode.SC_NOT_ACCEPTABLE.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.NOT_ACCEPTABLE);
+        String defaultMessage = String.format("不匹配的媒体类型, 仅匹配 [%s].", StringUtils.join(supportedMediaTypes));
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.mediaType", defaultMessage);
+            return ApiCode.SC_NOT_ACCEPTABLE.toResponse(message);
+        }
+        return ApiCode.SC_NOT_ACCEPTABLE.toResponse(defaultMessage);
     }
 
     /**
      * 415 (Unsupported Media Type)
      */
     @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
-    public ResponseEntity<ApiRestResponse<String>> httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
+    @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+    public ApiRestResponse<String> httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
         this.logException(ex);
-        String message = String.format("不支持的媒体类型, 仅支持 [%s].", StringUtils.join(ex.getSupportedMediaTypes()));
-        ApiRestResponse<String> resp = ApiCode.SC_UNSUPPORTED_MEDIA_TYPE.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        String defaultMessage = String.format("不支持的媒体类型, 仅支持 [%s].", StringUtils.join(ex.getSupportedMediaTypes()));
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.mediaType", defaultMessage);
+            return ApiCode.SC_UNSUPPORTED_MEDIA_TYPE.toResponse(message);
+        }
+        return ApiCode.SC_UNSUPPORTED_MEDIA_TYPE.toResponse(defaultMessage);
     }
 
     /**
      * 400 (Bad Request)
-     * https://www.jianshu.com/p/4df0cac308dc
+     * <a href="https://www.jianshu.com/p/4df0cac308dc">...</a>
      */
     @ExceptionHandler({MissingMatrixVariableException.class})
-    public ResponseEntity<ApiRestResponse<String>> missingMatrixVariableException(MissingMatrixVariableException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> missingMatrixVariableException(MissingMatrixVariableException ex) {
         this.logException(ex);
-        String message = String.format("缺少矩阵变量: [%s].", ex.getVariableName());
-        ApiRestResponse<String> resp = ApiCode.SC_MISSING_MATRIX_VARIABLE.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("缺少矩阵变量: [%s].", ex.getVariableName());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.matrix-variable", defaultMessage);
+            return ApiCode.SC_MISSING_MATRIX_VARIABLE.toResponse(message);
+        }
+        return ApiCode.SC_MISSING_MATRIX_VARIABLE.toResponse(defaultMessage);
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({MissingPathVariableException.class})
-    public ResponseEntity<ApiRestResponse<String>> missingPathVariableException(MissingPathVariableException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> missingPathVariableException(MissingPathVariableException ex) {
         this.logException(ex);
-        String message = String.format("缺少URI模板变量: [%s].", ex.getVariableName());
-        ApiRestResponse<String> resp = ApiCode.SC_MISSING_PATH_VARIABLE.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("缺少URI模板变量: [%s].", ex.getVariableName());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.path-variable", defaultMessage);
+            return ApiCode.SC_MISSING_PATH_VARIABLE.toResponse(message);
+        }
+        return ApiCode.SC_MISSING_PATH_VARIABLE.toResponse(defaultMessage);
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({MissingRequestCookieException.class})
-    public ResponseEntity<ApiRestResponse<String>> missingRequestCookieException(MissingRequestCookieException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> missingRequestCookieException(MissingRequestCookieException ex) {
         this.logException(ex);
-        String message = String.format("缺少Cookie变量: [%s].", ex.getCookieName());
-        ApiRestResponse<String> resp = ApiCode.SC_MISSING_REQUEST_COOKIE.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("缺少Cookie变量: [%s].", ex.getCookieName());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.cookie", defaultMessage);
+            return ApiCode.SC_MISSING_REQUEST_COOKIE.toResponse(message);
+        }
+        return ApiCode.SC_MISSING_REQUEST_COOKIE.toResponse(defaultMessage);
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({MissingRequestHeaderException.class})
-    public ResponseEntity<ApiRestResponse<String>> missingRequestHeaderException(MissingRequestHeaderException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> missingRequestHeaderException(MissingRequestHeaderException ex) {
         this.logException(ex);
-        String message = String.format("缺少请求头: [%s].", ex.getHeaderName());
-        ApiRestResponse<String> resp = ApiCode.SC_MISSING_REQUEST_HEADER.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("缺少请求头: [%s].", ex.getHeaderName());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.header", defaultMessage);
+            return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(message);
+        }
+        return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(defaultMessage);
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({MissingServletRequestParameterException.class})
-    public ResponseEntity<ApiRestResponse<String>> missingServletRequestParameterException(MissingServletRequestParameterException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> missingServletRequestParameterException(MissingServletRequestParameterException ex) {
         this.logException(ex);
-        String message = String.format("缺少参数: [%s]，类型为 [%s].", ex.getParameterName(), ex.getParameterType());
-        ApiRestResponse<String> resp = ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("缺少参数: [%s]，类型为 [%s].", ex.getParameterName(), ex.getParameterType());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.param", defaultMessage);
+            return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(message);
+        }
+        return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(defaultMessage);
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({MissingServletRequestPartException.class})
-    public ResponseEntity<ApiRestResponse<String>> missingServletRequestPartException(MissingServletRequestPartException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> missingServletRequestPartException(MissingServletRequestPartException ex) {
         this.logException(ex);
-        String message = String.format("缺少请求对象: [%s].", ex.getRequestPartName());
-        ApiRestResponse<String> resp = ApiCode.SC_MISSING_REQUEST_PART.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("缺少请求对象: [%s].", ex.getRequestPartName());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.param", defaultMessage);
+            return ApiCode.SC_MISSING_REQUEST_PART.toResponse(message);
+        }
+        return ApiCode.SC_MISSING_REQUEST_PART.toResponse(defaultMessage);
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({UnsatisfiedServletRequestParameterException.class})
-    public ResponseEntity<ApiRestResponse<String>> unsatisfiedServletRequestParameterException(UnsatisfiedServletRequestParameterException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> unsatisfiedServletRequestParameterException(UnsatisfiedServletRequestParameterException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_UNSATISFIED_PARAM.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.param", ex.getMessage());
+            return ApiCode.SC_UNSATISFIED_PARAM.toResponse(message);
+        }
+        return ApiCode.SC_UNSATISFIED_PARAM.toResponse();
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({ServletRequestBindingException.class})
-    public ResponseEntity<ApiRestResponse<String>> servletRequestBindingException(ServletRequestBindingException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> servletRequestBindingException(ServletRequestBindingException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_BINDING_ERROR.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.param", ex.getMessage());
+            return ApiCode.SC_BINDING_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_BINDING_ERROR.toResponse();
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({JsonParseException.class, JsonProcessingException.class})
-    public ResponseEntity<ApiRestResponse<String>> jsonProcessingException(JsonProcessingException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> jsonProcessingException(JsonProcessingException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_PARSING_ERROR.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.param", ex.getMessage());
+            return ApiCode.SC_PARSING_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_PARSING_ERROR.toResponse();
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({HttpMessageNotReadableException.class})
-    public ResponseEntity<ApiRestResponse<String>> httpMessageNotReadableException(HttpMessageNotReadableException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> httpMessageNotReadableException(HttpMessageNotReadableException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_PARSING_ERROR.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request.param", ex.getMessage());
+            return ApiCode.SC_PARSING_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_PARSING_ERROR.toResponse();
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({ConstraintViolationException.class})
-    public ResponseEntity<ApiRestResponse<List<String>>> constraintViolationException(ConstraintViolationException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<List<String>> constraintViolationException(ConstraintViolationException ex) {
         this.logException(ex);
 
         Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
@@ -243,22 +305,21 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
         List<String> msgList = new ArrayList<>();
         while (iterator.hasNext()) {
             ConstraintViolation<?> cvl = iterator.next();
-            msgList.add(StringUtils.defaultString(cvl.getMessage(), cvl.getMessageTemplate()));
+            msgList.add(Objects.toString(cvl.getMessage(), cvl.getMessageTemplate()));
         }
         if (CollectionUtils.isEmpty(msgList)) {
-            String message = StringUtils.defaultString(ex.getMessage(), ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.getReason());
-            ApiRestResponse<List<String>> response = ApiRestResponse.of(ApiCode.SC_METHOD_ARGUMENT_NOT_VALID, message, msgList);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            String message = Objects.toString(ex.getMessage(), ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.getReason());
+            return ApiRestResponse.of(ApiCode.SC_METHOD_ARGUMENT_NOT_VALID, message, msgList);
         }
-        ApiRestResponse<List<String>> response = ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.toResponse(msgList.get(0), msgList);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.toResponse(msgList.get(0), msgList);
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<ApiRestResponse<?>> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<?> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         this.logException(ex);
         return this.bindException(ex, ex.getBindingResult());
     }
@@ -271,20 +332,21 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
      * @see org.springframework.validation.DataBinder
      */
     @ExceptionHandler({BindException.class})
-    public ResponseEntity<ApiRestResponse<?>> bindException(BindException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<?> bindException(BindException ex) {
         this.logException(ex);
         return this.bindException(ex, ex.getBindingResult());
     }
 
 
     @ExceptionHandler(WebExchangeBindException.class)
-    public ResponseEntity<ApiRestResponse<?>> webExchangeBindException(WebExchangeBindException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<?> webExchangeBindException(WebExchangeBindException ex) {
         this.logException(ex);
         return this.bindException(ex, ex.getBindingResult());
     }
 
-    protected ResponseEntity<ApiRestResponse<?>> bindException(Exception ex, BindingResult result) {
-
+    protected ApiRestResponse<?> bindException(Exception ex, BindingResult result) {
         if (result.getErrorCount() > 0) {
             List<Map<String, String>> errorList = Lists.newArrayList();
             for (FieldError error : result.getFieldErrors()) {
@@ -296,16 +358,11 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
             String message = result.getFieldErrors()
                     .stream()
                     .findFirst().map(FieldError::getDefaultMessage).orElse(ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.getReason());
-            ApiRestResponse<?> response = ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.toResponse(message, errorList);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-
+            return ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.toResponse(message, errorList);
         } else {
-
             ObjectError error = result.getGlobalError();
-            String message = this.getLocaleMessage(ex, error.getDefaultMessage());
-            ApiRestResponse<String> resp = ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.toResponse(message);
-            return new ResponseEntity<ApiRestResponse<?>>(resp, HttpStatus.OK);
-
+            String message = this.getLocaleMessage(ex, "bad.request", Objects.requireNonNull(error).getDefaultMessage());
+            return ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.toResponse(message);
         }
     }
 
@@ -313,11 +370,15 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
      * 400 (Bad Request)
      */
     @ExceptionHandler({InvalidFormatException.class})
-    public ResponseEntity<ApiRestResponse<String>> invalidFormatException(InvalidFormatException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> invalidFormatException(InvalidFormatException ex) {
         this.logException(ex);
-        String message = String.format("JSON 格式错误: %s", ex.getLocation().toString());
-        ApiRestResponse<String> resp = ApiCode.SC_BAD_REQUEST.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("JSON 格式错误: %s", ex.getLocation().toString());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
+            return ApiCode.SC_BAD_REQUEST.toResponse(message);
+        }
+        return ApiCode.SC_BAD_REQUEST.toResponse(defaultMessage);
     }
 
     /**
@@ -325,396 +386,536 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
      * 400 (Bad Request)
      */
     @ExceptionHandler({TypeMismatchException.class})
-    public ResponseEntity<ApiRestResponse<String>> typeMismatchException(TypeMismatchException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> typeMismatchException(TypeMismatchException ex) {
         this.logException(ex);
-        String message = String.format("Bean 属性 [%s]类型不匹配. 类型应该是 [%s].", ex.getPropertyName(), ex.getRequiredType());
-        ApiRestResponse<String> resp = ApiCode.SC_BAD_REQUEST.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("Bean 属性 [%s]类型不匹配. 类型应该是 [%s].", ex.getPropertyName(), ex.getRequiredType());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
+            return ApiCode.SC_BAD_REQUEST.toResponse(message);
+        }
+        return ApiCode.SC_BAD_REQUEST.toResponse(defaultMessage);
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
-    public ResponseEntity<ApiRestResponse<String>> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
         this.logException(ex);
-        String message = String.format("参数类型不匹配，参数[%s]类型应该是 [%s].", ex.getName(), ex.getRequiredType().getSimpleName());
-        ApiRestResponse<String> resp = ApiCode.SC_BAD_REQUEST.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("参数类型不匹配，参数[%s]类型应该是 [%s].", ex.getName(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
+            return ApiCode.SC_BAD_REQUEST.toResponse(message);
+        }
+        return ApiCode.SC_BAD_REQUEST.toResponse(defaultMessage);
     }
 
     /**
      * 400 (Bad Request)
      */
     @ExceptionHandler({MethodArgumentConversionNotSupportedException.class})
-    public ResponseEntity<ApiRestResponse<String>> methodArgumentConversionNotSupportedException(MethodArgumentConversionNotSupportedException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> methodArgumentConversionNotSupportedException(MethodArgumentConversionNotSupportedException ex) {
         this.logException(ex);
-        String message = String.format("参数类型转换不支持，参数[%s]类型应该是 [%s].", ex.getName(), ex.getRequiredType().getSimpleName());
-        ApiRestResponse<String> resp = ApiCode.SC_BAD_REQUEST.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("参数类型转换不支持，参数[%s]类型应该是 [%s].", ex.getName(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
+            return ApiCode.SC_BAD_REQUEST.toResponse(message);
+        }
+        return ApiCode.SC_BAD_REQUEST.toResponse(defaultMessage);
     }
 
+    /**
+     * 400 (Bad Request)
+     */
+    @ExceptionHandler({ValidationException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestResponse<String> validationException(ValidationException ex) {
+        this.logException(ex);
+        String defaultMessage = "参数校验异常.";
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
+            return ApiCode.SC_BAD_REQUEST.toResponse(message);
+        }
+        return ApiCode.SC_BAD_REQUEST.toResponse(defaultMessage);
+    }
 
     /**
      * 413 (Payload Too Large)
      */
     @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ResponseEntity<ApiRestResponse<String>> maxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
+    @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
+    public ApiRestResponse<String> maxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
         this.logException(ex);
-		/*
-		StringBuilder error = new StringBuilder();
-
-		long maxUploadSize = ex.getMaxUploadSize();
-		String actualSize = String.valueOf(cause.getActualSize());
-		double parseDouble = Double.parseDouble(actualSize) / 1024 / 1024;
-		BigDecimal b = new BigDecimal(parseDouble);
-		double d = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-		error.append("最大上传文件为:" + ex.getMaxUploadSize() / 1024 / 1024).append("M;");
-		error.append("实际文件大小为：").append(d).append("M");
-        log.debug(error.toString());
-
-		error.append("上传文件出错");
-		log.debug(error.toString());
-		*/
-        String message = String.format("所有文件超过允许的最大限制: %s", ByteUnitFormat.B.to(ByteUnitFormat.K, ex.getMaxUploadSize()));
-        ApiRestResponse<String> resp = ApiCode.SC_REQUEST_TOO_LONG.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("所有文件超过允许的最大限制: %s", ByteUnitFormat.B.to(ByteUnitFormat.K, ex.getMaxUploadSize()));
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
+            return ApiCode.SC_REQUEST_TOO_LONG.toResponse(message);
+        }
+        return ApiCode.SC_REQUEST_TOO_LONG.toResponse(defaultMessage);
     }
 
     /**
      * 413 (Payload Too Large)
      */
     @ExceptionHandler(MaxUploadSizePerFileExceededException.class)
-    public ResponseEntity<ApiRestResponse<String>> maxUploadSizePerFileExceededException(MaxUploadSizePerFileExceededException ex) {
+    @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
+    public ApiRestResponse<String> maxUploadSizePerFileExceededException(MaxUploadSizePerFileExceededException ex) {
         this.logException(ex);
-        String message = String.format("单个文件超过允许的最大限制: %s", ByteUnitFormat.B.to(ByteUnitFormat.K, ex.getMaxUploadSizePerFile()));
-        ApiRestResponse<String> resp = ApiCode.SC_REQUEST_TOO_LONG.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        String defaultMessage = String.format("单个文件超过允许的最大限制: %s", ByteUnitFormat.B.to(ByteUnitFormat.K, ex.getMaxUploadSizePerFile()));
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
+            return ApiCode.SC_REQUEST_TOO_LONG.toResponse(message);
+        }
+        return ApiCode.SC_REQUEST_TOO_LONG.toResponse(defaultMessage);
     }
 
     // --- 5xx Server Error ---
 
     /**
-     * 500 (Internal Server Error)
+     * 400 (Bad Request)
      */
     @ExceptionHandler({ConstraintDeclarationException.class})
-    public ResponseEntity<ApiRestResponse<String>> constraintDeclarationException(ConstraintDeclarationException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> constraintDeclarationException(ConstraintDeclarationException ex) {
         this.logException(ex);
-        return new ResponseEntity<>(ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("约束声明不合法"), HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = "参数约束异常：约束声明不合法";
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
-     * 500 (Internal Server Error)
+     * 400 (Bad Request)
      */
     @ExceptionHandler({ConstraintDefinitionException.class})
-    public ResponseEntity<ApiRestResponse<String>> constraintDefinitionException(ConstraintDefinitionException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> constraintDefinitionException(ConstraintDefinitionException ex) {
         this.logException(ex);
-        return new ResponseEntity<>(ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("约束定义不合法"), HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = "参数约束异常：约束定义不合法";
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({GroupDefinitionException.class})
-    public ResponseEntity<ApiRestResponse<String>> groupDefinitionException(GroupDefinitionException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> groupDefinitionException(GroupDefinitionException ex) {
         this.logException(ex);
-        return new ResponseEntity<>(ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("约束组定义不合法"), HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = "参数约束异常：约束组定义不合法";
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({UnexpectedTypeException.class})
-    public ResponseEntity<ApiRestResponse<String>> unexpectedTypeException(UnexpectedTypeException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> unexpectedTypeException(UnexpectedTypeException ex) {
         this.logException(ex);
-        return new ResponseEntity<>(ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("参数校验异常：参数指定了错误的约束验证器"), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    /**
-     * 500 (Internal Server Error)
-     */
-    @ExceptionHandler({ValidationException.class})
-    public ResponseEntity<ApiRestResponse<String>> validationException(ValidationException ex) {
-        this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, "参数校验异常"));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = "参数约束异常：参数指定了错误的约束验证器";
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({ConversionNotSupportedException.class})
-    public ResponseEntity<ApiRestResponse<String>> conversionNotSupportedException(ConversionNotSupportedException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> conversionNotSupportedException(ConversionNotSupportedException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({HttpMessageConversionException.class, HttpMessageNotWritableException.class})
-    public ResponseEntity<ApiRestResponse<String>> httpMessageConversionException(HttpMessageConversionException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> httpMessageConversionException(HttpMessageConversionException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<ApiRestResponse<String>> nullPointerException(NullPointerException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> nullPointerException(NullPointerException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(ClassCastException.class)
-    public ResponseEntity<ApiRestResponse<String>> classCastException(ClassCastException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> classCastException(ClassCastException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<ApiRestResponse<String>> iOException(IOException ex) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiRestResponse<String> iOException(IOException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.io.error", ex.getMessage());
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(NoSuchMethodException.class)
-    public ResponseEntity<ApiRestResponse<String>> noSuchMethodException(NoSuchMethodException ex) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiRestResponse<String> noSuchMethodException(NoSuchMethodException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "no.such.method", ex.getMessage());
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(IndexOutOfBoundsException.class)
-    public ResponseEntity<ApiRestResponse<String>> indexOutOfBoundsException(IndexOutOfBoundsException ex) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiRestResponse<String> indexOutOfBoundsException(IndexOutOfBoundsException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ApiRestResponse<String>> illegalArgumentException(IllegalArgumentException ex) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiRestResponse<String> illegalArgumentException(IllegalArgumentException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
     }
 
-    /**---------------------业务异常----------------------------*/
+    /*---------------------业务异常----------------------------*/
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(BizRuntimeException.class)
-    @ResponseBody
-    public ResponseEntity<ApiRestResponse<String>> bizRuntimeException(BizRuntimeException ex) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiRestResponse<String> bizRuntimeException(BizRuntimeException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiRestResponse.error(ex.getCode(), this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.runtime.error", ex.getMessage());
+            return ApiRestResponse.error(ex.getCode(), message);
+        }
+        return ApiRestResponse.error(ex.getCode(), ex.getMessage());
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(BizCheckedException.class)
-    public ResponseEntity<ApiRestResponse<String>> bizCheckedException(BizCheckedException ex) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiRestResponse<String> bizCheckedException(BizCheckedException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiRestResponse.error(ex.getCode(), this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.checked.error", ex.getMessage());
+            return ApiRestResponse.error(ex.getCode(), message);
+        }
+        return ApiRestResponse.error(ex.getCode(), ex.getMessage());
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(BizIOException.class)
-    public ResponseEntity<ApiRestResponse<String>> bizIOException(BizIOException ex) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiRestResponse<String> bizIOException(BizIOException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiRestResponse.error(ex.getCode(), this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.io.error", ex.getMessage());
+            return ApiRestResponse.error(ex.getCode(), message);
+        }
+        return ApiRestResponse.error(ex.getCode(), ex.getMessage());
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(IdempotentException.class)
-    public ResponseEntity<ApiRestResponse<String>> idempotentException(IdempotentException ex) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiRestResponse<String> idempotentException(IdempotentException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiRestResponse.error(ex.getCode(), this.getLocaleMessage(ex, ex.getMessage()));
-        return new ResponseEntity<>(resp, HttpStatus.OK);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.idempotent.error", ex.getMessage());
+            return ApiRestResponse.error(ex.getCode(), message);
+        }
+        return ApiRestResponse.error(ex.getCode(), ex.getMessage());
     }
 
-    /**---------------------JDBC异常----------------------------*/
+    /*---------------------JDBC异常----------------------------*/
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(DataAccessException.class)
-    public ResponseEntity<ApiRestResponse<String>> dataAccessException(DataAccessException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> dataAccessException(DataAccessException ex) {
         this.logException(ex);
         Throwable cause = ex.getCause();
-        //ExceptionUtils.getRootCause(ex.getCause())
         if (cause instanceof SQLSyntaxErrorException) {
             return sqlSyntaxErrorException((SQLSyntaxErrorException) ex.getCause());
         } else if (cause instanceof SQLIntegrityConstraintViolationException) {
             return sqlIntegrityConstraintViolationException((SQLIntegrityConstraintViolationException) ex.getCause());
         }
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, "数据库访问异常，请稍后再试"));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = "数据库访问异常，请稍后再试";
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
-
-    /**
-     * 500 (Internal Server Error)
-     */
-    @ExceptionHandler(SQLException.class)
-    public ResponseEntity<ApiRestResponse<String>> sqlException(SQLException ex) {
-        this.logException(ex);
-        String message = String.format("SQL-%s[%s]：数据库操作失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(BatchUpdateException.class)
-    public ResponseEntity<ApiRestResponse<String>> sqlBatchUpdateException(BatchUpdateException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> sqlBatchUpdateException(BatchUpdateException ex) {
         this.logException(ex);
-        String message = String.format("SQL-%s[%s]：数据批量更新失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = String.format("SQL-%s[%s]：数据批量更新失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<ApiRestResponse<String>> sqlIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> sqlIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
         this.logException(ex);
-        String message = String.format("SQL-%s[%s]：数据保存失败，有重复的数据.", ex.getSQLState(), ex.getErrorCode());
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = String.format("SQL-%s[%s]：数据保存失败，有重复的数据.", ex.getSQLState(), ex.getErrorCode());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(SQLClientInfoException.class)
-    public ResponseEntity<ApiRestResponse<String>> sqlClientInfoException(SQLClientInfoException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> sqlClientInfoException(SQLClientInfoException ex) {
         this.logException(ex);
-        String message = String.format("SQL-%s[%s]：数据库访问异常，客户端配置错误.", ex.getSQLState(), ex.getErrorCode());
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = String.format("SQL-%s[%s]：数据库访问异常，客户端配置错误.", ex.getSQLState(), ex.getErrorCode());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(SQLRecoverableException.class)
-    public ResponseEntity<ApiRestResponse<String>> sqlRecoverableException(SQLRecoverableException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> sqlRecoverableException(SQLRecoverableException ex) {
         this.logException(ex);
-        String message = String.format("SQL-%s[%s]：数据库访问异常，请稍后再试", ex.getSQLState(), ex.getErrorCode());
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = String.format("SQL-%s[%s]：数据库访问异常，请稍后再试", ex.getSQLState(), ex.getErrorCode());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(SQLSyntaxErrorException.class)
-    public ResponseEntity<ApiRestResponse<String>> sqlSyntaxErrorException(SQLSyntaxErrorException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> sqlSyntaxErrorException(SQLSyntaxErrorException ex) {
         this.logException(ex);
-        String message = String.format("SQL-%s[%s]：SQL 语法错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = String.format("SQL-%s[%s]：SQL 语法错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(SQLTimeoutException.class)
-    public ResponseEntity<ApiRestResponse<String>> sqlTimeoutException(SQLTimeoutException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> sqlTimeoutException(SQLTimeoutException ex) {
         this.logException(ex);
-        String message = String.format("SQL-%s[%s]：数据库连接超时，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = String.format("SQL-%s[%s]：数据库连接超时，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(SQLTransactionRollbackException.class)
-    public ResponseEntity<ApiRestResponse<String>> sqlTransactionRollbackException(SQLTransactionRollbackException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> sqlTransactionRollbackException(SQLTransactionRollbackException ex) {
         this.logException(ex);
-        String message = String.format("SQL-%s[%s]：数据库错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = String.format("SQL-%s[%s]：数据库错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(SQLTransientConnectionException.class)
-    public ResponseEntity<ApiRestResponse<String>> sqlTransientConnectionException(SQLTransientConnectionException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> sqlTransientConnectionException(SQLTransientConnectionException ex) {
         this.logException(ex);
-        String message = String.format("SQL-%s[%s]：数据库连接异常，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        log.warn(message);
+        String defaultMessage = String.format("SQL-%s[%s]：数据库连接异常，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+        log.warn(defaultMessage);
         log.warn("可尝试：1. 增加连接池的大小，2. 检查数据库连接状态，3. 优化SQL查询，4. 调整超时设置");
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(SQLTransientException.class)
-    public ResponseEntity<ApiRestResponse<String>> sqlTransientException(SQLTransientException ex) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> sqlTransientException(SQLTransientException ex) {
         this.logException(ex);
-        String message = String.format("SQL-%s[%s]：数据服务器繁忙，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = String.format("SQL-%s[%s]：数据服务器繁忙，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
-    /**---------------------默认全局异常----------------------------*/
+    /**
+     * 500 (Internal Server Error)
+     */
+    @ExceptionHandler(DuplicateKeyException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> sqlDuplicateKeyException(DataIntegrityViolationException ex) {
+        this.logException(ex);
+        String defaultMessage = "数据保存失败，有重复的数据.";
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.duplicate.key", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+    }
+
+    /**
+     * 500 (Internal Server Error)
+     */
+    @ExceptionHandler(SQLException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestResponse<String> sqlException(SQLException ex) {
+        this.logException(ex);
+        String defaultMessage = String.format("SQL-%s[%s]：数据库操作失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+    }
+
+    /*---------------------默认全局异常----------------------------*/
 
     /**
      * 全局异常捕捉处理
      * 500 (Internal Server Error)
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiRestResponse<String>> defaultExceptionHandler(HttpServletRequest request, Exception ex) throws Exception {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiRestResponse<String> defaultExceptionHandler(Exception ex) throws Exception {
         this.logException(ex);
-        String message = ApiCode.SC_INTERNAL_SERVER_ERROR.getReason();
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(this.getLocaleMessage(ex, message));
-        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        String defaultMessage = ApiCode.SC_INTERNAL_SERVER_ERROR.getReason();
+        if (serviceI18nProperties.isEnabled()) {
+            String message = this.getLocaleMessage(ex, "sys.error", defaultMessage);
+            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+        }
+        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
      * 异常信息国际化
      */
-    protected String getLocaleMessage(Exception ex, String message) {
-        String i18nCode = null;
+    protected String getLocaleMessage(Exception ex, String i18nCode, String message) {
         Object[] args = null;
         if (ex instanceof BizCheckedException) {
             BizCheckedException bizEx = (BizCheckedException) ex;
@@ -736,11 +937,6 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
             return getMessageSource().getMessage(i18nCode, args, message, locale);
         }
         return message;
-    }
-
-
-    public NestedMessageSource getMessageSource() {
-        return messageSource;
     }
 
 }

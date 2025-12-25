@@ -18,5 +18,9 @@ public class ServiceI18nProperties {
      * 是否启用国际化
      */
     private boolean enabled;
+    /**
+     * 根据环境是否给客户端抛出未知具体异常信息
+     */
+    private boolean printErrorDetail;
 
 }

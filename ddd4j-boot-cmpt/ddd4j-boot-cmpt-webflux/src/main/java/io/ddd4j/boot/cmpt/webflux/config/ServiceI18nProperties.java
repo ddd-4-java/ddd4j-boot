@@ -5,6 +5,7 @@
 package io.ddd4j.boot.cmpt.webflux.config;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -18,5 +19,9 @@ public class ServiceI18nProperties {
      * 是否启用国际化
      */
     private boolean enabled;
+    /**
+     * 根据环境是否给客户端抛出未知具体异常信息
+     */
+    private boolean printErrorDetail;
 
 }

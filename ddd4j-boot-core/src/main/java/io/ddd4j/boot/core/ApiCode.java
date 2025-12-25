@@ -83,7 +83,7 @@ public enum ApiCode implements CustomApiCode {
      * 异常：HTTP Status 415（不支持的媒体类型） ->请求的格式不受请求页面的支持。
      * HttpMediaTypeNotSupportedException 415 (Unsupported Media Type)
      */
-    SC_UNSUPPORTED_MEDIA_TYPE(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE, Constants.RT_FAIL, "服务器无法处理请求附带的媒体格式"),
+    SC_UNSUPPORTED_MEDIA_TYPE(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE, Constants.RT_FAIL, "不支持的 Content-Type 类型"),
     /**
      * 异常：HTTP Status 416（请求范围不符合要求） ->如果页面无法提供请求的范围，则服务器会返回此状态代码。
      */
@@ -164,7 +164,7 @@ public enum ApiCode implements CustomApiCode {
      * MethodArgumentNotValidException 400 (Bad Request) BindException 400 (Bad
      * Request)
      */
-    SC_METHOD_ARGUMENT_NOT_VALID(HttpStatus.SC_BAD_REQUEST, Constants.RT_FAIL, "参数验证失败"),
+    SC_METHOD_ARGUMENT_NOT_VALID(HttpStatus.SC_BAD_REQUEST, Constants.RT_FAIL, "错误请求参数"),
 
     SC_ACCESS_DENIED(HttpStatus.SC_UNAUTHORIZED, Constants.RT_FAIL, "不允许访问（功能未授权）"),
 
@@ -180,7 +180,7 @@ public enum ApiCode implements CustomApiCode {
      * JsonProcessingException 400 (Bad Request) HttpMessageNotReadableException 400
      * (Bad Request)
      */
-    SC_PARSING_ERROR(HttpStatus.SC_BAD_REQUEST, Constants.RT_FAIL, "参数解析错误"),
+    SC_PARSING_ERROR(HttpStatus.SC_BAD_REQUEST, Constants.RT_FAIL, "请求格式有误"),
 
     // --- 5xx Server Error ---
 
