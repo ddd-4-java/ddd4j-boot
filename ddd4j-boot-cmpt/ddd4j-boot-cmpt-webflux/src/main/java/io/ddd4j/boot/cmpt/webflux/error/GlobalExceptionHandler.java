@@ -665,33 +665,22 @@ public class GlobalExceptionHandler extends ExceptinHandler {
 
     /**
      * 异常信息国际化
-     *
-     * @param ex
-     * @return
      */
     protected String getLocaleMessage(ServerWebExchange exchange, Exception ex, String message) {
-
-        String i18nKey = null;
+        String i18nCode = null;
         if (ex instanceof BizCheckedException) {
             BizCheckedException bizEx = (BizCheckedException) ex;
-            i18nKey = bizEx.getI18n();
+            i18nCode = bizEx.getI18nCode();
         } else if (ex instanceof BizIOException) {
             BizIOException bizEx = (BizIOException) ex;
-            i18nKey = bizEx.getI18n();
-        } else if (ex instanceof BizCheckedException) {
-            BizCheckedException bizEx = (BizCheckedException) ex;
-            i18nKey = bizEx.getI18n();
+            i18nCode = bizEx.getI18nCode();
         } else if (ex instanceof BizRuntimeException) {
             BizRuntimeException bizEx = (BizRuntimeException) ex;
-            i18nKey = bizEx.getI18n();
-        } else if (ex instanceof IdempotentException) {
-            IdempotentException bizEx = (IdempotentException) ex;
-            i18nKey = bizEx.getI18n();
+            i18nCode = bizEx.getI18nCode();
         }
-
-        if (StringUtils.isNoneBlank(i18nKey)) {
+        if (StringUtils.isNotBlank(i18nCode)) {
             Locale locale = exchange.getLocaleContext().getLocale();
-            return getMessageSource().getMessage(i18nKey, null, message, locale);
+            return getMessageSource().getMessage(i18nCode, null, message, locale);
         }
         return message;
     }

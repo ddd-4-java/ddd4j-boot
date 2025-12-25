@@ -123,7 +123,7 @@ public class DefaultMessageSourceAutoConfiguration {
 
     @Bean
     public NestedMessageSource nestedMessageSource(List<MessageSource> sources) {
-        return new NestedMessageSource(sources.toArray(new MessageSource[sources.size()]));
+        return new NestedMessageSource(sources.toArray(new MessageSource[0]));
     }
 
 

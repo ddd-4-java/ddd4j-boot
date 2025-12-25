@@ -12,6 +12,7 @@ import io.ddd4j.boot.core.exception.BizCheckedException;
 import io.ddd4j.boot.core.exception.BizIOException;
 import io.ddd4j.boot.core.exception.BizRuntimeException;
 import io.ddd4j.boot.core.exception.IdempotentException;
+import io.ddd4j.boot.core.utils.WebUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.ConversionNotSupportedException;
@@ -27,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -708,32 +710,24 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
 
     /**
      * 异常信息国际化
-     *
-     * @param ex
-     * @return
      */
     protected String getLocaleMessage(Exception ex, String message) {
-
-        String i18nKey = null;
+        String i18nCode = null;
         if (ex instanceof BizCheckedException) {
             BizCheckedException bizEx = (BizCheckedException) ex;
-            i18nKey = bizEx.getI18n();
+            i18nCode = bizEx.getI18nCode();
         } else if (ex instanceof BizIOException) {
             BizIOException bizEx = (BizIOException) ex;
-            i18nKey = bizEx.getI18n();
+            i18nCode = bizEx.getI18nCode();
         } else if (ex instanceof BizRuntimeException) {
             BizRuntimeException bizEx = (BizRuntimeException) ex;
-            i18nKey = bizEx.getI18n();
-        } else if (ex instanceof IdempotentException) {
-            IdempotentException bizEx = (IdempotentException) ex;
-            i18nKey = bizEx.getI18n();
+            i18nCode = bizEx.getI18nCode();
         }
-
-        if (StringUtils.isNoneBlank(i18nKey)) {
-            ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = servletRequestAttributes.getRequest();
+        if (StringUtils.isNotBlank(i18nCode)) {
+            HttpServletRequest request = WebUtils.getHttpServletRequest();
+            Assert.notNull(request, "request cannot be null");
             Locale locale = RequestContextUtils.getLocale(request);
-            return getMessageSource().getMessage(i18nKey, null, message, locale);
+            return getMessageSource().getMessage(i18nCode, null, message, locale);
         }
         return message;
     }
