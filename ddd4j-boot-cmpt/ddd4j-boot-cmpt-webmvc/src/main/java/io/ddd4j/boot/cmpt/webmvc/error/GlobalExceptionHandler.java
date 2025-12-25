@@ -286,18 +286,16 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     protected ResponseEntity<ApiRestResponse<?>> bindException(Exception ex, BindingResult result) {
 
         if (result.getErrorCount() > 0) {
-
             List<Map<String, String>> errorList = Lists.newArrayList();
             for (FieldError error : result.getFieldErrors()) {
                 Map<String, String> errorMap = Maps.newHashMap();
                 errorMap.put("field", error.getField());
                 errorMap.put("msg", error.getDefaultMessage());
-                log.error(error.getField() + ":" + error.getDefaultMessage());
                 errorList.add(errorMap);
             }
-
-            Map<String, String> errorMap = Optional.ofNullable(CollectionUtils.firstElement(errorList)).orElse(Collections.EMPTY_MAP);
-            String message = StringUtils.defaultString(errorMap.get("msg"), ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.getReason());
+            String message = result.getFieldErrors()
+                    .stream()
+                    .findFirst().map(FieldError::getDefaultMessage).orElse(ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.getReason());
             ApiRestResponse<?> response = ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.toResponse(message, errorList);
             return new ResponseEntity<>(response, HttpStatus.OK);
 
