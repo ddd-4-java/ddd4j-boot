@@ -5,6 +5,7 @@
 package io.ddd4j.boot.cmpt.webmvc;
 
 import io.ddd4j.boot.core.Constants;
+import io.ddd4j.boot.core.ProfileManager;
 import io.ddd4j.boot.core.sequence.Sequence;
 import io.ddd4j.boot.core.web.servlet.handler.Slf4jMDCInterceptor;
 import io.ddd4j.boot.cmpt.webmvc.config.LocalResourceProperteis;
@@ -15,6 +16,7 @@ import org.springframework.biz.web.servlet.theme.NestedThemeResolver;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.filter.RequestContextFilter;
@@ -35,6 +37,11 @@ import java.util.TimeZone;
 @EnableWebMvc
 @EnableConfigurationProperties(LocalResourceProperteis.class)
 public class DefaultWebMvcConfiguration {
+
+    @Bean
+    public ProfileManager profileManager(Environment environment) {
+        return new ProfileManager(environment);
+    }
 
     @Bean
     @ConditionalOnMissingBean
