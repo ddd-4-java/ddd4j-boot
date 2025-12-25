@@ -4,12 +4,14 @@
  */
 package io.ddd4j.boot.cmpt.webflux.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 服务信息
  */
 @ConfigurationProperties("server.info")
+@Data
 public class ServiceInfoProperties {
 
     /**
@@ -30,38 +32,6 @@ public class ServiceInfoProperties {
      * 服务节点版本
      */
     private String version;
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
 
     @Override
     public String toString() {

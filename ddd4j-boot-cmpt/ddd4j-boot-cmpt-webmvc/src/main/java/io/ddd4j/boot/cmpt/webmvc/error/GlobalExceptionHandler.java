@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import hitool.core.format.ByteUnitFormat;
+import io.ddd4j.boot.cmpt.webmvc.config.ServiceI18nProperties;
 import io.ddd4j.boot.core.ApiCode;
 import io.ddd4j.boot.core.ApiRestResponse;
 import io.ddd4j.boot.core.exception.BizCheckedException;
@@ -18,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.biz.web.multipart.MaxUploadSizePerFileExceededException;
 import org.springframework.biz.web.servlet.support.RequestContextUtils;
@@ -68,6 +70,8 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
 
     @Autowired
     private NestedMessageSource messageSource;
+    @Autowired
+    private ServiceI18nProperties serviceI18nProperties;
 
     // --- 4xx Client Error ---
 
@@ -713,21 +717,25 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
      */
     protected String getLocaleMessage(Exception ex, String message) {
         String i18nCode = null;
+        Object[] args = null;
         if (ex instanceof BizCheckedException) {
             BizCheckedException bizEx = (BizCheckedException) ex;
             i18nCode = bizEx.getI18nCode();
+            args = bizEx.getArgs();
         } else if (ex instanceof BizIOException) {
             BizIOException bizEx = (BizIOException) ex;
             i18nCode = bizEx.getI18nCode();
+            args = bizEx.getArgs();
         } else if (ex instanceof BizRuntimeException) {
             BizRuntimeException bizEx = (BizRuntimeException) ex;
             i18nCode = bizEx.getI18nCode();
+            args = bizEx.getArgs();
         }
-        if (StringUtils.isNotBlank(i18nCode)) {
+        if (serviceI18nProperties.isEnabled() && StringUtils.isNotBlank(i18nCode)) {
             HttpServletRequest request = WebUtils.getHttpServletRequest();
             Assert.notNull(request, "request cannot be null");
             Locale locale = RequestContextUtils.getLocale(request);
-            return getMessageSource().getMessage(i18nCode, null, message, locale);
+            return getMessageSource().getMessage(i18nCode, args, message, locale);
         }
         return message;
     }

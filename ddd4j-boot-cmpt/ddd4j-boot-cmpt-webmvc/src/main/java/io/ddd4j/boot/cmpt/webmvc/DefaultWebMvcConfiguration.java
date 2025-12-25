@@ -32,7 +32,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 @Configuration(proxyBeanMethods = false)
-@ComponentScan({"io.hiwepy.**.webmvc", "io.hiwepy.**.web", "io.hiwepy.**.controller"})
 @EnableWebMvc
 @EnableConfigurationProperties(LocalResourceProperteis.class)
 public class DefaultWebMvcConfiguration {

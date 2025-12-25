@@ -4,6 +4,9 @@
  */
 package io.ddd4j.boot.cmpt.webflux;
 
+import io.ddd4j.boot.cmpt.webflux.config.ServiceI18nProperties;
+import io.ddd4j.boot.cmpt.webflux.config.ServiceInfoProperties;
+import io.ddd4j.boot.cmpt.webflux.config.ServiceVendorProperties;
 import io.ddd4j.boot.cmpt.webflux.error.I18nResourceBasenameHandler;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.biz.context.NestedMessageSource;
@@ -36,7 +39,7 @@ import java.util.List;
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 @AutoConfigureBefore(MessageSourceAutoConfiguration.class)
-@EnableConfigurationProperties
+@EnableConfigurationProperties({ ServiceI18nProperties.class, ServiceInfoProperties.class, ServiceVendorProperties.class})
 public class DefaultMessageSourceAutoConfiguration {
 
     private static final Resource[] NO_RESOURCES = {};

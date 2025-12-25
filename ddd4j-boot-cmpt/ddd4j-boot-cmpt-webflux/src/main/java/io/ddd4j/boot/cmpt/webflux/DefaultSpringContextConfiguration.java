@@ -10,7 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration(proxyBeanMethods = false)
-@ComponentScan({"io.hiwepy.**.api", "io.hiwepy.**.feign", "io.hiwepy.**.setup", "io.hiwepy.**.service", "io.hiwepy.**.aspect", "io.hiwepy.**.task", "io.hiwepy.**.strategy", "io.hiwepy.**.extras"})
 public class DefaultSpringContextConfiguration {
 
     @Bean

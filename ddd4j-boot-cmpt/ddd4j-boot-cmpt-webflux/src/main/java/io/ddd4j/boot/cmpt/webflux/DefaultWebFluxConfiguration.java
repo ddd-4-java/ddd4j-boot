@@ -20,7 +20,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 @Configuration(proxyBeanMethods = false)
-@ComponentScan(basePackages = {"io.hiwepy.**.flux", "io.hiwepy.**.web", "io.hiwepy.**.route"})
 @EnableWebFlux
 @EnableConfigurationProperties(LocalResourceProperteis.class)
 public class DefaultWebFluxConfiguration {
