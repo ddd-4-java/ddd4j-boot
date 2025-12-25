@@ -7,55 +7,58 @@ package io.ddd4j.boot.core.exception;
 import hitool.core.lang3.exception.NestedIOException;
 import io.ddd4j.boot.core.ApiCode;
 import io.ddd4j.boot.core.CustomApiCode;
+import lombok.Getter;
 
-@SuppressWarnings("serial")
 public class BizIOException extends NestedIOException {
 
-    /**
-     * 错误码
-     */
+    @Getter
     private int code;
-    /**
-     * 国际化Key
-     */
-    private String i18n;
+    @Getter
+    private String i18nCode;
+    @Getter
+    private Object[] args;
 
-    public BizIOException(int code) {
-        super("");
+    public BizIOException(Integer code, String message) {
+        super(message);
         this.code = code;
     }
 
-    public BizIOException(String msg) {
-        super(msg);
-        this.code = ApiCode.SC_INTERNAL_SERVER_ERROR.getCode();
-    }
-
-    public BizIOException(int code, String msg) {
-        super(msg);
+    public BizIOException(Integer code, String i18nCode, String message) {
+        super(message);
         this.code = code;
+        this.i18nCode = i18nCode;
     }
 
-    public BizIOException(ApiCode code, String i18n) {
+    public BizIOException(Integer code, String i18nCode, Object[] args, String message) {
+        super(message);
+        this.code = code;
+        this.i18nCode = i18nCode;
+        this.args = args;
+    }
+
+    public BizIOException(String message) {
+        super(message);
+    }
+
+    public BizIOException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public BizIOException(ApiCode code, String i18nCode) {
         super(code.getReason());
         this.code = code.getCode();
-        this.i18n = i18n;
+        this.i18nCode = i18nCode;
     }
 
-    public BizIOException(int code, String i18n, String defMsg) {
-        super(defMsg);
-        this.code = code;
-        this.i18n = i18n;
-    }
-
-    public BizIOException(int code, String msg, Throwable cause) {
-        super(msg, cause);
+    public BizIOException(Integer code, String message, Throwable cause) {
+        super(message, cause);
         this.code = code;
     }
 
-    public BizIOException(int code, String i18n, String defMsg, Throwable cause) {
+    public BizIOException(Integer code, String i18nCode, String defMsg, Throwable cause) {
         super(defMsg, cause);
         this.code = code;
-        this.i18n = i18n;
+        this.i18nCode = i18nCode;
     }
 
     public BizIOException(CustomApiCode code) {
@@ -63,12 +66,12 @@ public class BizIOException extends NestedIOException {
         this.code = code.getCode();
     }
 
-    public int getCode() {
-        return code;
+    public static BizIOException e(String message) {
+        return new BizIOException(message);
     }
 
-    public String getI18n() {
-        return i18n;
+    public static BizIOException e(String i18nCode, String message) {
+        return new BizIOException(500, i18nCode, message);
     }
 
 }

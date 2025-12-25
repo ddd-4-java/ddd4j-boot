@@ -6,56 +6,59 @@ package io.ddd4j.boot.core.exception;
 
 import io.ddd4j.boot.core.ApiCode;
 import io.ddd4j.boot.core.CustomApiCode;
+import lombok.Getter;
 import org.springframework.core.NestedCheckedException;
 
-@SuppressWarnings("serial")
 public class BizCheckedException extends NestedCheckedException {
 
-    /**
-     * 错误码
-     */
+    @Getter
     private int code;
-    /**
-     * 国际化Key
-     */
-    private String i18n;
+    @Getter
+    private String i18nCode;
+    @Getter
+    private Object[] args;
 
-    public BizCheckedException(int code) {
-        super("");
+    public BizCheckedException(Integer code, String message) {
+        super(message);
         this.code = code;
     }
 
-    public BizCheckedException(String msg) {
-        super(msg);
-        this.code = ApiCode.SC_INTERNAL_SERVER_ERROR.getCode();
-    }
-
-    public BizCheckedException(int code, String msg) {
-        super(msg);
+    public BizCheckedException(Integer code, String i18nCode, String message) {
+        super(message);
         this.code = code;
+        this.i18nCode = i18nCode;
     }
 
-    public BizCheckedException(ApiCode code, String i18n) {
+    public BizCheckedException(Integer code, String i18nCode, Object[] args, String message) {
+        super(message);
+        this.code = code;
+        this.i18nCode = i18nCode;
+        this.args = args;
+    }
+
+    public BizCheckedException(String message) {
+        super(message);
+    }
+
+    public BizCheckedException(String message, Throwable cause) {
+        super(message, cause);
+    }
+ 
+    public BizCheckedException(ApiCode code, String i18nCode) {
         super(code.getReason());
         this.code = code.getCode();
-        this.i18n = i18n;
+        this.i18nCode = i18nCode;
     }
 
-    public BizCheckedException(int code, String i18n, String defMsg) {
-        super(defMsg);
-        this.code = code;
-        this.i18n = i18n;
-    }
-
-    public BizCheckedException(int code, String msg, Throwable cause) {
-        super(msg, cause);
+    public BizCheckedException(Integer code, String message, Throwable cause) {
+        super(message, cause);
         this.code = code;
     }
 
-    public BizCheckedException(int code, String i18n, String defMsg, Throwable cause) {
+    public BizCheckedException(Integer code, String i18nCode, String defMsg, Throwable cause) {
         super(defMsg, cause);
         this.code = code;
-        this.i18n = i18n;
+        this.i18nCode = i18nCode;
     }
 
     public BizCheckedException(CustomApiCode code) {
@@ -63,12 +66,12 @@ public class BizCheckedException extends NestedCheckedException {
         this.code = code.getCode();
     }
 
-    public int getCode() {
-        return code;
+    public static BizCheckedException e(String message) {
+        return new BizCheckedException(message);
     }
 
-    public String getI18n() {
-        return i18n;
+    public static BizCheckedException e(String i18nCode, String message) {
+        return new BizCheckedException(500, i18nCode, message);
     }
 
 }
