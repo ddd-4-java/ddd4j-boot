@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import hitool.core.format.ByteUnitFormat;
-import io.ddd4j.boot.cmpt.webflux.config.ServiceI18nProperties;
+import io.ddd4j.boot.cmpt.webflux.config.ServerI18nProperties;
 import io.ddd4j.boot.core.ApiCode;
 import io.ddd4j.boot.core.ApiRestResponse;
 import io.ddd4j.boot.core.exception.BizCheckedException;
@@ -71,7 +71,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @Autowired
     private NestedMessageSource messageSource;
     @Autowired
-    private ServiceI18nProperties serviceI18nProperties;
+    private ServerI18nProperties serverI18NProperties;
 
     // --- 4xx Client Error ---
 
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> httpRequestMethodNotSupportedException(ServerWebExchange exchange, HttpRequestMethodNotSupportedException ex) {
         this.logException(ex);
         String defaultMessage = String.format("[%s] 不支持的请求方法, 请使用 [%s].", ex.getMethod(), StringUtils.join(ex.getSupportedMethods()));
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "method.not.allowed", defaultMessage);
             return ApiCode.SC_METHOD_NOT_ALLOWED.toResponse(message);
         }
@@ -103,7 +103,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
             supportedMediaTypes[i] = mediaType.toString();
         }
         String defaultMessage = String.format("不匹配的媒体类型, 仅匹配 [%s].", StringUtils.join(supportedMediaTypes));
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.mediaType", defaultMessage);
             return ApiCode.SC_NOT_ACCEPTABLE.toResponse(message);
         }
@@ -118,7 +118,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> httpMediaTypeNotSupportedException(ServerWebExchange exchange, HttpMediaTypeNotSupportedException ex) {
         this.logException(ex);
         String defaultMessage = String.format("不支持的媒体类型, 仅支持 [%s].", StringUtils.join(ex.getSupportedMediaTypes()));
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.mediaType", defaultMessage);
             return ApiCode.SC_UNSUPPORTED_MEDIA_TYPE.toResponse(message);
         }
@@ -134,7 +134,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> missingMatrixVariableException(ServerWebExchange exchange, MissingMatrixVariableException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少矩阵变量: [%s].", ex.getVariableName());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.matrix-variable", defaultMessage);
             return ApiCode.SC_MISSING_MATRIX_VARIABLE.toResponse(message);
         }
@@ -149,7 +149,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> missingPathVariableException(ServerWebExchange exchange, MissingPathVariableException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少URI模板变量: [%s].", ex.getVariableName());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.path-variable", defaultMessage);
             return ApiCode.SC_MISSING_PATH_VARIABLE.toResponse(message);
         }
@@ -164,7 +164,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> missingRequestCookieException(ServerWebExchange exchange, MissingRequestCookieException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少Cookie变量: [%s].", ex.getCookieName());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.cookie", defaultMessage);
             return ApiCode.SC_MISSING_REQUEST_COOKIE.toResponse(message);
         }
@@ -179,7 +179,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> missingRequestHeaderException(ServerWebExchange exchange, MissingRequestHeaderException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少请求头: [%s].", ex.getHeaderName());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.header", defaultMessage);
             return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(message);
         }
@@ -194,7 +194,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> missingServletRequestParameterException(ServerWebExchange exchange, MissingServletRequestParameterException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少参数: [%s]，类型为 [%s].", ex.getParameterName(), ex.getParameterType());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", defaultMessage);
             return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(message);
         }
@@ -209,7 +209,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> missingServletRequestPartException(ServerWebExchange exchange, MissingServletRequestPartException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少请求对象: [%s].", ex.getRequestPartName());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", defaultMessage);
             return ApiCode.SC_MISSING_REQUEST_PART.toResponse(message);
         }
@@ -223,7 +223,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestResponse<String> unsatisfiedServletRequestParameterException(ServerWebExchange exchange, UnsatisfiedServletRequestParameterException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", ex.getMessage());
             return ApiCode.SC_UNSATISFIED_PARAM.toResponse(message);
         }
@@ -237,7 +237,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestResponse<String> servletRequestBindingException(ServerWebExchange exchange, ServletRequestBindingException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", ex.getMessage());
             return ApiCode.SC_BINDING_ERROR.toResponse(message);
         }
@@ -251,7 +251,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestResponse<String> jsonProcessingException(ServerWebExchange exchange, JsonProcessingException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", ex.getMessage());
             return ApiCode.SC_PARSING_ERROR.toResponse(message);
         }
@@ -265,7 +265,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestResponse<String> httpMessageNotReadableException(ServerWebExchange exchange, HttpMessageNotReadableException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", ex.getMessage());
             return ApiCode.SC_PARSING_ERROR.toResponse(message);
         }
@@ -354,7 +354,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> invalidFormatException(ServerWebExchange exchange, InvalidFormatException ex) {
         this.logException(ex);
         String defaultMessage = String.format("JSON 格式错误: %s", ex.getLocation().toString());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
             return ApiCode.SC_BAD_REQUEST.toResponse(message);
         }
@@ -370,7 +370,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> typeMismatchException(ServerWebExchange exchange, TypeMismatchException ex) {
         this.logException(ex);
         String defaultMessage = String.format("Bean 属性 [%s]类型不匹配. 类型应该是 [%s].", ex.getPropertyName(), ex.getRequiredType());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
             return ApiCode.SC_BAD_REQUEST.toResponse(message);
         }
@@ -385,7 +385,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> methodArgumentTypeMismatchException(ServerWebExchange exchange, MethodArgumentTypeMismatchException ex) {
         this.logException(ex);
         String defaultMessage = String.format("参数类型不匹配，参数[%s]类型应该是 [%s].", ex.getName(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
             return ApiCode.SC_BAD_REQUEST.toResponse(message);
         }
@@ -400,7 +400,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> methodArgumentConversionNotSupportedException(ServerWebExchange exchange, MethodArgumentConversionNotSupportedException ex) {
         this.logException(ex);
         String defaultMessage = String.format("参数类型转换不支持，参数[%s]类型应该是 [%s].", ex.getName(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
             return ApiCode.SC_BAD_REQUEST.toResponse(message);
         }
@@ -415,7 +415,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> validationException(ServerWebExchange exchange, ValidationException ex) {
         this.logException(ex);
         String defaultMessage = "参数校验异常.";
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
             return ApiCode.SC_BAD_REQUEST.toResponse(message);
         }
@@ -430,7 +430,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> maxUploadSizeExceededException(ServerWebExchange exchange, MaxUploadSizeExceededException ex) {
         this.logException(ex);
         String defaultMessage = String.format("所有文件超过允许的最大限制: %s", ByteUnitFormat.B.to(ByteUnitFormat.K, ex.getMaxUploadSize()));
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
             return ApiCode.SC_REQUEST_TOO_LONG.toResponse(message);
         }
@@ -445,7 +445,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> maxUploadSizePerFileExceededException(ServerWebExchange exchange, MaxUploadSizePerFileExceededException ex) {
         this.logException(ex);
         String defaultMessage = String.format("单个文件超过允许的最大限制: %s", ByteUnitFormat.B.to(ByteUnitFormat.K, ex.getMaxUploadSizePerFile()));
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
             return ApiCode.SC_REQUEST_TOO_LONG.toResponse(message);
         }
@@ -462,7 +462,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> constraintDeclarationException(ServerWebExchange exchange, ConstraintDeclarationException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：约束声明不合法";
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -477,7 +477,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> constraintDefinitionException(ServerWebExchange exchange, ConstraintDefinitionException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：约束定义不合法";
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -492,7 +492,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> groupDefinitionException(ServerWebExchange exchange, GroupDefinitionException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：约束组定义不合法";
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -507,7 +507,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> unexpectedTypeException(ServerWebExchange exchange, UnexpectedTypeException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：参数指定了错误的约束验证器";
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -521,7 +521,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestResponse<String> conversionNotSupportedException(ServerWebExchange exchange, ConversionNotSupportedException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -535,7 +535,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestResponse<String> httpMessageConversionException(ServerWebExchange exchange, HttpMessageConversionException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -549,7 +549,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestResponse<String> nullPointerException(ServerWebExchange exchange, NullPointerException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -563,7 +563,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestResponse<String> classCastException(ServerWebExchange exchange, ClassCastException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -577,7 +577,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> iOException(ServerWebExchange exchange, IOException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.io.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -591,7 +591,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> noSuchMethodException(ServerWebExchange exchange, NoSuchMethodException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "no.such.method", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -605,7 +605,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> indexOutOfBoundsException(ServerWebExchange exchange, IndexOutOfBoundsException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -619,7 +619,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> illegalArgumentException(ServerWebExchange exchange, IllegalArgumentException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -635,7 +635,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> bizRuntimeException(ServerWebExchange exchange, BizRuntimeException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.runtime.error", ex.getMessage());
             return ApiRestResponse.error(ex.getCode(), message);
         }
@@ -649,7 +649,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> bizCheckedException(ServerWebExchange exchange, BizCheckedException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.checked.error", ex.getMessage());
             return ApiRestResponse.error(ex.getCode(), message);
         }
@@ -663,7 +663,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> bizIOException(ServerWebExchange exchange, BizIOException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.io.error", ex.getMessage());
             return ApiRestResponse.error(ex.getCode(), message);
         }
@@ -677,7 +677,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> idempotentException(ServerWebExchange exchange, IdempotentException ex) {
         this.logException(ex);
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.idempotent.error", ex.getMessage());
             return ApiRestResponse.error(ex.getCode(), message);
         }
@@ -700,7 +700,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
             return sqlIntegrityConstraintViolationException(exchange, (SQLIntegrityConstraintViolationException) ex.getCause());
         }
         String defaultMessage = "数据库访问异常，请稍后再试";
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -715,7 +715,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> sqlBatchUpdateException(ServerWebExchange exchange, BatchUpdateException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据批量更新失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -730,7 +730,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> sqlIntegrityConstraintViolationException(ServerWebExchange exchange, SQLIntegrityConstraintViolationException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据保存失败，有重复的数据.", ex.getSQLState(), ex.getErrorCode());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -745,7 +745,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> sqlClientInfoException(ServerWebExchange exchange, SQLClientInfoException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库访问异常，客户端配置错误.", ex.getSQLState(), ex.getErrorCode());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -760,7 +760,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> sqlRecoverableException(ServerWebExchange exchange, SQLRecoverableException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库访问异常，请稍后再试", ex.getSQLState(), ex.getErrorCode());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -775,7 +775,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> sqlSyntaxErrorException(ServerWebExchange exchange, SQLSyntaxErrorException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：SQL 语法错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -790,7 +790,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> sqlTimeoutException(ServerWebExchange exchange, SQLTimeoutException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库连接超时，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -805,7 +805,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> sqlTransactionRollbackException(ServerWebExchange exchange, SQLTransactionRollbackException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -822,7 +822,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
         String defaultMessage = String.format("SQL-%s[%s]：数据库连接异常，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
         log.warn(defaultMessage);
         log.warn("可尝试：1. 增加连接池的大小，2. 检查数据库连接状态，3. 优化SQL查询，4. 调整超时设置");
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -837,7 +837,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> sqlTransientException(ServerWebExchange exchange, SQLTransientException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据服务器繁忙，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -852,7 +852,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> sqlDuplicateKeyException(ServerWebExchange exchange, DataIntegrityViolationException ex) {
         this.logException(ex);
         String defaultMessage = "数据保存失败，有重复的数据.";
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.duplicate.key", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -868,7 +868,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> sqlException(ServerWebExchange exchange, SQLException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库操作失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -886,7 +886,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
     public ApiRestResponse<String> defaultExceptionHandler(ServerWebExchange exchange, Exception ex) throws Exception {
         this.logException(ex);
         String defaultMessage = ApiCode.SC_INTERNAL_SERVER_ERROR.getReason();
-        if (serviceI18nProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -911,7 +911,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
             i18nCode = bizEx.getI18nCode();
             args = bizEx.getArgs();
         }
-        if (serviceI18nProperties.isEnabled() && StringUtils.isNotBlank(i18nCode)) {
+        if (serverI18NProperties.isEnabled() && StringUtils.isNotBlank(i18nCode)) {
             Locale locale = exchange.getLocaleContext().getLocale();
             Assert.notNull(locale, "locale must not be null");
             return getMessageSource().getMessage(i18nCode, args, message, locale);

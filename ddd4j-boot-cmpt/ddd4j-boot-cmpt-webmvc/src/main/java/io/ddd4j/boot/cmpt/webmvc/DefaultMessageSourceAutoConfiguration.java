@@ -4,9 +4,9 @@
  */
 package io.ddd4j.boot.cmpt.webmvc;
 
-import io.ddd4j.boot.cmpt.webmvc.config.ServiceI18nProperties;
-import io.ddd4j.boot.cmpt.webmvc.config.ServiceInfoProperties;
-import io.ddd4j.boot.cmpt.webmvc.config.ServiceVendorProperties;
+import io.ddd4j.boot.cmpt.webmvc.config.Server18nProperties;
+import io.ddd4j.boot.cmpt.webmvc.config.ServerInfoProperties;
+import io.ddd4j.boot.cmpt.webmvc.config.ServerVendorProperties;
 import io.ddd4j.boot.cmpt.webmvc.error.I18nResourceBasenameHandler;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,12 +35,11 @@ import org.springframework.util.ConcurrentReferenceHashMap;
 import org.springframework.util.StringUtils;
 
 import java.time.Duration;
-import java.util.List;
 
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 @AutoConfigureBefore(MessageSourceAutoConfiguration.class)
-@EnableConfigurationProperties({ ServiceI18nProperties.class, ServiceInfoProperties.class, ServiceVendorProperties.class})
+@EnableConfigurationProperties({ Server18nProperties.class, ServerInfoProperties.class, ServerVendorProperties.class})
 public class DefaultMessageSourceAutoConfiguration {
 
     private static final Resource[] NO_RESOURCES = {};

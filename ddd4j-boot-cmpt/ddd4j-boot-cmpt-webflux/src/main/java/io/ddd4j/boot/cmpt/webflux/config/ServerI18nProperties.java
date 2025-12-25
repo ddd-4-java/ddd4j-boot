@@ -5,7 +5,6 @@
 package io.ddd4j.boot.cmpt.webflux.config;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -13,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties("server.i18n")
 @Data
-public class ServiceI18nProperties {
+public class ServerI18nProperties {
 
     /**
      * 是否启用国际化

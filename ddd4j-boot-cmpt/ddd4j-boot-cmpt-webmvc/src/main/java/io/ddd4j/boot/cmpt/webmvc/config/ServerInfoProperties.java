@@ -2,7 +2,7 @@
  * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
  * All Rights Reserved.
  */
-package io.ddd4j.boot.cmpt.webflux.config;
+package io.ddd4j.boot.cmpt.webmvc.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties("server.info")
 @Data
-public class ServiceInfoProperties {
+public class ServerInfoProperties {
 
     /**
      * 服务节点UID: spring-boot-admin 服务端注册ID

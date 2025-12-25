@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties("server.vendor")
 @Data
-public class ServiceVendorProperties {
+public class ServerVendorProperties {
 
     /**
      * 省份
