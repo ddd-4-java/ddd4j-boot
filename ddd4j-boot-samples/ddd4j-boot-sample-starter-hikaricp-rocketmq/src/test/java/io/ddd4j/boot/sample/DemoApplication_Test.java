@@ -5,7 +5,7 @@
 package io.ddd4j.boot.sample;
 
 import com.google.common.collect.ImmutableMap;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +29,7 @@ public class DemoApplication_Test {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws Exception {
         String url = String.format("http://localhost:%d/", port);
         System.out.println(String.format("port is : [%d]", port));

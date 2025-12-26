@@ -11,6 +11,11 @@
 
     <artifactId>ddd4j-boot-sample-starter-druid-rocketmq</artifactId>
 
+    <properties>
+        <maven.install.skip>true</maven.install.skip>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <dependencies>
 
         <!-- For Jeebiz -->
@@ -208,21 +213,22 @@
                     <mainClass>com.github.hiwepy.boot.sample.MqttServerApplication</mainClass>
                 </configuration>
             </plugin>
+
             <!-- 第一步：生成可执行的启动脚本 -->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>appassembler-maven-plugin</artifactId>
-            </plugin>
+            </plugin>-->
             <!-- 第一步：通过antrun插件拷贝文件 -->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-            </plugin>
-            <!-- 第三步：通过docker-maven插件构造Docker镜像
-            <plugin>
+            </plugin>-->
+            <!-- 第三步：通过docker-maven插件构造Docker镜像  -->
+            <!--<plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-            </plugin> -->
+            </plugin>-->
         </plugins>
     </build>
 

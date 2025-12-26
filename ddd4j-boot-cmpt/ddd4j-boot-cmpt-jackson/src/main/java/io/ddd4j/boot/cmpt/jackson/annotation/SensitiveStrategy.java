@@ -19,13 +19,19 @@ public enum SensitiveStrategy {
      */
     ID_CARD(s -> s.replaceAll("(\\d{4})\\d{10}(\\w{4})", "$1****$2")),
     /**
-     * Phone sensitive type.
+     * 手机号, 185****1653
      */
     PHONE(s -> s.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2")),
     /**
      * Address sensitive type.
      */
-    ADDRESS(s -> s.replaceAll("(\\S{3})\\S{2}(\\S*)\\S{2}", "$1****$2****"));
+    ADDRESS(s -> s.replaceAll("(\\S{3})\\S{2}(\\S*)\\S{2}", "$1****$2****")),
+    /**
+     * 电子邮件, r*****o@qq.com
+     */
+    EMAIL(s -> s.replaceAll("(\\S)\\S*(@\\S*)", "$1****$2")),
+
+    ;
 
     private final Function<String, String> desensitizer;
 

@@ -14,6 +14,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -27,7 +29,7 @@ public class BaseEntity<T extends Model<?>> extends Model<T> implements Serializ
     private Integer isDeleted;
 
     /**
-     * 创建人ID
+     * 创建者
      */
     @TableField("create_by")
     private Long createBy;
@@ -39,7 +41,7 @@ public class BaseEntity<T extends Model<?>> extends Model<T> implements Serializ
     private LocalDateTime createTime;
 
     /**
-     * 修改人ID
+     * 更新者
      */
     @TableField("update_by")
     private Long updateBy;
@@ -70,5 +72,26 @@ public class BaseEntity<T extends Model<?>> extends Model<T> implements Serializ
     @JsonIgnore
     @TableField(exist = false)
     private String keywords;
+
+    /**
+     * 备注
+     */
+    @JsonIgnore
+    @TableField(exist = false)
+    private String remark;
+
+    /**
+     * 请求参数
+     */
+    @JsonIgnore
+    @TableField(exist = false)
+    private Map<String, Object> params;
+
+    public Map<String, Object> getParams() {
+        if (params == null) {
+            params = new HashMap<>();
+        }
+        return params;
+    }
 
 }

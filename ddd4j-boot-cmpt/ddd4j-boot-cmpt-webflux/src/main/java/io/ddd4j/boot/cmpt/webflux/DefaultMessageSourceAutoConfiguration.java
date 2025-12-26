@@ -4,7 +4,11 @@
  */
 package io.ddd4j.boot.cmpt.webflux;
 
+import io.ddd4j.boot.cmpt.webflux.config.ServerI18nProperties;
+import io.ddd4j.boot.cmpt.webflux.config.ServerInfoProperties;
+import io.ddd4j.boot.cmpt.webflux.config.ServerVendorProperties;
 import io.ddd4j.boot.cmpt.webflux.error.I18nResourceBasenameHandler;
+import io.ddd4j.boot.core.properties.BasePropertySourcePostProcessor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.biz.context.support.MultiResourceBundleMessageSource;
@@ -41,6 +45,11 @@ import java.util.List;
 public class DefaultMessageSourceAutoConfiguration {
 
     private static final Resource[] NO_RESOURCES = {};
+
+    @Bean
+    public BasePropertySourcePostProcessor bladePropertySourcePostProcessor() {
+        return new BasePropertySourcePostProcessor();
+    }
 
     @Bean
     @Primary

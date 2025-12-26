@@ -13,6 +13,18 @@
     <artifactId>ddd4j-boot-sample-common</artifactId>
 
     <dependencies>
+        <!-- For DDD4j Boot -->
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- For Cola -->
         <dependency>
             <groupId>com.alibaba.cola</groupId>
             <artifactId>cola-component-dto</artifactId>
@@ -20,18 +32,6 @@
         <dependency>
             <groupId>com.alibaba.cola</groupId>
             <artifactId>cola-component-exception</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>3.5.x.20251201-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
-            <version>3.5.x.20251201-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

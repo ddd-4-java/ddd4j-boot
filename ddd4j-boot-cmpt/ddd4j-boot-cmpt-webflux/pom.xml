@@ -14,7 +14,7 @@
     <description>Ddd4j Boot WebFlux Component</description>
 
     <dependencies>
-        <!-- For DDD4j -->
+        <!-- For DDD4j Boot -->
         <dependency>
             <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>

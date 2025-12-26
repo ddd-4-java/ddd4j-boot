@@ -6,56 +6,59 @@ package io.ddd4j.boot.core.exception;
 
 import io.ddd4j.boot.core.ApiCode;
 import io.ddd4j.boot.core.CustomApiCode;
+import lombok.Getter;
 import org.springframework.core.NestedRuntimeException;
 
-@SuppressWarnings("serial")
 public class BizRuntimeException extends NestedRuntimeException {
 
-    /**
-     * 错误码
-     */
+    @Getter
     private int code;
-    /**
-     * 国际化Key
-     */
-    private String i18n;
+    @Getter
+    private String i18nCode;
+    @Getter
+    private Object[] args;
 
-    public BizRuntimeException(int code) {
-        super("");
+    public BizRuntimeException(Integer code, String message) {
+        super(message);
         this.code = code;
     }
 
-    public BizRuntimeException(String msg) {
-        super(msg);
-        this.code = ApiCode.SC_FAIL.getCode();
-    }
-
-    public BizRuntimeException(int code, String msg) {
-        super(msg);
+    public BizRuntimeException(Integer code, String i18nCode, String message) {
+        super(message);
         this.code = code;
+        this.i18nCode = i18nCode;
     }
 
-    public BizRuntimeException(ApiCode code, String i18n) {
+    public BizRuntimeException(Integer code, String i18nCode, Object[] args, String message) {
+        super(message);
+        this.code = code;
+        this.i18nCode = i18nCode;
+        this.args = args;
+    }
+
+    public BizRuntimeException(String message) {
+        super(message);
+    }
+
+    public BizRuntimeException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public BizRuntimeException(ApiCode code, String i18nCode) {
         super(code.getReason());
         this.code = code.getCode();
-        this.i18n = i18n;
+        this.i18nCode = i18nCode;
     }
 
-    public BizRuntimeException(int code, String i18n, String defMsg) {
-        super(defMsg);
-        this.code = code;
-        this.i18n = i18n;
-    }
-
-    public BizRuntimeException(int code, String msg, Throwable cause) {
-        super(msg, cause);
+    public BizRuntimeException(Integer code, String message, Throwable cause) {
+        super(message, cause);
         this.code = code;
     }
 
-    public BizRuntimeException(int code, String i18n, String defMsg, Throwable cause) {
+    public BizRuntimeException(Integer code, String i18nCode, String defMsg, Throwable cause) {
         super(defMsg, cause);
         this.code = code;
-        this.i18n = i18n;
+        this.i18nCode = i18nCode;
     }
 
     public BizRuntimeException(CustomApiCode code) {
@@ -63,12 +66,12 @@ public class BizRuntimeException extends NestedRuntimeException {
         this.code = code.getCode();
     }
 
-    public int getCode() {
-        return code;
+    public static BizRuntimeException e(String message) {
+        return new BizRuntimeException(message);
     }
 
-    public String getI18n() {
-        return i18n;
+    public static BizRuntimeException e(String i18nCode, String message) {
+        return new BizRuntimeException(500, i18nCode, message);
     }
 
 }

@@ -2,7 +2,7 @@ package io.ddd4j.boot.cmpt.logs.aspect;
 
 import io.ddd4j.boot.core.XHeaders;
 import io.ddd4j.boot.core.sequence.Sequence;
-import io.ddd4j.boot.core.utils.WebUtils;
+import io.ddd4j.boot.core.util.WebUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

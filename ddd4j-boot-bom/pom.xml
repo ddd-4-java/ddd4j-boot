@@ -22,7 +22,6 @@
                 <artifactId>ddd4j-boot-core</artifactId>
                 <version>${revision}</version>
             </dependency>
-
             <!-- Ddd4j Boot Components -->
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>

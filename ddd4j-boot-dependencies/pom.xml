@@ -41,8 +41,6 @@
         <appium.version>10.0.0</appium.version>
         <aspectj.version>1.9.25.1</aspectj.version>
         <assertj.version>3.27.3</assertj.version>
-        <asciidoctorj.version>3.0.0</asciidoctorj.version>
-        <asciidoctorj.pdf.version>2.3.18</asciidoctorj.pdf.version>
         <asmsupport.version>0.4.3</asmsupport.version>
         <async-http-client.version>3.0.4</async-http-client.version>
         <auth0-java-jwt.version>4.5.0</auth0-java-jwt.version>

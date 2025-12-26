@@ -6,6 +6,7 @@ package io.ddd4j.boot.cmpt.webmvc;
 
 import io.ddd4j.boot.cmpt.webmvc.config.LocalResourceProperteis;
 import io.ddd4j.boot.core.Constants;
+import io.ddd4j.boot.core.ProfileManager;
 import io.ddd4j.boot.core.sequence.Sequence;
 import io.ddd4j.boot.core.web.servlet.handler.Slf4jMDCInterceptor;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -14,7 +15,11 @@ import org.springframework.biz.web.servlet.i18n.XHeaderLocaleResolver;
 import org.springframework.biz.web.servlet.theme.NestedThemeResolver;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Role;
+import org.springframework.core.env.Environment;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.filter.RequestContextFilter;
@@ -32,10 +37,14 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 @Configuration(proxyBeanMethods = false)
-@ComponentScan({"io.hiwepy.**.webmvc", "io.hiwepy.**.web", "io.hiwepy.**.controller"})
 @EnableWebMvc
 @EnableConfigurationProperties(LocalResourceProperteis.class)
 public class DefaultWebMvcConfiguration {
+
+    @Bean
+    public ProfileManager profileManager(Environment environment) {
+        return new ProfileManager(environment);
+    }
 
     @Bean
     @ConditionalOnMissingBean

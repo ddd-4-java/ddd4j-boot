@@ -4,7 +4,11 @@
  */
 package io.ddd4j.boot.cmpt.webmvc;
 
+import io.ddd4j.boot.cmpt.webmvc.config.Server18nProperties;
+import io.ddd4j.boot.cmpt.webmvc.config.ServerInfoProperties;
+import io.ddd4j.boot.cmpt.webmvc.config.ServerVendorProperties;
 import io.ddd4j.boot.cmpt.webmvc.error.I18nResourceBasenameHandler;
+import io.ddd4j.boot.core.properties.BasePropertySourcePostProcessor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.biz.context.support.MultiResourceBundleMessageSource;
@@ -37,10 +41,15 @@ import java.util.List;
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 @AutoConfigureBefore(MessageSourceAutoConfiguration.class)
-@EnableConfigurationProperties
+@EnableConfigurationProperties({ Server18nProperties.class, ServerInfoProperties.class, ServerVendorProperties.class})
 public class DefaultMessageSourceAutoConfiguration {
 
     private static final Resource[] NO_RESOURCES = {};
+
+    @Bean
+    public BasePropertySourcePostProcessor bladePropertySourcePostProcessor() {
+        return new BasePropertySourcePostProcessor();
+    }
 
     @Bean
     @Primary

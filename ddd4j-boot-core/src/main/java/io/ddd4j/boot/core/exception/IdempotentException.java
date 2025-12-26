@@ -1,64 +1,43 @@
 package io.ddd4j.boot.core.exception;
 
 import io.ddd4j.boot.core.ApiCode;
-import org.springframework.core.NestedRuntimeException;
+import io.ddd4j.boot.core.CustomApiCode;
 
-@SuppressWarnings("serial")
-public class IdempotentException extends NestedRuntimeException {
+public class IdempotentException extends BizRuntimeException {
 
-    /**
-     * 错误码
-     */
-    private int code;
-    /**
-     * 国际化Key
-     */
-    private String i18n;
-
-    public IdempotentException(int code) {
-        super("");
-        this.code = code;
+    public IdempotentException(Integer code, String message) {
+        super(code, message);
     }
 
-    public IdempotentException(String msg) {
-        super(msg);
-        this.code = ApiCode.SC_FAIL.getCode();
+    public IdempotentException(Integer code, String i18nCode, String message) {
+        super(code, i18nCode, message);
     }
 
-    public IdempotentException(int code, String msg) {
-        super(msg);
-        this.code = code;
+    public IdempotentException(Integer code, String i18nCode, Object[] args, String message) {
+        super(code, i18nCode, args, message);
     }
 
-    public IdempotentException(ApiCode code, String i18n) {
-        super(code.getReason());
-        this.code = code.getCode();
-        this.i18n = i18n;
+    public IdempotentException(String message) {
+        super(message);
     }
 
-    public IdempotentException(int code, String i18n, String defMsg) {
-        super(defMsg);
-        this.code = code;
-        this.i18n = i18n;
+    public IdempotentException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public IdempotentException(int code, String msg, Throwable cause) {
-        super(msg, cause);
-        this.code = code;
+    public IdempotentException(ApiCode code, String i18nCode) {
+        super(code, i18nCode);
     }
 
-    public IdempotentException(int code, String i18n, String defMsg, Throwable cause) {
-        super(defMsg, cause);
-        this.code = code;
-        this.i18n = i18n;
+    public IdempotentException(Integer code, String message, Throwable cause) {
+        super(code, message, cause);
     }
 
-    public int getCode() {
-        return code;
+    public IdempotentException(Integer code, String i18nCode, String defMsg, Throwable cause) {
+        super(code, i18nCode, defMsg, cause);
     }
 
-    public String getI18n() {
-        return i18n;
+    public IdempotentException(CustomApiCode code) {
+        super(code);
     }
-
 }

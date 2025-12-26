@@ -1,7 +1,7 @@
 package io.ddd4j.boot.cmpt.logs.aspect;
 
 import io.ddd4j.boot.core.Constants;
-import io.ddd4j.boot.core.utils.WebUtils;
+import io.ddd4j.boot.core.util.WebUtils;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.ServletRequest;
