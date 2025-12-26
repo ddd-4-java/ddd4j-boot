@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.order.application.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.io.Serializable;
