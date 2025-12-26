@@ -1,7 +1,6 @@
 package io.ddd4j.boot.sample.client.order.dto.response;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +10,13 @@ import java.util.List;
 
 /**
  * 订单分页响应对象（客户端SDK使用）
+ * 
+ * <p>统一的分页响应结构，包含分页信息和数据列表。</p>
+ * 
+ * @author DDD4J
+ * @since 1.0.0
  */
-@ApiModel(value = "OrderPageResponse", description = "订单分页响应")
+@Schema(description = "订单分页响应")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,25 +24,25 @@ public class OrderPageResponse implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @ApiModelProperty(value = "订单列表")
+    @Schema(description = "订单列表")
     private List<OrderResponse> records;
     
-    @ApiModelProperty(value = "总记录数", example = "100")
+    @Schema(description = "总记录数", example = "100")
     private Long total;
     
-    @ApiModelProperty(value = "当前页码（从1开始）", example = "1")
+    @Schema(description = "当前页码（从1开始）", example = "1")
     private Integer pageNum;
     
-    @ApiModelProperty(value = "每页大小", example = "10")
+    @Schema(description = "每页大小", example = "10")
     private Integer pageSize;
     
-    @ApiModelProperty(value = "总页数", example = "10")
+    @Schema(description = "总页数", example = "10")
     private Integer totalPages;
     
-    @ApiModelProperty(value = "是否有上一页", example = "false")
+    @Schema(description = "是否有上一页", example = "false")
     private Boolean hasPrevious;
     
-    @ApiModelProperty(value = "是否有下一页", example = "true")
+    @Schema(description = "是否有下一页", example = "true")
     private Boolean hasNext;
     
     /**

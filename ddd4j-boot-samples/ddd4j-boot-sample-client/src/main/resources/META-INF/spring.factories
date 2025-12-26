@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration
-

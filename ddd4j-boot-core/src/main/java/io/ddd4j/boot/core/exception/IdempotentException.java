@@ -2,7 +2,6 @@ package io.ddd4j.boot.core.exception;
 
 import io.ddd4j.boot.core.ApiCode;
 import io.ddd4j.boot.core.CustomApiCode;
-import org.springframework.core.NestedRuntimeException;
 
 public class IdempotentException extends BizRuntimeException {
 

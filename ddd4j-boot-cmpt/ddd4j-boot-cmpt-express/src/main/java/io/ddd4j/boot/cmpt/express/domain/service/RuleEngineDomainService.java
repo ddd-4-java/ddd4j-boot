@@ -7,8 +7,16 @@ import io.ddd4j.boot.cmpt.express.domain.model.vo.RuleValidationResult;
 import java.util.Map;
 
 /**
- * 规则引擎领域服务
- * 包含规则执行的核心业务逻辑，不依赖具体的技术实现
+ * 规则引擎领域服务接口
+ * 
+ * <p>领域层服务：包含规则执行的核心业务逻辑，不依赖具体的技术实现。
+ * 定义了规则执行、验证、可用性检查等核心业务操作。
+ * 
+ * <p>实现类：RuleEngineDomainServiceImpl（使用QLExpress实现）
+ * 
+ * @author ddd4j-boot
+ * @version 1.0
+ * @since 1.0
  */
 public interface RuleEngineDomainService {
 

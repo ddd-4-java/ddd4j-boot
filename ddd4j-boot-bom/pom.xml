@@ -16,7 +16,6 @@
 
     <dependencyManagement>
         <dependencies>
-
             <!-- Ddd4j Boot Core -->
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
@@ -86,12 +85,12 @@
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-pf4j</artifactId>
+                <artifactId>ddd4j-boot-cmpt-mybatis</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-mybatis</artifactId>
+                <artifactId>ddd4j-boot-cmpt-pf4j</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -119,6 +118,7 @@
                 <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
                 <version>${revision}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

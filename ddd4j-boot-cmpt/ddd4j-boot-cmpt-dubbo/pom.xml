@@ -6,7 +6,8 @@
     <parent>
         <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-cmpt</artifactId>
-        <version>2.7.x.20251215-SNAPSHOT</version>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>ddd4j-boot-cmpt-dubbo</artifactId>

@@ -1,7 +1,6 @@
 package io.ddd4j.boot.sample.client.order.dto.request;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,44 +9,52 @@ import java.time.LocalDateTime;
 
 /**
  * 订单查询请求对象（客户端SDK使用）
+ * 
+ * <p>用于客户端查询订单列表的请求参数。</p>
+ * 
+ * @author DDD4J
+ * @since 1.0.0
  */
-@ApiModel(value = "OrderQueryRequest", description = "订单查询请求")
+@Schema(description = "订单查询请求")
 @Data
 public class OrderQueryRequest implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @ApiModelProperty(value = "用户ID", example = "1001")
+    @Schema(description = "用户ID", example = "1001")
     private Long userId;
     
-    @ApiModelProperty(value = "订单状态", example = "PENDING")
+    @Schema(description = "订单状态", example = "PENDING", 
+            allowableValues = {"PENDING", "PAID", "SHIPPED", "DELIVERED", "COMPLETED", "CANCELLED"})
     private String status;
     
-    @ApiModelProperty(value = "开始时间（订单创建时间）", example = "2024-01-01T00:00:00")
+    @Schema(description = "开始时间（订单创建时间）", example = "2024-01-01T00:00:00")
     private LocalDateTime startTime;
     
-    @ApiModelProperty(value = "结束时间（订单创建时间）", example = "2024-12-31T23:59:59")
+    @Schema(description = "结束时间（订单创建时间）", example = "2024-12-31T23:59:59")
     private LocalDateTime endTime;
     
-    @ApiModelProperty(value = "最小金额", example = "100.00")
+    @Schema(description = "最小金额", example = "100.00")
     private BigDecimal minAmount;
     
-    @ApiModelProperty(value = "最大金额", example = "10000.00")
+    @Schema(description = "最大金额", example = "10000.00")
     private BigDecimal maxAmount;
     
-    @ApiModelProperty(value = "订单号（支持模糊查询）", example = "ORD2024")
+    @Schema(description = "订单号（支持模糊查询）", example = "ORD2024")
     private String orderNo;
     
-    @ApiModelProperty(value = "页码（从1开始）", example = "1")
+    @Schema(description = "页码（从1开始）", example = "1", defaultValue = "1")
     private Integer pageNum = 1;
     
-    @ApiModelProperty(value = "每页大小", example = "10")
+    @Schema(description = "每页大小", example = "10", defaultValue = "10", maximum = "100")
     private Integer pageSize = 10;
     
-    @ApiModelProperty(value = "排序字段", example = "createTime")
+    @Schema(description = "排序字段", example = "createTime", 
+            allowableValues = {"createTime", "totalAmount"})
     private String sortField = "createTime";
     
-    @ApiModelProperty(value = "排序方向", example = "DESC")
+    @Schema(description = "排序方向", example = "DESC", 
+            allowableValues = {"ASC", "DESC"}, defaultValue = "DESC")
     private String sortDirection = "DESC";
     
     /**

@@ -13,6 +13,18 @@
     <artifactId>ddd4j-boot-sample-common</artifactId>
 
     <dependencies>
+        <!-- For DDD4j Boot -->
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- For Cola -->
         <dependency>
             <groupId>com.alibaba.cola</groupId>
             <artifactId>cola-component-dto</artifactId>

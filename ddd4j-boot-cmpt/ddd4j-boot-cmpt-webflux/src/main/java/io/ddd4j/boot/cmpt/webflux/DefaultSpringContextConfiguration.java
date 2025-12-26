@@ -6,7 +6,6 @@ package io.ddd4j.boot.cmpt.webflux;
 
 import org.springframework.biz.context.SpringContextAwareContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration(proxyBeanMethods = false)

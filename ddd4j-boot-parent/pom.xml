@@ -21,32 +21,40 @@
         <project.module>${project.artifactId}</project.module>
         <jacocoArgLine> </jacocoArgLine>
 
-        <addClasspath>false</addClasspath>
-        <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-        <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-        <addExtensions>false</addExtensions>
-        <classpathPrefix>lib/</classpathPrefix>
+        <project.addClasspath>false</project.addClasspath>
+        <project.addDefaultImplementationEntries>true</project.addDefaultImplementationEntries>
+        <project.addDefaultSpecificationEntries>true</project.addDefaultSpecificationEntries>
+        <project.addExtensions>false</project.addExtensions>
+        <project.classpathPrefix>lib/</project.classpathPrefix>
 
         <!-- 生成部署脚本参数 -->
-        <appassembler-dir>${project.build.directory}/generated-resources/appassembler</appassembler-dir>
-        <appassembler-jsw-dir>${project.build.directory}/generated-resources/appassembler/jsw</appassembler-jsw-dir>
-        <appassembler-bin-fileName>ddd4j-boot</appassembler-bin-fileName>
+        <scripts-dir>${project.build.directory}/generated-resources/appassembler</scripts-dir>
+        <scripts-jsw-dir>${project.build.directory}/generated-resources/appassembler/jsw</scripts-jsw-dir>
+        <scripts-bin-fileName>ddd4j-boot</scripts-bin-fileName>
 
-        <!-- 生成Docker镜像参数: docker build、push地址-->
-        <docker.workdir>/u01/boot/${project.artifactId}</docker.workdir>
-        <docker.push.repostory>127.0.0.1</docker.push.repostory>
-        <docker.build.repostory>http://127.0.0.1:2376</docker.build.repostory>
-        <!--push镜像到私有库项目的名称-->
-        <docker.registry.name>ddd4j</docker.registry.name>
-
-        <!-- 生成API离线文参数-->
-        <swagger.input>http://localhost:8080/v2/api-docs</swagger.input>
-        <!-- <swagger.input>${project.basedir}/docs/swagger/swagger.json</swagger.input> -->
-        <!-- <swagger.input>${project.basedir}/src/docs/swagger/swagger_petstore.yaml</swagger.input> -->
-        <asciidoctor.input.directory>${generated.asciidoc.directory}</asciidoctor.input.directory>
-        <asciidoctor.html.output.directory>${project.build.directory}/asciidoc/html</asciidoctor.html.output.directory>
-        <asciidoctor.pdf.output.directory>${project.build.directory}/asciidoc/pdf</asciidoctor.pdf.output.directory>
-        <generated.asciidoc.directory>${project.build.directory}/asciidoc</generated.asciidoc.directory>
+        <!-- Docker 构建控制：设置为 true 可跳过 Docker 构建（用于本地开发时 Docker 环境有问题的情况） -->
+        <docker.skip>true</docker.skip>
+        <!-- Docker 推送控制：设置为 true 可跳过 Docker 推送（用于只构建不推送的场景） -->
+        <docker.push.skip>true</docker.push.skip>
+        <!-- 是否使用 buildx 构建（支持多平台构建，推荐在 Mac ARM64 上使用） -->
+        <!-- 设置为 true 使用 buildx，设置为 false 使用传统的 docker-maven-plugin -->
+        <docker.use.buildx>true</docker.use.buildx>
+        <!-- Docker 构建平台（使用 buildx 时生效，多个平台用逗号分隔） -->
+        <docker.platforms>linux/amd64,linux/arm64</docker.platforms>
+        <!-- Docker 镜像仓库地址 -->
+        <docker.registry.host>registry.ddd4j.io</docker.registry.host>
+        <!-- Docker 登录用户名 -->
+        <docker.registry.username>ddd4j</docker.registry.username>
+        <!-- Docker 登录密码（$ 需要转义为 $$） -->
+        <docker.registry.password>$$L3fhAhD9e9#nDYV</docker.registry.password>
+        <!-- buildx builder 名称（与 Jenkins 保持一致） -->
+        <docker.buildx.builder.name>ddd4j-builder</docker.buildx.builder.name>
+        <!-- buildkit 镜像（与 Jenkins 保持一致） -->
+        <!-- 参考文档：https://github.com/moby/buildkit#docker-buildx -->
+        <!-- 使用 driver-opt image=... 指定 BuildKit 镜像版本 -->
+        <!-- 注意：dockerpracticesig/buildkit:master-tencent 使用腾讯云镜像源，适合国内环境 -->
+        <!-- 如果本地构建失败，可以临时使用默认镜像：moby/buildkit:latest -->
+        <docker.buildx.buildkit.image>docker.1ms.run/moby/buildkit:latest</docker.buildx.buildkit.image>
 
     </properties>
 
@@ -59,107 +67,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- Ddd4j Boot Core -->
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-core</artifactId>
+                <artifactId>ddd4j-boot-bom</artifactId>
                 <version>${revision}</version>
-            </dependency>
-            <!-- Ddd4j Boot Components -->
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-akka</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-cola</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-crypto</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-datascope</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-dubbo</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-excel</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-express</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-external</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-jackson</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-kafka</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-license</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-logs</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-pf4j</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-mybatis</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-satoken</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-security</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-validation</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-webflux</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
-                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -178,13 +91,17 @@
         </dependency>
         <!-- For Servlet Api -->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
         <!-- For Validation Api -->
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.el</groupId>
+            <artifactId>jakarta.el-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>
@@ -195,13 +112,13 @@
             <artifactId>expressly</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
         <!-- For Websocket Api -->
         <dependency>
-            <groupId>javax.websocket</groupId>
-            <artifactId>javax.websocket-api</artifactId>
+            <groupId>jakarta.websocket</groupId>
+            <artifactId>jakarta.websocket-api</artifactId>
         </dependency>
         <!-- Bouncy Castle -->
         <dependency>
@@ -358,16 +275,25 @@
                     <configuration>
                         <archive>
                             <manifest>
-                                <addClasspath>${addClasspath}</addClasspath>
-                                <addDefaultImplementationEntries>${addDefaultImplementationEntries}
-                                </addDefaultImplementationEntries>
-                                <addDefaultSpecificationEntries>${addDefaultSpecificationEntries}
-                                </addDefaultSpecificationEntries>
-                                <addExtensions>${addExtensions}</addExtensions>
-                                <classpathPrefix>${classpathPrefix}</classpathPrefix>
+                                <addClasspath>${project.addClasspath}</addClasspath>
+                                <addDefaultImplementationEntries>${project.addDefaultImplementationEntries}</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>${project.addDefaultSpecificationEntries}</addDefaultSpecificationEntries>
+                                <addExtensions>${project.addExtensions}</addExtensions>
+                                <classpathPrefix>${project.classpathPrefix}</classpathPrefix>
                             </manifest>
                             <manifestEntries>
-                                <Implementation-Module>${project.module}</Implementation-Module>
+                                <Implementation-Module>${project.artifactId}</Implementation-Module>
+                                <Implementation-Title>${project.name}</Implementation-Title>
+                                <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+                                <Implementation-Vendor-Id>${project.organization.name}</Implementation-Vendor-Id>
+                                <Implementation-Version>${project.version}</Implementation-Version>
+                                <Implementation-Timestamp>${maven.build.timestamp}</Implementation-Timestamp>
+                                <Implementation-URL>${project.url}</Implementation-URL>
+                                <Implementation-Build-Date>${maven.build.timestamp}</Implementation-Build-Date>
+                                <Implementation-Build-Os>${os.name} ${os.version} ${os.arch}</Implementation-Build-Os>
+                                <Implementation-Build-Java>${java.version} ${java.vendor} ${java.vm.name} ${java.vm.version} ${java.vm.vendor}</Implementation-Build-Java>
+                                <Implementation-Build-TimeZone>${user.timezone}</Implementation-Build-TimeZone>
+                                <Implementation-Build-Java-Encoding>${project.build.sourceEncoding}</Implementation-Build-Java-Encoding>
                             </manifestEntries>
                         </archive>
                     </configuration>
@@ -690,9 +616,109 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-pmd-plugin</artifactId>
                 </plugin>
+                <!-- https://my.oschina.net/u/4007037/blog/3101178 -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <configuration>
+                        <!-- config for license:aggregate-add-third-party -->
+                        <outputDirectory>${project.basedir}</outputDirectory>
+                        <thirdPartyFilename>LICENSE-3RD-PARTY</thirdPartyFilename>
+                        <fileTemplate>/org/codehaus/mojo/license/third-party-file-groupByLicense.ftl</fileTemplate>
+                        <useMissingFile>true</useMissingFile>
+                        <missingFile>${project.basedir}/LICENSE-3RD-PARTY.properties</missingFile>
+                        <aggregateMissingLicensesFile>${project.basedir}/LICENSE-3RD-PARTY.properties
+                        </aggregateMissingLicensesFile>
+                        <licenseMerges>
+                            <licenseMerge>Apache 2.0|ASL, version
+                                2|http://www.apache.org/licenses/LICENSE-2.0.txt|http://asm.ow2.org/license.html|The
+                                Apache License, Version 2.0|Apache License|Apache License Version 2|Apache License
+                                Version 2.0|Apache Software License - Version 2.0|Apache 2.0 License|Apache License
+                                2.0|ASL|Apache 2|Apache-2.0|the Apache License, ASL Version 2.0|The Apache Software
+                                License, Version 2.0|Apache License, Version 2.0|Apache Public License 2.0
+                            </licenseMerge>
+                            <licenseMerge>BSD|The BSD 3-Clause License|The BSD License|Modified BSD License|New BSD
+                                License|New BSD license|Two-clause BSD-style license|BSD licence|BSD New|The New BSD
+                                License|BSD 3-Clause|BSD 3-clause
+                            </licenseMerge>
+                            <licenseMerge>MIT|MIT License|The MIT License</licenseMerge>
+                            <licenseMerge>LGPL|LGPL, version 2.1|GNU Library or Lesser General Public License (LGPL)
+                                V2.1|GNU Lesser General Public License (LGPL), Version 2.1|GNU Lesser General Public
+                                License, Version 2.1|LGPL 2.1
+                            </licenseMerge>
+                            <licenseMerge>CDDL|CDDL+GPL|CDDL+GPL License|CDDL + GPLv2 with classpath exception|CDDL
+                                License|CDDL 1.0|CDDL 1.1|COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version
+                                1.0|Common Development and Distribution License (CDDL) v1.0
+                            </licenseMerge>
+                            <licenseMerge>EPL|Eclipse Public License - Version 1.0</licenseMerge>
+                            <licenseMerge>GPL|GPL2 w/ CPE|GPLv2+CE|GNU General Public Library</licenseMerge>
+                            <licenseMerge>MPL|MPL 1.1</licenseMerge>
+                            <licenseMerge>Public Domain</licenseMerge>
+                            <licenseMerge>Common Public License|Common Public License Version 1.0</licenseMerge>
+                            <licenseMerge>CC0|CC0 1.0 Universal|Public Domain, per Creative Commons CC0</licenseMerge>
+                            <licenseMerge>Unknown License|Unknown license</licenseMerge>
+                        </licenseMerges>
+
+                        <!-- config for license:aggregate-download-licenses -->
+                        <aggregateDownloadLicenses.executeOnlyOnRootModule>true
+                        </aggregateDownloadLicenses.executeOnlyOnRootModule>
+                        <!--<licensesConfigFile>${main.basedir}/lic/config/licenses.xml</licensesConfigFile>-->
+                        <licensesOutputFile>${project.basedir}/lic/licenses.xml</licensesOutputFile>
+                        <licensesOutputDirectory>${project.basedir}/lic/licenses/</licensesOutputDirectory>
+
+                        <!-- config for license:update-file-header -->
+                        <licenseName>apache_v2</licenseName>
+                        <inceptionYear>2019</inceptionYear>
+                        <organizationName>sia</organizationName>
+                        <projectName>task</projectName>
+                        <roots>
+                            <root>src/main/java</root>
+                            <root>src/test/java</root>
+                        </roots>
+                        <includes>
+                            <include>**/*.java</include>
+                            <include>**/*.xml</include>
+                            <include>**/*.sh</include>
+                            <include>**/*.py</include>
+                            <include>**/*.properties</include>
+                            <include>**/*.sql</include>
+                            <include>**/*.html</include>
+                            <include>**/*.less</include>
+                            <include>**/*.css</include>
+                            <include>**/*.js</include>
+                            <include>**/*.json</include>
+                        </includes>
+                        <canUpdateCopyright>true</canUpdateCopyright>
+                        <canUpdateDescription>true</canUpdateDescription>
+                        <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+                        <emptyLineAfterHeader>true</emptyLineAfterHeader>
+                        <processStartTag>&lt;&lt;</processStartTag>
+                        <processEndTag>&gt;&gt;</processEndTag>
+                        <sectionDelimiter>==</sectionDelimiter>
+                        <!-- config for mvn license:update-project-license -->
+                        <licenseFile>${project.basedir}/LICENSE</licenseFile>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.jasig.maven</groupId>
+                    <artifactId>maven-notice-plugin</artifactId>
+                    <configuration>
+                        <generateChildNotices>false</generateChildNotices>
+                        <noticeTemplate>https://source.jasig.org/licenses/NOTICE.template</noticeTemplate>
+                        <licenseMapping>
+                            <param>https://source.jasig.org/licenses/license-mappings.xml</param>
+                        </licenseMapping>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
 
                 <!-- Spring Boot 应用可实施应用构建：脚本模式、服务模式、Docker模式 -->
-
                 <!-- http://www.mojohaus.org/appassembler/appassembler-maven-plugin -->
                 <plugin>
                     <!-- Java应用程序可执行脚本生成：http://blog.csdn.net/mn960mn/article/details/51554152 -->
@@ -769,9 +795,7 @@
                         <!-- 命令模式 : http://www.mojohaus.org/appassembler/appassembler-maven-plugin/assemble-mojo.html -->
 
                         <!-- 生成的执行脚本存放目录；默认${project.build.directory}/appassembler.（必填参数） -->
-                        <assembleDirectory>
-                            ${project.build.directory}/generated-resources/appassembler/${project.artifactId}
-                        </assembleDirectory>
+                        <assembleDirectory>${project.build.directory}/generated-resources/appassembler/${project.artifactId}</assembleDirectory>
                         <!-- 用于bin文件的文件扩展名。文件扩展名存储在使用平台名称作为键的地图中。要将Unix bin文件的文件扩展名更改为“.sh”，请使用此配置： -->
                         <binFileExtensions>
                             <unix>.sh</unix>
@@ -786,7 +810,7 @@
                         <!-- 将生成bin文件的一组程序配置（必填参数） -->
                         <programs>
                             <program>
-                                <id>${appassembler-bin-fileName}</id>
+                                <id>${scripts-bin-fileName}</id>
                                 <!-- 生成的脚本文件的名称，比如start.sh,你也可以根据你的需要命名成其他名字 -->
                                 <!-- <licenseHeaderFile></licenseHeaderFile> -->
                                 <!--指定主类，脚本名。会生成shell/bat两种类型,也可用platforms指定运行平台 -->
@@ -911,7 +935,7 @@
                         <!-- 项目的基本目录,默认值为：${basedir}。 -->
                         <basedir>${project.artifactId}</basedir>
                         <!-- 可执行脚本的名称 -->
-                        <binFileName>${appassembler-bin-fileName}</binFileName>
+                        <binFileName>${scripts-bin-fileName}</binFileName>
                         <!-- 一套守护进程生成配置（必填参数） -->
                         <daemons>
                             <daemon>
@@ -1111,285 +1135,317 @@
                             </goals>
                             <configuration>
                                 <target>
+                                    <echo message="antrun copy resources"/>
+
                                     <!-- 处理脚本模式依赖资源 -->
 
                                     <!-- 步骤1、拷贝应用程序文件 -->
-                                    <copy file="${project.build.directory}/${project.build.finalName}.${project.packaging}"
-                                          todir="${appassembler-dir}/${project.artifactId}/lib"/>
-
+                                    <copy file="${project.build.directory}/${project.build.finalName}.${project.packaging}" todir="${scripts-dir}/${project.artifactId}/lib"/>
                                     <!-- 步骤2、创建生产环境配置文件夹：拷贝配置文件以便覆盖默认配置 -->
-                                    <mkdir dir="${appassembler-dir}/${project.artifactId}/conf"/>
-
-                                    <copy file="${project.build.directory}/classes/application.yaml"
-                                          todir="${appassembler-dir}/${project.artifactId}/conf"/>
-
-                                    <copy file="${project.build.directory}/classes/application-dev.yaml"
-                                          todir="${appassembler-dir}/${project.artifactId}/conf"/>
-
-                                    <copy file="${project.build.directory}/classes/application-prod.yaml"
-                                          todir="${appassembler-dir}/${project.artifactId}/conf"/>
-
-                                    <copy file="${project.build.directory}/classes/application-test.yaml"
-                                          todir="${appassembler-dir}/${project.artifactId}/conf"/>
-
+                                    <mkdir dir="${scripts-dir}/${project.artifactId}/conf"/>
+                                    <copy file="${project.build.directory}/classes/application.yaml" todir="${scripts-dir}/${project.artifactId}/conf"/>
                                     <!-- 步骤3、拷贝Java环境变量设置文件
-                                    <copy file="${basedir}/runenv/setenv" todir="${appassembler-dir}/${project.artifactId}/bin" />
-                                    <copy file="${basedir}/runenv/setenv.bat" todir="${appassembler-dir}/${project.artifactId}/bin" />
+                                    <copy file="${basedir}/.env/setenv" todir="${scripts-dir}/${project.artifactId}/bin" />
+                                    <copy file="${basedir}/.env/setenv.bat" todir="${scripts-dir}/${project.artifactId}/bin" />
                                     -->
                                     <!-- 步骤4、拷贝Java运行环境文件
-                                    <copy file="${basedir}/runenv/jre-8u60-linux-x64.tar.gz"
-                                        todir="${appassembler-dir}/${project.artifactId}" /> -->
+                                    <copy file="${basedir}/.env/jre-8u60-linux-x64.tar.gz" todir="${scripts-dir}/${project.artifactId}" /> -->
                                     <!-- 步骤5、构建应用安装脚本 -->
-                                    <delete file="${appassembler-dir}/${project.artifactId}/install.sh"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#!/bin/sh${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#解压独立jre运行包【如果希望工程使用独有的jdk、jre请将压缩包放置在项目根目录并修改下面的配置】${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#rm -rf jre${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#tar -zxvf jre-8u60-linux-x64.tar.gz${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#File Authorized${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 jre/bin/*${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 bin/*${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 ${appassembler-bin-fileName}${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chmod 755 uninstall.sh${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="#启停脚本服务化软连接${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="cp ./${appassembler-bin-fileName} /etc/init.d/${project.artifactId}${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chkconfig --add ${project.artifactId}${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/install.sh" append="true"
-                                          message="chkconfig --level 345 ${project.artifactId} on${line.separator}"/>
+                                    <delete file="${scripts-dir}/${project.artifactId}/install.sh"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="#!/bin/sh${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="#解压独立jre运行包【如果希望工程使用独有的jdk、jre请将压缩包放置在项目根目录并修改下面的配置】${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="#rm -rf jre${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="#tar -zxvf jre-8u60-linux-x64.tar.gz${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="#File Authorized${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chmod 755 jre/bin/*${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chmod 755 bin/*${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chmod 755 ${scripts-bin-fileName}${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chmod 755 uninstall.sh${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="#启停脚本服务化软连接${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="cp ./${scripts-bin-fileName} /etc/init.d/${project.artifactId}${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chkconfig --add ${project.artifactId}${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chkconfig --level 345 ${project.artifactId} on${line.separator}"/>
                                     <!-- 步骤6、构建应用卸载脚本 -->
-                                    <delete file="${appassembler-dir}/${project.artifactId}/uninstall.sh"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="#!/bin/sh${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="chkconfig ${appassembler-bin-fileName} off${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="chkconfig --del ${appassembler-bin-fileName}${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
-                                    <echo file="${appassembler-dir}/${project.artifactId}/uninstall.sh" append="true"
-                                          message="#rm -rf jre${line.separator}"/>
+                                    <delete file="${scripts-dir}/${project.artifactId}/uninstall.sh"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="#!/bin/sh${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="chkconfig ${scripts-bin-fileName} off${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="chkconfig --del ${scripts-bin-fileName}${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="#rm -rf jre${line.separator}"/>
 
                                     <!-- 处理服务模式依赖资源 -->
 
                                     <!-- 步骤1、拷贝应用程序文件 -->
-                                    <copy file="${project.build.directory}/${project.build.finalName}.${project.packaging}"
-                                          todir="${appassembler-jsw-dir}/${project.artifactId}/lib"/>
+                                    <copy file="${project.build.directory}/${project.build.finalName}.${project.packaging}" todir="${scripts-jsw-dir}/${project.artifactId}/lib"/>
                                     <!-- 步骤2、创建生产环境配置文件夹：拷贝配置文件以便覆盖默认配置 -->
-
-                                    <mkdir dir="${appassembler-jsw-dir}/${project.artifactId}/conf"/>
-
-                                    <copy file="${project.build.directory}/classes/application.yaml"
-                                          todir="${appassembler-jsw-dir}/${project.artifactId}/conf"/>
-
-                                    <copy file="${project.build.directory}/classes/application-dev.yaml"
-                                          todir="${appassembler-jsw-dir}/${project.artifactId}/conf"/>
-
-                                    <copy file="${project.build.directory}/classes/application-prod.yaml"
-                                          todir="${appassembler-jsw-dir}/${project.artifactId}/conf"/>
-
-                                    <copy file="${project.build.directory}/classes/application-test.yaml"
-                                          todir="${appassembler-jsw-dir}/${project.artifactId}/conf"/>
-
+                                    <mkdir dir="${scripts-jsw-dir}/${project.artifactId}/conf"/>
+                                    <copy file="${project.build.directory}/classes/application.yaml" todir="${scripts-jsw-dir}/${project.artifactId}/conf"/>
                                     <!-- 步骤3、拷贝Java环境变量设置文件
-                                    <copy file="${basedir}/runenv/setenv" todir="${appassembler-jsw-dir}/${project.artifactId}/bin" />
-                                    <copy file="${basedir}/runenv/setenv.bat" todir="${appassembler-jsw-dir}/${project.artifactId}/bin" />
+                                    <copy file="${basedir}/.env/setenv" todir="${scripts-jsw-dir}/${project.artifactId}/bin" />
+                                    <copy file="${basedir}/.env/setenv.bat" todir="${scripts-jsw-dir}/${project.artifactId}/bin" />
                                     -->
+                                </target>
+                            </configuration>
+                        </execution>
+                        <!-- 在Maven打包阶段进行进一步的脚本处理：构建zip压缩包 -->
+                        <execution>
+                            <id>build-zip-package</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <echo message="build zip package"/>
+                                    <delete file="${scripts-jsw-dir}/${project.artifactId}-${project.version}-jsw.zip"/>
+                                    <zip basedir="${scripts-jsw-dir}/${project.artifactId}" destfile="${scripts-jsw-dir}/${project.artifactId}-${project.version}-jsw.zip"/>
+                                    <delete file="${scripts-dir}/${project.artifactId}-${project.version}.zip"/>
+                                    <zip basedir="${scripts-dir}/${project.artifactId}" destfile="${scripts-dir}/${project.artifactId}-${project.version}.zip"/>
                                 </target>
                             </configuration>
                         </execution>
                     </executions>
                 </plugin>
-                <!-- https://mvnrepository.com/artifact/com.spotify/docker-maven-plugin -->
-                <!-- https://github.com/spotify/docker-maven-plugin -->
-                <!-- http://blog.csdn.net/qq_22841811/article/details/67369530 -->
+                <!-- Docker 镜像构建插件：将JAR包打包成Docker镜像，并推送到仓库 -->
+                <!-- 支持 buildx 多平台构建，可通过 docker.use.buildx 属性控制 -->
                 <plugin>
-                    <!-- docker 镜像构建: https://blog.csdn.net/aixiaoyang168/article/details/77453974 -->
-                    <groupId>com.spotify</groupId>
+                    <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
+                    <configuration>
+                        <verbose>true</verbose>
+                        <!-- 跳过 Docker 构建（可通过 -Ddocker.skip=true 覆盖） -->
+                        <skip>${docker.skip}</skip>
+                        <!-- 跳过推送（仅在构建阶段） -->
+                        <skipPush>false</skipPush>
+                        <!-- 使用 Docker API -->
+                        <useColor>true</useColor>
+                        <images>
+                            <image>
+                                <!-- 镜像名称：包含仓库地址、项目名称和版本 -->
+                                <name>${docker.registry.host}/${project.artifactId}:${project.version}</name>
+                                <build>
+                                    <!-- 使用本地 Dockerfile -->
+                                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                    <!-- 构建上下文目录 -->
+                                    <contextDir>${project.basedir}</contextDir>
+                                    <!-- 不使用缓存，避免使用损坏的缓存 -->
+                                    <noCache>false</noCache>
+                                    <!-- 清理中间镜像 -->
+                                    <cleanup>true</cleanup>
+                                    <!-- 使用 buildx 进行多平台构建 -->
+                                    <!-- 注意：docker-maven-plugin 0.48.0 的 buildx 配置只支持 builderName 和 platforms -->
+                                    <!-- push 通过 goal 控制：build goal 不推送，push goal 会推送 -->
+                                    <!-- driver 和 driverOpts 需要通过 exec-maven-plugin 在 initialize 阶段手动创建 builder -->
+                                    <buildx>
+                                        <!-- builderName: 指定要使用的 buildx builder 名称（必须预先创建） -->
+                                        <builderName>${docker.buildx.builder.name}</builderName>
+                                        <!-- platforms: 指定平台列表，指定后自动启用 buildx -->
+                                        <platforms>
+                                            <platform>${docker.platforms}</platform>
+                                        </platforms>
+                                    </buildx>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
                     <executions>
+                        <!-- 在 install 阶段构建镜像（多平台构建，不推送） -->
                         <execution>
-                            <id>build-image</id>
-                            <phase>package</phase>
+                            <id>build</id>
+                            <phase>install</phase>
                             <goals>
                                 <goal>build</goal>
                             </goals>
-                        </execution>
-                        <execution>
-                            <id>tag-image</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>tag</goal>
-                            </goals>
                             <configuration>
-                                <image>${project.artifactId}:${project.version}</image>
-                                <newName>
-                                    ${docker.push.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}
-                                </newName>
+                                <skip>${docker.skip}</skip>
+                                <images>
+                                    <image>
+                                        <name>${docker.registry.host}/${project.artifactId}:${project.version}</name>
+                                        <build>
+                                            <!-- 使用 buildx 进行多平台构建（不推送） -->
+                                            <!-- 注意：docker-maven-plugin 0.48.0 只支持 builderName 和 platforms -->
+                                            <!-- build goal 不会推送镜像，只构建并保存到本地 -->
+                                            <buildx>
+                                                <builderName>${docker.buildx.builder.name}</builderName>
+                                                <!-- 使用多平台构建 -->
+                                                <platforms>
+                                                    <platform>${docker.platforms}</platform>
+                                                </platforms>
+                                            </buildx>
+                                        </build>
+                                    </image>
+                                </images>
                             </configuration>
                         </execution>
+                        <!-- 在 deploy 阶段推送镜像（可通过 docker.push.skip 控制是否跳过） -->
                         <execution>
-                            <id>push-image</id>
+                            <id>push</id>
                             <phase>deploy</phase>
                             <goals>
+                                <!-- 使用 push goal 会自动推送镜像 -->
                                 <goal>push</goal>
                             </goals>
                             <configuration>
-                                <imageName>
-                                    ${docker.push.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}
-                                </imageName>
+                                <!-- 通过 docker.push.skip 控制是否跳过推送 -->
+                                <skip>${docker.push.skip}</skip>
+                                <images>
+                                    <image>
+                                        <name>${docker.registry.host}/${project.artifactId}:${project.version}</name>
+                                        <build>
+                                            <!-- 使用 buildx 进行多平台构建并推送 -->
+                                            <!-- 注意：docker-maven-plugin 0.48.0 只支持 builderName 和 platforms -->
+                                            <!-- 在 deploy 阶段使用 push goal 会自动推送镜像 -->
+                                            <buildx>
+                                                <builderName>${docker.buildx.builder.name}</builderName>
+                                                <!-- 推送时使用多平台 -->
+                                                <platforms>
+                                                    <platform>${docker.platforms}</platform>
+                                                </platforms>
+                                            </buildx>
+                                        </build>
+                                    </image>
+                                </images>
                             </configuration>
                         </execution>
                     </executions>
-                    <configuration>
-                        <!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
-                        <!-- 详见：https://github.com/spotify/docker-maven-plugin Invalid repository
-                            name ... only [a-z0-9-_.] are allowed -->
-                        <!-- 如果要将docker镜像push到DockerHub上去的话，这边的路径要和repo路径一致 -->
-                        <imageName>${project.artifactId}:${project.version}</imageName>
-                        <!-- 指定Dockerfile所在的路径 -->
-                        <!-- <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory> -->
-                        <baseImage>${docker.push.repostory}/${docker.registry.name}/openjdk:1.8</baseImage>
-                        <volumes>/tmp</volumes>
-                        <workdir>${docker.workdir}</workdir>
-                        <entryPoint>["sh","./bin/${appassembler-bin-fileName}.sh"]</entryPoint>
-                        <dockerHost>${docker.build.repostory}</dockerHost>
-                        <resources>
-                            <resource>
-                                <targetPath>${docker.workdir}</targetPath>
-                                <directory>
-                                    ${project.build.directory}/generated-resources/appassembler/${project.artifactId}
-                                </directory>
-                            </resource>
-                        </resources>
-                        <!-- 以下两行是为了docker push到DockerHub使用的。 -->
-                        <!-- <serverId>docker-hub</serverId> -->
-                        <!-- <registryUrl>http://10.71.33.155/</registryUrl> -->
-                    </configuration>
                 </plugin>
-                <!-- https://mvnrepository.com/artifact/com.spotify/dockerfile-maven-plugin -->
-                <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>dockerfile-maven-plugin</artifactId>
-                    <configuration>
-                        <repository>${docker.registry.name}/${project.artifactId}</repository>
-                        <buildArgs>
-                            <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-                        </buildArgs>
-                    </configuration>
-                </plugin>
-                <!-- https://my.oschina.net/u/4007037/blog/3101178 -->
+                <!-- 初始化 buildx builder（docker-maven-plugin 使用 buildx 前需要先创建 builder） -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                    <configuration>
-                        <!-- config for license:aggregate-add-third-party -->
-                        <outputDirectory>${project.basedir}</outputDirectory>
-                        <thirdPartyFilename>LICENSE-3RD-PARTY</thirdPartyFilename>
-                        <fileTemplate>/org/codehaus/mojo/license/third-party-file-groupByLicense.ftl</fileTemplate>
-                        <useMissingFile>true</useMissingFile>
-                        <missingFile>${project.basedir}/LICENSE-3RD-PARTY.properties</missingFile>
-                        <aggregateMissingLicensesFile>${project.basedir}/LICENSE-3RD-PARTY.properties
-                        </aggregateMissingLicensesFile>
-                        <licenseMerges>
-                            <licenseMerge>Apache 2.0|ASL, version
-                                2|http://www.apache.org/licenses/LICENSE-2.0.txt|http://asm.ow2.org/license.html|The
-                                Apache License, Version 2.0|Apache License|Apache License Version 2|Apache License
-                                Version 2.0|Apache Software License - Version 2.0|Apache 2.0 License|Apache License
-                                2.0|ASL|Apache 2|Apache-2.0|the Apache License, ASL Version 2.0|The Apache Software
-                                License, Version 2.0|Apache License, Version 2.0|Apache Public License 2.0
-                            </licenseMerge>
-                            <licenseMerge>BSD|The BSD 3-Clause License|The BSD License|Modified BSD License|New BSD
-                                License|New BSD license|Two-clause BSD-style license|BSD licence|BSD New|The New BSD
-                                License|BSD 3-Clause|BSD 3-clause
-                            </licenseMerge>
-                            <licenseMerge>MIT|MIT License|The MIT License</licenseMerge>
-                            <licenseMerge>LGPL|LGPL, version 2.1|GNU Library or Lesser General Public License (LGPL)
-                                V2.1|GNU Lesser General Public License (LGPL), Version 2.1|GNU Lesser General Public
-                                License, Version 2.1|LGPL 2.1
-                            </licenseMerge>
-                            <licenseMerge>CDDL|CDDL+GPL|CDDL+GPL License|CDDL + GPLv2 with classpath exception|CDDL
-                                License|CDDL 1.0|CDDL 1.1|COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version
-                                1.0|Common Development and Distribution License (CDDL) v1.0
-                            </licenseMerge>
-                            <licenseMerge>EPL|Eclipse Public License - Version 1.0</licenseMerge>
-                            <licenseMerge>GPL|GPL2 w/ CPE|GPLv2+CE|GNU General Public Library</licenseMerge>
-                            <licenseMerge>MPL|MPL 1.1</licenseMerge>
-                            <licenseMerge>Public Domain</licenseMerge>
-                            <licenseMerge>Common Public License|Common Public License Version 1.0</licenseMerge>
-                            <licenseMerge>CC0|CC0 1.0 Universal|Public Domain, per Creative Commons CC0</licenseMerge>
-                            <licenseMerge>Unknown License|Unknown license</licenseMerge>
-                        </licenseMerges>
-
-                        <!-- config for license:aggregate-download-licenses -->
-                        <aggregateDownloadLicenses.executeOnlyOnRootModule>true
-                        </aggregateDownloadLicenses.executeOnlyOnRootModule>
-                        <!--<licensesConfigFile>${main.basedir}/lic/config/licenses.xml</licensesConfigFile>-->
-                        <licensesOutputFile>${project.basedir}/lic/licenses.xml</licensesOutputFile>
-                        <licensesOutputDirectory>${project.basedir}/lic/licenses/</licensesOutputDirectory>
-
-                        <!-- config for license:update-file-header -->
-                        <licenseName>apache_v2</licenseName>
-                        <inceptionYear>2019</inceptionYear>
-                        <organizationName>sia</organizationName>
-                        <projectName>task</projectName>
-                        <roots>
-                            <root>src/main/java</root>
-                            <root>src/test/java</root>
-                        </roots>
-                        <includes>
-                            <include>**/*.java</include>
-                            <include>**/*.xml</include>
-                            <include>**/*.sh</include>
-                            <include>**/*.py</include>
-                            <include>**/*.properties</include>
-                            <include>**/*.sql</include>
-                            <include>**/*.html</include>
-                            <include>**/*.less</include>
-                            <include>**/*.css</include>
-                            <include>**/*.js</include>
-                            <include>**/*.json</include>
-                        </includes>
-                        <canUpdateCopyright>true</canUpdateCopyright>
-                        <canUpdateDescription>true</canUpdateDescription>
-                        <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
-                        <emptyLineAfterHeader>true</emptyLineAfterHeader>
-                        <processStartTag>&lt;&lt;</processStartTag>
-                        <processEndTag>&gt;&gt;</processEndTag>
-                        <sectionDelimiter>==</sectionDelimiter>
-                        <!-- config for mvn license:update-project-license -->
-                        <licenseFile>${project.basedir}/LICENSE</licenseFile>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.jasig.maven</groupId>
-                    <artifactId>maven-notice-plugin</artifactId>
-                    <configuration>
-                        <generateChildNotices>false</generateChildNotices>
-                        <noticeTemplate>https://source.jasig.org/licenses/NOTICE.template</noticeTemplate>
-                        <licenseMapping>
-                            <param>https://source.jasig.org/licenses/license-mappings.xml</param>
-                        </licenseMapping>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <configuration>
-                        <failOnMissingWebXml>false</failOnMissingWebXml>
-                    </configuration>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <executions>
+                        <!-- Docker 镜像仓库登录 -->
+                        <execution>
+                            <id>docker-login</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <!-- 只有在未跳过 Docker 时才执行 -->
+                                <skip>${docker.skip}</skip>
+                                <executable>sh</executable>
+                                <arguments>
+                                    <argument>-c</argument>
+                                    <argument>echo '${docker.registry.password}' | docker login -u ${docker.registry.username} --password-stdin https://${docker.registry.host}</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <!-- 安装 binfmt 支持多平台构建（与 Jenkins 保持一致） -->
+                        <execution>
+                            <id>docker-buildx-binfmt</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <!-- 只有在未跳过 Docker 时才执行 -->
+                                <!-- 注意：如果 docker.use.buildx=false，buildx 不会被启用，但初始化步骤仍会执行（无害） -->
+                                <!-- 如果需要完全跳过，可以设置 -Ddocker.skip=true -->
+                                <skip>${docker.skip}</skip>
+                                <executable>docker</executable>
+                                <arguments>
+                                    <argument>run</argument>
+                                    <argument>--rm</argument>
+                                    <argument>--privileged</argument>
+                                    <argument>tonistiigi/binfmt</argument>
+                                    <argument>--install</argument>
+                                    <argument>all</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <!-- 初始化 buildx builder（如果不存在则创建，与 Jenkins 保持一致） -->
+                        <!-- 参考文档：https://github.com/moby/buildkit#docker-buildx -->
+                        <!-- 使用 driver-opt image=... 指定 BuildKit 镜像（符合官方文档规范） -->
+                        <execution>
+                            <id>docker-buildx-setup</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <!-- 只有在未跳过 Docker 时才执行 -->
+                                <!-- 注意：如果 docker.use.buildx=false，buildx 不会被启用，但初始化步骤仍会执行（无害） -->
+                                <!-- 如果需要完全跳过，可以设置 -Ddocker.skip=true -->
+                                <skip>${docker.skip}</skip>
+                                <executable>sh</executable>
+                                <arguments>
+                                    <argument>-c</argument>
+                                    <!-- 增强的 buildx builder 初始化逻辑 -->
+                                    <!-- 1. 检查 builder 是否存在且状态正常 -->
+                                    <!-- 2. 如果存在但状态异常，删除并重新创建 -->
+                                    <!-- 3. 如果不存在，创建新的 builder -->
+                                    <!-- 4. 优先使用腾讯云镜像（适合国内环境），失败则回退到默认镜像 -->
+                                    <!-- 5. 确保 BuildKit 容器正常运行 -->
+                                    <argument>BUILDER_NAME="${docker.buildx.builder.name}"; \
+                                        BUILDKIT_IMAGE="${docker.buildx.buildkit.image}"; \
+                                        if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
+                                        echo "Builder $BUILDER_NAME exists, checking status..."; \
+                                        if docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1; then \
+                                        echo "Builder $BUILDER_NAME is healthy"; \
+                                        docker buildx use "$BUILDER_NAME"; \
+                                        else \
+                                        echo "Builder $BUILDER_NAME is unhealthy, removing and recreating..."; \
+                                        docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx use "$BUILDER_NAME"; \
+                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
+                                        fi; \
+                                        else \
+                                        echo "Builder $BUILDER_NAME does not exist, creating..."; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx use "$BUILDER_NAME"; \
+                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
+                                        fi</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <!-- 在构建前验证并重启 buildx builder（解决导出阶段的连接问题） -->
+                        <execution>
+                            <id>docker-buildx-verify</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.skip}</skip>
+                                <executable>sh</executable>
+                                <arguments>
+                                    <argument>-c</argument>
+                                    <!-- 验证并重启 buildx builder，解决导出阶段的连接中断问题 -->
+                                    <!-- 策略：在每次构建前重启 BuildKit 容器，确保其处于干净状态 -->
+                                    <argument>BUILDER_NAME="${docker.buildx.builder.name}"; \
+                                        BUILDKIT_IMAGE="${docker.buildx.buildkit.image}"; \
+                                        echo "Preparing buildx builder $BUILDER_NAME before build..."; \
+                                        if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
+                                        echo "Builder exists, restarting BuildKit container to ensure clean state..."; \
+                                        BUILDER_CONTAINER=$(docker ps -a --filter "name=buildx_buildkit_${BUILDER_NAME}" --format "{{.Names}}" | head -1); \
+                                        if [ -n "$BUILDER_CONTAINER" ]; then \
+                                        echo "Stopping and removing BuildKit container: $BUILDER_CONTAINER"; \
+                                        docker stop "$BUILDER_CONTAINER" 2&gt;/dev/null || true; \
+                                        docker rm "$BUILDER_CONTAINER" 2&gt;/dev/null || true; \
+                                        fi; \
+                                        echo "Recreating builder with fresh BuildKit container..."; \
+                                        docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx use "$BUILDER_NAME"; \
+                                        echo "Booting BuildKit container..."; \
+                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || echo "WARNING: Builder bootstrap failed, but continuing..."; \
+                                        echo "Waiting for BuildKit to be ready..."; \
+                                        sleep 2; \
+                                        else \
+                                        echo "Builder does not exist, creating new builder..."; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx use "$BUILDER_NAME"; \
+                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
+                                        sleep 2; \
+                                        fi; \
+                                        echo "Builder $BUILDER_NAME is ready"</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

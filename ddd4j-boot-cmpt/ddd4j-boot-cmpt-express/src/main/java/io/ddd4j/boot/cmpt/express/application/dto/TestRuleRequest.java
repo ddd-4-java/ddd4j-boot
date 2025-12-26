@@ -1,36 +1,29 @@
 package io.ddd4j.boot.cmpt.express.application.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Map;
 
 /**
  * 测试规则请求DTO
+ * 
+ * <p>应用层DTO：用于规则测试接口的请求数据传输对象。
+ * 
+ * @author ddd4j-boot
+ * @version 1.0
+ * @since 1.0
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TestRuleRequest {
+
+    /** 规则编码，用于指定要测试的规则 */
     private String ruleCode;
+    
+    /** 执行上下文，包含规则表达式中使用的变量 */
     private Map<String, Object> context;
-
-    public TestRuleRequest() {
-    }
-
-    public TestRuleRequest(String ruleCode, Map<String, Object> context) {
-        this.ruleCode = ruleCode;
-        this.context = context;
-    }
-
-    public String getRuleCode() {
-        return ruleCode;
-    }
-
-    public void setRuleCode(String ruleCode) {
-        this.ruleCode = ruleCode;
-    }
-
-    public Map<String, Object> getContext() {
-        return context;
-    }
-
-    public void setContext(Map<String, Object> context) {
-        this.context = context;
-    }
 }
 

@@ -5,12 +5,23 @@ import java.util.List;
 
 /**
  * 规则验证结果值对象
- * 不可变的值对象，表示规则语法验证的结果
+ * 
+ * <p>领域模型：不可变的值对象，表示规则语法验证的结果。
+ * 使用Builder模式构建，确保不可变性。
+ * 
+ * @author ddd4j-boot
+ * @version 1.0
+ * @since 1.0
  */
 public class RuleValidationResult {
 
+    /** 验证是否通过 */
     private final boolean valid;
+    
+    /** 验证消息 */
     private final String message;
+    
+    /** 错误列表，验证失败时的详细错误信息 */
     private final List<String> errors;
 
     private RuleValidationResult(Builder builder) {
@@ -19,6 +30,11 @@ public class RuleValidationResult {
         this.errors = builder.errors != null ? new ArrayList<>(builder.errors) : new ArrayList<>();
     }
 
+    /**
+     * 创建Builder实例
+     * 
+     * @return Builder实例
+     */
     public static Builder builder() {
         return new Builder();
     }
