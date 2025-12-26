@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties("server.i18n")
 @Data
-public class Server18nProperties {
+public class ServerI18nProperties {
 
     /**
      * 是否启用国际化
