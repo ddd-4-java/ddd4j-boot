@@ -45,6 +45,21 @@
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-dubbo</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-excel</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-express</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-external</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -70,12 +85,22 @@
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-pf4j</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-satoken</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-security</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
