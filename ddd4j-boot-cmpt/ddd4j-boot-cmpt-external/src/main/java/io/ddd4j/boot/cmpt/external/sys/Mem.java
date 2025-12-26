@@ -1,6 +1,6 @@
 package io.ddd4j.boot.cmpt.external.sys;
 
-import io.ddd4j.boot.core.utils.Arith;
+import io.ddd4j.boot.core.util.Arith;
 import lombok.Data;
 
 /**

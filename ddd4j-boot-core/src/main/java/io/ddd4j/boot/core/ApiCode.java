@@ -4,7 +4,7 @@
  */
 package io.ddd4j.boot.core;
 
-import io.ddd4j.boot.core.utils.HttpStatus;
+import io.ddd4j.boot.core.util.HttpStatus;
 
 /**
  * Enumeration of Api Code.

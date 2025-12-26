@@ -4,7 +4,7 @@
  */
 package io.ddd4j.boot.core.exception;
 
-import io.ddd4j.boot.core.utils.WebUtils;
+import io.ddd4j.boot.core.util.WebUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 

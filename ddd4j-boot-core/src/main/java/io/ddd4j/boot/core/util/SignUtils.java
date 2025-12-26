@@ -1,4 +1,4 @@
-package io.ddd4j.boot.core.utils;
+package io.ddd4j.boot.core.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;

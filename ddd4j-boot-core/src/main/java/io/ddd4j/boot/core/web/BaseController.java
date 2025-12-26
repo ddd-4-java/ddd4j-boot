@@ -6,7 +6,7 @@ package io.ddd4j.boot.core.web;
 
 import io.ddd4j.boot.core.ApiRestResponse;
 import io.ddd4j.boot.core.exception.PayloadExceptionEvent;
-import io.ddd4j.boot.core.utils.HttpStatus;
+import io.ddd4j.boot.core.util.HttpStatus;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.Getter;

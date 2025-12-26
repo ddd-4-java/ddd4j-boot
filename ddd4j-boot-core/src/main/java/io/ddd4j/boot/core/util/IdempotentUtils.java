@@ -1,4 +1,4 @@
-package io.ddd4j.boot.core.utils;
+package io.ddd4j.boot.core.util;
 
 import com.alibaba.fastjson2.JSONObject;
 import io.ddd4j.boot.core.annotation.ApiIdempotent;

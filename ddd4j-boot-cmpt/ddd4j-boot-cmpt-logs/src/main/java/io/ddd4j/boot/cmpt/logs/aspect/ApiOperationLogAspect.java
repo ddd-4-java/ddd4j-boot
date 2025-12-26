@@ -2,7 +2,7 @@ package io.ddd4j.boot.cmpt.logs.aspect;
 
 import io.ddd4j.boot.core.XHeaders;
 import io.ddd4j.boot.core.sequence.Sequence;
-import io.ddd4j.boot.core.utils.WebUtils;
+import io.ddd4j.boot.core.util.WebUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

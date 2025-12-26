@@ -1,4 +1,4 @@
-package io.ddd4j.boot.core.utils;
+package io.ddd4j.boot.core.util;
 
 /**
  * A provider of randomized {@link java.lang.String} values.

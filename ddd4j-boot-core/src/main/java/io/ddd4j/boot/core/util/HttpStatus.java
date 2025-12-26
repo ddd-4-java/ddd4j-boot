@@ -2,7 +2,7 @@
  * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
  * All Rights Reserved.
  */
-package io.ddd4j.boot.core.utils;
+package io.ddd4j.boot.core.util;
 
 /**
  * 标准Http状态码

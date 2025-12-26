@@ -13,7 +13,7 @@ import io.ddd4j.boot.core.exception.BizCheckedException;
 import io.ddd4j.boot.core.exception.BizIOException;
 import io.ddd4j.boot.core.exception.BizRuntimeException;
 import io.ddd4j.boot.core.exception.IdempotentException;
-import io.ddd4j.boot.core.utils.WebUtils;
+import io.ddd4j.boot.core.util.WebUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

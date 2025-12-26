@@ -1,6 +1,6 @@
 package io.ddd4j.boot.core;
 
-import io.ddd4j.boot.core.utils.DateUtils;
+import io.ddd4j.boot.core.util.DateUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.text.DateFormat;
