@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.web.controller;
 
 import io.ddd4j.boot.sample.message.LogProducer;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;

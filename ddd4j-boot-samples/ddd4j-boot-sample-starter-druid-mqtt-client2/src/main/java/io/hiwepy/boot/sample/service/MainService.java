@@ -18,7 +18,7 @@ public class MainService {
     private MqttClientTemplate client;
 
     public boolean publish() {
-        client.publish("/test/client", "mica最牛皮".getBytes(StandardCharsets.UTF_8));
+        client.publish("/test/client,mica最牛皮".getBytes(StandardCharsets.UTF_8));
         return true;
     }
 

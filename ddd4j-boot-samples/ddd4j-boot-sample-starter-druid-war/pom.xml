@@ -40,6 +40,12 @@
             <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
             <version>${revision}</version>
         </dependency>
+        <!-- For sample common -->
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-sample-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
 
         <!-- For Embedded Web -->
         <dependency>
@@ -191,8 +197,8 @@
         </dependency>
 
         <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <!-- For Embed Tomcat : 用于开发阶段调试 -->

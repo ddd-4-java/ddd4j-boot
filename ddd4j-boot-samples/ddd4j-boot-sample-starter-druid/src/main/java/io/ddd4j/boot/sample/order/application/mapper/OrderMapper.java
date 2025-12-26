@@ -83,11 +83,11 @@ public interface OrderMapper {
             return null;
         }
         OrderDTO.AddressDTO dto = new OrderDTO.AddressDTO();
-        dto.setProvince(address.province());
-        dto.setCity(address.city());
-        dto.setDistrict(address.district());
-        dto.setDetail(address.detail());
-        dto.setZipCode(address.zipCode());
+        dto.setProvince(address.getProvince());
+        dto.setCity(address.getCity());
+        dto.setDistrict(address.getDistrict());
+        dto.setDetail(address.getDetail());
+        dto.setZipCode(address.getZipCode());
         dto.setFullAddress(address.getFullAddress());
         return dto;
     }

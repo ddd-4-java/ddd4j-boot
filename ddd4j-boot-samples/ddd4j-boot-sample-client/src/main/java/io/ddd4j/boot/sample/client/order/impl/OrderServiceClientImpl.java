@@ -9,16 +9,19 @@ import io.ddd4j.boot.sample.client.order.dto.response.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 /**
- * 订单服务客户端实现（使用RestClient）
+ * 订单服务客户端实现（使用RestTemplate）
  * 
- * <p>使用Spring 6.1+ 的 RestClient 实现订单服务的HTTP调用。</p>
+ * <p>使用 Spring 的 RestTemplate 实现订单服务的HTTP调用。</p>
  * 
  * <h3>配置说明：</h3>
  * <pre>{@code
@@ -35,7 +38,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderServiceClientImpl implements OrderServiceClient {
     
-    private final RestClient restClient;
+    private final RestTemplate restTemplate;
     private final String baseUrl;
     
     private static final String API_PREFIX = "/api/orders";
@@ -44,12 +47,16 @@ public class OrderServiceClientImpl implements OrderServiceClient {
     public OrderResponse createOrder(CreateOrderRequest request) {
         log.debug("调用创建订单接口，用户ID: {}", request.getUserId());
         
-        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restClient.post()
-                .uri(baseUrl + API_PREFIX)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(request)
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {});
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<CreateOrderRequest> entity = new HttpEntity<>(request, headers);
+        
+        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restTemplate.exchange(
+                baseUrl + API_PREFIX,
+                HttpMethod.POST,
+                entity,
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {}
+        );
         
         return handleResponse(responseEntity.getBody());
     }
@@ -61,12 +68,17 @@ public class OrderServiceClientImpl implements OrderServiceClient {
         PayOrderRequest request = new PayOrderRequest();
         request.setPaymentMethod(paymentMethod);
         
-        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restClient.post()
-                .uri(baseUrl + API_PREFIX + "/{orderId}/pay", orderId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(request)
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {});
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<PayOrderRequest> entity = new HttpEntity<>(request, headers);
+        
+        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restTemplate.exchange(
+                baseUrl + API_PREFIX + "/{orderId}/pay",
+                HttpMethod.POST,
+                entity,
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {},
+                orderId
+        );
         
         return handleResponse(responseEntity.getBody());
     }
@@ -79,12 +91,17 @@ public class OrderServiceClientImpl implements OrderServiceClient {
         request.setTrackingNumber(trackingNumber);
         request.setLogisticsCompany(logisticsCompany);
         
-        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restClient.post()
-                .uri(baseUrl + API_PREFIX + "/{orderId}/ship", orderId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(request)
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {});
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<ShipOrderRequest> entity = new HttpEntity<>(request, headers);
+        
+        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restTemplate.exchange(
+                baseUrl + API_PREFIX + "/{orderId}/ship",
+                HttpMethod.POST,
+                entity,
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {},
+                orderId
+        );
         
         return handleResponse(responseEntity.getBody());
     }
@@ -93,10 +110,15 @@ public class OrderServiceClientImpl implements OrderServiceClient {
     public OrderResponse confirmDelivery(Long orderId) {
         log.debug("调用确认收货接口，订单ID: {}", orderId);
         
-        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restClient.post()
-                .uri(baseUrl + API_PREFIX + "/{orderId}/confirm-delivery", orderId)
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {});
+        HttpEntity<Void> entity = new HttpEntity<>(new HttpHeaders());
+        
+        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restTemplate.exchange(
+                baseUrl + API_PREFIX + "/{orderId}/confirm-delivery",
+                HttpMethod.POST,
+                entity,
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {},
+                orderId
+        );
         
         return handleResponse(responseEntity.getBody());
     }
@@ -105,10 +127,15 @@ public class OrderServiceClientImpl implements OrderServiceClient {
     public OrderResponse completeOrder(Long orderId) {
         log.debug("调用完成订单接口，订单ID: {}", orderId);
         
-        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restClient.post()
-                .uri(baseUrl + API_PREFIX + "/{orderId}/complete", orderId)
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {});
+        HttpEntity<Void> entity = new HttpEntity<>(new HttpHeaders());
+        
+        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restTemplate.exchange(
+                baseUrl + API_PREFIX + "/{orderId}/complete",
+                HttpMethod.POST,
+                entity,
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {},
+                orderId
+        );
         
         return handleResponse(responseEntity.getBody());
     }
@@ -120,12 +147,17 @@ public class OrderServiceClientImpl implements OrderServiceClient {
         CancelOrderRequest request = new CancelOrderRequest();
         request.setReason(reason);
         
-        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restClient.post()
-                .uri(baseUrl + API_PREFIX + "/{orderId}/cancel", orderId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(request)
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {});
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<CancelOrderRequest> entity = new HttpEntity<>(request, headers);
+        
+        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restTemplate.exchange(
+                baseUrl + API_PREFIX + "/{orderId}/cancel",
+                HttpMethod.POST,
+                entity,
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {},
+                orderId
+        );
         
         return handleResponse(responseEntity.getBody());
     }
@@ -134,10 +166,13 @@ public class OrderServiceClientImpl implements OrderServiceClient {
     public OrderResponse getOrderById(Long id) {
         log.debug("调用查询订单接口，订单ID: {}", id);
         
-        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restClient.get()
-                .uri(baseUrl + API_PREFIX + "/{id}", id)
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {});
+        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restTemplate.exchange(
+                baseUrl + API_PREFIX + "/{id}",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {},
+                id
+        );
         
         return handleResponse(responseEntity.getBody());
     }
@@ -146,10 +181,13 @@ public class OrderServiceClientImpl implements OrderServiceClient {
     public OrderResponse getOrderByOrderNo(String orderNo) {
         log.debug("调用查询订单接口，订单号: {}", orderNo);
         
-        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restClient.get()
-                .uri(baseUrl + API_PREFIX + "/order-no/{orderNo}", orderNo)
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {});
+        ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = restTemplate.exchange(
+                baseUrl + API_PREFIX + "/order-no/{orderNo}",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {},
+                orderNo
+        );
         
         return handleResponse(responseEntity.getBody());
     }
@@ -158,10 +196,13 @@ public class OrderServiceClientImpl implements OrderServiceClient {
     public List<OrderResponse> getOrdersByUserId(Long userId) {
         log.debug("调用查询用户订单列表接口，用户ID: {}", userId);
         
-        ResponseEntity<ApiRestResponse<List<OrderResponse>>> responseEntity = restClient.get()
-                .uri(baseUrl + API_PREFIX + "/user/{userId}", userId)
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<ApiRestResponse<List<OrderResponse>>>() {});
+        ResponseEntity<ApiRestResponse<List<OrderResponse>>> responseEntity = restTemplate.exchange(
+                baseUrl + API_PREFIX + "/user/{userId}",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<ApiRestResponse<List<OrderResponse>>>() {},
+                userId
+        );
         
         return handleResponse(responseEntity.getBody());
     }
@@ -174,12 +215,16 @@ public class OrderServiceClientImpl implements OrderServiceClient {
             throw new IllegalArgumentException("查询参数无效");
         }
         
-        ResponseEntity<ApiRestResponse<OrderPageResponse>> responseEntity = restClient.post()
-                .uri(baseUrl + API_PREFIX + "/query")
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(query)
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<ApiRestResponse<OrderPageResponse>>() {});
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<OrderQueryRequest> entity = new HttpEntity<>(query, headers);
+        
+        ResponseEntity<ApiRestResponse<OrderPageResponse>> responseEntity = restTemplate.exchange(
+                baseUrl + API_PREFIX + "/query",
+                HttpMethod.POST,
+                entity,
+                new ParameterizedTypeReference<ApiRestResponse<OrderPageResponse>>() {}
+        );
         
         return handleResponse(responseEntity.getBody());
     }

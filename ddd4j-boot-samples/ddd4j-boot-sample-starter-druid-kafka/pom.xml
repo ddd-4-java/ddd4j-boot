@@ -29,6 +29,12 @@
             <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
             <version>${revision}</version>
         </dependency>
+        <!-- For sample common -->
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-sample-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
 
         <!-- For Kafka -->
         <dependency>

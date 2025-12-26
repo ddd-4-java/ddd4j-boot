@@ -1,7 +1,8 @@
 package io.ddd4j.boot.sample.order.application.response;
 
 import io.ddd4j.boot.sample.order.application.dto.OrderDTO;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author DDD4J
  * @since 1.0.0
  */
-@Schema(description = "订单分页响应")
+@ApiModel(description = "订单分页响应")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,45 +30,45 @@ public class OrderPageResponse implements Serializable {
     /**
      * 订单列表数据
      */
-    @Schema(description = "订单列表", required = true)
+    @ApiModelProperty(value = "订单列表", required = true)
     private List<OrderDTO> records;
     
     /**
      * 总记录数
      */
-    @Schema(description = "总记录数", example = "100", required = true)
+    @ApiModelProperty(value = "总记录数", example = "100", required = true)
     private Long total;
     
     /**
      * 当前页码
      * 从1开始
      */
-    @Schema(description = "当前页码（从1开始）", example = "1", required = true)
+    @ApiModelProperty(value = "当前页码（从1开始）", example = "1", required = true)
     private Integer pageNum;
     
     /**
      * 每页大小
      */
-    @Schema(description = "每页大小", example = "10", required = true)
+    @ApiModelProperty(value = "每页大小", example = "10", required = true)
     private Integer pageSize;
     
     /**
      * 总页数
      * 根据总记录数和每页大小计算得出
      */
-    @Schema(description = "总页数", example = "10", required = true)
+    @ApiModelProperty(value = "总页数", example = "10", required = true)
     private Integer totalPages;
     
     /**
      * 是否有上一页
      */
-    @Schema(description = "是否有上一页", example = "false")
+    @ApiModelProperty(value = "是否有上一页", example = "false")
     private Boolean hasPrevious;
     
     /**
      * 是否有下一页
      */
-    @Schema(description = "是否有下一页", example = "true")
+    @ApiModelProperty(value = "是否有下一页", example = "true")
     private Boolean hasNext;
     
     /**

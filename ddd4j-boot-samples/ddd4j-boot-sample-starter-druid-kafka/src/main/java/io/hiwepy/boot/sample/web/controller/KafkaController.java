@@ -3,7 +3,7 @@ package io.hiwepy.boot.sample.web.controller;
 import com.alibaba.fastjson2.JSON;
 import io.ddd4j.boot.core.ApiRestResponse;
 import io.hiwepy.boot.sample.setup.TopicConstant;
-import jakarta.annotation.Resource;
+import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import org.springframework.kafka.core.KafkaOperations;
 import org.springframework.kafka.core.KafkaTemplate;

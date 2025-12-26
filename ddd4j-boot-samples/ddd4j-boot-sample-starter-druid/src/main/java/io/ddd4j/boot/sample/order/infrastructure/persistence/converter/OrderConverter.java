@@ -36,11 +36,11 @@ public class OrderConverter {
         
         if (order.getShippingAddress() != null) {
             Address address = order.getShippingAddress();
-            entity.setProvince(address.province());
-            entity.setCity(address.city());
-            entity.setDistrict(address.district());
-            entity.setDetail(address.detail());
-            entity.setZipCode(address.zipCode());
+            entity.setProvince(address.getProvince());
+            entity.setCity(address.getCity());
+            entity.setDistrict(address.getDistrict());
+            entity.setDetail(address.getDetail());
+            entity.setZipCode(address.getZipCode());
         }
         
         entity.setRemark(order.getRemark());

@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.setup.config;
 
-import jakarta.jms.Queue;
-import jakarta.jms.Topic;
+import javax.jms.Queue;
+import javax.jms.Topic;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.context.annotation.Bean;
