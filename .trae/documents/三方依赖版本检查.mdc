@@ -1,0 +1,2 @@
+对比 https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent/3.0.13 页面 Managed Dependencies 列表中依赖版本号 与 @ddd4j-boot-dependencies/pom.xml 中 相同组件定义的版本号，确保在 @ddd4j-boot-dependencies/pom.xml
+ 有定义版本号的依赖版本，不能低于网页中列举的，如果有帮我更新它

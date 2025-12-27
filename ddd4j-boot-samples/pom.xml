@@ -32,7 +32,6 @@
         <module>ddd4j-boot-sample-infrastructure</module>
         <module>ddd4j-boot-sample-common</module>
         <module>ddd4j-boot-sample-starter-druid</module>
-        <module>ddd4j-boot-sample-starter-druid-activemq</module>
         <module>ddd4j-boot-sample-starter-druid-amqp</module>
         <module>ddd4j-boot-sample-starter-druid-kafka</module>
         <module>ddd4j-boot-sample-starter-druid-mqtt-client1</module>
@@ -41,7 +40,6 @@
         <module>ddd4j-boot-sample-starter-druid-rocketmq</module>
         <module>ddd4j-boot-sample-starter-druid-war</module>
         <module>ddd4j-boot-sample-starter-hikaricp</module>
-        <module>ddd4j-boot-sample-starter-hikaricp-activemq</module>
         <module>ddd4j-boot-sample-starter-hikaricp-amqp</module>
         <module>ddd4j-boot-sample-starter-hikaricp-kafka</module>
         <module>ddd4j-boot-sample-starter-hikaricp-rocketmq</module>
