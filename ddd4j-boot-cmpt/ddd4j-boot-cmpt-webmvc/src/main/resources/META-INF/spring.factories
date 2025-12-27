@@ -1,6 +1,6 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.hiwepy.boot.autoconfigure.DefaultMessageSourceAutoConfiguration,\
-io.hiwepy.boot.autoconfigure.DefaultSequenceConfiguration,\
-io.hiwepy.boot.autoconfigure.DefaultSpringContextConfiguration,\
-io.hiwepy.boot.autoconfigure.DefaultWebMvcConfiguration
+io.ddd4j.boot.cmpt.webmvc.DefaultMessageSourceAutoConfiguration,\
+io.ddd4j.boot.cmpt.webmvc.DefaultSequenceConfiguration,\
+io.ddd4j.boot.cmpt.webmvc.DefaultSpringContextConfiguration,\
+io.ddd4j.boot.cmpt.webmvc.DefaultWebMvcConfiguration

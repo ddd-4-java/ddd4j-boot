@@ -2,19 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>ddd4j-boot-cmpt</artifactId>
-        <groupId>com.github.hiwepy</groupId>
-        <version>${revision}</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.ddd4j.boot</groupId>
+        <artifactId>ddd4j-boot-cmpt</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
     <artifactId>ddd4j-boot-cmpt-logs</artifactId>
+    <description>Ddd4j Boot Log Component</description>
 
     <dependencies>
-        <!-- For Ddd4j API -->
+        <!-- For DDD4j -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>
             <version>${revision}</version>
         </dependency>

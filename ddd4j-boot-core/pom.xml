@@ -4,11 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.hiwepy</groupId>
+        <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-dependencies</artifactId>
         <version>${revision}</version>
-        <relativePath>../ddd4j-boot-dependencies</relativePath>
+        <relativePath>../ddd4j-boot-dependencies/pom.xml</relativePath>
     </parent>
+
     <artifactId>ddd4j-boot-core</artifactId>
 
     <dependencies>
@@ -57,20 +58,46 @@
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
         </dependency>
+        <!-- For DDD4j Core -->
+        <dependency>
+            <groupId>org.fuin.ddd4j</groupId>
+            <artifactId>ddd-4-java-core</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.fuin.ddd4j/ddd-4-java-codegen-api -->
+        <dependency>
+            <groupId>org.fuin.ddd4j</groupId>
+            <artifactId>ddd-4-java-codegen-api</artifactId>
+            <version>0.7.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.fuin.ddd4j/ddd-4-java-jackson -->
+        <dependency>
+            <groupId>org.fuin.ddd4j</groupId>
+            <artifactId>ddd-4-java-jackson</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.fuin.ddd4j/ddd-4-java-esc -->
+        <dependency>
+            <groupId>org.fuin.ddd4j</groupId>
+            <artifactId>ddd-4-java-esc</artifactId>
+        </dependency>
         <!-- For BouncyCastle -->
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpkix-jdk18on</artifactId>
         </dependency>
-        <!-- For Transmittable -->
+        <!-- For Guava -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>transmittable-thread-local</artifactId>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
         <!-- For Fastjson -->
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
+        </dependency>
+        <!-- For Jandex：https://github.com/smallrye/jandex -->
+        <dependency>
+            <groupId>io.smallrye</groupId>
+            <artifactId>jandex</artifactId>
         </dependency>
         <!-- For Jackson -->
         <dependency>
@@ -81,15 +108,15 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
+        <!-- For Transmittable -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+        </dependency>
         <!-- For StringTemplate -->
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>ST4</artifactId>
-        </dependency>
-        <!-- For Guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
         </dependency>
         <!-- For Swagger -->
         <dependency>
@@ -181,6 +208,10 @@
         <dependency>
             <groupId>com.googlecode.libphonenumber</groupId>
             <artifactId>libphonenumber</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
         </dependency>
 
     </dependencies>

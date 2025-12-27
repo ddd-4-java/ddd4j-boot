@@ -1,25 +1,27 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.hiwepy</groupId>
+        <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-cmpt</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
+    <description>Ddd4j Boot WebMvC Component</description>
 
     <dependencies>
-
-        <!-- For Ddd4j Core -->
+        <!-- For DDD4j -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-cmpt-jackson</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -47,11 +49,17 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
             </exclusions>
+        </dependency>
+        <!-- For Spring Tx -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <!-- For Jackson JSR310 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
     </dependencies>

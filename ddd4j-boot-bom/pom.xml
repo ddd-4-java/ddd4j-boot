@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.hiwepy</groupId>
+        <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
@@ -18,69 +18,103 @@
         <dependencies>
             <!-- Ddd4j Boot Core -->
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-core</artifactId>
                 <version>${revision}</version>
             </dependency>
-
             <!-- Ddd4j Boot Components -->
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-akka</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-cola</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-crypto</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-datascope</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-dubbo</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-excel</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-express</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-external</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-jackson</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-kafka</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-license</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-logs</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-pf4j</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-satoken</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-validation</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-webflux</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
                 <version>${revision}</version>
             </dependency>
