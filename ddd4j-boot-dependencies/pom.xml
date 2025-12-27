@@ -324,9 +324,7 @@
         <maven.version>3.6.3</maven.version>
         <mercadopago-sdk-java.version>2.1.29</mercadopago-sdk-java.version>
         <metadata-extractor.version>2.19.0</metadata-extractor.version>
-        <mica-mqtt.version>2.5.9</mica-mqtt.version>
         <mockito.version>5.20.0</mockito.version>
-        <minio.version>8.6.0</minio.version>
         <mongodb.version>5.5.0</mongodb.version>
         <mongo-java-driver.version>3.12.14</mongo-java-driver.version>
         <mssql-jdbc.version>12.6.3.jre8</mssql-jdbc.version>
@@ -357,13 +355,14 @@
         <!-- 降级到兼容 JDK 8 的版本（MySQL Connector/J 9.x 需要 JDK 11+） -->
         <mysql.version>8.0.33</mysql.version>
         <mysql-binlog-connector-java.version>0.30.1</mysql-binlog-connector-java.version>
+        <mica-mqtt.version>2.5.10</mica-mqtt.version>
+        <micrometer.version>1.14.4</micrometer.version>
         <minio.version>8.6.0</minio.version>
         <nacos.client.version>2.2.4</nacos.client.version>
         <neethi.version>3.2.1</neethi.version>
         <netty.version>4.1.128.Final</netty.version>
         <netty-socketio.version>2.0.13</netty-socketio.version>
         <netty-tcnative.version>2.0.74.Final</netty-tcnative.version>
-        <micrometer.version>1.14.4</micrometer.version>
         <nimbus-jose-jwt.version>9.41.1</nimbus-jose-jwt.version>
         <objenesis.version>3.4</objenesis.version>
         <opentracing.version>0.33.0</opentracing.version>
@@ -4376,6 +4375,12 @@
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.dromara.mica-mqtt/mica-mqtt-client -->
+            <dependency>
+                <groupId>org.dromara.mica-mqtt</groupId>
+                <artifactId>mica-mqtt-client</artifactId>
+                <version>${mica-mqtt.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-client -->
             <dependency>

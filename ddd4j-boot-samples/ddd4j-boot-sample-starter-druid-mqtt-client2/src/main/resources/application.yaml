@@ -343,7 +343,7 @@ mqtt:
     port: 1883                  # 端口：默认：1883
     name: Mica-Mqtt-Client      # 名称，默认：Mica-Mqtt-Client
     client-id: 000001           # 客户端Id（非常重要，一般为设备 sn，不可重复）
-    user-name: mica             # 认证的用户名
+    username: mica              # 认证的用户名，注意：2.5.x 之前是 user-name
     password: 123456            # 认证的密码
     global-subscribe:           # 全局订阅的 topic，可被全局监听到，保留 session 停机重启，依然可以接受到消息。（2.2.9开始支持）
     timeout: 5                  # 超时时间，单位：秒，默认：5秒
@@ -355,7 +355,7 @@ mqtt:
     keep-alive-secs: 60         # keep-alive 时间，单位：秒
     heartbeat-mode: LAST_REQ    # 心跳模式，支持最后发送或接收心跳时间来计算心跳，默认：最后发送心跳的时间。（2.4.3 开始支持）
     heartbeat-timeout-strategy: PING # 心跳超时策略，支持发送 PING 和 CLOSE 断开连接，默认：最大努力发送 PING。（2.4.3 开始支持）
-    clean-session: true         # mqtt clean session，默认：true
+    clean-start: true           # session 保留 2.5.x 使用 clean-start，老版本用 clean-session，默认：true
     session-expiry-interval-secs: 0 # 开启保留 session 时，session 的有效期，默认：0（2.4.2 开始支持）
     biz-thread-pool-size: 2     # mqtt 工作线程数，默认：2，如果消息量比较大，处理较慢，例如做 emqx 的转发消息处理，可以调大此参数（2.4.2 开始支持）
     ssl:

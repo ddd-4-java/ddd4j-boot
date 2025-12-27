@@ -3,6 +3,7 @@ package io.ddd4j.boot.cmpt.express.interfaces.web;
 import io.ddd4j.boot.cmpt.express.application.dto.*;
 import io.ddd4j.boot.cmpt.express.application.service.RuleEngineApplicationService;
 import io.ddd4j.boot.cmpt.express.application.service.RuleManagementService;
+import io.ddd4j.boot.cmpt.express.domain.model.entity.RuleDefinition;
 import io.ddd4j.boot.cmpt.express.domain.model.vo.RuleExecutionResult;
 import io.ddd4j.boot.cmpt.express.domain.model.vo.RuleValidationResult;
 import lombok.extern.slf4j.Slf4j;
@@ -100,8 +101,8 @@ public class RuleManagementController {
      */
     @PostMapping
     public ResponseEntity<RuleResponse> createRule(@RequestBody CreateRuleRequest request) {
-        var rule = ruleMapper.toEntity(request);
-        var savedRule = ruleManagementService.createRule(rule);
+        RuleDefinition rule = ruleMapper.toEntity(request);
+        RuleDefinition savedRule = ruleManagementService.createRule(rule);
         return ResponseEntity.ok(ruleMapper.toResponse(savedRule));
     }
 
@@ -117,10 +118,10 @@ public class RuleManagementController {
     @PutMapping("/{id}")
     public ResponseEntity<RuleResponse> updateRule(@PathVariable Long id, @RequestBody UpdateRuleRequest request) {
         try {
-            var rule = ruleManagementService.getRuleById(id)
+            RuleDefinition rule = ruleManagementService.getRuleById(id)
                     .orElseThrow(() -> new IllegalArgumentException("规则不存在: " + id));
             ruleMapper.updateEntity(rule, request);
-            var updatedRule = ruleManagementService.updateRule(id, rule);
+            RuleDefinition updatedRule = ruleManagementService.updateRule(id, rule);
             return ResponseEntity.ok(ruleMapper.toResponse(updatedRule));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
@@ -152,7 +153,7 @@ public class RuleManagementController {
     @PostMapping("/{id}/enable")
     public ResponseEntity<RuleResponse> enableRule(@PathVariable Long id) {
         try {
-            var rule = ruleManagementService.enableRule(id);
+            RuleDefinition rule = ruleManagementService.enableRule(id);
             return ResponseEntity.ok(ruleMapper.toResponse(rule));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
@@ -170,7 +171,7 @@ public class RuleManagementController {
     @PostMapping("/{id}/disable")
     public ResponseEntity<RuleResponse> disableRule(@PathVariable Long id) {
         try {
-            var rule = ruleManagementService.disableRule(id);
+            RuleDefinition rule = ruleManagementService.disableRule(id);
             return ResponseEntity.ok(ruleMapper.toResponse(rule));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();

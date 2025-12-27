@@ -1,6 +1,8 @@
 package io.hiwepy.boot.sample.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.mica.mqtt.codec.MqttQoS;
+import org.dromara.mica.mqtt.codec.message.builder.MqttPublishBuilder;
 import org.dromara.mica.mqtt.spring.client.MqttClientTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,10 @@ public class MainService {
     private MqttClientTemplate client;
 
     public boolean publish() {
-        client.publish("/test/client,mica最牛皮".getBytes(StandardCharsets.UTF_8));
+        client.publish(new MqttPublishBuilder()
+                .topicName("/test/client,mica最牛皮")
+                .payload("mica最牛皮".getBytes(StandardCharsets.UTF_8))
+                .qos(MqttQoS.QOS0));
         return true;
     }
 
