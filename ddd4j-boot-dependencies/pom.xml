@@ -412,6 +412,7 @@
         <protostuff.version>1.8.0</protostuff.version>
         <protobuf-java.version>4.30.2</protobuf-java.version>
         <proxool.version>0.9.1</proxool.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
         <pulsar.version>4.1.2</pulsar.version>
         <pulsar-reactive.version>0.7.0</pulsar-reactive.version>
         <qcloud-cos-api.version>5.6.259</qcloud-cos-api.version>
@@ -675,9 +676,27 @@
         <spring-boot-starter-rocketmq.version>2.3.3</spring-boot-starter-rocketmq.version>
         <spring-boot-starter-schemacrawler.version>1.0.7.RELEASE</spring-boot-starter-schemacrawler.version>
         <spring-boot-starter-seata.version>${seata.version}</spring-boot-starter-seata.version>
+        <spring-boot-starter-security-biz.version>2.3.x.20240823.RELEASE</spring-boot-starter-security-biz.version>
+        <spring-boot-starter-security-cas.version>2.3.x.20240823.RELEASE</spring-boot-starter-security-cas.version>
+        <spring-boot-starter-security-dingtalk.version>2.3.x.20240823.RELEASE</spring-boot-starter-security-dingtalk.version>
+        <spring-boot-starter-security-facebook.version>2.3.x.20240823.RELEASE</spring-boot-starter-security-facebook.version>
+        <spring-boot-starter-security-google.version>2.3.x.20240823.RELEASE</spring-boot-starter-security-google.version>
+        <spring-boot-starter-security-jwt.version>2.3.x.20240823.RELEASE</spring-boot-starter-security-jwt.version>
+        <spring-boot-starter-security-line.version>2.3.x.20240823.RELEASE</spring-boot-starter-security-line.version>
+        <spring-boot-starter-security-pac4j.version>2.3.x.20240823.RELEASE</spring-boot-starter-security-pac4j.version>
+        <spring-boot-starter-security-qrcode.version>2.3.x.20240823.RELEASE</spring-boot-starter-security-qrcode.version>
+        <spring-boot-starter-security-weixin.version>2.3.x.20240823.RELEASE</spring-boot-starter-security-weixin.version>
         <spring-boot-starter-shanyan.version>2.3.x.20240823.RELEASE</spring-boot-starter-shanyan.version>
         <spring-boot-starter-shardingsphere-jdbc.version>5.2.1</spring-boot-starter-shardingsphere-jdbc.version>
-        <spring-boot-starter-sigar.version>2.3.x.20240823.RELEASE</spring-boot-starter-sigar.version>
+        <spring-boot-starter-shiro-biz.version>2.3.x.20240823.RELEASE</spring-boot-starter-shiro-biz.version>
+        <spring-boot-starter-shiro-cas.version>2.3.x.20240823.RELEASE</spring-boot-starter-shiro-cas.version>
+        <spring-boot-starter-shiro-csrfguard.version>2.3.x.20240823.RELEASE</spring-boot-starter-shiro-csrfguard.version>
+        <spring-boot-starter-shiro-dingtalk.version>2.3.x.20240823.RELEASE</spring-boot-starter-shiro-dingtalk.version>
+        <spring-boot-starter-shiro-jwt.version>2.3.x.20240823.RELEASE</spring-boot-starter-shiro-jwt.version>
+        <spring-boot-starter-shiro-kisso.version>2.3.x.20240823.RELEASE</spring-boot-starter-shiro-kisso.version>
+        <spring-boot-starter-shiro-pac4j.version>2.3.x.20240823.RELEASE</spring-boot-starter-shiro-pac4j.version>
+        <spring-boot-starter-shiro-weixin.version>2.3.x.20240823.RELEASE</spring-boot-starter-shiro-weixin.version>
+	<spring-boot-starter-sigar.version>2.3.x.20240823.RELEASE</spring-boot-starter-sigar.version>
         <spring-boot-starter-simplecaptcha.version>2.3.x.20240823.RELEASE</spring-boot-starter-simplecaptcha.version>
         <spring-boot-starter-smartcaptcha.version>2.3.x.20240823.RELEASE</spring-boot-starter-smartcaptcha.version>
         <spring-boot-starter-soapui.version>2.3.x.20240823.RELEASE</spring-boot-starter-soapui.version>
@@ -6261,10 +6280,10 @@
                 <artifactId>thumbnailator</artifactId>
                 <version>${thumbnailator.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring6 -->
+            <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5 -->
             <dependency>
                 <groupId>org.thymeleaf</groupId>
-                <artifactId>thymeleaf-spring6</artifactId>
+                <artifactId>thymeleaf-spring5</artifactId>
                 <version>${thymeleaf.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-conditionalcomments -->
@@ -7038,6 +7057,12 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/spring-boot-starter-dropwizard-metrics -->
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>dropwizard-metrics-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-dropwizard-metrics.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -7065,12 +7090,6 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-dynamic-datasource.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot3-starter -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
                 <version>${spring-boot-starter-dynamic-datasource.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/cn.afterturn/easypoi-spring-boot-starter -->
@@ -7641,6 +7660,66 @@
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>shardingsphere-encrypt-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-shardingsphere-jdbc.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring-boot-starter -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring-boot-starter</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring-boot-web-starter -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring-boot-web-starter</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/shiro-biz-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>shiro-biz-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-shiro-biz.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/shiro-cas-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>shiro-cas-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-shiro-cas.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/shiro-csrfguard-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>shiro-csrfguard-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-shiro-csrfguard.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/shiro-dingtalk-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>shiro-dingtalk-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-shiro-dingtalk.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/shiro-jwt-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>shiro-jwt-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-shiro-jwt.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/shiro-kisso-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>shiro-kisso-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-shiro-kisso.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/shiro-pac4j-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>shiro-pac4j-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-shiro-pac4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/shiro-weixin-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>shiro-weixin-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-shiro-weixin.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/sigar-spring-boot-starter -->
             <dependency>

@@ -34,6 +34,7 @@
         <module>ddd4j-boot-cmpt-validation</module>
         <module>ddd4j-boot-cmpt-webflux</module>
         <module>ddd4j-boot-cmpt-webmvc</module>
+        <module>ddd4j-boot-cmpt-shiro</module>
     </modules>
 
     <dependencies>
