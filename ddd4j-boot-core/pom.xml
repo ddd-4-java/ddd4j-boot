@@ -67,17 +67,6 @@
             <groupId>org.fuin.ddd4j</groupId>
             <artifactId>ddd-4-java-core</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.fuin.ddd4j/ddd-4-java-codegen-api -->
-        <dependency>
-            <groupId>org.fuin.ddd4j</groupId>
-            <artifactId>ddd-4-java-codegen-api</artifactId>
-            <version>0.7.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.fuin.ddd4j/ddd-4-java-jackson -->
-        <dependency>
-            <groupId>org.fuin.ddd4j</groupId>
-            <artifactId>ddd-4-java-jackson</artifactId>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.fuin.ddd4j/ddd-4-java-esc -->
         <dependency>
             <groupId>org.fuin.ddd4j</groupId>

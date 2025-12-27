@@ -68,7 +68,7 @@ public class DefaultMessageSourceAutoConfiguration {
     public MessageSource messageSource(@Qualifier("myMessageSourceProperties") MessageSourceProperties properties, ResourceBasenameHandler resourceBasenameHandler) {
         MultiResourceBundleMessageSource messageSource = new MultiResourceBundleMessageSource();
         messageSource.setBasenameHandler(resourceBasenameHandler);
-                /*if (StringUtils.hasText(properties.getBasename())) {
+        /*if (StringUtils.hasText(properties.getBasename())) {
             messageSource.setBasenames(StringUtils.commaDelimitedListToStringArray(
                     StringUtils.trimAllWhitespace(properties.getBasename())));
         }*/
@@ -90,7 +90,7 @@ public class DefaultMessageSourceAutoConfiguration {
 
     protected static class ResourceBundleCondition extends SpringBootCondition {
 
-        private static ConcurrentReferenceHashMap<String, ConditionOutcome> cache = new ConcurrentReferenceHashMap<>();
+        private static final ConcurrentReferenceHashMap<String, ConditionOutcome> cache = new ConcurrentReferenceHashMap<>();
 
         @Override
         public ConditionOutcome getMatchOutcome(ConditionContext context,

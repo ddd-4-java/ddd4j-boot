@@ -40,7 +40,7 @@
         <apiguardian-api.version>1.1.2</apiguardian-api.version>
         <appium.version>10.0.0</appium.version>
         <aspectj.version>1.9.25.1</aspectj.version>
-        <assertj.version>3.27.3</assertj.version>
+        <assertj.version>3.27.6</assertj.version>
         <asmsupport.version>0.4.3</asmsupport.version>
         <async-http-client.version>3.0.4</async-http-client.version>
         <auth0-java-jwt.version>4.5.0</auth0-java-jwt.version>
@@ -322,16 +322,14 @@
         <management-core.version>2.1.30.4.43</management-core.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <markdown.version>1.11.1</markdown.version>
-        <mariadb.version>3.5.6</mariadb.version>
+        <mariadb.version>3.5.7</mariadb.version>
         <maven.version>3.6.3</maven.version>
         <mercadopago-sdk-java.version>2.1.29</mercadopago-sdk-java.version>
         <metadata-extractor.version>2.19.0</metadata-extractor.version>
-        <mica-mqtt.version>2.5.9</mica-mqtt.version>
         <mockito.version>5.20.0</mockito.version>
-        <minio.version>8.6.0</minio.version>
         <mongodb.version>5.6.1</mongodb.version>
         <mongo-java-driver.version>3.12.14</mongo-java-driver.version>
-        <mssql-jdbc.version>12.8.2.jre11</mssql-jdbc.version>
+        <mssql-jdbc.version>12.10.2.jre11</mssql-jdbc.version>
         <mybatis.version>3.5.19</mybatis.version>
         <mybatis-dynamic-sql.version>1.5.2</mybatis-dynamic-sql.version>
         <mybatis-plus.version>3.5.15</mybatis-plus.version>
@@ -358,19 +356,21 @@
         <mybatis-tk.version>5.0.1</mybatis-tk.version>
         <mysql.version>9.5.0</mysql.version>
         <mysql-binlog-connector-java.version>0.30.1</mysql-binlog-connector-java.version>
+        <mica-mqtt.version>2.5.10</mica-mqtt.version>
+        <micrometer.version>1.16.1</micrometer.version>
+        <micrometer-tracing.version>1.6.1</micrometer-tracing.version>
         <minio.version>8.6.0</minio.version>
-        <nacos-client.version>3.1.1</nacos-client.version>
+        <nacos.client.version>3.1.1</nacos.client.version>
         <neethi.version>3.2.1</neethi.version>
         <netty.version>4.2.7.Final</netty.version>
         <netty-socketio.version>2.0.13</netty-socketio.version>
         <netty-tcnative.version>2.0.74.Final</netty-tcnative.version>
-        <micrometer.version>1.16.1</micrometer.version>
-        <micrometer-tracing.version>1.6.1</micrometer-tracing.version>
         <nimbus-jose-jwt.version>10.6</nimbus-jose-jwt.version>
         <objenesis.version>3.4</objenesis.version>
         <opentelemetry.version>1.57.0</opentelemetry.version>
         <opentracing.version>0.33.0</opentracing.version>
         <opentest4j.version>1.3.0</opentest4j.version>
+        <okhttp.version>4.12.0</okhttp.version>
         <ons-client.version>2.0.9.Final</ons-client.version>
         <oracle-database.version>23.26.0.0.0</oracle-database.version>
         <oshi.version>6.9.1</oshi.version>
@@ -403,8 +403,6 @@
         <postgresql.version>42.7.8</postgresql.version>
         <poi.version>5.5.1</poi.version>
         <powerjob-client.version>5.1.2</powerjob-client.version>
-        <prometheus.version>1.4.3</prometheus.version>
-        <prometheus-pushgateway.version>0.16.0</prometheus-pushgateway.version>
         <prometheus-client.version>1.4.3</prometheus-client.version>
         <prometheus-simpleclient.version>0.16.0</prometheus-simpleclient.version>
         <protostuff.version>1.8.0</protostuff.version>
@@ -4366,11 +4364,17 @@
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.dromara.mica-mqtt/mica-mqtt-client -->
+            <dependency>
+                <groupId>org.dromara.mica-mqtt</groupId>
+                <artifactId>mica-mqtt-client</artifactId>
+                <version>${mica-mqtt.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-client -->
             <dependency>
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>
-                <version>${nacos-client.version}</version>
+                <version>${nacos.client.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.neethi -->
             <!-- Apache Neethi该组件为Axis2提供了非完整的WS-Policy实现，允许 Axis2用户操作和组合策略文档。 是Axis2用于创建策略文档的运行时表示形式、以及对策略文档执行规范化、合并和求交操作的工具。
@@ -5370,57 +5374,13 @@
                 <artifactId>powerjob-client</artifactId>
                 <version>${powerjob-client.version}</version>
             </dependency>
-
-            <!-- https://mvnrepository.com/artifact/io.prometheus/prometheus-metrics-core -->
+            <!-- https://mvnrepository.com/artifact/io.prometheus/prometheus-metrics-bom -->
             <dependency>
                 <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-core</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-model</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-config</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-instrumentation-jvm</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-exporter-servlet-jakarta</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-tracer-common</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-tracer-otel</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-tracer-otel-agent</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-exposition-formats</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-exposition-textformats</artifactId>
-                <version>${prometheus.version}</version>
+                <artifactId>prometheus-metrics-bom</artifactId>
+                <version>${prometheus-client.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.prometheus/simpleclient -->
             <dependency>
