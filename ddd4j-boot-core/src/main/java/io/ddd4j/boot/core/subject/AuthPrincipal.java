@@ -10,11 +10,6 @@ import java.util.*;
 @Data
 public class AuthPrincipal implements Serializable {
 
-    /**
-     * 授权方式（可选）
-     */
-    private String authType;
-
     //==============================认证授权信息====================================
 
     /**
@@ -36,7 +31,7 @@ public class AuthPrincipal implements Serializable {
     /**
      * 账号ID（账号来源表Id）
      */
-    private String accountId;
+    private String loginId;
     /**
      * 用户ID（用户来源表Id）
      */
@@ -80,18 +75,6 @@ public class AuthPrincipal implements Serializable {
      * 用户是否需要多因子验证
      */
     private boolean verify = Boolean.FALSE;
-    /**
-     * 请求参数签名（可选）
-     */
-    private String sign;
-    /**
-     * 用户最新经度（可选）
-     */
-    private double longitude;
-    /**
-     * 用户最新纬度（可选）
-     */
-    private double latitude;
 
     //==============================此次登录的请求来源====================================
 
@@ -119,6 +102,10 @@ public class AuthPrincipal implements Serializable {
      * 此次登录的客户端设备id
      */
     private String deviceId;
+    /**
+     * 此次登录的客户端 UserAgent 信息
+     */
+    private String userAgent;
 
     @Accessors(chain = true)
     @Data
