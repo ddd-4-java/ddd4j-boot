@@ -40,10 +40,7 @@
         <apiguardian-api.version>1.1.2</apiguardian-api.version>
         <appium.version>9.3.0</appium.version>
         <aspectj.version>1.9.25</aspectj.version>
-        <assertj.version>3.26.3</assertj.version>
-        <asciidoctorj.version>3.0.0</asciidoctorj.version>
-        <asciidoctorj.pdf.version>2.3.18</asciidoctorj.pdf.version>
-        <asmsupport.version>0.4.3</asmsupport.version>
+        <assertj.version>3.26.3</assertj.version><asmsupport.version>0.4.3</asmsupport.version>
         <async-http-client.version>3.0.4</async-http-client.version>
         <auth0-java-jwt.version>4.5.0</auth0-java-jwt.version>
         <auth0-jwks-rsa.version>0.23.0</auth0-jwks-rsa.version>
@@ -85,7 +82,7 @@
         <commons-betwixt.version>0.8</commons-betwixt.version>
         <commons-chain.version>1.2</commons-chain.version>
         <commons-cli.version>1.9.0</commons-cli.version>
-        <commons-codec.version>1.17.1</commons-codec.version>
+        <commons-codec.version>1.20.0</commons-codec.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <commons-collections4.version>4.5.0</commons-collections4.version>
         <commons-compiler.version>3.1.12</commons-compiler.version>

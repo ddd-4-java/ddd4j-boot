@@ -1,4 +1,4 @@
-package io.ddd4j.boot.cmpt.jackson.ser;
+package io.ddd4j.boot.cmpt.jackson.deser;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

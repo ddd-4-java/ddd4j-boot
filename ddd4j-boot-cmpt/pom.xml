@@ -59,6 +59,10 @@
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
         <!-- For Spring Boot Test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
