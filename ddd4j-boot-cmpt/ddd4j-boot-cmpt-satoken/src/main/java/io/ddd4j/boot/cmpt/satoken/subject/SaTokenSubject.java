@@ -1,17 +1,12 @@
 package io.ddd4j.boot.cmpt.satoken.subject;
 
-import cn.dev33.satoken.error.SaErrorCode;
-import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaStrategy;
 import io.ddd4j.boot.cmpt.satoken.util.StpKit;
 import io.ddd4j.boot.core.subject.AuthPrincipal;
 import io.ddd4j.boot.core.subject.Subject;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 public class SaTokenSubject implements Subject {
 

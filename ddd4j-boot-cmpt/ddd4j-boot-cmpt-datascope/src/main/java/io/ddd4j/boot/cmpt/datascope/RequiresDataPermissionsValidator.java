@@ -1,11 +1,11 @@
 package io.ddd4j.boot.cmpt.datascope;
 
 import io.ddd4j.boot.cmpt.datascope.annotation.RequiresDataPermissions;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.biz.utils.SpringContextUtils;
 
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 import java.util.Objects;
 
 /**

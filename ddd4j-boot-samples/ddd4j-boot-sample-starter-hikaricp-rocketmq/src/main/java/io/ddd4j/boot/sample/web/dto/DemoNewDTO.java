@@ -6,8 +6,9 @@ package io.ddd4j.boot.sample.web.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.NotBlank;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
 
 @ApiModel(description = "xxx数据传输对象")
 @Data

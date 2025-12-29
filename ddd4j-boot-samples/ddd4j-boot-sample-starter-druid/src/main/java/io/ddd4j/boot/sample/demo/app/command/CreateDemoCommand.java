@@ -2,8 +2,9 @@ package io.ddd4j.boot.sample.demo.app.command;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.NotBlank;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * 创建Demo命令

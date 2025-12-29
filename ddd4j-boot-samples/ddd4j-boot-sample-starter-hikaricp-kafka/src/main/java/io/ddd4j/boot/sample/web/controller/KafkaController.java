@@ -3,13 +3,14 @@ package io.ddd4j.boot.sample.web.controller;
 import com.alibaba.fastjson2.JSON;
 import io.ddd4j.boot.core.ApiRestResponse;
 import io.ddd4j.boot.sample.setup.TopicConstant;
-import javax.annotation.Resource;
-import javax.validation.constraints.NotNull;
 import org.springframework.kafka.core.KafkaOperations;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/kafka")

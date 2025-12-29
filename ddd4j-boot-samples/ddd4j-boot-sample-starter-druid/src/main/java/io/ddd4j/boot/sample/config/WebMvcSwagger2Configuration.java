@@ -1,9 +1,9 @@
 package io.ddd4j.boot.sample.config;
 
-import springfox.documentation.annotations.ApiIgnore;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Swagger2配置类

@@ -1,7 +1,6 @@
 package io.ddd4j.boot.core.util;
 
 import io.ddd4j.boot.core.XHeaders;
-import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.biz.utils.StringUtils;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -12,6 +11,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import reactor.core.publisher.Flux;
 
+import javax.servlet.http.HttpServletRequest;
 import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicReference;

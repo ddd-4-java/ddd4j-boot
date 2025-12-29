@@ -1,8 +1,8 @@
 package io.ddd4j.boot.core.message;
 
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.NotBlank;
 
+import javax.validation.constraints.NotBlank;
 import java.awt.TrayIcon.MessageType;
 import java.io.Serializable;
 import java.util.HashMap;

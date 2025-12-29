@@ -1,10 +1,10 @@
 package io.ddd4j.boot.cmpt.validation.constraintvalidators;
 
 import io.ddd4j.boot.cmpt.validation.constraints.AllowableValues;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import org.springframework.util.StringUtils;
 
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 import java.util.List;
 

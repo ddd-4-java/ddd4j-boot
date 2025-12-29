@@ -2,9 +2,9 @@ package io.ddd4j.boot.cmpt.validation.constraints;
 
 
 import io.ddd4j.boot.cmpt.validation.constraintvalidators.AllowedValuesValidator;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
-
 import java.lang.annotation.*;
 
 @Documented
