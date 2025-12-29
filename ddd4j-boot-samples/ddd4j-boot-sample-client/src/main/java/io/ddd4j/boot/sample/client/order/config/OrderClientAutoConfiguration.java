@@ -3,10 +3,10 @@ package io.ddd4j.boot.sample.client.order.config;
 import io.ddd4j.boot.sample.client.order.api.OrderServiceClient;
 import io.ddd4j.boot.sample.client.order.impl.OrderServiceClientImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
  * @since 1.0.0
  */
 @Slf4j
-@AutoConfiguration
+@Configuration
 @EnableConfigurationProperties(OrderClientProperties.class)
 public class OrderClientAutoConfiguration {
     
