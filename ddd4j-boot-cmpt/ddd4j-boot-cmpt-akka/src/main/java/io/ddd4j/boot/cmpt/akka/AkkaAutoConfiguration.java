@@ -3,16 +3,16 @@ package io.ddd4j.boot.cmpt.akka;
 import akka.actor.ActorSystem;
 import io.ddd4j.boot.cmpt.akka.actor.SpringExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Akka Auto Configuration
  */
-@AutoConfiguration
+@Configuration
 @ConditionalOnClass(ActorSystem.class)
 @EnableConfigurationProperties(AkkaProperties.class)
 public class AkkaAutoConfiguration {
