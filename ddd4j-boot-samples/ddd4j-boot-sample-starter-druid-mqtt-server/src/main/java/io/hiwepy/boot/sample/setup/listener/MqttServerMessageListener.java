@@ -2,15 +2,11 @@ package io.hiwepy.boot.sample.setup.listener;
 
 import io.hiwepy.boot.sample.entity.User;
 import lombok.extern.slf4j.Slf4j;
-import org.dromara.mica.mqtt.codec.MqttQoS;
 import org.dromara.mica.mqtt.codec.message.MqttPublishMessage;
 import org.dromara.mica.mqtt.core.annotation.MqttServerFunction;
-import org.dromara.mica.mqtt.core.server.event.IMqttMessageListener;
 import org.springframework.stereotype.Service;
 import org.tio.core.ChannelContext;
 import org.tio.core.Node;
-
-import java.nio.charset.StandardCharsets;
 
 /**
  *  注解消息监听，注意：如果自行实现了 IMqttMessageListener，MqttServerFunction 注解就不生效了。

@@ -4,11 +4,12 @@
  */
 package io.ddd4j.boot.cmpt.webmvc;
 
-import io.ddd4j.boot.cmpt.webmvc.config.Server18nProperties;
+import io.ddd4j.boot.cmpt.webmvc.config.ServerI18nProperties;
 import io.ddd4j.boot.cmpt.webmvc.config.ServerInfoProperties;
 import io.ddd4j.boot.cmpt.webmvc.config.ServerVendorProperties;
 import io.ddd4j.boot.cmpt.webmvc.error.I18nResourceBasenameHandler;
 import io.ddd4j.boot.core.properties.BasePropertySourcePostProcessor;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.biz.context.support.MultiResourceBundleMessageSource;
@@ -36,12 +37,11 @@ import org.springframework.util.ConcurrentReferenceHashMap;
 import org.springframework.util.StringUtils;
 
 import java.time.Duration;
-import java.util.List;
 
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 @AutoConfigureBefore(MessageSourceAutoConfiguration.class)
-@EnableConfigurationProperties({ Server18nProperties.class, ServerInfoProperties.class, ServerVendorProperties.class})
+@EnableConfigurationProperties({ ServerI18nProperties.class, ServerInfoProperties.class, ServerVendorProperties.class})
 public class DefaultMessageSourceAutoConfiguration {
 
     private static final Resource[] NO_RESOURCES = {};
@@ -90,7 +90,7 @@ public class DefaultMessageSourceAutoConfiguration {
 
     protected static class ResourceBundleCondition extends SpringBootCondition {
 
-        private static ConcurrentReferenceHashMap<String, ConditionOutcome> cache = new ConcurrentReferenceHashMap<>();
+        private static final ConcurrentReferenceHashMap<String, ConditionOutcome> cache = new ConcurrentReferenceHashMap<>();
 
         @Override
         public ConditionOutcome getMatchOutcome(ConditionContext context,
@@ -135,9 +135,9 @@ public class DefaultMessageSourceAutoConfiguration {
     }
 
     @Bean
-    public NestedMessageSource nestedMessageSource(List<MessageSource> sources) {
-        return new NestedMessageSource(sources.toArray(new MessageSource[sources.size()]));
+    public NestedMessageSource nestedMessageSource(ObjectProvider<MessageSource> messageSourceProvider) {
+        MessageSource[] messageSources = messageSourceProvider.orderedStream().toArray(MessageSource[]::new);
+        return new NestedMessageSource(messageSources);
     }
-
 
 }

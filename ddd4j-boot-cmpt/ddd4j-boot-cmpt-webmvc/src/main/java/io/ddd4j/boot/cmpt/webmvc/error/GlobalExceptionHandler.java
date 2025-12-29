@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import hitool.core.format.ByteUnitFormat;
-import io.ddd4j.boot.cmpt.webmvc.config.Server18nProperties;
+import io.ddd4j.boot.cmpt.webmvc.config.ServerI18nProperties;
 import io.ddd4j.boot.core.ApiCode;
 import io.ddd4j.boot.core.ApiRestResponse;
 import io.ddd4j.boot.core.exception.BizCheckedException;
@@ -74,7 +74,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @Autowired
     private NestedMessageSource messageSource;
     @Autowired
-    private Server18nProperties server18NProperties;
+    private ServerI18nProperties serverI18NProperties;
 
     // --- 4xx Client Error ---
 
@@ -86,7 +86,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> noHandlerFoundException(NoHandlerFoundException ex) {
         this.logException(ex);
         String defaultMessage = String.format("没有找到请求地址 [%s],请求方式 [%s]对应的处理对象.", ex.getRequestURL(), ex.getHttpMethod());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "not.found", defaultMessage);
             return ApiCode.SC_NOT_FOUND.toResponse(message);
         }
@@ -101,7 +101,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
         this.logException(ex);
         String defaultMessage = String.format("[%s] 不支持的请求方法, 请使用 [%s].", ex.getMethod(), StringUtils.join(ex.getSupportedMethods()));
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "method.not.allowed", defaultMessage);
             return ApiCode.SC_METHOD_NOT_ALLOWED.toResponse(message);
         }
@@ -121,7 +121,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
             supportedMediaTypes[i] = mediaType.toString();
         }
         String defaultMessage = String.format("不匹配的媒体类型, 仅匹配 [%s].", StringUtils.join(supportedMediaTypes));
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.mediaType", defaultMessage);
             return ApiCode.SC_NOT_ACCEPTABLE.toResponse(message);
         }
@@ -136,7 +136,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
         this.logException(ex);
         String defaultMessage = String.format("不支持的媒体类型, 仅支持 [%s].", StringUtils.join(ex.getSupportedMediaTypes()));
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.mediaType", defaultMessage);
             return ApiCode.SC_UNSUPPORTED_MEDIA_TYPE.toResponse(message);
         }
@@ -152,7 +152,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> missingMatrixVariableException(MissingMatrixVariableException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少矩阵变量: [%s].", ex.getVariableName());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.matrix-variable", defaultMessage);
             return ApiCode.SC_MISSING_MATRIX_VARIABLE.toResponse(message);
         }
@@ -167,7 +167,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> missingPathVariableException(MissingPathVariableException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少URI模板变量: [%s].", ex.getVariableName());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.path-variable", defaultMessage);
             return ApiCode.SC_MISSING_PATH_VARIABLE.toResponse(message);
         }
@@ -182,7 +182,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> missingRequestCookieException(MissingRequestCookieException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少Cookie变量: [%s].", ex.getCookieName());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.cookie", defaultMessage);
             return ApiCode.SC_MISSING_REQUEST_COOKIE.toResponse(message);
         }
@@ -197,7 +197,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> missingRequestHeaderException(MissingRequestHeaderException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少请求头: [%s].", ex.getHeaderName());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.header", defaultMessage);
             return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(message);
         }
@@ -212,7 +212,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> missingServletRequestParameterException(MissingServletRequestParameterException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少参数: [%s]，类型为 [%s].", ex.getParameterName(), ex.getParameterType());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.param", defaultMessage);
             return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(message);
         }
@@ -227,7 +227,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> missingServletRequestPartException(MissingServletRequestPartException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少请求对象: [%s].", ex.getRequestPartName());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.param", defaultMessage);
             return ApiCode.SC_MISSING_REQUEST_PART.toResponse(message);
         }
@@ -241,7 +241,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestResponse<String> unsatisfiedServletRequestParameterException(UnsatisfiedServletRequestParameterException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.param", ex.getMessage());
             return ApiCode.SC_UNSATISFIED_PARAM.toResponse(message);
         }
@@ -255,7 +255,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestResponse<String> servletRequestBindingException(ServletRequestBindingException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.param", ex.getMessage());
             return ApiCode.SC_BINDING_ERROR.toResponse(message);
         }
@@ -269,7 +269,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestResponse<String> jsonProcessingException(JsonProcessingException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.param", ex.getMessage());
             return ApiCode.SC_PARSING_ERROR.toResponse(message);
         }
@@ -283,7 +283,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestResponse<String> httpMessageNotReadableException(HttpMessageNotReadableException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request.param", ex.getMessage());
             return ApiCode.SC_PARSING_ERROR.toResponse(message);
         }
@@ -325,7 +325,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     /**
      * 400 (Bad Request)
      *
-     * @see jakarta.validation.Valid
+     * @see javax.validation.Valid
      * @see org.springframework.validation.Validator
      * @see org.springframework.validation.DataBinder
      */
@@ -372,7 +372,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> invalidFormatException(InvalidFormatException ex) {
         this.logException(ex);
         String defaultMessage = String.format("JSON 格式错误: %s", ex.getLocation().toString());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
             return ApiCode.SC_BAD_REQUEST.toResponse(message);
         }
@@ -388,7 +388,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> typeMismatchException(TypeMismatchException ex) {
         this.logException(ex);
         String defaultMessage = String.format("Bean 属性 [%s]类型不匹配. 类型应该是 [%s].", ex.getPropertyName(), ex.getRequiredType());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
             return ApiCode.SC_BAD_REQUEST.toResponse(message);
         }
@@ -403,7 +403,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
         this.logException(ex);
         String defaultMessage = String.format("参数类型不匹配，参数[%s]类型应该是 [%s].", ex.getName(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
             return ApiCode.SC_BAD_REQUEST.toResponse(message);
         }
@@ -418,7 +418,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> methodArgumentConversionNotSupportedException(MethodArgumentConversionNotSupportedException ex) {
         this.logException(ex);
         String defaultMessage = String.format("参数类型转换不支持，参数[%s]类型应该是 [%s].", ex.getName(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
             return ApiCode.SC_BAD_REQUEST.toResponse(message);
         }
@@ -433,7 +433,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> validationException(ValidationException ex) {
         this.logException(ex);
         String defaultMessage = "参数校验异常.";
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
             return ApiCode.SC_BAD_REQUEST.toResponse(message);
         }
@@ -448,7 +448,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> maxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
         this.logException(ex);
         String defaultMessage = String.format("所有文件超过允许的最大限制: %s", ByteUnitFormat.B.to(ByteUnitFormat.K, ex.getMaxUploadSize()));
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
             return ApiCode.SC_REQUEST_TOO_LONG.toResponse(message);
         }
@@ -463,7 +463,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> maxUploadSizePerFileExceededException(MaxUploadSizePerFileExceededException ex) {
         this.logException(ex);
         String defaultMessage = String.format("单个文件超过允许的最大限制: %s", ByteUnitFormat.B.to(ByteUnitFormat.K, ex.getMaxUploadSizePerFile()));
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "bad.request", defaultMessage);
             return ApiCode.SC_REQUEST_TOO_LONG.toResponse(message);
         }
@@ -480,7 +480,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> constraintDeclarationException(ConstraintDeclarationException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：约束声明不合法";
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -495,7 +495,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> constraintDefinitionException(ConstraintDefinitionException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：约束定义不合法";
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -510,7 +510,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> groupDefinitionException(GroupDefinitionException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：约束组定义不合法";
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -525,7 +525,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> unexpectedTypeException(UnexpectedTypeException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：参数指定了错误的约束验证器";
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -539,7 +539,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestResponse<String> conversionNotSupportedException(ConversionNotSupportedException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -553,7 +553,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestResponse<String> httpMessageConversionException(HttpMessageConversionException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -567,7 +567,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestResponse<String> nullPointerException(NullPointerException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -581,7 +581,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestResponse<String> classCastException(ClassCastException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -595,7 +595,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> iOException(IOException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.io.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -609,7 +609,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> noSuchMethodException(NoSuchMethodException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "no.such.method", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -623,7 +623,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> indexOutOfBoundsException(IndexOutOfBoundsException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -637,7 +637,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> illegalArgumentException(IllegalArgumentException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.error", ex.getMessage());
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -653,7 +653,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> bizRuntimeException(BizRuntimeException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.runtime.error", ex.getMessage());
             return ApiRestResponse.error(ex.getCode(), message);
         }
@@ -667,7 +667,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> bizCheckedException(BizCheckedException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.checked.error", ex.getMessage());
             return ApiRestResponse.error(ex.getCode(), message);
         }
@@ -681,7 +681,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> bizIOException(BizIOException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.io.error", ex.getMessage());
             return ApiRestResponse.error(ex.getCode(), message);
         }
@@ -695,7 +695,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     @ResponseStatus(HttpStatus.OK)
     public ApiRestResponse<String> idempotentException(IdempotentException ex) {
         this.logException(ex);
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.idempotent.error", ex.getMessage());
             return ApiRestResponse.error(ex.getCode(), message);
         }
@@ -718,7 +718,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
             return sqlIntegrityConstraintViolationException((SQLIntegrityConstraintViolationException) ex.getCause());
         }
         String defaultMessage = "数据库访问异常，请稍后再试";
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -733,7 +733,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> sqlBatchUpdateException(BatchUpdateException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据批量更新失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -748,7 +748,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> sqlIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据保存失败，有重复的数据.", ex.getSQLState(), ex.getErrorCode());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -763,7 +763,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> sqlClientInfoException(SQLClientInfoException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库访问异常，客户端配置错误.", ex.getSQLState(), ex.getErrorCode());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -778,7 +778,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> sqlRecoverableException(SQLRecoverableException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库访问异常，请稍后再试", ex.getSQLState(), ex.getErrorCode());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -793,7 +793,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> sqlSyntaxErrorException(SQLSyntaxErrorException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：SQL 语法错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -808,7 +808,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> sqlTimeoutException(SQLTimeoutException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库连接超时，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -823,7 +823,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> sqlTransactionRollbackException(SQLTransactionRollbackException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -840,7 +840,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
         String defaultMessage = String.format("SQL-%s[%s]：数据库连接异常，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
         log.warn(defaultMessage);
         log.warn("可尝试：1. 增加连接池的大小，2. 检查数据库连接状态，3. 优化SQL查询，4. 调整超时设置");
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -855,7 +855,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> sqlTransientException(SQLTransientException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据服务器繁忙，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -870,7 +870,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> sqlDuplicateKeyException(DataIntegrityViolationException ex) {
         this.logException(ex);
         String defaultMessage = "数据保存失败，有重复的数据.";
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.duplicate.key", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -885,7 +885,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> sqlException(SQLException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库操作失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.sql.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -903,7 +903,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
     public ApiRestResponse<String> defaultExceptionHandler(Exception ex) throws Exception {
         this.logException(ex);
         String defaultMessage = ApiCode.SC_INTERNAL_SERVER_ERROR.getReason();
-        if (server18NProperties.isEnabled()) {
+        if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(ex, "sys.error", defaultMessage);
             return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
         }
@@ -928,7 +928,7 @@ public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.Excepti
             i18nCode = bizEx.getI18nCode();
             args = bizEx.getArgs();
         }
-        if (server18NProperties.isEnabled() && StringUtils.isNotBlank(i18nCode)) {
+        if (serverI18NProperties.isEnabled() && StringUtils.isNotBlank(i18nCode)) {
             HttpServletRequest request = WebUtils.getHttpServletRequest();
             Assert.notNull(request, "request cannot be null");
             Locale locale = RequestContextUtils.getLocale(request);

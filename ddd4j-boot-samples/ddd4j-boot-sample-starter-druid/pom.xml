@@ -17,8 +17,7 @@
     </properties>
 
     <dependencies>
-
-        <!-- For ddd4j -->
+        <!-- For Ddd4j Boot -->
         <dependency>
             <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>
@@ -27,6 +26,12 @@
         <dependency>
             <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- For Sample common -->
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-sample-adapter</artifactId>
             <version>${revision}</version>
         </dependency>
 

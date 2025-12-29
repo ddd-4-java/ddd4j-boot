@@ -22,7 +22,7 @@ class MapperGenerator {
      */
     private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig.Builder(
             "jdbc:mysql://192.168.1.170:13306/ddd4j_boot?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8",
-            "ddd4j_boot", "hSy5aj8dD8ttTcjt");
+            "ddd4j_boot","hSy5aj8dD8ttTcjt");
 
     /**
      * 执行 run

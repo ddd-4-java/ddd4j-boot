@@ -10,7 +10,7 @@
  * @Bean public FlywayFluentConfiguration flywayFluentConfiguration() {
  * <p>
  * FlywayFluentConfiguration configuration = new FlywayFluentConfiguration("demo",
- * "Demo-模块初始化", "1.0.0");
+ * "Demo-模块初始化,1.0.0");
  * <p>
  * return configuration;
  * }

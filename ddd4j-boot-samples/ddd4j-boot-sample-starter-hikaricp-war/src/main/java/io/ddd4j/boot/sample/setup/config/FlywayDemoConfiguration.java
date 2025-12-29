@@ -15,7 +15,7 @@ public class FlywayDemoConfiguration {
     public FlywayFluentConfiguration flywayFluentConfiguration() {
 
         FlywayFluentConfiguration configuration = new FlywayFluentConfiguration("demo",
-                "Demo-模块初始化", "1.0.0");
+                "Demo-模块初始化","1.0.0");
 
         return configuration;
     }

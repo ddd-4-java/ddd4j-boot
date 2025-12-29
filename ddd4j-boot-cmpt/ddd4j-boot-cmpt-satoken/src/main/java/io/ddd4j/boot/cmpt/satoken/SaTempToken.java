@@ -50,19 +50,79 @@ public class SaTempToken implements Serializable {
      * 用户 loginId（一般是账号Id）
      */
     private String loginId;
+    /**
+     * 用户登录时间
+     */
+    private Long loginTime;
 
     //==============================辅助信息====================================
 
     /**
-     * 用户最新经度（可选）
+     * 别名（昵称）
      */
-    private double longitude;
+    private String nickname;
     /**
-     * 用户最新纬度（可选）
+     * 头像：图片路径或图标样式
      */
-    private double latitude;
+    private String avatar;
+    /**
+     * 手机号码
+     */
+    private String phone;
+    /**
+     * 电子邮箱
+     */
+    private String email;
+    /**
+     * 性别（0：未知项、1：男、2：女）
+     */
+    private Integer gender;
+    /**
+     * 出生日期
+     */
+    private Long birthday;
+    /**
+     * 用户年龄
+     */
+    private Integer age;
+    /**
+     * 用户位置：常驻国家/地区编码
+     */
+    private String regionCode;
+    /**
+     * 用户位置：常驻国家/地区名称
+     */
+    private String country;
+    /**
+     * 用户位置：常驻省份
+     */
+    private String province;
+    /**
+     * 用户位置：常驻城市
+     */
+    private String city;
+    /**
+     * 用户位置：常驻区域
+     */
+    private String area;
+    /**
+     * 用户位置：常驻地经度
+     */
+    private Double longitude;
+    /**
+     * 用户位置：常驻地纬度
+     */
+    private Double latitude;
+    /**
+     * 官方语言
+     */
+    private String lang;
+    /**
+     * 时区
+     */
+    private String zone;
 
-    //==============================此次登录的请求来源====================================
+    //==============================请求来源====================================
 
     /**
      * 此次登录的客户端ID
@@ -88,5 +148,9 @@ public class SaTempToken implements Serializable {
      * 此次登录的客户端设备id
      */
     private String deviceId;
+    /**
+     * 此次登录的客户端 UserAgent 信息
+     */
+    private String userAgent;
 
 }

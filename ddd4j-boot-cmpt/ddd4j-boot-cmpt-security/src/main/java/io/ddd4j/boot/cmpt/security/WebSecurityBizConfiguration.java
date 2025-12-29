@@ -4,6 +4,8 @@
  */
 package io.ddd4j.boot.cmpt.security;
 
+import io.ddd4j.boot.cmpt.security.subject.SecuritySubjectProvider;
+import io.ddd4j.boot.core.subject.SubjectProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,6 +36,11 @@ public class WebSecurityBizConfiguration {
     @Bean
     ServerSecurityContextRepository serverSecurityContextRepository() {
         return new WebSessionServerSecurityContextRepository();
+    }
+
+    @Bean
+    public SubjectProvider subjectProvider() {
+        return new SecuritySubjectProvider();
     }
 
     public static void main(String[] args) {

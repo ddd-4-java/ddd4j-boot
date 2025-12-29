@@ -12,7 +12,7 @@ import org.springframework.core.NestedRuntimeException;
 public class BizRuntimeException extends NestedRuntimeException {
 
     @Getter
-    private int code;
+    private Integer code;
     @Getter
     private String i18nCode;
     @Getter
