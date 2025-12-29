@@ -9,13 +9,13 @@ import io.ddd4j.boot.sample.app.order.dto.OrderDTO;
 import io.ddd4j.boot.sample.app.order.query.OrderQuery;
 import io.ddd4j.boot.sample.app.order.response.OrderPageResponse;
 import io.ddd4j.boot.sample.app.order.service.OrderApplicationService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.Api;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**

@@ -31,10 +31,10 @@
         <module>ddd4j-boot-cmpt-pf4j</module>
         <module>ddd4j-boot-cmpt-satoken</module>
         <module>ddd4j-boot-cmpt-security</module>
+        <module>ddd4j-boot-cmpt-shiro</module>
         <module>ddd4j-boot-cmpt-validation</module>
         <module>ddd4j-boot-cmpt-webflux</module>
         <module>ddd4j-boot-cmpt-webmvc</module>
-        <module>ddd4j-boot-cmpt-shiro</module>
     </modules>
 
     <dependencies>
@@ -58,6 +58,10 @@
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
         <!-- For Spring Boot Test-->
         <dependency>

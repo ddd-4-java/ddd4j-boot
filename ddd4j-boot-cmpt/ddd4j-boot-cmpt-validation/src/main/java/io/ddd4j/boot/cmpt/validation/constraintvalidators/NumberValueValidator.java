@@ -2,9 +2,9 @@ package io.ddd4j.boot.cmpt.validation.constraintvalidators;
 
 
 import io.ddd4j.boot.cmpt.validation.constraints.NumberValue;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

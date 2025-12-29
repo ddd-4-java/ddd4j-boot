@@ -2,11 +2,11 @@ package io.ddd4j.boot.core.param;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.Min;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @Data

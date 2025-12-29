@@ -12,7 +12,7 @@ import org.springframework.core.NestedCheckedException;
 public class BizCheckedException extends NestedCheckedException {
 
     @Getter
-    private int code;
+    private Integer code;
     @Getter
     private String i18nCode;
     @Getter

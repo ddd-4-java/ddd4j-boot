@@ -2,7 +2,6 @@ package io.ddd4j.boot.core.util;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.Arrays;
 import java.util.Optional;
 

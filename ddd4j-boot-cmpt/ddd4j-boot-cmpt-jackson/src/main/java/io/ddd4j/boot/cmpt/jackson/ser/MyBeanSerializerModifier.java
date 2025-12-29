@@ -1,12 +1,10 @@
 package io.ddd4j.boot.cmpt.jackson.ser;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.json.JSONArray;
 import com.fasterxml.jackson.databind.BeanDescription;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
-import hitool.core.beanutils.reflection.ClassUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

@@ -12,7 +12,6 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.github.dozermapper.core.Mapper;
 import io.ddd4j.boot.core.entity.PaginationEntity;
 import io.ddd4j.boot.core.mybatis.mapper.BaseMapper;
-import javax.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
@@ -28,6 +27,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.List;
 
