@@ -1,4 +1,4 @@
-package io.ddd4j.boot.cmpt.satoken.util;
+package io.ddd4j.boot.core.util;
 
 import java.math.BigDecimal;
 import java.util.Objects;

@@ -13,6 +13,10 @@ public class AuthPrincipal implements Serializable {
     //==============================认证授权信息====================================
 
     /**
+     * 所属组织ID
+     */
+    private Object orgId;
+    /**
      * 用户 OpenId
      * 说明：openid 是用户在某一 client 下的唯一标识，其有如下特点：
      * - 一个用户在同一个 client 下，openid 是固定的，每次请求都会返回相同的值。
@@ -29,21 +33,25 @@ public class AuthPrincipal implements Serializable {
      */
     private String unionId;
     /**
-     * 账号ID（账号来源表Id）
+     * 登录账号ID（账号来源表Id）
      */
-    private String loginId;
+    private Object loginId;
     /**
      * 用户ID（用户来源表Id）
      */
-    private String userId;
+    private Object userId;
     /**
      * 用户Code（内部工号）
      */
     private String userCode;
     /**
+     * 用户类型（可用于区分用户业务）
+     */
+    private String userType;
+    /**
      * 角色ID（角色表Id）
      */
-    private String roleId;
+    private Object roleId;
     /**
      * 角色Code：角色业务表中的唯一编码
      */

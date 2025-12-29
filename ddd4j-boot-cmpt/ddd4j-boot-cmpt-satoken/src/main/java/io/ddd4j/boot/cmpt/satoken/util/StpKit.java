@@ -3,6 +3,7 @@ package io.ddd4j.boot.cmpt.satoken.util;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import io.ddd4j.boot.cmpt.satoken.SaConstants;
+import io.ddd4j.boot.core.util.Functions;
 
 import java.util.Objects;
 import java.util.function.Function;
@@ -33,32 +34,13 @@ public class StpKit {
     public static final StpLogic XXX = new StpLogic("xx");
 
     /**
-     * 获取当前 Token 的扩展信息, 并转换为 String 类型（此函数只在jwt模式下生效）
+     * 获取当前会话账号id, 并转换为 long 类型
      *
      * @return 账号id
      */
-    public static String getExtraAsString(String key) {
-        return getExtraAs(key, Functions.TO_STRING);
+    public static Long getLoginIdAsLong() {
+        return StpUtil.getLoginIdAsLong();
     }
-
-    /**
-     * 获取当前 Token 的扩展信息,并转换为 int 类型（此函数只在jwt模式下生效）
-     *
-     * @return 账号id
-     */
-    public static Integer getExtraAsInteger(String key) {
-        return getExtraAs(key, Functions.TO_INTEGER);
-    }
-
-    /**
-     * 获取当前 Token 的扩展信息, 并转换为 long 类型（此函数只在jwt模式下生效）
-     *
-     * @return 账号id
-     */
-    public static Long getExtraAsLong(String key) {
-        return getExtraAs(key, Functions.TO_LONG);
-    }
-
     /**
      * 获取当前会话账号id, 并转换为 String 类型
      *
@@ -67,35 +49,31 @@ public class StpKit {
     public static String getLoginIdAsString() {
         return StpUtil.getLoginIdAsString();
     }
-
     /**
      * 获取当前会话账号id, 并转换为 int 类型
      *
      * @return 账号id
      */
-    public static int getLoginIdAsInt() {
+    public static Integer getLoginIdAsInteger() {
         return StpUtil.getLoginIdAsInt();
     }
 
-    /**
-     * 获取当前会话账号id, 并转换为 long 类型
-     *
-     * @return 账号id
-     */
-    public static long getLoginIdAsLong() {
-        return StpUtil.getLoginIdAsLong();
-    }
-
-    public static String getUserIdAsString() {
-        return getExtraAs(SaConstants.PAYLOAD_USER_ID, Functions.TO_STRING);
-    }
-
-    public static Integer getUserIdAsInteger() {
-        return getExtraAs(SaConstants.PAYLOAD_USER_ID, Functions.TO_INTEGER);
+    public static Object getUserId() {
+        return StpUtil.getExtra(SaConstants.PAYLOAD_USER_ID);
     }
 
     public static Long getUserIdAsLong() {
         return getExtraAs(SaConstants.PAYLOAD_USER_ID, Functions.TO_LONG);
+    }
+    public static String getUserIdAsString() {
+        return getExtraAs(SaConstants.PAYLOAD_USER_ID, Functions.TO_STRING);
+    }
+    public static Integer getUserIdAsInteger() {
+        return getExtraAs(SaConstants.PAYLOAD_USER_ID, Functions.TO_INTEGER);
+    }
+
+    public static Object getOrgId() {
+        return StpUtil.getExtra(SaConstants.PAYLOAD_ORG_ID);
     }
 
     public static String getOrgIdAsString() {
@@ -134,6 +112,10 @@ public class StpKit {
         return getExtraAs(SaConstants.PAYLOAD_INFO_ID, Functions.TO_INTEGER);
     }
 
+    public static Object getRoleId() {
+        return StpUtil.getExtra(SaConstants.PAYLOAD_INFO_ID);
+    }
+
     public static String getRoleIdAsString() {
         return getExtraAs(SaConstants.PAYLOAD_ROLE_ID, Functions.TO_STRING);
     }
@@ -152,6 +134,33 @@ public class StpKit {
 
     public static Integer getIdentityIdAsInteger() {
         return getExtraAs(SaConstants.PAYLOAD_IDENTITY_ID, Functions.TO_INTEGER);
+    }
+
+    /**
+     * 获取当前 Token 的扩展信息, 并转换为 String 类型（此函数只在jwt模式下生效）
+     *
+     * @return 账号id
+     */
+    public static String getExtraAsString(String key) {
+        return getExtraAs(key, Functions.TO_STRING);
+    }
+
+    /**
+     * 获取当前 Token 的扩展信息,并转换为 int 类型（此函数只在jwt模式下生效）
+     *
+     * @return 账号id
+     */
+    public static Integer getExtraAsInteger(String key) {
+        return getExtraAs(key, Functions.TO_INTEGER);
+    }
+
+    /**
+     * 获取当前 Token 的扩展信息, 并转换为 long 类型（此函数只在jwt模式下生效）
+     *
+     * @return 账号id
+     */
+    public static Long getExtraAsLong(String key) {
+        return getExtraAs(key, Functions.TO_LONG);
     }
 
     /**
