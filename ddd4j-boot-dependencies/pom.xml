@@ -557,6 +557,7 @@
         <xnio-netty-transport.version>0.1.10.Final</xnio-netty-transport.version>
         <xstream.version>1.4.21</xstream.version>
         <xxl-job.version>3.3.1</xxl-job.version>
+        <zstd-jni.version>1.5.7-6</zstd-jni.version>
         <zkclient.version>0.11</zkclient.version>
         <zookeeper.version>3.9.4</zookeeper.version>
         <zip4j.version>2.11.5</zip4j.version>
@@ -2799,6 +2800,16 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>httputils</artifactId>
                 <version>${httputils.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>not-yet-commons-ssl</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.commons.ssl</groupId>
+                        <artifactId>not-yet-commons-ssl</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
@@ -4101,6 +4112,12 @@
                 <artifactId>lz4-java</artifactId>
                 <version>${lz4-java.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.terracotta/management-common-resources-v2 -->
+            <dependency>
+                <groupId>org.terracotta</groupId>
+                <artifactId>management-common-resources-v2</artifactId>
+                <version>${management-core.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-jdk8 -->
             <dependency>
                 <groupId>org.mapstruct</groupId>
@@ -4357,6 +4374,18 @@
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.zendesk/mysql-binlog-connector-java -->
+            <dependency>
+                <groupId>com.zendesk</groupId>
+                <artifactId>mysql-binlog-connector-java</artifactId>
+                <version>${mysql-binlog-connector-java.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.minio/minio -->
             <dependency>
@@ -5224,6 +5253,12 @@
                 <groupId>org.reflections</groupId>
                 <artifactId>reflections</artifactId>
                 <version>${reflections.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-common -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-common</artifactId>
+                <version>${rocketmq-client.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-acl -->
             <dependency>
@@ -6641,12 +6676,6 @@
                 <artifactId>fr.opensagres.poi.xwpf.converter.core</artifactId>
                 <version>${xdocreport.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/fr.opensagres.xdocreport/fr.opensagres.poi.xwpf.converter.core-gae -->
-            <dependency>
-                <groupId>fr.opensagres.xdocreport</groupId>
-                <artifactId>fr.opensagres.poi.xwpf.converter.core-gae</artifactId>
-                <version>${xdocreport.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/fr.opensagres.xdocreport/fr.opensagres.poi.xwpf.converter.pdf -->
             <dependency>
                 <groupId>fr.opensagres.xdocreport</groupId>
@@ -6658,20 +6687,10 @@
                 <artifactId>org.apache.poi.xwpf.converter.pdf.itext5</artifactId>
                 <version>${xdocreport.version}</version>
             </dependency>
-            <dependency>
-                <groupId>fr.opensagres.xdocreport</groupId>
-                <artifactId>org.apache.poi.xwpf.converter.pdf-gae</artifactId>
-                <version>${xdocreport.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/fr.opensagres.xdocreport/fr.opensagres.poi.xwpf.converter.xhtml -->
             <dependency>
                 <groupId>fr.opensagres.xdocreport</groupId>
                 <artifactId>fr.opensagres.poi.xwpf.converter.xhtml</artifactId>
-                <version>${xdocreport.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>fr.opensagres.xdocreport</groupId>
-                <artifactId>org.apache.poi.xwpf.converter.xhtml-gae</artifactId>
                 <version>${xdocreport.version}</version>
             </dependency>
 
@@ -6681,12 +6700,6 @@
             <dependency>
                 <groupId>fr.opensagres.xdocreport</groupId>
                 <artifactId>fr.opensagres.xdocreport.itext.extension</artifactId>
-                <version>${xdocreport.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/fr.opensagres.xdocreport/fr.opensagres.xdocreport.itext.extension-gae -->
-            <dependency>
-                <groupId>fr.opensagres.xdocreport</groupId>
-                <artifactId>fr.opensagres.xdocreport.itext.extension-gae</artifactId>
                 <version>${xdocreport.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/fr.opensagres.xdocreport/fr.opensagres.xdocreport.itext5.extension -->
@@ -6765,7 +6778,12 @@
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/com.github.luben/zstd-jni -->
+            <dependency>
+                <groupId>com.github.luben</groupId>
+                <artifactId>zstd-jni</artifactId>
+                <version>${zstd-jni.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.101tec/zkclient -->
             <dependency>
                 <groupId>com.101tec</groupId>
@@ -7044,11 +7062,6 @@
             <dependency>
                 <groupId>org.flowable</groupId>
                 <artifactId>flowable-spring-boot-starter-actuator</artifactId>
-                <version>${flowable.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.flowable</groupId>
-                <artifactId>flowable-spring-boot-starter-basic</artifactId>
                 <version>${flowable.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.flowable/flowable-spring-boot-starter-cmmn -->
@@ -7450,6 +7463,12 @@
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-rocketmq.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-v5-client-spring-boot-starter -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-v5-client-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-rocketmq.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/schemacrawler-spring-boot-starter -->
