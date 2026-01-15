@@ -2,20 +2,20 @@ package io.ddd4j.boot.cmpt.validation.constraints;
 
 
 import io.ddd4j.boot.cmpt.validation.constraintvalidators.AllowedValuesValidator;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
+
 import java.lang.annotation.*;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
 @Constraint(validatedBy = AllowedValuesValidator.class)
-public @interface AllowableValues {
+public @interface AllowedValues {
 
     String message() default "invalid values";
 
-    String allows() default "";
+    String[] values();
 
     boolean nullable() default false;
 

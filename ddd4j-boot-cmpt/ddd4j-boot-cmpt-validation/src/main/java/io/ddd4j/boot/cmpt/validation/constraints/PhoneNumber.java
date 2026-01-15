@@ -14,7 +14,7 @@ public @interface PhoneNumber {
 
     String lang() default "CN";
 
-    String value() default "";
+    String value();
 
     String message();
 
