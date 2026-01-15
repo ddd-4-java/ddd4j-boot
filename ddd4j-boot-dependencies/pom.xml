@@ -70,7 +70,7 @@
         <cassandra-driver.version>4.17.0</cassandra-driver.version>
         <canal.version>1.1.8</canal.version>
         <cas-client.version>3.6.4</cas-client.version>
-        <camel.version>4.8.4</camel.version>
+        <camel.version>3.22.4</camel.version>
         <cglib.version>3.3.0</cglib.version>
         <classgraph.version>4.8.184</classgraph.version>
         <cola.version>5.0.0</cola.version>
@@ -6962,11 +6962,13 @@
                 <artifactId>binlog4j-spring-boot-starter</artifactId>
                 <version>${binlog4j.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.apache.camel.springboot/camel-spring-boot-starter -->
+            <!-- Source: https://mvnrepository.com/artifact/org.apache.camel.springboot/camel-spring-boot-bom -->
             <dependency>
                 <groupId>org.apache.camel.springboot</groupId>
-                <artifactId>camel-spring-boot-starter</artifactId>
+                <artifactId>camel-spring-boot-bom</artifactId>
                 <version>${spring-boot-starter-camel.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/canal-spring-boot-starter -->
             <dependency>
