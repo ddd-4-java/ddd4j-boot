@@ -1,6 +1,6 @@
 package io.ddd4j.boot.cmpt.validation.constraintvalidators;
 
-import io.ddd4j.boot.cmpt.validation.constraints.AllowableValues;
+import io.ddd4j.boot.cmpt.validation.constraints.AllowedValues;
 import org.springframework.util.StringUtils;
 
 import javax.validation.ConstraintValidator;
@@ -14,15 +14,15 @@ import java.util.List;
  * @author hiwepy
  * @since 2021-03-08
  */
-public class AllowedValuesValidator implements ConstraintValidator<AllowableValues, String> {
+public class AllowedValuesValidator implements ConstraintValidator<AllowedValues, String> {
 
-    List<String> allows;
+    List<String> allowedValues;
     boolean nullable;
 
     @Override
-    public void initialize(AllowableValues annotation) {
+    public void initialize(AllowedValues annotation) {
         nullable = annotation.nullable();
-        allows = Arrays.asList(StringUtils.tokenizeToStringArray(annotation.allows(), ","));
+        allowedValues = Arrays.asList(annotation.values());
     }
 
     @Override
@@ -30,6 +30,6 @@ public class AllowedValuesValidator implements ConstraintValidator<AllowableValu
         if (nullable && !StringUtils.hasText(value)) {
             return true;
         }
-        return allows.contains(value);
+        return allowedValues.contains(value);
     }
 }
