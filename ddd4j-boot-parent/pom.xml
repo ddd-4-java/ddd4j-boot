@@ -1216,7 +1216,7 @@
                         <!-- 跳过 Docker 构建（可通过 -Ddocker.skip=true 覆盖） -->
                         <skip>${docker.skip}</skip>
                         <!-- 跳过推送（仅在构建阶段） -->
-                        <skipPush>false</skipPush>
+                        <skipPush>${docker.push.skip}</skipPush>
                         <!-- 使用 Docker API -->
                         <useColor>true</useColor>
                         <images>
