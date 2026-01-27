@@ -49,12 +49,15 @@
         <docker.registry.password>$$L3fhAhD9e9#nDYV</docker.registry.password>
         <!-- buildx builder 名称（与 Jenkins 保持一致） -->
         <docker.buildx.builder.name>ddd4j-builder</docker.buildx.builder.name>
+        <!-- Docker 镜像加速地址 -->
+        <docker.registry.mirror>docker.1ms.run</docker.registry.mirror>
         <!-- buildkit 镜像（与 Jenkins 保持一致） -->
         <!-- 参考文档：https://github.com/moby/buildkit#docker-buildx -->
         <!-- 使用 driver-opt image=... 指定 BuildKit 镜像版本 -->
         <!-- 注意：dockerpracticesig/buildkit:master-tencent 使用腾讯云镜像源，适合国内环境 -->
         <!-- 如果本地构建失败，可以临时使用默认镜像：moby/buildkit:latest -->
-        <docker.buildx.buildkit.image>docker.1ms.run/moby/buildkit:latest</docker.buildx.buildkit.image>
+        <docker.buildx.buildkit.image>${docker.registry.mirror}/moby/buildkit:latest</docker.buildx.buildkit.image>
+        <docker.buildx.binfmt.image>${docker.registry.mirror}/tonistiigi/binfmt:latest</docker.buildx.binfmt.image>
 
     </properties>
 
@@ -1345,7 +1348,7 @@
                                     <argument>run</argument>
                                     <argument>--rm</argument>
                                     <argument>--privileged</argument>
-                                    <argument>tonistiigi/binfmt</argument>
+                                    <argument>${docker.buildx.binfmt.image}</argument>
                                     <argument>--install</argument>
                                     <argument>all</argument>
                                 </arguments>
