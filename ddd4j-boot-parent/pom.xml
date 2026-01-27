@@ -58,6 +58,16 @@
         <!-- 如果本地构建失败，可以临时使用默认镜像：moby/buildkit:latest -->
         <docker.buildx.buildkit.image>${docker.registry.mirror}/moby/buildkit:latest</docker.buildx.buildkit.image>
         <docker.buildx.binfmt.image>${docker.registry.mirror}/tonistiigi/binfmt:latest</docker.buildx.binfmt.image>
+        <!-- buildx 推送模式：
+             - output（默认，推荐）：使用 output=${docker.buildx.push.output} 推送，可控制 manifest 格式，兼容旧 Registry
+             - push：使用 push 推送，完全依赖 buildx/BuildKit 默认行为（可能生成 OCI mediatypes）
+             可通过 -Ddocker.buildx.push.mode=push|output 覆盖 -->
+        <docker.buildx.push.mode>output</docker.buildx.push.mode>
+        <!-- buildx registry 输出参数（docker buildx build 的 output）：
+             - 默认：type=registry,oci-mediatypes=false（旧 Registry 兼容模式，避免 OCI manifest/index 导致的 400）
+             - 若目标仓库完全支持 OCI，可设为：type=registry,oci-mediatypes=true
+             可通过 -Ddocker.buildx.push.output=... 覆盖 -->
+        <docker.buildx.push.output>type=registry,oci-mediatypes=false</docker.buildx.push.output>
 
     </properties>
 
@@ -1163,13 +1173,13 @@
                                     <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="#启停脚本服务化软连接${line.separator}"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="cp ./${scripts-bin-fileName} /etc/init.d/${project.artifactId}${line.separator}"/>
-                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chkconfig --add ${project.artifactId}${line.separator}"/>
-                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chkconfig --level 345 ${project.artifactId} on${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chkconfig —add ${project.artifactId}${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chkconfig —level 345 ${project.artifactId} on${line.separator}"/>
                                     <!-- 步骤6、构建应用卸载脚本 -->
                                     <delete file="${scripts-dir}/${project.artifactId}/uninstall.sh"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="#!/bin/sh${line.separator}"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="chkconfig ${scripts-bin-fileName} off${line.separator}"/>
-                                    <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="chkconfig --del ${scripts-bin-fileName}${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="chkconfig —del ${scripts-bin-fileName}${line.separator}"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="#rm -rf jre${line.separator}"/>
 
@@ -1287,7 +1297,7 @@
                             </goals>
                             <configuration>
                                 <!-- 通过 docker.push.skip 控制是否跳过推送 -->
-                                <skip>${docker.push.skip}</skip>
+                                <skip>true</skip>
                                 <images>
                                     <image>
                                         <name>${docker.registry.host}/${project.artifactId}:${project.version}</name>
@@ -1327,7 +1337,7 @@
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
-                                    <argument>echo '${docker.registry.password}' | docker login -u ${docker.registry.username} --password-stdin https://${docker.registry.host}</argument>
+                                    <argument>echo '${docker.registry.password}' | docker login -u ${docker.registry.username} —password-stdin https://${docker.registry.host}</argument>
                                 </arguments>
                             </configuration>
                         </execution>
@@ -1346,10 +1356,10 @@
                                 <executable>docker</executable>
                                 <arguments>
                                     <argument>run</argument>
-                                    <argument>--rm</argument>
-                                    <argument>--privileged</argument>
+                                    <argument>—rm</argument>
+                                    <argument>—privileged</argument>
                                     <argument>${docker.buildx.binfmt.image}</argument>
-                                    <argument>--install</argument>
+                                    <argument>—install</argument>
                                     <argument>all</argument>
                                 </arguments>
                             </configuration>
@@ -1381,21 +1391,21 @@
                                         BUILDKIT_IMAGE="${docker.buildx.buildkit.image}"; \
                                         if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
                                         echo "Builder $BUILDER_NAME exists, checking status..."; \
-                                        if docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1; then \
+                                        if docker buildx inspect "$BUILDER_NAME" —bootstrap &gt;/dev/null 2&gt;&amp;1; then \
                                         echo "Builder $BUILDER_NAME is healthy"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         else \
                                         echo "Builder $BUILDER_NAME is unhealthy, removing and recreating..."; \
                                         docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create —use —name "$BUILDER_NAME" —driver docker-container —driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
+                                        docker buildx inspect "$BUILDER_NAME" —bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
                                         fi; \
                                         else \
                                         echo "Builder $BUILDER_NAME does not exist, creating..."; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create —use —name "$BUILDER_NAME" —driver docker-container —driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
+                                        docker buildx inspect "$BUILDER_NAME" —bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
                                         fi</argument>
                                 </arguments>
                             </configuration>
@@ -1419,7 +1429,7 @@
                                         echo "Preparing buildx builder $BUILDER_NAME before build..."; \
                                         if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
                                         echo "Builder exists, restarting BuildKit container to ensure clean state..."; \
-                                        BUILDER_CONTAINER=$(docker ps -a --filter "name=buildx_buildkit_${BUILDER_NAME}" --format "{{.Names}}" | head -1); \
+                                        BUILDER_CONTAINER=$(docker ps -a —filter "name=buildx_buildkit_${BUILDER_NAME}" —format "{{.Names}}" | head -1); \
                                         if [ -n "$BUILDER_CONTAINER" ]; then \
                                         echo "Stopping and removing BuildKit container: $BUILDER_CONTAINER"; \
                                         docker stop "$BUILDER_CONTAINER" 2&gt;/dev/null || true; \
@@ -1427,23 +1437,51 @@
                                         fi; \
                                         echo "Recreating builder with fresh BuildKit container..."; \
                                         docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create —use —name "$BUILDER_NAME" —driver docker-container —driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         echo "Booting BuildKit container..."; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || echo "WARNING: Builder bootstrap failed, but continuing..."; \
+                                        docker buildx inspect "$BUILDER_NAME" —bootstrap &gt;/dev/null 2&gt;&amp;1 || echo "WARNING: Builder bootstrap failed, but continuing..."; \
                                         echo "Waiting for BuildKit to be ready..."; \
                                         sleep 2; \
                                         else \
                                         echo "Builder does not exist, creating new builder..."; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create —use —name "$BUILDER_NAME" —driver docker-container —driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
+                                        docker buildx inspect "$BUILDER_NAME" —bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
                                         sleep 2; \
                                         fi; \
                                         echo "Builder $BUILDER_NAME is ready"</argument>
                                 </arguments>
                             </configuration>
                         </execution>
+
+                        <execution>
+                            <id>docker-buildx-push</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.skip}</skip>
+                                <executable>sh</executable>
+                                <arguments>
+                                    <argument>-c</argument>
+                                    <argument>if [ "${docker.push.skip}" = "true" ]; then exit 0; fi; \
+                                        MODE="${docker.buildx.push.mode}"; \
+                                        IMAGE="${docker.registry.host}/${project.artifactId}:${project.version}"; \
+                                        PLATFORMS="${docker.platforms}"; \
+                                        BUILDER="${docker.buildx.builder.name}"; \
+                                        DOCKERFILE="${project.basedir}/Dockerfile"; \
+                                        CONTEXT="${project.basedir}"; \
+                                        if [ "$MODE" = "push" ]; then \
+                                        docker buildx build —builder "$BUILDER" —platform "$PLATFORMS" -t "$IMAGE" -f "$DOCKERFILE" "$CONTEXT" —provenance=false —sbom=false —push; \
+                                        else \
+                                        docker buildx build —builder "$BUILDER" —platform "$PLATFORMS" -t "$IMAGE" -f "$DOCKERFILE" "$CONTEXT" —provenance=false —sbom=false —output ${docker.buildx.push.output}; \
+                                        fi</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+
                     </executions>
                 </plugin>
             </plugins>
