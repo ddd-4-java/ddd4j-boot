@@ -48,6 +48,8 @@
         <docker.registry.username>ddd4j</docker.registry.username>
         <!-- Docker 登录密码（$ 需要转义为 $$） -->
         <docker.registry.password>$$L3fhAhD9e9#nDYV</docker.registry.password>
+        <docker.useColor>true</docker.useColor>
+        <docker.verbose>true</docker.verbose>
         <!-- buildx builder 名称（与 Jenkins 保持一致） -->
         <docker.buildx.builder.name>ddd4j-builder</docker.buildx.builder.name>
         <!-- Docker 镜像加速地址 -->
@@ -72,6 +74,10 @@
 
         <docker.fabric8.skip>true</docker.fabric8.skip>
         <docker.exec.buildx.skip>${docker.skip}</docker.exec.buildx.skip>
+        <docker.exec.buildx.unix.skip>${docker.exec.buildx.skip}</docker.exec.buildx.unix.skip>
+        <docker.exec.buildx.windows.skip>true</docker.exec.buildx.windows.skip>
+        <docker.exec.login.unix.skip>true</docker.exec.login.unix.skip>
+        <docker.exec.login.windows.skip>true</docker.exec.login.windows.skip>
 
     </properties>
 
@@ -1226,15 +1232,18 @@
                 <plugin>
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.48.0</version>
                     <configuration>
-                        <verbose>true</verbose>
+                        <verbose>${docker.verbose}</verbose>
                         <!-- 跳过 Docker 构建（可通过 -Ddocker.skip=true 覆盖） -->
                         <skip>${docker.fabric8.skip}</skip>
                         <!-- 跳过推送（仅在构建阶段） -->
                         <skipPush>${docker.push.skip}</skipPush>
                         <!-- 使用 Docker API -->
-                        <useColor>true</useColor>
+                        <useColor>${docker.useColor}</useColor>
+                        <authConfig>
+                            <username>${docker.registry.username}</username>
+                            <password>${docker.registry.password}</password>
+                        </authConfig>
                         <images>
                             <image>
                                 <!-- 镜像名称：包含仓库地址、项目名称和版本 -->
@@ -1329,7 +1338,6 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
-                    <version>3.6.2</version>
                     <executions>
                         <!-- Docker 镜像仓库登录 -->
                         <execution>
@@ -1339,12 +1347,30 @@
                                 <goal>exec</goal>
                             </goals>
                             <configuration>
-                                <!-- 只有在未跳过 Docker 时才执行 -->
-                                <skip>${docker.skip}</skip>
+                                <skip>${docker.exec.login.unix.skip}</skip>
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
                                     <argument>PASSWORD="$DOCKER_REGISTRY_PASSWORD"; if [ -z "$PASSWORD" ]; then PASSWORD='${docker.registry.password}'; fi; if [ -z "$PASSWORD" ]; then echo "docker registry password is empty"; exit 1; fi; REGISTRY='${docker.registry.host}'; REGISTRY=${REGISTRY#http://}; REGISTRY=${REGISTRY#https://}; DD='-'; DD="$DD$DD"; printf '%s' "$PASSWORD" | docker login -u ${docker.registry.username} "${DD}password-stdin" "$REGISTRY"</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>docker-login-windows</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.exec.login.windows.skip}</skip>
+                                <executable>powershell</executable>
+                                <arguments>
+                                    <argument>-NoProfile</argument>
+                                    <argument>-NonInteractive</argument>
+                                    <argument>-ExecutionPolicy</argument>
+                                    <argument>Bypass</argument>
+                                    <argument>-Command</argument>
+                                    <argument>$password = $env:DOCKER_REGISTRY_PASSWORD; if ([string]::IsNullOrWhiteSpace($password)) { $password = "${docker.registry.password}" }; if ([string]::IsNullOrWhiteSpace($password)) { Write-Error "docker registry password is empty"; exit 1 }; $registry = "${docker.registry.host}"; $registry = $registry -replace '^https?://',''; $username = "${docker.registry.username}"; $password | docker login -u $username --password-stdin $registry</argument>
                                 </arguments>
                             </configuration>
                         </execution>
@@ -1384,7 +1410,7 @@
                                 <!-- 只有在未跳过 Docker 时才执行 -->
                                 <!-- 注意：如果 docker.use.buildx=false，buildx 不会被启用，但初始化步骤仍会执行（无害） -->
                                 <!-- 如果需要完全跳过，可以设置 -Ddocker.skip=true -->
-                                <skip>${docker.exec.buildx.skip}</skip>
+                                <skip>${docker.exec.buildx.unix.skip}</skip>
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
@@ -1417,6 +1443,25 @@
                                 </arguments>
                             </configuration>
                         </execution>
+                        <execution>
+                            <id>docker-buildx-setup-windows</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.exec.buildx.windows.skip}</skip>
+                                <executable>powershell</executable>
+                                <arguments>
+                                    <argument>-NoProfile</argument>
+                                    <argument>-NonInteractive</argument>
+                                    <argument>-ExecutionPolicy</argument>
+                                    <argument>Bypass</argument>
+                                    <argument>-Command</argument>
+                                    <argument>$builderName = "${docker.buildx.builder.name}"; $buildkitImage = "${docker.buildx.buildkit.image}"; Write-Host "Ensuring buildx builder $builderName"; $exists = $false; try { docker buildx inspect $builderName *&gt; $null; $exists = $true } catch { $exists = $false }; if ($exists) { try { docker buildx inspect $builderName --bootstrap *&gt; $null; docker buildx use $builderName | Out-Null; Write-Host "Builder $builderName is healthy" } catch { Write-Host "Builder $builderName is unhealthy, recreating..."; docker buildx rm $builderName 2&gt;$null | Out-Null; docker buildx create --use --name $builderName --driver docker-container --driver-opt ("image=" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { } } } else { Write-Host "Builder $builderName does not exist, creating..."; docker buildx create --use --name $builderName --driver docker-container --driver-opt ("image=" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { } }</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
                         <!-- 在构建前验证并重启 buildx builder（解决导出阶段的连接问题） -->
                         <execution>
                             <id>docker-buildx-verify</id>
@@ -1425,7 +1470,7 @@
                                 <goal>exec</goal>
                             </goals>
                             <configuration>
-                                <skip>${docker.exec.buildx.skip}</skip>
+                                <skip>${docker.exec.buildx.unix.skip}</skip>
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
@@ -1461,6 +1506,25 @@
                                 </arguments>
                             </configuration>
                         </execution>
+                        <execution>
+                            <id>docker-buildx-verify-windows</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.exec.buildx.windows.skip}</skip>
+                                <executable>powershell</executable>
+                                <arguments>
+                                    <argument>-NoProfile</argument>
+                                    <argument>-NonInteractive</argument>
+                                    <argument>-ExecutionPolicy</argument>
+                                    <argument>Bypass</argument>
+                                    <argument>-Command</argument>
+                                    <argument>$builderName = "${docker.buildx.builder.name}"; $buildkitImage = "${docker.buildx.buildkit.image}"; Write-Host "Preparing buildx builder $builderName before build..."; $exists = $false; try { docker buildx inspect $builderName *&gt; $null; $exists = $true } catch { $exists = $false }; if ($exists) { Write-Host "Builder exists, restarting BuildKit container to ensure clean state..."; $builderContainer = docker ps -a --filter ("name=buildx_buildkit_" + $builderName) --format "{{.Names}}" | Select-Object -First 1; if ($builderContainer) { Write-Host "Stopping and removing BuildKit container: $builderContainer"; docker stop $builderContainer 2&gt;$null | Out-Null; docker rm $builderContainer 2&gt;$null | Out-Null }; Write-Host "Recreating builder with fresh BuildKit container..."; docker buildx rm $builderName 2&gt;$null | Out-Null }; docker buildx create --use --name $builderName --driver docker-container --driver-opt ("image=" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; Write-Host "Booting BuildKit container..."; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { Write-Warning "Builder bootstrap failed, but continuing..." }; Start-Sleep -Seconds 2; Write-Host "Builder $builderName is ready"</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
 
                         <execution>
                             <id>docker-buildx-push</id>
@@ -1469,7 +1533,7 @@
                                 <goal>exec</goal>
                             </goals>
                             <configuration>
-                                <skip>${docker.exec.buildx.skip}</skip>
+                                <skip>${docker.exec.buildx.unix.skip}</skip>
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
@@ -1485,6 +1549,25 @@
                                         else \
                                         docker buildx build --builder "$BUILDER" --platform "$PLATFORMS" -t "$IMAGE" -f "$DOCKERFILE" "$CONTEXT" --provenance=false --sbom=false --output ${docker.buildx.push.output}; \
                                         fi</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>docker-buildx-push-windows</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.exec.buildx.windows.skip}</skip>
+                                <executable>powershell</executable>
+                                <arguments>
+                                    <argument>-NoProfile</argument>
+                                    <argument>-NonInteractive</argument>
+                                    <argument>-ExecutionPolicy</argument>
+                                    <argument>Bypass</argument>
+                                    <argument>-Command</argument>
+                                    <argument>if ("${docker.push.skip}" -eq "true") { exit 0 }; $mode = "${docker.buildx.push.mode}"; $image = "${docker.registry.host}/${project.artifactId}:${project.version}"; $platforms = "${docker.platforms}"; $builder = "${docker.buildx.builder.name}"; $dockerfile = "${project.basedir}/Dockerfile"; $context = "${project.basedir}"; if ($mode -eq "push") { docker buildx build --builder $builder --platform $platforms -t $image -f $dockerfile $context --provenance=false --sbom=false --push } else { docker buildx build --builder $builder --platform $platforms -t $image -f $dockerfile $context --provenance=false --sbom=false --output "${docker.buildx.push.output}" }</argument>
                                 </arguments>
                             </configuration>
                         </execution>
@@ -1569,6 +1652,8 @@
             <properties>
                 <docker.fabric8.skip>true</docker.fabric8.skip>
                 <docker.exec.buildx.skip>${docker.skip}</docker.exec.buildx.skip>
+                <docker.exec.login.unix.skip>${docker.skip}</docker.exec.login.unix.skip>
+                <docker.exec.login.windows.skip>${docker.skip}</docker.exec.login.windows.skip>
             </properties>
         </profile>
         <profile>
@@ -1582,6 +1667,21 @@
             <properties>
                 <docker.fabric8.skip>${docker.skip}</docker.fabric8.skip>
                 <docker.exec.buildx.skip>true</docker.exec.buildx.skip>
+                <docker.exec.login.unix.skip>true</docker.exec.login.unix.skip>
+                <docker.exec.login.windows.skip>true</docker.exec.login.windows.skip>
+            </properties>
+        </profile>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <properties>
+                <docker.exec.buildx.unix.skip>true</docker.exec.buildx.unix.skip>
+                <docker.exec.buildx.windows.skip>${docker.exec.buildx.skip}</docker.exec.buildx.windows.skip>
+                <docker.exec.login.unix.skip>true</docker.exec.login.unix.skip>
             </properties>
         </profile>
         <profile>
