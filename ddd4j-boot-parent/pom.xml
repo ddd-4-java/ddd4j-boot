@@ -18,6 +18,7 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <revision>2.7.x.20251215-SNAPSHOT</revision>
         <project.module>${project.artifactId}</project.module>
         <jacocoArgLine> </jacocoArgLine>
 
@@ -68,6 +69,9 @@
              - 若目标仓库完全支持 OCI，可设为：type=registry,oci-mediatypes=true
              可通过 -Ddocker.buildx.push.output=... 覆盖 -->
         <docker.buildx.push.output>type=registry,oci-mediatypes=false</docker.buildx.push.output>
+
+        <docker.fabric8.skip>true</docker.fabric8.skip>
+        <docker.exec.buildx.skip>${docker.skip}</docker.exec.buildx.skip>
 
     </properties>
 
@@ -1134,6 +1138,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
+                    <version>3.0.0</version>
                     <executions>
                         <!-- 在Maven预打包阶段进行初步的脚本处理：拷贝配置文件、生成相关启停脚本 -->
                         <execution>
@@ -1173,13 +1178,13 @@
                                     <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="#启停脚本服务化软连接${line.separator}"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="cp ./${scripts-bin-fileName} /etc/init.d/${project.artifactId}${line.separator}"/>
-                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chkconfig —add ${project.artifactId}${line.separator}"/>
-                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chkconfig —level 345 ${project.artifactId} on${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chkconfig --add ${project.artifactId}${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/install.sh" append="true" message="chkconfig --level 345 ${project.artifactId} on${line.separator}"/>
                                     <!-- 步骤6、构建应用卸载脚本 -->
                                     <delete file="${scripts-dir}/${project.artifactId}/uninstall.sh"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="#!/bin/sh${line.separator}"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="chkconfig ${scripts-bin-fileName} off${line.separator}"/>
-                                    <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="chkconfig —del ${scripts-bin-fileName}${line.separator}"/>
+                                    <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="chkconfig --del ${scripts-bin-fileName}${line.separator}"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="rm -rf /etc/init.d/${project.artifactId}${line.separator}"/>
                                     <echo file="${scripts-dir}/${project.artifactId}/uninstall.sh" append="true" message="#rm -rf jre${line.separator}"/>
 
@@ -1221,10 +1226,11 @@
                 <plugin>
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.48.0</version>
                     <configuration>
                         <verbose>true</verbose>
                         <!-- 跳过 Docker 构建（可通过 -Ddocker.skip=true 覆盖） -->
-                        <skip>${docker.skip}</skip>
+                        <skip>${docker.fabric8.skip}</skip>
                         <!-- 跳过推送（仅在构建阶段） -->
                         <skipPush>${docker.push.skip}</skipPush>
                         <!-- 使用 Docker API -->
@@ -1267,7 +1273,7 @@
                                 <goal>build</goal>
                             </goals>
                             <configuration>
-                                <skip>${docker.skip}</skip>
+                                <skip>${docker.fabric8.skip}</skip>
                                 <images>
                                     <image>
                                         <name>${docker.registry.host}/${project.artifactId}:${project.version}</name>
@@ -1297,7 +1303,7 @@
                             </goals>
                             <configuration>
                                 <!-- 通过 docker.push.skip 控制是否跳过推送 -->
-                                <skip>true</skip>
+                                <skip>${docker.fabric8.skip}</skip>
                                 <images>
                                     <image>
                                         <name>${docker.registry.host}/${project.artifactId}:${project.version}</name>
@@ -1323,6 +1329,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.6.2</version>
                     <executions>
                         <!-- Docker 镜像仓库登录 -->
                         <execution>
@@ -1337,7 +1344,7 @@
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
-                                    <argument>echo '${docker.registry.password}' | docker login -u ${docker.registry.username} —password-stdin https://${docker.registry.host}</argument>
+                                    <argument>PASSWORD="$DOCKER_REGISTRY_PASSWORD"; if [ -z "$PASSWORD" ]; then PASSWORD='${docker.registry.password}'; fi; if [ -z "$PASSWORD" ]; then echo "docker registry password is empty"; exit 1; fi; REGISTRY='${docker.registry.host}'; REGISTRY=${REGISTRY#http://}; REGISTRY=${REGISTRY#https://}; DD='-'; DD="$DD$DD"; printf '%s' "$PASSWORD" | docker login -u ${docker.registry.username} "${DD}password-stdin" "$REGISTRY"</argument>
                                 </arguments>
                             </configuration>
                         </execution>
@@ -1352,14 +1359,14 @@
                                 <!-- 只有在未跳过 Docker 时才执行 -->
                                 <!-- 注意：如果 docker.use.buildx=false，buildx 不会被启用，但初始化步骤仍会执行（无害） -->
                                 <!-- 如果需要完全跳过，可以设置 -Ddocker.skip=true -->
-                                <skip>${docker.skip}</skip>
+                                <skip>${docker.exec.buildx.skip}</skip>
                                 <executable>docker</executable>
                                 <arguments>
                                     <argument>run</argument>
-                                    <argument>—rm</argument>
-                                    <argument>—privileged</argument>
+                                    <argument>--rm</argument>
+                                    <argument>--privileged</argument>
                                     <argument>${docker.buildx.binfmt.image}</argument>
-                                    <argument>—install</argument>
+                                    <argument>--install</argument>
                                     <argument>all</argument>
                                 </arguments>
                             </configuration>
@@ -1377,7 +1384,7 @@
                                 <!-- 只有在未跳过 Docker 时才执行 -->
                                 <!-- 注意：如果 docker.use.buildx=false，buildx 不会被启用，但初始化步骤仍会执行（无害） -->
                                 <!-- 如果需要完全跳过，可以设置 -Ddocker.skip=true -->
-                                <skip>${docker.skip}</skip>
+                                <skip>${docker.exec.buildx.skip}</skip>
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
@@ -1391,21 +1398,21 @@
                                         BUILDKIT_IMAGE="${docker.buildx.buildkit.image}"; \
                                         if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
                                         echo "Builder $BUILDER_NAME exists, checking status..."; \
-                                        if docker buildx inspect "$BUILDER_NAME" —bootstrap &gt;/dev/null 2&gt;&amp;1; then \
+                                        if docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1; then \
                                         echo "Builder $BUILDER_NAME is healthy"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         else \
                                         echo "Builder $BUILDER_NAME is unhealthy, removing and recreating..."; \
                                         docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create —use —name "$BUILDER_NAME" —driver docker-container —driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" —bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
+                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
                                         fi; \
                                         else \
                                         echo "Builder $BUILDER_NAME does not exist, creating..."; \
-                                        docker buildx create —use —name "$BUILDER_NAME" —driver docker-container —driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" —bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
+                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
                                         fi</argument>
                                 </arguments>
                             </configuration>
@@ -1418,7 +1425,7 @@
                                 <goal>exec</goal>
                             </goals>
                             <configuration>
-                                <skip>${docker.skip}</skip>
+                                <skip>${docker.exec.buildx.skip}</skip>
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
@@ -1429,7 +1436,7 @@
                                         echo "Preparing buildx builder $BUILDER_NAME before build..."; \
                                         if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
                                         echo "Builder exists, restarting BuildKit container to ensure clean state..."; \
-                                        BUILDER_CONTAINER=$(docker ps -a —filter "name=buildx_buildkit_${BUILDER_NAME}" —format "{{.Names}}" | head -1); \
+                                        BUILDER_CONTAINER=$(docker ps -a --filter "name=buildx_buildkit_${BUILDER_NAME}" --format "{{.Names}}" | head -1); \
                                         if [ -n "$BUILDER_CONTAINER" ]; then \
                                         echo "Stopping and removing BuildKit container: $BUILDER_CONTAINER"; \
                                         docker stop "$BUILDER_CONTAINER" 2&gt;/dev/null || true; \
@@ -1437,17 +1444,17 @@
                                         fi; \
                                         echo "Recreating builder with fresh BuildKit container..."; \
                                         docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create —use —name "$BUILDER_NAME" —driver docker-container —driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         echo "Booting BuildKit container..."; \
-                                        docker buildx inspect "$BUILDER_NAME" —bootstrap &gt;/dev/null 2&gt;&amp;1 || echo "WARNING: Builder bootstrap failed, but continuing..."; \
+                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || echo "WARNING: Builder bootstrap failed, but continuing..."; \
                                         echo "Waiting for BuildKit to be ready..."; \
                                         sleep 2; \
                                         else \
                                         echo "Builder does not exist, creating new builder..."; \
-                                        docker buildx create —use —name "$BUILDER_NAME" —driver docker-container —driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" —bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
+                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
                                         sleep 2; \
                                         fi; \
                                         echo "Builder $BUILDER_NAME is ready"</argument>
@@ -1462,7 +1469,7 @@
                                 <goal>exec</goal>
                             </goals>
                             <configuration>
-                                <skip>${docker.skip}</skip>
+                                <skip>${docker.exec.buildx.skip}</skip>
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
@@ -1474,9 +1481,9 @@
                                         DOCKERFILE="${project.basedir}/Dockerfile"; \
                                         CONTEXT="${project.basedir}"; \
                                         if [ "$MODE" = "push" ]; then \
-                                        docker buildx build —builder "$BUILDER" —platform "$PLATFORMS" -t "$IMAGE" -f "$DOCKERFILE" "$CONTEXT" —provenance=false —sbom=false —push; \
+                                        docker buildx build --builder "$BUILDER" --platform "$PLATFORMS" -t "$IMAGE" -f "$DOCKERFILE" "$CONTEXT" --provenance=false --sbom=false --push; \
                                         else \
-                                        docker buildx build —builder "$BUILDER" —platform "$PLATFORMS" -t "$IMAGE" -f "$DOCKERFILE" "$CONTEXT" —provenance=false —sbom=false —output ${docker.buildx.push.output}; \
+                                        docker buildx build --builder "$BUILDER" --platform "$PLATFORMS" -t "$IMAGE" -f "$DOCKERFILE" "$CONTEXT" --provenance=false --sbom=false --output ${docker.buildx.push.output}; \
                                         fi</argument>
                                 </arguments>
                             </configuration>
@@ -1551,6 +1558,32 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>docker-buildx</id>
+            <activation>
+                <property>
+                    <name>docker.use.buildx</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <docker.fabric8.skip>true</docker.fabric8.skip>
+                <docker.exec.buildx.skip>${docker.skip}</docker.exec.buildx.skip>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker-fabric8</id>
+            <activation>
+                <property>
+                    <name>docker.use.buildx</name>
+                    <value>false</value>
+                </property>
+            </activation>
+            <properties>
+                <docker.fabric8.skip>${docker.skip}</docker.fabric8.skip>
+                <docker.exec.buildx.skip>true</docker.exec.buildx.skip>
+            </properties>
+        </profile>
         <profile>
             <id>dev</id>
             <properties>
