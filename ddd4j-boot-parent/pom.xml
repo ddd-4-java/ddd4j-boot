@@ -1261,18 +1261,18 @@
                         </images>
                     </configuration>
                     <executions>
-                        <!-- 在 install 阶段构建镜像（多平台构建，不推送） -->
+                        <!-- 在 verify 阶段构建镜像（多平台构建，不推送） -->
                         <execution>
                             <id>build</id>
-                            <phase>install</phase>
+                            <phase>verify</phase>
                             <goals>
                                 <goal>build</goal>
                             </goals>
                         </execution>
-                        <!-- 在 deploy 阶段推送镜像（可通过 docker.push.skip 控制是否跳过） -->
+                        <!-- 在 verify 阶段推送镜像（可通过 docker.push.skip 控制是否跳过） -->
                         <execution>
                             <id>push</id>
-                            <phase>deploy</phase>
+                            <phase>verify</phase>
                             <goals>
                                 <!-- 使用 push goal 会自动推送镜像 -->
                                 <goal>push</goal>
@@ -1289,7 +1289,7 @@
                     <executions>
                         <execution>
                             <id>docker-buildx-binfmt</id>
-                            <phase>verify</phase>
+                            <phase>pre-integration-test</phase>
                             <goals>
                                 <goal>exec</goal>
                             </goals>
@@ -1308,7 +1308,7 @@
                         </execution>
                         <execution>
                             <id>docker-buildx-setup-unix</id>
-                            <phase>verify</phase>
+                            <phase>pre-integration-test</phase>
                             <goals>
                                 <goal>exec</goal>
                             </goals>
@@ -1323,7 +1323,7 @@
                         </execution>
                         <execution>
                             <id>docker-buildx-setup-windows</id>
-                            <phase>verify</phase>
+                            <phase>pre-integration-test</phase>
                             <goals>
                                 <goal>exec</goal>
                             </goals>

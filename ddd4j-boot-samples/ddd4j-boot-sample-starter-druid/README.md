@@ -64,7 +64,7 @@ export DOCKER_REGISTRY_PASSWORD='******'
 
 - `-t/--tag` → `-Ddocker.tag=...`
 - `-m multi` / `-p/--platforms` → `-Ddocker.platforms=linux/amd64,linux/arm64`
-- `--no-push` / `DOCKER_PUSH_SKIP=true` → `-Ddocker.push.skip=true`（或只执行 `install` 不执行 `deploy`）
+- `--no-push` / `DOCKER_PUSH_SKIP=true` → `-Ddocker.push.skip=true`（或只执行 `package` 不执行 `verify`）
 - `DOCKER_REGISTRY` → `-Ddocker.registry.host=...`
 - `DOCKER_IMAGE_NAME` → `-Ddocker.image.name=...`
 
@@ -73,13 +73,13 @@ export DOCKER_REGISTRY_PASSWORD='******'
 mvn -pl ddd4j-boot-samples/ddd4j-boot-sample-starter-druid -am \
   -Ddocker.skip=false -Ddocker.push.skip=true \
   -Ddocker.tag=2.7.x.20251219-SNAPSHOT \
-  install
+  verify
 
 # 单平台构建并推送
 mvn -pl ddd4j-boot-samples/ddd4j-boot-sample-starter-druid -am \
   -Ddocker.skip=false -Ddocker.push.skip=false \
   -Ddocker.tag=2.7.x.20251219-SNAPSHOT \
-  deploy
+  verify
 
 # 多平台构建并推送（跨平台镜像）
 mvn -pl ddd4j-boot-samples/ddd4j-boot-sample-starter-druid -am \
@@ -87,7 +87,7 @@ mvn -pl ddd4j-boot-samples/ddd4j-boot-sample-starter-druid -am \
   -Ddocker.tag=2.7.x.20251219-SNAPSHOT \
   -Ddocker.platforms=linux/amd64,linux/arm64 \
   -Ddocker.buildx.skip=false \
-  deploy
+  verify
 ```
 
 说明：
