@@ -1467,7 +1467,6 @@
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-project-info-reports-plugin -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.9.0</version>
                 <reportSets>
                     <reportSet>
                         <id>sunlink</id>

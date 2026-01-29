@@ -594,6 +594,7 @@
         <maven-nexus-m2settings-plugin.version>1.6.8</maven-nexus-m2settings-plugin.version>
         <maven-pmd-plugin.version>3.26.0</maven-pmd-plugin.version>
         <maven-properties-plugin.version>1.2.1</maven-properties-plugin.version>
+        <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
         <maven-rpm-plugin.version>2.2.0</maven-rpm-plugin.version>
         <maven-shade-plugin.version>3.3.0</maven-shade-plugin.version>
         <maven-sonar-plugin.version>4.0.0.4121</maven-sonar-plugin.version>
@@ -7972,6 +7973,12 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>properties-maven-plugin</artifactId>
                     <version>${maven-properties-plugin.version}</version>
+                </plugin>
+                <!-- Source: https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-project-info-reports-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${maven-project-info-reports-plugin.version}</version>
                 </plugin>
                 <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/rpm-maven-plugin -->
                 <plugin>
