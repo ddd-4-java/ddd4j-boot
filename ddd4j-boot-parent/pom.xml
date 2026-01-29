@@ -33,51 +33,28 @@
         <scripts-jsw-dir>${project.build.directory}/generated-resources/appassembler/jsw</scripts-jsw-dir>
         <scripts-bin-fileName>ddd4j-boot</scripts-bin-fileName>
 
-        <!-- Docker 构建控制：设置为 true 可跳过 Docker 构建（用于本地开发时 Docker 环境有问题的情况） -->
+        <!-- Docker 构建控制：设置为 true 可跳过 docker-maven-plugin 的 build/push 执行 -->
         <docker.skip>true</docker.skip>
-        <!-- Docker 推送控制：设置为 true 可跳过 Docker 推送（用于只构建不推送的场景） -->
-        <docker.push.skip>true</docker.push.skip>
-        <!-- 是否使用 buildx 构建（支持多平台构建，推荐在 Mac ARM64 上使用） -->
-        <!-- 设置为 true 使用 buildx，设置为 false 使用传统的 docker-maven-plugin -->
-        <docker.use.buildx>true</docker.use.buildx>
-        <!-- Docker 构建平台（使用 buildx 时生效，多个平台用逗号分隔） -->
-        <docker.platforms>linux/amd64,linux/arm64</docker.platforms>
-        <!-- Docker 镜像仓库地址 -->
+        <!-- Docker 推送控制：设置为 true 可跳过 docker-maven-plugin 的 push 执行（用于只构建不推送的场景） -->
+        <docker.push.skip>${docker.skip}</docker.push.skip>
+        <!-- Docker 镜像仓库地址（示例值，子项目可按需覆盖） -->
         <docker.registry.host>registry.ddd4j.io</docker.registry.host>
-        <!-- Docker 登录用户名 -->
-        <docker.registry.username>ddd4j</docker.registry.username>
-        <!-- Docker 登录密码（$ 需要转义为 $$） -->
-        <docker.registry.password>$$L3fhAhD9e9#nDYV</docker.registry.password>
-        <docker.useColor>true</docker.useColor>
-        <docker.verbose>true</docker.verbose>
-        <!-- buildx builder 名称（与 Jenkins 保持一致） -->
+        <!-- Docker 镜像名称（默认为当前 Maven 模块 artifactId，子项目可按需覆盖） -->
+        <docker.image.name>${project.artifactId}</docker.image.name>
+        <!-- Docker 镜像 Tag（默认为当前 Maven 模块 version，子项目可按需覆盖） -->
+        <docker.tag>${project.version}</docker.tag>
+        <!-- Docker 构建平台：为空表示单平台（当前宿主机平台）；多平台示例：linux/amd64,linux/arm64 -->
+        <docker.platforms></docker.platforms>
+        <!-- buildx builder 名称（多平台构建时使用，需本机已存在对应 builder） -->
         <docker.buildx.builder.name>ddd4j-builder</docker.buildx.builder.name>
-        <!-- Docker 镜像加速地址 -->
-        <docker.registry.mirror>docker.1ms.run</docker.registry.mirror>
-        <!-- buildkit 镜像（与 Jenkins 保持一致） -->
-        <!-- 参考文档：https://github.com/moby/buildkit#docker-buildx -->
-        <!-- 使用 driver-opt image=... 指定 BuildKit 镜像版本 -->
-        <!-- 注意：dockerpracticesig/buildkit:master-tencent 使用腾讯云镜像源，适合国内环境 -->
-        <!-- 如果本地构建失败，可以临时使用默认镜像：moby/buildkit:latest -->
-        <docker.buildx.buildkit.image>${docker.registry.mirror}/moby/buildkit:latest</docker.buildx.buildkit.image>
-        <docker.buildx.binfmt.image>${docker.registry.mirror}/tonistiigi/binfmt:latest</docker.buildx.binfmt.image>
-        <!-- buildx 推送模式：
-             - output（默认，推荐）：使用 output=${docker.buildx.push.output} 推送，可控制 manifest 格式，兼容旧 Registry
-             - push：使用 push 推送，完全依赖 buildx/BuildKit 默认行为（可能生成 OCI mediatypes）
-             可通过 -Ddocker.buildx.push.mode=push|output 覆盖 -->
-        <docker.buildx.push.mode>output</docker.buildx.push.mode>
-        <!-- buildx registry 输出参数（docker buildx build 的 output）：
-             - 默认：type=registry,oci-mediatypes=false（旧 Registry 兼容模式，避免 OCI manifest/index 导致的 400）
-             - 若目标仓库完全支持 OCI，可设为：type=registry,oci-mediatypes=true
-             可通过 -Ddocker.buildx.push.output=... 覆盖 -->
-        <docker.buildx.push.output>type=registry,oci-mediatypes=false</docker.buildx.push.output>
-
-        <docker.fabric8.skip>true</docker.fabric8.skip>
-        <docker.exec.buildx.skip>${docker.skip}</docker.exec.buildx.skip>
-        <docker.exec.buildx.unix.skip>${docker.exec.buildx.skip}</docker.exec.buildx.unix.skip>
-        <docker.exec.buildx.windows.skip>true</docker.exec.buildx.windows.skip>
-        <docker.exec.login.unix.skip>true</docker.exec.login.unix.skip>
-        <docker.exec.login.windows.skip>true</docker.exec.login.windows.skip>
+        <!-- Docker 登录用户名（示例值，建议在 CI 通过 -D 或 settings.xml 注入） -->
+        <docker.registry.username>ddd4j</docker.registry.username>
+        <!-- Docker 登录密码（示例值：$ 需要转义为 $$；更推荐在 CI/本机环境变量或 settings.xml 注入） -->
+        <docker.registry.password>$$L3fhAhD9e9#nDYV</docker.registry.password>
+        <!-- docker-maven-plugin 输出是否启用彩色（CI 日志不需要颜色时可设为 false） -->
+        <docker.useColor>true</docker.useColor>
+        <!-- docker-maven-plugin 输出是否打印详细日志（排查构建/推送问题时设为 true） -->
+        <docker.verbose>true</docker.verbose>
 
     </properties>
 
@@ -1228,26 +1205,23 @@
                     </executions>
                 </plugin>
                 <!-- Docker 镜像构建插件：将JAR包打包成Docker镜像，并推送到仓库 -->
-                <!-- 支持 buildx 多平台构建，可通过 docker.use.buildx 属性控制 -->
+                <!-- 支持 buildx 多平台构建：当 docker.platforms 非空时启用（由子项目自行配置） -->
                 <plugin>
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
                     <configuration>
+                        <!-- 是否输出详细日志：开启后会打印更多构建/推送细节，便于排查问题（可用 -Ddocker.verbose=false 关闭） -->
                         <verbose>${docker.verbose}</verbose>
                         <!-- 跳过 Docker 构建（可通过 -Ddocker.skip=true 覆盖） -->
-                        <skip>${docker.fabric8.skip}</skip>
+                        <skip>${docker.skip}</skip>
                         <!-- 跳过推送（仅在构建阶段） -->
                         <skipPush>${docker.push.skip}</skipPush>
-                        <!-- 使用 Docker API -->
+                        <!-- 是否启用彩色输出：关闭后在 CI/日志系统中更易读（可用 -Ddocker.useColor=false 关闭） -->
                         <useColor>${docker.useColor}</useColor>
-                        <authConfig>
-                            <username>${docker.registry.username}</username>
-                            <password>${docker.registry.password}</password>
-                        </authConfig>
                         <images>
                             <image>
                                 <!-- 镜像名称：包含仓库地址、项目名称和版本 -->
-                                <name>${docker.registry.host}/${project.artifactId}:${project.version}</name>
+                                <name>${docker.registry.host}/${docker.image.name}:${docker.tag}</name>
                                 <build>
                                     <!-- 使用本地 Dockerfile -->
                                     <dockerFile>${project.basedir}/Dockerfile</dockerFile>
@@ -1260,7 +1234,6 @@
                                     <!-- 使用 buildx 进行多平台构建 -->
                                     <!-- 注意：docker-maven-plugin 0.48.0 的 buildx 配置只支持 builderName 和 platforms -->
                                     <!-- push 通过 goal 控制：build goal 不推送，push goal 会推送 -->
-                                    <!-- driver 和 driverOpts 需要通过 exec-maven-plugin 在 initialize 阶段手动创建 builder -->
                                     <buildx>
                                         <!-- builderName: 指定要使用的 buildx builder 名称（必须预先创建） -->
                                         <builderName>${docker.buildx.builder.name}</builderName>
@@ -1281,26 +1254,6 @@
                             <goals>
                                 <goal>build</goal>
                             </goals>
-                            <configuration>
-                                <skip>${docker.fabric8.skip}</skip>
-                                <images>
-                                    <image>
-                                        <name>${docker.registry.host}/${project.artifactId}:${project.version}</name>
-                                        <build>
-                                            <!-- 使用 buildx 进行多平台构建（不推送） -->
-                                            <!-- 注意：docker-maven-plugin 0.48.0 只支持 builderName 和 platforms -->
-                                            <!-- build goal 不会推送镜像，只构建并保存到本地 -->
-                                            <buildx>
-                                                <builderName>${docker.buildx.builder.name}</builderName>
-                                                <!-- 使用多平台构建 -->
-                                                <platforms>
-                                                    <platform>${docker.platforms}</platform>
-                                                </platforms>
-                                            </buildx>
-                                        </build>
-                                    </image>
-                                </images>
-                            </configuration>
                         </execution>
                         <!-- 在 deploy 阶段推送镜像（可通过 docker.push.skip 控制是否跳过） -->
                         <execution>
@@ -1311,267 +1264,9 @@
                                 <goal>push</goal>
                             </goals>
                             <configuration>
-                                <!-- 通过 docker.push.skip 控制是否跳过推送 -->
-                                <skip>${docker.fabric8.skip}</skip>
-                                <images>
-                                    <image>
-                                        <name>${docker.registry.host}/${project.artifactId}:${project.version}</name>
-                                        <build>
-                                            <!-- 使用 buildx 进行多平台构建并推送 -->
-                                            <!-- 注意：docker-maven-plugin 0.48.0 只支持 builderName 和 platforms -->
-                                            <!-- 在 deploy 阶段使用 push goal 会自动推送镜像 -->
-                                            <buildx>
-                                                <builderName>${docker.buildx.builder.name}</builderName>
-                                                <!-- 推送时使用多平台 -->
-                                                <platforms>
-                                                    <platform>${docker.platforms}</platform>
-                                                </platforms>
-                                            </buildx>
-                                        </build>
-                                    </image>
-                                </images>
+                                <skip>${docker.push.skip}</skip>
                             </configuration>
                         </execution>
-                    </executions>
-                </plugin>
-                <!-- 初始化 buildx builder（docker-maven-plugin 使用 buildx 前需要先创建 builder） -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>exec-maven-plugin</artifactId>
-                    <executions>
-                        <!-- Docker 镜像仓库登录 -->
-                        <execution>
-                            <id>docker-login</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${docker.exec.login.unix.skip}</skip>
-                                <executable>sh</executable>
-                                <arguments>
-                                    <argument>-c</argument>
-                                    <argument>PASSWORD="$DOCKER_REGISTRY_PASSWORD"; if [ -z "$PASSWORD" ]; then PASSWORD='${docker.registry.password}'; fi; if [ -z "$PASSWORD" ]; then echo "docker registry password is empty"; exit 1; fi; REGISTRY='${docker.registry.host}'; REGISTRY=${REGISTRY#http://}; REGISTRY=${REGISTRY#https://}; DD='-'; DD="$DD$DD"; printf '%s' "$PASSWORD" | docker login -u ${docker.registry.username} "${DD}password-stdin" "$REGISTRY"</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>docker-login-windows</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${docker.exec.login.windows.skip}</skip>
-                                <executable>powershell</executable>
-                                <arguments>
-                                    <argument>-NoProfile</argument>
-                                    <argument>-NonInteractive</argument>
-                                    <argument>-ExecutionPolicy</argument>
-                                    <argument>Bypass</argument>
-                                    <argument>-Command</argument>
-                                    <argument>$password = $env:DOCKER_REGISTRY_PASSWORD; if ([string]::IsNullOrWhiteSpace($password)) { $password = "${docker.registry.password}" }; if ([string]::IsNullOrWhiteSpace($password)) { Write-Error "docker registry password is empty"; exit 1 }; $registry = "${docker.registry.host}"; $registry = $registry -replace '^https?://',''; $username = "${docker.registry.username}"; $password | docker login -u $username --password-stdin $registry</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                        <!-- 安装 binfmt 支持多平台构建（与 Jenkins 保持一致） -->
-                        <execution>
-                            <id>docker-buildx-binfmt</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <!-- 只有在未跳过 Docker 时才执行 -->
-                                <!-- 注意：如果 docker.use.buildx=false，buildx 不会被启用，但初始化步骤仍会执行（无害） -->
-                                <!-- 如果需要完全跳过，可以设置 -Ddocker.skip=true -->
-                                <skip>${docker.exec.buildx.skip}</skip>
-                                <executable>docker</executable>
-                                <arguments>
-                                    <argument>run</argument>
-                                    <argument>--rm</argument>
-                                    <argument>--privileged</argument>
-                                    <argument>${docker.buildx.binfmt.image}</argument>
-                                    <argument>--install</argument>
-                                    <argument>all</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                        <!-- 初始化 buildx builder（如果不存在则创建，与 Jenkins 保持一致） -->
-                        <!-- 参考文档：https://github.com/moby/buildkit#docker-buildx -->
-                        <!-- 使用 driver-opt image=... 指定 BuildKit 镜像（符合官方文档规范） -->
-                        <execution>
-                            <id>docker-buildx-setup</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <!-- 只有在未跳过 Docker 时才执行 -->
-                                <!-- 注意：如果 docker.use.buildx=false，buildx 不会被启用，但初始化步骤仍会执行（无害） -->
-                                <!-- 如果需要完全跳过，可以设置 -Ddocker.skip=true -->
-                                <skip>${docker.exec.buildx.unix.skip}</skip>
-                                <executable>sh</executable>
-                                <arguments>
-                                    <argument>-c</argument>
-                                    <!-- 增强的 buildx builder 初始化逻辑 -->
-                                    <!-- 1. 检查 builder 是否存在且状态正常 -->
-                                    <!-- 2. 如果存在但状态异常，删除并重新创建 -->
-                                    <!-- 3. 如果不存在，创建新的 builder -->
-                                    <!-- 4. 优先使用腾讯云镜像（适合国内环境），失败则回退到默认镜像 -->
-                                    <!-- 5. 确保 BuildKit 容器正常运行 -->
-                                    <argument>BUILDER_NAME="${docker.buildx.builder.name}"; \
-                                        BUILDKIT_IMAGE="${docker.buildx.buildkit.image}"; \
-                                        if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
-                                        echo "Builder $BUILDER_NAME exists, checking status..."; \
-                                        if docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1; then \
-                                        echo "Builder $BUILDER_NAME is healthy"; \
-                                        docker buildx use "$BUILDER_NAME"; \
-                                        else \
-                                        echo "Builder $BUILDER_NAME is unhealthy, removing and recreating..."; \
-                                        docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
-                                        docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
-                                        fi; \
-                                        else \
-                                        echo "Builder $BUILDER_NAME does not exist, creating..."; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
-                                        docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
-                                        fi</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>docker-buildx-setup-windows</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${docker.exec.buildx.windows.skip}</skip>
-                                <executable>powershell</executable>
-                                <arguments>
-                                    <argument>-NoProfile</argument>
-                                    <argument>-NonInteractive</argument>
-                                    <argument>-ExecutionPolicy</argument>
-                                    <argument>Bypass</argument>
-                                    <argument>-Command</argument>
-                                    <argument>$builderName = "${docker.buildx.builder.name}"; $buildkitImage = "${docker.buildx.buildkit.image}"; Write-Host "Ensuring buildx builder $builderName"; $exists = $false; try { docker buildx inspect $builderName *&gt; $null; $exists = $true } catch { $exists = $false }; if ($exists) { try { docker buildx inspect $builderName --bootstrap *&gt; $null; docker buildx use $builderName | Out-Null; Write-Host "Builder $builderName is healthy" } catch { Write-Host "Builder $builderName is unhealthy, recreating..."; docker buildx rm $builderName 2&gt;$null | Out-Null; docker buildx create --use --name $builderName --driver docker-container --driver-opt ("image=" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { } } } else { Write-Host "Builder $builderName does not exist, creating..."; docker buildx create --use --name $builderName --driver docker-container --driver-opt ("image=" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { } }</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                        <!-- 在构建前验证并重启 buildx builder（解决导出阶段的连接问题） -->
-                        <execution>
-                            <id>docker-buildx-verify</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${docker.exec.buildx.unix.skip}</skip>
-                                <executable>sh</executable>
-                                <arguments>
-                                    <argument>-c</argument>
-                                    <!-- 验证并重启 buildx builder，解决导出阶段的连接中断问题 -->
-                                    <!-- 策略：在每次构建前重启 BuildKit 容器，确保其处于干净状态 -->
-                                    <argument>BUILDER_NAME="${docker.buildx.builder.name}"; \
-                                        BUILDKIT_IMAGE="${docker.buildx.buildkit.image}"; \
-                                        echo "Preparing buildx builder $BUILDER_NAME before build..."; \
-                                        if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
-                                        echo "Builder exists, restarting BuildKit container to ensure clean state..."; \
-                                        BUILDER_CONTAINER=$(docker ps -a --filter "name=buildx_buildkit_${BUILDER_NAME}" --format "{{.Names}}" | head -1); \
-                                        if [ -n "$BUILDER_CONTAINER" ]; then \
-                                        echo "Stopping and removing BuildKit container: $BUILDER_CONTAINER"; \
-                                        docker stop "$BUILDER_CONTAINER" 2&gt;/dev/null || true; \
-                                        docker rm "$BUILDER_CONTAINER" 2&gt;/dev/null || true; \
-                                        fi; \
-                                        echo "Recreating builder with fresh BuildKit container..."; \
-                                        docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
-                                        docker buildx use "$BUILDER_NAME"; \
-                                        echo "Booting BuildKit container..."; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || echo "WARNING: Builder bootstrap failed, but continuing..."; \
-                                        echo "Waiting for BuildKit to be ready..."; \
-                                        sleep 2; \
-                                        else \
-                                        echo "Builder does not exist, creating new builder..."; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
-                                        docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; \
-                                        sleep 2; \
-                                        fi; \
-                                        echo "Builder $BUILDER_NAME is ready"</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>docker-buildx-verify-windows</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${docker.exec.buildx.windows.skip}</skip>
-                                <executable>powershell</executable>
-                                <arguments>
-                                    <argument>-NoProfile</argument>
-                                    <argument>-NonInteractive</argument>
-                                    <argument>-ExecutionPolicy</argument>
-                                    <argument>Bypass</argument>
-                                    <argument>-Command</argument>
-                                    <argument>$builderName = "${docker.buildx.builder.name}"; $buildkitImage = "${docker.buildx.buildkit.image}"; Write-Host "Preparing buildx builder $builderName before build..."; $exists = $false; try { docker buildx inspect $builderName *&gt; $null; $exists = $true } catch { $exists = $false }; if ($exists) { Write-Host "Builder exists, restarting BuildKit container to ensure clean state..."; $builderContainer = docker ps -a --filter ("name=buildx_buildkit_" + $builderName) --format "{{.Names}}" | Select-Object -First 1; if ($builderContainer) { Write-Host "Stopping and removing BuildKit container: $builderContainer"; docker stop $builderContainer 2&gt;$null | Out-Null; docker rm $builderContainer 2&gt;$null | Out-Null }; Write-Host "Recreating builder with fresh BuildKit container..."; docker buildx rm $builderName 2&gt;$null | Out-Null }; docker buildx create --use --name $builderName --driver docker-container --driver-opt ("image=" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; Write-Host "Booting BuildKit container..."; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { Write-Warning "Builder bootstrap failed, but continuing..." }; Start-Sleep -Seconds 2; Write-Host "Builder $builderName is ready"</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-
-                        <execution>
-                            <id>docker-buildx-push</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${docker.exec.buildx.unix.skip}</skip>
-                                <executable>sh</executable>
-                                <arguments>
-                                    <argument>-c</argument>
-                                    <argument>if [ "${docker.push.skip}" = "true" ]; then exit 0; fi; \
-                                        MODE="${docker.buildx.push.mode}"; \
-                                        IMAGE="${docker.registry.host}/${project.artifactId}:${project.version}"; \
-                                        PLATFORMS="${docker.platforms}"; \
-                                        BUILDER="${docker.buildx.builder.name}"; \
-                                        DOCKERFILE="${project.basedir}/Dockerfile"; \
-                                        CONTEXT="${project.basedir}"; \
-                                        if [ "$MODE" = "push" ]; then \
-                                        docker buildx build --builder "$BUILDER" --platform "$PLATFORMS" -t "$IMAGE" -f "$DOCKERFILE" "$CONTEXT" --provenance=false --sbom=false --push; \
-                                        else \
-                                        docker buildx build --builder "$BUILDER" --platform "$PLATFORMS" -t "$IMAGE" -f "$DOCKERFILE" "$CONTEXT" --provenance=false --sbom=false --output ${docker.buildx.push.output}; \
-                                        fi</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>docker-buildx-push-windows</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${docker.exec.buildx.windows.skip}</skip>
-                                <executable>powershell</executable>
-                                <arguments>
-                                    <argument>-NoProfile</argument>
-                                    <argument>-NonInteractive</argument>
-                                    <argument>-ExecutionPolicy</argument>
-                                    <argument>Bypass</argument>
-                                    <argument>-Command</argument>
-                                    <argument>if ("${docker.push.skip}" -eq "true") { exit 0 }; $mode = "${docker.buildx.push.mode}"; $image = "${docker.registry.host}/${project.artifactId}:${project.version}"; $platforms = "${docker.platforms}"; $builder = "${docker.buildx.builder.name}"; $dockerfile = "${project.basedir}/Dockerfile"; $context = "${project.basedir}"; if ($mode -eq "push") { docker buildx build --builder $builder --platform $platforms -t $image -f $dockerfile $context --provenance=false --sbom=false --push } else { docker buildx build --builder $builder --platform $platforms -t $image -f $dockerfile $context --provenance=false --sbom=false --output "${docker.buildx.push.output}" }</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-
                     </executions>
                 </plugin>
             </plugins>
@@ -1641,49 +1336,6 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>docker-buildx</id>
-            <activation>
-                <property>
-                    <name>docker.use.buildx</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <properties>
-                <docker.fabric8.skip>true</docker.fabric8.skip>
-                <docker.exec.buildx.skip>${docker.skip}</docker.exec.buildx.skip>
-                <docker.exec.login.unix.skip>${docker.skip}</docker.exec.login.unix.skip>
-                <docker.exec.login.windows.skip>${docker.skip}</docker.exec.login.windows.skip>
-            </properties>
-        </profile>
-        <profile>
-            <id>docker-fabric8</id>
-            <activation>
-                <property>
-                    <name>docker.use.buildx</name>
-                    <value>false</value>
-                </property>
-            </activation>
-            <properties>
-                <docker.fabric8.skip>${docker.skip}</docker.fabric8.skip>
-                <docker.exec.buildx.skip>true</docker.exec.buildx.skip>
-                <docker.exec.login.unix.skip>true</docker.exec.login.unix.skip>
-                <docker.exec.login.windows.skip>true</docker.exec.login.windows.skip>
-            </properties>
-        </profile>
-        <profile>
-            <id>windows</id>
-            <activation>
-                <os>
-                    <family>Windows</family>
-                </os>
-            </activation>
-            <properties>
-                <docker.exec.buildx.unix.skip>true</docker.exec.buildx.unix.skip>
-                <docker.exec.buildx.windows.skip>${docker.exec.buildx.skip}</docker.exec.buildx.windows.skip>
-                <docker.exec.login.unix.skip>true</docker.exec.login.unix.skip>
-            </properties>
-        </profile>
         <profile>
             <id>dev</id>
             <properties>

@@ -14,6 +14,10 @@
     <properties>
         <maven.install.skip>true</maven.install.skip>
         <maven.deploy.skip>true</maven.deploy.skip>
+        <docker.registry.host>registry.baomagangwan.com</docker.registry.host>
+        <docker.image.name>${project.artifactId}</docker.image.name>
+        <docker.tag>${project.version}</docker.tag>
+        <docker.buildx.builder.name>cloud-builder</docker.buildx.builder.name>
     </properties>
 
     <dependencies>
@@ -220,6 +224,10 @@
                 <configuration>
                     <mainClass>com.github.hiwepy.boot.sample.MqttServerApplication</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
             </plugin>
 
             <!-- 第一步：生成可执行的启动脚本 -->
