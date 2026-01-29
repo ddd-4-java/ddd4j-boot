@@ -51,6 +51,15 @@
         <docker.registry.username>ddd4j</docker.registry.username>
         <!-- Docker 登录密码（示例值：$ 需要转义为 $$；更推荐在 CI/本机环境变量或 settings.xml 注入） -->
         <docker.registry.password>$$L3fhAhD9e9#nDYV</docker.registry.password>
+        <!-- Docker 镜像加速地址 -->
+        <docker.registry.mirror>docker.1ms.run</docker.registry.mirror>
+        <!-- buildkit 镜像（与 Jenkins 保持一致） -->
+        <!-- 参考文档：https://github.com/moby/buildkit#docker-buildx -->
+        <!-- 使用 driver-opt image=... 指定 BuildKit 镜像版本 -->
+        <!-- 注意：dockerpracticesig/buildkit:master-tencent 使用腾讯云镜像源，适合国内环境 -->
+        <!-- 如果本地构建失败，可以临时使用默认镜像：moby/buildkit:latest -->
+        <docker.buildx.buildkit.image>${docker.registry.mirror}/moby/buildkit:latest</docker.buildx.buildkit.image>
+        <docker.buildx.binfmt.image>${docker.registry.mirror}/tonistiigi/binfmt:latest</docker.buildx.binfmt.image>
         <!-- docker-maven-plugin 输出是否启用彩色（CI 日志不需要颜色时可设为 false） -->
         <docker.useColor>true</docker.useColor>
         <!-- docker-maven-plugin 输出是否打印详细日志（排查构建/推送问题时设为 true） -->
