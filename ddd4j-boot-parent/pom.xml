@@ -1218,6 +1218,66 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- 构建Docker镜像:  -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>docker-buildx-binfmt</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.buildx.skip}</skip>
+                                <executable>docker</executable>
+                                <arguments>
+                                    <argument>run</argument>
+                                    <argument>--rm</argument>
+                                    <argument>--privileged</argument>
+                                    <argument>${docker.buildx.binfmt.image}</argument>
+                                    <argument>--install</argument>
+                                    <argument>all</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>docker-buildx-setup-unix</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.buildx.unix.skip}</skip>
+                                <executable>sh</executable>
+                                <arguments>
+                                    <argument>-c</argument>
+                                    <argument>BUILDER_NAME="${docker.buildx.builder.name}"; BUILDKIT_IMAGE="${docker.buildx.buildkit.image}"; if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then if docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1; then docker buildx use "$BUILDER_NAME"; else docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; docker buildx use "$BUILDER_NAME"; docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; fi; else docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; docker buildx use "$BUILDER_NAME"; docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; fi</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>docker-buildx-setup-windows</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.buildx.windows.skip}</skip>
+                                <executable>powershell</executable>
+                                <arguments>
+                                    <argument>-NoProfile</argument>
+                                    <argument>-NonInteractive</argument>
+                                    <argument>-ExecutionPolicy</argument>
+                                    <argument>Bypass</argument>
+                                    <argument>-Command</argument>
+                                    <argument>$builderName = "${docker.buildx.builder.name}"; $buildkitImage = "${docker.buildx.buildkit.image}"; $exists = $false; try { docker buildx inspect $builderName *&gt; $null; $exists = $true } catch { $exists = $false }; if ($exists) { try { docker buildx inspect $builderName --bootstrap *&gt; $null; docker buildx use $builderName | Out-Null } catch { docker buildx rm $builderName 2&gt;$null | Out-Null; docker buildx create --use --name $builderName --driver docker-container --driver-opt (\"image=\" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { } } } else { docker buildx create --use --name $builderName --driver docker-container --driver-opt (\"image=\" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { } }</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
                 <!-- Docker 镜像构建插件：将JAR包打包成Docker镜像，并推送到仓库 -->
                 <!-- 支持 buildx 多平台构建：当 docker.platforms 非空时启用（由子项目自行配置） -->
                 <plugin>
@@ -1261,83 +1321,24 @@
                         </images>
                     </configuration>
                     <executions>
-                        <!-- 在 verify 阶段构建镜像（多平台构建，不推送） -->
+                        <!-- 在 install 阶段构建镜像（多平台构建，不推送） -->
                         <execution>
                             <id>build</id>
-                            <phase>verify</phase>
+                            <phase>install</phase>
                             <goals>
                                 <goal>build</goal>
                             </goals>
                         </execution>
-                        <!-- 在 verify 阶段推送镜像（可通过 docker.push.skip 控制是否跳过） -->
+                        <!-- 在 install 阶段推送镜像（可通过 docker.push.skip 控制是否跳过） -->
                         <execution>
                             <id>push</id>
-                            <phase>verify</phase>
+                            <phase>install</phase>
                             <goals>
                                 <!-- 使用 push goal 会自动推送镜像 -->
                                 <goal>push</goal>
                             </goals>
                             <configuration>
                                 <skip>${docker.push.skip}</skip>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>exec-maven-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>docker-buildx-binfmt</id>
-                            <phase>pre-integration-test</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${docker.buildx.skip}</skip>
-                                <executable>docker</executable>
-                                <arguments>
-                                    <argument>run</argument>
-                                    <argument>--rm</argument>
-                                    <argument>--privileged</argument>
-                                    <argument>${docker.buildx.binfmt.image}</argument>
-                                    <argument>--install</argument>
-                                    <argument>all</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>docker-buildx-setup-unix</id>
-                            <phase>pre-integration-test</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${docker.buildx.unix.skip}</skip>
-                                <executable>sh</executable>
-                                <arguments>
-                                    <argument>-c</argument>
-                                    <argument>BUILDER_NAME="${docker.buildx.builder.name}"; BUILDKIT_IMAGE="${docker.buildx.buildkit.image}"; if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then if docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1; then docker buildx use "$BUILDER_NAME"; else docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; docker buildx use "$BUILDER_NAME"; docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; fi; else docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; docker buildx use "$BUILDER_NAME"; docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; fi</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>docker-buildx-setup-windows</id>
-                            <phase>pre-integration-test</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${docker.buildx.windows.skip}</skip>
-                                <executable>powershell</executable>
-                                <arguments>
-                                    <argument>-NoProfile</argument>
-                                    <argument>-NonInteractive</argument>
-                                    <argument>-ExecutionPolicy</argument>
-                                    <argument>Bypass</argument>
-                                    <argument>-Command</argument>
-                                    <argument>$builderName = "${docker.buildx.builder.name}"; $buildkitImage = "${docker.buildx.buildkit.image}"; $exists = $false; try { docker buildx inspect $builderName *&gt; $null; $exists = $true } catch { $exists = $false }; if ($exists) { try { docker buildx inspect $builderName --bootstrap *&gt; $null; docker buildx use $builderName | Out-Null } catch { docker buildx rm $builderName 2&gt;$null | Out-Null; docker buildx create --use --name $builderName --driver docker-container --driver-opt (\"image=\" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { } } } else { docker buildx create --use --name $builderName --driver docker-container --driver-opt (\"image=\" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { } }</argument>
-                                </arguments>
                             </configuration>
                         </execution>
                     </executions>
