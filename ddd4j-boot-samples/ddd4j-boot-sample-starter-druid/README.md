@@ -86,11 +86,14 @@ mvn -pl ddd4j-boot-samples/ddd4j-boot-sample-starter-druid -am \
   -Ddocker.skip=false -Ddocker.push.skip=false \
   -Ddocker.tag=2.7.x.20251219-SNAPSHOT \
   -Ddocker.platforms=linux/amd64,linux/arm64 \
+  -Ddocker.buildx.skip=false \
   deploy
 ```
 
 说明：
-- 多平台构建依赖本机 Docker 已启用 buildx 且存在对应 builder（`-Ddocker.buildx.builder.name=...`），与脚本不同，Maven 方式不负责创建 builder / 安装 binfmt。
+- 多平台构建需要启用 buildx；通过 Maven 方式构建跨平台镜像时，可用 `exec-maven-plugin` 在 `verify` 阶段自动安装 binfmt 并创建/自愈 builder。
+- Linux/macOS 多平台示例：追加 `-Ddocker.buildx.skip=false -Ddocker.buildx.unix.skip=false -Ddocker.buildx.windows.skip=true`
+- Windows 多平台示例：追加 `-Ddocker.buildx.skip=false -Ddocker.buildx.unix.skip=true -Ddocker.buildx.windows.skip=false`
 
 #### Windows (CMD/PowerShell) 构建脚本
 

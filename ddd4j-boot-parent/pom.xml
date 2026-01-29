@@ -37,16 +37,26 @@
         <docker.skip>true</docker.skip>
         <!-- Docker 推送控制：设置为 true 可跳过 docker-maven-plugin 的 push 执行（用于只构建不推送的场景） -->
         <docker.push.skip>${docker.skip}</docker.push.skip>
-        <!-- Docker 镜像仓库地址（示例值，子项目可按需覆盖） -->
-        <docker.registry.host>registry.ddd4j.io</docker.registry.host>
         <!-- Docker 镜像名称（默认为当前 Maven 模块 artifactId，子项目可按需覆盖） -->
         <docker.image.name>${project.artifactId}</docker.image.name>
         <!-- Docker 镜像 Tag（默认为当前 Maven 模块 version，子项目可按需覆盖） -->
         <docker.tag>${project.version}</docker.tag>
+        <!-- 输出是否启用彩色（CI 日志不需要颜色时可设为 false） -->
+        <docker.useColor>true</docker.useColor>
+        <!-- 输出是否打印详细日志（排查构建/推送问题时设为 true） -->
+        <docker.verbose>true</docker.verbose>
         <!-- Docker 构建平台：为空表示单平台（当前宿主机平台）；多平台示例：linux/amd64,linux/arm64 -->
-        <docker.platforms></docker.platforms>
-        <!-- buildx builder 名称（多平台构建时使用，需本机已存在对应 builder） -->
+        <docker.platforms/>
+        <!-- buildx builder 名称（多平台构建时使用；默认由 exec-maven-plugin 在 verify 阶段创建/自愈） -->
         <docker.buildx.builder.name>ddd4j-builder</docker.buildx.builder.name>
+        <!-- buildx 初始化总开关：是否跳过 binfmt 安装与 builder 创建（单平台保持 true，多平台设为 false） -->
+        <docker.buildx.skip>true</docker.buildx.skip>
+        <!-- buildx 初始化脚本开关：是否跳过 Unix/macOS 版 builder 初始化脚本（由运行环境通过 -D 控制） -->
+        <docker.buildx.unix.skip>true</docker.buildx.unix.skip>
+        <!-- buildx 初始化脚本开关：是否跳过 Windows 版 builder 初始化脚本（由运行环境通过 -D 控制） -->
+        <docker.buildx.windows.skip>true</docker.buildx.windows.skip>
+        <!-- Docker 镜像仓库地址（示例值，子项目可按需覆盖） -->
+        <docker.registry.host>registry.ddd4j.io</docker.registry.host>
         <!-- Docker 登录用户名（示例值，建议在 CI 通过 -D 或 settings.xml 注入） -->
         <docker.registry.username>ddd4j</docker.registry.username>
         <!-- Docker 登录密码（示例值：$ 需要转义为 $$；更推荐在 CI/本机环境变量或 settings.xml 注入） -->
@@ -60,10 +70,6 @@
         <!-- 如果本地构建失败，可以临时使用默认镜像：moby/buildkit:latest -->
         <docker.buildx.buildkit.image>${docker.registry.mirror}/moby/buildkit:latest</docker.buildx.buildkit.image>
         <docker.buildx.binfmt.image>${docker.registry.mirror}/tonistiigi/binfmt:latest</docker.buildx.binfmt.image>
-        <!-- docker-maven-plugin 输出是否启用彩色（CI 日志不需要颜色时可设为 false） -->
-        <docker.useColor>true</docker.useColor>
-        <!-- docker-maven-plugin 输出是否打印详细日志（排查构建/推送问题时设为 true） -->
-        <docker.verbose>true</docker.verbose>
 
     </properties>
 
@@ -1130,7 +1136,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
-                    <version>3.0.0</version>
                     <executions>
                         <!-- 在Maven预打包阶段进行初步的脚本处理：拷贝配置文件、生成相关启停脚本 -->
                         <execution>
@@ -1244,7 +1249,7 @@
                                     <!-- 注意：docker-maven-plugin 0.48.0 的 buildx 配置只支持 builderName 和 platforms -->
                                     <!-- push 通过 goal 控制：build goal 不推送，push goal 会推送 -->
                                     <buildx>
-                                        <!-- builderName: 指定要使用的 buildx builder 名称（必须预先创建） -->
+                                        <!-- builderName: 指定要使用的 buildx builder 名称（由 exec-maven-plugin 在 verify 阶段创建/自愈） -->
                                         <builderName>${docker.buildx.builder.name}</builderName>
                                         <!-- platforms: 指定平台列表，指定后自动启用 buildx -->
                                         <platforms>
@@ -1278,6 +1283,65 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>docker-buildx-binfmt</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.buildx.skip}</skip>
+                                <executable>docker</executable>
+                                <arguments>
+                                    <argument>run</argument>
+                                    <argument>--rm</argument>
+                                    <argument>--privileged</argument>
+                                    <argument>${docker.buildx.binfmt.image}</argument>
+                                    <argument>--install</argument>
+                                    <argument>all</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>docker-buildx-setup-unix</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.buildx.unix.skip}</skip>
+                                <executable>sh</executable>
+                                <arguments>
+                                    <argument>-c</argument>
+                                    <argument>BUILDER_NAME="${docker.buildx.builder.name}"; BUILDKIT_IMAGE="${docker.buildx.buildkit.image}"; if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then if docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1; then docker buildx use "$BUILDER_NAME"; else docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; docker buildx use "$BUILDER_NAME"; docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; fi; else docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; docker buildx use "$BUILDER_NAME"; docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true; fi</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>docker-buildx-setup-windows</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${docker.buildx.windows.skip}</skip>
+                                <executable>powershell</executable>
+                                <arguments>
+                                    <argument>-NoProfile</argument>
+                                    <argument>-NonInteractive</argument>
+                                    <argument>-ExecutionPolicy</argument>
+                                    <argument>Bypass</argument>
+                                    <argument>-Command</argument>
+                                    <argument>$builderName = "${docker.buildx.builder.name}"; $buildkitImage = "${docker.buildx.buildkit.image}"; $exists = $false; try { docker buildx inspect $builderName *&gt; $null; $exists = $true } catch { $exists = $false }; if ($exists) { try { docker buildx inspect $builderName --bootstrap *&gt; $null; docker buildx use $builderName | Out-Null } catch { docker buildx rm $builderName 2&gt;$null | Out-Null; docker buildx create --use --name $builderName --driver docker-container --driver-opt (\"image=\" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { } } } else { docker buildx create --use --name $builderName --driver docker-container --driver-opt (\"image=\" + $buildkitImage) | Out-Null; docker buildx use $builderName | Out-Null; try { docker buildx inspect $builderName --bootstrap *&gt; $null } catch { } }</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -1285,6 +1349,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
             </plugin>
             <!-- 编译插件：编译主代码至主输出目录 -->
             <plugin>

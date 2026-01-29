@@ -18,6 +18,7 @@
         <docker.image.name>${project.artifactId}</docker.image.name>
         <docker.tag>${project.version}</docker.tag>
         <docker.buildx.builder.name>cloud-builder</docker.buildx.builder.name>
+        <docker.buildx.skip>true</docker.buildx.skip>
     </properties>
 
     <dependencies>
