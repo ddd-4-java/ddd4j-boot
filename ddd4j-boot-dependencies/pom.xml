@@ -691,7 +691,7 @@
         <spring-boot-starter-webflux-swagger2.version>2.7.x.20240823.RELEASE</spring-boot-starter-webflux-swagger2.version>
         <spring-boot-starter-webmvc-swagger2.version>2.7.x.20240823.RELEASE</spring-boot-starter-webmvc-swagger2.version>
         <spring-boot-starter-xmemcached.version>2.7.x.20240823.RELEASE</spring-boot-starter-xmemcached.version>
-        <spring-boot-starter-xxljob.version>2.7.x.20240823.RELEASE</spring-boot-starter-xxljob.version>
+        <spring-boot-starter-xxljob.version>2.7.x.20260603-SNAPSHOT</spring-boot-starter-xxljob.version>
         <spring-boot-starter-zxing.version>2.7.x.20240823.RELEASE</spring-boot-starter-zxing.version>
 
     </properties>
@@ -7764,7 +7764,7 @@
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/xxljob-spring-boot-starter -->
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.github.hiwepy</groupId>
                 <artifactId>xxljob-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-xxljob.version}</version>
             </dependency>
