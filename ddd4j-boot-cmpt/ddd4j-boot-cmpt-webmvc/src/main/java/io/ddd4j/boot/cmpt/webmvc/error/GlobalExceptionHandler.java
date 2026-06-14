@@ -68,7 +68,7 @@ import java.util.*;
 @ControllerAdvice
 @ResponseBody
 @Slf4j
-public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.ExceptinHandler {
+public class GlobalExceptionHandler extends io.ddd4j.boot.core.exception.BaseExceptionHandler {
 
     @Getter
     @Autowired

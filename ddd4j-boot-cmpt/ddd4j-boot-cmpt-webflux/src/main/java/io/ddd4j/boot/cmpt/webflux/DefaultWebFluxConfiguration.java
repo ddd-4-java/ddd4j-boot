@@ -46,7 +46,7 @@ public class DefaultWebFluxConfiguration {
     }
 
     @Bean
-    public GlobalExceptionHandler defaultExceptinHandler() {
+    public GlobalExceptionHandler defaultExceptionHandler() {
         return new GlobalExceptionHandler();
     }
 

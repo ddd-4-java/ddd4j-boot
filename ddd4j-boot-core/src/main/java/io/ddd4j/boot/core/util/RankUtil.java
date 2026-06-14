@@ -7,7 +7,12 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * 排名工具类
+ * 排名工具类（通用算法）。
+ *
+ * <p>提供基于排序键的排名计算能力，可用于排行榜、成绩排名、优先级队列等场景。
+ *
+ * @author wandl
+ * @since 1.0.x
  */
 public class RankUtil {
 

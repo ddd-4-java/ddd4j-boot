@@ -4,13 +4,13 @@
  */
 package io.hiwepy.boot.sample.exception;
 
-import io.ddd4j.boot.core.exception.ExceptinHandler;
+import io.ddd4j.boot.core.exception.BaseExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 @ControllerAdvice
-public class BizExceptionHandler extends ExceptinHandler {
+public class BizExceptionHandler extends BaseExceptionHandler {
 
     @Autowired
     protected NestedMessageSource messageSource;

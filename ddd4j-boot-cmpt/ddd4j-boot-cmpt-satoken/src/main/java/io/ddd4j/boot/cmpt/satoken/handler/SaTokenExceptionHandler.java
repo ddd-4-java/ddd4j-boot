@@ -6,7 +6,7 @@ package io.ddd4j.boot.cmpt.satoken.handler;
 
 import cn.dev33.satoken.exception.SaTokenException;
 import io.ddd4j.boot.core.ApiRestResponse;
-import io.ddd4j.boot.core.exception.ExceptinHandler;
+import io.ddd4j.boot.core.exception.BaseExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 @ResponseBody
 @Slf4j
-public class SaTokenExceptionHandler extends ExceptinHandler {
+public class SaTokenExceptionHandler extends BaseExceptionHandler {
 
     /**
      * 401 (Unauthorized)

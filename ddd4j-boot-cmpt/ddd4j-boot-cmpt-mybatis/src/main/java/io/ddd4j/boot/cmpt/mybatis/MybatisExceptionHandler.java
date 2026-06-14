@@ -7,7 +7,7 @@ package io.ddd4j.boot.cmpt.mybatis;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import io.ddd4j.boot.core.ApiCode;
 import io.ddd4j.boot.core.ApiRestResponse;
-import io.ddd4j.boot.core.exception.ExceptinHandler;
+import io.ddd4j.boot.core.exception.BaseExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.binding.BindingException;
 import org.apache.ibatis.cache.CacheException;
@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 @ResponseBody
 @Slf4j
-public class MybatisExceptionHandler extends ExceptinHandler {
+public class MybatisExceptionHandler extends BaseExceptionHandler {
 
 	@Autowired
 	private NestedMessageSource messageSource;

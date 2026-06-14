@@ -64,6 +64,8 @@
         <module>ddd4j-boot-bom</module>
         <module>ddd4j-boot-dependencies</module>
         <module>ddd4j-boot-core</module>
+        <!-- 纯 DDD 轨道：集成 fuinorg ddd-4-java + cqrs-4-java，领域层零 MyBatis Plus 依赖 -->
+        <module>ddd4j-boot-ddd</module>
         <module>ddd4j-boot-cmpt</module>
         <module>ddd4j-boot-parent</module>
         <module>ddd4j-boot-samples</module>

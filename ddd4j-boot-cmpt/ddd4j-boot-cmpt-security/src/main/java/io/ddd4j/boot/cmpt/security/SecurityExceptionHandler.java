@@ -6,7 +6,7 @@ package io.ddd4j.boot.cmpt.security;
 
 import io.ddd4j.boot.core.ApiCode;
 import io.ddd4j.boot.core.ApiRestResponse;
-import io.ddd4j.boot.core.exception.ExceptinHandler;
+import io.ddd4j.boot.core.exception.BaseExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 @ResponseBody
 @Slf4j
-public class SecurityExceptionHandler extends ExceptinHandler {
+public class SecurityExceptionHandler extends BaseExceptionHandler {
 
     protected final MessageSourceAccessor messages = SpringSecurityBizMessageSource.getAccessor();
 

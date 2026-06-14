@@ -32,12 +32,20 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 通用Service实现，daoBase自动注入，不能存在多个实例
+ * 通用 Service 实现（MyBatis Plus 轨道）。
  *
  * @param <M> {@link BaseMapper} 实现
  * @param <T> {@link IBaseService} 持有的实体对象
+ * @deprecated 自 3.4.x 起，ddd4j-boot 重构为纯 DDD 脚手架。本类继承 MyBatis Plus 的
+ *             {@link ServiceImpl}，耦合 ORM 框架。
+ *             <p>
+ *             <b>替代方案</b>：在基础设施层实现 {@link io.ddd4j.boot.core.contract.Repository}，
+ *             用 MyBatis Plus 的 Mapper 作为内部实现细节，不暴露到领域层。
+ *             <p>
+ *             本类将在 5.0.x 版本移除。
  * @author <a href="https://github.com/wandl">wandl</a>
  */
+@Deprecated(since = "3.4.x", forRemoval = true)
 public class BaseServiceImpl<M extends BaseMapper<T>, T extends Model<?>> extends ServiceImpl<M, T> implements InitializingBean,
         ApplicationEventPublisherAware, ApplicationContextAware, EmbeddedValueResolverAware, IBaseService<T> {
 

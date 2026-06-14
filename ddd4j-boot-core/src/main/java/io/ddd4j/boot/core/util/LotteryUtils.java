@@ -9,6 +9,14 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 
+/**
+ * 加权随机工具类（通用算法）。
+ *
+ * <p>提供基于权重的随机选择能力，可用于抽奖、负载均衡、A/B 测试分流等场景。
+ *
+ * @author wandl
+ * @since 1.0.x
+ */
 public class LotteryUtils {
 
     @Data
