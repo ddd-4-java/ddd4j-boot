@@ -1,6 +1,6 @@
 package io.ddd4j.boot.cmpt.webflux.error;
 
-import io.ddd4j.boot.core.annotation.WebSocketMapping;
+import io.ddd4j.boot.annotation.WebSocketMapping;
 import io.ddd4j.boot.core.exception.BizRuntimeException;
 import org.springframework.beans.BeansException;
 import org.springframework.core.Ordered;

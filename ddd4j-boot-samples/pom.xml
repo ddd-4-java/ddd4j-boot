@@ -25,6 +25,8 @@
     </properties>
 
     <modules>
+        <!-- DDD 分层架构示例（Level 2）：充血 Model + BaseRepository + DDD 注解 -->
+        <module>ddd4j-boot-sample-layered</module>
         <module>ddd4j-boot-sample-domain</module>
         <module>ddd4j-boot-sample-adapter</module>
         <module>ddd4j-boot-sample-client</module>

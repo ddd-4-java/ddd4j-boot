@@ -56,7 +56,7 @@ public class DddAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean(EventStore.class)
-    @ConditionalOnProperty(prefix = "ddd4j.ddd.eventstore", name = "type", havingValue = "mem", matchIfMissing = true)
+    @ConditionalOnProperty(prefix = "ddd4j.ddd.event-store", name = "type", havingValue = "mem", matchIfMissing = true)
     public EventStore inMemoryEventStore() {
         InMemoryEventStore store = new InMemoryEventStore(Runnable::run);
         store.open();

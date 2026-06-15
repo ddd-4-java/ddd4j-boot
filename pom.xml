@@ -63,7 +63,19 @@
     <modules>
         <module>ddd4j-boot-bom</module>
         <module>ddd4j-boot-dependencies</module>
+        <!-- 注解层：零框架依赖（仅 spring-context） -->
+        <module>ddd4j-boot-annotation</module>
         <module>ddd4j-boot-core</module>
+        <!-- 工具箱：继承式增强 Hutool -->
+        <module>ddd4j-boot-kit</module>
+        <!-- 数据层：BaseRepositoryImpl 四泛型封装 MyBatis Plus -->
+        <module>ddd4j-boot-data</module>
+        <!-- Web 层：拦截器/Session/Feign/多租户 -->
+        <module>ddd4j-boot-web</module>
+        <!-- 消息队列：5 种 MQ 统一抽象 -->
+        <module>ddd4j-boot-mq</module>
+        <!-- 监控告警：钉钉/企微机器人 + 日志告警 -->
+        <module>ddd4j-boot-monitor</module>
         <!-- 纯 DDD 轨道：集成 fuinorg ddd-4-java + cqrs-4-java，领域层零 MyBatis Plus 依赖 -->
         <module>ddd4j-boot-ddd</module>
         <module>ddd4j-boot-cmpt</module>

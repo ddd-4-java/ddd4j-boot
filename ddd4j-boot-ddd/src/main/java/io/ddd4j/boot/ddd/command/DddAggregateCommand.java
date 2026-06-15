@@ -7,6 +7,8 @@ import org.fuin.cqrs4j.jackson.AbstractAggregateCommand;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.io.Serial;
+
 /**
  * ddd4j-boot 聚合命令基类（纯净 DDD 轨道）。
  *
@@ -59,6 +61,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public abstract class DddAggregateCommand<ROOT_ID extends AggregateRootId, ENTITY_ID extends EntityId>
         extends AbstractAggregateCommand<ROOT_ID, ENTITY_ID> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

@@ -5,17 +5,13 @@
 package io.ddd4j.boot.core.util;
 
 /**
- * FastDFS 文件存储业务工具。
+ * FastDFS 文件存储 Token 工具。
  *
- * @deprecated 自 3.4.x 起，ddd4j-boot-core 重构为纯 DDD 脚手架，不含业务逻辑。
- *             本类是特定存储方案（FastDFS）的业务工具，不属于框架核心抽象。
- *             <p>
- *             <b>迁移方向</b>：移动到 {@code ddd4j-util-extra} 模块或使用方的文件服务模块。
- *             本类将在 5.0.x 版本移除。
+ * <p>提供 FastDFS 文件 URL 的 Token 生成与校验能力。
+ *
  * @author wandl
  * @since 1.0.x
  */
-@Deprecated(since = "3.4.x", forRemoval = true)
 public class FastdfsUtils {
 
     public static String g_charset = "ISO8859-1";

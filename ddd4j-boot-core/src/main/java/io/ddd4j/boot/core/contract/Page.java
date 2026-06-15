@@ -1,125 +1,140 @@
 package io.ddd4j.boot.core.contract;
 
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
- * 框架无关的分页结果（不依赖 MyBatis Plus 的 IPage）。
+ * 分页数据对象
+ * 实现集合接口，集合操作的是records对象
  *
- * <p>这是 ddd4j-boot 纯净 DDD 轨道的分页容器。与 MyBatis Plus 的
- * {@code com.baomidou.mybatisplus.extension.plugins.pagination.Page} 完全独立。
- *
- * <p>使用方式：
- * <pre>
- * Page&lt;User&gt; page = Page.of(userList, 100L, 1, 10);
- * page.getRecords();   // 当前页数据
- * page.getTotal();     // 总记录数
- * page.getPages();     // 总页数
- * </pre>
- *
- * @param <T> 记录类型
- * @author wandl
- * @since 3.4.x
+ * @param <T>
  */
-public class Page<T> implements Serializable {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Page<T> implements Iterable<T> {
+    // 列表数据
+    private List<T> records;
+    // 总记录数
+    private long total;
+    // 回写当前页
+    private long current = 1L;
+    // 回写每页大小
+    private long size = 10L;
+    // 扩展字段
+    private Map<String, Object> extras;
 
-    private static final long serialVersionUID = 1L;
-
-    /** 当前页记录列表 */
-    private final List<T> records;
-
-    /** 总记录数 */
-    private final long total;
-
-    /** 当前页码（从 1 开始） */
-    private final long current;
-
-    /** 每页大小 */
-    private final long size;
-
-    /**
-     * 构造分页结果。
-     *
-     * @param records 当前页记录
-     * @param total   总记录数
-     * @param current 当前页码（从 1 开始）
-     * @param size    每页大小
-     */
-    public Page(List<T> records, long total, long current, long size) {
-        this.records = records == null ? Collections.emptyList() : records;
-        this.total = total;
+    public Page(long current, long size) {
         this.current = current;
         this.size = size;
+        this.total = 0L;
+        this.records = new ArrayList<>();
     }
 
-    /**
-     * 工厂方法。
-     *
-     * @param records 当前页记录
-     * @param total   总记录数
-     * @param current 当前页码
-     * @param size    每页大小
-     * @param <T>     记录类型
-     * @return 分页结果
-     */
-    public static <T> Page<T> of(List<T> records, long total, long current, long size) {
-        return new Page<>(records, total, current, size);
+    public static <T> Page<T> succeed(List<T> records, long total, long current, long size) {
+        return new Page<>(records, total, current, size, new HashMap<>());
     }
 
-    /**
-     * 空页工厂方法。
-     *
-     * @param current 当前页码
-     * @param size    每页大小
-     * @param <T>     记录类型
-     * @return 空的分页结果
-     */
-    public static <T> Page<T> empty(long current, long size) {
-        return new Page<>(Collections.emptyList(), 0L, current, size);
+    public static <T> Page<T> empty() {
+        return new Page<>(new ArrayList<>(), 0L, 0L, 0L, Collections.emptyMap());
     }
 
-    public List<T> getRecords() {
-        return records;
+    @Override
+    public Iterator<T> iterator() {
+        return this.records != null && !this.records.isEmpty() ? this.records.iterator() : null;
     }
 
-    public long getTotal() {
-        return total;
+    @Override
+    public Spliterator<T> spliterator() {
+        return this.records != null ? this.records.spliterator() : null;
     }
 
-    public long getCurrent() {
-        return current;
+    @Override
+    public void forEach(Consumer<? super T> action) {
+        if (this.records != null) {
+            this.records.forEach(action);
+        }
     }
 
-    public long getSize() {
-        return size;
+    @JsonIgnore
+    public boolean isEmpty() {
+        return this.records == null || this.records.isEmpty();
     }
 
-    /**
-     * 计算总页数。
-     *
-     * @return 总页数（size 为 0 时返回 0）
-     */
-    public long getPages() {
-        return size <= 0 ? 0 : (total + size - 1) / size;
+    public boolean contains(Object o) {
+        return o != null && this.records != null && this.records.contains(o);
     }
 
-    /**
-     * 是否有下一页。
-     *
-     * @return 有下一页返回 true
-     */
-    public boolean hasNext() {
-        return current < getPages();
+    public boolean add(T t) {
+        return this.records != null && this.records.add(t);
     }
 
-    /**
-     * 是否有上一页。
-     *
-     * @return 有上一页返回 true
-     */
-    public boolean hasPrevious() {
-        return current > 1;
+    public boolean remove(Object o) {
+        return this.records != null && this.records.remove(o);
     }
 
+    public boolean containsAll(Collection<?> c) {
+        return this.records != null && this.records.containsAll(c);
+    }
+
+    public boolean addAll(Collection<? extends T> c) {
+        return this.records != null && this.records.addAll(c);
+    }
+
+    public boolean removeAll(Collection<?> c) {
+        return this.records != null && this.records.removeAll(c);
+    }
+
+    public boolean removeIf(Predicate<? super T> filter) {
+        return this.records != null && this.records.removeIf(filter);
+    }
+
+    public boolean retainAll(Collection<?> c) {
+        return this.records != null && this.records.retainAll(c);
+    }
+
+    public Stream<T> stream() {
+        return this.records != null ? this.records.stream() : new ArrayList<T>().stream();
+    }
+
+    public Page<T> peek(Consumer<? super T> action) {
+        if (this.records != null) {
+            this.records.forEach(action);
+        }
+        return this;
+    }
+
+    public Page<T> setRecords(List<T> records) {
+        this.records = records;
+        return this;
+    }
+
+    public Page<T> setTotal(long total) {
+        this.total = total;
+        return this;
+    }
+
+    public Page<T> setSize(long size) {
+        this.size = size;
+        return this;
+    }
+
+    public Page<T> setCurrent(long current) {
+        this.current = current;
+        return this;
+    }
+
+    public Map<String, Object> extras() {
+        if (extras == null) {
+            extras = new HashMap<>();
+        }
+        return extras;
+    }
 }

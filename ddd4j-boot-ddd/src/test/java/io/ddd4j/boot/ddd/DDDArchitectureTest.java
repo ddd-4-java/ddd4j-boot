@@ -70,11 +70,14 @@ class DDDArchitectureTest {
      *
      * <p>BaseEntity 继承 MyBatis Plus 的 Model，与本模块的纯净定位冲突。
      * 两者可以共存于同一项目，但不能混用在同一个聚合根上。
+     *
+     * <p>注意：用全限定名字符串匹配，避免 ArchUnit 导入 BaseEntity 类时触发
+     * MyBatis Plus 的 Model 类加载（本模块排除了 MP 依赖）。
      */
     @Test
     void ddd_module_should_not_extend_base_entity() {
         noClasses().that().resideInAPackage("..ddd4j.boot.ddd..")
-                .should().beAssignableTo(io.ddd4j.boot.core.entity.BaseEntity.class)
+                .should().haveFullyQualifiedName("io.ddd4j.boot.core.entity.BaseEntity")
                 .because("ddd4j-boot-ddd 的聚合根必须继承 DddAggregateRoot，不得使用 BaseEntity（AR 轨道）")
                 .check(classes);
     }

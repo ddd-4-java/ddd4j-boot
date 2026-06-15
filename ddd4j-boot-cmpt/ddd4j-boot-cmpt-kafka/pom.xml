@@ -10,6 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <!-- @deprecated 自 3.4.x 起，请使用 ddd4j-boot-mq 模块（5 种 MQ 统一抽象） -->
     <artifactId>ddd4j-boot-cmpt-kafka</artifactId>
     <description>Ddd4j Boot Kafka Component</description>
 

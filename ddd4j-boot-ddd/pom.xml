@@ -16,6 +16,19 @@
     <name>ddd4j-boot-ddd</name>
     <description>DDD 基础设施层：集成 fuinorg ddd-4-java + cqrs-4-java，提供纯净的 DDD/CQRS/Event Sourcing 轨道，领域层零 MyBatis Plus 依赖</description>
 
+    <!-- 强制 JUnit 子模块版本对齐（修复 spring-biz 传递的 5.8.2 与 SB 3.4 的 6.0.1 冲突） -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit-jupiter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- ============================================================ -->
         <!-- fuinorg DDD + CQRS：纯净 DDD 轨道的核心依赖                    -->
@@ -68,6 +81,11 @@
                 <exclusion>
                     <groupId>com.github.hiwepy</groupId>
                     <artifactId>mybatis-plus-enhance</artifactId>
+                </exclusion>
+                <!-- 排除 spring-biz 传递的旧版 JUnit（5.8.2 compile scope），避免与 SB 3.4 的 6.0.1 冲突 -->
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

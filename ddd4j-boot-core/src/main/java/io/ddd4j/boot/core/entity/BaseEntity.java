@@ -26,7 +26,7 @@ import java.util.Map;
  *             <p>
  *             <b>替代方案</b>（按场景选择）：
  *             <ul>
- *               <li><b>纯净 DDD 轨道</b>：使用 {@link io.ddd4j.boot.core.contract.DomainModel}
+ *               <li><b>纯净 DDD 轨道</b>：使用 {@link io.ddd4j.boot.core.contract.Model}
  *                   （不继承任何框架类，适合 COLA/Clean/Hexagonal 架构）</li>
  *               <li><b>事件溯源轨道</b>：使用 {@code io.ddd4j.boot.ddd.aggregate.DddAggregateRoot}
  *                   （基于 fuinorg ddd-4-java，支持 ES/CQRS）</li>

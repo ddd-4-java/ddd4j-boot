@@ -13,6 +13,27 @@
     <artifactId>ddd4j-boot-cmpt-dubbo</artifactId>
 
     <dependencies>
+        <!--For ddd4j-boot-core: 统一响应/异常体系 -->
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!--For Spring Boot AutoConfigure -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <!--For Spring Web（异常处理需要） -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!--For Dubbo -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>

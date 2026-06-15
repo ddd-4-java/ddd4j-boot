@@ -4,8 +4,8 @@
 package io.ddd4j.boot.sample.web.controller;
 
 import io.ddd4j.boot.core.ApiRestResponse;
-import io.ddd4j.boot.core.annotation.ApiOperationLog;
-import io.ddd4j.boot.core.annotation.BusinessType;
+import io.ddd4j.boot.annotation.ApiOperationLog;
+import io.ddd4j.boot.annotation.BusinessType;
 import io.ddd4j.boot.core.web.BaseMapperController;
 import io.ddd4j.boot.sample.entity.DemoEntity;
 import io.ddd4j.boot.sample.service.IDemoService;

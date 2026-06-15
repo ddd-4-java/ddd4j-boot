@@ -65,6 +65,7 @@ import java.util.*;
  * NoSuchMethodException,IOException,IndexOutOfBoundsException
  */
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean(annotation = org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean.class)
 @ControllerAdvice
 @ResponseBody
 @Slf4j

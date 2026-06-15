@@ -1,6 +1,8 @@
 package io.ddd4j.boot.ddd.aggregate;
 
 import java.time.LocalDateTime;
+
+import lombok.Getter;
 import org.fuin.ddd4j.core.AggregateRootId;
 import org.fuin.ddd4j.core.AbstractAggregateRoot;
 
@@ -28,6 +30,7 @@ import org.fuin.ddd4j.core.AbstractAggregateRoot;
  * @see org.fuin.ddd4j.core.ApplyEvent
  * @since 3.4.x
  */
+@Getter
 public abstract class DddAggregateRoot<ID extends AggregateRootId> extends AbstractAggregateRoot<ID> {
 
     /** 创建时间（审计字段，无 ORM 注解） */
@@ -41,14 +44,6 @@ public abstract class DddAggregateRoot<ID extends AggregateRootId> extends Abstr
      */
     protected DddAggregateRoot() {
         super();
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
     }
 
 }
