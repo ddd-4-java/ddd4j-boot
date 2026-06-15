@@ -42,7 +42,7 @@
         <maven-nexus-staging-plugin.version>1.7.0</maven-nexus-staging-plugin.version>
         <maven-release-plugin.version>3.2.0</maven-release-plugin.version>
         <!-- Spring versions (Fix ) -->
-        <jackson.version>2.18.4</jackson.version>
+        <jackson.version>2.18.8</jackson.version>
         <jackson-bom.version>${jackson.version}</jackson-bom.version>
         <spring-amqp.version>2.4.17</spring-amqp.version>
         <spring-batch.version>4.3.10</spring-batch.version>
