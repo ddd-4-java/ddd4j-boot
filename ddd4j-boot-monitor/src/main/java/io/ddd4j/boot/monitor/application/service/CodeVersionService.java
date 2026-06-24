@@ -27,7 +27,9 @@ public class CodeVersionService implements ApplicationListener<ApplicationEvent>
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
-        if (!(event instanceof ApplicationStartedEvent || event instanceof ApplicationFailedEvent)) return;
+        if (!(event instanceof ApplicationStartedEvent || event instanceof ApplicationFailedEvent)) {
+            return;
+        }
         try {
             Properties p = new Properties();
             p.load(this.getClass().getClassLoader().getResourceAsStream("git.properties"));

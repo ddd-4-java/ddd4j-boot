@@ -34,7 +34,7 @@ import redis.clients.jedis.resps.StreamGroupInfo;
 @Component
 public final class RedisStreamClient implements MQClient {
 
-	BlockingQueue<MQEvent> SENDING_MSGS = new LinkedBlockingQueue<>();
+	private final BlockingQueue<MQEvent> SENDING_MSGS = new LinkedBlockingQueue<>();
 	private final AtomicBoolean started = new AtomicBoolean(false);
 
 	// 使用 ThreadLocal 来管理每个线程的 Jedis 实例

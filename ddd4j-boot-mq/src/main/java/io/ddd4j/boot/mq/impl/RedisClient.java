@@ -1,6 +1,5 @@
 package io.ddd4j.boot.mq.impl;
 
-import io.ddd4j.boot.core.context.SpringContext;
 import io.ddd4j.boot.core.contract.MQEvent;
 import io.ddd4j.boot.core.contract.exception.ServiceException;
 import io.ddd4j.boot.core.utils.JsonKit;
@@ -10,8 +9,6 @@ import io.ddd4j.boot.mq.core.MQListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisPubSub;
 
 import java.util.ArrayList;
@@ -30,7 +27,7 @@ import java.util.function.Consumer;
 @Component
 public final class RedisClient implements MQClient {
     BlockingQueue<MQEvent> SENDING_MSGS = new LinkedBlockingQueue<>();
-    private AtomicBoolean started = new AtomicBoolean(false);
+    private final AtomicBoolean started = new AtomicBoolean(false);
 
     // 使用 ThreadLocal 来管理每个线程的 Jedis 实例
     private final ThreadLocal<Jedis> jedisThreadLocal = ThreadLocal.withInitial(this::createJedis);

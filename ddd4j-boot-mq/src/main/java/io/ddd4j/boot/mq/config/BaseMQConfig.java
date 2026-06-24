@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Order(PriorityOrdered.HIGHEST_PRECEDENCE + 10)
 @Configuration
-@ConditionalOnProperty(prefix = "base-mq", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "ddd4j.event", name = "enable", havingValue = "true")
 public class BaseMQConfig {
     @Autowired
     private List<MQClient> mqClients;

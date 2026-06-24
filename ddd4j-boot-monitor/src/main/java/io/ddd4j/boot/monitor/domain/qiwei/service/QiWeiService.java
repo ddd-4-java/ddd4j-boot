@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -20,6 +21,7 @@ public class QiWeiService {
 
     private static final RestTemplate restTemplate = new RestTemplate();
 
+    private static final RestClient restClient = RestClient.builder().build();
 
     public static final String BASE_URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=";
 
