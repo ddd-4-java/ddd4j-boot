@@ -23,7 +23,10 @@ import java.util.stream.Collectors;
 
 /**
  * MQClient接口，MQ实现类实现该接口做差异化实现
+ *
+ * @deprecated 请使用 {@link io.ddd4j.boot.mq.spi.MQBrokerAdapter}。
  */
+@Deprecated
 public interface MQClient {
     // MQ实现
     String impl();

@@ -12,7 +12,10 @@ import java.util.function.Function;
 
 /**
  * MQ监听器
+ *
+ * @deprecated 请使用 {@link io.ddd4j.boot.mq.registry.MQListenerDefinition}。
  */
+@Deprecated
 @Data
 @Builder
 @AllArgsConstructor

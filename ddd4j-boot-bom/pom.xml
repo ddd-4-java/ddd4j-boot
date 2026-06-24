@@ -118,6 +118,62 @@
                 <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <!-- Ddd4j Boot MQ -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-mq</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-rabbit</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-rocket</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-pulsar</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-redis-stream</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-activemq</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-nats</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-ons</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-tdmq</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-disruptor</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cmpt-sqs</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

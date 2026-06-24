@@ -1,0 +1,68 @@
+package io.ddd4j.boot.mq.registry;
+
+import org.springframework.util.StringUtils;
+
+import java.util.Locale;
+
+/**
+ * 支持的 Broker 类型枚举（与 {@code ddd4j.mq.broker} / legacy {@code base-mq.impl} 对齐）。
+ */
+public enum MQBrokerType {
+
+    NONE,
+    /** 进程内 LMAX Disruptor 本地队列（非分布式 MQ）。 */
+    DISRUPTOR,
+    RABBIT,
+    KAFKA,
+    ROCKET,
+    PULSAR,
+    REDIS_STREAM,
+    ACTIVEMQ,
+    NATS,
+    ONS,
+    TDMQ,
+    SQS;
+
+    /**
+     * 解析配置字符串为 Broker 类型（兼容 legacy 命名如 redisStream）。
+     */
+    public static MQBrokerType from(String raw) {
+        if (!StringUtils.hasText(raw) || "none".equalsIgnoreCase(raw.trim())) {
+            return NONE;
+        }
+        String normalized = raw.trim()
+                .replace('_', '-')
+                .toLowerCase(Locale.ROOT);
+        return switch (normalized) {
+            case "disruptor", "local", "local-disruptor" -> DISRUPTOR;
+            case "rabbit" -> RABBIT;
+            case "kafka" -> KAFKA;
+            case "rocket" -> ROCKET;
+            case "pulsar" -> PULSAR;
+            case "redis", "redis-stream", "redisstream" -> REDIS_STREAM;
+            case "activemq", "artemis" -> ACTIVEMQ;
+            case "nats" -> NATS;
+            case "ons" -> ONS;
+            case "tdmq" -> TDMQ;
+            case "sqs" -> SQS;
+            default -> NONE;
+        };
+    }
+
+    /**
+     * 解析配置字符串（{@link #from(String)} 别名，供配置类调用）。
+     *
+     * @param raw 配置值
+     * @return Broker 类型
+     */
+    public static MQBrokerType fromConfig(String raw) {
+        return from(raw);
+    }
+
+    /**
+     * 转为 kebab-case 配置值（如 {@code redis-stream}）。
+     */
+    public String toConfigValue() {
+        return name().toLowerCase(Locale.ROOT).replace('_', '-');
+    }
+}

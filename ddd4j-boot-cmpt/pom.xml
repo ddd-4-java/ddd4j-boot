@@ -25,6 +25,16 @@
         <module>ddd4j-boot-cmpt-external</module>
         <module>ddd4j-boot-cmpt-jackson</module>
         <module>ddd4j-boot-cmpt-kafka</module>
+        <module>ddd4j-boot-cmpt-nats</module>
+        <module>ddd4j-boot-cmpt-ons</module>
+        <module>ddd4j-boot-cmpt-rabbit</module>
+        <module>ddd4j-boot-cmpt-sqs</module>
+        <module>ddd4j-boot-cmpt-tdmq</module>
+        <module>ddd4j-boot-cmpt-rocket</module>
+        <module>ddd4j-boot-cmpt-pulsar</module>
+        <module>ddd4j-boot-cmpt-redis-stream</module>
+        <module>ddd4j-boot-cmpt-activemq</module>
+        <module>ddd4j-boot-cmpt-disruptor</module>
         <module>ddd4j-boot-cmpt-license</module>
         <module>ddd4j-boot-cmpt-logs</module>
         <module>ddd4j-boot-cmpt-mybatis</module>

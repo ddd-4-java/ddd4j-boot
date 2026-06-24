@@ -11,9 +11,14 @@
     </parent>
 
     <artifactId>ddd4j-boot-mq</artifactId>
-    <description>ddd4j-boot 消息队列：Kafka/RocketMQ/RabbitMQ/Redis/RedisStream 五种统一抽象</description>
+    <description>ddd4j-boot 消息队列契约与 SPI（实现见 ddd4j-boot-cmpt-*）</description>
 
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>
@@ -23,6 +28,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
         </dependency>
         <!-- Hutool -->
         <dependency>
@@ -52,11 +61,16 @@
             <artifactId>amqp-client</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- Redis（可选） -->
+        <!-- Redis（可选，legacy impl） -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

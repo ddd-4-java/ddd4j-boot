@@ -23,6 +23,10 @@ import java.util.function.Consumer;
 
 @Component
 @Slf4j(topic = "### BASE-MQ : rabbitClient ###")
+/**
+ * @deprecated 请使用 {@code ddd4j-boot-cmpt-rabbit} 与 {@link io.ddd4j.boot.mq.spi.MQBrokerAdapter}。
+ */
+@Deprecated
 public final class RabbitClient implements MQClient {
     private static Connection CONNECTION;
 

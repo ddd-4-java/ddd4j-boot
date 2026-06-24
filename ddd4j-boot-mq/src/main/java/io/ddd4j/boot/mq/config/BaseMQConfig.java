@@ -13,12 +13,15 @@ import org.springframework.core.annotation.Order;
 import java.util.List;
 
 /**
- * 基础MQ配置
+ * 基础MQ配置（legacy）。
+ *
+ * @deprecated 请使用 {@link LegacyMQBridgeConfiguration} 并设置 {@code ddd4j.mq.legacy-enabled=true}。
  */
+@Deprecated
 @Slf4j
 @Order(PriorityOrdered.HIGHEST_PRECEDENCE + 10)
 @Configuration
-@ConditionalOnProperty(prefix = "ddd4j.event", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "ddd4j.mq", name = "legacy-enabled", havingValue = "true", matchIfMissing = false)
 public class BaseMQConfig {
     @Autowired
     private List<MQClient> mqClients;
