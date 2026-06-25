@@ -25,8 +25,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 应用就绪后扫描 {@link MQEventListener} 并通过 {@link MQBrokerAdapter} 动态注册消费端点。
- * <p>
- * 替代 legacy {@link io.ddd4j.boot.mq.core.MQClient#init()} 消费注册路径。
  */
 @Slf4j
 @RequiredArgsConstructor

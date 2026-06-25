@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * ddd4j MQ 主配置（前缀 {@code ddd4j.mq}），与 legacy {@link BaseMQProperties} 并存。
+ * ddd4j MQ 主配置（前缀 {@code ddd4j.mq}）。
  */
 @Data
 @ConfigurationProperties(prefix = "ddd4j.mq")
@@ -42,25 +42,6 @@ public class Ddd4jMQProperties {
      */
     public MQBrokerType brokerType() {
         return MQBrokerType.from(broker);
-    }
-
-    /**
-     * 从 legacy {@link BaseMQProperties} 同步字段（兼容迁移）。
-     *
-     * @param legacy legacy 配置
-     */
-    public void mergeFrom(BaseMQProperties legacy) {
-        if (legacy == null) {
-            return;
-        }
-        this.enabled = legacy.isEnable();
-        this.broker = legacy.getImpl();
-        this.namespace = legacy.getNamespace();
-        this.defaultTopic = legacy.getDefaultTopic();
-        this.serialization = legacy.getSerialization();
-        this.persist = legacy.isPersist();
-        this.retries = legacy.getRetries();
-        this.consumer.ackMode = legacy.isAutoAck() ? "auto" : "manual";
     }
 
     /**

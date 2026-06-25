@@ -1,3 +1,1 @@
 io.ddd4j.boot.mq.config.Ddd4jMQAutoConfiguration
-io.ddd4j.boot.mq.config.LegacyMQBridgeConfiguration
-io.ddd4j.boot.mq.config.MQEventPublisherBridgeConfiguration

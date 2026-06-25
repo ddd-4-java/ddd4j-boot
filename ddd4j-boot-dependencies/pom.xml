@@ -423,6 +423,7 @@
         <qiniu-java-sdk.version>7.19.0</qiniu-java-sdk.version>
         <qlexpress.version>4.1.2</qlexpress.version>
         <quartz.version>2.5.2</quartz.version>
+        <quarkus-bom.version>3.37.0</quarkus-bom.version>
         <r2dbc-h2.version>1.1.0.RELEASE</r2dbc-h2.version>
         <r2dbc-spi.version>1.0.0.RELEASE</r2dbc-spi.version>
         <r2dbc-mariadb.version>1.4.1</r2dbc-mariadb.version>
@@ -604,7 +605,7 @@
         <maven-nexus-m2settings-plugin.version>1.6.8</maven-nexus-m2settings-plugin.version>
         <maven-pmd-plugin.version>3.26.0</maven-pmd-plugin.version>
         <maven-properties-plugin.version>1.2.1</maven-properties-plugin.version>
-        <maven-quarkus-plugin.version>3.37.0</maven-quarkus-plugin.version>
+        <maven-quarkus-plugin.version>3.63.3</maven-quarkus-plugin.version>
         <maven-rpm-plugin.version>2.2.0</maven-rpm-plugin.version>
         <maven-shade-plugin.version>3.6.1</maven-shade-plugin.version>
         <maven-sonar-plugin.version>4.0.0.4121</maven-sonar-plugin.version>

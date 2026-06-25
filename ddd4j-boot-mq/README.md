@@ -1,7 +1,7 @@
 # ddd4j-boot-mq 架构设计
 
 > 本文档描述 ddd4j 消息队列体系的目标架构、模块边界与落地约定。  
-> **状态：阶段二/三已落地**（legacy `impl/*Client` 仍保留兼容，见 §16）。
+> **状态：阶段二/三已落地**；legacy `base-mq` 兼容层与 `impl/*Client` 已移除（见 §12）。
 
 ---
 
@@ -158,7 +158,7 @@ io.ddd4j.boot.mq
 │   ├── MQBindingNaming
 │   └── MQBrokerType
 ├── config/
-│   └── Ddd4jMQProperties            # 主前缀 ddd4j.mq，兼容 base-mq
+│   └── Ddd4jMQProperties            # 主前缀 ddd4j.mq
 └── spi/
     ├── MQBrokerAdapter              # 各 cmpt 实现
     └── MQPublisherFactory
@@ -228,29 +228,21 @@ public interface MQBrokerAdapter {
 }
 ```
 
-启动时根据 `ddd4j.mq.broker`（或兼容的 `base-mq.impl`）从 `List<MQBrokerAdapter>` 中选取唯一实现。
+启动时根据 `ddd4j.mq.broker` 从 `List<MQBrokerAdapter>` 中选取唯一实现。
 
 ---
 
 ## 7. 发布侧设计
 
-### 7.1 从 `BaseContext` 到 Spring Bean
-
-**旧方式（废弃）：**
-
-```java
-BaseContext.get("MQEventPublisher").accept(event);
-```
-
-**新方式：**
+### 7.1 Spring Bean 发布
 
 ```java
 public interface MQEventPublisher {
-    <T extends MQEvent> void publish(T event, MQDestination destination);
+    void publish(MQEvent event);
 }
 ```
 
-`MQEvent.publish(topic, tag, tenantId)` 委托注入的 `MQEventPublisher` Bean，便于测试与替换。
+`MQEvent.publish(topic, tag, tenantId)` 委托 Spring 容器中的 `MQEventPublisher` Bean；未启用 MQ 或未引入 cmpt 时将抛出 `IllegalStateException`。
 
 ### 7.2 出站路径
 
@@ -454,8 +446,9 @@ Cloud 侧从 `org.springframework.messaging.Message` 解析：
 
 | 前缀 | 说明 |
 |------|------|
-| `ddd4j.mq.*` | **主前缀**（新应用使用） |
-| `base-mq.*` | **兼容别名**（legacy ddd4j / 存量配置，经 `EnvironmentPostProcessor` 映射） |
+| `ddd4j.mq.*` | **唯一主前缀**（`Ddd4jMQProperties`） |
+
+> **Breaking（vNext）**：不再支持 `base-mq.*` 配置别名与 `EnvironmentPostProcessor` 自动映射。存量应用须一次性将配置迁移至 `ddd4j.mq.*`（见第 12 节）。
 
 ### 10.2 Boot 单体示例
 
@@ -531,7 +524,7 @@ spring:
 | `persist` | boolean | false | 是否启用消息本地持久化（需 `MQEventStorer`） |
 | `retries` | int | 0 | 发送失败重试（cmpt 实现） |
 
-Legacy `base-mq.server` / `username` / `password` 等连接信息**逐步下沉**到各 Broker 标准配置（`spring.rabbitmq.*`、`spring.kafka.*` 等），避免 duplicate 配置。
+Broker 连接信息（host、username、password 等）使用各 Broker 标准配置（`spring.rabbitmq.*`、`spring.kafka.*` 等），不在 `ddd4j.mq` 中重复定义。
 
 ---
 
@@ -550,15 +543,31 @@ Legacy `base-mq.server` / `username` / `password` 等连接信息**逐步下沉*
 
 ---
 
-## 12. 迁移与兼容
+## 12. 迁移说明（Breaking）
 
-| 项 | 策略 |
-|----|------|
-| `base-mq.*` | 映射到 `ddd4j.mq.*` |
-| `MQEvent.publish()` | 委托 `MQEventPublisher`；短期保留 `BaseContext` 桥接 |
-| `@MQEventListener` | 注解语义不变，注册改走 `MQBrokerAdapter` |
-| `impl/*Client` | 标记 `@Deprecated`，下个大版本移除 |
-| `MQClient` / `MQListener` | 由 `MQListenerDefinition` + Adapter 替代 |
+自本版本起，**仅支持** `ddd4j.mq.*` 配置前缀；`base-mq.*`、`ddd4j.mq.legacy-enabled` 及 `LegacyMQBridgeConfiguration` / `MQClient.init()` 桥接路径已移除。
+
+### 12.1 配置映射（一次性）
+
+| 旧 `base-mq.*` | 新 `ddd4j.mq.*` | 备注 |
+|----------------|-----------------|------|
+| `base-mq.enable` | `ddd4j.mq.enabled` | boolean |
+| `base-mq.impl` | `ddd4j.mq.broker` | `redisStream` → `redis-stream` |
+| `base-mq.namespace` | `ddd4j.mq.namespace` | |
+| `base-mq.default-topic` | `ddd4j.mq.default-topic` | |
+| `base-mq.persist` | `ddd4j.mq.persist` | |
+| `base-mq.serialization` | `ddd4j.mq.serialization` | 建议 `json` |
+| `base-mq.retries` | `ddd4j.mq.retries` | |
+| `base-mq.auto-ack` | `ddd4j.mq.consumer.ack-mode` | `true` → `auto`，`false` → `manual` |
+| `base-mq.server` / `username` / `password` 等 | `spring.rabbitmq.*` / `spring.kafka.*` 等 | 下沉至 Broker 标准配置 |
+
+### 12.2 API 迁移
+
+| 旧路径 | 新路径 |
+|--------|--------|
+| `MQEvent.publish()` + `BaseContext` | `MQEventPublisher` Bean（或 `MQEvent.publish()` 自动委托） |
+| `@MQEventListener` + `MQClient.init()` | `@MQEventListener` + `MQBrokerAdapter` 动态注册 |
+| `impl/*Client` | `ddd4j-boot-cmpt-*` + `MQBrokerAdapter` |
 
 ---
 
@@ -568,10 +577,11 @@ Legacy `base-mq.server` / `username` / `password` 等连接信息**逐步下沉*
 
 - [x] `MessageAcknowledgment`、`AckDisposition`、`MQEventPublisher`、`MQBrokerAdapter`
 - [x] `MQConsumeTemplates` 与 Ack 状态机单测
-- [x] `Ddd4jMQProperties` + `base-mq` 别名
+- [x] `Ddd4jMQProperties`（仅 `ddd4j.mq` 前缀）
+- [x] 移除 `base-mq.*` 别名与 legacy 桥接
 - [x] `MQListenerBeanPostProcessor` + `MQListenerDefinitionRegistry`（替代全容器扫描）
 - [x] `MQListenerClasspathScanner` + `MQListenerEndpointNaming`（跨 cmpt / cloud 复用）
-- [ ] legacy `impl/*Client` 移除（下个大版本）
+- [x] legacy `impl/*Client` 与 `MQClient` / `MQListener` 移除
 
 ### 阶段二：Boot cmpt（全 Broker 消费端）✅
 
@@ -579,9 +589,9 @@ Legacy `base-mq.server` / `username` / `password` 等连接信息**逐步下沉*
 |------|--------|-------------|-------------------|
 | `ddd4j-boot-cmpt-rabbit` | ✅ `SimpleRabbitListenerEndpoint` | `spring-boot-starter-amqp` | ✅ `RabbitMQContainerIT` |
 | `ddd4j-boot-cmpt-kafka` | ✅ `ConcurrentMessageListenerContainer` | `spring-kafka` + `KafkaAutoConfiguration` | ✅ `KafkaContainerIT` |
-| `ddd4j-boot-cmpt-rocket` | ✅ `DefaultMQPushConsumer` | `rocketmq-spring-boot-starter` | [ ] |
+| `ddd4j-boot-cmpt-rocket` | ✅ `DefaultMQPushConsumer` | `rocketmq-spring-boot-starter` | ✅ `RocketMQContainerIT` |
 | `ddd4j-boot-cmpt-pulsar` | ✅ `PulsarClient` messageListener | `spring-boot-starter-pulsar` | [ ] |
-| `ddd4j-boot-cmpt-redis-stream` | ✅ `StreamMessageListenerContainer` | `spring-boot-starter-data-redis` | [ ] |
+| `ddd4j-boot-cmpt-redis-stream` | ✅ `StreamMessageListenerContainer` | `spring-boot-starter-data-redis` | ✅ `RedisStreamContainerIT` |
 | `ddd4j-boot-cmpt-activemq` | ✅ `SimpleJmsListenerEndpoint` | `spring-boot-starter-artemis` | [ ] |
 | `ddd4j-boot-cmpt-nats` | ✅ JetStream / Core Dispatcher | 无官方 Starter（`jnats`） | [ ] |
 | `ddd4j-boot-cmpt-ons` | ✅ `ONSFactory.createConsumer` | 无官方 Starter（`ons-client`） | [ ] |
@@ -593,16 +603,18 @@ Legacy `base-mq.server` / `username` / `password` 等连接信息**逐步下沉*
 
 ```bash
 cd ddd4j-boot-cmpt
-mvn verify -Pmq-integration-tests -pl ddd4j-boot-cmpt-rabbit,ddd4j-boot-cmpt-kafka -am
+mvn verify -Pmq-integration-tests -pl ddd4j-boot-cmpt-rabbit,ddd4j-boot-cmpt-kafka,ddd4j-boot-cmpt-rocket,ddd4j-boot-cmpt-redis-stream -am
 ```
 
-默认 `skipTests=true`；`*IT.java` 需 `-Pmq-integration-tests`。IT 使用 `org.testcontainers:testcontainers` + 模块包（`rabbitmq` / `kafka`），版本 `1.20.6` 与 Spring Boot 3.4.x 对齐（勿用 `ddd4j-boot-dependencies` 的 testcontainers 2.x）。
+默认 `skipTests=true`；`*IT.java` 需 `-Pmq-integration-tests`。IT 使用 `org.testcontainers:testcontainers` + 模块包（`rabbitmq` / `kafka`）或 `GenericContainer`（Rocket / Redis），版本 `1.20.6` 与 Spring Boot 3.4.x 对齐（勿用 `ddd4j-boot-dependencies` 的 testcontainers 2.x）。
 
 **IT 注意事项**：
 
 - `spring-biz` 传递的 JUnit 5.8.2 已与 BOM 排除对齐（`ddd4j-boot-dependencies` 引入 `junit-bom` + 排除 `junit-jupiter-api`），避免与 Spring Boot 3.4 的 `junit-platform` 6.x 冲突。
 - Kafka IT 使用 Testcontainers 1.20+ 的 `org.testcontainers.kafka.KafkaContainer` + 官方镜像 `apache/kafka:3.8.1`（勿用 `confluentinc/cp-kafka`，需 `ConfluentKafkaContainer`）。
-- IT 内手动 `@BeforeAll` 启动容器，不依赖 `testcontainers-junit-jupiter` 扩展。
+- Rocket IT 无官方 Testcontainers 模块，使用双 `FixedHostPortGenericContainer`（`apache/rocketmq:5.3.1`）+ 固定端口 9876/10911 + `brokerIP1=127.0.0.1`，避免 Broker 注册地址不可达；`@BeforeAll` 内 `mqadmin updateTopic` 预创建 topic（RocketMQ topic 禁止 `.`，冒烟用无 namespace 的 `smoke`）。
+- Redis Stream IT 使用 `GenericContainer` + `redis:7-alpine`（1.20.x 无内置 Redis 模块；社区 `com.redis:testcontainers-redis` 为 2.x 勿混用）。
+- IT 内手动 `@BeforeAll` 启动容器，不依赖 `testcontainers-junit-jupiter` 扩展；Docker 不可用则 `@EnabledIf` 跳过。
 
 ### 阶段三：Cloud Stream 桥接 ✅
 
@@ -615,9 +627,10 @@ mvn verify -Pmq-integration-tests -pl ddd4j-boot-cmpt-rabbit,ddd4j-boot-cmpt-kaf
 
 - [ ] 各 Broker Ack 映射矩阵配置模板（yaml 片段）
 - [ ] SQS 迁移至 `io.awspring.cloud:spring-cloud-aws-starter-sqs`
-- [ ] Rocket / Redis Stream Testcontainers IT
+- [x] Rocket / Redis Stream Testcontainers IT
 - [ ] 可选：`ddd4j-cloud-cmpt-base-mqflow` 拦截器集成
-- [ ] legacy `impl/*Client` 清理
+- [x] legacy 配置桥接移除（`base-mq.*` / `LegacyMQBridgeConfiguration` / `MQEventPublisherBridgeConfiguration`）
+- [x] legacy `impl/*Client` 源码清理
 
 ---
 
@@ -704,19 +717,4 @@ ddd4j-cloud-cmpt-stream ──────────────────�
 
 ---
 
-## 17. 附录：legacy 代码说明
-
-当前 `ddd4j-boot-mq` 仍包含自 ddd4j 迁入的 legacy 实现：
-
-- `impl/RabbitClient.java`
-- `impl/KafkaClient.java`
-- `impl/RocketClient.java`
-- `impl/RedisClient.java`（PubSub，将废弃）
-- `impl/RedisStreamClient.java`
-- `core/MQClient.java`
-
-上述类**不代表目标架构**，仅作过渡兼容。新功能开发请遵循本文档，在 `ddd4j-boot-cmpt-*` 与 `ddd4j-cloud-cmpt-stream-*` 中实现。
-
----
-
-*文档版本：1.1 | 维护：ddd4j-boot 团队*
+*文档版本：1.2 | 维护：ddd4j-boot 团队*

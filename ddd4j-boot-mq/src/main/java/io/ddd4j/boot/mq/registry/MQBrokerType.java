@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 import java.util.Locale;
 
 /**
- * 支持的 Broker 类型枚举（与 {@code ddd4j.mq.broker} / legacy {@code base-mq.impl} 对齐）。
+ * 支持的 Broker 类型枚举（与 {@code ddd4j.mq.broker} 对齐）。
  */
 public enum MQBrokerType {
 
@@ -24,7 +24,7 @@ public enum MQBrokerType {
     SQS;
 
     /**
-     * 解析配置字符串为 Broker 类型（兼容 legacy 命名如 redisStream）。
+     * 解析配置字符串为 Broker 类型（兼容 redisStream 等历史命名）。
      */
     public static MQBrokerType from(String raw) {
         if (!StringUtils.hasText(raw) || "none".equalsIgnoreCase(raw.trim())) {

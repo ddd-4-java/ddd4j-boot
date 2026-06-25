@@ -4,12 +4,12 @@ import io.ddd4j.boot.core.contract.MQEvent;
 import io.ddd4j.boot.mq.contract.MQDestination;
 
 /**
- * 领域事件发布端口，替代 {@code BaseContext} 静态查找方式。
+ * 领域事件发布端口。
  * <p>
  * 各 {@code ddd4j-boot-cmpt-*} 模块通过 {@link io.ddd4j.boot.mq.spi.MQBrokerAdapter} 提供实现。
  * </p>
  */
-public interface MQEventPublisher {
+public interface MQEventPublisher extends io.ddd4j.boot.core.contract.MQEventPublisher {
 
     /**
      * 发布领域事件到指定目的地。

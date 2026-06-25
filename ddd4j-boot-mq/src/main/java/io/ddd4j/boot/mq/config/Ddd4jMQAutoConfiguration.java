@@ -25,7 +25,7 @@ import java.util.List;
  * ddd4j 消息队列自动配置（契约层）：注册属性、发布器与监听器编排。
  */
 @Configuration
-@EnableConfigurationProperties({Ddd4jMQProperties.class, BaseMQProperties.class})
+@EnableConfigurationProperties(Ddd4jMQProperties.class)
 @ConditionalOnProperty(prefix = "ddd4j.mq", name = "enabled", havingValue = "true")
 public class Ddd4jMQAutoConfiguration {
 
