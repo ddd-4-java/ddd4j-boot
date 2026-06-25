@@ -1,5 +1,7 @@
 # ddd4j-boot-sample-druid-mqtt
 
+> **生产集成**：领域事件发布/订阅请使用 [`ddd4j-boot-cmpt-mqtt`](../../ddd4j-boot-cmpt/ddd4j-boot-cmpt-mqtt)（`ddd4j.mq.broker=mqtt`，Eclipse Paho + Spring Integration）。本 sample 演示底层 MQTT 客户端配置。
+
 >
 基于 [Spring Boot 3.x](https://docs.spring.io/spring-boot/index.html) 、[Mybatis Plus](https://baomidou.com/introduce/)、[Druid](https://github.com/alibaba/druid)
 技术为主的 Demo 功能示例。

@@ -48,6 +48,8 @@ class MQBindingNamingTest {
     @Test
     void brokerTypeFromConfig() {
         assertEquals(MQBrokerType.RABBIT, MQBrokerType.fromConfig("rabbit"));
+        assertEquals(MQBrokerType.MQTT, MQBrokerType.fromConfig("mqtt"));
+        assertEquals(MQBrokerType.MQTT_MICA, MQBrokerType.fromConfig("mqtt-mica"));
         assertEquals(MQBrokerType.REDIS_STREAM, MQBrokerType.fromConfig("redis-stream"));
         assertEquals(MQBrokerType.NONE, MQBrokerType.fromConfig("unknown"));
     }

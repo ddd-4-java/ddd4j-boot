@@ -19,6 +19,10 @@ public enum MQBrokerType {
     REDIS_STREAM,
     ACTIVEMQ,
     NATS,
+    /** Eclipse Paho MQTT 客户端（连接外部 Broker，非嵌入式服务端）。 */
+    MQTT,
+    /** mica-mqtt AIO 客户端（sample mqtt-client2，连接外部 Broker）。 */
+    MQTT_MICA,
     ONS,
     TDMQ,
     SQS;
@@ -42,6 +46,8 @@ public enum MQBrokerType {
             case "redis", "redis-stream", "redisstream" -> REDIS_STREAM;
             case "activemq", "artemis" -> ACTIVEMQ;
             case "nats" -> NATS;
+            case "mqtt" -> MQTT;
+            case "mqtt-mica", "mica-mqtt", "mica" -> MQTT_MICA;
             case "ons" -> ONS;
             case "tdmq" -> TDMQ;
             case "sqs" -> SQS;

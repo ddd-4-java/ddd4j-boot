@@ -72,7 +72,7 @@
 │  ddd4j-boot-cmpt-pulsar           spring-pulsar                  │
 │  ddd4j-boot-cmpt-redis-stream     spring-data-redis              │
 │  ddd4j-boot-cmpt-activemq         spring-boot-starter-artemis    │
-│  ddd4j-boot-cmpt-nats / -ons / -tdmq / -sqs  …（按区域选装）      │
+│  ddd4j-boot-cmpt-nats / -mqtt / -ons / -tdmq / -sqs  …（按区域选装） │
 ├─────────────────────────────────────────────────────────────────┤
 │ 开源实现层（不自研协议客户端）                                     │
 │ RabbitTemplate · KafkaListener · RocketMQTemplate · Pulsar…      │
@@ -190,6 +190,8 @@ ddd4j-boot-cmpt-rabbit/
 | 5 | Redis Stream | `spring-boot-starter-data-redis` | `ddd4j-boot-cmpt-redis-stream` | 无官方 Spring Cloud Stream Binder，短期走 boot cmpt |
 | 6 | ActiveMQ Artemis | `spring-boot-starter-artemis` | `ddd4j-boot-cmpt-activemq` | 视 binder 成熟度 |
 | 7 | NATS JetStream | `jnats` + AutoConfig | `ddd4j-boot-cmpt-nats` | 视社区 binder |
+| — | **Eclipse MQTT** | `spring-integration-mqtt` + Paho | `ddd4j-boot-cmpt-mqtt` | 无官方 Stream Binder；**仅客户端**连外部 Broker |
+| — | **mica-mqtt** | `mica-mqtt-client-spring-boot-starter` | `ddd4j-boot-cmpt-mqtt-mica` | 无官方 Stream Binder；**仅客户端**（AIO 高性能，sample client2） |
 | 8 | 阿里云 ONS | `ons-client`（Rocket 兼容） | `ddd4j-boot-cmpt-ons` | 可复用 stream-rocket |
 | 9 | 腾讯云 TDMQ | `tdmq-client` | `ddd4j-boot-cmpt-tdmq` | 视 binder |
 | 10 | AWS SQS | `spring-cloud-aws-sqs` | `ddd4j-boot-cmpt-sqs` | `ddd4j-cloud-cmpt-stream-aws` |
@@ -456,7 +458,7 @@ Cloud 侧从 `org.springframework.messaging.Message` 解析：
 ddd4j:
   mq:
     enabled: true
-    broker: rabbit          # rabbit | kafka | rocket | pulsar | redis-stream | ...
+    broker: rabbit          # rabbit | kafka | rocket | pulsar | redis-stream | mqtt | ...
     namespace: app
     default-topic: DEFAULT
     consumer:
@@ -524,7 +526,75 @@ spring:
 | `persist` | boolean | false | 是否启用消息本地持久化（需 `MQEventStorer`） |
 | `retries` | int | 0 | 发送失败重试（cmpt 实现） |
 
-Broker 连接信息（host、username、password 等）使用各 Broker 标准配置（`spring.rabbitmq.*`、`spring.kafka.*` 等），不在 `ddd4j.mq` 中重复定义。
+Broker 连接信息（host、username、password 等）使用各 Broker 标准配置（`spring.rabbitmq.*`、`spring.kafka.*` 等），MQTT 使用 `ddd4j.mq.mqtt.*`（见下），不在 `ddd4j.mq` 根级重复定义。
+
+**MQTT 客户端示例**（连接外部 Mosquitto / EMQX 等，非嵌入式 Broker）：
+
+```yaml
+ddd4j:
+  mq:
+    enabled: true
+    broker: mqtt
+    namespace: app
+    consumer:
+      ack-mode: manual    # manual → QoS 1；auto → QoS 0
+  mqtt:
+    url: tcp://127.0.0.1:1883
+    username: mqtt_user
+    password: mqtt_password
+    qos: 1
+    clean-session: true
+    automatic-reconnect: true
+```
+
+> **mica-mqtt**（sample `mqtt-client2`）与 **mica-mqtt-server**（sample `mqtt-server`）为可选替代实现；生产 cmpt 主路径为 **Eclipse Paho + Spring Integration**（sample `mqtt-client1`），可选 **mica-mqtt** 见 `ddd4j-boot-cmpt-mqtt-mica`（`ddd4j.mq.broker=mqtt-mica`）。嵌入式 Broker 不纳入 `ddd4j-boot-cmpt-mqtt` / `ddd4j-boot-cmpt-mqtt-mica`。
+
+**mica-mqtt 客户端示例**（`ddd4j-boot-cmpt-mqtt-mica`，连接参数走 `mqtt.client.*`）：
+
+```yaml
+ddd4j:
+  mq:
+    enabled: true
+    broker: mqtt-mica
+    namespace: app
+    consumer:
+      ack-mode: manual
+    mica:
+      qos: 1
+      url: tcp://127.0.0.1:1883   # 文档/测试辅助；运行时以 mqtt.client.* 为准
+
+mqtt:
+  client:
+    enabled: true
+    ip: 127.0.0.1
+    port: 1883
+    client-id: ddd4j-mica-mqtt-001
+    clean-start: true
+```
+
+**何时选用 mqtt（Paho）vs mqtt-mica：**
+
+| 场景 | 推荐 |
+|------|------|
+| 与 Spring Integration 生态集成、已有 Paho 运维经验 | `ddd4j-boot-cmpt-mqtt`（`broker: mqtt`） |
+| 高并发设备接入、低延迟 AIO 客户端、与 sample client2 一致 | `ddd4j-boot-cmpt-mqtt-mica`（`broker: mqtt-mica`） |
+| 嵌入式 Broker | sample `mqtt-server` 或独立 Mosquitto/EMQX，**不**在 cmpt 内嵌入 |
+
+**IoT 双轨消费（mqtt-mica）**：
+
+| 注解 | 路径 | 启用方式 |
+|------|------|----------|
+| `@MQEventListener` | ddd4j 统一 MQ（`MQConsumeTemplates`、Ack、namespace） | `ddd4j.mq.broker=mqtt-mica` 自动启用 |
+| `@MqttClientSubscribe` | mica 原生方法订阅（与 sample client2 一致） | IoT 模块在启动类加 `@EnableMicaMqttBridge` |
+
+```java
+@SpringBootApplication
+@EnableMicaMqttBridge   // 仅 IoT 等需要原生 @MqttClientSubscribe 的模块显式开启
+public class IotMqttApplication {
+}
+```
+
+未标注 `@EnableMicaMqttBridge` 时，ddd4j 会通过 no-op 守卫屏蔽 mica 默认全局 `@MqttClientSubscribe` 扫描，避免与 `@MQEventListener` 混用。
 
 ---
 
@@ -590,20 +660,22 @@ Broker 连接信息（host、username、password 等）使用各 Broker 标准�
 | `ddd4j-boot-cmpt-rabbit` | ✅ `SimpleRabbitListenerEndpoint` | `spring-boot-starter-amqp` | ✅ `RabbitMQContainerIT` |
 | `ddd4j-boot-cmpt-kafka` | ✅ `ConcurrentMessageListenerContainer` | `spring-kafka` + `KafkaAutoConfiguration` | ✅ `KafkaContainerIT` |
 | `ddd4j-boot-cmpt-rocket` | ✅ `DefaultMQPushConsumer` | `rocketmq-spring-boot-starter` | ✅ `RocketMQContainerIT` |
-| `ddd4j-boot-cmpt-pulsar` | ✅ `PulsarClient` messageListener | `spring-boot-starter-pulsar` | [ ] |
+| `ddd4j-boot-cmpt-pulsar` | ✅ `PulsarClient` messageListener | `spring-boot-starter-pulsar` | ✅ `PulsarContainerIT` |
 | `ddd4j-boot-cmpt-redis-stream` | ✅ `StreamMessageListenerContainer` | `spring-boot-starter-data-redis` | ✅ `RedisStreamContainerIT` |
-| `ddd4j-boot-cmpt-activemq` | ✅ `SimpleJmsListenerEndpoint` | `spring-boot-starter-artemis` | [ ] |
-| `ddd4j-boot-cmpt-nats` | ✅ JetStream / Core Dispatcher | 无官方 Starter（`jnats`） | [ ] |
-| `ddd4j-boot-cmpt-ons` | ✅ `ONSFactory.createConsumer` | 无官方 Starter（`ons-client`） | [ ] |
-| `ddd4j-boot-cmpt-sqs` | ✅ 长轮询 | 待迁 `io.awspring.cloud` Starter | [ ] |
-| `ddd4j-boot-cmpt-tdmq` | ✅ 占位进程内总线 | 无官方 Starter | [ ] |
+| `ddd4j-boot-cmpt-activemq` | ✅ `SimpleJmsListenerEndpoint` | `spring-boot-starter-artemis` | ✅ `ActiveMQContainerIT` |
+| `ddd4j-boot-cmpt-nats` | ✅ JetStream / Core Dispatcher | 无官方 Starter（`jnats`） | ✅ `NatsContainerIT` |
+| `ddd4j-boot-cmpt-mqtt` | ✅ `MqttPahoMessageDrivenChannelAdapter` | `spring-integration-mqtt` + Paho | ✅ `MqttContainerIT`（Mosquitto） |
+| `ddd4j-boot-cmpt-mqtt-mica` | ✅ `MqttClientTemplate.subQos*` | `mica-mqtt-client-spring-boot-starter` | ✅ `MicaMqttContainerIT`（Mosquitto） |
+| `ddd4j-boot-cmpt-ons` | ✅ `ONSFactory.createConsumer` | 无官方 Starter（`ons-client`） | ⛔ `OnsContainerIT` @Disabled（需 RocketMQ 5 Proxy） |
+| `ddd4j-boot-cmpt-sqs` | ✅ 长轮询 | 待迁 `io.awspring.cloud` Starter | ✅ `SqsContainerIT`（ElasticMQ） |
+| `ddd4j-boot-cmpt-tdmq` | ✅ 占位进程内总线 | 无官方 Starter | ✅ `TdmqPlaceholderIT`（无 Docker） |
 | `ddd4j-boot-cmpt-disruptor` | ✅ `DisruptorMQBus` | 无（`com.lmax:disruptor`） | N/A 本地 |
 
 运行集成测试（需 Docker）：
 
 ```bash
 cd ddd4j-boot-cmpt
-mvn verify -Pmq-integration-tests -pl ddd4j-boot-cmpt-rabbit,ddd4j-boot-cmpt-kafka,ddd4j-boot-cmpt-rocket,ddd4j-boot-cmpt-redis-stream -am
+mvn verify -Pmq-integration-tests -pl ddd4j-boot-cmpt-rabbit,ddd4j-boot-cmpt-kafka,ddd4j-boot-cmpt-rocket,ddd4j-boot-cmpt-redis-stream,ddd4j-boot-cmpt-activemq,ddd4j-boot-cmpt-pulsar,ddd4j-boot-cmpt-nats,ddd4j-boot-cmpt-mqtt,ddd4j-boot-cmpt-mqtt-mica,ddd4j-boot-cmpt-ons,ddd4j-boot-cmpt-sqs,ddd4j-boot-cmpt-tdmq -am
 ```
 
 默认 `skipTests=true`；`*IT.java` 需 `-Pmq-integration-tests`。IT 使用 `org.testcontainers:testcontainers` + 模块包（`rabbitmq` / `kafka`）或 `GenericContainer`（Rocket / Redis），版本 `1.20.6` 与 Spring Boot 3.4.x 对齐（勿用 `ddd4j-boot-dependencies` 的 testcontainers 2.x）。
@@ -614,6 +686,13 @@ mvn verify -Pmq-integration-tests -pl ddd4j-boot-cmpt-rabbit,ddd4j-boot-cmpt-kaf
 - Kafka IT 使用 Testcontainers 1.20+ 的 `org.testcontainers.kafka.KafkaContainer` + 官方镜像 `apache/kafka:3.8.1`（勿用 `confluentinc/cp-kafka`，需 `ConfluentKafkaContainer`）。
 - Rocket IT 无官方 Testcontainers 模块，使用双 `FixedHostPortGenericContainer`（`apache/rocketmq:5.3.1`）+ 固定端口 9876/10911 + `brokerIP1=127.0.0.1`，避免 Broker 注册地址不可达；`@BeforeAll` 内 `mqadmin updateTopic` 预创建 topic（RocketMQ topic 禁止 `.`，冒烟用无 namespace 的 `smoke`）。
 - Redis Stream IT 使用 `GenericContainer` + `redis:7-alpine`（1.20.x 无内置 Redis 模块；社区 `com.redis:testcontainers-redis` 为 2.x 勿混用）。
+- ActiveMQ IT 使用 `GenericContainer` + `apache/activemq-artemis:2.37.0`（Artemis JMS，`spring-boot-starter-artemis`）。
+- Pulsar IT 使用 `GenericContainer` + `apachepulsar/pulsar:3.3.0` standalone（1.20.x 无官方 Pulsar 模块；社区模块为 2.x）。
+- NATS IT 使用 `GenericContainer` + `nats:2.10-alpine -js`（JetStream 启用；发布失败时回退 Core NATS）。
+- MQTT IT 使用 `GenericContainer` + `eclipse-mosquitto:2`（端口 1883；cmpt **仅客户端**，嵌入式 Broker 见 sample `mqtt-server` 或 mica-mqtt）。
+- ONS IT 为 `OnsContainerIT`（当前 `@Disabled`）：`ons-client 2.0.x` 经 gRPC/TLS 连 RocketMQ 5，仅 NameServer+Broker 容器不足，需 Proxy 或阿里云实例后再启用。
+- SQS IT 使用 `GenericContainer` + `softwaremill/elasticmq-native:1.6.8`（SQS 兼容 API，镜像小于 LocalStack）；IT 内 `@Primary` 覆盖 `AmazonSQS` 指向 ElasticMQ 端点。
+- TDMQ IT 为 `TdmqPlaceholderIT`（进程内 `TdmqClientPlaceholder`，无需 Docker）。
 - IT 内手动 `@BeforeAll` 启动容器，不依赖 `testcontainers-junit-jupiter` 扩展；Docker 不可用则 `@EnabledIf` 跳过。
 
 ### 阶段三：Cloud Stream 桥接 ✅
@@ -649,6 +728,8 @@ mvn verify -Pmq-integration-tests -pl ddd4j-boot-cmpt-rabbit,ddd4j-boot-cmpt-kaf
 | **Redis Stream** | `org.springframework.boot:spring-boot-starter-data-redis` | [spring-data-redis](https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis) | `ddd4j-boot-cmpt-redis-stream` | `StreamMessageListenerContainer` |
 | **ActiveMQ Artemis** | `org.springframework.boot:spring-boot-starter-artemis` | [spring-jms](https://mvnrepository.com/artifact/org.springframework/spring-jms) | `ddd4j-boot-cmpt-activemq` | `SimpleJmsListenerEndpoint` |
 | **NATS** | 无 Spring 官方 Starter | [jnats](https://mvnrepository.com/artifact/io.nats/jnats) | `ddd4j-boot-cmpt-nats` | `Nats.connect` + JetStream `subscribe`（**必须**手写） |
+| **MQTT** | `org.springframework.integration:spring-integration-mqtt` | [spring-integration-mqtt](https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-mqtt) · [paho](https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3) | `ddd4j-boot-cmpt-mqtt` | `MqttPahoMessageDrivenChannelAdapter` + 出站 Handler；**客户端 only**（不嵌入 Broker） |
+| **MQTT (mica)** | `org.dromara.mica-mqtt:mica-mqtt-client-spring-boot-starter` | [mica-mqtt-client-spring-boot-starter](https://mvnrepository.com/artifact/org.dromara.mica-mqtt/mica-mqtt-client-spring-boot-starter) | `ddd4j-boot-cmpt-mqtt-mica` | `MqttClientTemplate` 编程式订阅 + 发布；连接走 `mqtt.client.*`；**客户端 only** |
 | **阿里云 ONS** | 无 Spring 官方 Starter | [ons-client](https://mvnrepository.com/artifact/com.aliyun.openservices/ons-client) | `ddd4j-boot-cmpt-ons` | `ONSFactory.createConsumer`（**必须**手写） |
 | **AWS SQS** | `io.awspring.cloud:spring-cloud-aws-starter-sqs`（目标） | [spring-cloud-aws-starter-sqs](https://mvnrepository.com/search?q=spring-cloud-aws-starter-sqs) | `ddd4j-boot-cmpt-sqs` | 当前 `aws-java-sdk-sqs` + 长轮询，待迁 awspring |
 | **腾讯云 TDMQ** | 无统一 Spring Starter | TDMQ / Pulsar 兼容 SDK | `ddd4j-boot-cmpt-tdmq` | `TdmqClient` 占位 + 进程内总线 |
