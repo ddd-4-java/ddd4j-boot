@@ -1,7 +1,7 @@
 # ddd4j-boot-mq 架构设计
 
 > 本文档描述 ddd4j 消息队列体系的目标架构、模块边界与落地约定。  
-> **状态：设计稿**（当前仓库仍含 legacy `impl/*Client`，将按本文档逐步迁移。）
+> **状态：阶段二/三已落地**（legacy `impl/*Client` 仍保留兼容，见 §16）。
 
 ---
 
@@ -564,36 +564,111 @@ Legacy `base-mq.server` / `username` / `password` 等连接信息**逐步下沉*
 
 ## 13. 落地路线图
 
-### 阶段一：契约冻结（boot-mq）
+### 阶段一：契约冻结（boot-mq）✅
 
-- [x] 定义 `MessageAcknowledgment`、`AckDisposition`、`MQEventPublisher`、`MQBrokerAdapter`
-- [x] 实现 `MQConsumeTemplates` 与 Ack 状态机单测
+- [x] `MessageAcknowledgment`、`AckDisposition`、`MQEventPublisher`、`MQBrokerAdapter`
+- [x] `MQConsumeTemplates` 与 Ack 状态机单测
 - [x] `Ddd4jMQProperties` + `base-mq` 别名
-- [ ] 从本模块移除 Broker SDK 依赖（仅保留契约；legacy `impl/*` 仍保留 optional 依赖待下个大版本移除）
+- [x] `MQListenerBeanPostProcessor` + `MQListenerDefinitionRegistry`（替代全容器扫描）
+- [x] `MQListenerClasspathScanner` + `MQListenerEndpointNaming`（跨 cmpt / cloud 复用）
+- [ ] legacy `impl/*Client` 移除（下个大版本）
 
-### 阶段二：Boot cmpt（Rabbit + Kafka 优先）
+### 阶段二：Boot cmpt（全 Broker 消费端）✅
 
-- [x] `ddd4j-boot-cmpt-rabbit` + `AmqpMessageAcknowledgment`（含动态 `@RabbitListener` 注册）
-- [x] `ddd4j-boot-cmpt-kafka` + `KafkaMessageAcknowledgment`
-- [x] `ddd4j-boot-cmpt-rocket` / `pulsar` / `redis-stream` / `activemq` / `nats` / `ons` / `tdmq` / `sqs`
-- [x] 消费端动态注册：`MQListenerScanner` + `MQListenerRegistrar` + `MQListenerMethodInvoker`
-- [x] Testcontainers 集成测试（rabbit 模块 `RabbitMQContainerIT`，需 Docker + `-DskipTests=false`）
+| 模块 | 消费端 | 官方 Starter | Testcontainers IT |
+|------|--------|-------------|-------------------|
+| `ddd4j-boot-cmpt-rabbit` | ✅ `SimpleRabbitListenerEndpoint` | `spring-boot-starter-amqp` | ✅ `RabbitMQContainerIT` |
+| `ddd4j-boot-cmpt-kafka` | ✅ `ConcurrentMessageListenerContainer` | `spring-kafka` + `KafkaAutoConfiguration` | ✅ `KafkaContainerIT` |
+| `ddd4j-boot-cmpt-rocket` | ✅ `DefaultMQPushConsumer` | `rocketmq-spring-boot-starter` | [ ] |
+| `ddd4j-boot-cmpt-pulsar` | ✅ `PulsarClient` messageListener | `spring-boot-starter-pulsar` | [ ] |
+| `ddd4j-boot-cmpt-redis-stream` | ✅ `StreamMessageListenerContainer` | `spring-boot-starter-data-redis` | [ ] |
+| `ddd4j-boot-cmpt-activemq` | ✅ `SimpleJmsListenerEndpoint` | `spring-boot-starter-artemis` | [ ] |
+| `ddd4j-boot-cmpt-nats` | ✅ JetStream / Core Dispatcher | 无官方 Starter（`jnats`） | [ ] |
+| `ddd4j-boot-cmpt-ons` | ✅ `ONSFactory.createConsumer` | 无官方 Starter（`ons-client`） | [ ] |
+| `ddd4j-boot-cmpt-sqs` | ✅ 长轮询 | 待迁 `io.awspring.cloud` Starter | [ ] |
+| `ddd4j-boot-cmpt-tdmq` | ✅ 占位进程内总线 | 无官方 Starter | [ ] |
+| `ddd4j-boot-cmpt-disruptor` | ✅ `DisruptorMQBus` | 无（`com.lmax:disruptor`） | N/A 本地 |
 
-### 阶段三：Cloud Stream 桥接
+运行集成测试（需 Docker）：
+
+```bash
+cd ddd4j-boot-cmpt
+mvn verify -Pmq-integration-tests -pl ddd4j-boot-cmpt-rabbit,ddd4j-boot-cmpt-kafka -am
+```
+
+默认 `skipTests=true`；`*IT.java` 需 `-Pmq-integration-tests`。IT 使用 `org.testcontainers:testcontainers` + 模块包（`rabbitmq` / `kafka`），版本 `1.20.6` 与 Spring Boot 3.4.x 对齐（勿用 `ddd4j-boot-dependencies` 的 testcontainers 2.x）。
+
+**IT 注意事项**：
+
+- `spring-biz` 传递的 JUnit 5.8.2 已与 BOM 排除对齐（`ddd4j-boot-dependencies` 引入 `junit-bom` + 排除 `junit-jupiter-api`），避免与 Spring Boot 3.4 的 `junit-platform` 6.x 冲突。
+- Kafka IT 使用 Testcontainers 1.20+ 的 `org.testcontainers.kafka.KafkaContainer` + 官方镜像 `apache/kafka:3.8.1`（勿用 `confluentinc/cp-kafka`，需 `ConfluentKafkaContainer`）。
+- IT 内手动 `@BeforeAll` 启动容器，不依赖 `testcontainers-junit-jupiter` 扩展。
+
+### 阶段三：Cloud Stream 桥接 ✅
 
 - [x] `ddd4j-cloud-cmpt-stream` + `Ddd4jStreamConsumeSupport`
-- [x] `ddd4j-cloud-cmpt-stream-rabbit`（及 kafka / rocket / pulsar）
-- [x] `BindingNamingContributor` 与函数式 Consumer 注册（`FunctionalConsumerRegistrar` + `StreamListenerConsumer`）
+- [x] `ddd4j-cloud-cmpt-stream-rabbit` / `kafka` / `rocket` / `pulsar`
+- [x] `FunctionalConsumerRegistrar` 复用 `MQListenerClasspathScanner`
+- [x] `StreamListenerMetadata.from(MQListenerDefinition)`
 
-### 阶段四：扩展 Broker
+### 阶段四：深化与治理
 
-- [x] rocket、pulsar、redis-stream、activemq、nats、ons、tdmq、sqs（boot cmpt 骨架 + SPI 已落地）
-- [ ] 各 Broker Ack 映射矩阵与配置模板文档补全
-- [ ] 可选：与 `ddd4j-cloud-cmpt-base-mqflow` 拦截器集成
+- [ ] 各 Broker Ack 映射矩阵配置模板（yaml 片段）
+- [ ] SQS 迁移至 `io.awspring.cloud:spring-cloud-aws-starter-sqs`
+- [ ] Rocket / Redis Stream Testcontainers IT
+- [ ] 可选：`ddd4j-cloud-cmpt-base-mqflow` 拦截器集成
+- [ ] legacy `impl/*Client` 清理
 
 ---
 
-## 14. 设计决策摘要
+## 14. 官方 Starter 选型矩阵（Maven Central）
+
+> **原则**：有 Spring Boot 官方 Starter → 必用 Starter；有 Spring Cloud Stream Binder → cloud 侧用 Binder（库模块不引 `starter-stream-*` 避免重复自动配置）；**仅在没有 Starter 时**才在 cmpt 内手写 `Connection` / `Consumer` 初始化。
+
+### Boot 层（`ddd4j-boot-cmpt-*`）
+
+| Broker | Maven 坐标（优先） | mvnrepository | ddd4j 模块 | 自定义部分 |
+|--------|-------------------|---------------|-----------|-----------|
+| **RabbitMQ** | `org.springframework.boot:spring-boot-starter-amqp` | [spring-rabbit](https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit) | `ddd4j-boot-cmpt-rabbit` | 仅 `@MQEventListener` 动态 `SimpleRabbitListenerEndpoint` |
+| **Kafka** | `org.springframework.kafka:spring-kafka`（Boot 无 `starter-kafka`） | [spring-kafka](https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka) | `ddd4j-boot-cmpt-kafka` | 编程式 `ConcurrentMessageListenerContainer`；连接配置走 `spring.kafka.*` |
+| **RocketMQ** | `org.apache.rocketmq:rocketmq-spring-boot-starter` | [rocketmq-spring-boot-starter](https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-spring-boot-starter) | `ddd4j-boot-cmpt-rocket` | 编程式 `DefaultMQPushConsumer`（复用 `RocketMQProperties`） |
+| **Pulsar** | `org.springframework.boot:spring-boot-starter-pulsar` | [spring-pulsar](https://mvnrepository.com/artifact/org.springframework.pulsar/spring-pulsar) | `ddd4j-boot-cmpt-pulsar` | `PulsarClient` messageListener |
+| **Redis Stream** | `org.springframework.boot:spring-boot-starter-data-redis` | [spring-data-redis](https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis) | `ddd4j-boot-cmpt-redis-stream` | `StreamMessageListenerContainer` |
+| **ActiveMQ Artemis** | `org.springframework.boot:spring-boot-starter-artemis` | [spring-jms](https://mvnrepository.com/artifact/org.springframework/spring-jms) | `ddd4j-boot-cmpt-activemq` | `SimpleJmsListenerEndpoint` |
+| **NATS** | 无 Spring 官方 Starter | [jnats](https://mvnrepository.com/artifact/io.nats/jnats) | `ddd4j-boot-cmpt-nats` | `Nats.connect` + JetStream `subscribe`（**必须**手写） |
+| **阿里云 ONS** | 无 Spring 官方 Starter | [ons-client](https://mvnrepository.com/artifact/com.aliyun.openservices/ons-client) | `ddd4j-boot-cmpt-ons` | `ONSFactory.createConsumer`（**必须**手写） |
+| **AWS SQS** | `io.awspring.cloud:spring-cloud-aws-starter-sqs`（目标） | [spring-cloud-aws-starter-sqs](https://mvnrepository.com/search?q=spring-cloud-aws-starter-sqs) | `ddd4j-boot-cmpt-sqs` | 当前 `aws-java-sdk-sqs` + 长轮询，待迁 awspring |
+| **腾讯云 TDMQ** | 无统一 Spring Starter | TDMQ / Pulsar 兼容 SDK | `ddd4j-boot-cmpt-tdmq` | `TdmqClient` 占位 + 进程内总线 |
+| **Disruptor** | 无 | [disruptor](https://mvnrepository.com/artifact/com.lmax/disruptor) | `ddd4j-boot-cmpt-disruptor` | 本地 `RingBuffer`（参考 disruptor-spring-boot-starter 思路） |
+
+### Cloud 层（`ddd4j-cloud-cmpt-stream-*`）
+
+| Broker | Binder（cmpt 库依赖） | 应用可选用 Starter | mvnrepository |
+|--------|----------------------|-------------------|---------------|
+| **RabbitMQ** | `spring-cloud-stream-binder-rabbit` | `spring-cloud-starter-stream-rabbit` | [binder-rabbit](https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-stream-binder-rabbit) · [starter](https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-stream-rabbit) |
+| **Kafka** | `spring-cloud-stream-binder-kafka` | `spring-cloud-starter-stream-kafka` | [binder-kafka](https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-stream-binder-kafka) |
+| **RocketMQ** | `spring-cloud-starter-stream-rocketmq`（Alibaba Cloud） | 同左 | [starter-stream-rocketmq](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-stream-rocketmq) |
+| **Pulsar** | `spring-pulsar-spring-cloud-stream-binder` | `spring-boot-starter-pulsar` | [pulsar binder](https://mvnrepository.com/search?q=spring-pulsar-spring-cloud-stream-binder) |
+
+**cmpt 库 vs 应用 Starter**：
+
+- `ddd4j-cloud-cmpt-stream-rabbit` 只引 **binder** + `ddd4j-boot-cmpt-rabbit`（已含 `starter-amqp`），**不引** `spring-cloud-starter-stream-rabbit`，避免双份自动配置。
+- 业务应用若不用 ddd4j cloud cmpt，可直接引 `spring-cloud-starter-stream-rabbit`，自行配置 `spring.cloud.stream.*`。
+
+### 依赖决策树
+
+```
+需要 MQ？
+ ├─ 单体 / Boot 微服务 → ddd4j-boot-cmpt-{broker}
+ │    └─ Starter 由 cmpt 传递（spring-boot-starter-* / rocketmq-spring-boot-starter）
+ ├─ Spring Cloud Stream → ddd4j-cloud-cmpt-stream-{broker}
+ │    └─ Binder 由 cloud cmpt 传递；连接仍走 spring.rabbitmq.* / spring.kafka.* 等标准配置
+ └─ 无官方 Starter（NATS/ONS/TDMQ）→ cmpt 内最小化手写客户端，仅补 @MQEventListener 动态注册
+```
+
+---
+
+## 15. 设计决策摘要
 
 1. **boot-mq 零 Broker SDK**：实现全部在 `ddd4j-boot-cmpt-*`。
 2. **无独立 `ddd4j-boot-starter-mq-*`**：cmpt 模块即开箱依赖单元。
@@ -605,7 +680,7 @@ Legacy `base-mq.server` / `username` / `password` 等连接信息**逐步下沉*
 
 ---
 
-## 15. 参考关系（模块依赖简图）
+## 16. 参考关系（模块依赖简图）
 
 ```
 ddd4j-boot-core (MQEvent, @MQEventListener)
@@ -629,7 +704,7 @@ ddd4j-cloud-cmpt-stream ──────────────────�
 
 ---
 
-## 16. 附录：legacy 代码说明
+## 17. 附录：legacy 代码说明
 
 当前 `ddd4j-boot-mq` 仍包含自 ddd4j 迁入的 legacy 实现：
 
@@ -644,4 +719,4 @@ ddd4j-cloud-cmpt-stream ──────────────────�
 
 ---
 
-*文档版本：1.0 | 维护：ddd4j-boot 团队*
+*文档版本：1.1 | 维护：ddd4j-boot 团队*

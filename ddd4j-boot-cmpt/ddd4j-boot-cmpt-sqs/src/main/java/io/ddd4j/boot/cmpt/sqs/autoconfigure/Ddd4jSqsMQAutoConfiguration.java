@@ -46,7 +46,7 @@ public class Ddd4jSqsMQAutoConfiguration {
     /**
      * 注册 SQS 消费端点编排器。
      */
-    @Bean
+    @Bean(destroyMethod = "close")
     @ConditionalOnMissingBean
     public SqsMQConsumerEndpointRegistrar sqsMQConsumerEndpointRegistrar(
             ObjectProvider<AmazonSQS> amazonSqsProvider,

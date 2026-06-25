@@ -1,7 +1,8 @@
 package io.ddd4j.boot.cmpt.kafka.mq;
 
 import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
-import io.ddd4j.boot.mq.core.MQEventSerialization;
+import io.ddd4j.boot.mq.publish.MQEventPublisher;
+import io.ddd4j.boot.mq.serialization.MQMessageSerialization;
 import io.ddd4j.boot.mq.spi.MQBrokerAdapter;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -27,21 +28,28 @@ public class Ddd4jKafkaMQAutoConfiguration {
 
     /**
      * 注册 Kafka {@link MQBrokerAdapter} Bean。
-     *
-     * @param kafkaTemplate     Kafka 模板
-     * @param consumerFactory   消费者工厂
-     * @param serialization     事件序列化器
-     * @return Kafka Broker 适配器
      */
     @Bean
     @ConditionalOnMissingBean(name = "kafkaMQBrokerAdapter")
     public MQBrokerAdapter kafkaMQBrokerAdapter(
             ObjectProvider<KafkaTemplate<String, String>> kafkaTemplate,
             ObjectProvider<ConsumerFactory<String, String>> consumerFactory,
-            ObjectProvider<MQEventSerialization> serialization) {
+            ObjectProvider<MQMessageSerialization> serialization) {
         return new KafkaMQBrokerAdapter(
                 kafkaTemplate.getIfAvailable(),
                 consumerFactory.getIfAvailable(),
                 serialization.getIfAvailable());
+    }
+
+    /**
+     * 注册领域事件发布 Bean（与 Rabbit 等 cmpt 模块对齐）。
+     */
+    @Bean
+    @ConditionalOnMissingBean(MQEventPublisher.class)
+    public MQEventPublisher kafkaMQEventPublisher(
+            KafkaTemplate<String, String> kafkaTemplate,
+            MQMessageSerialization serialization,
+            Ddd4jMQProperties properties) {
+        return new KafkaMQEventPublisher(kafkaTemplate, serialization, properties);
     }
 }

@@ -20,4 +20,15 @@ public interface TdmqClient {
      * @param payload 消息体
      */
     void publish(String topic, String tag, byte[] payload);
+
+    /**
+     * 订阅 topic（占位实现使用进程内总线模拟）。
+     *
+     * @param topic    主题
+     * @param tag      标签（可为 null 表示全部）
+     * @param group    消费组
+     * @param consumer 消费回调
+     * @return 订阅句柄
+     */
+    TdmqSubscription subscribe(String topic, String tag, String group, TdmqMessageConsumer consumer);
 }

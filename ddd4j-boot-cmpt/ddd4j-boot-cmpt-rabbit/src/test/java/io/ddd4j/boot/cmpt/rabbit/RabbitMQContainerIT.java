@@ -3,8 +3,8 @@ package io.ddd4j.boot.cmpt.rabbit;
 import io.ddd4j.boot.core.contract.MQEvent;
 import io.ddd4j.boot.mq.contract.MQDestination;
 import io.ddd4j.boot.mq.publish.MQEventPublisher;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIf;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,22 +14,20 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.DockerClientFactory;
 import org.testcontainers.containers.RabbitMQContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * RabbitMQ 发布路径 Testcontainers 冒烟集成测试。
+ * <p>
+ * Docker 不可用时跳过（{@link org.junit.jupiter.api.Assumptions#assumeTrue}）。
  */
-@Testcontainers
 @SpringBootTest(classes = RabbitMQContainerIT.TestApplication.class)
-@EnabledIf("io.ddd4j.boot.cmpt.rabbit.RabbitMQContainerIT#isDockerAvailable")
 class RabbitMQContainerIT {
 
-    @Container
-    static RabbitMQContainer rabbit = new RabbitMQContainer("rabbitmq:3.13-management");
+    private static final RabbitMQContainer RABBIT = new RabbitMQContainer("rabbitmq:3.13-management");
 
     @Autowired
     private MQEventPublisher mqEventPublisher;
@@ -37,15 +35,24 @@ class RabbitMQContainerIT {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    /**
+     * 启动 Testcontainers RabbitMQ（Docker 可用时）。
+     */
+    @BeforeAll
+    static void startContainer() {
+        assumeTrue(isDockerAvailable(), "Docker is not available; skip RabbitMQContainerIT");
+        RABBIT.start();
+    }
+
     @DynamicPropertySource
     static void registerProperties(DynamicPropertyRegistry registry) {
         registry.add("ddd4j.mq.enabled", () -> "true");
         registry.add("ddd4j.mq.broker", () -> "rabbit");
         registry.add("ddd4j.mq.namespace", () -> "it");
-        registry.add("spring.rabbitmq.host", rabbit::getHost);
-        registry.add("spring.rabbitmq.port", rabbit::getAmqpPort);
-        registry.add("spring.rabbitmq.username", rabbit::getAdminUsername);
-        registry.add("spring.rabbitmq.password", rabbit::getAdminPassword);
+        registry.add("spring.rabbitmq.host", RABBIT::getHost);
+        registry.add("spring.rabbitmq.port", RABBIT::getAmqpPort);
+        registry.add("spring.rabbitmq.username", RABBIT::getAdminUsername);
+        registry.add("spring.rabbitmq.password", RABBIT::getAdminPassword);
     }
 
     /**
@@ -62,6 +69,7 @@ class RabbitMQContainerIT {
 
     @Test
     void publishShouldNotThrow() {
+        assumeTrue(isDockerAvailable());
         assertNotNull(mqEventPublisher);
         assertNotNull(rabbitTemplate);
 

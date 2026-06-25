@@ -30,25 +30,31 @@ import java.util.Properties;
 public class Ddd4jOnsMQAutoConfiguration {
 
     /**
-     * 注册 ONS Producer（骨架 Bean，可通过自定义 Producer 覆盖）。
-     *
-     * @param accessKey  AccessKey
-     * @param secretKey  SecretKey
-     * @param nameSrvAddr NameServer 地址
-     * @param groupId    生产者 GroupId
-     * @return ONS Producer
+     * ONS 连接属性（Producer / Consumer 共用）。
      */
-    @Bean(initMethod = "start", destroyMethod = "shutdown")
-    @ConditionalOnMissingBean(Producer.class)
-    public Producer onsProducer(
+    @Bean
+    @ConditionalOnMissingBean(name = "onsConnectionProperties")
+    public Properties onsConnectionProperties(
             @Value("${ddd4j.mq.ons.access-key:}") String accessKey,
             @Value("${ddd4j.mq.ons.secret-key:}") String secretKey,
-            @Value("${ddd4j.mq.ons.namesrv-addr:}") String nameSrvAddr,
-            @Value("${ddd4j.mq.ons.producer-group:DEFAULT}") String groupId) {
+            @Value("${ddd4j.mq.ons.namesrv-addr:}") String nameSrvAddr) {
         Properties properties = new Properties();
         properties.setProperty(PropertyKeyConst.AccessKey, accessKey);
         properties.setProperty(PropertyKeyConst.SecretKey, secretKey);
         properties.setProperty(PropertyKeyConst.NAMESRV_ADDR, nameSrvAddr);
+        return properties;
+    }
+
+    /**
+     * 注册 ONS Producer。
+     */
+    @Bean(initMethod = "start", destroyMethod = "shutdown")
+    @ConditionalOnMissingBean(Producer.class)
+    public Producer onsProducer(
+            Properties onsConnectionProperties,
+            @Value("${ddd4j.mq.ons.producer-group:DEFAULT}") String groupId) {
+        Properties properties = new Properties();
+        properties.putAll(onsConnectionProperties);
         properties.setProperty(PropertyKeyConst.GROUP_ID, groupId);
         return ONSFactory.createProducer(properties);
     }
@@ -59,9 +65,9 @@ public class Ddd4jOnsMQAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public OnsMQConsumerEndpointRegistrar onsMQConsumerEndpointRegistrar(
-            ObjectProvider<Producer> producerProvider,
+            Properties onsConnectionProperties,
             Ddd4jMQProperties properties) {
-        return new OnsMQConsumerEndpointRegistrar(producerProvider.getIfAvailable(), properties);
+        return new OnsMQConsumerEndpointRegistrar(onsConnectionProperties, properties);
     }
 
     /**

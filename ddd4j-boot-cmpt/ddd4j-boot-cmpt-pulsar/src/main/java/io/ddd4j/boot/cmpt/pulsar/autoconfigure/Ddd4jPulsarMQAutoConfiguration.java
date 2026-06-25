@@ -7,6 +7,8 @@ import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
 import io.ddd4j.boot.mq.publish.MQEventPublisher;
 import io.ddd4j.boot.mq.spi.MQBrokerAdapter;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.apache.pulsar.client.api.PulsarClient;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -28,9 +30,10 @@ import org.springframework.pulsar.core.PulsarTemplate;
 public class Ddd4jPulsarMQAutoConfiguration {
 
     /**
-     * 注册 Pulsar 消费端点编排器。
+     * 注册 Pulsar 消费端点编排器（依赖 Spring Boot 提供的 {@link PulsarClient}）。
      */
     @Bean
+    @ConditionalOnBean(PulsarClient.class)
     @ConditionalOnMissingBean
     public PulsarConsumerEndpointRegistrar pulsarConsumerEndpointRegistrar(
             ApplicationContext applicationContext,

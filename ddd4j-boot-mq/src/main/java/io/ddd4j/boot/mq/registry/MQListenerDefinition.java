@@ -49,6 +49,42 @@ public class MQListenerDefinition {
     }
 
     /**
+     * BFPP 阶段构建监听器定义（Bean 实例尚未创建）。
+     *
+     * @param beanName         Spring Bean 名称
+     * @param method           监听方法
+     * @param ann              注解实例
+     * @param defaultGroup     默认消费组前缀（通常为 spring.application.name）
+     * @param defaultNamespace 默认命名空间（通常为 ddd4j.mq.namespace）
+     * @return 监听器定义
+     */
+    public static MQListenerDefinition from(
+            String beanName,
+            Method method,
+            MQEventListener ann,
+            String defaultGroup,
+            String defaultNamespace) {
+
+        String group = ann.group() != null && !ann.group().isBlank()
+                ? ann.group()
+                : defaultGroup + "_" + method.getName();
+        String namespace = ann.namespace() != null && !ann.namespace().isBlank()
+                ? ann.namespace()
+                : defaultNamespace;
+
+        return MQListenerDefinition.builder()
+                .beanName(beanName)
+                .method(method)
+                .group(group)
+                .namespace(namespace)
+                .topic(ann.topic())
+                .tags(ann.tags())
+                .supports(Arrays.asList(ann.supports()))
+                .concat(ann.concat())
+                .build();
+    }
+
+    /**
      * 返回策略匹配支持列表（不可变）。
      */
     public List<String> supports() {

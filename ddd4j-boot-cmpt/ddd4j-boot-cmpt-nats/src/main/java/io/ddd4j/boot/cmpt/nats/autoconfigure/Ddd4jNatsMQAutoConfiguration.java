@@ -46,7 +46,7 @@ public class Ddd4jNatsMQAutoConfiguration {
     /**
      * 注册 NATS 消费端点编排器。
      */
-    @Bean
+    @Bean(destroyMethod = "close")
     @ConditionalOnMissingBean
     public NatsMQConsumerEndpointRegistrar natsMQConsumerEndpointRegistrar(
             ObjectProvider<Connection> connectionProvider,

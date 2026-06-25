@@ -3,7 +3,8 @@ package io.ddd4j.boot.cmpt.kafka.mq;
 import io.ddd4j.boot.core.contract.MQEvent;
 import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
 import io.ddd4j.boot.mq.contract.MQDestination;
-import io.ddd4j.boot.mq.core.MQEventSerialization;
+import io.ddd4j.boot.core.utils.JsonKit;
+import io.ddd4j.boot.mq.serialization.MQEventSerialization;
 import io.ddd4j.boot.mq.publish.MQEventPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -44,7 +45,7 @@ public class KafkaMQEventPublisher implements MQEventPublisher {
      */
     @Override
     public <T extends MQEvent> void publish(T event, MQDestination destination) {
-        String payload = String.valueOf(serialization.serialize(event));
+        String payload = JsonKit.toJson(event);
         String topic = resolveTopic(event, destination);
         String key = StringUtils.defaultIfBlank(event.getTag(), event.getTenantId());
         log.debug("Publish MQ event to Kafka topic [{}], key [{}]", topic, key);

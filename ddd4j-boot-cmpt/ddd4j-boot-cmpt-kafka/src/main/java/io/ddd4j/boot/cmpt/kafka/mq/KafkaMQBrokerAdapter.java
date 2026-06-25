@@ -5,7 +5,7 @@ import io.ddd4j.boot.mq.acknowledgment.NoOpMessageAcknowledgment;
 import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
 import io.ddd4j.boot.mq.consume.MQConsumerHandler;
 import io.ddd4j.boot.mq.contract.MQMessage;
-import io.ddd4j.boot.mq.core.MQEventSerialization;
+import io.ddd4j.boot.mq.serialization.MQEventSerialization;
 import io.ddd4j.boot.mq.publish.MQEventPublisher;
 import io.ddd4j.boot.mq.registry.MQBrokerType;
 import io.ddd4j.boot.mq.registry.MQListenerDefinition;
