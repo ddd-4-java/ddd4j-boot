@@ -4,7 +4,7 @@
  */
 package io.ddd4j.boot.sample.entity;
 
-import io.ddd4j.boot.core.entity.BaseEntity;
+import io.ddd4j.core.entity.BaseEntity;
 
 public class DemoEntity extends BaseEntity<DemoEntity> {
 

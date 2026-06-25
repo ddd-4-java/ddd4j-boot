@@ -1,1 +1,1 @@
-io.ddd4j.boot.monitor.infras.config.BaseMonitorConfig
+io.ddd4j.boot.monitor.Ddd4jMonitorBootAutoConfiguration

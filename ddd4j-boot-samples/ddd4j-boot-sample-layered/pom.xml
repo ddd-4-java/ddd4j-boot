@@ -26,10 +26,15 @@
             <artifactId>ddd4j-boot-data</artifactId>
             <version>${revision}</version>
         </dependency>
-        <!-- Web 基础（拦截器/全局异常/统一响应） -->
+        <!-- Web 底座 + Boot WebMVC 整合（无独立 ddd4j-boot-web 模块） -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-web</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-web</artifactId>
+            <artifactId>ddd4j-boot-web-webmvc</artifactId>
             <version>${revision}</version>
         </dependency>
         <!-- MyBatis Plus（BaseRepositoryImpl 需要） -->

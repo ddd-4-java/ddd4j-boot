@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.layered.domain.model;
 
-import io.ddd4j.boot.core.contract.BaseRepository;
+import io.ddd4j.core.contract.BaseRepository;
 
 /**
  * 用户仓储接口（领域层定义，基础设施层实现）。

@@ -4,7 +4,7 @@
  */
 package io.ddd4j.boot.sample.service.impl;
 
-import io.ddd4j.boot.core.service.BaseServiceImpl;
+import io.ddd4j.core.service.BaseServiceImpl;
 import io.ddd4j.boot.sample.entity.DemoEntity;
 import io.ddd4j.boot.sample.mapper.DemoMapper;
 import io.ddd4j.boot.sample.service.IDemoService;

@@ -15,7 +15,7 @@
     <description>Ddd4j Boot Dependencies</description>
 
     <properties>
-        <!-- Dependency versions -->
+        <ddd4j.version>2.0.x20260625-SNAPSHOT</ddd4j.version>
         <activemq.version>6.2.0</activemq.version>
         <activation.version>1.1.1</activation.version>
         <!-- ArchUnit：分层约束验证（ddd4j-boot-ddd 模块用） -->
@@ -703,6 +703,15 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- ddd4j 底座 BOM（最先 import） -->
+            <dependency>
+                <groupId>io.ddd4j</groupId>
+                <artifactId>ddd4j-dependencies</artifactId>
+                <version>${ddd4j.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!-- JUnit 子模块版本对齐（与 Spring Boot 3.4 / junit-jupiter.version 一致） -->
             <dependency>
@@ -7812,17 +7821,17 @@
             <!-- Ddd4j Boot Components -->
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-rabbit</artifactId>
+                <artifactId>ddd4j-boot-mq-rabbitmq</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-mqtt</artifactId>
+                <artifactId>ddd4j-boot-mq-mqtt</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-mqtt-mica</artifactId>
+                <artifactId>ddd4j-boot-mq-mqtt-mica</artifactId>
                 <version>${revision}</version>
             </dependency>
 

@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.demo.app.service;
 
-import io.ddd4j.boot.core.exception.BizRuntimeException;
+import io.ddd4j.core.exception.BizRuntimeException;
 import io.ddd4j.boot.sample.demo.app.command.CreateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.command.UpdateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.dto.DemoDTO;

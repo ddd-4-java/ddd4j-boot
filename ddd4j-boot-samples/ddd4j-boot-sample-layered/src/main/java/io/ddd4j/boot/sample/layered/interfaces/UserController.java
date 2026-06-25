@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.ddd4j.boot.core.ApiRestResponse;
-import io.ddd4j.boot.core.contract.Page;
+import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.contract.Page;
 import io.ddd4j.boot.sample.layered.domain.model.User;
 import io.ddd4j.boot.sample.layered.domain.model.UserQuery;
 

@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.domain.order.model.aggregate;
 
-import io.ddd4j.boot.core.entity.BaseEntity;
+import io.ddd4j.core.entity.BaseEntity;
 import io.ddd4j.boot.sample.domain.order.event.*;
 import io.ddd4j.boot.sample.domain.order.model.entity.OrderItem;
 import io.ddd4j.boot.sample.domain.order.model.vo.Address;

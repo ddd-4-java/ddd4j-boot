@@ -4,7 +4,7 @@
  */
 package io.ddd4j.boot.sample.mapper;
 
-import io.ddd4j.boot.core.mybatis.mapper.BaseMapper;
+import io.ddd4j.core.mybatis.mapper.BaseMapper;
 import io.ddd4j.boot.sample.entity.DemoEntity;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,8 +1,8 @@
 package io.ddd4j.boot.sample.layered.domain.model;
 
-import io.ddd4j.boot.annotation.DomainEntity;
-import io.ddd4j.boot.core.contract.BaseRepository;
-import io.ddd4j.boot.core.contract.Model;
+import io.ddd4j.annotation.DomainEntity;
+import io.ddd4j.core.contract.BaseRepository;
+import io.ddd4j.core.contract.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

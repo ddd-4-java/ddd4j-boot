@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import io.ddd4j.boot.data.annotation.BizKey;
-import io.ddd4j.boot.data.annotation.OnCreate;
-import io.ddd4j.boot.data.annotation.OnUpdate;
+import io.ddd4j.data.annotation.BizKey;
+import io.ddd4j.data.annotation.OnCreate;
+import io.ddd4j.data.annotation.OnUpdate;
 import lombok.Data;
 
 import java.time.LocalDateTime;

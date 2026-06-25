@@ -13,11 +13,10 @@
     <artifactId>ddd4j-boot-core</artifactId>
 
     <dependencies>
-        <!-- For ddd4j-boot-annotation -->
         <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-annotation</artifactId>
-            <version>${revision}</version>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-annotation</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <!-- For Servlet Api -->
         <dependency>

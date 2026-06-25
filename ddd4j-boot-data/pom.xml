@@ -11,43 +11,26 @@
     </parent>
 
     <artifactId>ddd4j-boot-data</artifactId>
-    <description>ddd4j-boot 数据层：BaseRepositoryImpl 四泛型封装 MyBatis Plus，充血 Model/Query，多租户</description>
+    <description>ddd4j-boot 数据层 Spring Boot 整合（依赖 ddd4j-data）</description>
 
     <dependencies>
-        <!-- For ddd4j-boot-core -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-data</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>
             <version>${revision}</version>
         </dependency>
-        <!-- For Spring Boot AutoConfigure -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
-        <!-- For Spring TX -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-        </dependency>
-        <!-- For MyBatis Plus -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-        </dependency>
-        <!-- For Hutool -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
-        <!-- For Commons Lang3 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
         </dependency>
     </dependencies>
 

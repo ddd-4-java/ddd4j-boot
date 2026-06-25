@@ -4,7 +4,7 @@
  */
 package io.ddd4j.boot.sample.service;
 
-import io.ddd4j.boot.core.service.IBaseService;
+import io.ddd4j.core.service.IBaseService;
 import io.ddd4j.boot.sample.entity.DemoEntity;
 
 public interface IDemoService extends IBaseService<DemoEntity> {

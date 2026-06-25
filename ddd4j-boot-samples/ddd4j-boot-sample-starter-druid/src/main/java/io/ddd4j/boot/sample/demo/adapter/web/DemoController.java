@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.demo.adapter.web;
 
-import io.ddd4j.boot.core.ApiRestResponse;
+import io.ddd4j.core.ApiRestResponse;
 import io.ddd4j.boot.sample.demo.app.command.CreateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.command.UpdateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.dto.DemoDTO;

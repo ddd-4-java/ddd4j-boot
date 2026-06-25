@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.demo.domain.model.entity;
 
-import io.ddd4j.boot.core.entity.BaseEntity;
+import io.ddd4j.core.entity.BaseEntity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

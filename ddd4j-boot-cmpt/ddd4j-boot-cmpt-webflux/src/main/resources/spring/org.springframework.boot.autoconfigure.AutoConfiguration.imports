@@ -1,4 +1,0 @@
-io.ddd4j.boot.cmpt.webflux.DefaultMessageSourceAutoConfiguration
-io.ddd4j.boot.cmpt.webflux.DefaultSequenceConfiguration
-io.ddd4j.boot.cmpt.webflux.DefaultSpringContextConfiguration
-io.ddd4j.boot.cmpt.webflux.DefaultWebFluxConfiguration

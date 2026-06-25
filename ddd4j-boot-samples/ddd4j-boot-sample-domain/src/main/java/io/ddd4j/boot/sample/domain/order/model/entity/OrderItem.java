@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.domain.order.model.entity;
 
-import io.ddd4j.boot.core.entity.BaseEntity;
+import io.ddd4j.core.entity.BaseEntity;
 import io.ddd4j.boot.sample.domain.order.model.vo.Money;
 import lombok.Getter;
 import lombok.Setter;

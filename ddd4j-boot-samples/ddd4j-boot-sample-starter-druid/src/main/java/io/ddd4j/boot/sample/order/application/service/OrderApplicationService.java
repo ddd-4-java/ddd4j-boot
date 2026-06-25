@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.order.application.service;
 
-import io.ddd4j.boot.core.exception.BizRuntimeException;
+import io.ddd4j.core.exception.BizRuntimeException;
 import io.ddd4j.boot.sample.order.application.command.CancelOrderCommand;
 import io.ddd4j.boot.sample.order.application.command.CreateOrderCommand;
 import io.ddd4j.boot.sample.order.application.command.PayOrderCommand;

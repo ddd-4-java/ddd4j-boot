@@ -11,21 +11,17 @@
     </parent>
 
     <artifactId>ddd4j-boot-mq</artifactId>
-    <description>消息队列契约与 SPI</description>
+    <description>ddd4j-boot 消息队列 Spring Boot 整合（依赖 ddd4j-mq）</description>
 
     <dependencies>
         <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>${revision}</version>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-mq</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

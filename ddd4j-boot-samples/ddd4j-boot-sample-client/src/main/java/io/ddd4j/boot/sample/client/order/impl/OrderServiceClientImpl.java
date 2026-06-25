@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.client.order.impl;
 
-import io.ddd4j.boot.core.ApiRestResponse;
+import io.ddd4j.core.ApiRestResponse;
 import io.ddd4j.boot.sample.client.order.api.OrderServiceClient;
 import io.ddd4j.boot.sample.client.order.dto.request.CreateOrderRequest;
 import io.ddd4j.boot.sample.client.order.dto.request.OrderQueryRequest;

@@ -3,7 +3,7 @@ package io.ddd4j.boot.sample.infrastructure.order.persistence.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.ddd4j.boot.core.entity.BaseEntity;
+import io.ddd4j.core.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

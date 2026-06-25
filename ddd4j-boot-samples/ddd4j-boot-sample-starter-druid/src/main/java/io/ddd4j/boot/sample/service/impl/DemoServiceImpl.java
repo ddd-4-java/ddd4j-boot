@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.service.impl;
 
-import io.ddd4j.boot.core.service.BaseServiceImpl;
+import io.ddd4j.core.service.BaseServiceImpl;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 import io.hiwepy.boot.sample.mapper.DemoMapper;
 import io.hiwepy.boot.sample.service.IDemoService;

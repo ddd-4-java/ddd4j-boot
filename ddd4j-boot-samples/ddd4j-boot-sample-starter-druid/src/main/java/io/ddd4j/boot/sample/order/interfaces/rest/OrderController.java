@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.order.interfaces.rest;
 
-import io.ddd4j.boot.core.ApiRestResponse;
+import io.ddd4j.core.ApiRestResponse;
 import io.ddd4j.boot.sample.order.application.command.CancelOrderCommand;
 import io.ddd4j.boot.sample.order.application.command.CreateOrderCommand;
 import io.ddd4j.boot.sample.order.application.command.PayOrderCommand;
