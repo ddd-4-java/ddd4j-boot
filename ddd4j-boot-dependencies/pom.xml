@@ -42,7 +42,7 @@
         <apiguardian-api.version>1.1.2</apiguardian-api.version>
         <appium.version>10.1.1</appium.version>
         <aspectj.version>1.9.25.1</aspectj.version>
-        <assertj.version>3.27.6</assertj.version>
+        <assertj.version>3.27.7</assertj.version>
         <asmsupport.version>0.4.3</asmsupport.version>
         <async-http-client.version>3.0.11</async-http-client.version>
         <auth0-java-jwt.version>4.5.2</auth0-java-jwt.version>
@@ -604,6 +604,7 @@
         <maven-nexus-m2settings-plugin.version>1.6.8</maven-nexus-m2settings-plugin.version>
         <maven-pmd-plugin.version>3.26.0</maven-pmd-plugin.version>
         <maven-properties-plugin.version>1.2.1</maven-properties-plugin.version>
+        <maven-quarkus-plugin.version>3.37.0</maven-quarkus-plugin.version>
         <maven-rpm-plugin.version>2.2.0</maven-rpm-plugin.version>
         <maven-shade-plugin.version>3.6.1</maven-shade-plugin.version>
         <maven-sonar-plugin.version>4.0.0.4121</maven-sonar-plugin.version>
@@ -7985,6 +7986,18 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>properties-maven-plugin</artifactId>
                     <version>${maven-properties-plugin.version}</version>
+                </plugin>
+                <!-- Source: https://mvnrepository.com/artifact/io.quarkus/quarkus-maven-plugin -->
+                <plugin>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-maven-plugin</artifactId>
+                    <version>${maven-quarkus-plugin.version}</version>
+                </plugin>
+                <!-- Source: https://mvnrepository.com/artifact/io.quarkus/quarkus-extension-maven-plugin -->
+                <plugin>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-extension-maven-plugin</artifactId>
+                    <version>${maven-quarkus-plugin.version}</version>
                 </plugin>
                 <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/rpm-maven-plugin -->
                 <plugin>
