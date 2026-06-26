@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.ddd4j.boot</groupId>
+        <artifactId>ddd4j-boot-dependencies</artifactId>
+        <version>${revision}</version>
+        <relativePath>../ddd4j-boot-dependencies/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ddd4j-boot-extensions</artifactId>
+    <packaging>pom</packaging>
+    <description>Ddd4j Boot Extensions - 扩展模块聚合父 POM（与 3.4.x 对齐）。下含 5 类子模块：data-* / mq-* / auth-* / extension-* / web-*</description>
+
+    <modules>
+        <!-- data-* (4)：数据层扩展（与 ddd4j-boot-data 单模块互补） -->
+        <module>ddd4j-boot-data-crypto</module>
+        <module>ddd4j-boot-data-external</module>
+        <module>ddd4j-boot-data-logs</module>
+        <module>ddd4j-boot-data-mybatis</module>
+
+        <!-- mq-* (1+)：消息队列 broker 适配 -->
+        <module>ddd4j-boot-mq-kafka</module>
+
+        <!-- auth-* (5)：鉴权框架整合 -->
+        <module>ddd4j-boot-auth-datascope</module>
+        <module>ddd4j-boot-auth-license</module>
+        <module>ddd4j-boot-auth-satoken</module>
+        <module>ddd4j-boot-auth-security</module>
+        <module>ddd4j-boot-auth-shiro</module>
+
+        <!-- extension-* (7)：横切扩展（通用组件） -->
+        <module>ddd4j-boot-extension-akka</module>
+        <module>ddd4j-boot-extension-cola</module>
+        <module>ddd4j-boot-extension-dubbo</module>
+        <module>ddd4j-boot-extension-excel</module>
+        <module>ddd4j-boot-extension-jackson</module>
+        <module>ddd4j-boot-extension-pf4j</module>
+        <module>ddd4j-boot-extension-qlexpress</module>
+
+        <!-- web-* (3)：Web 层 -->
+        <module>ddd4j-boot-web-validation</module>
+        <module>ddd4j-boot-web-webflux</module>
+        <module>ddd4j-boot-web-webmvc</module>
+    </modules>
+
+    <dependencies>
+        <!-- 公共依赖：所有 extensions 子模块继承 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

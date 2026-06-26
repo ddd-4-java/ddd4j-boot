@@ -695,10 +695,22 @@
         <spring-boot-starter-xxljob.version>2.7.x.20260603-SNAPSHOT</spring-boot-starter-xxljob.version>
         <spring-boot-starter-zxing.version>2.7.x.20240823.RELEASE</spring-boot-starter-zxing.version>
 
+        <!-- DDD / CQRS / Event Store 基础设施版本（fuinorg，Java 8 兼容） -->
+        <esc-mem.version>0.7.0</esc-mem.version>
+
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- 导入 Ddd4j Boot BOM：管理本仓库内 ddd4j-boot-core / data / mq / monitor / ddd / extensions 全部子模块的版本 -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-bom</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!-- Third Party -->
 
@@ -7799,6 +7811,18 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>zxing-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-zxing.version}</version>
+            </dependency>
+
+            <!-- ============================================================ -->
+            <!-- DDD / CQRS / Event Store 基础设施（fuinorg ddd4j，Java 8 兼容） -->
+            <!-- 与 3.4.x 的 ddd4j-boot-ddd 模块对齐 -->
+            <!-- 注：ddd-4-java-* 与 cqrs-4-java-* 已在上方（行 2478-2531）通过 ${fuin-ddd4j.version}/${fuin-cqrs4j.version} 统一管理 -->
+            <!-- ============================================================ -->
+            <!-- https://github.com/fuinorg/esc-mem （内存事件存储，仅 dev/test） -->
+            <dependency>
+                <groupId>org.fuin.esc</groupId>
+                <artifactId>esc-mem</artifactId>
+                <version>${esc-mem.version}</version>
             </dependency>
 
         </dependencies>

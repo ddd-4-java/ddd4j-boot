@@ -16,106 +16,141 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Ddd4j Boot Core -->
+            <!-- Ddd4j Boot 单模块（与 3.4.x 对齐） -->
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-core</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <!-- Ddd4j Boot Components -->
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-akka</artifactId>
+                <artifactId>ddd4j-boot-data</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-cola</artifactId>
+                <artifactId>ddd4j-boot-mq</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-crypto</artifactId>
+                <artifactId>ddd4j-boot-monitor</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-datascope</artifactId>
+                <artifactId>ddd4j-boot-ddd</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- Ddd4j Boot 扩展模块（与 3.4.x 命名风格对齐：data-/mq-/auth-/extension-/web-） -->
+            <!-- data-* -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-data-crypto</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-dubbo</artifactId>
+                <artifactId>ddd4j-boot-data-external</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-excel</artifactId>
+                <artifactId>ddd4j-boot-data-logs</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-express</artifactId>
+                <artifactId>ddd4j-boot-data-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- mq-* -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-mq-kafka</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- auth-* -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-auth-datascope</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-external</artifactId>
+                <artifactId>ddd4j-boot-auth-license</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-jackson</artifactId>
+                <artifactId>ddd4j-boot-auth-satoken</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-kafka</artifactId>
+                <artifactId>ddd4j-boot-auth-security</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-license</artifactId>
+                <artifactId>ddd4j-boot-auth-shiro</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- extension-* -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-extension-akka</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-logs</artifactId>
+                <artifactId>ddd4j-boot-extension-cola</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-mybatis</artifactId>
+                <artifactId>ddd4j-boot-extension-dubbo</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-pf4j</artifactId>
+                <artifactId>ddd4j-boot-extension-excel</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-satoken</artifactId>
+                <artifactId>ddd4j-boot-extension-jackson</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-security</artifactId>
+                <artifactId>ddd4j-boot-extension-pf4j</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-validation</artifactId>
+                <artifactId>ddd4j-boot-extension-qlexpress</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- web-* -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-web-validation</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-webflux</artifactId>
+                <artifactId>ddd4j-boot-web-webflux</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
+                <artifactId>ddd4j-boot-web-webmvc</artifactId>
                 <version>${revision}</version>
             </dependency>
 

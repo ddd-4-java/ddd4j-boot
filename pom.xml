@@ -65,7 +65,11 @@
         <module>ddd4j-boot-bom</module>
         <module>ddd4j-boot-dependencies</module>
         <module>ddd4j-boot-core</module>
-        <module>ddd4j-boot-cmpt</module>
+        <module>ddd4j-boot-data</module>
+        <module>ddd4j-boot-mq</module>
+        <module>ddd4j-boot-monitor</module>
+        <module>ddd4j-boot-ddd</module>
+        <module>ddd4j-boot-extensions</module>
         <module>ddd4j-boot-parent</module>
         <module>ddd4j-boot-samples</module>
     </modules>
