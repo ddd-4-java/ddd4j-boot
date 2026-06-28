@@ -145,6 +145,11 @@
                 <artifactId>ddd4j-boot-data-mybatis</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-data-datascope</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <!-- Boot 扩展：extension -->
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>

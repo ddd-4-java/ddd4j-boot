@@ -11,27 +11,15 @@
     </parent>
 
     <artifactId>ddd4j-boot-data</artifactId>
-    <description>ddd4j-boot 数据层 Spring Boot 整合（依赖 ddd4j-data）</description>
+    <packaging>pom</packaging>
+    <description>ddd4j-boot 数据层 Spring Boot 整合聚合：mybatis/crypto/external/logs/datascope 各子模块的 auto-config。参照 ddd4j-data 多模块范式。</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-data</artifactId>
-            <version>${ddd4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>ddd4j-boot-data-mybatis</module>
+        <module>ddd4j-boot-data-crypto</module>
+        <module>ddd4j-boot-data-external</module>
+        <module>ddd4j-boot-data-logs</module>
+        <module>ddd4j-boot-data-datascope</module>
+    </modules>
 
 </project>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.ddd4j.boot</groupId>
+        <artifactId>ddd4j-boot-data</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ddd4j-boot-data-datascope</artifactId>
+    <description>ddd4j-boot 数据层 - 数据权限 Spring Boot 整合：DataScopeProvider Bean 装配。</description>
+
+    <dependencies>
+        <dependency><groupId>io.ddd4j</groupId><artifactId>ddd4j-data-datascope</artifactId><version>${ddd4j.version}</version></dependency>
+        <dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-autoconfigure</artifactId></dependency>
+        <dependency><groupId>com.github.hiwepy</groupId><artifactId>spring-biz</artifactId></dependency>
+    </dependencies>
+
+</project>

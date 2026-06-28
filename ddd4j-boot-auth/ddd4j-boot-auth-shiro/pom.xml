@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.ddd4j.boot</groupId>
+        <artifactId>ddd4j-boot-auth</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ddd4j-boot-auth-shiro</artifactId>
+    <description>
+        ddd4j-boot + Apache Shiro 深度整合：自动装配、异常处理。
+        底层复用 io.ddd4j:ddd4j-auth-shiro（纯 Java）+ io.ddd4j:ddd4j-auth-spring（桥接）。
+    </description>
+
+    <dependencies>
+        <!-- ddd4j auth shiro 纯 Java 实现 -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-auth-shiro</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <!-- ddd4j auth spring 桥接（含 ShiroExceptionHandler） -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-auth-spring</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <!-- ddd4j core -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-core</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <!-- Apache Shiro（jakarta 兼容） -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+        </dependency>
+        <!-- Spring Boot Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+</project>

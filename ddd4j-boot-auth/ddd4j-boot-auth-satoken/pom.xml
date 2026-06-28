@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.ddd4j.boot</groupId>
+        <artifactId>ddd4j-boot-auth</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ddd4j-boot-auth-satoken</artifactId>
+    <description>
+        ddd4j-boot + sa-token 深度整合：Spring Boot 自动装配、注解增强、异常处理。
+        底层复用 io.ddd4j:ddd4j-auth-satoken（纯 Java）+ io.ddd4j:ddd4j-auth-spring（桥接）。
+    </description>
+
+    <dependencies>
+        <!-- ddd4j auth sa-token 纯 Java 实现 -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-auth-satoken</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <!-- ddd4j auth spring 桥接（SubjectRegistrar + 互斥装配） -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-auth-spring</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <!-- ddd4j core（ApiRestResponse 等） -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-core</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <!-- Sa-Token Spring Boot3 Starter -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot3-starter</artifactId>
+        </dependency>
+        <!-- Sa-Token 整合 API Key -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-apikey</artifactId>
+        </dependency>
+        <!-- Spring Boot Web（@ControllerAdvice / @ExceptionHandler 需要） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -2,9 +2,7 @@ package io.ddd4j.boot.sample.layered.infrastructure.persistence;
 
 import java.util.List;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-
-import io.ddd4j.annotation.DomainRepository;
+import io.ddd4j.annotation.ddd.DomainRepository;
 import io.ddd4j.data.repository.impl.BaseRepositoryImpl;
 import io.ddd4j.boot.sample.layered.domain.model.User;
 import io.ddd4j.boot.sample.layered.domain.model.UserQuery;

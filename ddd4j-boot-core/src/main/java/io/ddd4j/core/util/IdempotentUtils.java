@@ -1,7 +1,7 @@
 package io.ddd4j.core.util;
 
 import com.alibaba.fastjson2.JSONObject;
-import io.ddd4j.annotation.ApiIdempotent;
+import io.ddd4j.annotation.api.ApiIdempotent;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import lombok.extern.slf4j.Slf4j;

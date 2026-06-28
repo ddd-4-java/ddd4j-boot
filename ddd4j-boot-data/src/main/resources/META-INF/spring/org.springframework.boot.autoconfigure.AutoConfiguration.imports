@@ -1,1 +1,6 @@
 io.ddd4j.data.config.BaseDataConfig
+io.ddd4j.data.config.Ddd4jCryptoAutoConfiguration
+io.ddd4j.data.config.Ddd4jExternalAutoConfiguration
+io.ddd4j.data.config.Ddd4jGlobalSequenceAutoConfiguration
+io.ddd4j.data.config.Ddd4jApiLogAspectAutoConfiguration
+io.ddd4j.data.config.Ddd4jDataScopeAutoConfiguration

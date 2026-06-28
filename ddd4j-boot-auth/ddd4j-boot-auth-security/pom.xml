@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.ddd4j.boot</groupId>
+        <artifactId>ddd4j-boot-auth</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ddd4j-boot-auth-security</artifactId>
+    <description>
+        ddd4j-boot + Spring Security 深度整合：自动装配、异常处理。
+        底层复用 io.ddd4j:ddd4j-auth-security（允许 Spring 依赖）+ io.ddd4j:ddd4j-auth-spring（桥接）。
+    </description>
+
+    <dependencies>
+        <!-- ddd4j auth security 实现（允许 Spring 依赖） -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-auth-security</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <!-- ddd4j auth spring 桥接 -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-auth-spring</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <!-- ddd4j core -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-core</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <!-- Spring Boot Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!-- Spring Boot Web（异常处理需要） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+</project>
