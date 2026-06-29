@@ -23,10 +23,8 @@
     <description>Ddd4j Projects For Spring Boot</description>
 
     <scm>
-        <connection>scm:git:https:codeup.aliyun.com/5fdc0afd99b59ba3c5ead757/ddd4j/${project.artifactId}.git
-        </connection>
-        <developerConnection>scm:git:https:codeup.aliyun.com/5fdc0afd99b59ba3c5ead757/ddd4j/${project.artifactId}.git
-        </developerConnection>
+        <connection>scm:git:https:codeup.aliyun.com/5fdc0afd99b59ba3c5ead757/ddd4j/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:https:codeup.aliyun.com/5fdc0afd99b59ba3c5ead757/ddd4j/${project.artifactId}.git</developerConnection>
         <url>https://codeup.aliyun.com/5fdc0afd99b59ba3c5ead757/ddd4j/${project.artifactId}</url>
         <tag>${project.artifactId}</tag>
     </scm>
@@ -34,8 +32,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <revision>3.4.x.20251215-SNAPSHOT</revision>
-        <ddd4j.version>2.0.x.20260625-SNAPSHOT</ddd4j.version>
+        <revision>3.4.x.20260630-SNAPSHOT</revision>
+        <ddd4j.version>2.0.x.20260630-SNAPSHOT</ddd4j.version>
         <java.version>17</java.version>
         <!-- Maven Plugin versions -->
         <maven.version>3.6.3</maven.version>

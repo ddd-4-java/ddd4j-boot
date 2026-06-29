@@ -103,3 +103,4 @@ node_modules
 *.http
 *.json
 qodana.yaml
+/.trae/

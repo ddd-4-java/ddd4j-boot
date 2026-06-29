@@ -71,6 +71,22 @@
         <!-- ddd4j-boot-core：复用统一响应/异常/注解体系（非 MyBatis 部分）  -->
         <!-- ============================================================ -->
         <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-core</artifactId>
+            <version>${ddd4j.version}</version>
+            <exclusions>
+                <!-- 本模块是纯 DDD 轨道，排除 MyBatis Plus 相关 -->
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.github.hiwepy</groupId>
+                    <artifactId>mybatis-plus-enhance</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>
             <version>${revision}</version>
