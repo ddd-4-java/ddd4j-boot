@@ -1,1 +1,1 @@
-io.ddd4j.boot.auth.satoken.config.SaTokenEnhanceAutoConfiguration
+io.ddd4j.boot.auth.satoken.SaTokenEnhanceAutoConfiguration

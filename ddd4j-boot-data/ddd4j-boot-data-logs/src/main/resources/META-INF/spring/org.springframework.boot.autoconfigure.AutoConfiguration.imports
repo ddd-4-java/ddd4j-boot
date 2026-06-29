@@ -1,1 +1,1 @@
-io.ddd4j.boot.data.logs.config.Ddd4jApiLogAspectAutoConfiguration
+io.ddd4j.boot.data.logs.Ddd4jApiLogAspectAutoConfiguration

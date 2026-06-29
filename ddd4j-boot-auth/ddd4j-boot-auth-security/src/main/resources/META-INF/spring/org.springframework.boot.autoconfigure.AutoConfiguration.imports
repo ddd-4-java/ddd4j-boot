@@ -1,1 +1,1 @@
-io.ddd4j.boot.auth.security.config.SecurityEnhanceAutoConfiguration
+io.ddd4j.boot.auth.security.SecurityEnhanceAutoConfiguration

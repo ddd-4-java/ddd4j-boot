@@ -1,1 +1,1 @@
-io.ddd4j.boot.auth.shiro.config.ShiroEnhanceAutoConfiguration
+io.ddd4j.boot.auth.shiro.ShiroEnhanceAutoConfiguration

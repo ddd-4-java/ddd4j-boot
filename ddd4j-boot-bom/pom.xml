@@ -19,12 +19,38 @@
             <!-- Boot 核心整合 -->
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-annotation</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-core</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-ddd</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-cache</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!-- Boot 聚合 pom（供业务项目按需 import） -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-data</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-auth</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -39,7 +65,7 @@
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-ddd</artifactId>
+                <artifactId>ddd4j-boot-extensions</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!-- Boot 扩展：web -->
@@ -59,6 +85,11 @@
                 <version>${revision}</version>
             </dependency>
             <!-- Boot 扩展：mq -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-mq-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-mq-kafka</artifactId>

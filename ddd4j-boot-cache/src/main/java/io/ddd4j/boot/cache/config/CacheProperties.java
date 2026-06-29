@@ -1,6 +1,7 @@
 package io.ddd4j.boot.cache.config;
 
 import io.ddd4j.cache.CacheKit;
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
+@Getter
 @ConfigurationProperties(prefix = "ddd4j.cache")
 public class CacheProperties {
 
@@ -15,10 +17,6 @@ public class CacheProperties {
      * 默认本地缓存实现类型（CAFFEINE / GUAVA / HUTOOL）
      */
     private CacheKit.LocalCacheType defaultType = CacheKit.LocalCacheType.CAFFEINE;
-
-    public CacheKit.LocalCacheType getDefaultType() {
-        return defaultType;
-    }
 
     public void setDefaultType(CacheKit.LocalCacheType defaultType) {
         this.defaultType = defaultType;

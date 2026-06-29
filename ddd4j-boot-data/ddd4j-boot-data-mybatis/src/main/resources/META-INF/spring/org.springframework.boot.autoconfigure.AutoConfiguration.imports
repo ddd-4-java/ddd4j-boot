@@ -1,1 +1,1 @@
-io.ddd4j.boot.data.mybatis.config.BaseDataConfig
+io.ddd4j.boot.data.mybatis.Ddd4jMybatisAutoConfiguration
