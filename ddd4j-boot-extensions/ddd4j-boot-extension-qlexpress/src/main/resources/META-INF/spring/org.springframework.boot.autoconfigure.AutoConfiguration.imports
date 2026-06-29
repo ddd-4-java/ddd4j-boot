@@ -1,2 +1,1 @@
-io.ddd4j.extension.express.infrastructure.config.ExpressAutoConfiguration
-
+io.ddd4j.boot.express.Ddd4jExpressBootAutoConfiguration
