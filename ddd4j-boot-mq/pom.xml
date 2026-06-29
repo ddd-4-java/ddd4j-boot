@@ -11,23 +11,16 @@
     </parent>
 
     <artifactId>ddd4j-boot-mq</artifactId>
-    <description>ddd4j-boot 消息队列 Spring Boot 整合（依赖 ddd4j-mq）</description>
+    <packaging>pom</packaging>
+    <description>
+        ddd4j-boot 消息队列 Spring Boot 整合聚合。
+        参照 ddd4j-mq 多模块范式：
+        - core（通用 MQ 编排 auto-config：MQEventPublisher/MQListenerRegistrar/MQMessageSerialization）
+        各 broker 的桥接按需在业务项目 pom 中引入对应的 ddd4j-mq-{broker}（已含 Spring auto-config）。
+    </description>
 
-    <dependencies>
-        <dependency>
-            <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-mq</artifactId>
-            <version>${ddd4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>ddd4j-boot-mq-core</module>
+    </modules>
 
 </project>

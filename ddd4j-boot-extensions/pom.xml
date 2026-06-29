@@ -17,33 +17,11 @@
     <modules>
         <module>ddd4j-boot-extension-akka</module>
         <module>ddd4j-boot-extension-cola</module>
-        <module>ddd4j-boot-data-crypto</module>
-        <module>ddd4j-boot-auth-datascope</module>
         <module>ddd4j-boot-extension-dubbo</module>
         <module>ddd4j-boot-extension-excel</module>
         <module>ddd4j-boot-extension-qlexpress</module>
-        <module>ddd4j-boot-data-external</module>
         <module>ddd4j-boot-extension-jackson</module>
-        <module>ddd4j-boot-mq-kafka</module>
-        <module>ddd4j-boot-mq-nats</module>
-        <module>ddd4j-boot-mq-mqtt</module>
-        <module>ddd4j-boot-mq-mqtt-mica</module>
-        <module>ddd4j-boot-mq-ons</module>
-        <module>ddd4j-boot-mq-rabbitmq</module>
-        <module>ddd4j-boot-mq-sqs</module>
-        <module>ddd4j-boot-mq-tdmq</module>
-        <module>ddd4j-boot-mq-rocketmq</module>
-        <module>ddd4j-boot-mq-pulsar</module>
-        <module>ddd4j-boot-mq-redis-stream</module>
-        <module>ddd4j-boot-mq-activemq</module>
-        <module>ddd4j-boot-mq-disruptor</module>
-        <module>ddd4j-boot-auth-license</module>
-        <module>ddd4j-boot-data-logs</module>
-        <module>ddd4j-boot-data-mybatis</module>
         <module>ddd4j-boot-extension-pf4j</module>
-        <module>ddd4j-boot-auth-satoken</module>
-        <module>ddd4j-boot-auth-security</module>
-        <module>ddd4j-boot-auth-shiro</module>
         <module>ddd4j-boot-web-validation</module>
         <module>ddd4j-boot-web-webflux</module>
         <module>ddd4j-boot-web-webmvc</module>
