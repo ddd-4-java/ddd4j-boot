@@ -15,14 +15,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class MqttServerApplication implements CommandLineRunner {
 
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(MqttServerApplication.class, args);
+    }
+
     @Bean
     public MeterRegistryCustomizer<MeterRegistry> configurer(
             @Value("${spring.application.name}") String applicationName) {
         return (registry) -> registry.config().commonTags("application", applicationName);
-    }
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(MqttServerApplication.class, args);
     }
 
     @Override

@@ -1,16 +1,10 @@
 package io.ddd4j.boot.sample.layered.interfaces;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import io.ddd4j.core.ApiRestResponse;
-import io.ddd4j.core.contract.Page;
 import io.ddd4j.boot.sample.layered.domain.model.User;
 import io.ddd4j.boot.sample.layered.domain.model.UserQuery;
+import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.contract.Page;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 用户接口层。
@@ -91,16 +85,34 @@ public class UserController {
     public static class RegisterRequest {
         private String phone;
         private String nickname;
-        public String getPhone() { return phone; }
-        public void setPhone(String phone) { this.phone = phone; }
-        public String getNickname() { return nickname; }
-        public void setNickname(String nickname) { this.nickname = nickname; }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
     }
 
     public static class RenameRequest {
         private String nickname;
-        public String getNickname() { return nickname; }
-        public void setNickname(String nickname) { this.nickname = nickname; }
+
+        public String getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
     }
 
 }

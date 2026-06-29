@@ -34,16 +34,24 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class UserQuery extends Query {
 
-    /** 用户ID */
+    /**
+     * 用户ID
+     */
     private String id;
 
-    /** 手机号（精确匹配） */
+    /**
+     * 手机号（精确匹配）
+     */
     private String phone;
 
-    /** 昵称（模糊匹配，业务层用 wrapper.like 构造） */
+    /**
+     * 昵称（模糊匹配，业务层用 wrapper.like 构造）
+     */
     private String nickname;
 
-    /** 状态：0-禁用，1-启用 */
+    /**
+     * 状态：0-禁用，1-启用
+     */
     private Integer status;
 
     /**

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -14,7 +14,9 @@
     <packaging>jar</packaging>
 
     <name>ddd4j-boot-ddd</name>
-    <description>DDD 基础设施层：集成 fuinorg ddd-4-java + cqrs-4-java，提供纯净的 DDD/CQRS/Event Sourcing 轨道，领域层零 MyBatis Plus 依赖</description>
+    <description>DDD 基础设施层：集成 fuinorg ddd-4-java + cqrs-4-java，提供纯净的 DDD/CQRS/Event Sourcing 轨道，领域层零
+        MyBatis Plus 依赖
+    </description>
 
     <!-- 强制 JUnit 子模块版本对齐（修复 spring-biz 传递的 5.8.2 与 SB 3.4 的 6.0.1 冲突） -->
     <dependencyManagement>

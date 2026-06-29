@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ddd4j-boot-sample-auth-satoken
+
+# sa-token 配置
+sa-token:
+  timeout: 7200
+  active-timeout: -1
+  is-share: true
+  token-name: Authorization

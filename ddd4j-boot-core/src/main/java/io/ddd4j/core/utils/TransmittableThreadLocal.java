@@ -10,6 +10,18 @@ import java.util.WeakHashMap;
  */
 public class TransmittableThreadLocal<T> extends InheritableThreadLocal<T> {
 
+    private static final InheritableThreadLocal<WeakHashMap<TransmittableThreadLocal<Object>, ?>> holder =
+            new InheritableThreadLocal<WeakHashMap<TransmittableThreadLocal<Object>, ?>>() {
+                @Override
+                protected WeakHashMap<TransmittableThreadLocal<Object>, ?> initialValue() {
+                    return new WeakHashMap<>();
+                }
+
+                @Override
+                protected WeakHashMap<TransmittableThreadLocal<Object>, ?> childValue(WeakHashMap<TransmittableThreadLocal<Object>, ?> parentValue) {
+                    return new WeakHashMap<TransmittableThreadLocal<Object>, Object>(parentValue);
+                }
+            };
     private final boolean disableIgnoreNullValueSemantics;
 
     public TransmittableThreadLocal() {
@@ -40,19 +52,6 @@ public class TransmittableThreadLocal<T> extends InheritableThreadLocal<T> {
         removeThisFromHolder();
         super.remove();
     }
-
-    private static final InheritableThreadLocal<WeakHashMap<TransmittableThreadLocal<Object>, ?>> holder =
-            new InheritableThreadLocal<WeakHashMap<TransmittableThreadLocal<Object>, ?>>() {
-                @Override
-                protected WeakHashMap<TransmittableThreadLocal<Object>, ?> initialValue() {
-                    return new WeakHashMap<>();
-                }
-
-                @Override
-                protected WeakHashMap<TransmittableThreadLocal<Object>, ?> childValue(WeakHashMap<TransmittableThreadLocal<Object>, ?> parentValue) {
-                    return new WeakHashMap<TransmittableThreadLocal<Object>, Object>(parentValue);
-                }
-            };
 
     @SuppressWarnings("unchecked")
     private void addThisToHolder() {

@@ -4,11 +4,11 @@
  */
 package io.ddd4j.web.webmvc;
 
+import io.ddd4j.core.properties.BasePropertySourcePostProcessor;
 import io.ddd4j.web.webmvc.config.ServerI18nProperties;
 import io.ddd4j.web.webmvc.config.ServerInfoProperties;
 import io.ddd4j.web.webmvc.config.ServerVendorProperties;
 import io.ddd4j.web.webmvc.error.I18nResourceBasenameHandler;
-import io.ddd4j.core.properties.BasePropertySourcePostProcessor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.biz.context.NestedMessageSource;
@@ -41,7 +41,7 @@ import java.time.Duration;
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 @AutoConfigureBefore(MessageSourceAutoConfiguration.class)
-@EnableConfigurationProperties({ ServerI18nProperties.class, ServerInfoProperties.class, ServerVendorProperties.class})
+@EnableConfigurationProperties({ServerI18nProperties.class, ServerInfoProperties.class, ServerVendorProperties.class})
 public class DefaultMessageSourceAutoConfiguration {
 
     private static final Resource[] NO_RESOURCES = {};
@@ -88,6 +88,12 @@ public class DefaultMessageSourceAutoConfiguration {
         return messageSource;
     }
 
+    @Bean
+    public NestedMessageSource nestedMessageSource(ObjectProvider<MessageSource> messageSourceProvider) {
+        MessageSource[] messageSources = messageSourceProvider.orderedStream().toArray(MessageSource[]::new);
+        return new NestedMessageSource(messageSources);
+    }
+
     protected static class ResourceBundleCondition extends SpringBootCondition {
 
         private static final ConcurrentReferenceHashMap<String, ConditionOutcome> cache = new ConcurrentReferenceHashMap<>();
@@ -132,12 +138,6 @@ public class DefaultMessageSourceAutoConfiguration {
             }
         }
 
-    }
-
-    @Bean
-    public NestedMessageSource nestedMessageSource(ObjectProvider<MessageSource> messageSourceProvider) {
-        MessageSource[] messageSources = messageSourceProvider.orderedStream().toArray(MessageSource[]::new);
-        return new NestedMessageSource(messageSources);
     }
 
 }

@@ -1,8 +1,8 @@
 package io.ddd4j.boot.sample.web.controller;
 
-import io.ddd4j.core.ApiRestResponse;
 import io.ddd4j.boot.sample.service.MQProducerService;
 import io.ddd4j.boot.sample.web.dto.MessageDTO;
+import io.ddd4j.core.ApiRestResponse;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

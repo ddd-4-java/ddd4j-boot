@@ -1,6 +1,5 @@
 package io.ddd4j.boot.sample.adapter.order.web;
 
-import io.ddd4j.core.ApiRestResponse;
 import io.ddd4j.boot.sample.app.order.command.CancelOrderCommand;
 import io.ddd4j.boot.sample.app.order.command.CreateOrderCommand;
 import io.ddd4j.boot.sample.app.order.command.PayOrderCommand;
@@ -9,6 +8,7 @@ import io.ddd4j.boot.sample.app.order.dto.OrderDTO;
 import io.ddd4j.boot.sample.app.order.query.OrderQuery;
 import io.ddd4j.boot.sample.app.order.response.OrderPageResponse;
 import io.ddd4j.boot.sample.app.order.service.OrderApplicationService;
+import io.ddd4j.core.ApiRestResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,9 +26,9 @@ import java.util.List;
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
 public class OrderController {
-    
+
     private final OrderApplicationService orderApplicationService;
-    
+
     /**
      * 创建订单
      */
@@ -38,7 +38,7 @@ public class OrderController {
         OrderDTO order = orderApplicationService.createOrder(command);
         return ApiRestResponse.success(order);
     }
-    
+
     /**
      * 支付订单
      */
@@ -52,7 +52,7 @@ public class OrderController {
         OrderDTO order = orderApplicationService.payOrder(command);
         return ApiRestResponse.success(order);
     }
-    
+
     /**
      * 发货
      */
@@ -66,7 +66,7 @@ public class OrderController {
         OrderDTO order = orderApplicationService.shipOrder(command);
         return ApiRestResponse.success(order);
     }
-    
+
     /**
      * 确认收货
      */
@@ -80,7 +80,7 @@ public class OrderController {
         OrderDTO order = orderApplicationService.confirmDelivery(orderId, orderNo);
         return ApiRestResponse.success(order);
     }
-    
+
     /**
      * 完成订单
      */
@@ -94,7 +94,7 @@ public class OrderController {
         OrderDTO order = orderApplicationService.completeOrder(orderId, orderNo);
         return ApiRestResponse.success(order);
     }
-    
+
     /**
      * 取消订单
      */
@@ -108,7 +108,7 @@ public class OrderController {
         OrderDTO order = orderApplicationService.cancelOrder(command);
         return ApiRestResponse.success(order);
     }
-    
+
     /**
      * 根据ID查询订单
      */
@@ -120,7 +120,7 @@ public class OrderController {
         OrderDTO order = orderApplicationService.getOrderById(id);
         return ApiRestResponse.success(order);
     }
-    
+
     /**
      * 根据订单号查询订单
      */
@@ -132,7 +132,7 @@ public class OrderController {
         OrderDTO order = orderApplicationService.getOrderByOrderNo(orderNo);
         return ApiRestResponse.success(order);
     }
-    
+
     /**
      * 根据用户ID查询订单列表
      */
@@ -144,7 +144,7 @@ public class OrderController {
         List<OrderDTO> orders = orderApplicationService.getOrdersByUserId(userId);
         return ApiRestResponse.success(orders);
     }
-    
+
     /**
      * 分页查询订单
      */

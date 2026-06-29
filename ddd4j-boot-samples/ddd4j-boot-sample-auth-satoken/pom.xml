@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.ddd4j.boot</groupId>
+        <artifactId>ddd4j-boot-dependencies</artifactId>
+        <version>${revision}</version>
+        <relativePath>../../ddd4j-boot-dependencies/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ddd4j-boot-sample-auth-satoken</artifactId>
+    <packaging>jar</packaging>
+    <description>ddd4j-boot-auth + sa-token 集成示例：演示 SubjectKit 统一鉴权入口（Spring Boot 3）</description>
+
+    <dependencies>
+        <!-- ddd4j-boot 注解（DDD 注解同名复制 + Spring 元注解融合） -->
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-annotation</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- ddd4j-boot auth sa-token 适配 -->
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-auth-satoken</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- sa-token Spring Boot3 Starter -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot3-starter</artifactId>
+        </dependency>
+        <!-- Spring Boot Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

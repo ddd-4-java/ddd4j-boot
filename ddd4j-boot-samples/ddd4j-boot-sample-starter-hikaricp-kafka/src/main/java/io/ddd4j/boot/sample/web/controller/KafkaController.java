@@ -1,8 +1,8 @@
 package io.ddd4j.boot.sample.web.controller;
 
 import com.alibaba.fastjson2.JSON;
-import io.ddd4j.core.ApiRestResponse;
 import io.ddd4j.boot.sample.setup.TopicConstant;
+import io.ddd4j.core.ApiRestResponse;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.kafka.core.KafkaOperations;

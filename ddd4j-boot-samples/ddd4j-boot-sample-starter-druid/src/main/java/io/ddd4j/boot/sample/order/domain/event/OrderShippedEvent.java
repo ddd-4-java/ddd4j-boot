@@ -7,13 +7,13 @@ import lombok.Getter;
  */
 @Getter
 public class OrderShippedEvent extends DomainEvent {
-    
+
     private final Long orderId;
     private final String orderNo;
     private final Long userId;
     private final String trackingNumber;
     private final String logisticsCompany;
-    
+
     public OrderShippedEvent(Long orderId, String orderNo, Long userId, String trackingNumber, String logisticsCompany) {
         this.orderId = orderId;
         this.orderNo = orderNo;

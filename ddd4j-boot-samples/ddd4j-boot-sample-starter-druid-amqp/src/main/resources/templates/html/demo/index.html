@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh_CN" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
 
 </head>
@@ -54,19 +54,19 @@ ${#ctx.servletContext}
                 <!--浅色按钮组-->
                 <div class="panel-body demo-nifty-btn">
                     <!-- tool bar-start  -->
-                    <div id="btn_db" class="btn-toolbar" role="toolbar"
+                    <div class="btn-toolbar" id="btn_db" role="toolbar"
                          style="float: right;">
                         <div class="btn-group">
-                            <button type="button" href="javascript:void(0);"
-                                    class="btn zf-btn btn-default btn-light-default" id="btn_zj">
+                            <button class="btn zf-btn btn-default btn-light-default" href="javascript:void(0);"
+                                    id="btn_zj" type="button">
                                 <i class="fa fa-plus"></i> 新增
                             </button>
-                            <button type="button" href="javascript:void(0);"
-                                    class="btn zf-btn btn-default btn-light-default" id="btn_xg">
+                            <button class="btn zf-btn btn-default btn-light-default" href="javascript:void(0);"
+                                    id="btn_xg" type="button">
                                 <i class="fa fa-pencil-square-o"></i> 编辑
                             </button>
-                            <button type="button" href="javascript:void(0);"
-                                    class="btn zf-btn btn-default btn-light-default" id="btn_sc">
+                            <button class="btn zf-btn btn-default btn-light-default" href="javascript:void(0);"
+                                    id="btn_sc" type="button">
                                 <i class="fa fa-pencil-square-o"></i> 删除
                             </button>
                         </div>
@@ -76,12 +76,12 @@ ${#ctx.servletContext}
                 <div class="panel-body ">
                     <form class="form-inline">
                         <div class="form-group col-xs-4 col-sm-4 col-md-3">
-                            <label for="query-name" class="control-label">接口名称：</label> <input
-                                id="query-name" type="text" class="form-control"
-                                placeholder="请输入名称...">
+                            <label class="control-label" for="query-name">接口名称：</label> <input
+                                class="form-control" id="query-name" placeholder="请输入名称..."
+                                type="text">
                         </div>
-                        <div id="db_btn_search"
-                             class="btn zf-btn btn-primary btn-light-primary">查 询
+                        <div class="btn zf-btn btn-primary btn-light-primary"
+                             id="db_btn_search">查 询
                         </div>
                     </form>
                 </div>

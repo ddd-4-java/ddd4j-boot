@@ -200,7 +200,8 @@ public class MqttTestController {
 
 ### 基于 Mica-MQTT 的 MQTT 客户端
 
-> **ddd4j MQ 集成**：若需统一使用 `@MQEventListener` + `MQEventPublisher`（而非 `@MqttClientSubscribe`），请引入可选模块 `ddd4j-boot-cmpt-mqtt-mica` 并设置 `ddd4j.mq.broker=mqtt-mica`。详见 `ddd4j-boot-mq/README.md`。
+> **ddd4j MQ 集成**：若需统一使用 `@MQEventListener` + `MQEventPublisher`（而非 `@MqttClientSubscribe`），请引入可选模块
+`ddd4j-boot-cmpt-mqtt-mica` 并设置 `ddd4j.mq.broker=mqtt-mica`。详见 `ddd4j-boot-mq/README.md`。
 
 #### 一、添加依赖
 

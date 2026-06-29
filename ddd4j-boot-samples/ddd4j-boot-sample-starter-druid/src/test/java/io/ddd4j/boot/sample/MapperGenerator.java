@@ -10,19 +10,18 @@ import java.util.*;
 
 class MapperGenerator {
 
+    /**
+     * 数据源配置
+     */
+    private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig.Builder(
+            "jdbc:mysql://192.168.1.170:13306/ddd4j_boot?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8",
+            "ddd4j_boot", "hSy5aj8dD8ttTcjt");
     // 设置你的昵称
     private static String AUTHOR = "wandl";
     // 设置项目名称
     private static String PROJECT_NAME = "ddd4j-boot-samples/ddd4j-boot-sample-druid";
     // 设置项目包路径
     private static String PROJECT_PACKAGE = "io.ddd4j.boot.sample";
-
-    /**
-     * 数据源配置
-     */
-    private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig.Builder(
-            "jdbc:mysql://192.168.1.170:13306/ddd4j_boot?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8",
-            "ddd4j_boot","hSy5aj8dD8ttTcjt");
 
     /**
      * 执行 run

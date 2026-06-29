@@ -6,9 +6,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * 独立验证器：在应用启动时（不依赖 surefire）验证 11 个 DDD 注解的元注解融合。
  *
@@ -22,22 +19,23 @@ import java.util.Set;
  */
 public final class AnnotationFusionVerifier {
 
-    private AnnotationFusionVerifier() {}
+    private AnnotationFusionVerifier() {
+    }
 
     public static void main(String[] args) {
         int passed = 0;
         int failed = 0;
 
-        passed += verify("DomainService",         DomainService.class,         Service.class,    true);
-        passed += verify("DomainRepository",      DomainRepository.class,      Repository.class, true);
-        passed += verify("ApplicationService",    ApplicationService.class,    Service.class,    true);
-        passed += verify("QueryService",         QueryService.class,         Service.class,    true);
-        passed += verify("CommandExecutor",      CommandExecutor.class,      Component.class,  true);
-        passed += verify("DomainEntity",         DomainEntity.class,         Component.class,  true);
-        passed += verify("DomainValueObject",    DomainValueObject.class,    Component.class,  true);
-        passed += verify("DomainGateway",        DomainGateway.class,        Component.class,  true);
-        passed += verify("DomainAssembler",      DomainAssembler.class,      Component.class,  true);
-        passed += verify("DomainConverter",      DomainConverter.class,      Component.class,  true);
+        passed += verify("DomainService", DomainService.class, Service.class, true);
+        passed += verify("DomainRepository", DomainRepository.class, Repository.class, true);
+        passed += verify("ApplicationService", ApplicationService.class, Service.class, true);
+        passed += verify("QueryService", QueryService.class, Service.class, true);
+        passed += verify("CommandExecutor", CommandExecutor.class, Component.class, true);
+        passed += verify("DomainEntity", DomainEntity.class, Component.class, true);
+        passed += verify("DomainValueObject", DomainValueObject.class, Component.class, true);
+        passed += verify("DomainGateway", DomainGateway.class, Component.class, true);
+        passed += verify("DomainAssembler", DomainAssembler.class, Component.class, true);
+        passed += verify("DomainConverter", DomainConverter.class, Component.class, true);
 
         // 验证 @DomainEvent 不在 ddd4j-boot-annotation 中
         System.out.println();
@@ -100,8 +98,9 @@ public final class AnnotationFusionVerifier {
         int passed = 0;
 
         // 业务代码只写一个 @DomainService
-        @DomainService
-        class TestDomainService {}
+        @DomainRepository
+        interface TestDomainRepository {
+        }
 
         Service service = AnnotationUtils.findAnnotation(TestDomainService.class, Service.class);
         if (service != null) {
@@ -120,8 +119,10 @@ public final class AnnotationFusionVerifier {
         }
 
         // 业务代码只写一个 @DomainRepository
-        @DomainRepository
-        interface TestDomainRepository {}
+
+        @DomainService
+        class TestDomainService {
+        }
 
         Repository repo = AnnotationUtils.findAnnotation(TestDomainRepository.class, Repository.class);
         if (repo != null) {

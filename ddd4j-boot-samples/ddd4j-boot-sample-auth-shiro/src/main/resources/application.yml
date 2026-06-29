@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ddd4j-boot-sample-auth-shiro
+
+ddd4j:
+  auth:
+    enabled: true

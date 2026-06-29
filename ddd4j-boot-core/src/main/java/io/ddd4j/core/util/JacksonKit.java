@@ -16,7 +16,11 @@ import java.util.Objects;
 public class JacksonKit {
 
     public static final String YYYYMMDDHHMMSS = "yyyy-MM-dd HH:mm:ss";
-
+    public static final StringTypeReference STRING_TYPE = new StringTypeReference();
+    ;
+    public static final IntegerTypeReference INTEGER_TYPE = new IntegerTypeReference();
+    public static final LongTypeReference LONG_TYPE = new LongTypeReference();
+    public static final DoubleTypeReference DOUBLE_TYPE = new DoubleTypeReference();
     // 单独初始化ObjectMapper，不使用全局对象，因为下面要指定特殊的输出处理，会影响内部业务逻辑
     public static ObjectMapper OBJECT_MAPPER = JsonMapper.builder()
             // 指定序列化输入的类型，类必须是非final修饰的，final修饰的类，比如String,Integer等会跑出异常
@@ -26,31 +30,6 @@ public class JacksonKit {
             .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
             .serializationInclusion(JsonInclude.Include.NON_NULL)
             .build();
-    ;
-
-    public static final StringTypeReference STRING_TYPE = new StringTypeReference();
-
-    public static final IntegerTypeReference INTEGER_TYPE = new IntegerTypeReference();
-
-    public static final LongTypeReference LONG_TYPE = new LongTypeReference();
-
-    public static final DoubleTypeReference DOUBLE_TYPE = new DoubleTypeReference();
-
-    public static class StringTypeReference extends TypeReference<String> {
-
-    }
-
-    public static class IntegerTypeReference extends TypeReference<Integer> {
-
-    }
-
-    public static class LongTypeReference extends TypeReference<Long> {
-
-    }
-
-    public static class DoubleTypeReference extends TypeReference<Double> {
-
-    }
 
     public static <T> T toType(Object value, Class<T> valueType) {
         // 1、如果value为空，直接返回null
@@ -71,6 +50,22 @@ public class JacksonKit {
         } catch (JsonProcessingException e) {
             throw new BizRuntimeException(e.getMessage());
         }
+    }
+
+    public static class StringTypeReference extends TypeReference<String> {
+
+    }
+
+    public static class IntegerTypeReference extends TypeReference<Integer> {
+
+    }
+
+    public static class LongTypeReference extends TypeReference<Long> {
+
+    }
+
+    public static class DoubleTypeReference extends TypeReference<Double> {
+
     }
 
 }

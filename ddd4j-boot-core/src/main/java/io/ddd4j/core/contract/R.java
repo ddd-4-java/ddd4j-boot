@@ -25,14 +25,6 @@ public class R<T> implements IR {
     // 响应数据
     protected T data;
 
-    public Boolean isOk() {
-        return Objects.equals(this.getCode(), ResultCode.OK.getCode()) || Objects.equals(this.getCode(), ResultCode.SUCCESS.getCode());
-    }
-
-    public Boolean isEmpty() {
-        return !isOk() || data == null;
-    }
-
     public R() {
         this(ResultCode.OK.getCode(), ResultCode.OK.getDesc());
     }
@@ -86,5 +78,13 @@ public class R<T> implements IR {
         target.setCode(source.getCode());
         target.setMsg(source.getMsg());
         return target;
+    }
+
+    public Boolean isOk() {
+        return Objects.equals(this.getCode(), ResultCode.OK.getCode()) || Objects.equals(this.getCode(), ResultCode.SUCCESS.getCode());
+    }
+
+    public Boolean isEmpty() {
+        return !isOk() || data == null;
     }
 }

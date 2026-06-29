@@ -16,12 +16,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class MQProducerServiceImpl implements MQProducerService {
 
-    @Value("${rocketmq.producer.send-message-timeout}")
-    private Integer messageTimeOut;
-
     // 建议正常规模项目统一用一个TOPIC
     private static final String topic = "RLT_TEST_TOPIC";
-
+    @Value("${rocketmq.producer.send-message-timeout}")
+    private Integer messageTimeOut;
     // 直接注入使用，用于发送消息到broker服务器
     @Autowired
     private RocketMQTemplate rocketMQTemplate;

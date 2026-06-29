@@ -13,9 +13,9 @@ import org.springframework.web.client.RestClient;
 
 /**
  * 订单服务客户端自动配置
- * 
+ *
  * <p>自动配置 RestClient 和 OrderServiceClient 实现。</p>
- * 
+ *
  * @author DDD4J
  * @since 1.0.0
  */
@@ -23,22 +23,22 @@ import org.springframework.web.client.RestClient;
 @AutoConfiguration
 @EnableConfigurationProperties(OrderClientProperties.class)
 public class OrderClientAutoConfiguration {
-    
+
     @Bean
     @ConditionalOnMissingBean
     public RestClient restClient(OrderClientProperties properties) {
         ClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         ((SimpleClientHttpRequestFactory) factory).setConnectTimeout(properties.getConnectTimeout());
         ((SimpleClientHttpRequestFactory) factory).setReadTimeout(properties.getReadTimeout());
-        
+
         RestClient restClient = RestClient.builder()
                 .requestFactory(factory)
                 .build();
-        
+
         log.info("订单服务客户端 RestClient 初始化完成，baseUrl: {}", properties.getBaseUrl());
         return restClient;
     }
-    
+
     @Bean
     @ConditionalOnMissingBean
     public OrderServiceClient orderServiceClient(

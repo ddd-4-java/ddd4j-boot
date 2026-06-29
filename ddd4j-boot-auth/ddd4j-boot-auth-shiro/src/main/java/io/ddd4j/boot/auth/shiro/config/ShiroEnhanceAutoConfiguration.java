@@ -2,8 +2,6 @@ package io.ddd4j.boot.auth.shiro.config;
 
 import io.ddd4j.auth.shiro.subject.ShiroSubjectProvider;
 import io.ddd4j.core.subject.SubjectProvider;
-import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

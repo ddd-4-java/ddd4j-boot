@@ -18,8 +18,6 @@ import java.util.Map;
 public class MQEvent implements Serializable {
     // 消息ID，默认当前时间戳
     protected String msgId;
-    // 命名空间
-    private String namespace;
     // 主题，配置 ddd4j.mq.default-topic 后无须每次指定
     protected String topic;
     // 标签，只支持单个标签，多标签需要分开发送
@@ -29,6 +27,8 @@ public class MQEvent implements Serializable {
     // 租户ID，默认从线程上下文获取（外部系统 JSON 常用 tenant_id）
     @JsonAlias("tenant_id")
     protected String tenantId;
+    // 命名空间
+    private String namespace;
 
     // 策略匹配，supports参数来源于@MQEventListener.supports
     public boolean supports(List<String> supports) {

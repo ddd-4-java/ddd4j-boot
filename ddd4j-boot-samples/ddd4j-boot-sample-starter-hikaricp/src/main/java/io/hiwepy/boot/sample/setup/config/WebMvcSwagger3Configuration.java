@@ -5,7 +5,6 @@
 package io.hiwepy.boot.sample.setup.config;
 
 
-
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;

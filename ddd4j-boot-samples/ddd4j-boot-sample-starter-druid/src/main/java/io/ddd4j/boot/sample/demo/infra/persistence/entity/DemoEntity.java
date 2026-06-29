@@ -15,19 +15,19 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @TableName("t_demo")
 public class DemoEntity extends BaseEntity<DemoEntity> {
-    
+
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
-    
+
     @TableField("name")
     private String name;
-    
+
     @TableField("intro")
     private String intro;
-    
+
     @TableField("order_by")
     private Integer orderBy;
-    
+
     @TableField("`status`")
     private Integer status;
 }

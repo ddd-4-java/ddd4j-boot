@@ -11,7 +11,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "ddd4j.cache")
 public class CacheProperties {
 
-    /** 默认本地缓存实现类型（CAFFEINE / GUAVA / HUTOOL） */
+    /**
+     * 默认本地缓存实现类型（CAFFEINE / GUAVA / HUTOOL）
+     */
     private CacheKit.LocalCacheType defaultType = CacheKit.LocalCacheType.CAFFEINE;
 
     public CacheKit.LocalCacheType getDefaultType() {

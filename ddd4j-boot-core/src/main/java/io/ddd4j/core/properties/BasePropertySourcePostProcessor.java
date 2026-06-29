@@ -40,6 +40,19 @@ public class BasePropertySourcePostProcessor implements BeanFactoryPostProcessor
         this.propertySourceLoaders = SpringFactoriesLoader.loadFactories(PropertySourceLoader.class, getClass().getClassLoader());
     }
 
+    private static void loadPropertySource(String location, Resource resource,
+                                           PropertySourceLoader loader,
+                                           List<PropertySource<?>> sourceList) {
+        if (resource.exists()) {
+            String name = "basePropertySource: [" + location + "]";
+            try {
+                sourceList.addAll(loader.load(name, resource));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         log.info("BasePropertySourcePostProcessor process @BasePropertySource bean.");
@@ -112,19 +125,6 @@ public class BasePropertySourcePostProcessor implements BeanFactoryPostProcessor
         // 转存
         for (PropertySource<?> propertySource : propertySourceList) {
             propertySources.addLast(propertySource);
-        }
-    }
-
-    private static void loadPropertySource(String location, Resource resource,
-                                           PropertySourceLoader loader,
-                                           List<PropertySource<?>> sourceList) {
-        if (resource.exists()) {
-            String name = "basePropertySource: [" + location + "]";
-            try {
-                sourceList.addAll(loader.load(name, resource));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 

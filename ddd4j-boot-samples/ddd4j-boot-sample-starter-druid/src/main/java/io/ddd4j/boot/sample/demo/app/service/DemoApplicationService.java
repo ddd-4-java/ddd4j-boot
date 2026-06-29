@@ -1,11 +1,11 @@
 package io.ddd4j.boot.sample.demo.app.service;
 
-import io.ddd4j.core.exception.BizRuntimeException;
 import io.ddd4j.boot.sample.demo.app.command.CreateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.command.UpdateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.dto.DemoDTO;
 import io.ddd4j.boot.sample.demo.domain.model.entity.DemoEntity;
 import io.ddd4j.boot.sample.demo.domain.repository.DemoRepository;
+import io.ddd4j.core.exception.BizRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,36 +21,36 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class DemoApplicationService {
-    
+
     private final DemoRepository demoRepository;
-    
+
     /**
      * 创建Demo
      */
     @Transactional(rollbackFor = Exception.class)
     public DemoDTO createDemo(CreateDemoCommand command) {
         log.info("创建Demo，名称: {}", command.getName());
-        
+
         DemoEntity entity = new DemoEntity();
         entity.setName(command.getName());
         entity.setIntro(command.getIntro());
         entity.setOrderBy(command.getOrderBy());
         entity.setStatus(command.getStatus() != null ? command.getStatus() : 1);
-        
+
         DemoEntity saved = demoRepository.save(entity);
         return toDTO(saved);
     }
-    
+
     /**
      * 更新Demo
      */
     @Transactional(rollbackFor = Exception.class)
     public DemoDTO updateDemo(UpdateDemoCommand command) {
         log.info("更新Demo，ID: {}", command.getId());
-        
+
         DemoEntity entity = demoRepository.findById(command.getId())
                 .orElseThrow(() -> new BizRuntimeException("Demo不存在"));
-        
+
         if (command.getName() != null) {
             entity.setName(command.getName());
         }
@@ -63,11 +63,11 @@ public class DemoApplicationService {
         if (command.getStatus() != null) {
             entity.setStatus(command.getStatus());
         }
-        
+
         DemoEntity saved = demoRepository.save(entity);
         return toDTO(saved);
     }
-    
+
     /**
      * 根据ID查询Demo
      */
@@ -76,7 +76,7 @@ public class DemoApplicationService {
                 .map(this::toDTO)
                 .orElseThrow(() -> new BizRuntimeException("Demo不存在"));
     }
-    
+
     /**
      * 查询所有Demo
      */
@@ -85,7 +85,7 @@ public class DemoApplicationService {
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * 删除Demo
      */
@@ -94,7 +94,7 @@ public class DemoApplicationService {
         log.info("删除Demo，ID: {}", id);
         demoRepository.delete(id);
     }
-    
+
     /**
      * 批量删除Demo
      */
@@ -103,7 +103,7 @@ public class DemoApplicationService {
         log.info("批量删除Demo，IDs: {}", ids);
         ids.forEach(this::deleteDemo);
     }
-    
+
     /**
      * 实体转DTO
      */

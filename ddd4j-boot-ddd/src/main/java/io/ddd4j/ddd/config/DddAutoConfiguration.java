@@ -1,15 +1,12 @@
 package io.ddd4j.ddd.config;
 
-import java.util.List;
-import java.util.Objects;
-
+import org.fuin.cqrs4j.core.CommandExecutor;
 import org.fuin.cqrs4j.core.MultiCommandExecutor;
 import org.fuin.ddd4j.core.EntityIdFactory;
 import org.fuin.ddd4j.core.JandexEntityIdFactory;
 import org.fuin.ddd4j.jackson.Ddd4JacksonModule;
 import org.fuin.esc.api.EventStore;
 import org.fuin.esc.mem.InMemoryEventStore;
-import org.fuin.cqrs4j.core.CommandExecutor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -17,6 +14,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * ddd4j-boot-ddd 自动配置。

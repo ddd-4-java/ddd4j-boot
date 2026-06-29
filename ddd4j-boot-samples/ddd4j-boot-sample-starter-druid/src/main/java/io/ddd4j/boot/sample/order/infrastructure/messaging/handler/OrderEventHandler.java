@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class OrderEventHandler {
-    
+
     /**
      * 处理订单创建事件
      */
@@ -29,7 +29,7 @@ public class OrderEventHandler {
         // 2. 扣减库存
         // 3. 记录订单日志
     }
-    
+
     /**
      * 处理订单支付事件
      */
@@ -42,7 +42,7 @@ public class OrderEventHandler {
         // 2. 更新用户积分
         // 3. 触发发货流程
     }
-    
+
     /**
      * 处理订单发货事件
      */
@@ -55,7 +55,7 @@ public class OrderEventHandler {
         // 2. 更新物流信息
         // 3. 记录发货日志
     }
-    
+
     /**
      * 处理订单取消事件
      */

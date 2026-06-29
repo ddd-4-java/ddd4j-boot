@@ -1,20 +1,21 @@
 package io.ddd4j.boot.annotation.ddd;
 
 import io.ddd4j.annotation.ddd.DDDAnnotation;
-import org.springframework.stereotype.Service;
 import org.springframework.core.annotation.AliasFor;
+import org.springframework.stereotype.Service;
+
 import java.lang.annotation.*;
 
 /**
  * Spring 业务服务 Bean（领域服务）
- * 
+ *
  * <p><b>核心目标</b>：业务代码只写一个 @DomainService，同时获得：
  * <ul>
  *   <li>DDD 语义（被 ArchUnit 规则识别）</li>
  *   <li>Spring 自动注册为 Bean（@Service 元注解）</li>
  *   <li>ddd4j AOP 拦截能力</li>
  * </ul>
- * 
+ *
  * <p>业务代码使用方式：
  * <pre>
  * &#64;DomainService   // ← 只需写一个注解！

@@ -1,14 +1,12 @@
 package io.ddd4j.boot.cmpt.cola.config;
 
+import io.ddd4j.boot.cmpt.cola.handler.Ddd4jResponseHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-
-import io.ddd4j.boot.cmpt.cola.handler.Ddd4jResponseHandler;
 
 /**
  * COLA 架构组件自动配置。

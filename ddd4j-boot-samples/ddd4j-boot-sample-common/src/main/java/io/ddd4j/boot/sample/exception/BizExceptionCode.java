@@ -118,10 +118,6 @@ public enum BizExceptionCode implements CustomApiCode {
         this.desc = desc;
     }
 
-    public void throwException() {
-        throw this.asException();
-    }
-
     public static void throwByErrorcode(Integer errorCode) {
         getByErrorcode(errorCode).throwException();
     }
@@ -142,6 +138,10 @@ public enum BizExceptionCode implements CustomApiCode {
             }
         }
         return BizExceptionCode.SYSTEM_ERROR;
+    }
+
+    public void throwException() {
+        throw this.asException();
     }
 
     public BizRuntimeException asException() {

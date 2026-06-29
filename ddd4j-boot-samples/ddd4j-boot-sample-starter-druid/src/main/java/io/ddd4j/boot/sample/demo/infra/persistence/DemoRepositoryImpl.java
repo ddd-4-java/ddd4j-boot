@@ -18,24 +18,24 @@ import java.util.stream.Collectors;
 @Repository
 @RequiredArgsConstructor
 public class DemoRepositoryImpl implements DemoRepository {
-    
+
     private final DemoMapper demoMapper;
     private final DemoConverter demoConverter;
-    
+
     @Override
     public DemoEntity save(DemoEntity domain) {
         io.ddd4j.boot.sample.demo.infra.persistence.entity.DemoEntity entity = demoConverter.toEntity(domain);
-        
+
         if (domain.getId() == null) {
             demoMapper.insert(entity);
             domain.setId(entity.getId());
         } else {
             demoMapper.updateById(entity);
         }
-        
+
         return demoConverter.toDomain(entity);
     }
-    
+
     @Override
     public Optional<DemoEntity> findById(Long id) {
         io.ddd4j.boot.sample.demo.infra.persistence.entity.DemoEntity entity = demoMapper.selectById(id);
@@ -44,7 +44,7 @@ public class DemoRepositoryImpl implements DemoRepository {
         }
         return Optional.of(demoConverter.toDomain(entity));
     }
-    
+
     @Override
     public List<DemoEntity> findAll() {
         List<io.ddd4j.boot.sample.demo.infra.persistence.entity.DemoEntity> entities =
@@ -53,7 +53,7 @@ public class DemoRepositoryImpl implements DemoRepository {
                 .map(demoConverter::toDomain)
                 .collect(Collectors.toList());
     }
-    
+
     @Override
     public void delete(Long id) {
         demoMapper.deleteById(id);

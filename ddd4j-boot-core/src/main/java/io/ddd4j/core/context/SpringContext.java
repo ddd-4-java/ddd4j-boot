@@ -35,8 +35,8 @@ public class SpringContext implements ApplicationContextAware, ApplicationRunner
     public static final CountDownLatch APP_START_SIGNAL = new CountDownLatch(1);
     // Spring上下文初始化完成的信号
     public static final CountDownLatch APPLICATION_CONTEXT_START_SIGNAL = new CountDownLatch(1);
-    private static ApplicationContext APPLICATION_CONTEXT;
     private static final ExecutorService EXECUTOR_SERVICE = Executors.newSingleThreadExecutor();
+    private static ApplicationContext APPLICATION_CONTEXT;
 
     public SpringContext() {
         log.debug("Loading SpringContext");
@@ -53,17 +53,6 @@ public class SpringContext implements ApplicationContextAware, ApplicationRunner
                 break;
             }
         }
-    }
-
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        SpringContext.APPLICATION_CONTEXT = applicationContext;
-        APPLICATION_CONTEXT_START_SIGNAL.countDown();
-    }
-
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        // 通知等待的线程初始化已完成
-        APP_START_SIGNAL.countDown();
     }
 
     public static void onAppStarted(Consumer<ApplicationContext> then) {
@@ -88,6 +77,11 @@ public class SpringContext implements ApplicationContextAware, ApplicationRunner
             APPLICATION_CONTEXT_START_SIGNAL.await();
         }
         return APPLICATION_CONTEXT;
+    }
+
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        SpringContext.APPLICATION_CONTEXT = applicationContext;
+        APPLICATION_CONTEXT_START_SIGNAL.countDown();
     }
 
     public static <T> T getBean(@NonNull String name) {
@@ -128,6 +122,12 @@ public class SpringContext implements ApplicationContextAware, ApplicationRunner
 
     public static Environment getEnv() {
         return getApplicationContext().getEnvironment();
+    }
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        // 通知等待的线程初始化已完成
+        APP_START_SIGNAL.countDown();
     }
 
 }

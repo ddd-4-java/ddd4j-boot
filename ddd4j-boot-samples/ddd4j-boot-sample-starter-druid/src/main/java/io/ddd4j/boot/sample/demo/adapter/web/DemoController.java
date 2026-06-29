@@ -1,10 +1,10 @@
 package io.ddd4j.boot.sample.demo.adapter.web;
 
-import io.ddd4j.core.ApiRestResponse;
 import io.ddd4j.boot.sample.demo.app.command.CreateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.command.UpdateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.dto.DemoDTO;
 import io.ddd4j.boot.sample.demo.app.service.DemoApplicationService;
+import io.ddd4j.core.ApiRestResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,9 +22,9 @@ import java.util.List;
 @RequestMapping("/api/demos")
 @RequiredArgsConstructor
 public class DemoController {
-    
+
     private final DemoApplicationService demoApplicationService;
-    
+
     /**
      * 创建Demo
      */
@@ -34,7 +34,7 @@ public class DemoController {
         DemoDTO demo = demoApplicationService.createDemo(command);
         return ApiRestResponse.success(demo);
     }
-    
+
     /**
      * 更新Demo
      */
@@ -48,7 +48,7 @@ public class DemoController {
         DemoDTO demo = demoApplicationService.updateDemo(command);
         return ApiRestResponse.success(demo);
     }
-    
+
     /**
      * 根据ID查询Demo
      */
@@ -60,7 +60,7 @@ public class DemoController {
         DemoDTO demo = demoApplicationService.getDemoById(id);
         return ApiRestResponse.success(demo);
     }
-    
+
     /**
      * 查询所有Demo
      */
@@ -70,7 +70,7 @@ public class DemoController {
         List<DemoDTO> demos = demoApplicationService.getAllDemos();
         return ApiRestResponse.success(demos);
     }
-    
+
     /**
      * 删除Demo
      */
@@ -82,7 +82,7 @@ public class DemoController {
         demoApplicationService.deleteDemo(id);
         return ApiRestResponse.success("删除成功");
     }
-    
+
     /**
      * 批量删除Demo
      */

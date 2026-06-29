@@ -1,17 +1,17 @@
 package io.ddd4j.boot.mq.core.config;
 
-import io.ddd4j.mq.consume.MQConsumeInterceptor;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.consume.MQConsumeInterceptor;
 import io.ddd4j.mq.publish.MQEventPublisher;
-import io.ddd4j.mq.spring.registry.MQListenerBeanPostProcessor;
 import io.ddd4j.mq.registry.MQListenerDefinitionRegistry;
-import io.ddd4j.mq.spring.registry.MQListenerRegistrar;
 import io.ddd4j.mq.registry.MQListenerScanner;
 import io.ddd4j.mq.serialization.JsonMQMessageSerialization;
 import io.ddd4j.mq.serialization.MQEventSerialization;
 import io.ddd4j.mq.serialization.MQMessageSerialization;
 import io.ddd4j.mq.spi.MQBrokerAdapter;
 import io.ddd4j.mq.spi.MQBrokerAdapters;
+import io.ddd4j.mq.spring.registry.MQListenerBeanPostProcessor;
+import io.ddd4j.mq.spring.registry.MQListenerRegistrar;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

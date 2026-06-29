@@ -18,32 +18,6 @@ import java.util.stream.Collectors;
  */
 public class Model implements Serializable {
 
-    public boolean save() {
-        return BaseRepository.of(this.getClass()).save(this);
-    }
-
-    public boolean update() {
-        return BaseRepository.of(this.getClass()).update(this);
-    }
-
-    public boolean saveOrUpdate() {
-        return BaseRepository.of(this.getClass()).saveOrUpdate(this);
-    }
-
-    public <Q extends Query> boolean update(Q query) {
-        query.with();
-        query.setOrderBys(null);
-        return BaseRepository.of(query.getClass()).update(this, query);
-    }
-
-    public boolean updateByKey() {
-        return BaseRepository.of(this.getClass()).updateByKey(this);
-    }
-
-    public <Q extends Query> void fill(Q query) {
-        BaseRepository.of(this.getClass()).fill(query, this);
-    }
-
     public static <M extends Model> boolean save(List<M> models) {
         if (models == null || models.isEmpty()) {
             return false;
@@ -91,5 +65,31 @@ public class Model implements Serializable {
             return modelMaps.stream().map(modelMap -> convert(name, modelMap)).filter(Objects::nonNull).collect(Collectors.toList());
         }
         return null;
+    }
+
+    public boolean save() {
+        return BaseRepository.of(this.getClass()).save(this);
+    }
+
+    public boolean update() {
+        return BaseRepository.of(this.getClass()).update(this);
+    }
+
+    public boolean saveOrUpdate() {
+        return BaseRepository.of(this.getClass()).saveOrUpdate(this);
+    }
+
+    public <Q extends Query> boolean update(Q query) {
+        query.with();
+        query.setOrderBys(null);
+        return BaseRepository.of(query.getClass()).update(this, query);
+    }
+
+    public boolean updateByKey() {
+        return BaseRepository.of(this.getClass()).updateByKey(this);
+    }
+
+    public <Q extends Query> void fill(Q query) {
+        BaseRepository.of(this.getClass()).fill(query, this);
     }
 }

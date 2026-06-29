@@ -17,36 +17,36 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @TableName("t_order")
 public class OrderEntity extends BaseEntity<OrderEntity> {
-    
+
     @TableId(type = IdType.AUTO)
     private Long id;
-    
+
     private String orderNo;
-    
+
     private Long userId;
-    
+
     private String status;
-    
+
     private BigDecimal totalAmount;
-    
+
     private String currency;
-    
+
     private String province;
-    
+
     private String city;
-    
+
     private String district;
-    
+
     private String detail;
-    
+
     private String zipCode;
-    
+
     private String remark;
-    
+
     private LocalDateTime paidTime;
-    
+
     private LocalDateTime shippedTime;
-    
+
     private LocalDateTime deliveredTime;
 }
 

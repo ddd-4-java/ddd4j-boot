@@ -14,9 +14,9 @@ import java.net.InetAddress;
 @Slf4j
 public class Sequence {
 
+    private static byte LAST_IP = 0;
     @Getter
     private final Snowflake snowflake;
-    private static byte LAST_IP = 0;
 
     /**
      * 获取单例的Twitter的Snowflake 算法生成器对象<br>
@@ -154,16 +154,6 @@ public class Sequence {
     }
 
     /**
-     * 获取ID
-     *
-     * @return long
-     */
-    public synchronized Long nextId() {
-        // 使用snowflake获取ID
-        return this.snowflake.nextId();
-    }
-
-    /**
      * 用IP地址最后几个字节标示
      * <p>
      * eg:192.168.1.30->30
@@ -185,6 +175,16 @@ public class Sequence {
         }
 
         return LAST_IP;
+    }
+
+    /**
+     * 获取ID
+     *
+     * @return long
+     */
+    public synchronized Long nextId() {
+        // 使用snowflake获取ID
+        return this.snowflake.nextId();
     }
 
 

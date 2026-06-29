@@ -1,12 +1,12 @@
 package io.ddd4j.boot.sample.layered.infrastructure.persistence;
 
-import java.util.List;
-
 import io.ddd4j.annotation.ddd.DomainRepository;
-import io.ddd4j.data.repository.impl.BaseRepositoryImpl;
 import io.ddd4j.boot.sample.layered.domain.model.User;
 import io.ddd4j.boot.sample.layered.domain.model.UserQuery;
 import io.ddd4j.boot.sample.layered.domain.model.UserRepository;
+import io.ddd4j.data.repository.impl.BaseRepositoryImpl;
+
+import java.util.List;
 
 /**
  * 用户仓储实现（基础设施层）。

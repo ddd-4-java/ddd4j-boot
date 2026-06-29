@@ -1,11 +1,10 @@
 package io.ddd4j.core.config;
 
+import io.ddd4j.core.context.SpringContext;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-
-import io.ddd4j.core.context.SpringContext;
 
 /**
  * 核心自动配置。

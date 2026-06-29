@@ -1,7 +1,6 @@
 package io.ddd4j.ddd.config;
 
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -22,7 +21,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "ddd4j.ddd")
 public class DddProperties {
 
-    /** 事件存储配置 */
+    /**
+     * 事件存储配置
+     */
     private EventStoreConfig eventStore = new EventStoreConfig();
 
     /**

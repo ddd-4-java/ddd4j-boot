@@ -1,17 +1,15 @@
 package io.ddd4j.boot.cmpt.cola.exception;
 
+import com.alibaba.cola.exception.BizException;
+import com.alibaba.cola.exception.SysException;
+import io.ddd4j.core.ApiCode;
+import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.exception.BaseExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import com.alibaba.cola.exception.BizException;
-import com.alibaba.cola.exception.SysException;
-
-import io.ddd4j.core.ApiCode;
-import io.ddd4j.core.ApiRestResponse;
-import io.ddd4j.core.exception.BaseExceptionHandler;
 
 /**
  * COLA 异常处理器。

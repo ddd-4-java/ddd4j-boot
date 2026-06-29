@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.domain.order.model.entity;
 
-import io.ddd4j.core.entity.BaseEntity;
 import io.ddd4j.boot.sample.domain.order.model.vo.Money;
+import io.ddd4j.core.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class OrderItem extends BaseEntity<OrderItem> {
-    
+
     private Long id;
     private Long orderId;
     private String productId;
@@ -21,7 +21,7 @@ public class OrderItem extends BaseEntity<OrderItem> {
     private Integer quantity;
     private Money unitPrice;
     private Money totalPrice;
-    
+
     public OrderItem(String productId, String productName, Integer quantity, Money unitPrice) {
         if (productId == null || productId.trim().isEmpty()) {
             throw new IllegalArgumentException("商品ID不能为空");
@@ -38,7 +38,7 @@ public class OrderItem extends BaseEntity<OrderItem> {
         this.unitPrice = unitPrice;
         this.totalPrice = unitPrice.multiply(BigDecimal.valueOf(quantity));
     }
-    
+
     public void updateQuantity(Integer newQuantity) {
         if (newQuantity == null || newQuantity <= 0) {
             throw new IllegalArgumentException("商品数量必须大于0");
@@ -46,7 +46,7 @@ public class OrderItem extends BaseEntity<OrderItem> {
         this.quantity = newQuantity;
         this.totalPrice = unitPrice.multiply(BigDecimal.valueOf(newQuantity));
     }
-    
+
     public Money calculateTotal() {
         return unitPrice.multiply(BigDecimal.valueOf(quantity));
     }

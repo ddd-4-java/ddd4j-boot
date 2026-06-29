@@ -14,14 +14,14 @@ import org.springframework.data.mongodb.core.MongoOperations;
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
 
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+
     @Bean
     public MeterRegistryCustomizer<MeterRegistry> configurer(
             @Value("${spring.application.name}") String applicationName) {
         return (registry) -> registry.config().commonTags("application", applicationName);
-    }
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(DemoApplication.class, args);
     }
 
     @Override

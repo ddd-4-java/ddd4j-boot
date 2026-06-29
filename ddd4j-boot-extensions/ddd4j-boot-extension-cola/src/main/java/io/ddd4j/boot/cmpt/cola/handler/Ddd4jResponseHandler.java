@@ -1,16 +1,14 @@
 package io.ddd4j.boot.cmpt.cola.handler;
 
+import com.alibaba.cola.catchlog.ResponseHandlerI;
+import com.alibaba.cola.dto.Response;
+import com.alibaba.cola.exception.BaseException;
+import io.ddd4j.core.ApiCode;
+import io.ddd4j.core.ApiRestResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import com.alibaba.cola.catchlog.ResponseHandlerI;
-import com.alibaba.cola.dto.Response;
-import com.alibaba.cola.exception.BaseException;
-
-import io.ddd4j.core.ApiCode;
-import io.ddd4j.core.ApiRestResponse;
 
 /**
  * COLA catchlog 的 ResponseHandler 扩展。

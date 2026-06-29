@@ -1,14 +1,13 @@
 package io.ddd4j.core;
 
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
-
 import com.tngtech.archunit.lang.ArchRule;
-
 import io.ddd4j.annotation.ddd.ApplicationService;
 import io.ddd4j.annotation.ddd.DomainEntity;
 import io.ddd4j.annotation.ddd.DomainRepository;
 import io.ddd4j.annotation.ddd.DomainService;
+
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 /**
  * DDD 分层纪律 ArchUnit 规则集。
@@ -35,9 +34,6 @@ import io.ddd4j.annotation.ddd.DomainService;
  */
 public final class DDDLayerRules {
 
-    private DDDLayerRules() {
-    }
-
     /**
      * 规则1：标了 {@code @DomainEntity} 的类必须在 {@code ..domain..} 包。
      *
@@ -47,7 +43,6 @@ public final class DDDLayerRules {
             .that().areAnnotatedWith(DomainEntity.class)
             .should().resideInAPackage("..domain..")
             .because("标了 @DomainEntity 的类是领域实体，必须在 domain 包");
-
     /**
      * 规则2：标了 {@code @DomainService} 的类必须在 {@code ..domain..} 包。
      *
@@ -57,7 +52,6 @@ public final class DDDLayerRules {
             .that().areAnnotatedWith(DomainService.class)
             .should().resideInAPackage("..domain..")
             .because("标了 @DomainService 的类是领域服务，必须在 domain 包");
-
     /**
      * 规则3：标了 {@code @ApplicationService} 的类必须在 {@code ..app..} 或 {@code ..application..} 包。
      *
@@ -67,7 +61,6 @@ public final class DDDLayerRules {
             .that().areAnnotatedWith(ApplicationService.class)
             .should().resideInAnyPackage("..app..", "..application..")
             .because("标了 @ApplicationService 的类是应用服务，必须在 app/application 包");
-
     /**
      * 规则4：标了 {@code @DomainRepository} 的类必须在 {@code ..infrastructure..} 或 {@code ..infras..} 包。
      *
@@ -79,7 +72,6 @@ public final class DDDLayerRules {
             .that().areAnnotatedWith(DomainRepository.class)
             .should().resideInAnyPackage("..infrastructure..", "..infras..")
             .because("标了 @DomainRepository 的类是仓储实现，必须在 infrastructure/infras 包");
-
     /**
      * 规则5：domain 包不得依赖 web/controller/adapter 包。
      *
@@ -90,7 +82,6 @@ public final class DDDLayerRules {
             .should().dependOnClassesThat().resideInAnyPackage(
                     "..controller..", "..adapter..", "..web..")
             .because("领域层不得依赖 Web/Controller/Adapter 层");
-
     /**
      * 规则6：domain 包不得依赖 infrastructure 包。
      *
@@ -101,5 +92,8 @@ public final class DDDLayerRules {
             .should().dependOnClassesThat().resideInAnyPackage(
                     "..infrastructure..", "..infras..")
             .because("领域层不得依赖基础设施层（依赖方向应反转）");
+
+    private DDDLayerRules() {
+    }
 
 }

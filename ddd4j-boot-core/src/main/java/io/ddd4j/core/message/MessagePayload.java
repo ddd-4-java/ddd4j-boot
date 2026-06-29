@@ -16,10 +16,6 @@ public class MessagePayload implements Serializable {
      */
     protected MessageType type;
     /**
-     * 应用Key
-     */
-    private String appKey;
-    /**
      * 消息ID
      */
     protected String uuid;
@@ -27,15 +23,17 @@ public class MessagePayload implements Serializable {
      * 消息头内容
      */
     protected Map<String, String> header = new HashMap<String, String>();
-
+    protected Map<String, String> bodyMap = new HashMap<String, String>();
+    /**
+     * 应用Key
+     */
+    private String appKey;
     /**
      * 消息体内容
      */
     @Schema(name = "body", requiredMode = Schema.RequiredMode.REQUIRED, type = "string", description = "消息内容")
     @NotBlank(message = "消息内容必填")
     private String body;
-
-    protected Map<String, String> bodyMap = new HashMap<String, String>();
 
     public MessageType getType() {
         return type;

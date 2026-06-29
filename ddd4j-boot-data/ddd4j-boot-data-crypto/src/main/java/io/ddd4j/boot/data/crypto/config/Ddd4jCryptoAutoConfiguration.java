@@ -2,7 +2,6 @@ package io.ddd4j.boot.data.crypto.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ddd4j.data.crypto.CryptoProperties;
-import io.ddd4j.data.crypto.provider.CryptoProvider;
 import io.ddd4j.data.crypto.provider.DefaultCryptoProvider;
 import io.ddd4j.data.crypto.strategy.CryptoStrategy;
 import io.ddd4j.data.crypto.strategy.DefaultCryptoStrategy;

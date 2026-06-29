@@ -16,9 +16,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class OrderDomainEventPublisher {
-    
+
     private final ApplicationEventPublisher applicationEventPublisher;
-    
+
     /**
      * 发布领域事件
      */
@@ -28,7 +28,7 @@ public class OrderDomainEventPublisher {
             applicationEventPublisher.publishEvent(event);
         }
     }
-    
+
     /**
      * 批量发布领域事件
      */

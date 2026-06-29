@@ -5,8 +5,8 @@
 package io.ddd4j.web.webflux;
 
 import cn.hutool.core.util.IdUtil;
-import io.ddd4j.web.webflux.config.SequenceProperties;
 import io.ddd4j.core.sequence.Sequence;
+import io.ddd4j.web.webflux.config.SequenceProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

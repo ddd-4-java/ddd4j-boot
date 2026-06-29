@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -466,7 +466,8 @@
         <schemacrawler-mysql.version>${schemacrawler.version}</schemacrawler-mysql.version>
         <schemacrawler-hana.version>${schemacrawler.version}</schemacrawler-hana.version>
         <schemacrawler-hsqldb.version>${schemacrawler.version}</schemacrawler-hsqldb.version>
-        <schemacrawler-oracle.version>${schemacrawler.version}</schemacrawler-oracle.version>  <!-- Note: 14.17.05 For Oracle 10g/11g -->
+        <schemacrawler-oracle.version>${schemacrawler.version}
+        </schemacrawler-oracle.version>  <!-- Note: 14.17.05 For Oracle 10g/11g -->
         <schemacrawler-postgresql.version>${schemacrawler.version}</schemacrawler-postgresql.version>
         <schemacrawler-sqlserver.version>${schemacrawler.version}</schemacrawler-sqlserver.version>
         <schemacrawler-sqlite.version>${schemacrawler.version}</schemacrawler-sqlite.version>
@@ -646,20 +647,28 @@
         <spring-boot-starter-schemacrawler.version>1.0.7.RELEASE</spring-boot-starter-schemacrawler.version>
         <spring-boot-starter-seata.version>${seata.version}</spring-boot-starter-seata.version>
         <spring-boot-starter-security-cas.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-cas.version>
-        <spring-boot-starter-security-dingtalk.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-dingtalk.version>
-        <spring-boot-starter-security-facebook.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-facebook.version>
-        <spring-boot-starter-security-google.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-google.version>
+        <spring-boot-starter-security-dingtalk.version>3.3.x.20241003.RELEASE
+        </spring-boot-starter-security-dingtalk.version>
+        <spring-boot-starter-security-facebook.version>3.3.x.20241003.RELEASE
+        </spring-boot-starter-security-facebook.version>
+        <spring-boot-starter-security-google.version>3.3.x.20241003.RELEASE
+        </spring-boot-starter-security-google.version>
         <spring-boot-starter-security-line.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-line.version>
-        <spring-boot-starter-security-qrcode.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-qrcode.version>
-        <spring-boot-starter-security-weixin.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-weixin.version>
+        <spring-boot-starter-security-qrcode.version>3.3.x.20241003.RELEASE
+        </spring-boot-starter-security-qrcode.version>
+        <spring-boot-starter-security-weixin.version>3.3.x.20250712-SNAPSHOT
+        </spring-boot-starter-security-weixin.version>
         <spring-boot-starter-shanyan.version>3.3.x.20240823.RELEASE</spring-boot-starter-shanyan.version>
         <spring-boot-starter-shardingsphere-jdbc.version>5.2.1</spring-boot-starter-shardingsphere-jdbc.version>
         <spring-boot-starter-sigar.version>3.3.x.20240823.RELEASE</spring-boot-starter-sigar.version>
         <spring-boot-starter-socketio.version>3.3.x.20240823.RELEASE</spring-boot-starter-socketio.version>
         <spring-boot-starter-tencentapi.version>3.3.x.20240823.RELEASE</spring-boot-starter-tencentapi.version>
-        <spring-boot-starter-validation-mimetypes.version>3.3.x.20250430-SNAPSHOT</spring-boot-starter-validation-mimetypes.version>
-        <spring-boot-starter-webflux-swagger2.version>2.7.x.20240823.RELEASE</spring-boot-starter-webflux-swagger2.version>
-        <spring-boot-starter-webmvc-swagger2.version>2.7.x.20240823.RELEASE</spring-boot-starter-webmvc-swagger2.version>
+        <spring-boot-starter-validation-mimetypes.version>3.3.x.20250430-SNAPSHOT
+        </spring-boot-starter-validation-mimetypes.version>
+        <spring-boot-starter-webflux-swagger2.version>2.7.x.20240823.RELEASE
+        </spring-boot-starter-webflux-swagger2.version>
+        <spring-boot-starter-webmvc-swagger2.version>2.7.x.20240823.RELEASE
+        </spring-boot-starter-webmvc-swagger2.version>
         <spring-boot-starter-xmemcached.version>3.3.x.20240823.RELEASE</spring-boot-starter-xmemcached.version>
         <spring-boot-starter-xxljob.version>3.3.x.20240823.RELEASE</spring-boot-starter-xxljob.version>
         <spring-boot-starter-zxing.version>3.3.x.20240823.RELEASE</spring-boot-starter-zxing.version>

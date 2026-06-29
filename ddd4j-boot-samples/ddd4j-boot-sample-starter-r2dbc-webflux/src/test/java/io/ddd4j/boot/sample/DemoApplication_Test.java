@@ -21,15 +21,13 @@ import java.util.Map;
 @SpringBootTest(classes = DemoApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DemoApplication_Test {
 
+    public ContiPerfRule contiPerfRule = new ContiPerfRule();
     /**
      * @LocalServerPort 提供了 @Value("${local.server.port}") 的代替
      */
     @LocalServerPort
     private int port;
     private URL base;
-
-    public ContiPerfRule contiPerfRule = new ContiPerfRule();
-
     @Autowired
     private TestRestTemplate restTemplate;
 

@@ -20,14 +20,14 @@ public class AkkaAutoConfiguration {
     @Autowired
     private ApplicationContext applicationContext;
 
+    public AkkaAutoConfiguration() {
+    }
+
     @Bean
     public ActorSystem actorSystem(AkkaProperties properties) {
         ActorSystem system = ActorSystem.create(properties.getName());
         ((SpringExtension.SpringExt) SpringExtension.SPRING_EXTENSION_PROVIDER.get(system)).initialize(this.applicationContext);
         return system;
-    }
-
-    public AkkaAutoConfiguration() {
     }
 
     public ApplicationContext getApplicationContext() {

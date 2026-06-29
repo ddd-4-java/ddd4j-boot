@@ -10,15 +10,15 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class DemoEntity extends BaseEntity<DemoEntity> {
-    
+
     private Long id;
-    
+
     private String name;
-    
+
     private String intro;
-    
+
     private Integer orderBy;
-    
+
     private Integer status;
 }
 

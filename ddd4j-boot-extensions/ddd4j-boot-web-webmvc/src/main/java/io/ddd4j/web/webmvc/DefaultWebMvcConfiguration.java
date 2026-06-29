@@ -4,11 +4,11 @@
  */
 package io.ddd4j.web.webmvc;
 
-import io.ddd4j.web.webmvc.config.LocalResourceProperteis;
 import io.ddd4j.core.Constants;
 import io.ddd4j.core.ProfileManager;
 import io.ddd4j.core.sequence.Sequence;
 import io.ddd4j.core.web.servlet.handler.Slf4jMDCInterceptor;
+import io.ddd4j.web.webmvc.config.LocalResourceProperteis;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.biz.web.servlet.i18n.XHeaderLocaleResolver;

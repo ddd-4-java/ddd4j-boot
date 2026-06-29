@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ddd4j-boot-sample-auth-security
+
+# 开放所有端点便于示例测试
+ddd4j:
+  auth:
+    enabled: true

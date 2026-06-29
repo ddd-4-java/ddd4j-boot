@@ -1,11 +1,11 @@
 package io.ddd4j.boot.sample.order.domain.model.aggregate;
 
-import io.ddd4j.core.entity.BaseEntity;
 import io.ddd4j.boot.sample.order.domain.event.*;
 import io.ddd4j.boot.sample.order.domain.model.entity.OrderItem;
 import io.ddd4j.boot.sample.order.domain.model.vo.Address;
 import io.ddd4j.boot.sample.order.domain.model.vo.Money;
 import io.ddd4j.boot.sample.order.domain.model.vo.OrderStatus;
+import io.ddd4j.core.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Order extends BaseEntity<Order> {
-    
+
     private Long id;
     private String orderNo;
     private Long userId;
@@ -32,12 +32,12 @@ public class Order extends BaseEntity<Order> {
     private LocalDateTime paidTime;
     private LocalDateTime shippedTime;
     private LocalDateTime deliveredTime;
-    
+
     private List<OrderItem> items = new ArrayList<>();
-    
+
     // 领域事件列表（不持久化）
     private transient List<DomainEvent> domainEvents = new ArrayList<>();
-    
+
     /**
      * 创建订单
      */
@@ -51,7 +51,7 @@ public class Order extends BaseEntity<Order> {
         if (items == null || items.isEmpty()) {
             throw new IllegalArgumentException("订单项不能为空");
         }
-        
+
         Order order = new Order();
         order.orderNo = orderNo;
         order.userId = userId;
@@ -59,13 +59,13 @@ public class Order extends BaseEntity<Order> {
         order.shippingAddress = shippingAddress;
         order.items = new ArrayList<>(items);
         order.calculateTotalAmount();
-        
+
         // 发布订单创建事件
         order.addDomainEvent(new OrderCreatedEvent(null, orderNo, userId, order.totalAmount.toString()));
-        
+
         return order;
     }
-    
+
     /**
      * 添加领域事件
      */
@@ -75,14 +75,14 @@ public class Order extends BaseEntity<Order> {
         }
         domainEvents.add(event);
     }
-    
+
     /**
      * 获取所有领域事件
      */
     public List<DomainEvent> getDomainEvents() {
         return domainEvents != null ? Collections.unmodifiableList(domainEvents) : Collections.emptyList();
     }
-    
+
     /**
      * 清空领域事件
      */
@@ -91,7 +91,7 @@ public class Order extends BaseEntity<Order> {
             domainEvents.clear();
         }
     }
-    
+
     /**
      * 计算订单总金额
      */
@@ -100,14 +100,14 @@ public class Order extends BaseEntity<Order> {
             this.totalAmount = new Money(BigDecimal.ZERO, "CNY");
             return;
         }
-        
+
         Money total = items.stream()
                 .map(OrderItem::calculateTotal)
                 .reduce(new Money(BigDecimal.ZERO, "CNY"), Money::add);
-        
+
         this.totalAmount = total;
     }
-    
+
     /**
      * 添加订单项
      */
@@ -121,7 +121,7 @@ public class Order extends BaseEntity<Order> {
         this.items.add(item);
         calculateTotalAmount();
     }
-    
+
     /**
      * 移除订单项
      */
@@ -132,7 +132,7 @@ public class Order extends BaseEntity<Order> {
         this.items.removeIf(item -> item.getId() != null && item.getId().equals(itemId));
         calculateTotalAmount();
     }
-    
+
     /**
      * 支付订单
      */
@@ -142,11 +142,11 @@ public class Order extends BaseEntity<Order> {
         }
         this.status = OrderStatus.PAID;
         this.paidTime = LocalDateTime.now();
-        
+
         // 发布订单支付事件
         addDomainEvent(new OrderPaidEvent(this.id, this.orderNo, this.userId, paymentMethod));
     }
-    
+
     /**
      * 取消订单
      */
@@ -158,11 +158,11 @@ public class Order extends BaseEntity<Order> {
             throw new IllegalStateException("已发货的订单不能取消");
         }
         this.status = OrderStatus.CANCELLED;
-        
+
         // 发布订单取消事件
         addDomainEvent(new OrderCancelledEvent(this.id, this.orderNo, this.userId, reason));
     }
-    
+
     /**
      * 发货
      */
@@ -172,11 +172,11 @@ public class Order extends BaseEntity<Order> {
         }
         this.status = OrderStatus.SHIPPED;
         this.shippedTime = LocalDateTime.now();
-        
+
         // 发布订单发货事件
         addDomainEvent(new OrderShippedEvent(this.id, this.orderNo, this.userId, trackingNumber, logisticsCompany));
     }
-    
+
     /**
      * 确认收货
      */
@@ -187,7 +187,7 @@ public class Order extends BaseEntity<Order> {
         this.status = OrderStatus.DELIVERED;
         this.deliveredTime = LocalDateTime.now();
     }
-    
+
     /**
      * 完成订单
      */
@@ -197,7 +197,7 @@ public class Order extends BaseEntity<Order> {
         }
         this.status = OrderStatus.COMPLETED;
     }
-    
+
     /**
      * 更新收货地址
      */

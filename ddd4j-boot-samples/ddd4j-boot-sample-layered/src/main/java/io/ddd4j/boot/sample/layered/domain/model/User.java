@@ -25,16 +25,24 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class User extends Model {
 
-    /** 用户ID */
+    /**
+     * 用户ID
+     */
     private String id;
 
-    /** 手机号（业务键） */
+    /**
+     * 手机号（业务键）
+     */
     private String phone;
 
-    /** 昵称 */
+    /**
+     * 昵称
+     */
     private String nickname;
 
-    /** 状态：0-禁用，1-启用 */
+    /**
+     * 状态：0-禁用，1-启用
+     */
     private Integer status;
 
     /**
@@ -47,6 +55,13 @@ public class User extends Model {
         this.phone = phone;
         this.nickname = nickname;
         this.status = 1;
+    }
+
+    /**
+     * 静态访问仓储（充血模型可直接 save/update/delete）。
+     */
+    public static UserRepository repository() {
+        return BaseRepository.of(User.class);
     }
 
     /**
@@ -76,13 +91,6 @@ public class User extends Model {
     public User enable() {
         this.status = 1;
         return this;
-    }
-
-    /**
-     * 静态访问仓储（充血模型可直接 save/update/delete）。
-     */
-    public static UserRepository repository() {
-        return BaseRepository.of(User.class);
     }
 
 }
