@@ -60,11 +60,6 @@
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-monitor</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-extensions</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -217,17 +212,17 @@
                 <artifactId>ddd4j-boot-extension-qlexpress</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-extension-license</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-extension-monitor</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <!-- Boot 扩展：auth -->
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-auth-datascope</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-auth-license</artifactId>
-                <version>${revision}</version>
-            </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-auth-satoken</artifactId>

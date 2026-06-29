@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.ddd4j.boot</groupId>
-        <artifactId>ddd4j-boot-dependencies</artifactId>
+        <artifactId>ddd4j-boot-extensions</artifactId>
         <version>${revision}</version>
-        <relativePath>../ddd4j-boot-dependencies/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>ddd4j-boot-monitor</artifactId>
+    <artifactId>ddd4j-boot-extension-monitor</artifactId>
     <description>ddd4j-boot 监控告警 Spring Boot 整合（依赖 ddd4j-monitor）</description>
 
     <dependencies>
