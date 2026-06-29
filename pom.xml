@@ -35,7 +35,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <revision>3.4.x.20251215-SNAPSHOT</revision>
-        <ddd4j.version>2.0.x20260625-SNAPSHOT</ddd4j.version>
+        <ddd4j.version>2.0.x.20260625-SNAPSHOT</ddd4j.version>
         <java.version>17</java.version>
         <!-- Maven Plugin versions -->
         <maven.version>3.6.3</maven.version>
