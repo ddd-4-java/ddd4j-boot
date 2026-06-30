@@ -26,6 +26,7 @@ import org.springframework.web.client.RestClient;
 public class Ddd4jExternalAutoConfiguration {
 
     @Bean
+    @ConditionalOnMissingBean
     public RestClient restClient() {
         return RestClient.builder().build();
     }

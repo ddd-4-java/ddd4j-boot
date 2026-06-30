@@ -25,10 +25,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+        <!-- QLExpressConfig 使用 @Configuration / @Bean / ObjectProvider / AnnotationUtils -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <!-- QLExpressConfig.registerHardcodedFunctions 显式引用 Express4Runner -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>qlexpress4</artifactId>
         </dependency>
     </dependencies>
 

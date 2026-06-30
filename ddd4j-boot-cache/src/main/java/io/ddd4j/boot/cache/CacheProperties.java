@@ -1,4 +1,4 @@
-package io.ddd4j.boot.cache.config;
+package io.ddd4j.boot.cache;
 
 import io.ddd4j.cache.CacheKit;
 import lombok.Getter;

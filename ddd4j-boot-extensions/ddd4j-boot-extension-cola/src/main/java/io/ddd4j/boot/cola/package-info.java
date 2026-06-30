@@ -3,7 +3,7 @@
  *
  * <p>提供 ddd4j-boot 与 Alibaba COLA 组件的集成：
  * <ul>
- *   <li>{@link io.ddd4j.boot.cola.config.ColaAutoConfiguration} — COLA 自动配置（聚合 domain/extension/catchlog/statemachine）</li>
+ *   <li>{@link io.ddd4j.boot.cola.ColaAutoConfiguration} — COLA 自动配置（聚合 domain/extension/catchlog/statemachine）</li>
  *   <li>{@link io.ddd4j.boot.cola.exception.ColaExceptionHandler} — COLA 异常到 {@code ApiRestResponse} 转换</li>
  *   <li>{@link io.ddd4j.boot.cola.handler.Ddd4jResponseHandler} — catchlog 的 ResponseHandler 扩展</li>
  * </ul>

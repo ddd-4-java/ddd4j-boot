@@ -1,4 +1,4 @@
-package io.ddd4j.boot.cola.config;
+package io.ddd4j.boot.cola;
 
 import io.ddd4j.boot.cola.handler.Ddd4jResponseHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
