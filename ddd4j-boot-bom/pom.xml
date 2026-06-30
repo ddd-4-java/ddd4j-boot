@@ -61,11 +61,6 @@
             </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-web</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-auth</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -79,21 +74,21 @@
                 <artifactId>ddd4j-boot-extensions</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <!-- Boot 扩展：web -->
+            <!-- Web 依赖入口：直接复用 io.ddd4j Web 实现 -->
             <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-web-webmvc</artifactId>
-                <version>${revision}</version>
+                <groupId>io.ddd4j</groupId>
+                <artifactId>ddd4j-web-webmvc</artifactId>
+                <version>${ddd4j.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-web-webflux</artifactId>
-                <version>${revision}</version>
+                <groupId>io.ddd4j</groupId>
+                <artifactId>ddd4j-web-webflux</artifactId>
+                <version>${ddd4j.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-web-validation</artifactId>
-                <version>${revision}</version>
+                <groupId>io.ddd4j</groupId>
+                <artifactId>ddd4j-extension-validation</artifactId>
+                <version>${ddd4j.version}</version>
             </dependency>
             <!-- Boot 扩展：mq -->
             <dependency>

@@ -26,9 +26,9 @@
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-web-webmvc</artifactId>
-            <version>${revision}</version>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-web-webmvc</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <!-- For sample common -->
         <dependency>
