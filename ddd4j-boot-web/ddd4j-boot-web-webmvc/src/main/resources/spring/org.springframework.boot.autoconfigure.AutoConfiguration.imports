@@ -1,5 +1,0 @@
-io.ddd4j.web.config.BaseWebConfig
-io.ddd4j.web.webmvc.DefaultMessageSourceAutoConfiguration
-io.ddd4j.web.webmvc.DefaultSequenceConfiguration
-io.ddd4j.web.webmvc.DefaultSpringContextConfiguration
-io.ddd4j.web.webmvc.DefaultWebMvcConfiguration

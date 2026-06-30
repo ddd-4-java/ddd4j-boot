@@ -1,6 +1,0 @@
-# Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.ddd4j.web.webflux.DefaultMessageSourceAutoConfiguration,\
-io.ddd4j.web.webflux.DefaultSequenceConfiguration,\
-io.ddd4j.web.webflux.DefaultSpringContextConfiguration,\
-io.ddd4j.web.webflux.DefaultWebFluxConfiguration
