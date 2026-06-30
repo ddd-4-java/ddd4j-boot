@@ -1,18 +1,23 @@
 package io.ddd4j.boot.monitor;
 
-import io.ddd4j.monitor.infras.config.BaseMonitorConfig;
-import io.ddd4j.monitor.infras.config.BaseMonitorProperties;
+import ch.qos.logback.classic.LoggerContext;
+import io.ddd4j.extension.monitor.application.service.DingDingRobotSender;
+import io.ddd4j.extension.monitor.application.service.QiWeiRobotSender;
+import io.ddd4j.extension.monitor.domain.robot.service.RobotLogbackAppendService;
+import io.ddd4j.extension.monitor.infras.config.BaseMonitorProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 
 /**
- * ddd4j-monitor 的 Spring Boot 整合入口：绑定配置属性并导入 Framework 层 {@link BaseMonitorConfig}。
+ * ddd4j-extension-monitor Spring Boot integration.
  */
 @AutoConfiguration
-@Import(BaseMonitorConfig.class)
+@ConditionalOnClass(LoggerContext.class)
+@ConditionalOnProperty(prefix = "base-monitor.log", name = "enable", havingValue = "true", matchIfMissing = true)
 public class Ddd4jMonitorBootAutoConfiguration {
 
     /**
@@ -23,5 +28,27 @@ public class Ddd4jMonitorBootAutoConfiguration {
     @ConfigurationProperties(prefix = "base-monitor")
     public BaseMonitorProperties baseMonitorProperties() {
         return new BaseMonitorProperties();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(RobotLogbackAppendService.class)
+    public RobotLogbackAppendService robotLogbackAppendService() {
+        return new RobotLogbackAppendService();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(QiWeiRobotSender.class)
+    @ConditionalOnProperty(prefix = "base-monitor.log.qiwei", name = "enable", havingValue = "true", matchIfMissing = true)
+    public QiWeiRobotSender qiWeiRobotSender(BaseMonitorProperties properties) {
+        return new QiWeiRobotSender(properties.getLog().getQiwei().getKey());
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(DingDingRobotSender.class)
+    @ConditionalOnProperty(prefix = "base-monitor.log.dingding", name = "enable", havingValue = "true", matchIfMissing = true)
+    public DingDingRobotSender dingDingRobotSender(BaseMonitorProperties properties) {
+        return new DingDingRobotSender(
+                properties.getLog().getDingding().getToken(),
+                properties.getLog().getDingding().getSecret());
     }
 }
