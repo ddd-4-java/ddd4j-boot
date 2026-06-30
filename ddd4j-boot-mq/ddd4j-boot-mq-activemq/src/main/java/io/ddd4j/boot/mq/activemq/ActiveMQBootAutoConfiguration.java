@@ -1,6 +1,5 @@
-package io.ddd4j.boot.mq.activemq.config;
+package io.ddd4j.boot.mq.activemq;
 
-import io.ddd4j.mq.activemq.autoconfigure.Ddd4jActiveMQAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;
