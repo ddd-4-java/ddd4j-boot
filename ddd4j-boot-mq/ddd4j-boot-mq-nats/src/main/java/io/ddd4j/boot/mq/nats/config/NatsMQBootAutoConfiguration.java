@@ -1,6 +1,5 @@
 package io.ddd4j.boot.mq.nats.config;
 
-import io.ddd4j.mq.nats.autoconfigure.Ddd4jNatsMQAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;

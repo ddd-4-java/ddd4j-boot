@@ -1,6 +1,5 @@
 package io.ddd4j.boot.mq.mqtt.config;
 
-import io.ddd4j.mq.mqtt.autoconfigure.Ddd4jMqttMQAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;

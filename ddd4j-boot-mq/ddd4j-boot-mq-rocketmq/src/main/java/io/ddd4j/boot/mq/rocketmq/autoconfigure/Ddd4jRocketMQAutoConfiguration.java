@@ -1,11 +1,10 @@
 package io.ddd4j.boot.mq.rocketmq.autoconfigure;
 
+import io.ddd4j.boot.mq.rocketmq.publisher.RocketMQEventPublisher;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
 import io.ddd4j.mq.publish.MQEventPublisher;
 import io.ddd4j.mq.rocketmq.consumer.RocketMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.rocketmq.publisher.RocketMQEventPublisher;
 import io.ddd4j.mq.rocketmq.spi.RocketMQBrokerAdapter;
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

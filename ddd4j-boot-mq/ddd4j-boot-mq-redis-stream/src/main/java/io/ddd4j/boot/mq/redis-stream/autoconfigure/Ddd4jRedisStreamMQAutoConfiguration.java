@@ -1,9 +1,9 @@
 package io.ddd4j.boot.mq.redis_stream.autoconfigure;
 
+import io.ddd4j.boot.mq.redis_stream.publisher.RedisStreamMQEventPublisher;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
 import io.ddd4j.mq.publish.MQEventPublisher;
 import io.ddd4j.mq.redisstream.consumer.RedisStreamConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.redis_stream.publisher.RedisStreamMQEventPublisher;
 import io.ddd4j.mq.redisstream.spi.RedisStreamMQBrokerAdapter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;

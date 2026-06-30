@@ -8,7 +8,6 @@ import io.ddd4j.boot.mq.contract.MQMessage;
 import io.ddd4j.boot.mq.nats.ack.NatsMessageAcknowledgmentFactory;
 import io.ddd4j.boot.mq.registry.MQListenerDefinition;
 import io.ddd4j.boot.mq.registry.MQListenerEndpointNaming;
-import io.nats.client.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

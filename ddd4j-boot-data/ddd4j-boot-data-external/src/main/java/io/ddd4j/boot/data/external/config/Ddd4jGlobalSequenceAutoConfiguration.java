@@ -42,7 +42,7 @@ public class Ddd4jGlobalSequenceAutoConfiguration {
 
     @PreDestroy
     public void destroy() {
-        if (globalSequence != null) {
+        if (Objects.nonNull(globalSequence)) {
             globalSequence.shutdown();
         }
     }

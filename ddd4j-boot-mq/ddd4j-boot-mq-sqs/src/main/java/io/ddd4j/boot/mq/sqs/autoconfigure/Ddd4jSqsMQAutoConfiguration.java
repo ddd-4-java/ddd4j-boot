@@ -11,7 +11,6 @@ import io.ddd4j.mq.sqs.spi.SqsMQBrokerAdapter;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * AWS SQS 组件自动配置，在 {@code ddd4j.mq.enabled=true} 且 broker=sqs 时生效。

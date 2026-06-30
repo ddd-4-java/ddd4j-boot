@@ -10,7 +10,6 @@ import io.ddd4j.boot.mq.rabbit.ack.AmqpMessageAcknowledgmentFactory;
 import io.ddd4j.boot.mq.registry.MQListenerDefinition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerEndpoint;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

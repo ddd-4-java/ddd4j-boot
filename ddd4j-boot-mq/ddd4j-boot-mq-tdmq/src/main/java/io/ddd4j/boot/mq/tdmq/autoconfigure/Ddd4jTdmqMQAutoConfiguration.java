@@ -8,7 +8,6 @@ import io.ddd4j.mq.tdmq.consumer.TdmqMQConsumerEndpointRegistrar;
 import io.ddd4j.mq.tdmq.publisher.TdmqMQEventPublisher;
 import io.ddd4j.mq.tdmq.spi.TdmqMQBrokerAdapter;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 腾讯云 TDMQ 组件自动配置，在 {@code ddd4j.mq.enabled=true} 且 broker=tdmq 时生效。

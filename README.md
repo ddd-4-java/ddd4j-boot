@@ -91,14 +91,14 @@ Sourcing）。
 
 **Maven 模块架构**：
 
-| 模块                      | 说明                                                                                                                     |
-|-------------------------|------------------------------------------------------------------------------------------------------------------------|
-| ddd4j-boot-bom          | BOM 依赖管理模块，统一管理所有子模块版本，外部项目通过 BOM 引用实现版本对齐                                                                             |
-| ddd4j-boot-dependencies | 公共依赖声明模块，集中管理第三方组件版本，确保依赖版本一致性                                                                                         |
-| ddd4j / ddd4j-spring / ddd4j-data-mybatis | **核心能力来源**，分别承载 DDD 基础抽象、Spring/Web 基类与 MyBatis 基础能力 |
-| ddd4j-boot-cmpt         | 组件模块父模块，提供各类技术组件的自动配置（WebMVC/WebFlux、消息队列、缓存、认证等），作为基础设施层实现                                                            |
-| ddd4j-boot-parent       | Maven 父 POM，定义统一的编译、打包、发布规则，所有业务服务模块继承此父 POM                                                                           |
-| ddd4j-boot-samples      | 示例服务模块集合，展示基于 DDD 架构的业务服务实现，涵盖不同技术栈组合（数据源、消息队列等）                                                                       |
+| 模块                                        | 说明                                                          |
+|-------------------------------------------|-------------------------------------------------------------|
+| ddd4j-boot-bom                            | BOM 依赖管理模块，统一管理所有子模块版本，外部项目通过 BOM 引用实现版本对齐                  |
+| ddd4j-boot-dependencies                   | 公共依赖声明模块，集中管理第三方组件版本，确保依赖版本一致性                              |
+| ddd4j / ddd4j-spring / ddd4j-data-mybatis | **核心能力来源**，分别承载 DDD 基础抽象、Spring/Web 基类与 MyBatis 基础能力        |
+| ddd4j-boot-cmpt                           | 组件模块父模块，提供各类技术组件的自动配置（WebMVC/WebFlux、消息队列、缓存、认证等），作为基础设施层实现 |
+| ddd4j-boot-parent                         | Maven 父 POM，定义统一的编译、打包、发布规则，所有业务服务模块继承此父 POM                |
+| ddd4j-boot-samples                        | 示例服务模块集合，展示基于 DDD 架构的业务服务实现，涵盖不同技术栈组合（数据源、消息队列等）            |
 
 **使用建议**：
 
@@ -203,22 +203,22 @@ Sourcing）。
 
 #### 3. 组件模块说明
 
-| 组件模块                       | 说明                                |
-|----------------------------|-----------------------------------|
-| ddd4j-boot-cmpt-akka       | Akka 组件，支持 Akka 3 Actor 系统        |
-| ddd4j-boot-cmpt-crypto     | 加解密组件，支持 AES、SM3、SM4 等加密算法        |
-| ddd4j-boot-cmpt-datascope  | 数据权限组件，支持数据范围权限控制                 |
-| ddd4j-boot-cmpt-license    | License 组件，支持 TrueLicense 许可证管理   |
-| ddd4j-boot-cmpt-logs       | 日志组件，支持 API 操作日志记录                |
-| ddd4j-boot-cmpt-pf4j       | PF4J 插件组件，支持插件化开发                 |
-| ddd4j-boot-cmpt-cola       | COLA 组件，支持 COLA 架构模式              |
-| ddd4j-boot-cmpt-satoken    | SaToken 组件，支持 SaToken 权限认证        |
-| ddd4j-boot-cmpt-jackson    | Jackson 组件，支持 Jackson 序列化配置       |
-| ddd4j-web-webmvc           | WebMVC 组件，支持 Spring MVC              |
-| ddd4j-web-webflux          | WebFlux 组件，支持 Spring WebFlux         | 
-| ddd4j-boot-cmpt-kafka      | Kafka 组件，支持 Kafka 消息队列集成          |
-| ddd4j-boot-cmpt-external   | 外部 API 集成组件，支持外部服务调用              |
-| ddd4j-boot-cmpt-validation | 验证组件，支持自定义验证规则                    |
+| 组件模块                       | 说明                              |
+|----------------------------|---------------------------------|
+| ddd4j-boot-cmpt-akka       | Akka 组件，支持 Akka 3 Actor 系统      |
+| ddd4j-boot-cmpt-crypto     | 加解密组件，支持 AES、SM3、SM4 等加密算法      |
+| ddd4j-boot-cmpt-datascope  | 数据权限组件，支持数据范围权限控制               |
+| ddd4j-boot-cmpt-license    | License 组件，支持 TrueLicense 许可证管理 |
+| ddd4j-boot-cmpt-logs       | 日志组件，支持 API 操作日志记录              |
+| ddd4j-boot-cmpt-pf4j       | PF4J 插件组件，支持插件化开发               |
+| ddd4j-boot-cmpt-cola       | COLA 组件，支持 COLA 架构模式            |
+| ddd4j-boot-cmpt-satoken    | SaToken 组件，支持 SaToken 权限认证      |
+| ddd4j-boot-cmpt-jackson    | Jackson 组件，支持 Jackson 序列化配置     |
+| ddd4j-web-webmvc           | WebMVC 组件，支持 Spring MVC         |
+| ddd4j-web-webflux          | WebFlux 组件，支持 Spring WebFlux    | 
+| ddd4j-boot-cmpt-kafka      | Kafka 组件，支持 Kafka 消息队列集成        |
+| ddd4j-boot-cmpt-external   | 外部 API 集成组件，支持外部服务调用            |
+| ddd4j-boot-cmpt-validation | 验证组件，支持自定义验证规则                  |
 
 ### 📁 DDD 分层目录结构
 

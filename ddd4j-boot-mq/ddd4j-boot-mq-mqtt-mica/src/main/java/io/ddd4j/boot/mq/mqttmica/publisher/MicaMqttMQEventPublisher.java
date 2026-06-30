@@ -2,6 +2,7 @@ package io.ddd4j.boot.mq.mqttmica.publisher;
 
 import io.ddd4j.core.contract.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
+import io.ddd4j.kit.lang.StrKit;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
 import io.ddd4j.mq.contract.MQDestination;
 import io.ddd4j.mq.publish.MQEventPublisher;
@@ -10,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.dromara.mica.mqtt.codec.MqttQoS;
 import org.dromara.mica.mqtt.codec.message.builder.MqttPublishBuilder;
 import org.dromara.mica.mqtt.spring.client.MqttClientTemplate;
-import io.ddd4j.kit.lang.StrKit;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;

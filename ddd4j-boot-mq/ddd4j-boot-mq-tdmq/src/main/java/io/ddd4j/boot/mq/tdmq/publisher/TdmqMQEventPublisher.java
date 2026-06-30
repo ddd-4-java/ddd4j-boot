@@ -1,14 +1,14 @@
 package io.ddd4j.boot.mq.tdmq.publisher;
 
-import io.ddd4j.core.contract.MQEvent;
-import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
 import io.ddd4j.boot.mq.contract.MQDestination;
 import io.ddd4j.boot.mq.publish.MQEventPublisher;
 import io.ddd4j.boot.mq.tdmq.client.TdmqClient;
+import io.ddd4j.core.contract.MQEvent;
+import io.ddd4j.kit.lang.JsonKit;
+import io.ddd4j.kit.lang.StrKit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import io.ddd4j.kit.lang.StrKit;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;

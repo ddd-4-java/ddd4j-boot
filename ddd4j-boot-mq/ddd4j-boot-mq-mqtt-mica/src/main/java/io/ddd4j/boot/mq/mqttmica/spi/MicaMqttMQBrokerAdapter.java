@@ -1,14 +1,14 @@
 package io.ddd4j.boot.mq.mqttmica.spi;
 
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
 import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttHeaders;
 import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttMessageAcknowledgment;
 import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttMessageAcknowledgmentFactory;
 import io.ddd4j.boot.mq.mqttmica.consumer.MicaMqttMQConsumerEndpointRegistrar;
 import io.ddd4j.boot.mq.mqttmica.publisher.MicaMqttMQEventPublisher;
+import io.ddd4j.mq.ack.MessageAcknowledgment;
+import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.consume.MQConsumerHandler;
+import io.ddd4j.mq.contract.MQMessage;
 import io.ddd4j.mq.publish.MQEventPublisher;
 import io.ddd4j.mq.registry.MQBrokerType;
 import io.ddd4j.mq.registry.MQListenerDefinition;

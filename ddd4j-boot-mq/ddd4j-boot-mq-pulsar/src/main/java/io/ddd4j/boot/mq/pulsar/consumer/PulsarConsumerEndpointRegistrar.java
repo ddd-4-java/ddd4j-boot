@@ -11,7 +11,6 @@ import io.ddd4j.mq.registry.MQListenerDefinition;
 import io.ddd4j.mq.registry.MQListenerEndpointNaming;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.pulsar.client.api.*;
 import org.springframework.context.ApplicationContext;
 
 import java.util.HashMap;

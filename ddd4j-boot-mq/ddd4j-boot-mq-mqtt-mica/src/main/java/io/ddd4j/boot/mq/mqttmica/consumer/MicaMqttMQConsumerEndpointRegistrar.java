@@ -1,12 +1,12 @@
 package io.ddd4j.boot.mq.mqttmica.consumer;
 
+import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttHeaders;
+import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttMessageAcknowledgmentFactory;
+import io.ddd4j.boot.mq.mqttmica.config.Ddd4jMicaMqttProperties;
 import io.ddd4j.mq.ack.MessageAcknowledgment;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
 import io.ddd4j.mq.consume.MQConsumerHandler;
 import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttHeaders;
-import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttMessageAcknowledgmentFactory;
-import io.ddd4j.boot.mq.mqttmica.config.Ddd4jMicaMqttProperties;
 import io.ddd4j.mq.registry.MQListenerDefinition;
 import io.ddd4j.mq.registry.MQListenerEndpointNaming;
 import lombok.RequiredArgsConstructor;

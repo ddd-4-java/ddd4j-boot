@@ -1,8 +1,8 @@
 package io.ddd4j.boot.auth.shiro;
 
+import io.ddd4j.auth.shiro.subject.ShiroSubjectProvider;
 import io.ddd4j.auth.spring.AuthSpringConfiguration;
 import io.ddd4j.auth.spring.shiro.ShiroExceptionHandler;
-import io.ddd4j.auth.shiro.subject.ShiroSubjectProvider;
 import io.ddd4j.core.subject.SubjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

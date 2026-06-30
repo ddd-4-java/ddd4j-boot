@@ -1,6 +1,5 @@
 package io.ddd4j.boot.mq.ons.config;
 
-import io.ddd4j.mq.ons.autoconfigure.Ddd4jOnsMQAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;

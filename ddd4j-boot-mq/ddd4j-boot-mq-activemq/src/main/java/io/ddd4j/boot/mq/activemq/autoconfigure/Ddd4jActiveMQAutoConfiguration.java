@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.activemq.autoconfigure;
 
-import io.ddd4j.mq.activemq.consumer.ActiveMQConsumerEndpointRegistrar;
 import io.ddd4j.boot.mq.activemq.publisher.ActiveMQEventPublisher;
+import io.ddd4j.mq.activemq.consumer.ActiveMQConsumerEndpointRegistrar;
 import io.ddd4j.mq.activemq.spi.ActiveMQBrokerAdapter;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
 import io.ddd4j.mq.publish.MQEventPublisher;

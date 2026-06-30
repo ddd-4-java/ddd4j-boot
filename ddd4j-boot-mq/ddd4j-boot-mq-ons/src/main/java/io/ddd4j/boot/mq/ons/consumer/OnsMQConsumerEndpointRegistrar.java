@@ -1,6 +1,7 @@
 package io.ddd4j.boot.mq.ons.consumer;
 
-import com.aliyun.openservices.ons.api.*;
+import com.aliyun.openservices.ons.api.Action;
+import com.aliyun.openservices.ons.api.Consumer;
 import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
 import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
 import io.ddd4j.boot.mq.consume.MQConsumerHandler;

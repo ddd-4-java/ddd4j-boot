@@ -1,5 +1,6 @@
 package io.ddd4j.ddd.config;
 
+import io.ddd4j.core.ddd.config.DddProperties;
 import org.fuin.cqrs4j.core.CommandExecutor;
 import org.fuin.cqrs4j.core.MultiCommandExecutor;
 import org.fuin.ddd4j.core.EntityIdFactory;
@@ -14,8 +15,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-
-import io.ddd4j.core.ddd.config.DddProperties;
 
 import java.util.List;
 import java.util.Objects;

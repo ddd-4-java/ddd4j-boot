@@ -1,9 +1,9 @@
 package io.ddd4j.boot.mq.rabbitmq.autoconfigure;
 
+import io.ddd4j.boot.mq.rabbitmq.publisher.RabbitMQEventPublisher;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
 import io.ddd4j.mq.publish.MQEventPublisher;
 import io.ddd4j.mq.rabbit.consumer.RabbitMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.rabbitmq.publisher.RabbitMQEventPublisher;
 import io.ddd4j.mq.rabbit.spi.RabbitMQBrokerAdapter;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistry;

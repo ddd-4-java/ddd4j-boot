@@ -1,9 +1,9 @@
 package io.ddd4j.boot.sample.auth.satoken.controller;
 
-import io.ddd4j.spring.annotation.ApplicationService;
 import io.ddd4j.core.subject.AuthPrincipal;
 import io.ddd4j.core.subject.AuthRequest;
 import io.ddd4j.core.util.SubjectKit;
+import io.ddd4j.spring.annotation.ApplicationService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
