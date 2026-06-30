@@ -129,8 +129,8 @@ Sourcing）。
 |------ddd4j-boot-cmpt-cola               #COLA组件
 |------ddd4j-boot-cmpt-satoken            #SaToken组件
 |------ddd4j-boot-cmpt-jackson            #Jackson组件
-|------ddd4j-boot-cmpt-webmvc             #WebMVC组件
-|------ddd4j-boot-cmpt-webflux            #WebFlux组件
+|------ddd4j-web-webmvc                   #WebMVC组件
+|------ddd4j-web-webflux                  #WebFlux组件
 |------ddd4j-boot-cmpt-kafka              #Kafka组件
 |------ddd4j-boot-cmpt-external           #外部API集成组件
 |------ddd4j-boot-cmpt-validation         #验证组件
@@ -184,7 +184,7 @@ Sourcing）。
     </dependency>
     <dependency>
         <groupId>com.github.hiwepy</groupId>
-        <artifactId>ddd4j-boot-cmpt-webmvc</artifactId>
+        <artifactId>ddd4j-web-webmvc</artifactId>
     </dependency>
 </dependencies>
 ```
@@ -215,8 +215,8 @@ Sourcing）。
 | ddd4j-boot-cmpt-cola       | COLA 组件，支持 COLA 架构模式              |
 | ddd4j-boot-cmpt-satoken    | SaToken 组件，支持 SaToken 权限认证        |
 | ddd4j-boot-cmpt-jackson    | Jackson 组件，支持 Jackson 序列化配置       |
-| ddd4j-boot-cmpt-webmvc     | WebMVC 组件，支持 Spring MVC 自动配置      |
-| ddd4j-boot-cmpt-webflux    | WebFlux 组件，支持 Spring WebFlux 自动配置 | 
+| ddd4j-web-webmvc           | WebMVC 组件，支持 Spring MVC              |
+| ddd4j-web-webflux          | WebFlux 组件，支持 Spring WebFlux         | 
 | ddd4j-boot-cmpt-kafka      | Kafka 组件，支持 Kafka 消息队列集成          |
 | ddd4j-boot-cmpt-external   | 外部 API 集成组件，支持外部服务调用              |
 | ddd4j-boot-cmpt-validation | 验证组件，支持自定义验证规则                    |

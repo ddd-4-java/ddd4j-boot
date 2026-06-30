@@ -67,9 +67,6 @@
             <artifactId>cqrs-4-java-jackson</artifactId>
         </dependency>
 
-        <!-- ============================================================ -->
-        <!-- ddd4j-boot-core：复用统一响应/异常/注解体系（非 MyBatis 部分）  -->
-        <!-- ============================================================ -->
         <dependency>
             <groupId>io.ddd4j</groupId>
             <artifactId>ddd4j-core</artifactId>
@@ -87,25 +84,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>${revision}</version>
-            <exclusions>
-                <!-- 本模块是纯 DDD 轨道，排除 MyBatis Plus 相关 -->
-                <exclusion>
-                    <groupId>com.baomidou</groupId>
-                    <artifactId>mybatis-plus</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.github.hiwepy</groupId>
-                    <artifactId>mybatis-plus-enhance</artifactId>
-                </exclusion>
-                <!-- 排除 spring-biz 传递的旧版 JUnit（5.8.2 compile scope），避免与 SB 3.4 的 6.0.1 冲突 -->
-                <exclusion>
-                    <groupId>org.junit.jupiter</groupId>
-                    <artifactId>junit-jupiter-api</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-spring</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
 
         <!-- ============================================================ -->

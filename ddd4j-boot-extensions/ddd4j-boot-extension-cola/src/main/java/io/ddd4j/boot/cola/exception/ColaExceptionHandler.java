@@ -4,7 +4,7 @@ import com.alibaba.cola.exception.BizException;
 import com.alibaba.cola.exception.SysException;
 import io.ddd4j.core.ApiCode;
 import io.ddd4j.core.ApiRestResponse;
-import io.ddd4j.core.exception.BaseExceptionHandler;
+import io.ddd4j.web.exception.BaseExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;

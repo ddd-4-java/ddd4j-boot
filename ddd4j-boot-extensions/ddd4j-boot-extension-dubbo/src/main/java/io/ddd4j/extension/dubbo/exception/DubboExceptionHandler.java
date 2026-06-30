@@ -2,7 +2,7 @@ package io.ddd4j.extension.dubbo.exception;
 
 import io.ddd4j.core.ApiCode;
 import io.ddd4j.core.ApiRestResponse;
-import io.ddd4j.core.exception.BaseExceptionHandler;
+import io.ddd4j.web.exception.BaseExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.rpc.RpcException;
 import org.slf4j.Logger;

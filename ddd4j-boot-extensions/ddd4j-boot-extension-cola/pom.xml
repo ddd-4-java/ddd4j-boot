@@ -20,6 +20,11 @@
             <artifactId>ddd4j-boot-core</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-web-core</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
         <!--For Spring Boot AutoConfigure -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
