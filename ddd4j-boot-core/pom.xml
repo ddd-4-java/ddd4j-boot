@@ -16,8 +16,8 @@
         <!-- ddd4j 库底座：提供 contract/util/context/subject/exception 等核心契约 -->
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-boot-annotation</artifactId>
-            <version>${revision}</version>
+            <artifactId>ddd4j-spring</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <dependency>
             <groupId>io.ddd4j</groupId>

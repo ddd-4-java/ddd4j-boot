@@ -1,10 +1,10 @@
 package io.ddd4j.core;
 
 import com.tngtech.archunit.lang.ArchRule;
-import io.ddd4j.annotation.ddd.ApplicationService;
-import io.ddd4j.annotation.ddd.DomainEntity;
-import io.ddd4j.annotation.ddd.DomainRepository;
-import io.ddd4j.annotation.ddd.DomainService;
+import io.ddd4j.spring.annotation.ddd.ApplicationService;
+import io.ddd4j.spring.annotation.ddd.DomainEntity;
+import io.ddd4j.spring.annotation.ddd.DomainRepository;
+import io.ddd4j.spring.annotation.ddd.DomainService;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
@@ -15,7 +15,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
  * <p>定义业务项目应遵守的分层规则，通过注解标签驱动校验。
  * 业务项目可继承此类或直接引用这些 {@link ArchRule} 常量。
  *
- * <p>规则基于 ddd4j-boot 的注解体系（{@code @DomainEntity} / {@code @DomainService} /
+ * <p>规则基于 ddd4j-spring 的注解体系（{@code @DomainEntity} / {@code @DomainService} /
  * {@code @ApplicationService} / {@code @DomainRepository}），不绑定具体的包名，
  * 而是通过注解标记校验——这样无论业务项目用什么包结构，只要正确标注了注解就能被校验。
  *
