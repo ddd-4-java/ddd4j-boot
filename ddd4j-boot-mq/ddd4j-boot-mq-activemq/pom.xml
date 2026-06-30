@@ -16,17 +16,17 @@
     <dependencies>
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-mq-activemq</artifactId>
-            <version>${ddd4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ddd4j</groupId>
             <artifactId>ddd4j-mq-spring</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-mq-core</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
     </dependencies>
 
