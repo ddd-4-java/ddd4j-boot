@@ -11,16 +11,16 @@
     </parent>
 
     <artifactId>ddd4j-boot-mq-rabbitmq</artifactId>
-    <description>Ddd4j Boot MQ raUbbitmq Spring Boot AutoConfiguration</description>
+    <description>Ddd4j Boot MQ rabbitmq Spring Boot AutoConfiguration</description>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-mq-core</artifactId>
+            <artifactId>ddd4j-mq-rabbitmq</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
     </dependencies>

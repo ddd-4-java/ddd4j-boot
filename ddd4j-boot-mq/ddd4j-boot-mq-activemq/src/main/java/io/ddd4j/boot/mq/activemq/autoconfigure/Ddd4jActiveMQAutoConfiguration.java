@@ -45,6 +45,7 @@ public class Ddd4jActiveMQAutoConfiguration {
      */
     @Bean
     public MQEventPublisher activeMQEventPublisher(
+            JmsTemplate jmsTemplate,
             Ddd4jMQProperties properties) {
         return new ActiveMQEventPublisher(jmsTemplate, properties);
     }
