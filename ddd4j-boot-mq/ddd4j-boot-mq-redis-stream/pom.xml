@@ -28,6 +28,10 @@
             <artifactId>ddd4j-mq-core</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
