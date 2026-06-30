@@ -13,14 +13,14 @@
 ## 关键配置
 
 - `ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/java/io/ddd4j/boot/cmpt/webmvc/DefaultWebMvcConfiguration.java:53-76`
-- `ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/web/BaseController.java:21-35`
+- `io.ddd4j.spring.web.BaseController`
 
 ## 统一响应
 
 - 成功：`ApiRestResponse.success(...)`
 - 失败：`ApiRestResponse.fail(...)`
 - 错误：`ApiRestResponse.error(...)`
-- 参考：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/ApiRestResponse.java:118-166`
+- 参考：`io.ddd4j.core.ApiRestResponse`
 
 ## 全局异常映射
 
@@ -36,12 +36,11 @@
 
 ## 幂等控制
 
-- 注解：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/annotation/ApiIdempotent.java`
-- Key 生成：请求映射值 + 参数（可选）→ MD5：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/utils/IdempotentUtils.java`
+- 注解：`io.ddd4j.spring.annotation.ApiIdempotent`
+- Key 生成：请求映射值 + 参数（可选）→ MD5，由 `ddd4j-spring` 幂等组件提供
 
 ## 使用建议
 
 - 控制器继承 `BaseController`，使用 `success`/`fail`/`error` 统一返回
 - 对外 API 需要幂等的，标注 `@ApiIdempotent` 并合理设置过期与重试策略
 - 通过国际化键值输出用户可读消息，统一体验
-

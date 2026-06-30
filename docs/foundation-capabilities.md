@@ -2,8 +2,8 @@
 
 ## 分页与排序
 
-- Service：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/service/BaseServiceImpl.java:92-105`
-- Mapper：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/mybatis/mapper/BaseMapper.java:34-41`
+- Service：`io.ddd4j.core.service.BaseServiceImpl`（位于 `ddd4j-data-mybatis`）
+- Mapper：`io.ddd4j.core.mybatis.mapper.BaseMapper`（位于 `ddd4j-data-mybatis`）
 - 用法：组装 `PaginationEntity` 与 `OrderItem`，调用 `getPagedList`
 
 ## 通用统计接口
@@ -12,8 +12,8 @@
 
 ## 幂等控制
 
-- 注解：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/annotation/ApiIdempotent.java`
-- Key 生成逻辑：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/utils/IdempotentUtils.java`
+- 注解：`io.ddd4j.spring.annotation.ApiIdempotent`
+- Key 生成逻辑：`ddd4j-spring` 中对应幂等实现
 - 建议：对重要写操作开启幂等，设置合理过期与重试策略
 
 ## 国际化与主题
@@ -34,5 +34,4 @@
 
 ## MyBatis JSON 类型处理
 
-- `ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/mybatis/handler/JSONObjectTypeHandler.java`
-
+- `ddd4j-data-mybatis` 中的 MyBatis 类型处理器实现

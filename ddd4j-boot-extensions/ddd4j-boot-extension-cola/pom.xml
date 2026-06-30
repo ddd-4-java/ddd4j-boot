@@ -14,11 +14,11 @@
     <description>Ddd4j Boot COLA Component</description>
 
     <dependencies>
-        <!--For ddd4j-boot-core: 统一响应/异常体系 -->
+        <!-- For ddd4j-core: 统一响应模型 -->
         <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>${revision}</version>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-core</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <dependency>
             <groupId>io.ddd4j</groupId>

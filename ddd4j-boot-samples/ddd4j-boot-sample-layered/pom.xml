@@ -16,9 +16,14 @@
     <dependencies>
         <!-- 核心契约（Model/BaseRepository/Query/Page/DomainEvent） -->
         <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>${revision}</version>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-core</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-annotation</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <!-- 数据层（BaseRepositoryImpl 四泛型 + MP 官方插件） -->
         <dependency>

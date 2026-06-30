@@ -25,11 +25,11 @@
             <artifactId>ddd4j-boot-sample-client</artifactId>
             <version>${revision}</version>
         </dependency>
-        <!-- ddd4j-boot-core: 提供异常处理等 -->
+        <!-- ddd4j-core: 提供异常码与基础异常 -->
         <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>${revision}</version>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-core</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <!-- Spring -->
         <dependency>

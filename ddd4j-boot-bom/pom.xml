@@ -16,12 +16,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Boot 核心整合 -->
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-core</artifactId>
-                <version>${revision}</version>
-            </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-ddd</artifactId>

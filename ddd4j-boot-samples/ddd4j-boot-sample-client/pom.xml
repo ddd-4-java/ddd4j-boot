@@ -19,11 +19,11 @@
     </properties>
 
     <dependencies>
-        <!-- ddd4j-boot-core: 提供ApiRestResponse等 -->
+        <!-- ddd4j-core: 提供 ApiRestResponse 等 -->
         <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>${revision}</version>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-core</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <!-- Spring Web (for RestClient) -->
         <dependency>

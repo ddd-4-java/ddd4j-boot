@@ -13,11 +13,11 @@
     <artifactId>ddd4j-boot-sample-common</artifactId>
 
     <dependencies>
-        <!-- For DDD4j Boot -->
+        <!-- For ddd4j core response and exception model -->
         <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>${revision}</version>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-core</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <dependency>
             <groupId>io.ddd4j</groupId>

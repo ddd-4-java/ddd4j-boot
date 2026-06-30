@@ -1,11 +1,12 @@
 package io.ddd4j.boot.data.datascope;
 
 import io.ddd4j.data.datascope.DataScopeProvider;
-import org.springframework.biz.context.SpringContextAwareContext;
+import io.ddd4j.spring.config.SpringCoreConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * ddd4j 数据权限（DataScope）Spring Boot 自动配置。
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Configuration(proxyBeanMethods = false)
+@Import(SpringCoreConfig.class)
 @ConditionalOnProperty(prefix = "ddd4j.datascope", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class Ddd4jDataScopeAutoConfiguration {
 
@@ -24,12 +26,6 @@ public class Ddd4jDataScopeAutoConfiguration {
     public DataScopeProvider dataScopeProvider() {
         return new DataScopeProvider() {
         };
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(SpringContextAwareContext.class)
-    public SpringContextAwareContext springContextAwareContext() {
-        return new SpringContextAwareContext();
     }
 
 }

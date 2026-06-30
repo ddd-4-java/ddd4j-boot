@@ -11,7 +11,7 @@
     - 版本对齐：`ddd4j-boot-bom/pom.xml`
     - 依赖声明：`ddd4j-boot-dependencies/pom.xml`
     - 打包父：`ddd4j-boot-parent/pom.xml`
-- 核心能力：`ddd4j-boot-core`
+- 核心能力：复用 `ddd4j-core`、`ddd4j-spring`、`ddd4j-data-mybatis`
 - 组件集：`ddd4j-boot-cmpt/*`
 - 示例集：`ddd4j-boot-samples/*`
 
@@ -27,7 +27,7 @@ graph TD
   A[ddd4j-boot (聚合)] --> B[ddd4j-boot-bom]
   A --> C[ddd4j-boot-dependencies]
   A --> D[ddd4j-boot-parent]
-  A --> E[ddd4j-boot-core]
+  A --> E[ddd4j core modules]
   A --> F[ddd4j-boot-cmpt]
   A --> G[ddd4j-boot-samples]
 
@@ -52,11 +52,8 @@ graph TD
 
 ## 核心能力速览
 
-- 响应模型与状态码：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/ApiRestResponse.java`、
-  `ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/ApiCode.java`
-- Service/Mapper/Controller 基类：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/service/BaseServiceImpl.java`、
-  `ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/mybatis/mapper/BaseMapper.java`、
-  `ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/web/BaseController.java`
+- 响应模型与状态码：`ddd4j-core`
+- Service/Mapper/Controller 基类：`ddd4j-data-mybatis`、`ddd4j-spring`
 - 全局异常（MVC/WebFlux）：
   `ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/java/io/ddd4j/boot/cmpt/webmvc/webmvc/GlobalExceptionHandler.java`、
   `ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/java/io/ddd4j/boot/cmpt/webflux/handler/GlobalExceptionHandler.java`
@@ -67,7 +64,6 @@ graph TD
 - 根聚合与版本：`ddd4j-boot/pom.xml:31-39`
 - MVC 基础配置：
   `ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/java/io/ddd4j/boot/cmpt/webmvc/DefaultWebMvcConfiguration.java:53-76`
-- 响应模型：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/ApiRestResponse.java:118-137`
+- 响应模型：`io.ddd4j.core.ApiRestResponse`
 - 全局异常（MVC）：
   `ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/java/io/ddd4j/boot/cmpt/webmvc/webmvc/GlobalExceptionHandler.java:72-81`
-

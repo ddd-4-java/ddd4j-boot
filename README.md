@@ -95,7 +95,7 @@ Sourcing）。
 |-------------------------|------------------------------------------------------------------------------------------------------------------------|
 | ddd4j-boot-bom          | BOM 依赖管理模块，统一管理所有子模块版本，外部项目通过 BOM 引用实现版本对齐                                                                             |
 | ddd4j-boot-dependencies | 公共依赖声明模块，集中管理第三方组件版本，确保依赖版本一致性                                                                                         |
-| ddd4j-boot-core         | **核心领域模块**，封装 DDD 基础抽象（BaseEntity、BaseRepository、领域事件等）、应用层基类（BaseService、Command/Query）、接口层基类（BaseController）以及领域异常定义 |
+| ddd4j / ddd4j-spring / ddd4j-data-mybatis | **核心能力来源**，分别承载 DDD 基础抽象、Spring/Web 基类与 MyBatis 基础能力 |
 | ddd4j-boot-cmpt         | 组件模块父模块，提供各类技术组件的自动配置（WebMVC/WebFlux、消息队列、缓存、认证等），作为基础设施层实现                                                            |
 | ddd4j-boot-parent       | Maven 父 POM，定义统一的编译、打包、发布规则，所有业务服务模块继承此父 POM                                                                           |
 | ddd4j-boot-samples      | 示例服务模块集合，展示基于 DDD 架构的业务服务实现，涵盖不同技术栈组合（数据源、消息队列等）                                                                       |
@@ -118,7 +118,6 @@ Sourcing）。
 |--ddd4j-boot
 |----ddd4j-boot-bom                       #BOM依赖管理，用于外部项目引用 ddd4j-boot 模块版本管理
 |----ddd4j-boot-dependencies              #公共依赖，便于依赖组件版本控制
-|----ddd4j-boot-core                      #核心模块，基础API、公共对象（BaseController、BaseService、BaseMapper等）、异常对象
 |----ddd4j-boot-cmpt                      #组件模块父模块
 |------ddd4j-boot-cmpt-akka               #Akka组件
 |------ddd4j-boot-cmpt-crypto             #加解密组件
@@ -179,11 +178,11 @@ Sourcing）。
 ```xml
 <dependencies>
     <dependency>
-        <groupId>com.github.hiwepy</groupId>
-        <artifactId>ddd4j-boot-core</artifactId>
+        <groupId>io.ddd4j</groupId>
+        <artifactId>ddd4j-core</artifactId>
     </dependency>
     <dependency>
-        <groupId>com.github.hiwepy</groupId>
+        <groupId>io.ddd4j</groupId>
         <artifactId>ddd4j-web-webmvc</artifactId>
     </dependency>
 </dependencies>
@@ -223,12 +222,12 @@ Sourcing）。
 
 ### 📁 DDD 分层目录结构
 
-##### 核心模块（ddd4j-boot-core）
+##### 核心能力模块（ddd4j / ddd4j-spring / ddd4j-data-mybatis）
 
 遵循 DDD 经典四层架构，体现清晰的职责分离和依赖方向：
 
 ```
-ddd4j-boot-core/
+ddd4j/
 ├── src/main/java/io/ddd4j/boot/core
 │   │
 │   ├── domain/                # 领域层（核心，无外部依赖）

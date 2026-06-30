@@ -17,11 +17,21 @@
     </properties>
 
     <dependencies>
-        <!-- For Ddd4j Boot -->
+        <!-- For ddd4j core/spring/data base components -->
         <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-core</artifactId>
-            <version>${revision}</version>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-core</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-spring</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-data-mybatis</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <dependency>
             <groupId>io.ddd4j</groupId>

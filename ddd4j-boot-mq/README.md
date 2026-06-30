@@ -84,7 +84,7 @@
 
 | 模块                          | 允许依赖                                             | 禁止依赖                                |
 |-----------------------------|--------------------------------------------------|-------------------------------------|
-| `ddd4j-boot-mq`             | `ddd4j-boot-core`、`spring-boot-autoconfigure`    | 一切 Broker SDK、`spring-cloud-stream` |
+| `ddd4j-boot-mq`             | `ddd4j-core`、`spring-boot-autoconfigure`         | 一切 Broker SDK、`spring-cloud-stream` |
 | `ddd4j-boot-cmpt-{broker}`  | `ddd4j-boot-mq` + 对应 Boot Starter                | `ddd4j-cloud-*`                     |
 | `ddd4j-cloud-cmpt-stream-*` | `ddd4j-boot-mq` + `spring-cloud-stream` + binder | —                                   |
 | `ddd4j-cloud`               | 可依赖 `ddd4j-boot`                                 | —                                   |
@@ -800,7 +800,7 @@ mvn verify -Pmq-integration-tests -pl ddd4j-boot-cmpt-rabbit,ddd4j-boot-cmpt-kaf
 ## 16. 参考关系（模块依赖简图）
 
 ```
-ddd4j-boot-core (MQEvent, @MQEventListener)
+ddd4j-core / ddd4j-spring (MQEvent, @MQEventListener)
         │
         ▼
 ddd4j-boot-mq  ◄────────────────────────────┐

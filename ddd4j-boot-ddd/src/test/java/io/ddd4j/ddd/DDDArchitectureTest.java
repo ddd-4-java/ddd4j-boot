@@ -14,7 +14,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
  * <p>验证本模块（纯净 DDD 轨道）的架构边界：
  * <ul>
  *   <li>不得依赖 MyBatis Plus（与 ddd4j-boot-data 的 MP 轨道隔离）</li>
- *   <li>不得依赖 ddd4j-boot-core 的 BaseEntity（AR 轨道）</li>
+ *   <li>不得依赖 `io.ddd4j.core.entity.BaseEntity`（AR 轨道）</li>
  *   <li>不得依赖 Servlet/Web 框架</li>
  *   <li>所有公开适配类必须在 {@code io.ddd4j.ddd} 包下</li>
  * </ul>
@@ -65,7 +65,7 @@ class DDDArchitectureTest {
     }
 
     /**
-     * 纯净 DDD 轨道不得继承 ddd4j-boot-core 的 BaseEntity（AR 轨道）。
+     * 纯净 DDD 轨道不得继承 io.ddd4j.core.entity.BaseEntity（AR 轨道）。
      *
      * <p>BaseEntity 继承 MyBatis Plus 的 Model，与本模块的纯净定位冲突。
      * 两者可以共存于同一项目，但不能混用在同一个聚合根上。

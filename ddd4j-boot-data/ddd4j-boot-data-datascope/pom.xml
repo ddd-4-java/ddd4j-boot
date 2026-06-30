@@ -20,12 +20,13 @@
             <version>${ddd4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-spring</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>spring-biz</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
 
