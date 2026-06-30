@@ -163,7 +163,7 @@ Sourcing）。
 <dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-bom</artifactId>
             <version>${ddd4j-boot.version}</version>
             <type>pom</type>
@@ -194,7 +194,7 @@ Sourcing）。
 
 ```xml
 <parent>
-    <groupId>com.github.hiwepy</groupId>
+    <groupId>io.ddd4j.boot</groupId>
     <artifactId>ddd4j-boot-parent</artifactId>
     <version>${revision}</version>
     <relativePath>../ddd4j-boot-parent/pom.xml</relativePath>

@@ -25,16 +25,21 @@
             <artifactId>ddd4j-annotation</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-spring</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
         <!-- 数据层（BaseRepositoryImpl 四泛型 + MP 官方插件） -->
         <dependency>
-            <groupId>io.ddd4j.boot</groupId>
-            <artifactId>ddd4j-boot-data</artifactId>
-            <version>${revision}</version>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-data-mybatis</artifactId>
+            <version>${ddd4j.version}</version>
         </dependency>
         <!-- Web 底座 + ddd4j WebMVC 整合 -->
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-web</artifactId>
+            <artifactId>ddd4j-web-core</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
         <dependency>

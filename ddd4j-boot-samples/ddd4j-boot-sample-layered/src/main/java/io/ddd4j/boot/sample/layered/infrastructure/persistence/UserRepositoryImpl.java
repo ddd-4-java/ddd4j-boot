@@ -1,10 +1,10 @@
 package io.ddd4j.boot.sample.layered.infrastructure.persistence;
 
-import io.ddd4j.annotation.ddd.DomainRepository;
 import io.ddd4j.boot.sample.layered.domain.model.User;
 import io.ddd4j.boot.sample.layered.domain.model.UserQuery;
 import io.ddd4j.boot.sample.layered.domain.model.UserRepository;
-import io.ddd4j.data.repository.impl.BaseRepositoryImpl;
+import io.ddd4j.data.mybatis.repository.impl.BaseRepositoryImpl;
+import io.ddd4j.spring.annotation.DomainRepository;
 
 import java.util.List;
 

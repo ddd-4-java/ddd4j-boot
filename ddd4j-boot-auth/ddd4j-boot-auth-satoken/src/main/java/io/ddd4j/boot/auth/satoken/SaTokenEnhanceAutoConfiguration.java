@@ -3,12 +3,16 @@ package io.ddd4j.boot.auth.satoken;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import io.ddd4j.auth.satoken.handler.SaMixCheckLoginHandler;
 import io.ddd4j.auth.satoken.subject.SaTokenSubjectProvider;
+import io.ddd4j.auth.spring.AuthSpringConfiguration;
+import io.ddd4j.auth.spring.satoken.SaTokenExceptionHandler;
 import io.ddd4j.core.subject.SubjectProvider;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 
 /**
@@ -28,6 +32,7 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
  */
 @AutoConfiguration
 @ConditionalOnClass(name = "cn.dev33.satoken.stp.StpUtil")
+@Import(AuthSpringConfiguration.class)
 public class SaTokenEnhanceAutoConfiguration implements InitializingBean {
 
     @Override
@@ -52,6 +57,16 @@ public class SaTokenEnhanceAutoConfiguration implements InitializingBean {
     @ConditionalOnMissingBean(SubjectProvider.class)
     public SubjectProvider saTokenSubjectProvider() {
         return new SaTokenSubjectProvider();
+    }
+
+    /**
+     * Sa-Token exception handler for servlet applications.
+     */
+    @Bean
+    @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+    @ConditionalOnMissingBean(SaTokenExceptionHandler.class)
+    public SaTokenExceptionHandler saTokenExceptionHandler() {
+        return new SaTokenExceptionHandler();
     }
 
 }

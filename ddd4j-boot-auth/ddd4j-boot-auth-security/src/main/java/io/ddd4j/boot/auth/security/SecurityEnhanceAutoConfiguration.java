@@ -1,11 +1,15 @@
 package io.ddd4j.boot.auth.security;
 
+import io.ddd4j.auth.security.handler.SecurityExceptionHandler;
 import io.ddd4j.auth.security.subject.SecuritySubjectProvider;
+import io.ddd4j.auth.spring.AuthSpringConfiguration;
 import io.ddd4j.core.subject.SubjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -18,13 +22,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  *   <li>{@code SubjectProvider}（SecuritySubjectProvider，确保 Spring Security 适配生效）</li>
  * </ul>
  *
- * <p>Spring Security 的异常处理（SecurityExceptionHandler）已在 ddd4j-auth-security 模块内提供，
- * 通过其自身的 AutoConfiguration.imports 自动装配。
+ * <p>Spring Security 的异常处理由本 Boot 自动配置按 Servlet Web 环境显式注册。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @AutoConfiguration
 @ConditionalOnClass(name = "org.springframework.security.core.context.SecurityContextHolder")
+@Import(AuthSpringConfiguration.class)
 public class SecurityEnhanceAutoConfiguration {
 
     /**
@@ -43,6 +47,16 @@ public class SecurityEnhanceAutoConfiguration {
     @ConditionalOnMissingBean(SubjectProvider.class)
     public SubjectProvider securitySubjectProvider() {
         return new SecuritySubjectProvider();
+    }
+
+    /**
+     * Spring Security exception handler for servlet applications.
+     */
+    @Bean
+    @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+    @ConditionalOnMissingBean(SecurityExceptionHandler.class)
+    public SecurityExceptionHandler securityExceptionHandler() {
+        return new SecurityExceptionHandler();
     }
 
 }

@@ -1,6 +1,7 @@
 package io.ddd4j.boot.data.datascope;
 
 import io.ddd4j.data.datascope.DataScopeProvider;
+import io.ddd4j.data.datascope.RequiresDataPermissionsValidator;
 import io.ddd4j.spring.config.SpringCoreConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -24,8 +25,13 @@ public class Ddd4jDataScopeAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(DataScopeProvider.class)
     public DataScopeProvider dataScopeProvider() {
-        return new DataScopeProvider() {
-        };
+        return DataScopeProvider.nonNullAllowed();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(RequiresDataPermissionsValidator.class)
+    public RequiresDataPermissionsValidator requiresDataPermissionsValidator(DataScopeProvider provider) {
+        return new RequiresDataPermissionsValidator(provider);
     }
 
 }
