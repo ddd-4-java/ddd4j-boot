@@ -1,5 +1,12 @@
 package io.ddd4j.ddd.config;
 
+import io.ddd4j.core.cqrs.projection.DefaultProjectionService;
+import io.ddd4j.core.cqrs.projection.EventChunkReader;
+import io.ddd4j.core.cqrs.projection.InMemoryProjectionPositionRepository;
+import io.ddd4j.core.cqrs.projection.NoopEventChunkReader;
+import io.ddd4j.core.cqrs.projection.ProjectionPositionRepository;
+import io.ddd4j.core.cqrs.projection.ProjectionRunner;
+import io.ddd4j.core.cqrs.projection.ProjectionService;
 import io.ddd4j.core.ddd.config.DddProperties;
 import org.fuin.cqrs4j.core.CommandExecutor;
 import org.fuin.cqrs4j.core.MultiCommandExecutor;
@@ -96,6 +103,40 @@ public class DddAutoConfiguration {
     public MultiCommandExecutor dddCommandBus(ObjectProvider<List<CommandExecutor>> executorsProvider) {
         List<CommandExecutor> executors = executorsProvider.getIfAvailable(List::of);
         return new MultiCommandExecutor(executors);
+    }
+
+    /**
+     * 默认投影位置仓储：内存版，仅用于开发、测试和示例。
+     *
+     * <p>生产环境应由业务侧提供数据库或 Redis 等持久化实现。
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public ProjectionPositionRepository projectionPositionRepository() {
+        return new InMemoryProjectionPositionRepository();
+    }
+
+    /**
+     * ddd4j 原生投影位置服务。
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public ProjectionService projectionService(ProjectionPositionRepository repository) {
+        return new DefaultProjectionService(repository);
+    }
+
+    /**
+     * ddd4j 原生投影运行器。
+     *
+     * <p>未配置真实 {@link EventChunkReader} 时使用空读取器，保证应用可启动。
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public ProjectionRunner<Object> projectionRunner(
+            ProjectionService projectionService,
+            ObjectProvider<EventChunkReader<Object>> chunkReaderProvider) {
+        EventChunkReader<Object> chunkReader = chunkReaderProvider.getIfAvailable(NoopEventChunkReader::new);
+        return new ProjectionRunner<>(projectionService, chunkReader);
     }
 
 }

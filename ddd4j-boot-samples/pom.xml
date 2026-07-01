@@ -33,6 +33,9 @@
         <module>ddd4j-boot-sample-app</module>
         <module>ddd4j-boot-sample-infrastructure</module>
         <module>ddd4j-boot-sample-common</module>
+        <module>ddd4j-boot-sample-cqrs-person-shared</module>
+        <module>ddd4j-boot-sample-cqrs-person-command</module>
+        <module>ddd4j-boot-sample-cqrs-person-query</module>
         <module>ddd4j-boot-sample-starter-druid</module>
         <module>ddd4j-boot-sample-starter-druid-amqp</module>
         <module>ddd4j-boot-sample-starter-druid-kafka</module>
