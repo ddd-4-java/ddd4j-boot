@@ -1020,6 +1020,21 @@
                 <version>${spring-boot-starter-dynamic-datasource.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dromara.mica-mqtt</groupId>
+                <artifactId>mica-mqtt-client-spring-boot-starter</artifactId>
+                <version>${mica-mqtt.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>cn.afterturn</groupId>
                 <artifactId>easypoi-spring-boot-starter</artifactId>
                 <version>${easypoi.version}</version>
@@ -1033,6 +1048,11 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>fastdfs-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-fastdfs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>ip2region-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-ip2region.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.flowable</groupId>
@@ -1297,6 +1317,11 @@
                 <version>${spring-boot-starter-redisson-plus.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>redistpl-plus-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-redistpl-plus.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-redisson.version}</version>
@@ -1321,6 +1346,16 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>schemacrawler-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-schemacrawler.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>security-biz-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-security-biz.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>security-jwt-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-security-jwt.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
