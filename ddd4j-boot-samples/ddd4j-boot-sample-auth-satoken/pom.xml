@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-spring</artifactId>
+            <artifactId>ddd4j-runtime-spring</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
         <!-- ddd4j-boot auth sa-token 适配 -->

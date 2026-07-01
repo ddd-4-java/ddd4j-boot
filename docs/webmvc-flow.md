@@ -37,7 +37,7 @@
 ## 幂等控制
 
 - 注解：`io.ddd4j.spring.annotation.ApiIdempotent`
-- Key 生成：请求映射值 + 参数（可选）→ MD5，由 `ddd4j-spring` 幂等组件提供
+- Key 生成：请求映射值 + 参数（可选）→ MD5，由 `ddd4j-runtime-spring` 幂等组件提供
 
 ## 使用建议
 

@@ -13,7 +13,7 @@
 ## 幂等控制
 
 - 注解：`io.ddd4j.spring.annotation.ApiIdempotent`
-- Key 生成逻辑：`ddd4j-spring` 中对应幂等实现
+- Key 生成逻辑：`ddd4j-runtime-spring` 中对应幂等实现
 - 建议：对重要写操作开启幂等，设置合理过期与重试策略
 
 ## 国际化与主题

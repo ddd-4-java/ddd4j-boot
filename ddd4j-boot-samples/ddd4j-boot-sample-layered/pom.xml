@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-spring</artifactId>
+            <artifactId>ddd4j-runtime-spring</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
         <!-- 数据层（BaseRepositoryImpl 四泛型 + MP 官方插件） -->

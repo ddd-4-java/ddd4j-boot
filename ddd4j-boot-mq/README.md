@@ -800,7 +800,7 @@ mvn verify -Pmq-integration-tests -pl ddd4j-boot-cmpt-rabbit,ddd4j-boot-cmpt-kaf
 ## 16. 参考关系（模块依赖简图）
 
 ```
-ddd4j-core / ddd4j-spring (MQEvent, @MQEventListener)
+ddd4j-core / ddd4j-runtime-spring (MQEvent, @MQEventListener)
         │
         ▼
 ddd4j-boot-mq  ◄────────────────────────────┐

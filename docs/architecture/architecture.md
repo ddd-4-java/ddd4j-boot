@@ -11,7 +11,7 @@
     - 版本对齐：`ddd4j-boot-bom/pom.xml`
     - 依赖声明：`ddd4j-boot-dependencies/pom.xml`
     - 打包父：`ddd4j-boot-parent/pom.xml`
-- 核心能力：复用 `ddd4j-core`、`ddd4j-spring`、`ddd4j-data-mybatis`
+- 核心能力：复用 `ddd4j-core`、`ddd4j-runtime-spring`、`ddd4j-data-mybatis`
 - 组件集：`ddd4j-boot-cmpt/*`
 - 示例集：`ddd4j-boot-samples/*`
 
@@ -53,7 +53,7 @@ graph TD
 ## 核心能力速览
 
 - 响应模型与状态码：`ddd4j-core`
-- Service/Mapper/Controller 基类：`ddd4j-data-mybatis`、`ddd4j-spring`
+- Service/Mapper/Controller 基类：`ddd4j-data-mybatis`、`ddd4j-runtime-spring`
 - 全局异常（MVC/WebFlux）：
   `ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/java/io/ddd4j/boot/cmpt/webmvc/webmvc/GlobalExceptionHandler.java`、
   `ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/java/io/ddd4j/boot/cmpt/webflux/handler/GlobalExceptionHandler.java`
