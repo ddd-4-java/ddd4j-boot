@@ -40,7 +40,7 @@ public class MicaMqttMQEventPublisher implements MQEventPublisher {
         if (!StrKit.isNotBlank(event.getNamespace())) {
             event.setNamespace(mqProperties.getNamespace());
         }
-        if (event.getMsgId() == null) {
+        if (Objects.isNull(event.getMsgId())) {
             event.setMsgId(String.valueOf(System.currentTimeMillis()));
         }
 

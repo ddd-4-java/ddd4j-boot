@@ -2,7 +2,7 @@ package io.ddd4j.boot.mq.ons.ack;
 
 import com.aliyun.openservices.ons.api.Action;
 import com.aliyun.openservices.ons.api.Message;
-import io.ddd4j.boot.mq.contract.MQMessage;
+import io.ddd4j.mq.contract.MQMessage;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -24,7 +24,7 @@ public final class OnsMessageAcknowledgmentFactory {
      * @return 确认对象
      */
     public static Optional<OnsMessageAcknowledgment> fromOnsMessage(Message message) {
-        if (message == null) {
+        if (Objects.isNull(message)) {
             return Optional.empty();
         }
         return Optional.of(new OnsMessageAcknowledgment(
@@ -44,7 +44,7 @@ public final class OnsMessageAcknowledgmentFactory {
     public static Optional<OnsMessageAcknowledgment> from(MQMessage<?> message) {
         Objects.requireNonNull(message, "message");
         Message onsMessage = message.nativeMessage(Message.class);
-        if (onsMessage != null) {
+        if (Objects.nonNull(onsMessage)) {
             return fromOnsMessage(onsMessage);
         }
         Object payload = message.getPayload();
@@ -52,6 +52,6 @@ public final class OnsMessageAcknowledgmentFactory {
             return fromOnsMessage(nativeMessage);
         }
         OnsMessageAcknowledgment ack = message.nativeMessage(OnsMessageAcknowledgment.class);
-        return ack == null ? Optional.empty() : Optional.of(ack);
+        return Objects.isNull(ack) ? Optional.empty() : Optional.of(ack);
     }
 }

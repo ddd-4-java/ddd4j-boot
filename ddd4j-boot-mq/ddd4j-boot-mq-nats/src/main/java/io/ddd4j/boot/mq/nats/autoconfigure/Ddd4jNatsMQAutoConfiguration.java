@@ -1,9 +1,9 @@
 package io.ddd4j.boot.mq.nats.autoconfigure;
 
+import io.ddd4j.boot.mq.nats.consumer.NatsMQConsumerEndpointRegistrar;
+import io.ddd4j.boot.mq.nats.publisher.NatsMQEventPublisher;
+import io.ddd4j.boot.mq.nats.spi.NatsMQBrokerAdapter;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.nats.consumer.NatsMQConsumerEndpointRegistrar;
-import io.ddd4j.mq.nats.publisher.NatsMQEventPublisher;
-import io.ddd4j.mq.nats.spi.NatsMQBrokerAdapter;
 import io.ddd4j.mq.publish.MQEventPublisher;
 import io.nats.client.Connection;
 import io.nats.client.Nats;

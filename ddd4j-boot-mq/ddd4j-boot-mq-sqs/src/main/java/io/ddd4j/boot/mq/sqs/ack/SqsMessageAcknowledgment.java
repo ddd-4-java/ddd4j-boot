@@ -4,9 +4,9 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.ChangeMessageVisibilityRequest;
 import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import com.amazonaws.services.sqs.model.Message;
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
-import io.ddd4j.boot.mq.ack.UnsupportedAckOperationException;
-import io.ddd4j.boot.mq.registry.MQBrokerType;
+import io.ddd4j.mq.ack.MessageAcknowledgment;
+import io.ddd4j.mq.ack.UnsupportedAckOperationException;
+import io.ddd4j.mq.registry.MQBrokerType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -41,7 +41,7 @@ public final class SqsMessageAcknowledgment implements MessageAcknowledgment {
 
     @Override
     public long deliveryTag() {
-        return message.getAttributes() == null ? 0L
+        return Objects.isNull(message.getAttributes()) ? 0L
                 : Long.parseLong(message.getAttributes().getOrDefault("ApproximateReceiveCount", "0"));
     }
 

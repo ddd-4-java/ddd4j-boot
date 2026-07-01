@@ -2,19 +2,26 @@ package io.ddd4j.boot.mq.ons.consumer;
 
 import com.aliyun.openservices.ons.api.Action;
 import com.aliyun.openservices.ons.api.Consumer;
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
-import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
-import io.ddd4j.boot.mq.consume.MQConsumerHandler;
-import io.ddd4j.boot.mq.contract.MQMessage;
+import com.aliyun.openservices.ons.api.Message;
+import com.aliyun.openservices.ons.api.ONSFactory;
+import com.aliyun.openservices.ons.api.PropertyKeyConst;
 import io.ddd4j.boot.mq.ons.ack.OnsMessageAcknowledgment;
 import io.ddd4j.boot.mq.ons.ack.OnsMessageAcknowledgmentFactory;
-import io.ddd4j.boot.mq.registry.MQListenerDefinition;
-import io.ddd4j.boot.mq.registry.MQListenerEndpointNaming;
+import io.ddd4j.mq.ack.MessageAcknowledgment;
+import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.consume.MQConsumerHandler;
+import io.ddd4j.mq.contract.MQMessage;
+import io.ddd4j.mq.registry.MQListenerDefinition;
+import io.ddd4j.mq.registry.MQListenerEndpointNaming;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -60,7 +67,7 @@ public class OnsMQConsumerEndpointRegistrar implements AutoCloseable {
      * 批量注册监听器。
      */
     public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
-        if (definitions == null || definitions.isEmpty()) {
+        if (Objects.isNull(definitions) || definitions.isEmpty()) {
             log.debug("No @MQEventListener definitions found for ONS");
             return;
         }
@@ -138,14 +145,14 @@ public class OnsMQConsumerEndpointRegistrar implements AutoCloseable {
 
     private String resolveTag(String tags) {
         String tag = MQListenerEndpointNaming.resolveTag(tags);
-        return tag == null ? "*" : tag;
+        return Objects.isNull(tag) ? "*" : tag;
     }
 
     private String beanLabel(MQListenerDefinition definition) {
-        if (definition.getBean() != null) {
+        if (Objects.nonNull(definition.getBean())) {
             return definition.getBean().getClass().getSimpleName();
         }
-        if (definition.getBeanName() != null) {
+        if (Objects.nonNull(definition.getBeanName())) {
             return definition.getBeanName();
         }
         return definition.getMethod().getDeclaringClass().getSimpleName();

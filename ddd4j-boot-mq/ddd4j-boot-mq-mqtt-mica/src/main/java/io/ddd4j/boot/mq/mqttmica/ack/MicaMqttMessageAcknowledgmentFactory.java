@@ -54,7 +54,7 @@ public final class MicaMqttMessageAcknowledgmentFactory {
         Object qosHeader = message.getHeaders().get(MicaMqttHeaders.QOS);
         int qos = qosHeader instanceof Number number ? number.intValue() : 0;
         Object idHeader = message.getHeaders().get(MicaMqttHeaders.MESSAGE_ID);
-        String messageId = idHeader == null ? null : String.valueOf(idHeader);
+        String messageId = Objects.isNull(idHeader) ? null : String.valueOf(idHeader);
         if (qos <= 0) {
             return Optional.empty();
         }
@@ -84,7 +84,7 @@ public final class MicaMqttMessageAcknowledgmentFactory {
      * 解析 QoS。
      */
     private static int resolveQos(MqttPublishMessage message, Map<String, Object> headers) {
-        if (message != null && message.fixedHeader() != null && message.fixedHeader().qosLevel() != null) {
+        if (Objects.nonNull(message) && Objects.nonNull(message.fixedHeader()) && Objects.nonNull(message.fixedHeader().qosLevel())) {
             return message.fixedHeader().qosLevel().value();
         }
         Object qosHeader = headers.get(MicaMqttHeaders.QOS);
@@ -98,14 +98,14 @@ public final class MicaMqttMessageAcknowledgmentFactory {
      * 解析消息 ID（packet id）。
      */
     private static String resolveMessageId(MqttPublishMessage message, Map<String, Object> headers) {
-        if (message != null) {
+        if (Objects.nonNull(message)) {
             Object variableHeader = message.variableHeader();
             if (variableHeader instanceof MqttPublishVariableHeader publishHeader) {
                 return String.valueOf(publishHeader.packetId());
             }
         }
         Object idHeader = headers.get(MicaMqttHeaders.MESSAGE_ID);
-        return idHeader == null ? null : String.valueOf(idHeader);
+        return Objects.isNull(idHeader) ? null : String.valueOf(idHeader);
     }
 
     /**

@@ -1,20 +1,22 @@
 package io.ddd4j.boot.mq.nats.spi;
 
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
-import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
-import io.ddd4j.boot.mq.consume.MQConsumerHandler;
-import io.ddd4j.boot.mq.contract.MQMessage;
 import io.ddd4j.boot.mq.nats.ack.NatsMessageAcknowledgment;
 import io.ddd4j.boot.mq.nats.ack.NatsMessageAcknowledgmentFactory;
 import io.ddd4j.boot.mq.nats.consumer.NatsMQConsumerEndpointRegistrar;
 import io.ddd4j.boot.mq.nats.publisher.NatsMQEventPublisher;
-import io.ddd4j.boot.mq.publish.MQEventPublisher;
-import io.ddd4j.boot.mq.registry.MQBrokerType;
-import io.ddd4j.boot.mq.registry.MQListenerDefinition;
-import io.ddd4j.boot.mq.spi.MQBrokerAdapter;
+import io.ddd4j.mq.ack.MessageAcknowledgment;
+import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.consume.MQConsumerHandler;
+import io.ddd4j.mq.contract.MQMessage;
+import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.registry.MQBrokerType;
+import io.ddd4j.mq.registry.MQListenerDefinition;
+import io.ddd4j.mq.spi.MQBrokerAdapter;
 import io.nats.client.Connection;
 import io.nats.client.Message;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Objects;
 
 /**
  * NATS Broker 适配器，桥接 ddd4j MQ SPI 与 jnats 客户端。
@@ -47,7 +49,7 @@ public class NatsMQBrokerAdapter implements MQBrokerAdapter {
     public MessageAcknowledgment resolveAcknowledgment(MQMessage<?> message) {
         // 逻辑块：优先从 NATS 原生 Message 解析 JetStream 确认
         Message natsMessage = message.nativeMessage(Message.class);
-        if (natsMessage != null) {
+        if (Objects.nonNull(natsMessage)) {
             return NatsMessageAcknowledgmentFactory.fromNatsMessage(natsMessage)
                     .map(ack -> (MessageAcknowledgment) ack)
                     .orElse(null);

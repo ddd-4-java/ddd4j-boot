@@ -1,19 +1,21 @@
 package io.ddd4j.boot.mq.mqtt.spi;
 
+import io.ddd4j.boot.mq.mqtt.ack.MqttMessageAcknowledgment;
+import io.ddd4j.boot.mq.mqtt.ack.MqttMessageAcknowledgmentFactory;
+import io.ddd4j.boot.mq.mqtt.consumer.MqttMQConsumerEndpointRegistrar;
+import io.ddd4j.boot.mq.mqtt.publisher.MqttMQEventPublisher;
 import io.ddd4j.mq.ack.MessageAcknowledgment;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
 import io.ddd4j.mq.consume.MQConsumerHandler;
 import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.mqtt.ack.MqttMessageAcknowledgment;
-import io.ddd4j.mq.mqtt.ack.MqttMessageAcknowledgmentFactory;
-import io.ddd4j.mq.mqtt.consumer.MqttMQConsumerEndpointRegistrar;
-import io.ddd4j.mq.mqtt.publisher.MqttMQEventPublisher;
 import io.ddd4j.mq.publish.MQEventPublisher;
 import io.ddd4j.mq.registry.MQBrokerType;
 import io.ddd4j.mq.registry.MQListenerDefinition;
 import io.ddd4j.mq.spi.MQBrokerAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.MessageChannel;
+
+import java.util.Objects;
 
 /**
  * MQTT Broker 适配器，桥接 ddd4j MQ SPI 与 Spring Integration MQTT（Eclipse Paho）。
@@ -50,7 +52,7 @@ public class MqttMQBrokerAdapter implements MQBrokerAdapter {
     public MessageAcknowledgment resolveAcknowledgment(MQMessage<?> message) {
         // 2.0.x：直接基于纯 Java MQMessage 解析（MQTT QoS 通过 nativeMessage 逃生口传入）
         MqttMessageAcknowledgment mqttAck = message.nativeMessage(MqttMessageAcknowledgment.class);
-        if (mqttAck != null) {
+        if (Objects.nonNull(mqttAck)) {
             return mqttAck;
         }
         return MqttMessageAcknowledgmentFactory.resolve(message).acknowledgment();

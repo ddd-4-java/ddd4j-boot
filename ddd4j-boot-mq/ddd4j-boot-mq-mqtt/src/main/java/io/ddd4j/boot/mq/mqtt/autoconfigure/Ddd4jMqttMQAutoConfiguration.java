@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.mqtt.autoconfigure;
 
+import io.ddd4j.boot.mq.mqtt.config.Ddd4jMqttProperties;
+import io.ddd4j.boot.mq.mqtt.consumer.MqttMQConsumerEndpointRegistrar;
+import io.ddd4j.boot.mq.mqtt.publisher.MqttMQEventPublisher;
+import io.ddd4j.boot.mq.mqtt.spi.MqttMQBrokerAdapter;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.mqtt.config.Ddd4jMqttProperties;
-import io.ddd4j.mq.mqtt.consumer.MqttMQConsumerEndpointRegistrar;
-import io.ddd4j.mq.mqtt.publisher.MqttMQEventPublisher;
-import io.ddd4j.mq.mqtt.spi.MqttMQBrokerAdapter;
 import io.ddd4j.mq.publish.MQEventPublisher;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.context.annotation.Bean;

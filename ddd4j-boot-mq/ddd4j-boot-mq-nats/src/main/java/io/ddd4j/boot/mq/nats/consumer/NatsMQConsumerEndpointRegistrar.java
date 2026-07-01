@@ -1,13 +1,19 @@
 package io.ddd4j.boot.mq.nats.consumer;
 
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
-import io.ddd4j.boot.mq.ack.NoOpMessageAcknowledgment;
-import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
-import io.ddd4j.boot.mq.consume.MQConsumerHandler;
-import io.ddd4j.boot.mq.contract.MQMessage;
 import io.ddd4j.boot.mq.nats.ack.NatsMessageAcknowledgmentFactory;
-import io.ddd4j.boot.mq.registry.MQListenerDefinition;
-import io.ddd4j.boot.mq.registry.MQListenerEndpointNaming;
+import io.ddd4j.mq.ack.MessageAcknowledgment;
+import io.ddd4j.mq.ack.NoOpMessageAcknowledgment;
+import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.consume.MQConsumerHandler;
+import io.ddd4j.mq.contract.MQMessage;
+import io.ddd4j.mq.registry.MQListenerDefinition;
+import io.ddd4j.mq.registry.MQListenerEndpointNaming;
+import io.nats.client.Connection;
+import io.nats.client.Dispatcher;
+import io.nats.client.JetStream;
+import io.nats.client.JetStreamSubscription;
+import io.nats.client.Message;
+import io.nats.client.PushSubscribeOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -82,7 +88,7 @@ public class NatsMQConsumerEndpointRegistrar implements AutoCloseable {
      * 批量注册监听器。
      */
     public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
-        if (definitions == null || definitions.isEmpty()) {
+        if (Objects.isNull(definitions) || definitions.isEmpty()) {
             log.debug("No @MQEventListener definitions found for NATS");
             return;
         }
@@ -132,13 +138,13 @@ public class NatsMQConsumerEndpointRegistrar implements AutoCloseable {
                     .orElseGet(NoOpMessageAcknowledgment::new);
             handler.handle(mqMessage, ack);
             if (!properties.getConsumer().isManualAck() && !ack.isAcknowledged()
-                    && natsMessage.metaData() != null) {
+                    && Objects.nonNull(natsMessage.metaData())) {
                 ack.ack();
             }
         } catch (Exception ex) {
             log.error("NATS consumer failed: bean={}, method={}",
                     beanLabel(definition), definition.getMethod().getName(), ex);
-            if (natsMessage.metaData() != null) {
+            if (Objects.nonNull(natsMessage.metaData())) {
                 try {
                     natsMessage.nak();
                 } catch (Exception nakEx) {
@@ -149,10 +155,10 @@ public class NatsMQConsumerEndpointRegistrar implements AutoCloseable {
     }
 
     private String beanLabel(MQListenerDefinition definition) {
-        if (definition.getBean() != null) {
+        if (Objects.nonNull(definition.getBean())) {
             return definition.getBean().getClass().getSimpleName();
         }
-        if (definition.getBeanName() != null) {
+        if (Objects.nonNull(definition.getBeanName())) {
             return definition.getBeanName();
         }
         return definition.getMethod().getDeclaringClass().getSimpleName();

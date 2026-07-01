@@ -1,11 +1,11 @@
 package io.ddd4j.boot.mq.nats.publisher;
 
-import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
-import io.ddd4j.boot.mq.contract.MQDestination;
-import io.ddd4j.boot.mq.publish.MQEventPublisher;
 import io.ddd4j.core.contract.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.kit.lang.StrKit;
+import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.contract.MQDestination;
+import io.ddd4j.mq.publish.MQEventPublisher;
 import io.nats.client.Connection;
 import io.nats.client.JetStream;
 import io.nats.client.JetStreamApiException;
@@ -32,7 +32,7 @@ public class NatsMQEventPublisher implements MQEventPublisher {
     public <T extends MQEvent> void publish(T event, MQDestination destination) {
         Objects.requireNonNull(event, "event");
         Objects.requireNonNull(destination, "destination");
-        if (connection == null) {
+        if (Objects.isNull(connection)) {
             throw new IllegalStateException("NATS Connection is not available; configure ddd4j.mq.nats.servers");
         }
 
@@ -43,7 +43,7 @@ public class NatsMQEventPublisher implements MQEventPublisher {
         if (!StrKit.isNotBlank(event.getNamespace())) {
             event.setNamespace(properties.getNamespace());
         }
-        if (event.getMsgId() == null) {
+        if (Objects.isNull(event.getMsgId())) {
             event.setMsgId(String.valueOf(System.currentTimeMillis()));
         }
 

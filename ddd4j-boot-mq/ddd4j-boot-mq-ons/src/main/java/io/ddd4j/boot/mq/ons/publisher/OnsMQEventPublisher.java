@@ -3,12 +3,12 @@ package io.ddd4j.boot.mq.ons.publisher;
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.Producer;
 import com.aliyun.openservices.ons.api.SendResult;
-import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
-import io.ddd4j.boot.mq.contract.MQDestination;
-import io.ddd4j.boot.mq.publish.MQEventPublisher;
 import io.ddd4j.core.contract.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.kit.lang.StrKit;
+import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.contract.MQDestination;
+import io.ddd4j.mq.publish.MQEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,7 +31,7 @@ public class OnsMQEventPublisher implements MQEventPublisher {
     public <T extends MQEvent> void publish(T event, MQDestination destination) {
         Objects.requireNonNull(event, "event");
         Objects.requireNonNull(destination, "destination");
-        if (producer == null) {
+        if (Objects.isNull(producer)) {
             throw new IllegalStateException("ONS Producer is not available; configure ddd4j.mq.ons.* properties");
         }
 
@@ -42,7 +42,7 @@ public class OnsMQEventPublisher implements MQEventPublisher {
         if (!StrKit.isNotBlank(event.getNamespace())) {
             event.setNamespace(properties.getNamespace());
         }
-        if (event.getMsgId() == null) {
+        if (Objects.isNull(event.getMsgId())) {
             event.setMsgId(String.valueOf(System.currentTimeMillis()));
         }
 

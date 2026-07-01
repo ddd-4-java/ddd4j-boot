@@ -2,19 +2,21 @@ package io.ddd4j.boot.mq.sqs.spi;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.Message;
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
-import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
-import io.ddd4j.boot.mq.consume.MQConsumerHandler;
-import io.ddd4j.boot.mq.contract.MQMessage;
-import io.ddd4j.boot.mq.publish.MQEventPublisher;
-import io.ddd4j.boot.mq.registry.MQBrokerType;
-import io.ddd4j.boot.mq.registry.MQListenerDefinition;
-import io.ddd4j.boot.mq.spi.MQBrokerAdapter;
 import io.ddd4j.boot.mq.sqs.ack.SqsMessageAcknowledgment;
 import io.ddd4j.boot.mq.sqs.ack.SqsMessageAcknowledgmentFactory;
 import io.ddd4j.boot.mq.sqs.consumer.SqsMQConsumerEndpointRegistrar;
 import io.ddd4j.boot.mq.sqs.publisher.SqsMQEventPublisher;
+import io.ddd4j.mq.ack.MessageAcknowledgment;
+import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.consume.MQConsumerHandler;
+import io.ddd4j.mq.contract.MQMessage;
+import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.registry.MQBrokerType;
+import io.ddd4j.mq.registry.MQListenerDefinition;
+import io.ddd4j.mq.spi.MQBrokerAdapter;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Objects;
 
 /**
  * AWS SQS Broker 适配器，桥接 ddd4j MQ SPI 与 aws-java-sdk-sqs。
@@ -48,7 +50,7 @@ public class SqsMQBrokerAdapter implements MQBrokerAdapter {
     public MessageAcknowledgment resolveAcknowledgment(MQMessage<?> message) {
         // 逻辑块：优先从 SQS 原生 Message 解析确认
         Message sqsMessage = message.nativeMessage(Message.class);
-        if (sqsMessage != null) {
+        if (Objects.nonNull(sqsMessage)) {
             return SqsMessageAcknowledgmentFactory.from(message)
                     .map(ack -> (MessageAcknowledgment) ack)
                     .orElse(null);

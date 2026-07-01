@@ -32,12 +32,12 @@ public final class MqttMessageAcknowledgmentFactory {
     public static Optional<MqttMessageAcknowledgment> from(MQMessage<?> message) {
         Objects.requireNonNull(message, "message");
         Map<String, Object> headers = message.getHeaders();
-        if (headers == null || headers.isEmpty()) {
+        if (Objects.isNull(headers) || headers.isEmpty()) {
             return Optional.empty();
         }
 
         Object topicHeader = headers.get(MqttHeaders.RECEIVED_TOPIC);
-        if (topicHeader == null) {
+        if (Objects.isNull(topicHeader)) {
             topicHeader = headers.get(MqttHeaders.TOPIC);
         }
         Object qosHeader = headers.get(MqttHeaders.RECEIVED_QOS);
@@ -46,7 +46,7 @@ public final class MqttMessageAcknowledgmentFactory {
         }
         int qos = qosHeader instanceof Number number ? number.intValue() : 0;
         Object idHeader = headers.get(MqttHeaders.ID);
-        String messageId = idHeader == null ? null : String.valueOf(idHeader);
+        String messageId = Objects.isNull(idHeader) ? null : String.valueOf(idHeader);
         if (qos <= 0) {
             return Optional.empty();
         }

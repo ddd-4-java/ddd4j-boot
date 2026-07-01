@@ -41,7 +41,7 @@ public class MqttMQEventPublisher implements MQEventPublisher {
         if (!StringUtils.hasText(event.getNamespace())) {
             event.setNamespace(mqProperties.getNamespace());
         }
-        if (event.getMsgId() == null) {
+        if (Objects.isNull(event.getMsgId())) {
             event.setMsgId(String.valueOf(System.currentTimeMillis()));
         }
 

@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.mqttmica.autoconfigure;
 
 import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.mqtt.mica.config.Ddd4jMicaMqttProperties;
-import io.ddd4j.mq.mqtt.mica.consumer.MicaMqttMQConsumerEndpointRegistrar;
-import io.ddd4j.mq.mqtt.mica.publisher.MicaMqttMQEventPublisher;
-import io.ddd4j.mq.mqtt.mica.spi.MicaMqttMQBrokerAdapter;
+import io.ddd4j.boot.mq.mqttmica.config.Ddd4jMicaMqttProperties;
+import io.ddd4j.boot.mq.mqttmica.consumer.MicaMqttMQConsumerEndpointRegistrar;
+import io.ddd4j.boot.mq.mqttmica.publisher.MicaMqttMQEventPublisher;
+import io.ddd4j.boot.mq.mqttmica.spi.MicaMqttMQBrokerAdapter;
 import io.ddd4j.mq.publish.MQEventPublisher;
 import org.dromara.mica.mqtt.spring.client.MqttClientTemplate;
 import org.springframework.context.annotation.Bean;

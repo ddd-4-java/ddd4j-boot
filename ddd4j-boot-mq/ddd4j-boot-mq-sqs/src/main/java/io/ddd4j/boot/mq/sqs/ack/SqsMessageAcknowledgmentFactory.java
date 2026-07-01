@@ -2,7 +2,7 @@ package io.ddd4j.boot.mq.sqs.ack;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.Message;
-import io.ddd4j.boot.mq.contract.MQMessage;
+import io.ddd4j.mq.contract.MQMessage;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -30,7 +30,7 @@ public final class SqsMessageAcknowledgmentFactory {
      */
     public static Optional<SqsMessageAcknowledgment> fromSqsMessage(
             AmazonSQS amazonSqs, String queueUrl, Message message) {
-        if (amazonSqs == null || queueUrl == null || message == null) {
+        if (Objects.isNull(amazonSqs) || Objects.isNull(queueUrl) || Objects.isNull(message)) {
             return Optional.empty();
         }
         return Optional.of(new SqsMessageAcknowledgment(amazonSqs, queueUrl, message));
@@ -45,13 +45,13 @@ public final class SqsMessageAcknowledgmentFactory {
     public static Optional<SqsMessageAcknowledgment> from(MQMessage<?> message) {
         Objects.requireNonNull(message, "message");
         Message sqsMessage = message.nativeMessage(Message.class);
-        if (sqsMessage != null) {
+        if (Objects.nonNull(sqsMessage)) {
             AmazonSQS amazonSqs = resolveAmazonSqs(message);
             String queueUrl = resolveQueueUrl(message);
             return fromSqsMessage(amazonSqs, queueUrl, sqsMessage);
         }
         SqsMessageAcknowledgment ack = message.nativeMessage(SqsMessageAcknowledgment.class);
-        return ack == null ? Optional.empty() : Optional.of(ack);
+        return Objects.isNull(ack) ? Optional.empty() : Optional.of(ack);
     }
 
     /**
@@ -67,6 +67,6 @@ public final class SqsMessageAcknowledgmentFactory {
      */
     private static String resolveQueueUrl(MQMessage<?> message) {
         Object queueUrl = message.getHeaders().get(HEADER_QUEUE_URL);
-        return queueUrl == null ? null : String.valueOf(queueUrl);
+        return Objects.isNull(queueUrl) ? null : String.valueOf(queueUrl);
     }
 }

@@ -1,9 +1,9 @@
 package io.ddd4j.boot.mq.ons.ack;
 
 import com.aliyun.openservices.ons.api.Action;
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
-import io.ddd4j.boot.mq.ack.UnsupportedAckOperationException;
-import io.ddd4j.boot.mq.registry.MQBrokerType;
+import io.ddd4j.mq.ack.MessageAcknowledgment;
+import io.ddd4j.mq.ack.UnsupportedAckOperationException;
+import io.ddd4j.mq.registry.MQBrokerType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;

@@ -1,6 +1,7 @@
 package io.ddd4j.boot.auth.satoken;
 
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
+import io.ddd4j.auth.satoken.handler.SaInternalCheckHandler;
 import io.ddd4j.auth.satoken.handler.SaMixCheckLoginHandler;
 import io.ddd4j.auth.satoken.subject.SaTokenSubjectProvider;
 import io.ddd4j.auth.spring.AuthSpringConfiguration;
@@ -22,6 +23,7 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
  * <ul>
  *   <li>注解合并能力（重写 Sa-Token 的 getAnnotation 为 AnnotatedElementUtils.getMergedAnnotation）</li>
  *   <li>{@code SaMixCheckLoginHandler} 注册（多账号混合登录注解处理器）</li>
+ *   <li>{@code SaInternalCheckHandler} 注册（内部服务 API Key 注解处理器）</li>
  *   <li>{@code SubjectProvider} 注册（SubjectKit 全局注册中心写入）</li>
  * </ul>
  *
@@ -42,12 +44,36 @@ public class SaTokenEnhanceAutoConfiguration implements InitializingBean {
     }
 
     /**
+     * 显式注册 ddd4j 扩展注解处理器，避免依赖框架自动发现策略。
+     */
+    @Bean
+    @ConditionalOnMissingBean(name = "ddd4jSaTokenAnnotationHandlerRegistrar")
+    public InitializingBean ddd4jSaTokenAnnotationHandlerRegistrar(
+            SaMixCheckLoginHandler mixCheckLoginHandler,
+            SaInternalCheckHandler internalCheckHandler) {
+
+        return () -> {
+            SaAnnotationStrategy.instance.registerAnnotationHandler(mixCheckLoginHandler);
+            SaAnnotationStrategy.instance.registerAnnotationHandler(internalCheckHandler);
+        };
+    }
+
+    /**
      * 多账号混合登录注解处理器。
      */
     @Bean
     @ConditionalOnMissingBean
     public SaMixCheckLoginHandler saMixCheckLoginHandler() {
         return new SaMixCheckLoginHandler();
+    }
+
+    /**
+     * 内部服务 API Key 注解处理器。
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public SaInternalCheckHandler saInternalCheckHandler() {
+        return new SaInternalCheckHandler();
     }
 
     /**

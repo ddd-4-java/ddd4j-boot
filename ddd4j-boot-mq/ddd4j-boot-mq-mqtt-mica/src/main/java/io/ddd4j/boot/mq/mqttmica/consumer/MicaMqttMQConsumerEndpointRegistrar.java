@@ -69,7 +69,7 @@ public class MicaMqttMQConsumerEndpointRegistrar implements AutoCloseable {
      * 批量注册监听器（启动阶段调用）。
      */
     public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
-        if (definitions == null || definitions.isEmpty()) {
+        if (Objects.isNull(definitions) || definitions.isEmpty()) {
             log.debug("No @MQEventListener definitions found for mica-mqtt");
             return;
         }
@@ -147,10 +147,10 @@ public class MicaMqttMQConsumerEndpointRegistrar implements AutoCloseable {
     }
 
     private String beanLabel(MQListenerDefinition definition) {
-        if (definition.getBean() != null) {
+        if (Objects.nonNull(definition.getBean())) {
             return definition.getBean().getClass().getSimpleName();
         }
-        if (definition.getBeanName() != null) {
+        if (Objects.nonNull(definition.getBeanName())) {
             return definition.getBeanName();
         }
         return definition.getMethod().getDeclaringClass().getSimpleName();
@@ -158,6 +158,6 @@ public class MicaMqttMQConsumerEndpointRegistrar implements AutoCloseable {
 
     private String headerAsString(Map<String, Object> headers, String key) {
         Object value = headers.get(key);
-        return value == null ? null : String.valueOf(value);
+        return Objects.isNull(value) ? null : String.valueOf(value);
     }
 }

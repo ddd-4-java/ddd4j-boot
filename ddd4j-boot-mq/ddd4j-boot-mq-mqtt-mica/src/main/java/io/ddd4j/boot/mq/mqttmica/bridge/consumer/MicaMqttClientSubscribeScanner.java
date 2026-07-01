@@ -15,6 +15,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
 
+import java.util.Objects;
+
 /**
  * 扫描应用上下文中 {@link MqttClientSubscribe} 并委托 {@link MicaMqttClientSubscribeRegistrar} 注册订阅。
  * <p>
@@ -65,7 +67,7 @@ public class MicaMqttClientSubscribeScanner implements BeanPostProcessor, Ordere
      */
     private void processClassLevelSubscription(Class<?> userClass, Object bean, String beanName) {
         MqttClientSubscribe subscribe = AnnotationUtils.findAnnotation(userClass, MqttClientSubscribe.class);
-        if (subscribe == null) {
+        if (Objects.isNull(subscribe)) {
             return;
         }
         String[] topicFilters = registrar.resolveTopicFilters(subscribe.value());
@@ -81,7 +83,7 @@ public class MicaMqttClientSubscribeScanner implements BeanPostProcessor, Ordere
     private void processMethodLevelSubscriptions(Class<?> userClass, Object bean, String beanName) {
         ReflectionUtils.doWithMethods(userClass, method -> {
             MqttClientSubscribe subscribe = AnnotationUtils.findAnnotation(method, MqttClientSubscribe.class);
-            if (subscribe == null) {
+            if (Objects.isNull(subscribe)) {
                 return;
             }
             String[] topicFilters = registrar.resolveTopicFilters(subscribe.value());

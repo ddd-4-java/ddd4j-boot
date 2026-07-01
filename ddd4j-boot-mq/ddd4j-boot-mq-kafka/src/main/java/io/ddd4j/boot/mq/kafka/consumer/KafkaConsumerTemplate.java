@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.kafka.consumer;
 
-import io.ddd4j.mq.kafka.KafkaEnhanceProperties;
-import io.ddd4j.mq.kafka.config.KafkaConnectionProperties;
+import io.ddd4j.boot.mq.kafka.KafkaEnhanceProperties;
+import io.ddd4j.boot.mq.kafka.config.KafkaConnectionProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -460,4 +460,3 @@ public class KafkaConsumerTemplate implements DisposableBean {
     }
 
 }
-

@@ -1,11 +1,11 @@
 package io.ddd4j.boot.mq.mqtt.consumer;
 
+import io.ddd4j.boot.mq.mqtt.ack.MqttMessageAcknowledgmentFactory;
+import io.ddd4j.boot.mq.mqtt.config.Ddd4jMqttProperties;
 import io.ddd4j.mq.ack.MessageAcknowledgment;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
 import io.ddd4j.mq.consume.MQConsumerHandler;
 import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.mqtt.ack.MqttMessageAcknowledgmentFactory;
-import io.ddd4j.mq.mqtt.config.Ddd4jMqttProperties;
 import io.ddd4j.mq.registry.MQListenerDefinition;
 import io.ddd4j.mq.registry.MQListenerEndpointNaming;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,11 @@ import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.Message;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -72,7 +76,7 @@ public class MqttMQConsumerEndpointRegistrar implements AutoCloseable {
      * 批量注册监听器（启动阶段调用）。
      */
     public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
-        if (definitions == null || definitions.isEmpty()) {
+        if (Objects.isNull(definitions) || definitions.isEmpty()) {
             log.debug("No @MQEventListener definitions found for MQTT");
             return;
         }
@@ -110,7 +114,7 @@ public class MqttMQConsumerEndpointRegistrar implements AutoCloseable {
             Map<String, Object> headers = new HashMap<>(springMessage.getHeaders());
             String messageId = headerAsString(headers, MqttHeaders.ID);
             String topic = headerAsString(headers, MqttHeaders.RECEIVED_TOPIC);
-            if (topic == null) {
+            if (Objects.isNull(topic)) {
                 topic = headerAsString(headers, MqttHeaders.TOPIC);
             }
 
@@ -172,10 +176,10 @@ public class MqttMQConsumerEndpointRegistrar implements AutoCloseable {
     }
 
     private String beanLabel(MQListenerDefinition definition) {
-        if (definition.getBean() != null) {
+        if (Objects.nonNull(definition.getBean())) {
             return definition.getBean().getClass().getSimpleName();
         }
-        if (definition.getBeanName() != null) {
+        if (Objects.nonNull(definition.getBeanName())) {
             return definition.getBeanName();
         }
         return definition.getMethod().getDeclaringClass().getSimpleName();
@@ -183,6 +187,6 @@ public class MqttMQConsumerEndpointRegistrar implements AutoCloseable {
 
     private String headerAsString(Map<String, Object> headers, String key) {
         Object value = headers.get(key);
-        return value == null ? null : String.valueOf(value);
+        return Objects.isNull(value) ? null : String.valueOf(value);
     }
 }

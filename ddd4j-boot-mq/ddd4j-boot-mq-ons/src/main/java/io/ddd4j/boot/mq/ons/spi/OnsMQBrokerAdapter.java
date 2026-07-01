@@ -2,19 +2,21 @@ package io.ddd4j.boot.mq.ons.spi;
 
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.Producer;
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
-import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
-import io.ddd4j.boot.mq.consume.MQConsumerHandler;
-import io.ddd4j.boot.mq.contract.MQMessage;
 import io.ddd4j.boot.mq.ons.ack.OnsMessageAcknowledgment;
 import io.ddd4j.boot.mq.ons.ack.OnsMessageAcknowledgmentFactory;
 import io.ddd4j.boot.mq.ons.consumer.OnsMQConsumerEndpointRegistrar;
 import io.ddd4j.boot.mq.ons.publisher.OnsMQEventPublisher;
-import io.ddd4j.boot.mq.publish.MQEventPublisher;
-import io.ddd4j.boot.mq.registry.MQBrokerType;
-import io.ddd4j.boot.mq.registry.MQListenerDefinition;
-import io.ddd4j.boot.mq.spi.MQBrokerAdapter;
+import io.ddd4j.mq.ack.MessageAcknowledgment;
+import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.consume.MQConsumerHandler;
+import io.ddd4j.mq.contract.MQMessage;
+import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.registry.MQBrokerType;
+import io.ddd4j.mq.registry.MQListenerDefinition;
+import io.ddd4j.mq.spi.MQBrokerAdapter;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Objects;
 
 /**
  * 阿里云 ONS Broker 适配器，桥接 ddd4j MQ SPI 与 ons-client（Rocket 兼容）。
@@ -47,7 +49,7 @@ public class OnsMQBrokerAdapter implements MQBrokerAdapter {
     public MessageAcknowledgment resolveAcknowledgment(MQMessage<?> message) {
         // 逻辑块：优先从 ONS 原生 Message 解析确认
         Message onsMessage = message.nativeMessage(Message.class);
-        if (onsMessage != null) {
+        if (Objects.nonNull(onsMessage)) {
             return OnsMessageAcknowledgmentFactory.fromOnsMessage(onsMessage)
                     .map(ack -> (MessageAcknowledgment) ack)
                     .orElse(null);

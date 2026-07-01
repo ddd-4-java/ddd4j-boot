@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.dromara.mica.mqtt.codec.message.MqttPublishMessage;
 import org.dromara.mica.mqtt.spring.client.MqttClientTemplate;
 
+import java.util.Objects;
+
 /**
  * mica-mqtt Broker 适配器，桥接 ddd4j MQ SPI 与 {@link MqttClientTemplate}。
  *
@@ -49,9 +51,9 @@ public class MicaMqttMQBrokerAdapter implements MQBrokerAdapter {
     public MessageAcknowledgment resolveAcknowledgment(MQMessage<?> message) {
         // 逻辑块：优先从 mica 原生消息解析 QoS 确认
         MqttPublishMessage micaMessage = message.nativeMessage(MqttPublishMessage.class);
-        if (micaMessage != null) {
+        if (Objects.nonNull(micaMessage)) {
             Object topicHeader = message.getHeaders().get(MicaMqttHeaders.TOPIC);
-            String topic = topicHeader == null ? null : String.valueOf(topicHeader);
+            String topic = Objects.isNull(topicHeader) ? null : String.valueOf(topicHeader);
             return MicaMqttMessageAcknowledgmentFactory.from(topic, micaMessage, message.getHeaders())
                     .acknowledgment();
         }

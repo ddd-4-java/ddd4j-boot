@@ -2,12 +2,12 @@ package io.ddd4j.boot.mq.sqs.publisher;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
-import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
-import io.ddd4j.boot.mq.contract.MQDestination;
-import io.ddd4j.boot.mq.publish.MQEventPublisher;
 import io.ddd4j.core.contract.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.kit.lang.StrKit;
+import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.contract.MQDestination;
+import io.ddd4j.mq.publish.MQEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +30,7 @@ public class SqsMQEventPublisher implements MQEventPublisher {
     public <T extends MQEvent> void publish(T event, MQDestination destination) {
         Objects.requireNonNull(event, "event");
         Objects.requireNonNull(destination, "destination");
-        if (amazonSqs == null) {
+        if (Objects.isNull(amazonSqs)) {
             throw new IllegalStateException("AmazonSQS client is not available; configure ddd4j.mq.sqs.* properties");
         }
 
@@ -41,7 +41,7 @@ public class SqsMQEventPublisher implements MQEventPublisher {
         if (!StrKit.isNotBlank(event.getNamespace())) {
             event.setNamespace(properties.getNamespace());
         }
-        if (event.getMsgId() == null) {
+        if (Objects.isNull(event.getMsgId())) {
             event.setMsgId(String.valueOf(System.currentTimeMillis()));
         }
 

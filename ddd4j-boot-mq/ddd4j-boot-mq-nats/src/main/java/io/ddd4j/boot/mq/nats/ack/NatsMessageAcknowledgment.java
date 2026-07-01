@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.nats.ack;
 
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
-import io.ddd4j.boot.mq.ack.UnsupportedAckOperationException;
-import io.ddd4j.boot.mq.registry.MQBrokerType;
+import io.ddd4j.mq.ack.MessageAcknowledgment;
+import io.ddd4j.mq.ack.UnsupportedAckOperationException;
+import io.ddd4j.mq.registry.MQBrokerType;
 import io.nats.client.Message;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +32,7 @@ public final class NatsMessageAcknowledgment implements MessageAcknowledgment {
 
     @Override
     public long deliveryTag() {
-        return message.metaData() == null ? 0L : message.metaData().consumerSequence();
+        return Objects.isNull(message.metaData()) ? 0L : message.metaData().consumerSequence();
     }
 
     @Override

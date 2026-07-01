@@ -130,10 +130,10 @@ public class MicaMqttClientSubscribeRegistrar implements AutoCloseable {
     }
 
     private String beanLabel(MicaMqttClientSubscribeDefinition definition) {
-        if (definition.getBeanName() != null) {
+        if (Objects.nonNull(definition.getBeanName())) {
             return definition.getBeanName();
         }
-        if (definition.getBean() != null) {
+        if (Objects.nonNull(definition.getBean())) {
             return definition.getBean().getClass().getSimpleName();
         }
         return "unknown";

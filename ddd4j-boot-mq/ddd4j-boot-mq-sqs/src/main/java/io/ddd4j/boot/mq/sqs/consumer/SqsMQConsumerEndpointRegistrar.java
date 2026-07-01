@@ -10,7 +10,7 @@ import io.ddd4j.mq.consume.MQConsumerHandler;
 import io.ddd4j.mq.contract.MQMessage;
 import io.ddd4j.mq.registry.MQListenerDefinition;
 import io.ddd4j.mq.registry.MQListenerEndpointNaming;
-import io.ddd4j.mq.sqs.ack.SqsMessageAcknowledgment;
+import io.ddd4j.boot.mq.sqs.ack.SqsMessageAcknowledgment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -75,7 +75,7 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
      * 批量注册监听器。
      */
     public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
-        if (definitions == null || definitions.isEmpty()) {
+        if (Objects.isNull(definitions) || definitions.isEmpty()) {
             log.debug("No @MQEventListener definitions found for SQS");
             return;
         }
@@ -111,7 +111,7 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
                 ReceiveMessageResult result = amazonSqs.receiveMessage(new ReceiveMessageRequest(queueUrl)
                         .withMaxNumberOfMessages(MAX_MESSAGES)
                         .withWaitTimeSeconds(WAIT_TIME_SECONDS)
-                        .withAttributeNames("All")
+                        .withMessageSystemAttributeNames("All")
                         .withMessageAttributeNames("All"));
                 for (Message sqsMessage : result.getMessages()) {
                     onMessage(queueUrl, sqsMessage, definition, handler);
@@ -137,7 +137,7 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
         try {
             String payloadText = sqsMessage.getBody();
             Map<String, Object> headers = new HashMap<>();
-            if (sqsMessage.getMessageAttributes() != null) {
+            if (Objects.nonNull(sqsMessage.getMessageAttributes())) {
                 sqsMessage.getMessageAttributes().forEach((k, v) -> headers.put(k, v.getStringValue()));
             }
 
@@ -182,10 +182,10 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
     }
 
     private String beanLabel(MQListenerDefinition definition) {
-        if (definition.getBean() != null) {
+        if (Objects.nonNull(definition.getBean())) {
             return definition.getBean().getClass().getSimpleName();
         }
-        if (definition.getBeanName() != null) {
+        if (Objects.nonNull(definition.getBeanName())) {
             return definition.getBeanName();
         }
         return definition.getMethod().getDeclaringClass().getSimpleName();
