@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import io.ddd4j.core.contract.TypeHandlerRegistry;
+import io.ddd4j.core.event.TypeHandlerRegistry;
 import io.ddd4j.data.mybatis.config.BaseDataProperties;
 import io.ddd4j.data.mybatis.typehandler.MybatisTypeHandlerRegistry;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

@@ -35,7 +35,7 @@ public class UserController {
     @PostMapping("/{id}/rename")
     public ApiRestResponse<User> rename(@PathVariable String id, @RequestBody RenameRequest req) {
         // 充血查询：UserQuery.builder().id(id).one("用户不存在")
-        User user = UserQuery.builder().id(id).one("用户不存在");
+        User user = (User) UserQuery.builder().id(id).one("用户不存在");
         user.rename(req.getNickname());
         user.update();
         return ApiRestResponse.success(user);
@@ -46,7 +46,7 @@ public class UserController {
      */
     @PostMapping("/{id}/disable")
     public ApiRestResponse<User> disable(@PathVariable String id) {
-        User user = UserQuery.builder().id(id).one("用户不存在");
+        User user = (User) UserQuery.builder().id(id).one("用户不存在");
         user.disable();
         user.update();
         return ApiRestResponse.success(user);
@@ -57,7 +57,7 @@ public class UserController {
      */
     @GetMapping("/phone/{phone}")
     public ApiRestResponse<User> getByPhone(@PathVariable String phone) {
-        User user = UserQuery.builder().phone(phone).one("用户不存在");
+        User user = (User) UserQuery.builder().phone(phone).one("用户不存在");
         return ApiRestResponse.success(user);
     }
 

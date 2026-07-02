@@ -2,7 +2,7 @@ package io.ddd4j.boot.mq.sqs.publisher;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
-import io.ddd4j.core.contract.MQEvent;
+import io.ddd4j.core.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.kit.lang.StrKit;
 import io.ddd4j.mq.config.Ddd4jMQProperties;

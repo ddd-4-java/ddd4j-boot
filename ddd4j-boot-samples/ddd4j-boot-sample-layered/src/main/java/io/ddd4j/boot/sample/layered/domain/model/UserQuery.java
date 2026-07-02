@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.layered.domain.model;
 
-import io.ddd4j.core.contract.Query;
+import io.ddd4j.core.cqrs.query.Query;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

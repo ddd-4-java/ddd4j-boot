@@ -3,6 +3,7 @@ package io.ddd4j.boot.sample.layered.infrastructure.persistence;
 import io.ddd4j.boot.sample.layered.domain.model.User;
 import io.ddd4j.boot.sample.layered.domain.model.UserQuery;
 import io.ddd4j.boot.sample.layered.domain.model.UserRepository;
+import io.ddd4j.core.cqrs.query.Query;
 import io.ddd4j.data.mybatis.repository.impl.BaseRepositoryImpl;
 import io.ddd4j.spring.annotation.DomainRepository;
 
@@ -35,7 +36,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserMapper, User, Use
      * 避免 N+1 查询。此处仅做占位。
      */
     @Override
-    public void fill(UserQuery query, List<User> models) {
+    public void fill(Query query, List<User> models) {
         // TODO: 按 query.getFills() 的值决定填充哪些关联数据
     }
 

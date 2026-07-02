@@ -1,15 +1,15 @@
 package io.ddd4j.boot.sample.layered.domain.model;
 
-import io.ddd4j.core.contract.BaseRepository;
-import io.ddd4j.core.contract.Model;
+import io.ddd4j.core.ddd.model.AggregateRoot;
 import io.ddd4j.spring.annotation.DomainEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.util.StringUtils;
 
 /**
  * 用户聚合根（充血模型）。
  *
- * <p>继承 {@link Model} 即获得全套 CRUD 能力：
+ * <p>继承 {@link AggregateRoot} 即获得框架无关的充血持久化能力：
  * <pre>
  * user.save();        // 新增
  * user.update();      // 更新
@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @DomainEntity(aggregateRoot = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class User extends Model {
+public class User extends AggregateRoot<String> {
 
     /**
      * 用户ID
@@ -57,11 +57,9 @@ public class User extends Model {
         this.status = 1;
     }
 
-    /**
-     * 静态访问仓储（充血模型可直接 save/update/delete）。
-     */
-    public static UserRepository repository() {
-        return BaseRepository.of(User.class);
+    @Override
+    public String id() {
+        return id;
     }
 
     /**
@@ -70,7 +68,7 @@ public class User extends Model {
      * @param nickname 新昵称
      */
     public User rename(String nickname) {
-        if (nickname == null || nickname.isBlank()) {
+        if (!StringUtils.hasText(nickname)) {
             throw new IllegalArgumentException("昵称不能为空");
         }
         this.nickname = nickname;

@@ -1,6 +1,6 @@
 package io.ddd4j.boot.mq.rocketmq.publisher;
 
-import io.ddd4j.core.contract.MQEvent;
+import io.ddd4j.core.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.mq.config.Ddd4jMQProperties;
 import io.ddd4j.mq.contract.MQDestination;
