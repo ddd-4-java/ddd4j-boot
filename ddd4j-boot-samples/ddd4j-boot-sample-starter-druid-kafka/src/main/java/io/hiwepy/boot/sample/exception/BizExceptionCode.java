@@ -1,7 +1,7 @@
 package io.hiwepy.boot.sample.exception;
 
 import io.ddd4j.core.ApiRestResponse;
-import io.ddd4j.core.Constants;
+import io.ddd4j.core.constant.Constants;
 import io.ddd4j.core.CustomApiCode;
 import io.ddd4j.core.exception.BizRuntimeException;
 import org.springframework.biz.context.NestedMessageSource;
