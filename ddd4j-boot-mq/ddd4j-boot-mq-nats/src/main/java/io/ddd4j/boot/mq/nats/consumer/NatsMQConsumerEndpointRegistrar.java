@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.nats.consumer;
 
 import io.ddd4j.boot.mq.nats.ack.NatsAcknowledgmentFactory;
-import io.ddd4j.mq.consume.Acknowledgment;
-import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.consume.ack.Acknowledgment;
+import io.ddd4j.mq.consume.ack.NoOpAcknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;
@@ -12,7 +12,6 @@ import io.nats.client.Connection;
 import io.nats.client.Dispatcher;
 import io.nats.client.JetStream;
 import io.nats.client.JetStreamSubscription;
-import io.nats.client.Message;
 import io.nats.client.PushSubscribeOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

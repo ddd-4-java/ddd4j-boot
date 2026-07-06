@@ -5,7 +5,7 @@ import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.message.Destination;
 import io.ddd4j.mq.event.MQEventPublisher;
-import io.ddd4j.mq.serialization.EventSerialization;
+import io.ddd4j.mq.event.MQEventSerialization;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -19,7 +19,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 public class KafkaMQEventPublisher implements MQEventPublisher {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final EventSerialization serialization;
+    private final MQEventSerialization serialization;
     private final MQProperties properties;
 
     /**
@@ -31,7 +31,7 @@ public class KafkaMQEventPublisher implements MQEventPublisher {
      */
     public KafkaMQEventPublisher(
             KafkaTemplate<String, String> kafkaTemplate,
-            EventSerialization serialization,
+            MQEventSerialization serialization,
             MQProperties properties) {
         this.kafkaTemplate = kafkaTemplate;
         this.serialization = serialization;

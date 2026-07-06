@@ -2,7 +2,7 @@ package io.ddd4j.boot.mq.mqtt.consumer;
 
 import io.ddd4j.boot.mq.mqtt.ack.MqttAcknowledgmentFactory;
 import io.ddd4j.boot.mq.mqtt.config.Ddd4jMqttProperties;
-import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.ack.Acknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;
@@ -15,7 +15,6 @@ import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.integration.mqtt.support.MqttHeaders;
-import org.springframework.messaging.Message;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;

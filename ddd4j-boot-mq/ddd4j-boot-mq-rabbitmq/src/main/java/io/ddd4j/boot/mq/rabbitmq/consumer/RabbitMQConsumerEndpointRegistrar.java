@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.rabbitmq.consumer;
 
 import com.rabbitmq.client.Channel;
-import io.ddd4j.mq.consume.Acknowledgment;
-import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.consume.ack.Acknowledgment;
+import io.ddd4j.mq.consume.ack.NoOpAcknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;

@@ -5,9 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import io.ddd4j.core.event.TypeHandlerRegistry;
 import io.ddd4j.data.mybatis.config.BaseDataProperties;
-import io.ddd4j.data.mybatis.typehandler.MybatisTypeHandlerRegistry;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -60,18 +58,6 @@ public class Ddd4jMybatisAutoConfiguration {
         // 防全表攻击（阻止无 WHERE 的 UPDATE/DELETE）
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         return interceptor;
-    }
-
-    /**
-     * 注册 TypeHandlerRegistry（core SPI 的 MyBatis 实现）。
-     *
-     * <p>提供 core 的 {@link TypeHandlerRegistry} 统一查询入口，
-     * 将 MyBatis TypeHandler 的序列化逻辑适配为 core 的 serialize/deserialize 语义。
-     */
-    @Bean
-    @ConditionalOnMissingBean(TypeHandlerRegistry.class)
-    public TypeHandlerRegistry mybatisTypeHandlerRegistry() {
-        return new MybatisTypeHandlerRegistry();
     }
 
 }

@@ -2,8 +2,8 @@ package io.ddd4j.boot.mq.tdmq.config;
 
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.event.MQEventPublisher;
-import io.ddd4j.mq.serialization.JsonSerialization;
-import io.ddd4j.mq.serialization.EventSerialization;
+import io.ddd4j.mq.serialization.JsonMQEventSerialization;
+import io.ddd4j.mq.event.MQEventSerialization;
 import io.ddd4j.mq.tdmq.client.TdmqClient;
 import io.ddd4j.mq.tdmq.client.TdmqClientPlaceholder;
 import io.ddd4j.mq.tdmq.spi.TdmqBrokerAdapter;
@@ -45,9 +45,9 @@ public class TdmqMQBootAutoConfiguration {
             TdmqClient tdmqClient,
             TdmqMQProperties tdmqProperties,
             MQProperties mqProperties,
-            ObjectProvider<EventSerialization> serialization) {
-        EventSerialization eventSerialization = serialization.getIfAvailable(JsonSerialization::new);
-        return new TdmqBrokerAdapter(tdmqClient, tdmqProperties, mqProperties, eventSerialization);
+            ObjectProvider<MQEventSerialization> serialization) {
+        MQEventSerialization MQEventSerialization = serialization.getIfAvailable(JsonMQEventSerialization::new);
+        return new TdmqBrokerAdapter(tdmqClient, tdmqProperties, mqProperties, MQEventSerialization);
     }
 
     @Bean

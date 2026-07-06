@@ -3,7 +3,7 @@ package io.ddd4j.boot.mq.mqttmica.consumer;
 import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttHeaders;
 import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttAcknowledgmentFactory;
 import io.ddd4j.boot.mq.mqttmica.config.Ddd4jMicaMqttProperties;
-import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.ack.Acknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;

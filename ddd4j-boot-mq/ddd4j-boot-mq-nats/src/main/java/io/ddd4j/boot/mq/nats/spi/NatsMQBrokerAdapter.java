@@ -4,7 +4,7 @@ import io.ddd4j.boot.mq.nats.ack.NatsAcknowledgment;
 import io.ddd4j.boot.mq.nats.ack.NatsAcknowledgmentFactory;
 import io.ddd4j.boot.mq.nats.consumer.NatsMQConsumerEndpointRegistrar;
 import io.ddd4j.boot.mq.nats.publisher.NatsMQEventPublisher;
-import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.ack.Acknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;

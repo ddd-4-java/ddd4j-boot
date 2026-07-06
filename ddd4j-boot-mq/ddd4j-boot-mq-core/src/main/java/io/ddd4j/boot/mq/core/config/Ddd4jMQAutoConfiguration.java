@@ -1,12 +1,12 @@
 package io.ddd4j.boot.mq.core.config;
 
 import io.ddd4j.mq.config.MQProperties;
-import io.ddd4j.mq.consume.ConsumerInterceptor;
+import io.ddd4j.mq.consume.interceptor.ConsumerInterceptor;
 import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.listener.ListenerDefinitionRegistry;
 import io.ddd4j.mq.listener.ListenerScanner;
-import io.ddd4j.mq.serialization.JsonSerialization;
-import io.ddd4j.mq.serialization.EventSerialization;
+import io.ddd4j.mq.serialization.JsonMQEventSerialization;
+import io.ddd4j.mq.event.MQEventSerialization;
 import io.ddd4j.mq.serialization.MessageSerialization;
 import io.ddd4j.mq.spi.BrokerAdapter;
 import io.ddd4j.mq.spi.BrokerAdapters;
@@ -36,7 +36,7 @@ public class Ddd4jMQAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(MessageSerialization.class)
     public MessageSerialization mqMessageSerialization() {
-        return new JsonSerialization();
+        return new JsonMQEventSerialization();
     }
 
     /**
@@ -87,10 +87,10 @@ public class Ddd4jMQAutoConfiguration {
             ListenerScanner scanner,
             List<BrokerAdapter> adapters,
             MQProperties props,
-            ObjectProvider<EventSerialization> serializationProvider,
+            ObjectProvider<MQEventSerialization> serializationProvider,
             ObjectProvider<ConsumerInterceptor> interceptorsProvider) {
 
-        EventSerialization serialization = serializationProvider.getIfAvailable(JsonSerialization::new);
+        MQEventSerialization serialization = serializationProvider.getIfAvailable(JsonMQEventSerialization::new);
         List<ConsumerInterceptor> interceptors = interceptorsProvider.orderedStream().toList();
         return new MQListenerRegistrar(scanner, adapters, props, serialization, interceptors);
     }

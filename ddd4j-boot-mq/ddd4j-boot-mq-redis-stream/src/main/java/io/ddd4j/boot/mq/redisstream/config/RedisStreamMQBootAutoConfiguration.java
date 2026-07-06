@@ -4,8 +4,8 @@ import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.redisstream.RedisStreamBrokerAdapter;
 import io.ddd4j.mq.redisstream.RedisStreamMQProperties;
-import io.ddd4j.mq.serialization.JsonSerialization;
-import io.ddd4j.mq.serialization.EventSerialization;
+import io.ddd4j.mq.serialization.JsonMQEventSerialization;
+import io.ddd4j.mq.event.MQEventSerialization;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -37,9 +37,9 @@ public class RedisStreamMQBootAutoConfiguration {
     public RedisStreamBrokerAdapter redisStreamBrokerAdapter(
             RedisStreamMQProperties redisStreamProperties,
             MQProperties mqProperties,
-            ObjectProvider<EventSerialization> serialization) {
-        EventSerialization eventSerialization = serialization.getIfAvailable(JsonSerialization::new);
-        return new RedisStreamBrokerAdapter(redisStreamProperties, mqProperties, eventSerialization, redisStreamProperties.newOperations());
+            ObjectProvider<MQEventSerialization> serialization) {
+        MQEventSerialization MQEventSerialization = serialization.getIfAvailable(JsonMQEventSerialization::new);
+        return new RedisStreamBrokerAdapter(redisStreamProperties, mqProperties, MQEventSerialization, redisStreamProperties.newOperations());
     }
 
     @Bean

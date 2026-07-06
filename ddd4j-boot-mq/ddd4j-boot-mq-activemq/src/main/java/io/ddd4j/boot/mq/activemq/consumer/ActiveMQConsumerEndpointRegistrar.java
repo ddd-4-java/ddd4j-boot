@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.activemq.consumer;
 
-import io.ddd4j.mq.consume.Acknowledgment;
-import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.consume.ack.Acknowledgment;
+import io.ddd4j.mq.consume.ack.NoOpAcknowledgment;
 import io.ddd4j.mq.activemq.ack.ActiveMQAcknowledgment;
 import io.ddd4j.mq.activemq.ack.ActiveMQAcknowledgmentFactory;
 import io.ddd4j.mq.config.MQProperties;

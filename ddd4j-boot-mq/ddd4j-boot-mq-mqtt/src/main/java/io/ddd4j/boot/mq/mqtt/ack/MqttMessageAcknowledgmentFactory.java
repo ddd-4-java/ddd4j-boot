@@ -1,6 +1,7 @@
 package io.ddd4j.boot.mq.mqtt.ack;
 
-import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.consume.ack.NoOpAcknowledgment;
+import io.ddd4j.mq.consume.ack.Acknowledgment;
 import io.ddd4j.mq.message.Message;
 import org.springframework.integration.mqtt.support.MqttHeaders;
 
@@ -75,7 +76,7 @@ public final class MqttAcknowledgmentFactory {
      * @param qosAck         是否为 QoS 级确认
      */
     public record AcknowledgmentOrNoOp(
-            io.ddd4j.mq.consume.Acknowledgment acknowledgment,
+            Acknowledgment acknowledgment,
             boolean qosAck) {
     }
 }

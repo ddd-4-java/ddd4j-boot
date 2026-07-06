@@ -1,11 +1,10 @@
 package io.ddd4j.boot.mq.kafka.mq;
 
-import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.ack.Acknowledgment;
 import io.ddd4j.mq.consume.UnsupportedAckOperationException;
 import io.ddd4j.mq.listener.BrokerType;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.header.Header;
-import org.springframework.kafka.support.Acknowledgment;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;

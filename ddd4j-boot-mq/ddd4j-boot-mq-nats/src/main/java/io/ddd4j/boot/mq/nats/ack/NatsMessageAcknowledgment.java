@@ -1,6 +1,6 @@
 package io.ddd4j.boot.mq.nats.ack;
 
-import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.ack.Acknowledgment;
 import io.ddd4j.mq.consume.UnsupportedAckOperationException;
 import io.ddd4j.mq.listener.BrokerType;
 import io.nats.client.Message;

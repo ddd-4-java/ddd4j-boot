@@ -1,14 +1,14 @@
 package io.ddd4j.boot.mq.kafka.mq;
 
-import io.ddd4j.mq.consume.Acknowledgment;
-import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.consume.ack.Acknowledgment;
+import io.ddd4j.mq.consume.ack.NoOpAcknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;
 import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.listener.BrokerType;
 import io.ddd4j.mq.listener.ListenerDefinition;
-import io.ddd4j.mq.serialization.EventSerialization;
+import io.ddd4j.mq.event.MQEventSerialization;
 import io.ddd4j.mq.spi.BrokerAdapter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -36,7 +36,7 @@ public class KafkaBrokerAdapter implements BrokerAdapter, DisposableBean {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ConsumerFactory<String, String> consumerFactory;
-    private final EventSerialization serialization;
+    private final MQEventSerialization serialization;
     private final List<ConcurrentMessageListenerContainer<String, String>> containers = new CopyOnWriteArrayList<>();
 
     /**
@@ -49,7 +49,7 @@ public class KafkaBrokerAdapter implements BrokerAdapter, DisposableBean {
     public KafkaBrokerAdapter(
             KafkaTemplate<String, String> kafkaTemplate,
             ConsumerFactory<String, String> consumerFactory,
-            EventSerialization serialization) {
+            MQEventSerialization serialization) {
         this.kafkaTemplate = kafkaTemplate;
         this.consumerFactory = consumerFactory;
         this.serialization = serialization;

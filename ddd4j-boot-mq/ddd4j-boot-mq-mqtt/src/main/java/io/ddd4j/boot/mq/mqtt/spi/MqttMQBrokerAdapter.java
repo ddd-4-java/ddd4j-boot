@@ -4,7 +4,7 @@ import io.ddd4j.boot.mq.mqtt.ack.MqttAcknowledgment;
 import io.ddd4j.boot.mq.mqtt.ack.MqttAcknowledgmentFactory;
 import io.ddd4j.boot.mq.mqtt.consumer.MqttMQConsumerEndpointRegistrar;
 import io.ddd4j.boot.mq.mqtt.publisher.MqttMQEventPublisher;
-import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.ack.Acknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;
