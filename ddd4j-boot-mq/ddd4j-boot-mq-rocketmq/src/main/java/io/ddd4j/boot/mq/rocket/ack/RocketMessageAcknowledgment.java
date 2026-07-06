@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.rocket.ack;
 
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
+import io.ddd4j.boot.mq.ack.Acknowledgment;
 import io.ddd4j.boot.mq.ack.UnsupportedAckOperationException;
-import io.ddd4j.boot.mq.registry.MQBrokerType;
+import io.ddd4j.boot.mq.registry.BrokerType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 
@@ -17,15 +17,15 @@ import java.util.function.Consumer;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Slf4j
-public final class RocketMessageAcknowledgment implements MessageAcknowledgment {
+public final class RocketAcknowledgment implements Acknowledgment {
 
     /**
-     * MQMessage headers 中存放 MessageExt 的键
+     * Message headers 中存放 MessageExt 的键
      */
     public static final String HEADER_ROCKET_MESSAGE = "rocket.messageExt";
 
     /**
-     * MQMessage headers 中存放消费结果回调的键
+     * Message headers 中存放消费结果回调的键
      */
     public static final String HEADER_ROCKET_ACK_CALLBACK = "rocket.ackCallback";
 
@@ -39,7 +39,7 @@ public final class RocketMessageAcknowledgment implements MessageAcknowledgment 
      * @param messageExt  RocketMQ 消息扩展
      * @param ackCallback 消费结果回调（true=成功，false=重新消费）
      */
-    public RocketMessageAcknowledgment(MessageExt messageExt, Consumer<Boolean> ackCallback) {
+    public RocketAcknowledgment(MessageExt messageExt, Consumer<Boolean> ackCallback) {
         this.messageExt = Objects.requireNonNull(messageExt, "messageExt");
         this.ackCallback = ackCallback;
     }
@@ -70,8 +70,8 @@ public final class RocketMessageAcknowledgment implements MessageAcknowledgment 
     }
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.ROCKET;
+    public BrokerType brokerType() {
+        return BrokerType.ROCKET;
     }
 
     @Override
@@ -116,7 +116,7 @@ public final class RocketMessageAcknowledgment implements MessageAcknowledgment 
 
     @Override
     public void recover(boolean requeue) {
-        throw new UnsupportedAckOperationException(MQBrokerType.ROCKET, "recover");
+        throw new UnsupportedAckOperationException(BrokerType.ROCKET, "recover");
     }
 
     @Override
@@ -125,7 +125,7 @@ public final class RocketMessageAcknowledgment implements MessageAcknowledgment 
         if (MessageExt.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(messageExt));
         }
-        if (RocketMessageAcknowledgment.class.isAssignableFrom(nativeType)) {
+        if (RocketAcknowledgment.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(this));
         }
         return Optional.empty();

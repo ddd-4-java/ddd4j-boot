@@ -1,13 +1,13 @@
 package io.ddd4j.boot.mq.rocketmq.consumer;
 
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.ack.NoOpMessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.registry.MQListenerDefinition;
-import io.ddd4j.mq.rocketmq.ack.RocketMessageAcknowledgment;
-import io.ddd4j.mq.rocketmq.ack.RocketMessageAcknowledgmentFactory;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.listener.ListenerDefinition;
+import io.ddd4j.mq.rocketmq.ack.RocketAcknowledgment;
+import io.ddd4j.mq.rocketmq.ack.RocketAcknowledgmentFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
@@ -28,7 +28,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 /**
- * 将 {@code @MQEventListener} 动态注册为 RocketMQ {@link DefaultMQPushConsumer}。
+ * 将 {@code @EventListener} 动态注册为 RocketMQ {@link DefaultMQPushConsumer}。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
@@ -37,14 +37,14 @@ import java.util.function.Consumer;
 public class RocketMQConsumerEndpointRegistrar implements AutoCloseable {
 
     private final ApplicationContext applicationContext;
-    private final Ddd4jMQProperties properties;
-    private final List<MQListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
+    private final MQProperties properties;
+    private final List<ListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
     private final List<DefaultMQPushConsumer> consumers = new CopyOnWriteArrayList<>();
 
     /**
      * 注册单个监听器定义。
      */
-    public void register(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void register(ListenerDefinition definition, ConsumerHandler handler) {
         Objects.requireNonNull(definition, "definition");
         Objects.requireNonNull(handler, "handler");
 
@@ -74,11 +74,11 @@ public class RocketMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 批量注册监听器。
      */
-    public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
+    public void registerAll(List<ListenerDefinition> definitions, ConsumerHandler handler) {
         if (definitions == null || definitions.isEmpty()) {
             return;
         }
-        for (MQListenerDefinition definition : definitions) {
+        for (ListenerDefinition definition : definitions) {
             register(definition, handler);
         }
         log.info("RocketMQ consumer registrar initialized with {} listener(s)", registeredDefinitions.size());
@@ -95,34 +95,34 @@ public class RocketMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 返回已登记的监听器定义。
      */
-    public List<MQListenerDefinition> registeredDefinitions() {
+    public List<ListenerDefinition> registeredDefinitions() {
         return List.copyOf(registeredDefinitions);
     }
 
     /**
-     * 处理 RocketMQ 消息并委托 {@link MQConsumerHandler}。
+     * 处理 RocketMQ 消息并委托 {@link ConsumerHandler}。
      */
-    private void onMessage(MessageExt messageExt, MQListenerDefinition definition, MQConsumerHandler handler) {
+    private void onMessage(MessageExt messageExt, ListenerDefinition definition, ConsumerHandler handler) {
         try {
             String payloadText = new String(messageExt.getBody(), StandardCharsets.UTF_8);
             Consumer<Boolean> ackCallback = success -> {
             };
 
-            // 2.0.x：直接构造纯 Java MQMessage，MessageExt 通过 nativeMessage 逃生口传入
+            // 2.0.x：直接构造纯 Java Message，MessageExt 通过 nativeMessage 逃生口传入
             Map<String, Object> headers = new HashMap<>();
-            headers.put(RocketMessageAcknowledgment.HEADER_ROCKET_MESSAGE, messageExt);
-            headers.put(RocketMessageAcknowledgment.HEADER_ROCKET_ACK_CALLBACK, ackCallback);
+            headers.put(RocketAcknowledgment.HEADER_ROCKET_MESSAGE, messageExt);
+            headers.put(RocketAcknowledgment.HEADER_ROCKET_ACK_CALLBACK, ackCallback);
 
-            MQMessage<String> mqMessage = MQMessage.of(
+            Message<String> mqMessage = Message.of(
                     payloadText,
                     headers,
                     messageExt.getMsgId(),
                     messageExt.getKeys(),
                     messageExt);
 
-            MessageAcknowledgment ack = RocketMessageAcknowledgmentFactory.from(mqMessage)
-                    .map(a -> (MessageAcknowledgment) a)
-                    .orElseGet(NoOpMessageAcknowledgment::new);
+            Acknowledgment ack = RocketAcknowledgmentFactory.from(mqMessage)
+                    .map(a -> (Acknowledgment) a)
+                    .orElseGet(NoOpAcknowledgment::new);
             handler.handle(mqMessage, ack);
         } catch (Exception ex) {
             log.error("RocketMQ consumer failed: bean={}, method={}",
@@ -143,7 +143,7 @@ public class RocketMQConsumerEndpointRegistrar implements AutoCloseable {
         }
     }
 
-    private String buildTopic(MQListenerDefinition definition) {
+    private String buildTopic(ListenerDefinition definition) {
         String concat = StringUtils.hasText(definition.getConcat()) ? definition.getConcat() : ".";
         String namespace = StringUtils.hasText(definition.getNamespace())
                 ? definition.getNamespace()

@@ -3,9 +3,9 @@ package io.ddd4j.boot.mq.mqttmica.publisher;
 import io.ddd4j.core.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.kit.lang.StrKit;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.contract.MQDestination;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.message.Destination;
+import io.ddd4j.mq.publish.EventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.mica.mqtt.codec.MqttQoS;
@@ -22,14 +22,14 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class MicaMqttMQEventPublisher implements MQEventPublisher {
+public class MicaMqttEventPublisher implements EventPublisher {
 
     private final MqttClientTemplate mqttClientTemplate;
-    private final Ddd4jMQProperties mqProperties;
+    private final MQProperties mqProperties;
     private final int defaultQos;
 
     @Override
-    public <T extends MQEvent> void publish(T event, MQDestination destination) {
+    public <T extends MQEvent> void publish(T event, Destination destination) {
         Objects.requireNonNull(event, "event");
         Objects.requireNonNull(destination, "destination");
 
@@ -59,7 +59,7 @@ public class MicaMqttMQEventPublisher implements MQEventPublisher {
     /**
      * 根据目的地与 tag 生成 MQTT 主题（namespace.topic[.tag]）。
      */
-    private String buildMqttTopic(MQDestination destination, String eventTag) {
+    private String buildMqttTopic(Destination destination, String eventTag) {
         String namespace = StrKit.isNotBlank(destination.getNamespace())
                 ? destination.getNamespace()
                 : mqProperties.getNamespace();

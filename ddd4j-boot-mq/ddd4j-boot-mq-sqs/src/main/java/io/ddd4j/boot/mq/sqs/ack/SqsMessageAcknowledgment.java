@@ -4,9 +4,9 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.ChangeMessageVisibilityRequest;
 import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import com.amazonaws.services.sqs.model.Message;
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.ack.UnsupportedAckOperationException;
-import io.ddd4j.mq.registry.MQBrokerType;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.UnsupportedAckOperationException;
+import io.ddd4j.mq.listener.BrokerType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Slf4j
-public final class SqsMessageAcknowledgment implements MessageAcknowledgment {
+public final class SqsAcknowledgment implements Acknowledgment {
 
     private final AmazonSQS amazonSqs;
     private final String queueUrl;
@@ -33,7 +33,7 @@ public final class SqsMessageAcknowledgment implements MessageAcknowledgment {
      * @param queueUrl  队列 URL
      * @param message   SQS 消息
      */
-    public SqsMessageAcknowledgment(AmazonSQS amazonSqs, String queueUrl, Message message) {
+    public SqsAcknowledgment(AmazonSQS amazonSqs, String queueUrl, Message message) {
         this.amazonSqs = Objects.requireNonNull(amazonSqs, "amazonSqs");
         this.queueUrl = Objects.requireNonNull(queueUrl, "queueUrl");
         this.message = Objects.requireNonNull(message, "message");
@@ -66,8 +66,8 @@ public final class SqsMessageAcknowledgment implements MessageAcknowledgment {
     }
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.SQS;
+    public BrokerType brokerType() {
+        return BrokerType.SQS;
     }
 
     @Override
@@ -132,7 +132,7 @@ public final class SqsMessageAcknowledgment implements MessageAcknowledgment {
         if (AmazonSQS.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(amazonSqs));
         }
-        if (SqsMessageAcknowledgment.class.isAssignableFrom(nativeType)) {
+        if (SqsAcknowledgment.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(this));
         }
         return Optional.empty();

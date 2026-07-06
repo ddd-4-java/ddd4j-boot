@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.kafka.config;
 
 import io.ddd4j.boot.mq.kafka.mq.Ddd4jKafkaMQAutoConfiguration;
-import io.ddd4j.boot.mq.kafka.mq.KafkaMQBrokerAdapter;
+import io.ddd4j.boot.mq.kafka.mq.KafkaBrokerAdapter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
  * @since 4.0.x
  */
 @AutoConfiguration
-@ConditionalOnClass(KafkaMQBrokerAdapter.class)
+@ConditionalOnClass(KafkaBrokerAdapter.class)
 @Import(Ddd4jKafkaMQAutoConfiguration.class)
 public class KafkaMQBootAutoConfiguration {
 

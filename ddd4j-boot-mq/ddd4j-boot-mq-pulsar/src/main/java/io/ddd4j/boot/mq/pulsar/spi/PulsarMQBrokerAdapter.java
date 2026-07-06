@@ -1,15 +1,15 @@
 package io.ddd4j.boot.mq.pulsar.spi;
 
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
-import io.ddd4j.boot.mq.config.Ddd4jMQProperties;
-import io.ddd4j.boot.mq.consume.MQConsumerHandler;
-import io.ddd4j.boot.mq.contract.MQMessage;
-import io.ddd4j.boot.mq.pulsar.ack.PulsarMessageAcknowledgment;
-import io.ddd4j.boot.mq.pulsar.ack.PulsarMessageAcknowledgmentFactory;
+import io.ddd4j.boot.mq.ack.Acknowledgment;
+import io.ddd4j.boot.mq.config.MQProperties;
+import io.ddd4j.boot.mq.consume.ConsumerHandler;
+import io.ddd4j.boot.mq.contract.Message;
+import io.ddd4j.boot.mq.pulsar.ack.PulsarAcknowledgment;
+import io.ddd4j.boot.mq.pulsar.ack.PulsarAcknowledgmentFactory;
 import io.ddd4j.boot.mq.pulsar.consumer.PulsarConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.registry.MQBrokerType;
-import io.ddd4j.boot.mq.registry.MQListenerDefinition;
-import io.ddd4j.boot.mq.spi.MQBrokerAdapter;
+import io.ddd4j.boot.mq.registry.BrokerType;
+import io.ddd4j.boot.mq.registry.ListenerDefinition;
+import io.ddd4j.boot.mq.spi.BrokerAdapter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -19,36 +19,36 @@ import lombok.RequiredArgsConstructor;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @RequiredArgsConstructor
-public class PulsarMQBrokerAdapter implements MQBrokerAdapter {
+public class PulsarBrokerAdapter implements BrokerAdapter {
 
-    private final Ddd4jMQProperties properties;
+    private final MQProperties properties;
     private final PulsarConsumerEndpointRegistrar consumerEndpointRegistrar;
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.PULSAR;
+    public BrokerType brokerType() {
+        return BrokerType.PULSAR;
     }
 
     @Override
-    public void registerConsumer(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void registerConsumer(ListenerDefinition definition, ConsumerHandler handler) {
         consumerEndpointRegistrar.register(definition, handler);
     }
 
     @Override
-    public MessageAcknowledgment resolveAcknowledgment(MQMessage<?> message) {
-        PulsarMessageAcknowledgment pulsarAck = message.nativeMessage(PulsarMessageAcknowledgment.class);
+    public Acknowledgment resolveAcknowledgment(Message<?> message) {
+        PulsarAcknowledgment pulsarAck = message.nativeMessage(PulsarAcknowledgment.class);
         if (pulsarAck != null) {
             return pulsarAck;
         }
-        return PulsarMessageAcknowledgmentFactory.from(message).orElse(null);
+        return PulsarAcknowledgmentFactory.from(message).orElse(null);
     }
 
     @Override
-    public boolean supports(MQBrokerType configured) {
-        return MQBrokerType.PULSAR == configured;
+    public boolean supports(BrokerType configured) {
+        return BrokerType.PULSAR == configured;
     }
 
-    public Ddd4jMQProperties properties() {
+    public MQProperties properties() {
         return properties;
     }
 }

@@ -2,9 +2,9 @@ package io.ddd4j.boot.mq.rabbitmq.publisher;
 
 import io.ddd4j.core.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.contract.MQDestination;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.message.Destination;
+import io.ddd4j.mq.publish.EventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -23,13 +23,13 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class RabbitMQEventPublisher implements MQEventPublisher {
+public class RabbitEventPublisher implements EventPublisher {
 
     private final RabbitTemplate rabbitTemplate;
-    private final Ddd4jMQProperties properties;
+    private final MQProperties properties;
 
     @Override
-    public <T extends MQEvent> void publish(T event, MQDestination destination) {
+    public <T extends MQEvent> void publish(T event, Destination destination) {
         Objects.requireNonNull(event, "event");
         Objects.requireNonNull(destination, "destination");
 
@@ -61,7 +61,7 @@ public class RabbitMQEventPublisher implements MQEventPublisher {
     /**
      * 根据目的地与 tag 生成路由键。
      */
-    private String buildRoutingKey(MQDestination destination, String eventTag) {
+    private String buildRoutingKey(Destination destination, String eventTag) {
         String namespace = StringUtils.hasText(destination.getNamespace())
                 ? destination.getNamespace()
                 : properties.getNamespace();

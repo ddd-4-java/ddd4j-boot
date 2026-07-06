@@ -1,9 +1,9 @@
 package io.ddd4j.boot.mq.ons.ack;
 
 import com.aliyun.openservices.ons.api.Action;
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.ack.UnsupportedAckOperationException;
-import io.ddd4j.mq.registry.MQBrokerType;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.UnsupportedAckOperationException;
+import io.ddd4j.mq.listener.BrokerType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Slf4j
-public final class OnsMessageAcknowledgment implements MessageAcknowledgment {
+public final class OnsAcknowledgment implements Acknowledgment {
 
     private final String messageId;
     private final String correlationId;
@@ -35,7 +35,7 @@ public final class OnsMessageAcknowledgment implements MessageAcknowledgment {
      * @param commitAction    提交成功回调
      * @param reconsumeAction 重新消费回调
      */
-    public OnsMessageAcknowledgment(String messageId,
+    public OnsAcknowledgment(String messageId,
                                     String correlationId,
                                     long deliveryTag,
                                     Supplier<Action> commitAction,
@@ -73,8 +73,8 @@ public final class OnsMessageAcknowledgment implements MessageAcknowledgment {
     }
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.ONS;
+    public BrokerType brokerType() {
+        return BrokerType.ONS;
     }
 
     @Override
@@ -133,7 +133,7 @@ public final class OnsMessageAcknowledgment implements MessageAcknowledgment {
         if (Action.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(acknowledged.get() ? Action.CommitMessage : Action.ReconsumeLater));
         }
-        if (OnsMessageAcknowledgment.class.isAssignableFrom(nativeType)) {
+        if (OnsAcknowledgment.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(this));
         }
         return Optional.empty();

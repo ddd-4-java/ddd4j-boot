@@ -1,12 +1,12 @@
 package io.ddd4j.boot.mq.tdmq.config;
 
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.publish.MQEventPublisher;
-import io.ddd4j.mq.serialization.JsonMQMessageSerialization;
-import io.ddd4j.mq.serialization.MQEventSerialization;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.serialization.JsonSerialization;
+import io.ddd4j.mq.serialization.EventSerialization;
 import io.ddd4j.mq.tdmq.client.TdmqClient;
 import io.ddd4j.mq.tdmq.client.TdmqClientPlaceholder;
-import io.ddd4j.mq.tdmq.spi.TdmqMQBrokerAdapter;
+import io.ddd4j.mq.tdmq.spi.TdmqBrokerAdapter;
 import io.ddd4j.mq.tdmq.spi.TdmqMQProperties;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Bean;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @AutoConfiguration
-@ConditionalOnClass(TdmqMQBrokerAdapter.class)
+@ConditionalOnClass(TdmqBrokerAdapter.class)
 public class TdmqMQBootAutoConfiguration {
 
     @Bean
@@ -41,20 +41,20 @@ public class TdmqMQBootAutoConfiguration {
 
     @Bean(destroyMethod = "close")
     @ConditionalOnMissingBean
-    public TdmqMQBrokerAdapter tdmqMQBrokerAdapter(
+    public TdmqBrokerAdapter tdmqBrokerAdapter(
             TdmqClient tdmqClient,
             TdmqMQProperties tdmqProperties,
-            Ddd4jMQProperties mqProperties,
-            ObjectProvider<MQEventSerialization> serialization) {
-        MQEventSerialization eventSerialization = serialization.getIfAvailable(JsonMQMessageSerialization::new);
-        return new TdmqMQBrokerAdapter(tdmqClient, tdmqProperties, mqProperties, eventSerialization);
+            MQProperties mqProperties,
+            ObjectProvider<EventSerialization> serialization) {
+        EventSerialization eventSerialization = serialization.getIfAvailable(JsonSerialization::new);
+        return new TdmqBrokerAdapter(tdmqClient, tdmqProperties, mqProperties, eventSerialization);
     }
 
     @Bean
-    @ConditionalOnMissingBean(name = "tdmqMQEventPublisher")
-    public MQEventPublisher tdmqMQEventPublisher(
-            TdmqMQBrokerAdapter tdmqMQBrokerAdapter,
-            Ddd4jMQProperties mqProperties) {
-        return tdmqMQBrokerAdapter.createPublisher(mqProperties);
+    @ConditionalOnMissingBean(name = "tdmqEventPublisher")
+    public EventPublisher tdmqEventPublisher(
+            TdmqBrokerAdapter tdmqBrokerAdapter,
+            MQProperties mqProperties) {
+        return tdmqBrokerAdapter.createPublisher(mqProperties);
     }
 }

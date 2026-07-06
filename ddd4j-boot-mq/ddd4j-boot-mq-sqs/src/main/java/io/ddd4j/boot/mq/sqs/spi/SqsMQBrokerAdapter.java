@@ -2,18 +2,18 @@ package io.ddd4j.boot.mq.sqs.spi;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.Message;
-import io.ddd4j.boot.mq.sqs.ack.SqsMessageAcknowledgment;
-import io.ddd4j.boot.mq.sqs.ack.SqsMessageAcknowledgmentFactory;
+import io.ddd4j.boot.mq.sqs.ack.SqsAcknowledgment;
+import io.ddd4j.boot.mq.sqs.ack.SqsAcknowledgmentFactory;
 import io.ddd4j.boot.mq.sqs.consumer.SqsMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.sqs.publisher.SqsMQEventPublisher;
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.publish.MQEventPublisher;
-import io.ddd4j.mq.registry.MQBrokerType;
-import io.ddd4j.mq.registry.MQListenerDefinition;
-import io.ddd4j.mq.spi.MQBrokerAdapter;
+import io.ddd4j.boot.mq.sqs.publisher.SqsEventPublisher;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.listener.BrokerType;
+import io.ddd4j.mq.listener.ListenerDefinition;
+import io.ddd4j.mq.spi.BrokerAdapter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Objects;
@@ -24,50 +24,50 @@ import java.util.Objects;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @RequiredArgsConstructor
-public class SqsMQBrokerAdapter implements MQBrokerAdapter {
+public class SqsBrokerAdapter implements BrokerAdapter {
 
     private final AmazonSQS amazonSqs;
     private final String defaultQueueUrl;
-    private final Ddd4jMQProperties properties;
+    private final MQProperties properties;
     private final SqsMQConsumerEndpointRegistrar consumerEndpointRegistrar;
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.SQS;
+    public BrokerType brokerType() {
+        return BrokerType.SQS;
     }
 
     @Override
-    public MQEventPublisher createPublisher(Ddd4jMQProperties props) {
-        return new SqsMQEventPublisher(amazonSqs, defaultQueueUrl, props);
+    public EventPublisher createPublisher(MQProperties props) {
+        return new SqsEventPublisher(amazonSqs, defaultQueueUrl, props);
     }
 
     @Override
-    public void registerConsumer(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void registerConsumer(ListenerDefinition definition, ConsumerHandler handler) {
         consumerEndpointRegistrar.register(definition, handler);
     }
 
     @Override
-    public MessageAcknowledgment resolveAcknowledgment(MQMessage<?> message) {
+    public Acknowledgment resolveAcknowledgment(Message<?> message) {
         // 逻辑块：优先从 SQS 原生 Message 解析确认
         Message sqsMessage = message.nativeMessage(Message.class);
         if (Objects.nonNull(sqsMessage)) {
-            return SqsMessageAcknowledgmentFactory.from(message)
-                    .map(ack -> (MessageAcknowledgment) ack)
+            return SqsAcknowledgmentFactory.from(message)
+                    .map(ack -> (Acknowledgment) ack)
                     .orElse(null);
         }
-        SqsMessageAcknowledgment sqsAck = message.nativeMessage(SqsMessageAcknowledgment.class);
+        SqsAcknowledgment sqsAck = message.nativeMessage(SqsAcknowledgment.class);
         return sqsAck;
     }
 
     @Override
-    public boolean supports(MQBrokerType configured) {
-        return MQBrokerType.SQS == configured;
+    public boolean supports(BrokerType configured) {
+        return BrokerType.SQS == configured;
     }
 
     /**
      * 返回当前 MQ 配置。
      */
-    public Ddd4jMQProperties properties() {
+    public MQProperties properties() {
         return properties;
     }
 }

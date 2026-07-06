@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.activemq.ack;
 
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
+import io.ddd4j.boot.mq.ack.Acknowledgment;
 import io.ddd4j.boot.mq.ack.UnsupportedAckOperationException;
-import io.ddd4j.boot.mq.registry.MQBrokerType;
+import io.ddd4j.boot.mq.registry.BrokerType;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
 import jakarta.jms.Session;
@@ -18,15 +18,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Slf4j
-public final class ActiveMQMessageAcknowledgment implements MessageAcknowledgment {
+public final class ActiveMQAcknowledgment implements Acknowledgment {
 
     /**
-     * MQMessage headers 中存放 JMS Message 的键
+     * Message headers 中存放 JMS Message 的键
      */
     public static final String HEADER_JMS_MESSAGE = "jms.message";
 
     /**
-     * MQMessage headers 中存放 JMS Session 的键
+     * Message headers 中存放 JMS Session 的键
      */
     public static final String HEADER_JMS_SESSION = "jms.session";
 
@@ -40,7 +40,7 @@ public final class ActiveMQMessageAcknowledgment implements MessageAcknowledgmen
      * @param jmsMessage JMS 消息
      * @param session    JMS 会话
      */
-    public ActiveMQMessageAcknowledgment(Message jmsMessage, Session session) {
+    public ActiveMQAcknowledgment(Message jmsMessage, Session session) {
         this.jmsMessage = Objects.requireNonNull(jmsMessage, "jmsMessage");
         this.session = session;
     }
@@ -83,8 +83,8 @@ public final class ActiveMQMessageAcknowledgment implements MessageAcknowledgmen
     }
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.ACTIVEMQ;
+    public BrokerType brokerType() {
+        return BrokerType.ACTIVEMQ;
     }
 
     @Override
@@ -96,7 +96,7 @@ public final class ActiveMQMessageAcknowledgment implements MessageAcknowledgmen
     public void ack(boolean multiple) {
         ensureNotAcknowledged();
         if (multiple) {
-            throw new UnsupportedAckOperationException(MQBrokerType.ACTIVEMQ, "ack(multiple=true)");
+            throw new UnsupportedAckOperationException(BrokerType.ACTIVEMQ, "ack(multiple=true)");
         }
         try {
             // 逻辑块：CLIENT_ACKNOWLEDGE 模式下确认单条消息
@@ -116,7 +116,7 @@ public final class ActiveMQMessageAcknowledgment implements MessageAcknowledgmen
     public void nack(boolean multiple, boolean requeue) {
         ensureNotAcknowledged();
         if (multiple) {
-            throw new UnsupportedAckOperationException(MQBrokerType.ACTIVEMQ, "nack(multiple=true)");
+            throw new UnsupportedAckOperationException(BrokerType.ACTIVEMQ, "nack(multiple=true)");
         }
         if (requeue && session != null) {
             try {
@@ -140,7 +140,7 @@ public final class ActiveMQMessageAcknowledgment implements MessageAcknowledgmen
     public void recover(boolean requeue) {
         ensureNotAcknowledged();
         if (session == null) {
-            throw new UnsupportedAckOperationException(MQBrokerType.ACTIVEMQ, "recover without session");
+            throw new UnsupportedAckOperationException(BrokerType.ACTIVEMQ, "recover without session");
         }
         try {
             // 逻辑块：session.recover 恢复未确认消息
@@ -160,7 +160,7 @@ public final class ActiveMQMessageAcknowledgment implements MessageAcknowledgmen
         if (Session.class.isAssignableFrom(nativeType)) {
             return session == null ? Optional.empty() : Optional.of(nativeType.cast(session));
         }
-        if (ActiveMQMessageAcknowledgment.class.isAssignableFrom(nativeType)) {
+        if (ActiveMQAcknowledgment.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(this));
         }
         return Optional.empty();

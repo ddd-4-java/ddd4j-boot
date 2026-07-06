@@ -6,9 +6,9 @@ import com.aliyun.openservices.ons.api.SendResult;
 import io.ddd4j.core.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.kit.lang.StrKit;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.contract.MQDestination;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.message.Destination;
+import io.ddd4j.mq.publish.EventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,13 +22,13 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class OnsMQEventPublisher implements MQEventPublisher {
+public class OnsEventPublisher implements EventPublisher {
 
     private final Producer producer;
-    private final Ddd4jMQProperties properties;
+    private final MQProperties properties;
 
     @Override
-    public <T extends MQEvent> void publish(T event, MQDestination destination) {
+    public <T extends MQEvent> void publish(T event, Destination destination) {
         Objects.requireNonNull(event, "event");
         Objects.requireNonNull(destination, "destination");
         if (Objects.isNull(producer)) {
@@ -60,7 +60,7 @@ public class OnsMQEventPublisher implements MQEventPublisher {
     /**
      * 根据目的地生成 ONS Topic（namespace.topic）。
      */
-    private String buildTopic(MQDestination destination) {
+    private String buildTopic(Destination destination) {
         if (StrKit.isNotBlank(destination.getNamespace())) {
             return destination.getNamespace() + "." + destination.getTopic();
         }

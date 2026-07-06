@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.pulsar.autoconfigure;
 
-import io.ddd4j.boot.mq.pulsar.publisher.PulsarMQEventPublisher;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.boot.mq.pulsar.publisher.PulsarEventPublisher;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.publish.EventPublisher;
 import io.ddd4j.mq.pulsar.consumer.PulsarConsumerEndpointRegistrar;
-import io.ddd4j.mq.pulsar.spi.PulsarMQBrokerAdapter;
+import io.ddd4j.mq.pulsar.spi.PulsarBrokerAdapter;
 import org.apache.pulsar.client.api.PulsarClient;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +24,7 @@ public class Ddd4jPulsarMQAutoConfiguration {
     @Bean
     public PulsarConsumerEndpointRegistrar pulsarConsumerEndpointRegistrar(
             ApplicationContext applicationContext,
-            Ddd4jMQProperties properties) {
+            MQProperties properties) {
         return new PulsarConsumerEndpointRegistrar(applicationContext, properties);
     }
 
@@ -32,18 +32,18 @@ public class Ddd4jPulsarMQAutoConfiguration {
      * 注册 Pulsar Broker 适配器。
      */
     @Bean
-    public PulsarMQBrokerAdapter pulsarMQBrokerAdapter(
-            Ddd4jMQProperties properties,
+    public PulsarBrokerAdapter pulsarBrokerAdapter(
+            MQProperties properties,
             PulsarConsumerEndpointRegistrar consumerEndpointRegistrar) {
-        return new PulsarMQBrokerAdapter(properties, consumerEndpointRegistrar);
+        return new PulsarBrokerAdapter(properties, consumerEndpointRegistrar);
     }
 
     /**
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public MQEventPublisher pulsarMQEventPublisher(
-            Ddd4jMQProperties properties) {
-        return new PulsarMQEventPublisher(pulsarTemplate, properties);
+    public EventPublisher pulsarEventPublisher(
+            MQProperties properties) {
+        return new PulsarEventPublisher(pulsarTemplate, properties);
     }
 }

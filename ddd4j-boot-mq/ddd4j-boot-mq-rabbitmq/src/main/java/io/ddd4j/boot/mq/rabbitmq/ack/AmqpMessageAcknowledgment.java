@@ -1,9 +1,9 @@
 package io.ddd4j.boot.mq.rabbitmq.ack;
 
 import com.rabbitmq.client.Channel;
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.ack.UnsupportedAckOperationException;
-import io.ddd4j.mq.registry.MQBrokerType;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.UnsupportedAckOperationException;
+import io.ddd4j.mq.listener.BrokerType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Slf4j
-public final class AmqpMessageAcknowledgment implements MessageAcknowledgment {
+public final class AmqpAcknowledgment implements Acknowledgment {
 
     private final Channel channel;
     private final long deliveryTag;
@@ -33,7 +33,7 @@ public final class AmqpMessageAcknowledgment implements MessageAcknowledgment {
      * @param messageId     消息 ID
      * @param correlationId 关联 ID
      */
-    public AmqpMessageAcknowledgment(Channel channel, long deliveryTag, String messageId, String correlationId) {
+    public AmqpAcknowledgment(Channel channel, long deliveryTag, String messageId, String correlationId) {
         this.channel = Objects.requireNonNull(channel, "channel");
         this.deliveryTag = deliveryTag;
         this.messageId = messageId;
@@ -66,8 +66,8 @@ public final class AmqpMessageAcknowledgment implements MessageAcknowledgment {
     }
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.RABBIT;
+    public BrokerType brokerType() {
+        return BrokerType.RABBIT;
     }
 
     @Override
@@ -134,7 +134,7 @@ public final class AmqpMessageAcknowledgment implements MessageAcknowledgment {
         if (Channel.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(channel));
         }
-        if (AmqpMessageAcknowledgment.class.isAssignableFrom(nativeType)) {
+        if (AmqpAcknowledgment.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(this));
         }
         return Optional.empty();

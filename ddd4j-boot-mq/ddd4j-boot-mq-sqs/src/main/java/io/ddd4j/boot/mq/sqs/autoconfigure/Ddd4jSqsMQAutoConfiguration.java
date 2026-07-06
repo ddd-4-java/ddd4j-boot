@@ -4,10 +4,10 @@ import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import io.ddd4j.boot.mq.sqs.consumer.SqsMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.sqs.publisher.SqsMQEventPublisher;
-import io.ddd4j.boot.mq.sqs.spi.SqsMQBrokerAdapter;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.boot.mq.sqs.publisher.SqsEventPublisher;
+import io.ddd4j.boot.mq.sqs.spi.SqsBrokerAdapter;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.publish.EventPublisher;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -42,7 +42,7 @@ public class Ddd4jSqsMQAutoConfiguration {
     public SqsMQConsumerEndpointRegistrar sqsMQConsumerEndpointRegistrar(
             ObjectProvider<AmazonSQS> amazonSqsProvider,
             @Value("${ddd4j.mq.sqs.queue-url:}") String queueUrl,
-            Ddd4jMQProperties properties) {
+            MQProperties properties) {
         return new SqsMQConsumerEndpointRegistrar(amazonSqsProvider.getIfAvailable(), queueUrl, properties);
     }
 
@@ -50,22 +50,22 @@ public class Ddd4jSqsMQAutoConfiguration {
      * 注册 SQS Broker 适配器。
      */
     @Bean
-    public SqsMQBrokerAdapter sqsMQBrokerAdapter(
+    public SqsBrokerAdapter sqsBrokerAdapter(
             ObjectProvider<AmazonSQS> amazonSqsProvider,
             @Value("${ddd4j.mq.sqs.queue-url:}") String queueUrl,
-            Ddd4jMQProperties properties,
+            MQProperties properties,
             SqsMQConsumerEndpointRegistrar consumerEndpointRegistrar) {
-        return new SqsMQBrokerAdapter(amazonSqsProvider.getIfAvailable(), queueUrl, properties, consumerEndpointRegistrar);
+        return new SqsBrokerAdapter(amazonSqsProvider.getIfAvailable(), queueUrl, properties, consumerEndpointRegistrar);
     }
 
     /**
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public MQEventPublisher sqsMQEventPublisher(
+    public EventPublisher sqsEventPublisher(
             ObjectProvider<AmazonSQS> amazonSqsProvider,
             @Value("${ddd4j.mq.sqs.queue-url:}") String queueUrl,
-            Ddd4jMQProperties properties) {
-        return new SqsMQEventPublisher(amazonSqsProvider.getIfAvailable(), queueUrl, properties);
+            MQProperties properties) {
+        return new SqsEventPublisher(amazonSqsProvider.getIfAvailable(), queueUrl, properties);
     }
 }

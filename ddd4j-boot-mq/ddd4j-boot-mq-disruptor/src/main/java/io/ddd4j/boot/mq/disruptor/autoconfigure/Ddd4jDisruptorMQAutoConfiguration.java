@@ -1,13 +1,13 @@
 package io.ddd4j.boot.mq.disruptor.autoconfigure;
 
-import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.disruptor.config.DisruptorMQProperties;
 import io.ddd4j.mq.disruptor.consumer.DisruptorMQConsumerEndpointRegistrar;
 import io.ddd4j.mq.disruptor.core.DisruptorMQBus;
 import io.ddd4j.mq.disruptor.core.DisruptorMQEventDispatcher;
-import io.ddd4j.mq.disruptor.publisher.DisruptorMQEventPublisher;
-import io.ddd4j.mq.disruptor.spi.DisruptorMQBrokerAdapter;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.disruptor.publisher.DisruptorEventPublisher;
+import io.ddd4j.mq.disruptor.spi.DisruptorBrokerAdapter;
+import io.ddd4j.mq.publish.EventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -38,17 +38,17 @@ public class Ddd4jDisruptorMQAutoConfiguration {
     }
 
     @Bean
-    public DisruptorMQBrokerAdapter disruptorMQBrokerAdapter(
+    public DisruptorBrokerAdapter disruptorBrokerAdapter(
             DisruptorMQBus disruptorMQBus,
-            Ddd4jMQProperties properties,
+            MQProperties properties,
             DisruptorMQConsumerEndpointRegistrar consumerEndpointRegistrar) {
-        return new DisruptorMQBrokerAdapter(disruptorMQBus, properties, consumerEndpointRegistrar);
+        return new DisruptorBrokerAdapter(disruptorMQBus, properties, consumerEndpointRegistrar);
     }
 
     @Bean
-    public MQEventPublisher disruptorMQEventPublisher(
+    public EventPublisher disruptorEventPublisher(
             DisruptorMQBus disruptorMQBus,
-            Ddd4jMQProperties properties) {
-        return new DisruptorMQEventPublisher(disruptorMQBus, properties);
+            MQProperties properties) {
+        return new DisruptorEventPublisher(disruptorMQBus, properties);
     }
 }

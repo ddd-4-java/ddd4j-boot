@@ -1,11 +1,11 @@
 package io.ddd4j.boot.mq.redisstream.config;
 
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.publish.MQEventPublisher;
-import io.ddd4j.mq.redisstream.RedisStreamMQBrokerAdapter;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.redisstream.RedisStreamBrokerAdapter;
 import io.ddd4j.mq.redisstream.RedisStreamMQProperties;
-import io.ddd4j.mq.serialization.JsonMQMessageSerialization;
-import io.ddd4j.mq.serialization.MQEventSerialization;
+import io.ddd4j.mq.serialization.JsonSerialization;
+import io.ddd4j.mq.serialization.EventSerialization;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Bean;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @AutoConfiguration
-@ConditionalOnClass(RedisStreamMQBrokerAdapter.class)
+@ConditionalOnClass(RedisStreamBrokerAdapter.class)
 public class RedisStreamMQBootAutoConfiguration {
 
     @Bean
@@ -34,19 +34,19 @@ public class RedisStreamMQBootAutoConfiguration {
 
     @Bean(destroyMethod = "close")
     @ConditionalOnMissingBean
-    public RedisStreamMQBrokerAdapter redisStreamMQBrokerAdapter(
+    public RedisStreamBrokerAdapter redisStreamBrokerAdapter(
             RedisStreamMQProperties redisStreamProperties,
-            Ddd4jMQProperties mqProperties,
-            ObjectProvider<MQEventSerialization> serialization) {
-        MQEventSerialization eventSerialization = serialization.getIfAvailable(JsonMQMessageSerialization::new);
-        return new RedisStreamMQBrokerAdapter(redisStreamProperties, mqProperties, eventSerialization, redisStreamProperties.newOperations());
+            MQProperties mqProperties,
+            ObjectProvider<EventSerialization> serialization) {
+        EventSerialization eventSerialization = serialization.getIfAvailable(JsonSerialization::new);
+        return new RedisStreamBrokerAdapter(redisStreamProperties, mqProperties, eventSerialization, redisStreamProperties.newOperations());
     }
 
     @Bean
-    @ConditionalOnMissingBean(name = "redisStreamMQEventPublisher")
-    public MQEventPublisher redisStreamMQEventPublisher(
-            RedisStreamMQBrokerAdapter redisStreamMQBrokerAdapter,
-            Ddd4jMQProperties mqProperties) {
-        return redisStreamMQBrokerAdapter.createPublisher(mqProperties);
+    @ConditionalOnMissingBean(name = "redisStreamEventPublisher")
+    public EventPublisher redisStreamEventPublisher(
+            RedisStreamBrokerAdapter redisStreamBrokerAdapter,
+            MQProperties mqProperties) {
+        return redisStreamBrokerAdapter.createPublisher(mqProperties);
     }
 }

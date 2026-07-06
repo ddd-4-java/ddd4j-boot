@@ -1,13 +1,13 @@
 package io.ddd4j.boot.mq.mqtt.consumer;
 
-import io.ddd4j.boot.mq.mqtt.ack.MqttMessageAcknowledgmentFactory;
+import io.ddd4j.boot.mq.mqtt.ack.MqttAcknowledgmentFactory;
 import io.ddd4j.boot.mq.mqtt.config.Ddd4jMqttProperties;
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.registry.MQListenerDefinition;
-import io.ddd4j.mq.registry.MQListenerEndpointNaming;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.listener.ListenerDefinition;
+import io.ddd4j.mq.listener.EndpointNaming;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.integration.channel.DirectChannel;
@@ -26,7 +26,7 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 将 {@code @MQEventListener} 动态注册为 MQTT 入站适配器（Eclipse Paho）。
+ * 将 {@code @EventListener} 动态注册为 MQTT 入站适配器（Eclipse Paho）。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
@@ -35,9 +35,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class MqttMQConsumerEndpointRegistrar implements AutoCloseable {
 
     private final MqttPahoClientFactory mqttClientFactory;
-    private final Ddd4jMQProperties mqProperties;
+    private final MQProperties mqProperties;
     private final Ddd4jMqttProperties mqttProperties;
-    private final List<MQListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
+    private final List<ListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
     private final List<MqttPahoMessageDrivenChannelAdapter> adapters = new CopyOnWriteArrayList<>();
 
     /**
@@ -46,11 +46,11 @@ public class MqttMQConsumerEndpointRegistrar implements AutoCloseable {
      * @param definition 监听器定义
      * @param handler    消费处理函数
      */
-    public void register(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void register(ListenerDefinition definition, ConsumerHandler handler) {
         Objects.requireNonNull(definition, "definition");
         Objects.requireNonNull(handler, "handler");
 
-        String mqttTopic = MQListenerEndpointNaming.physicalTopic(mqProperties, definition);
+        String mqttTopic = EndpointNaming.physicalTopic(mqProperties, definition);
         String clientId = buildClientId(definition);
         int qos = resolveQos();
 
@@ -75,12 +75,12 @@ public class MqttMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 批量注册监听器（启动阶段调用）。
      */
-    public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
+    public void registerAll(List<ListenerDefinition> definitions, ConsumerHandler handler) {
         if (Objects.isNull(definitions) || definitions.isEmpty()) {
-            log.debug("No @MQEventListener definitions found for MQTT");
+            log.debug("No @EventListener definitions found for MQTT");
             return;
         }
-        for (MQListenerDefinition definition : definitions) {
+        for (ListenerDefinition definition : definitions) {
             register(definition, handler);
         }
         log.info("MQTT consumer registrar initialized with {} listener(s)", registeredDefinitions.size());
@@ -101,14 +101,14 @@ public class MqttMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 返回已登记的监听器定义（只读视图）。
      */
-    public List<MQListenerDefinition> registeredDefinitions() {
+    public List<ListenerDefinition> registeredDefinitions() {
         return List.copyOf(registeredDefinitions);
     }
 
     /**
-     * 处理 MQTT 消息并委托 {@link MQConsumerHandler}。
+     * 处理 MQTT 消息并委托 {@link ConsumerHandler}。
      */
-    private void onMessage(Message<?> springMessage, MQListenerDefinition definition, MQConsumerHandler handler) {
+    private void onMessage(Message<?> springMessage, ListenerDefinition definition, ConsumerHandler handler) {
         try {
             String payloadText = extractPayload(springMessage);
             Map<String, Object> headers = new HashMap<>(springMessage.getHeaders());
@@ -118,17 +118,17 @@ public class MqttMQConsumerEndpointRegistrar implements AutoCloseable {
                 topic = headerAsString(headers, MqttHeaders.TOPIC);
             }
 
-            // 2.0.x：构造纯 Java MQMessage，Spring Message 通过 nativeMessage 逃生口传入（Spring Integration 回调签名约束）
-            MQMessage<String> mqMessage = MQMessage.of(
+            // 2.0.x：构造纯 Java Message，Spring Message 通过 nativeMessage 逃生口传入（Spring Integration 回调签名约束）
+            Message<String> mqMessage = Message.of(
                     payloadText,
                     headers,
                     messageId,
                     topic,
                     springMessage);
 
-            MqttMessageAcknowledgmentFactory.MessageAcknowledgmentOrNoOp ackWrapper =
-                    MqttMessageAcknowledgmentFactory.resolve(mqMessage);
-            MessageAcknowledgment ack = ackWrapper.acknowledgment();
+            MqttAcknowledgmentFactory.AcknowledgmentOrNoOp ackWrapper =
+                    MqttAcknowledgmentFactory.resolve(mqMessage);
+            Acknowledgment ack = ackWrapper.acknowledgment();
 
             handler.handle(mqMessage, ack);
 
@@ -159,8 +159,8 @@ public class MqttMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 构建唯一客户端 ID。
      */
-    private String buildClientId(MQListenerDefinition definition) {
-        String endpointId = MQListenerEndpointNaming.endpointId("mqtt", definition);
+    private String buildClientId(ListenerDefinition definition) {
+        String endpointId = EndpointNaming.endpointId("mqtt", definition);
         return mqttProperties.getSubscribeClientIdPrefix() + "-" + endpointId + "-"
                 + UUID.randomUUID().toString().substring(0, 8);
     }
@@ -175,7 +175,7 @@ public class MqttMQConsumerEndpointRegistrar implements AutoCloseable {
         return 0;
     }
 
-    private String beanLabel(MQListenerDefinition definition) {
+    private String beanLabel(ListenerDefinition definition) {
         if (Objects.nonNull(definition.getBean())) {
             return definition.getBean().getClass().getSimpleName();
         }

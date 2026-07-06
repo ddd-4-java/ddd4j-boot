@@ -2,9 +2,9 @@ package io.ddd4j.boot.mq.rocketmq.publisher;
 
 import io.ddd4j.core.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.contract.MQDestination;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.message.Destination;
+import io.ddd4j.mq.publish.EventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -24,13 +24,13 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class RocketMQEventPublisher implements MQEventPublisher {
+public class RocketEventPublisher implements EventPublisher {
 
     private final RocketMQTemplate rocketMQTemplate;
-    private final Ddd4jMQProperties properties;
+    private final MQProperties properties;
 
     @Override
-    public <T extends MQEvent> void publish(T event, MQDestination destination) {
+    public <T extends MQEvent> void publish(T event, Destination destination) {
         Objects.requireNonNull(event, "event");
         Objects.requireNonNull(destination, "destination");
 
@@ -61,7 +61,7 @@ public class RocketMQEventPublisher implements MQEventPublisher {
     /**
      * 根据目的地与 tag 生成 RocketMQ destination（topic:tag）。
      */
-    private String buildRocketDestination(MQDestination destination, String eventTag) {
+    private String buildRocketDestination(Destination destination, String eventTag) {
         String namespace = StringUtils.hasText(destination.getNamespace())
                 ? destination.getNamespace()
                 : properties.getNamespace();

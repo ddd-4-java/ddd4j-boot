@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.mqttmica.ack;
 
 /**
- * mica-mqtt 消息头键名（写入 {@link io.ddd4j.mq.contract.MQMessage} headers）。
+ * mica-mqtt 消息头键名（写入 {@link io.ddd4j.mq.message.Message} headers）。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */

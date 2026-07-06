@@ -1,9 +1,9 @@
 package io.ddd4j.boot.mq.kafka.mq;
 
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.publish.MQEventPublisher;
-import io.ddd4j.mq.serialization.MQMessageSerialization;
-import io.ddd4j.mq.spi.MQBrokerAdapter;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.serialization.MessageSerialization;
+import io.ddd4j.mq.spi.BrokerAdapter;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,14 +19,14 @@ import org.springframework.kafka.core.KafkaTemplate;
 public class Ddd4jKafkaMQAutoConfiguration {
 
     /**
-     * 注册 Kafka {@link MQBrokerAdapter} Bean。
+     * 注册 Kafka {@link BrokerAdapter} Bean。
      */
     @Bean
-    public MQBrokerAdapter kafkaMQBrokerAdapter(
+    public BrokerAdapter kafkaBrokerAdapter(
             ObjectProvider<KafkaTemplate<String, String>> kafkaTemplate,
             ObjectProvider<ConsumerFactory<String, String>> consumerFactory,
-            ObjectProvider<MQMessageSerialization> serialization) {
-        return new KafkaMQBrokerAdapter(
+            ObjectProvider<MessageSerialization> serialization) {
+        return new KafkaBrokerAdapter(
                 kafkaTemplate.getIfAvailable(),
                 consumerFactory.getIfAvailable(),
                 serialization.getIfAvailable());
@@ -36,10 +36,10 @@ public class Ddd4jKafkaMQAutoConfiguration {
      * 注册领域事件发布 Bean（与 Rabbit 等 cmpt 模块对齐）。
      */
     @Bean
-    public MQEventPublisher kafkaMQEventPublisher(
+    public EventPublisher kafkaEventPublisher(
             KafkaTemplate<String, String> kafkaTemplate,
-            MQMessageSerialization serialization,
-            Ddd4jMQProperties properties) {
-        return new KafkaMQEventPublisher(kafkaTemplate, serialization, properties);
+            MessageSerialization serialization,
+            MQProperties properties) {
+        return new KafkaEventPublisher(kafkaTemplate, serialization, properties);
     }
 }

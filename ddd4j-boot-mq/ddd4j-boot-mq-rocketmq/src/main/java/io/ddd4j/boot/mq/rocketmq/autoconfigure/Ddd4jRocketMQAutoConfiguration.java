@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.rocketmq.autoconfigure;
 
-import io.ddd4j.boot.mq.rocketmq.publisher.RocketMQEventPublisher;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.boot.mq.rocketmq.publisher.RocketEventPublisher;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.publish.EventPublisher;
 import io.ddd4j.mq.rocketmq.consumer.RocketMQConsumerEndpointRegistrar;
-import io.ddd4j.mq.rocketmq.spi.RocketMQBrokerAdapter;
+import io.ddd4j.mq.rocketmq.spi.RocketBrokerAdapter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ public class Ddd4jRocketMQAutoConfiguration {
     @Bean
     public RocketMQConsumerEndpointRegistrar rocketMQConsumerEndpointRegistrar(
             ApplicationContext applicationContext,
-            Ddd4jMQProperties properties) {
+            MQProperties properties) {
         return new RocketMQConsumerEndpointRegistrar(applicationContext, properties);
     }
 
@@ -31,18 +31,18 @@ public class Ddd4jRocketMQAutoConfiguration {
      * 注册 RocketMQ Broker 适配器。
      */
     @Bean
-    public RocketMQBrokerAdapter rocketMQBrokerAdapter(
-            Ddd4jMQProperties properties,
+    public RocketBrokerAdapter rocketBrokerAdapter(
+            MQProperties properties,
             RocketMQConsumerEndpointRegistrar consumerEndpointRegistrar) {
-        return new RocketMQBrokerAdapter(properties, consumerEndpointRegistrar);
+        return new RocketBrokerAdapter(properties, consumerEndpointRegistrar);
     }
 
     /**
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public MQEventPublisher rocketMQEventPublisher(
-            Ddd4jMQProperties properties) {
-        return new RocketMQEventPublisher(rocketMQTemplate, properties);
+    public EventPublisher rocketEventPublisher(
+            MQProperties properties) {
+        return new RocketEventPublisher(rocketMQTemplate, properties);
     }
 }

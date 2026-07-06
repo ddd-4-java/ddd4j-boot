@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.rabbitmq.autoconfigure;
 
-import io.ddd4j.boot.mq.rabbitmq.publisher.RabbitMQEventPublisher;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.boot.mq.rabbitmq.publisher.RabbitEventPublisher;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.publish.EventPublisher;
 import io.ddd4j.mq.rabbit.consumer.RabbitMQConsumerEndpointRegistrar;
-import io.ddd4j.mq.rabbit.spi.RabbitMQBrokerAdapter;
+import io.ddd4j.mq.rabbit.spi.RabbitBrokerAdapter;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistry;
 import org.springframework.context.ApplicationContext;
@@ -26,7 +26,7 @@ public class Ddd4jRabbitMQAutoConfiguration {
     public RabbitMQConsumerEndpointRegistrar rabbitMQConsumerEndpointRegistrar(
             ApplicationContext applicationContext,
             RabbitListenerEndpointRegistry endpointRegistry,
-            Ddd4jMQProperties properties) {
+            MQProperties properties) {
         return new RabbitMQConsumerEndpointRegistrar(applicationContext, endpointRegistry, properties);
     }
 
@@ -34,19 +34,19 @@ public class Ddd4jRabbitMQAutoConfiguration {
      * 注册 RabbitMQ Broker 适配器。
      */
     @Bean
-    public RabbitMQBrokerAdapter rabbitMQBrokerAdapter(
-            Ddd4jMQProperties properties,
+    public RabbitBrokerAdapter rabbitBrokerAdapter(
+            MQProperties properties,
             RabbitMQConsumerEndpointRegistrar consumerEndpointRegistrar) {
-        return new RabbitMQBrokerAdapter(properties, consumerEndpointRegistrar);
+        return new RabbitBrokerAdapter(properties, consumerEndpointRegistrar);
     }
 
     /**
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public MQEventPublisher rabbitMQEventPublisher(
+    public EventPublisher rabbitEventPublisher(
             RabbitTemplate rabbitTemplate,
-            Ddd4jMQProperties properties) {
-        return new RabbitMQEventPublisher(rabbitTemplate, properties);
+            MQProperties properties) {
+        return new RabbitEventPublisher(rabbitTemplate, properties);
     }
 }

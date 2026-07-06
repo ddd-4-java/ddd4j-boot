@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.mqttmica.config;
 
 import io.ddd4j.boot.mq.mqttmica.autoconfigure.Ddd4jMicaMqttMQAutoConfiguration;
-import io.ddd4j.boot.mq.mqttmica.spi.MicaMqttMQBrokerAdapter;
+import io.ddd4j.boot.mq.mqttmica.spi.MicaMqttBrokerAdapter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
  * @since 4.0.x
  */
 @AutoConfiguration
-@ConditionalOnClass(MicaMqttMQBrokerAdapter.class)
+@ConditionalOnClass(MicaMqttBrokerAdapter.class)
 @Import(Ddd4jMicaMqttMQAutoConfiguration.class)
 public class MicaMqttMQBootAutoConfiguration {
 

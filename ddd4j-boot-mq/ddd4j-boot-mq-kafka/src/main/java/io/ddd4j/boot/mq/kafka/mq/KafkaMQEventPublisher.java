@@ -2,10 +2,10 @@ package io.ddd4j.boot.mq.kafka.mq;
 
 import io.ddd4j.core.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.contract.MQDestination;
-import io.ddd4j.mq.publish.MQEventPublisher;
-import io.ddd4j.mq.serialization.MQEventSerialization;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.message.Destination;
+import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.serialization.EventSerialization;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -16,11 +16,11 @@ import org.springframework.kafka.core.KafkaTemplate;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Slf4j
-public class KafkaMQEventPublisher implements MQEventPublisher {
+public class KafkaEventPublisher implements EventPublisher {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final MQEventSerialization serialization;
-    private final Ddd4jMQProperties properties;
+    private final EventSerialization serialization;
+    private final MQProperties properties;
 
     /**
      * 构建 Kafka 事件发布器。
@@ -29,10 +29,10 @@ public class KafkaMQEventPublisher implements MQEventPublisher {
      * @param serialization 序列化器
      * @param properties    MQ 配置
      */
-    public KafkaMQEventPublisher(
+    public KafkaEventPublisher(
             KafkaTemplate<String, String> kafkaTemplate,
-            MQEventSerialization serialization,
-            Ddd4jMQProperties properties) {
+            EventSerialization serialization,
+            MQProperties properties) {
         this.kafkaTemplate = kafkaTemplate;
         this.serialization = serialization;
         this.properties = properties;
@@ -46,7 +46,7 @@ public class KafkaMQEventPublisher implements MQEventPublisher {
      * @param <T>         事件类型
      */
     @Override
-    public <T extends MQEvent> void publish(T event, MQDestination destination) {
+    public <T extends MQEvent> void publish(T event, Destination destination) {
         String payload = JsonKit.toJson(event);
         String topic = resolveTopic(event, destination);
         String key = StringUtils.defaultIfBlank(event.getTag(), event.getTenantId());
@@ -65,7 +65,7 @@ public class KafkaMQEventPublisher implements MQEventPublisher {
      * @param destination 目的地
      * @return Kafka topic
      */
-    private String resolveTopic(MQEvent event, MQDestination destination) {
+    private String resolveTopic(MQEvent event, Destination destination) {
         String namespace = StringUtils.defaultIfBlank(destination.getNamespace(), properties.getNamespace());
         if (StringUtils.isNotBlank(event.getNamespace())) {
             namespace = event.getNamespace();

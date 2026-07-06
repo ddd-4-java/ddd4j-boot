@@ -1,13 +1,13 @@
 package io.ddd4j.boot.mq.nats.consumer;
 
-import io.ddd4j.boot.mq.nats.ack.NatsMessageAcknowledgmentFactory;
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.ack.NoOpMessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.registry.MQListenerDefinition;
-import io.ddd4j.mq.registry.MQListenerEndpointNaming;
+import io.ddd4j.boot.mq.nats.ack.NatsAcknowledgmentFactory;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.listener.ListenerDefinition;
+import io.ddd4j.mq.listener.EndpointNaming;
 import io.nats.client.Connection;
 import io.nats.client.Dispatcher;
 import io.nats.client.JetStream;
@@ -25,7 +25,7 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 将 {@code @MQEventListener} 动态注册为 NATS JetStream Push Consumer。
+ * 将 {@code @EventListener} 动态注册为 NATS JetStream Push Consumer。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
@@ -34,19 +34,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class NatsMQConsumerEndpointRegistrar implements AutoCloseable {
 
     private final Connection connection;
-    private final Ddd4jMQProperties properties;
-    private final List<MQListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
+    private final MQProperties properties;
+    private final List<ListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
     private final List<JetStreamSubscription> subscriptions = new CopyOnWriteArrayList<>();
     private final List<Dispatcher> dispatchers = new CopyOnWriteArrayList<>();
 
     /**
      * 注册单个监听器定义。
      */
-    public void register(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void register(ListenerDefinition definition, ConsumerHandler handler) {
         Objects.requireNonNull(definition, "definition");
         Objects.requireNonNull(handler, "handler");
 
-        String subject = MQListenerEndpointNaming.physicalTopic(properties, definition);
+        String subject = EndpointNaming.physicalTopic(properties, definition);
         try {
             JetStream jetStream = connection.jetStream();
             Dispatcher dispatcher = connection.createDispatcher(msg -> {
@@ -76,7 +76,7 @@ public class NatsMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 核心 NATS 订阅（无 JetStream ack，使用 NoOp 确认）。
      */
-    private void registerCoreNats(String subject, MQListenerDefinition definition, MQConsumerHandler handler) {
+    private void registerCoreNats(String subject, ListenerDefinition definition, ConsumerHandler handler) {
         Dispatcher dispatcher = connection.createDispatcher(msg -> onMessage(msg, definition, handler));
         dispatcher.subscribe(subject);
         dispatchers.add(dispatcher);
@@ -87,12 +87,12 @@ public class NatsMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 批量注册监听器。
      */
-    public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
+    public void registerAll(List<ListenerDefinition> definitions, ConsumerHandler handler) {
         if (Objects.isNull(definitions) || definitions.isEmpty()) {
-            log.debug("No @MQEventListener definitions found for NATS");
+            log.debug("No @EventListener definitions found for NATS");
             return;
         }
-        for (MQListenerDefinition definition : definitions) {
+        for (ListenerDefinition definition : definitions) {
             register(definition, handler);
         }
         log.info("NATS consumer registrar initialized with {} listener(s)", registeredDefinitions.size());
@@ -114,28 +114,28 @@ public class NatsMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 返回已登记的监听器定义。
      */
-    public List<MQListenerDefinition> registeredDefinitions() {
+    public List<ListenerDefinition> registeredDefinitions() {
         return List.copyOf(registeredDefinitions);
     }
 
     /**
-     * 处理 NATS 消息并委托 {@link MQConsumerHandler}。
+     * 处理 NATS 消息并委托 {@link ConsumerHandler}。
      */
-    private void onMessage(Message natsMessage, MQListenerDefinition definition, MQConsumerHandler handler) {
+    private void onMessage(Message natsMessage, ListenerDefinition definition, ConsumerHandler handler) {
         try {
             String payloadText = new String(natsMessage.getData(), StandardCharsets.UTF_8);
             Map<String, Object> headers = new HashMap<>();
             headers.put("nats.subject", natsMessage.getSubject());
-            MQMessage<String> mqMessage = MQMessage.of(
+            Message<String> mqMessage = Message.of(
                     payloadText,
                     headers,
                     natsMessage.getSID(),
                     natsMessage.getReplyTo(),
                     natsMessage);
 
-            MessageAcknowledgment ack = NatsMessageAcknowledgmentFactory.fromNatsMessage(natsMessage)
-                    .map(a -> (MessageAcknowledgment) a)
-                    .orElseGet(NoOpMessageAcknowledgment::new);
+            Acknowledgment ack = NatsAcknowledgmentFactory.fromNatsMessage(natsMessage)
+                    .map(a -> (Acknowledgment) a)
+                    .orElseGet(NoOpAcknowledgment::new);
             handler.handle(mqMessage, ack);
             if (!properties.getConsumer().isManualAck() && !ack.isAcknowledged()
                     && Objects.nonNull(natsMessage.metaData())) {
@@ -154,7 +154,7 @@ public class NatsMQConsumerEndpointRegistrar implements AutoCloseable {
         }
     }
 
-    private String beanLabel(MQListenerDefinition definition) {
+    private String beanLabel(ListenerDefinition definition) {
         if (Objects.nonNull(definition.getBean())) {
             return definition.getBean().getClass().getSimpleName();
         }

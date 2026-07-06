@@ -2,18 +2,18 @@ package io.ddd4j.boot.mq.ons.spi;
 
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.Producer;
-import io.ddd4j.boot.mq.ons.ack.OnsMessageAcknowledgment;
-import io.ddd4j.boot.mq.ons.ack.OnsMessageAcknowledgmentFactory;
+import io.ddd4j.boot.mq.ons.ack.OnsAcknowledgment;
+import io.ddd4j.boot.mq.ons.ack.OnsAcknowledgmentFactory;
 import io.ddd4j.boot.mq.ons.consumer.OnsMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.ons.publisher.OnsMQEventPublisher;
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.publish.MQEventPublisher;
-import io.ddd4j.mq.registry.MQBrokerType;
-import io.ddd4j.mq.registry.MQListenerDefinition;
-import io.ddd4j.mq.spi.MQBrokerAdapter;
+import io.ddd4j.boot.mq.ons.publisher.OnsEventPublisher;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.listener.BrokerType;
+import io.ddd4j.mq.listener.ListenerDefinition;
+import io.ddd4j.mq.spi.BrokerAdapter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Objects;
@@ -24,49 +24,49 @@ import java.util.Objects;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @RequiredArgsConstructor
-public class OnsMQBrokerAdapter implements MQBrokerAdapter {
+public class OnsBrokerAdapter implements BrokerAdapter {
 
     private final Producer producer;
-    private final Ddd4jMQProperties properties;
+    private final MQProperties properties;
     private final OnsMQConsumerEndpointRegistrar consumerEndpointRegistrar;
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.ONS;
+    public BrokerType brokerType() {
+        return BrokerType.ONS;
     }
 
     @Override
-    public MQEventPublisher createPublisher(Ddd4jMQProperties props) {
-        return new OnsMQEventPublisher(producer, props);
+    public EventPublisher createPublisher(MQProperties props) {
+        return new OnsEventPublisher(producer, props);
     }
 
     @Override
-    public void registerConsumer(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void registerConsumer(ListenerDefinition definition, ConsumerHandler handler) {
         consumerEndpointRegistrar.register(definition, handler);
     }
 
     @Override
-    public MessageAcknowledgment resolveAcknowledgment(MQMessage<?> message) {
+    public Acknowledgment resolveAcknowledgment(Message<?> message) {
         // 逻辑块：优先从 ONS 原生 Message 解析确认
         Message onsMessage = message.nativeMessage(Message.class);
         if (Objects.nonNull(onsMessage)) {
-            return OnsMessageAcknowledgmentFactory.fromOnsMessage(onsMessage)
-                    .map(ack -> (MessageAcknowledgment) ack)
+            return OnsAcknowledgmentFactory.fromOnsMessage(onsMessage)
+                    .map(ack -> (Acknowledgment) ack)
                     .orElse(null);
         }
-        OnsMessageAcknowledgment onsAck = message.nativeMessage(OnsMessageAcknowledgment.class);
+        OnsAcknowledgment onsAck = message.nativeMessage(OnsAcknowledgment.class);
         return onsAck;
     }
 
     @Override
-    public boolean supports(MQBrokerType configured) {
-        return MQBrokerType.ONS == configured;
+    public boolean supports(BrokerType configured) {
+        return BrokerType.ONS == configured;
     }
 
     /**
      * 返回当前 MQ 配置。
      */
-    public Ddd4jMQProperties properties() {
+    public MQProperties properties() {
         return properties;
     }
 }

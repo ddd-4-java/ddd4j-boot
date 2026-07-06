@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.sqs.config;
 
 import io.ddd4j.boot.mq.sqs.autoconfigure.Ddd4jSqsMQAutoConfiguration;
-import io.ddd4j.boot.mq.sqs.spi.SqsMQBrokerAdapter;
+import io.ddd4j.boot.mq.sqs.spi.SqsBrokerAdapter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
  * @since 4.0.x
  */
 @AutoConfiguration
-@ConditionalOnClass(SqsMQBrokerAdapter.class)
+@ConditionalOnClass(SqsBrokerAdapter.class)
 @Import(Ddd4jSqsMQAutoConfiguration.class)
 public class SqsMQBootAutoConfiguration {
 

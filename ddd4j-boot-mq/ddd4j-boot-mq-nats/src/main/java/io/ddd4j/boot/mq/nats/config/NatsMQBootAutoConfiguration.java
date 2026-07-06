@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.nats.config;
 
 import io.ddd4j.boot.mq.nats.autoconfigure.Ddd4jNatsMQAutoConfiguration;
-import io.ddd4j.boot.mq.nats.spi.NatsMQBrokerAdapter;
+import io.ddd4j.boot.mq.nats.spi.NatsBrokerAdapter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
  * @since 4.0.x
  */
 @AutoConfiguration
-@ConditionalOnClass(NatsMQBrokerAdapter.class)
+@ConditionalOnClass(NatsBrokerAdapter.class)
 @Import(Ddd4jNatsMQAutoConfiguration.class)
 public class NatsMQBootAutoConfiguration {
 

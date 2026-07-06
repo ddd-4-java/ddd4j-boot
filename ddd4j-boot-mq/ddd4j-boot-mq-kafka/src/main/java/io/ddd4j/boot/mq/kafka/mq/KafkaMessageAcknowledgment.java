@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.kafka.mq;
 
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.ack.UnsupportedAckOperationException;
-import io.ddd4j.mq.registry.MQBrokerType;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.UnsupportedAckOperationException;
+import io.ddd4j.mq.listener.BrokerType;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.header.Header;
 import org.springframework.kafka.support.Acknowledgment;
@@ -17,15 +17,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
-public class KafkaMessageAcknowledgment implements MessageAcknowledgment {
+public class KafkaAcknowledgment implements Acknowledgment {
 
     /**
-     * MQMessage headers 中存放 Spring Kafka Acknowledgment 的键
+     * Message headers 中存放 Spring Kafka Acknowledgment 的键
      */
     public static final String HEADER_KAFKA_ACK = "kafka.acknowledgment";
 
     /**
-     * MQMessage headers 中存放 ConsumerRecord 的键
+     * Message headers 中存放 ConsumerRecord 的键
      */
     public static final String HEADER_KAFKA_RECORD = "kafka.consumerRecord";
 
@@ -39,7 +39,7 @@ public class KafkaMessageAcknowledgment implements MessageAcknowledgment {
      * @param kafkaAck Spring Kafka 确认对象
      * @param record   消费记录
      */
-    public KafkaMessageAcknowledgment(Acknowledgment kafkaAck, ConsumerRecord<?, ?> record) {
+    public KafkaAcknowledgment(Acknowledgment kafkaAck, ConsumerRecord<?, ?> record) {
         this.kafkaAck = Objects.requireNonNull(kafkaAck, "kafkaAck");
         this.record = Objects.requireNonNull(record, "record");
     }
@@ -78,8 +78,8 @@ public class KafkaMessageAcknowledgment implements MessageAcknowledgment {
     }
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.KAFKA;
+    public BrokerType brokerType() {
+        return BrokerType.KAFKA;
     }
 
     @Override
@@ -134,7 +134,7 @@ public class KafkaMessageAcknowledgment implements MessageAcknowledgment {
      */
     @Override
     public void recover(boolean requeue) {
-        throw new UnsupportedAckOperationException(MQBrokerType.KAFKA, "recover");
+        throw new UnsupportedAckOperationException(BrokerType.KAFKA, "recover");
     }
 
     @Override

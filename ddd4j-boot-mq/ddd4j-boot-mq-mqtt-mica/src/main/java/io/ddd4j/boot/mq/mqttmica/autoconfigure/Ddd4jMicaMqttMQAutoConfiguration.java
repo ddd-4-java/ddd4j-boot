@@ -1,11 +1,11 @@
 package io.ddd4j.boot.mq.mqttmica.autoconfigure;
 
-import io.ddd4j.mq.config.Ddd4jMQProperties;
+import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.boot.mq.mqttmica.config.Ddd4jMicaMqttProperties;
 import io.ddd4j.boot.mq.mqttmica.consumer.MicaMqttMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.mqttmica.publisher.MicaMqttMQEventPublisher;
-import io.ddd4j.boot.mq.mqttmica.spi.MicaMqttMQBrokerAdapter;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.boot.mq.mqttmica.publisher.MicaMqttEventPublisher;
+import io.ddd4j.boot.mq.mqttmica.spi.MicaMqttBrokerAdapter;
+import io.ddd4j.mq.publish.EventPublisher;
 import org.dromara.mica.mqtt.spring.client.MqttClientTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ public class Ddd4jMicaMqttMQAutoConfiguration {
     @Bean(destroyMethod = "close")
     public MicaMqttMQConsumerEndpointRegistrar micaMqttMQConsumerEndpointRegistrar(
             MqttClientTemplate mqttClientTemplate,
-            Ddd4jMQProperties mqProperties,
+            MQProperties mqProperties,
             Ddd4jMicaMqttProperties micaMqttProperties) {
         return new MicaMqttMQConsumerEndpointRegistrar(mqttClientTemplate, mqProperties, micaMqttProperties);
     }
@@ -35,12 +35,12 @@ public class Ddd4jMicaMqttMQAutoConfiguration {
      * 注册 mica-mqtt Broker 适配器。
      */
     @Bean
-    public MicaMqttMQBrokerAdapter micaMqttMQBrokerAdapter(
+    public MicaMqttBrokerAdapter micaMqttBrokerAdapter(
             MqttClientTemplate mqttClientTemplate,
-            Ddd4jMQProperties mqProperties,
+            MQProperties mqProperties,
             Ddd4jMicaMqttProperties micaMqttProperties,
             MicaMqttMQConsumerEndpointRegistrar consumerEndpointRegistrar) {
-        return new MicaMqttMQBrokerAdapter(
+        return new MicaMqttBrokerAdapter(
                 mqttClientTemplate, mqProperties, micaMqttProperties.getQos(), consumerEndpointRegistrar);
     }
 
@@ -48,10 +48,10 @@ public class Ddd4jMicaMqttMQAutoConfiguration {
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public MQEventPublisher micaMqttMQEventPublisher(
+    public EventPublisher micaMqttEventPublisher(
             MqttClientTemplate mqttClientTemplate,
-            Ddd4jMQProperties mqProperties,
+            MQProperties mqProperties,
             Ddd4jMicaMqttProperties micaMqttProperties) {
-        return new MicaMqttMQEventPublisher(mqttClientTemplate, mqProperties, micaMqttProperties.getQos());
+        return new MicaMqttEventPublisher(mqttClientTemplate, mqProperties, micaMqttProperties.getQos());
     }
 }

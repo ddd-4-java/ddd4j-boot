@@ -1,14 +1,14 @@
 package io.ddd4j.boot.mq.activemq.consumer;
 
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.ack.NoOpMessageAcknowledgment;
-import io.ddd4j.mq.activemq.ack.ActiveMQMessageAcknowledgment;
-import io.ddd4j.mq.activemq.ack.ActiveMQMessageAcknowledgmentFactory;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.registry.MQListenerDefinition;
-import io.ddd4j.mq.registry.MQListenerEndpointNaming;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.activemq.ack.ActiveMQAcknowledgment;
+import io.ddd4j.mq.activemq.ack.ActiveMQAcknowledgmentFactory;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.listener.ListenerDefinition;
+import io.ddd4j.mq.listener.EndpointNaming;
 import jakarta.jms.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 将 {@code @MQEventListener} 动态注册为 ActiveMQ Artemis JMS 消费端点。
+ * 将 {@code @EventListener} 动态注册为 ActiveMQ Artemis JMS 消费端点。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
@@ -38,8 +38,8 @@ public class ActiveMQConsumerEndpointRegistrar implements AutoCloseable {
 
     private final ApplicationContext applicationContext;
     private final JmsListenerEndpointRegistry endpointRegistry;
-    private final Ddd4jMQProperties properties;
-    private final List<MQListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
+    private final MQProperties properties;
+    private final List<ListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
     private final List<String> endpointIds = new CopyOnWriteArrayList<>();
 
     /**
@@ -85,12 +85,12 @@ public class ActiveMQConsumerEndpointRegistrar implements AutoCloseable {
      * @param definition 监听器定义
      * @param handler    消费处理函数
      */
-    public void register(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void register(ListenerDefinition definition, ConsumerHandler handler) {
         Objects.requireNonNull(definition, "definition");
         Objects.requireNonNull(handler, "handler");
 
-        String endpointId = MQListenerEndpointNaming.endpointId("activemq", definition);
-        String queueName = MQListenerEndpointNaming.queueName(definition);
+        String endpointId = EndpointNaming.endpointId("activemq", definition);
+        String queueName = EndpointNaming.queueName(definition);
 
         SimpleJmsListenerEndpoint endpoint = new SimpleJmsListenerEndpoint();
         endpoint.setId(endpointId);
@@ -112,12 +112,12 @@ public class ActiveMQConsumerEndpointRegistrar implements AutoCloseable {
      * @param definitions 监听器定义列表
      * @param handler     统一消费处理函数
      */
-    public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
+    public void registerAll(List<ListenerDefinition> definitions, ConsumerHandler handler) {
         if (definitions == null || definitions.isEmpty()) {
-            log.debug("No @MQEventListener definitions found for ActiveMQ");
+            log.debug("No @EventListener definitions found for ActiveMQ");
             return;
         }
-        for (MQListenerDefinition definition : definitions) {
+        for (ListenerDefinition definition : definitions) {
             register(definition, handler);
         }
         log.info("ActiveMQ consumer registrar initialized with {} listener(s), ackMode={}",
@@ -141,7 +141,7 @@ public class ActiveMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 返回已登记的监听器定义（只读视图）。
      */
-    public List<MQListenerDefinition> registeredDefinitions() {
+    public List<ListenerDefinition> registeredDefinitions() {
         return List.copyOf(registeredDefinitions);
     }
 
@@ -167,10 +167,10 @@ public class ActiveMQConsumerEndpointRegistrar implements AutoCloseable {
     private final class SessionAwareJmsMessageListener
             implements MessageListener, SessionAwareMessageListener<Message> {
 
-        private final MQListenerDefinition definition;
-        private final MQConsumerHandler handler;
+        private final ListenerDefinition definition;
+        private final ConsumerHandler handler;
 
-        private SessionAwareJmsMessageListener(MQListenerDefinition definition, MQConsumerHandler handler) {
+        private SessionAwareJmsMessageListener(ListenerDefinition definition, ConsumerHandler handler) {
             this.definition = definition;
             this.handler = handler;
         }
@@ -185,21 +185,21 @@ public class ActiveMQConsumerEndpointRegistrar implements AutoCloseable {
             try {
                 String payloadText = extractPayload(jmsMessage);
 
-                // 2.0.x：直接构造纯 Java MQMessage，jakarta.jms.Message 通过 nativeMessage 逃生口传入
+                // 2.0.x：直接构造纯 Java Message，jakarta.jms.Message 通过 nativeMessage 逃生口传入
                 Map<String, Object> headers = new HashMap<>();
-                headers.put(ActiveMQMessageAcknowledgment.HEADER_JMS_MESSAGE, jmsMessage);
-                headers.put(ActiveMQMessageAcknowledgment.HEADER_JMS_SESSION, session);
+                headers.put(ActiveMQAcknowledgment.HEADER_JMS_MESSAGE, jmsMessage);
+                headers.put(ActiveMQAcknowledgment.HEADER_JMS_SESSION, session);
 
-                MQMessage<String> mqMessage = MQMessage.of(
+                Message<String> mqMessage = Message.of(
                         payloadText,
                         headers,
                         safeMessageId(jmsMessage),
                         safeCorrelationId(jmsMessage),
                         jmsMessage);
 
-                MessageAcknowledgment ack = ActiveMQMessageAcknowledgmentFactory.from(mqMessage)
-                        .map(a -> (MessageAcknowledgment) a)
-                        .orElseGet(NoOpMessageAcknowledgment::new);
+                Acknowledgment ack = ActiveMQAcknowledgmentFactory.from(mqMessage)
+                        .map(a -> (Acknowledgment) a)
+                        .orElseGet(NoOpAcknowledgment::new);
 
                 handler.handle(mqMessage, ack);
             } catch (Exception ex) {

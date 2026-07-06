@@ -4,10 +4,10 @@ import com.aliyun.openservices.ons.api.ONSFactory;
 import com.aliyun.openservices.ons.api.Producer;
 import com.aliyun.openservices.ons.api.PropertyKeyConst;
 import io.ddd4j.boot.mq.ons.consumer.OnsMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.ons.publisher.OnsMQEventPublisher;
-import io.ddd4j.boot.mq.ons.spi.OnsMQBrokerAdapter;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.boot.mq.ons.publisher.OnsEventPublisher;
+import io.ddd4j.boot.mq.ons.spi.OnsBrokerAdapter;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.publish.EventPublisher;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -56,7 +56,7 @@ public class Ddd4jOnsMQAutoConfiguration {
     @Bean
     public OnsMQConsumerEndpointRegistrar onsMQConsumerEndpointRegistrar(
             Properties onsConnectionProperties,
-            Ddd4jMQProperties properties) {
+            MQProperties properties) {
         return new OnsMQConsumerEndpointRegistrar(onsConnectionProperties, properties);
     }
 
@@ -64,20 +64,20 @@ public class Ddd4jOnsMQAutoConfiguration {
      * 注册 ONS Broker 适配器。
      */
     @Bean
-    public OnsMQBrokerAdapter onsMQBrokerAdapter(
+    public OnsBrokerAdapter onsBrokerAdapter(
             ObjectProvider<Producer> producerProvider,
-            Ddd4jMQProperties properties,
+            MQProperties properties,
             OnsMQConsumerEndpointRegistrar consumerEndpointRegistrar) {
-        return new OnsMQBrokerAdapter(producerProvider.getIfAvailable(), properties, consumerEndpointRegistrar);
+        return new OnsBrokerAdapter(producerProvider.getIfAvailable(), properties, consumerEndpointRegistrar);
     }
 
     /**
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public MQEventPublisher onsMQEventPublisher(
+    public EventPublisher onsEventPublisher(
             ObjectProvider<Producer> producerProvider,
-            Ddd4jMQProperties properties) {
-        return new OnsMQEventPublisher(producerProvider.getIfAvailable(), properties);
+            MQProperties properties) {
+        return new OnsEventPublisher(producerProvider.getIfAvailable(), properties);
     }
 }

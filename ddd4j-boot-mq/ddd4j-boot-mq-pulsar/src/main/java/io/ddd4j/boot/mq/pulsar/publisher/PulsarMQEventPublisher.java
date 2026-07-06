@@ -2,9 +2,9 @@ package io.ddd4j.boot.mq.pulsar.publisher;
 
 import io.ddd4j.core.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.contract.MQDestination;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.message.Destination;
+import io.ddd4j.mq.publish.EventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.pulsar.core.PulsarTemplate;
@@ -19,13 +19,13 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class PulsarMQEventPublisher implements MQEventPublisher {
+public class PulsarEventPublisher implements EventPublisher {
 
     private final PulsarTemplate<String> pulsarTemplate;
-    private final Ddd4jMQProperties properties;
+    private final MQProperties properties;
 
     @Override
-    public <T extends MQEvent> void publish(T event, MQDestination destination) {
+    public <T extends MQEvent> void publish(T event, Destination destination) {
         Objects.requireNonNull(event, "event");
         Objects.requireNonNull(destination, "destination");
 
@@ -50,7 +50,7 @@ public class PulsarMQEventPublisher implements MQEventPublisher {
     /**
      * 根据目的地与 tag 生成 Pulsar topic 名称。
      */
-    private String buildTopic(MQDestination destination, String eventTag) {
+    private String buildTopic(Destination destination, String eventTag) {
         String namespace = StringUtils.hasText(destination.getNamespace())
                 ? destination.getNamespace()
                 : properties.getNamespace();

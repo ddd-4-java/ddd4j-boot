@@ -3,9 +3,9 @@ package io.ddd4j.boot.mq.nats.publisher;
 import io.ddd4j.core.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.kit.lang.StrKit;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.contract.MQDestination;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.message.Destination;
+import io.ddd4j.mq.publish.EventPublisher;
 import io.nats.client.Connection;
 import io.nats.client.JetStream;
 import io.nats.client.JetStreamApiException;
@@ -23,13 +23,13 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class NatsMQEventPublisher implements MQEventPublisher {
+public class NatsEventPublisher implements EventPublisher {
 
     private final Connection connection;
-    private final Ddd4jMQProperties properties;
+    private final MQProperties properties;
 
     @Override
-    public <T extends MQEvent> void publish(T event, MQDestination destination) {
+    public <T extends MQEvent> void publish(T event, Destination destination) {
         Objects.requireNonNull(event, "event");
         Objects.requireNonNull(destination, "destination");
         if (Objects.isNull(connection)) {
@@ -65,7 +65,7 @@ public class NatsMQEventPublisher implements MQEventPublisher {
     /**
      * 根据目的地与 tag 生成 NATS subject。
      */
-    private String buildSubject(MQDestination destination, String eventTag) {
+    private String buildSubject(Destination destination, String eventTag) {
         String namespace = StrKit.isNotBlank(destination.getNamespace())
                 ? destination.getNamespace()
                 : properties.getNamespace();

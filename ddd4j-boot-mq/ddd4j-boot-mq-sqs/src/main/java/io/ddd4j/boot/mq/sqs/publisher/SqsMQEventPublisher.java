@@ -5,9 +5,9 @@ import com.amazonaws.services.sqs.model.SendMessageRequest;
 import io.ddd4j.core.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.kit.lang.StrKit;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.contract.MQDestination;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.message.Destination;
+import io.ddd4j.mq.publish.EventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,14 +20,14 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class SqsMQEventPublisher implements MQEventPublisher {
+public class SqsEventPublisher implements EventPublisher {
 
     private final AmazonSQS amazonSqs;
     private final String defaultQueueUrl;
-    private final Ddd4jMQProperties properties;
+    private final MQProperties properties;
 
     @Override
-    public <T extends MQEvent> void publish(T event, MQDestination destination) {
+    public <T extends MQEvent> void publish(T event, Destination destination) {
         Objects.requireNonNull(event, "event");
         Objects.requireNonNull(destination, "destination");
         if (Objects.isNull(amazonSqs)) {
@@ -59,7 +59,7 @@ public class SqsMQEventPublisher implements MQEventPublisher {
     /**
      * 解析目标队列 URL（destination.topic 或默认配置）。
      */
-    private String resolveQueueUrl(MQDestination destination) {
+    private String resolveQueueUrl(Destination destination) {
         if (StrKit.isNotBlank(destination.getTopic()) && destination.getTopic().startsWith("http")) {
             return destination.getTopic();
         }

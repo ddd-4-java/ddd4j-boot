@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.mqtt.ack;
 
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.ack.UnsupportedAckOperationException;
-import io.ddd4j.mq.registry.MQBrokerType;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.UnsupportedAckOperationException;
+import io.ddd4j.mq.listener.BrokerType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Slf4j
-public final class MqttMessageAcknowledgment implements MessageAcknowledgment {
+public final class MqttAcknowledgment implements Acknowledgment {
 
     private final String topic;
     private final int qos;
@@ -32,7 +32,7 @@ public final class MqttMessageAcknowledgment implements MessageAcknowledgment {
      * @param qos       消息 QoS
      * @param messageId 消息 ID（若可用）
      */
-    public MqttMessageAcknowledgment(String topic, int qos, String messageId) {
+    public MqttAcknowledgment(String topic, int qos, String messageId) {
         this.topic = topic;
         this.qos = qos;
         this.messageId = messageId;
@@ -64,8 +64,8 @@ public final class MqttMessageAcknowledgment implements MessageAcknowledgment {
     }
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.MQTT;
+    public BrokerType brokerType() {
+        return BrokerType.MQTT;
     }
 
     @Override
@@ -108,7 +108,7 @@ public final class MqttMessageAcknowledgment implements MessageAcknowledgment {
     @Override
     public <T> Optional<T> unwrap(Class<T> nativeType) {
         Objects.requireNonNull(nativeType, "nativeType");
-        if (MqttMessageAcknowledgment.class.isAssignableFrom(nativeType)) {
+        if (MqttAcknowledgment.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(this));
         }
         return Optional.empty();

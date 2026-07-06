@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.disruptor.config;
 
 import io.ddd4j.boot.mq.disruptor.autoconfigure.Ddd4jDisruptorMQAutoConfiguration;
-import io.ddd4j.mq.disruptor.spi.DisruptorMQBrokerAdapter;
+import io.ddd4j.mq.disruptor.spi.DisruptorBrokerAdapter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
  * @since 4.0.x
  */
 @AutoConfiguration
-@ConditionalOnClass(DisruptorMQBrokerAdapter.class)
+@ConditionalOnClass(DisruptorBrokerAdapter.class)
 @Import(Ddd4jDisruptorMQAutoConfiguration.class)
 public class DisruptorMQBootAutoConfiguration {
 

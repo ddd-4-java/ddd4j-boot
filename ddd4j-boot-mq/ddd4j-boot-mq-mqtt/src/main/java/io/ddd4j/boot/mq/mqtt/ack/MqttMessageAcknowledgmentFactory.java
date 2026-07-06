@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.mqtt.ack;
 
-import io.ddd4j.mq.ack.NoOpMessageAcknowledgment;
-import io.ddd4j.mq.contract.MQMessage;
+import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.message.Message;
 import org.springframework.integration.mqtt.support.MqttHeaders;
 
 import java.util.Map;
@@ -9,27 +9,27 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * 从纯 Java {@link MQMessage} 头信息构建 {@link MqttMessageAcknowledgment}。
+ * 从纯 Java {@link Message} 头信息构建 {@link MqttAcknowledgment}。
  *
  * <p>2.0.x 重构：彻底移除对 {@code org.springframework.messaging.Message} 的依赖，
- * 直接基于 ddd4j-mq-core 的纯 Java {@link MQMessage} 工作。
+ * 直接基于 ddd4j-mq-core 的纯 Java {@link Message} 工作。
  *
  * <p>注：{@code MqttHeaders} 来自 spring-integration-mqtt，属于 MQTT 客户端设计约束。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
-public final class MqttMessageAcknowledgmentFactory {
+public final class MqttAcknowledgmentFactory {
 
-    private MqttMessageAcknowledgmentFactory() {
+    private MqttAcknowledgmentFactory() {
     }
 
     /**
-     * 从 {@link MQMessage} 头信息解析确认对象。
+     * 从 {@link Message} 头信息解析确认对象。
      *
      * @param message MQ 信封
      * @return 确认对象；QoS 0 时返回 empty
      */
-    public static Optional<MqttMessageAcknowledgment> from(MQMessage<?> message) {
+    public static Optional<MqttAcknowledgment> from(Message<?> message) {
         Objects.requireNonNull(message, "message");
         Map<String, Object> headers = message.getHeaders();
         if (Objects.isNull(headers) || headers.isEmpty()) {
@@ -50,22 +50,22 @@ public final class MqttMessageAcknowledgmentFactory {
         if (qos <= 0) {
             return Optional.empty();
         }
-        return Optional.of(new MqttMessageAcknowledgment(topic, qos, messageId));
+        return Optional.of(new MqttAcknowledgment(topic, qos, messageId));
     }
 
     /**
-     * 从 {@link MQMessage} 头信息解析确认对象，QoS 0 时返回 NoOp 包装。
+     * 从 {@link Message} 头信息解析确认对象，QoS 0 时返回 NoOp 包装。
      *
      * @param message MQ 信封
      * @return 确认对象与是否为 QoS 确认的包装
      */
-    public static MessageAcknowledgmentOrNoOp resolve(MQMessage<?> message) {
+    public static AcknowledgmentOrNoOp resolve(Message<?> message) {
         Objects.requireNonNull(message, "message");
-        Optional<MqttMessageAcknowledgment> ack = from(message);
+        Optional<MqttAcknowledgment> ack = from(message);
         if (ack.isPresent()) {
-            return new MessageAcknowledgmentOrNoOp(ack.get(), true);
+            return new AcknowledgmentOrNoOp(ack.get(), true);
         }
-        return new MessageAcknowledgmentOrNoOp(new NoOpMessageAcknowledgment(), false);
+        return new AcknowledgmentOrNoOp(new NoOpAcknowledgment(), false);
     }
 
     /**
@@ -74,8 +74,8 @@ public final class MqttMessageAcknowledgmentFactory {
      * @param acknowledgment 确认实现
      * @param qosAck         是否为 QoS 级确认
      */
-    public record MessageAcknowledgmentOrNoOp(
-            io.ddd4j.mq.ack.MessageAcknowledgment acknowledgment,
+    public record AcknowledgmentOrNoOp(
+            io.ddd4j.mq.consume.Acknowledgment acknowledgment,
             boolean qosAck) {
     }
 }

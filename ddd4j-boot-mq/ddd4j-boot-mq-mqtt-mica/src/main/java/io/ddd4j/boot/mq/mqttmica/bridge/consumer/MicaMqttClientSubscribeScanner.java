@@ -20,7 +20,7 @@ import java.util.Objects;
 /**
  * 扫描应用上下文中 {@link MqttClientSubscribe} 并委托 {@link MicaMqttClientSubscribeRegistrar} 注册订阅。
  * <p>
- * 仅在 {@code @EnableMicaMqttBridge} 启用时装配；与 ddd4j {@code @MQEventListener} 路径互不干扰。
+ * 仅在 {@code @EnableMicaMqttBridge} 启用时装配；与 ddd4j {@code @EventListener} 路径互不干扰。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */

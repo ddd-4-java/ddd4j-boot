@@ -1,14 +1,14 @@
 package io.ddd4j.boot.mq.pulsar.consumer;
 
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.ack.NoOpMessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.pulsar.ack.PulsarMessageAcknowledgment;
-import io.ddd4j.mq.pulsar.ack.PulsarMessageAcknowledgmentFactory;
-import io.ddd4j.mq.registry.MQListenerDefinition;
-import io.ddd4j.mq.registry.MQListenerEndpointNaming;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.pulsar.ack.PulsarAcknowledgment;
+import io.ddd4j.mq.pulsar.ack.PulsarAcknowledgmentFactory;
+import io.ddd4j.mq.listener.ListenerDefinition;
+import io.ddd4j.mq.listener.EndpointNaming;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 将 {@code @MQEventListener} 动态注册为 Pulsar 消费端点。
+ * 将 {@code @EventListener} 动态注册为 Pulsar 消费端点。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
@@ -29,8 +29,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class PulsarConsumerEndpointRegistrar implements AutoCloseable {
 
     private final ApplicationContext applicationContext;
-    private final Ddd4jMQProperties properties;
-    private final List<MQListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
+    private final MQProperties properties;
+    private final List<ListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
     private final List<Consumer<String>> consumers = new CopyOnWriteArrayList<>();
 
     /**
@@ -39,15 +39,15 @@ public class PulsarConsumerEndpointRegistrar implements AutoCloseable {
      * @param definition 监听器定义
      * @param handler    消费处理函数
      */
-    public void register(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void register(ListenerDefinition definition, ConsumerHandler handler) {
         Objects.requireNonNull(definition, "definition");
         Objects.requireNonNull(handler, "handler");
 
         PulsarClient pulsarClient = applicationContext.getBean(PulsarClient.class);
-        String topic = MQListenerEndpointNaming.physicalTopic(properties, definition);
+        String topic = EndpointNaming.physicalTopic(properties, definition);
         String subscriptionName = definition.getGroup();
-        String endpointId = MQListenerEndpointNaming.endpointId("pulsar", definition);
-        String queueName = MQListenerEndpointNaming.queueName(definition);
+        String endpointId = EndpointNaming.endpointId("pulsar", definition);
+        String queueName = EndpointNaming.queueName(definition);
 
         try {
             Consumer<String> consumer = pulsarClient.newConsumer(Schema.STRING)
@@ -74,12 +74,12 @@ public class PulsarConsumerEndpointRegistrar implements AutoCloseable {
      * @param definitions 监听器定义列表
      * @param handler     统一消费处理函数
      */
-    public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
+    public void registerAll(List<ListenerDefinition> definitions, ConsumerHandler handler) {
         if (definitions == null || definitions.isEmpty()) {
-            log.debug("No @MQEventListener definitions found for Pulsar");
+            log.debug("No @EventListener definitions found for Pulsar");
             return;
         }
-        for (MQListenerDefinition definition : definitions) {
+        for (ListenerDefinition definition : definitions) {
             register(definition, handler);
         }
         log.info("Pulsar consumer registrar initialized with {} listener(s), ackMode={}",
@@ -101,37 +101,37 @@ public class PulsarConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 返回已登记的监听器定义（只读视图）。
      */
-    public List<MQListenerDefinition> registeredDefinitions() {
+    public List<ListenerDefinition> registeredDefinitions() {
         return List.copyOf(registeredDefinitions);
     }
 
     /**
-     * 处理 Pulsar 消息并委托 {@link MQConsumerHandler}。
+     * 处理 Pulsar 消息并委托 {@link ConsumerHandler}。
      */
     private void onMessage(
             Consumer<String> consumer,
             Message<String> pulsarMessage,
-            MQListenerDefinition definition,
-            MQConsumerHandler handler) {
+            ListenerDefinition definition,
+            ConsumerHandler handler) {
 
         try {
             String payloadText = pulsarMessage.getValue();
 
-            // 2.0.x：直接构造纯 Java MQMessage，Pulsar 原生消息通过 nativeMessage 逃生口传入
+            // 2.0.x：直接构造纯 Java Message，Pulsar 原生消息通过 nativeMessage 逃生口传入
             Map<String, Object> headers = new HashMap<>();
-            headers.put(PulsarMessageAcknowledgment.HEADER_PULSAR_CONSUMER, consumer);
-            headers.put(PulsarMessageAcknowledgment.HEADER_PULSAR_MESSAGE, pulsarMessage);
+            headers.put(PulsarAcknowledgment.HEADER_PULSAR_CONSUMER, consumer);
+            headers.put(PulsarAcknowledgment.HEADER_PULSAR_MESSAGE, pulsarMessage);
 
-            MQMessage<String> mqMessage = MQMessage.of(
+            Message<String> mqMessage = Message.of(
                     payloadText,
                     headers,
                     pulsarMessage.getMessageId().toString(),
                     pulsarMessage.getProperty("correlationId"),
                     pulsarMessage);
 
-            MessageAcknowledgment ack = PulsarMessageAcknowledgmentFactory.from(mqMessage)
-                    .map(a -> (MessageAcknowledgment) a)
-                    .orElseGet(NoOpMessageAcknowledgment::new);
+            Acknowledgment ack = PulsarAcknowledgmentFactory.from(mqMessage)
+                    .map(a -> (Acknowledgment) a)
+                    .orElseGet(NoOpAcknowledgment::new);
 
             handler.handle(mqMessage, ack);
         } catch (Exception ex) {

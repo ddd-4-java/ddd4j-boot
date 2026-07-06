@@ -5,14 +5,14 @@ import com.aliyun.openservices.ons.api.Consumer;
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.ONSFactory;
 import com.aliyun.openservices.ons.api.PropertyKeyConst;
-import io.ddd4j.boot.mq.ons.ack.OnsMessageAcknowledgment;
-import io.ddd4j.boot.mq.ons.ack.OnsMessageAcknowledgmentFactory;
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.registry.MQListenerDefinition;
-import io.ddd4j.mq.registry.MQListenerEndpointNaming;
+import io.ddd4j.boot.mq.ons.ack.OnsAcknowledgment;
+import io.ddd4j.boot.mq.ons.ack.OnsAcknowledgmentFactory;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.listener.ListenerDefinition;
+import io.ddd4j.mq.listener.EndpointNaming;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +26,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * 将 {@code @MQEventListener} 动态注册为阿里云 ONS {@link Consumer} 端点。
+ * 将 {@code @EventListener} 动态注册为阿里云 ONS {@link Consumer} 端点。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
@@ -35,18 +35,18 @@ import java.util.concurrent.atomic.AtomicReference;
 public class OnsMQConsumerEndpointRegistrar implements AutoCloseable {
 
     private final Properties onsConsumerProperties;
-    private final Ddd4jMQProperties properties;
-    private final List<MQListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
+    private final MQProperties properties;
+    private final List<ListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
     private final List<Consumer> consumers = new CopyOnWriteArrayList<>();
 
     /**
      * 注册单个监听器定义。
      */
-    public void register(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void register(ListenerDefinition definition, ConsumerHandler handler) {
         Objects.requireNonNull(definition, "definition");
         Objects.requireNonNull(handler, "handler");
 
-        String topic = MQListenerEndpointNaming.physicalTopic(properties, definition);
+        String topic = EndpointNaming.physicalTopic(properties, definition);
         String tag = resolveTag(definition.getTags());
 
         Properties consumerProps = new Properties();
@@ -66,12 +66,12 @@ public class OnsMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 批量注册监听器。
      */
-    public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
+    public void registerAll(List<ListenerDefinition> definitions, ConsumerHandler handler) {
         if (Objects.isNull(definitions) || definitions.isEmpty()) {
-            log.debug("No @MQEventListener definitions found for ONS");
+            log.debug("No @EventListener definitions found for ONS");
             return;
         }
-        for (MQListenerDefinition definition : definitions) {
+        for (ListenerDefinition definition : definitions) {
             register(definition, handler);
         }
         log.info("ONS consumer registrar initialized with {} listener(s)", registeredDefinitions.size());
@@ -92,14 +92,14 @@ public class OnsMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 返回已登记的监听器定义。
      */
-    public List<MQListenerDefinition> registeredDefinitions() {
+    public List<ListenerDefinition> registeredDefinitions() {
         return List.copyOf(registeredDefinitions);
     }
 
     /**
      * ONS 消息监听回调：将 handler 的 ack 语义映射为 {@link Action}。
      */
-    private Action onMessage(Message onsMessage, MQListenerDefinition definition, MQConsumerHandler handler) {
+    private Action onMessage(Message onsMessage, ListenerDefinition definition, ConsumerHandler handler) {
         AtomicReference<Action> action = new AtomicReference<>(Action.CommitMessage);
         try {
             String payloadText = new String(onsMessage.getBody(), StandardCharsets.UTF_8);
@@ -107,10 +107,10 @@ public class OnsMQConsumerEndpointRegistrar implements AutoCloseable {
             headers.put("ons.topic", onsMessage.getTopic());
             headers.put("ons.tag", onsMessage.getTag());
 
-            OnsMessageAcknowledgment ack = OnsMessageAcknowledgmentFactory.fromOnsMessage(onsMessage)
+            OnsAcknowledgment ack = OnsAcknowledgmentFactory.fromOnsMessage(onsMessage)
                     .orElseThrow(() -> new IllegalStateException("Failed to build ONS acknowledgment"));
 
-            OnsMessageAcknowledgment trackedAck = new OnsMessageAcknowledgment(
+            OnsAcknowledgment trackedAck = new OnsAcknowledgment(
                     onsMessage.getMsgID(),
                     onsMessage.getKey(),
                     onsMessage.getReconsumeTimes(),
@@ -123,14 +123,14 @@ public class OnsMQConsumerEndpointRegistrar implements AutoCloseable {
                         return Action.ReconsumeLater;
                     });
 
-            MQMessage<String> mqMessage = MQMessage.of(
+            Message<String> mqMessage = Message.of(
                     payloadText,
                     headers,
                     onsMessage.getMsgID(),
                     onsMessage.getKey(),
                     onsMessage);
 
-            MessageAcknowledgment messageAck = trackedAck;
+            Acknowledgment messageAck = trackedAck;
             handler.handle(mqMessage, messageAck);
             if (!properties.getConsumer().isManualAck() && !trackedAck.isAcknowledged()) {
                 trackedAck.ack();
@@ -144,11 +144,11 @@ public class OnsMQConsumerEndpointRegistrar implements AutoCloseable {
     }
 
     private String resolveTag(String tags) {
-        String tag = MQListenerEndpointNaming.resolveTag(tags);
+        String tag = EndpointNaming.resolveTag(tags);
         return Objects.isNull(tag) ? "*" : tag;
     }
 
-    private String beanLabel(MQListenerDefinition definition) {
+    private String beanLabel(ListenerDefinition definition) {
         if (Objects.nonNull(definition.getBean())) {
             return definition.getBean().getClass().getSimpleName();
         }

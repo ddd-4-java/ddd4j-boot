@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.nats.autoconfigure;
 
 import io.ddd4j.boot.mq.nats.consumer.NatsMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.nats.publisher.NatsMQEventPublisher;
-import io.ddd4j.boot.mq.nats.spi.NatsMQBrokerAdapter;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.boot.mq.nats.publisher.NatsEventPublisher;
+import io.ddd4j.boot.mq.nats.spi.NatsBrokerAdapter;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.publish.EventPublisher;
 import io.nats.client.Connection;
 import io.nats.client.Nats;
 import io.nats.client.Options;
@@ -41,7 +41,7 @@ public class Ddd4jNatsMQAutoConfiguration {
     @Bean(destroyMethod = "close")
     public NatsMQConsumerEndpointRegistrar natsMQConsumerEndpointRegistrar(
             ObjectProvider<Connection> connectionProvider,
-            Ddd4jMQProperties properties) {
+            MQProperties properties) {
         return new NatsMQConsumerEndpointRegistrar(connectionProvider.getIfAvailable(), properties);
     }
 
@@ -49,20 +49,20 @@ public class Ddd4jNatsMQAutoConfiguration {
      * 注册 NATS Broker 适配器。
      */
     @Bean
-    public NatsMQBrokerAdapter natsMQBrokerAdapter(
+    public NatsBrokerAdapter natsBrokerAdapter(
             ObjectProvider<Connection> connectionProvider,
-            Ddd4jMQProperties properties,
+            MQProperties properties,
             NatsMQConsumerEndpointRegistrar consumerEndpointRegistrar) {
-        return new NatsMQBrokerAdapter(connectionProvider.getIfAvailable(), properties, consumerEndpointRegistrar);
+        return new NatsBrokerAdapter(connectionProvider.getIfAvailable(), properties, consumerEndpointRegistrar);
     }
 
     /**
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public MQEventPublisher natsMQEventPublisher(
+    public EventPublisher natsEventPublisher(
             ObjectProvider<Connection> connectionProvider,
-            Ddd4jMQProperties properties) {
-        return new NatsMQEventPublisher(connectionProvider.getIfAvailable(), properties);
+            MQProperties properties) {
+        return new NatsEventPublisher(connectionProvider.getIfAvailable(), properties);
     }
 }

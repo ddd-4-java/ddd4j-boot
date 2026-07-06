@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.rabbit.ack;
 
 import com.rabbitmq.client.Channel;
-import io.ddd4j.boot.mq.contract.MQMessage;
+import io.ddd4j.boot.mq.contract.Message;
 import org.springframework.amqp.support.AmqpHeaders;
 
 import java.util.Map;
@@ -9,25 +9,25 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * 从纯 Java {@link MQMessage} 头信息构建 {@link AmqpMessageAcknowledgment}。
+ * 从纯 Java {@link Message} 头信息构建 {@link AmqpAcknowledgment}。
  *
  * <p>2.0.x 重构：彻底移除对 {@code org.springframework.messaging.Message} 的类型依赖，
- * 直接基于 ddd4j-mq-core 定义的纯 Java {@link MQMessage} 工作。
+ * 直接基于 ddd4j-mq-core 定义的纯 Java {@link Message} 工作。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
-public final class AmqpMessageAcknowledgmentFactory {
+public final class AmqpAcknowledgmentFactory {
 
-    private AmqpMessageAcknowledgmentFactory() {
+    private AmqpAcknowledgmentFactory() {
     }
 
     /**
-     * 从 {@link MQMessage} 头信息解析确认对象。
+     * 从 {@link Message} 头信息解析确认对象。
      *
      * @param message 纯 Java MQ 信封
      * @return 确认对象；缺少必要头时返回 empty
      */
-    public static Optional<AmqpMessageAcknowledgment> from(MQMessage<?> message) {
+    public static Optional<AmqpAcknowledgment> from(Message<?> message) {
         Objects.requireNonNull(message, "message");
         Map<String, Object> headers = message.getHeaders();
         if (headers == null || headers.isEmpty()) {
@@ -46,7 +46,7 @@ public final class AmqpMessageAcknowledgmentFactory {
         Object correlationIdHeader = headers.get(AmqpHeaders.CORRELATION_ID);
         String messageId = messageIdHeader == null ? null : String.valueOf(messageIdHeader);
         String correlationId = correlationIdHeader == null ? null : String.valueOf(correlationIdHeader);
-        return Optional.of(new AmqpMessageAcknowledgment(channel, deliveryTag, messageId, correlationId));
+        return Optional.of(new AmqpAcknowledgment(channel, deliveryTag, messageId, correlationId));
     }
 
     /**

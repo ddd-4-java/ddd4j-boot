@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.mqttmica.ack;
 
-import io.ddd4j.mq.ack.NoOpMessageAcknowledgment;
-import io.ddd4j.mq.contract.MQMessage;
+import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.message.Message;
 import org.dromara.mica.mqtt.codec.message.MqttPublishMessage;
 import org.dromara.mica.mqtt.codec.message.header.MqttPublishVariableHeader;
 import org.springframework.util.StringUtils;
@@ -12,13 +12,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * 从 mica-mqtt 入站消息构建 {@link MicaMqttMessageAcknowledgment}。
+ * 从 mica-mqtt 入站消息构建 {@link MicaMqttAcknowledgment}。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
-public final class MicaMqttMessageAcknowledgmentFactory {
+public final class MicaMqttAcknowledgmentFactory {
 
-    private MicaMqttMessageAcknowledgmentFactory() {
+    private MicaMqttAcknowledgmentFactory() {
     }
 
     /**
@@ -29,23 +29,23 @@ public final class MicaMqttMessageAcknowledgmentFactory {
      * @param headers MQ 头信息
      * @return 确认对象；QoS 0 时返回 NoOp 包装
      */
-    public static MessageAcknowledgmentOrNoOp from(String topic, MqttPublishMessage message, Map<String, Object> headers) {
+    public static AcknowledgmentOrNoOp from(String topic, MqttPublishMessage message, Map<String, Object> headers) {
         int qos = resolveQos(message, headers);
         String messageId = resolveMessageId(message, headers);
         if (qos <= 0) {
-            return new MessageAcknowledgmentOrNoOp(new NoOpMessageAcknowledgment(), false);
+            return new AcknowledgmentOrNoOp(new NoOpAcknowledgment(), false);
         }
-        return new MessageAcknowledgmentOrNoOp(
-                new MicaMqttMessageAcknowledgment(topic, qos, messageId), true);
+        return new AcknowledgmentOrNoOp(
+                new MicaMqttAcknowledgment(topic, qos, messageId), true);
     }
 
     /**
-     * 从 {@link MQMessage} 头信息解析确认对象。
+     * 从 {@link Message} 头信息解析确认对象。
      *
      * @param message MQ 信封
      * @return 确认对象
      */
-    public static Optional<MicaMqttMessageAcknowledgment> from(MQMessage<?> message) {
+    public static Optional<MicaMqttAcknowledgment> from(Message<?> message) {
         Objects.requireNonNull(message, "message");
         Object topicHeader = message.getHeaders().get(MicaMqttHeaders.TOPIC);
         if (!(topicHeader instanceof String topic)) {
@@ -58,7 +58,7 @@ public final class MicaMqttMessageAcknowledgmentFactory {
         if (qos <= 0) {
             return Optional.empty();
         }
-        return Optional.of(new MicaMqttMessageAcknowledgment(topic, qos, messageId));
+        return Optional.of(new MicaMqttAcknowledgment(topic, qos, messageId));
     }
 
     /**
@@ -114,8 +114,8 @@ public final class MicaMqttMessageAcknowledgmentFactory {
      * @param acknowledgment 确认实现
      * @param qosAck         是否为 QoS 级确认
      */
-    public record MessageAcknowledgmentOrNoOp(
-            io.ddd4j.mq.ack.MessageAcknowledgment acknowledgment,
+    public record AcknowledgmentOrNoOp(
+            io.ddd4j.mq.consume.Acknowledgment acknowledgment,
             boolean qosAck) {
     }
 }

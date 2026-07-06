@@ -1,15 +1,15 @@
 package io.ddd4j.boot.mq.kafka.mq;
 
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.ack.NoOpMessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.publish.MQEventPublisher;
-import io.ddd4j.mq.registry.MQBrokerType;
-import io.ddd4j.mq.registry.MQListenerDefinition;
-import io.ddd4j.mq.serialization.MQEventSerialization;
-import io.ddd4j.mq.spi.MQBrokerAdapter;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.listener.BrokerType;
+import io.ddd4j.mq.listener.ListenerDefinition;
+import io.ddd4j.mq.serialization.EventSerialization;
+import io.ddd4j.mq.spi.BrokerAdapter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.DisposableBean;
@@ -33,11 +33,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Slf4j
-public class KafkaMQBrokerAdapter implements MQBrokerAdapter, DisposableBean {
+public class KafkaBrokerAdapter implements BrokerAdapter, DisposableBean {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ConsumerFactory<String, String> consumerFactory;
-    private final MQEventSerialization serialization;
+    private final EventSerialization serialization;
     private final List<ConcurrentMessageListenerContainer<String, String>> containers = new CopyOnWriteArrayList<>();
 
     /**
@@ -47,25 +47,25 @@ public class KafkaMQBrokerAdapter implements MQBrokerAdapter, DisposableBean {
      * @param consumerFactory 消费者工厂
      * @param serialization   序列化器
      */
-    public KafkaMQBrokerAdapter(
+    public KafkaBrokerAdapter(
             KafkaTemplate<String, String> kafkaTemplate,
             ConsumerFactory<String, String> consumerFactory,
-            MQEventSerialization serialization) {
+            EventSerialization serialization) {
         this.kafkaTemplate = kafkaTemplate;
         this.consumerFactory = consumerFactory;
         this.serialization = serialization;
     }
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.KAFKA;
+    public BrokerType brokerType() {
+        return BrokerType.KAFKA;
     }
 
     @Override
-    public MQEventPublisher createPublisher(Ddd4jMQProperties props) {
-        Objects.requireNonNull(kafkaTemplate, "KafkaTemplate is required for KafkaMQEventPublisher");
-        Objects.requireNonNull(serialization, "MQEventSerialization is required for KafkaMQEventPublisher");
-        return new KafkaMQEventPublisher(kafkaTemplate, serialization, props);
+    public EventPublisher createPublisher(MQProperties props) {
+        Objects.requireNonNull(kafkaTemplate, "KafkaTemplate is required for KafkaEventPublisher");
+        Objects.requireNonNull(serialization, "EventSerialization is required for KafkaEventPublisher");
+        return new KafkaEventPublisher(kafkaTemplate, serialization, props);
     }
 
     /**
@@ -75,7 +75,7 @@ public class KafkaMQBrokerAdapter implements MQBrokerAdapter, DisposableBean {
      * @param handler    消费处理器
      */
     @Override
-    public void registerConsumer(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void registerConsumer(ListenerDefinition definition, ConsumerHandler handler) {
         Objects.requireNonNull(consumerFactory, "ConsumerFactory is required to register Kafka consumer");
         Objects.requireNonNull(definition, "definition");
         Objects.requireNonNull(handler, "handler");
@@ -98,21 +98,21 @@ public class KafkaMQBrokerAdapter implements MQBrokerAdapter, DisposableBean {
     }
 
     @Override
-    public MessageAcknowledgment resolveAcknowledgment(MQMessage<?> message) {
+    public Acknowledgment resolveAcknowledgment(Message<?> message) {
         if (message == null || message.getHeaders() == null) {
-            return new NoOpMessageAcknowledgment();
+            return new NoOpAcknowledgment();
         }
-        Object ackObj = message.getHeaders().get(KafkaMessageAcknowledgment.HEADER_KAFKA_ACK);
-        Object recordObj = message.getHeaders().get(KafkaMessageAcknowledgment.HEADER_KAFKA_RECORD);
+        Object ackObj = message.getHeaders().get(KafkaAcknowledgment.HEADER_KAFKA_ACK);
+        Object recordObj = message.getHeaders().get(KafkaAcknowledgment.HEADER_KAFKA_RECORD);
         if (ackObj instanceof Acknowledgment acknowledgment && recordObj instanceof ConsumerRecord<?, ?> record) {
-            return new KafkaMessageAcknowledgment(acknowledgment, record);
+            return new KafkaAcknowledgment(acknowledgment, record);
         }
-        return new NoOpMessageAcknowledgment();
+        return new NoOpAcknowledgment();
     }
 
     @Override
-    public boolean supports(MQBrokerType configured) {
-        return MQBrokerType.KAFKA == configured;
+    public boolean supports(BrokerType configured) {
+        return BrokerType.KAFKA == configured;
     }
 
     /**
@@ -131,16 +131,16 @@ public class KafkaMQBrokerAdapter implements MQBrokerAdapter, DisposableBean {
     }
 
     private void consumeRecord(
-            MQListenerDefinition definition,
-            MQConsumerHandler handler,
+            ListenerDefinition definition,
+            ConsumerHandler handler,
             ConsumerRecord<String, String> record,
             Acknowledgment ack) {
         Map<String, Object> headers = new HashMap<>();
-        headers.put(KafkaMessageAcknowledgment.HEADER_KAFKA_ACK, ack);
-        headers.put(KafkaMessageAcknowledgment.HEADER_KAFKA_RECORD, record);
+        headers.put(KafkaAcknowledgment.HEADER_KAFKA_ACK, ack);
+        headers.put(KafkaAcknowledgment.HEADER_KAFKA_RECORD, record);
 
-        MQMessage<String> message = MQMessage.of(record.value(), headers, null, null);
-        KafkaMessageAcknowledgment acknowledgment = new KafkaMessageAcknowledgment(ack, record);
+        Message<String> message = Message.of(record.value(), headers, null, null);
+        KafkaAcknowledgment acknowledgment = new KafkaAcknowledgment(ack, record);
 
         try {
             handler.handle(message, acknowledgment);
@@ -155,7 +155,7 @@ public class KafkaMQBrokerAdapter implements MQBrokerAdapter, DisposableBean {
         }
     }
 
-    private String resolveTopic(MQListenerDefinition definition) {
+    private String resolveTopic(ListenerDefinition definition) {
         String namespace = definition.getNamespace();
         String concat = StringUtils.hasText(definition.getConcat()) ? definition.getConcat() : "_";
         String topic = StringUtils.hasText(definition.getTopic()) ? definition.getTopic() : "DEFAULT";
@@ -165,7 +165,7 @@ public class KafkaMQBrokerAdapter implements MQBrokerAdapter, DisposableBean {
         return topic;
     }
 
-    private String resolveGroupId(MQListenerDefinition definition) {
+    private String resolveGroupId(ListenerDefinition definition) {
         if (StringUtils.hasText(definition.getGroup())) {
             return definition.getGroup();
         }

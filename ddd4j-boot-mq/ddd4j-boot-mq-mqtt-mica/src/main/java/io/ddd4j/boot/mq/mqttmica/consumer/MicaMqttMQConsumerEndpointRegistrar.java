@@ -1,14 +1,14 @@
 package io.ddd4j.boot.mq.mqttmica.consumer;
 
 import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttHeaders;
-import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttMessageAcknowledgmentFactory;
+import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttAcknowledgmentFactory;
 import io.ddd4j.boot.mq.mqttmica.config.Ddd4jMicaMqttProperties;
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.registry.MQListenerDefinition;
-import io.ddd4j.mq.registry.MQListenerEndpointNaming;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.listener.ListenerDefinition;
+import io.ddd4j.mq.listener.EndpointNaming;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.mica.mqtt.codec.message.MqttPublishMessage;
@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 将 {@code @MQEventListener} 动态注册为 mica-mqtt 编程式订阅（镜像 {@code @MqttClientSubscribe}）。
+ * 将 {@code @EventListener} 动态注册为 mica-mqtt 编程式订阅（镜像 {@code @MqttClientSubscribe}）。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
@@ -31,9 +31,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class MicaMqttMQConsumerEndpointRegistrar implements AutoCloseable {
 
     private final MqttClientTemplate mqttClientTemplate;
-    private final Ddd4jMQProperties mqProperties;
+    private final MQProperties mqProperties;
     private final Ddd4jMicaMqttProperties micaMqttProperties;
-    private final List<MQListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
+    private final List<ListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
     private final List<String> subscribedTopics = new CopyOnWriteArrayList<>();
 
     /**
@@ -42,11 +42,11 @@ public class MicaMqttMQConsumerEndpointRegistrar implements AutoCloseable {
      * @param definition 监听器定义
      * @param handler    消费处理函数
      */
-    public void register(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void register(ListenerDefinition definition, ConsumerHandler handler) {
         Objects.requireNonNull(definition, "definition");
         Objects.requireNonNull(handler, "handler");
 
-        String mqttTopic = MQListenerEndpointNaming.physicalTopic(mqProperties, definition);
+        String mqttTopic = EndpointNaming.physicalTopic(mqProperties, definition);
         int qos = resolveQos();
         IMqttClientMessageListener listener = (context, topic, message, payload) ->
                 onMessage(topic, message, payload, definition, handler);
@@ -68,12 +68,12 @@ public class MicaMqttMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 批量注册监听器（启动阶段调用）。
      */
-    public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
+    public void registerAll(List<ListenerDefinition> definitions, ConsumerHandler handler) {
         if (Objects.isNull(definitions) || definitions.isEmpty()) {
-            log.debug("No @MQEventListener definitions found for mica-mqtt");
+            log.debug("No @EventListener definitions found for mica-mqtt");
             return;
         }
-        for (MQListenerDefinition definition : definitions) {
+        for (ListenerDefinition definition : definitions) {
             register(definition, handler);
         }
         log.info("mica-mqtt consumer registrar initialized with {} listener(s)", registeredDefinitions.size());
@@ -95,34 +95,34 @@ public class MicaMqttMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 返回已登记的监听器定义（只读视图）。
      */
-    public List<MQListenerDefinition> registeredDefinitions() {
+    public List<ListenerDefinition> registeredDefinitions() {
         return List.copyOf(registeredDefinitions);
     }
 
     /**
-     * 处理 mica-mqtt 消息并委托 {@link MQConsumerHandler}。
+     * 处理 mica-mqtt 消息并委托 {@link ConsumerHandler}。
      */
     private void onMessage(
             String topic,
             MqttPublishMessage message,
             byte[] payload,
-            MQListenerDefinition definition,
-            MQConsumerHandler handler) {
+            ListenerDefinition definition,
+            ConsumerHandler handler) {
         try {
             String payloadText = new String(payload, StandardCharsets.UTF_8);
-            Map<String, Object> headers = MicaMqttMessageAcknowledgmentFactory.buildHeaders(topic, message);
+            Map<String, Object> headers = MicaMqttAcknowledgmentFactory.buildHeaders(topic, message);
             String messageId = headerAsString(headers, MicaMqttHeaders.MESSAGE_ID);
 
-            MQMessage<String> mqMessage = MQMessage.of(
+            Message<String> mqMessage = Message.of(
                     payloadText,
                     headers,
                     messageId,
                     topic,
                     message);
 
-            MicaMqttMessageAcknowledgmentFactory.MessageAcknowledgmentOrNoOp ackWrapper =
-                    MicaMqttMessageAcknowledgmentFactory.from(topic, message, headers);
-            MessageAcknowledgment ack = ackWrapper.acknowledgment();
+            MicaMqttAcknowledgmentFactory.AcknowledgmentOrNoOp ackWrapper =
+                    MicaMqttAcknowledgmentFactory.from(topic, message, headers);
+            Acknowledgment ack = ackWrapper.acknowledgment();
 
             handler.handle(mqMessage, ack);
 
@@ -146,7 +146,7 @@ public class MicaMqttMQConsumerEndpointRegistrar implements AutoCloseable {
         return 0;
     }
 
-    private String beanLabel(MQListenerDefinition definition) {
+    private String beanLabel(ListenerDefinition definition) {
         if (Objects.nonNull(definition.getBean())) {
             return definition.getBean().getClass().getSimpleName();
         }

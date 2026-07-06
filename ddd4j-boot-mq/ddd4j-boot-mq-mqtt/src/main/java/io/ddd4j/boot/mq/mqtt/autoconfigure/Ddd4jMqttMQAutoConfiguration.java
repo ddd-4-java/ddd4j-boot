@@ -2,10 +2,10 @@ package io.ddd4j.boot.mq.mqtt.autoconfigure;
 
 import io.ddd4j.boot.mq.mqtt.config.Ddd4jMqttProperties;
 import io.ddd4j.boot.mq.mqtt.consumer.MqttMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.mqtt.publisher.MqttMQEventPublisher;
-import io.ddd4j.boot.mq.mqtt.spi.MqttMQBrokerAdapter;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.boot.mq.mqtt.publisher.MqttEventPublisher;
+import io.ddd4j.boot.mq.mqtt.spi.MqttBrokerAdapter;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.publish.EventPublisher;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -85,7 +85,7 @@ public class Ddd4jMqttMQAutoConfiguration {
     @Bean(destroyMethod = "close")
     public MqttMQConsumerEndpointRegistrar mqttMQConsumerEndpointRegistrar(
             MqttPahoClientFactory mqttClientFactory,
-            Ddd4jMQProperties mqProperties,
+            MQProperties mqProperties,
             Ddd4jMqttProperties mqttProperties) {
         return new MqttMQConsumerEndpointRegistrar(mqttClientFactory, mqProperties, mqttProperties);
     }
@@ -94,12 +94,12 @@ public class Ddd4jMqttMQAutoConfiguration {
      * 注册 MQTT Broker 适配器。
      */
     @Bean
-    public MqttMQBrokerAdapter mqttMQBrokerAdapter(
+    public MqttBrokerAdapter mqttBrokerAdapter(
             MessageChannel mqttOutboundChannel,
-            Ddd4jMQProperties mqProperties,
+            MQProperties mqProperties,
             Ddd4jMqttProperties mqttProperties,
             MqttMQConsumerEndpointRegistrar consumerEndpointRegistrar) {
-        return new MqttMQBrokerAdapter(
+        return new MqttBrokerAdapter(
                 mqttOutboundChannel, mqProperties, mqttProperties.getQos(), consumerEndpointRegistrar);
     }
 
@@ -107,10 +107,10 @@ public class Ddd4jMqttMQAutoConfiguration {
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public MQEventPublisher mqttMQEventPublisher(
+    public EventPublisher mqttEventPublisher(
             MessageChannel mqttOutboundChannel,
-            Ddd4jMQProperties mqProperties,
+            MQProperties mqProperties,
             Ddd4jMqttProperties mqttProperties) {
-        return new MqttMQEventPublisher(mqttOutboundChannel, mqProperties, mqttProperties.getQos());
+        return new MqttEventPublisher(mqttOutboundChannel, mqProperties, mqttProperties.getQos());
     }
 }

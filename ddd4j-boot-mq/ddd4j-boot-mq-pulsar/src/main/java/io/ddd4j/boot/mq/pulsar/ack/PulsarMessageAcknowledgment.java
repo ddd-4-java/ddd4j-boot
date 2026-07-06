@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.pulsar.ack;
 
-import io.ddd4j.boot.mq.ack.MessageAcknowledgment;
+import io.ddd4j.boot.mq.ack.Acknowledgment;
 import io.ddd4j.boot.mq.ack.UnsupportedAckOperationException;
-import io.ddd4j.boot.mq.registry.MQBrokerType;
+import io.ddd4j.boot.mq.registry.BrokerType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.Message;
@@ -18,15 +18,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Slf4j
-public final class PulsarMessageAcknowledgment implements MessageAcknowledgment {
+public final class PulsarAcknowledgment implements Acknowledgment {
 
     /**
-     * MQMessage headers 中存放 Pulsar Consumer 的键
+     * Message headers 中存放 Pulsar Consumer 的键
      */
     public static final String HEADER_PULSAR_CONSUMER = "pulsar.consumer";
 
     /**
-     * MQMessage headers 中存放 Pulsar Message 的键
+     * Message headers 中存放 Pulsar Message 的键
      */
     public static final String HEADER_PULSAR_MESSAGE = "pulsar.message";
 
@@ -41,7 +41,7 @@ public final class PulsarMessageAcknowledgment implements MessageAcknowledgment 
      * @param consumer      Pulsar 消费者
      * @param pulsarMessage Pulsar 消息
      */
-    public PulsarMessageAcknowledgment(Consumer<?> consumer, Message<?> pulsarMessage) {
+    public PulsarAcknowledgment(Consumer<?> consumer, Message<?> pulsarMessage) {
         this.consumer = Objects.requireNonNull(consumer, "consumer");
         this.pulsarMessage = Objects.requireNonNull(pulsarMessage, "pulsarMessage");
         this.messageId = pulsarMessage.getMessageId();
@@ -73,8 +73,8 @@ public final class PulsarMessageAcknowledgment implements MessageAcknowledgment 
     }
 
     @Override
-    public MQBrokerType brokerType() {
-        return MQBrokerType.PULSAR;
+    public BrokerType brokerType() {
+        return BrokerType.PULSAR;
     }
 
     @Override
@@ -86,7 +86,7 @@ public final class PulsarMessageAcknowledgment implements MessageAcknowledgment 
     public void ack(boolean multiple) {
         ensureNotAcknowledged();
         if (multiple) {
-            throw new UnsupportedAckOperationException(MQBrokerType.PULSAR, "ack(multiple=true)");
+            throw new UnsupportedAckOperationException(BrokerType.PULSAR, "ack(multiple=true)");
         }
         try {
             // 逻辑块：单条确认成功消费
@@ -106,7 +106,7 @@ public final class PulsarMessageAcknowledgment implements MessageAcknowledgment 
     public void nack(boolean multiple, boolean requeue) {
         ensureNotAcknowledged();
         if (multiple) {
-            throw new UnsupportedAckOperationException(MQBrokerType.PULSAR, "nack(multiple=true)");
+            throw new UnsupportedAckOperationException(BrokerType.PULSAR, "nack(multiple=true)");
         }
         if (requeue) {
             try {
@@ -128,7 +128,7 @@ public final class PulsarMessageAcknowledgment implements MessageAcknowledgment 
 
     @Override
     public void recover(boolean requeue) {
-        throw new UnsupportedAckOperationException(MQBrokerType.PULSAR, "recover");
+        throw new UnsupportedAckOperationException(BrokerType.PULSAR, "recover");
     }
 
     @Override
@@ -143,7 +143,7 @@ public final class PulsarMessageAcknowledgment implements MessageAcknowledgment 
         if (MessageId.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(messageId));
         }
-        if (PulsarMessageAcknowledgment.class.isAssignableFrom(nativeType)) {
+        if (PulsarAcknowledgment.class.isAssignableFrom(nativeType)) {
             return Optional.of(nativeType.cast(this));
         }
         return Optional.empty();

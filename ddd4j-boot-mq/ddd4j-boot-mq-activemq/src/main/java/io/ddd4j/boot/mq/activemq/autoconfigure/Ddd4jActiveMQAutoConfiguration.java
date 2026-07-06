@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.activemq.autoconfigure;
 
-import io.ddd4j.boot.mq.activemq.publisher.ActiveMQEventPublisher;
+import io.ddd4j.boot.mq.activemq.publisher.ActiveEventPublisher;
 import io.ddd4j.mq.activemq.consumer.ActiveMQConsumerEndpointRegistrar;
-import io.ddd4j.mq.activemq.spi.ActiveMQBrokerAdapter;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.publish.MQEventPublisher;
+import io.ddd4j.mq.activemq.spi.ActiveBrokerAdapter;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.publish.EventPublisher;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ public class Ddd4jActiveMQAutoConfiguration {
     public ActiveMQConsumerEndpointRegistrar activeMQConsumerEndpointRegistrar(
             ApplicationContext applicationContext,
             JmsListenerEndpointRegistry endpointRegistry,
-            Ddd4jMQProperties properties) {
+            MQProperties properties) {
         return new ActiveMQConsumerEndpointRegistrar(applicationContext, endpointRegistry, properties);
     }
 
@@ -34,19 +34,19 @@ public class Ddd4jActiveMQAutoConfiguration {
      * 注册 ActiveMQ Broker 适配器。
      */
     @Bean
-    public ActiveMQBrokerAdapter activeMQBrokerAdapter(
-            Ddd4jMQProperties properties,
+    public ActiveBrokerAdapter activeBrokerAdapter(
+            MQProperties properties,
             ActiveMQConsumerEndpointRegistrar consumerEndpointRegistrar) {
-        return new ActiveMQBrokerAdapter(properties, consumerEndpointRegistrar);
+        return new ActiveBrokerAdapter(properties, consumerEndpointRegistrar);
     }
 
     /**
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public MQEventPublisher activeMQEventPublisher(
+    public EventPublisher activeEventPublisher(
             JmsTemplate jmsTemplate,
-            Ddd4jMQProperties properties) {
-        return new ActiveMQEventPublisher(jmsTemplate, properties);
+            MQProperties properties) {
+        return new ActiveEventPublisher(jmsTemplate, properties);
     }
 }

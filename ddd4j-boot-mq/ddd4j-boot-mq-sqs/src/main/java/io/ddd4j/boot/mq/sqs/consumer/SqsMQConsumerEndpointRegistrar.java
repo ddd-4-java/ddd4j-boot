@@ -4,13 +4,13 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.ReceiveMessageResult;
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.registry.MQListenerDefinition;
-import io.ddd4j.mq.registry.MQListenerEndpointNaming;
-import io.ddd4j.boot.mq.sqs.ack.SqsMessageAcknowledgment;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.listener.ListenerDefinition;
+import io.ddd4j.mq.listener.EndpointNaming;
+import io.ddd4j.boot.mq.sqs.ack.SqsAcknowledgment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -26,7 +26,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * 将 {@code @MQEventListener} 动态注册为 SQS 长轮询消费循环。
+ * 将 {@code @EventListener} 动态注册为 SQS 长轮询消费循环。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
@@ -39,8 +39,8 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
 
     private final AmazonSQS amazonSqs;
     private final String defaultQueueUrl;
-    private final Ddd4jMQProperties properties;
-    private final List<MQListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
+    private final MQProperties properties;
+    private final List<ListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
     private final List<Future<?>> pollingTasks = new CopyOnWriteArrayList<>();
     private final AtomicBoolean running = new AtomicBoolean(true);
     private final ExecutorService executor = Executors.newCachedThreadPool(r -> {
@@ -52,7 +52,7 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 注册单个监听器定义。
      */
-    public void register(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void register(ListenerDefinition definition, ConsumerHandler handler) {
         Objects.requireNonNull(definition, "definition");
         Objects.requireNonNull(handler, "handler");
 
@@ -74,12 +74,12 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 批量注册监听器。
      */
-    public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
+    public void registerAll(List<ListenerDefinition> definitions, ConsumerHandler handler) {
         if (Objects.isNull(definitions) || definitions.isEmpty()) {
-            log.debug("No @MQEventListener definitions found for SQS");
+            log.debug("No @EventListener definitions found for SQS");
             return;
         }
-        for (MQListenerDefinition definition : definitions) {
+        for (ListenerDefinition definition : definitions) {
             register(definition, handler);
         }
         log.info("SQS consumer registrar initialized with {} listener(s)", registeredDefinitions.size());
@@ -98,14 +98,14 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 返回已登记的监听器定义。
      */
-    public List<MQListenerDefinition> registeredDefinitions() {
+    public List<ListenerDefinition> registeredDefinitions() {
         return List.copyOf(registeredDefinitions);
     }
 
     /**
      * 长轮询消费循环。
      */
-    private void pollLoop(String queueUrl, MQListenerDefinition definition, MQConsumerHandler handler) {
+    private void pollLoop(String queueUrl, ListenerDefinition definition, ConsumerHandler handler) {
         while (running.get() && !Thread.currentThread().isInterrupted()) {
             try {
                 ReceiveMessageResult result = amazonSqs.receiveMessage(new ReceiveMessageRequest(queueUrl)
@@ -131,8 +131,8 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
     private void onMessage(
             String queueUrl,
             Message sqsMessage,
-            MQListenerDefinition definition,
-            MQConsumerHandler handler) {
+            ListenerDefinition definition,
+            ConsumerHandler handler) {
 
         try {
             String payloadText = sqsMessage.getBody();
@@ -141,14 +141,14 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
                 sqsMessage.getMessageAttributes().forEach((k, v) -> headers.put(k, v.getStringValue()));
             }
 
-            MQMessage<String> mqMessage = MQMessage.of(
+            Message<String> mqMessage = Message.of(
                     payloadText,
                     headers,
                     sqsMessage.getMessageId(),
                     sqsMessage.getReceiptHandle(),
                     sqsMessage);
 
-            MessageAcknowledgment ack = new SqsMessageAcknowledgment(amazonSqs, queueUrl, sqsMessage);
+            Acknowledgment ack = new SqsAcknowledgment(amazonSqs, queueUrl, sqsMessage);
             handler.handle(mqMessage, ack);
             if (!properties.getConsumer().isManualAck() && !ack.isAcknowledged()) {
                 ack.ack();
@@ -162,11 +162,11 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
     /**
      * 解析队列 URL：优先 defaultQueueUrl，否则以 topic 作为队列名拼接（需 IAM 侧已创建）。
      */
-    private String resolveQueueUrl(MQListenerDefinition definition) {
+    private String resolveQueueUrl(ListenerDefinition definition) {
         if (StringUtils.hasText(defaultQueueUrl)) {
             return defaultQueueUrl;
         }
-        String topic = MQListenerEndpointNaming.physicalTopic(properties, definition);
+        String topic = EndpointNaming.physicalTopic(properties, definition);
         if (topic.startsWith("http://") || topic.startsWith("https://")) {
             return topic;
         }
@@ -181,7 +181,7 @@ public class SqsMQConsumerEndpointRegistrar implements AutoCloseable {
         }
     }
 
-    private String beanLabel(MQListenerDefinition definition) {
+    private String beanLabel(ListenerDefinition definition) {
         if (Objects.nonNull(definition.getBean())) {
             return definition.getBean().getClass().getSimpleName();
         }

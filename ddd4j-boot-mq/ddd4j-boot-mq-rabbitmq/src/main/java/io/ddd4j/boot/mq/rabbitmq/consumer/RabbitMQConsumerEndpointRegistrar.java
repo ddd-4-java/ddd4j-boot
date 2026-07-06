@@ -1,13 +1,13 @@
 package io.ddd4j.boot.mq.rabbitmq.consumer;
 
 import com.rabbitmq.client.Channel;
-import io.ddd4j.mq.ack.MessageAcknowledgment;
-import io.ddd4j.mq.ack.NoOpMessageAcknowledgment;
-import io.ddd4j.mq.config.Ddd4jMQProperties;
-import io.ddd4j.mq.consume.MQConsumerHandler;
-import io.ddd4j.mq.contract.MQMessage;
-import io.ddd4j.mq.rabbit.ack.AmqpMessageAcknowledgmentFactory;
-import io.ddd4j.mq.registry.MQListenerDefinition;
+import io.ddd4j.mq.consume.Acknowledgment;
+import io.ddd4j.mq.consume.NoOpAcknowledgment;
+import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.consume.ConsumerHandler;
+import io.ddd4j.mq.message.Message;
+import io.ddd4j.mq.rabbit.ack.AmqpAcknowledgmentFactory;
+import io.ddd4j.mq.listener.ListenerDefinition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerEndpoint;
@@ -28,7 +28,7 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 将 {@code @MQEventListener} 动态注册为 RabbitMQ 消费端点。
+ * 将 {@code @EventListener} 动态注册为 RabbitMQ 消费端点。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
@@ -38,8 +38,8 @@ public class RabbitMQConsumerEndpointRegistrar {
 
     private final ApplicationContext applicationContext;
     private final RabbitListenerEndpointRegistry endpointRegistry;
-    private final Ddd4jMQProperties properties;
-    private final List<MQListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
+    private final MQProperties properties;
+    private final List<ListenerDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
 
     /**
      * 注册单个监听器定义。
@@ -47,7 +47,7 @@ public class RabbitMQConsumerEndpointRegistrar {
      * @param definition 监听器定义
      * @param handler    消费处理函数
      */
-    public void register(MQListenerDefinition definition, MQConsumerHandler handler) {
+    public void register(ListenerDefinition definition, ConsumerHandler handler) {
         Objects.requireNonNull(definition, "definition");
         Objects.requireNonNull(handler, "handler");
 
@@ -80,12 +80,12 @@ public class RabbitMQConsumerEndpointRegistrar {
     /**
      * 批量注册监听器（启动阶段调用）。
      */
-    public void registerAll(List<MQListenerDefinition> definitions, MQConsumerHandler handler) {
+    public void registerAll(List<ListenerDefinition> definitions, ConsumerHandler handler) {
         if (definitions == null || definitions.isEmpty()) {
-            log.debug("No @MQEventListener definitions found for RabbitMQ");
+            log.debug("No @EventListener definitions found for RabbitMQ");
             return;
         }
-        for (MQListenerDefinition definition : definitions) {
+        for (ListenerDefinition definition : definitions) {
             register(definition, handler);
         }
         log.info("RabbitMQ consumer registrar initialized with {} listener(s)", registeredDefinitions.size());
@@ -94,22 +94,22 @@ public class RabbitMQConsumerEndpointRegistrar {
     /**
      * 返回已登记的监听器定义（只读视图）。
      */
-    public List<MQListenerDefinition> registeredDefinitions() {
+    public List<ListenerDefinition> registeredDefinitions() {
         return List.copyOf(registeredDefinitions);
     }
 
     /**
-     * 创建 ChannelAware 消息监听器，转换 AMQP 消息并委托 {@link MQConsumerHandler}。
+     * 创建 ChannelAware 消息监听器，转换 AMQP 消息并委托 {@link ConsumerHandler}。
      */
     private ChannelAwareMessageListener createMessageListener(
-            MQListenerDefinition definition,
-            MQConsumerHandler handler) {
+            ListenerDefinition definition,
+            ConsumerHandler handler) {
 
         return (Message amqpMessage, Channel channel) -> {
             try {
                 String payloadText = new String(amqpMessage.getBody(), StandardCharsets.UTF_8);
 
-                // 2.0.x：直接构造纯 Java MQMessage，Channel/deliveryTag 通过 headers 传递（与 AmqpMessageAcknowledgmentFactory.from(MQMessage) 配套）
+                // 2.0.x：直接构造纯 Java Message，Channel/deliveryTag 通过 headers 传递（与 AmqpAcknowledgmentFactory.from(Message) 配套）
                 Map<String, Object> headers = new HashMap<>();
                 Map<String, Object> propsHeaders = amqpMessage.getMessageProperties().getHeaders();
                 if (propsHeaders != null) {
@@ -118,16 +118,16 @@ public class RabbitMQConsumerEndpointRegistrar {
                 headers.put(AmqpHeaders.CHANNEL, channel);
                 headers.put(AmqpHeaders.DELIVERY_TAG, amqpMessage.getMessageProperties().getDeliveryTag());
 
-                MQMessage<String> mqMessage = MQMessage.of(
+                Message<String> mqMessage = Message.of(
                         payloadText,
                         headers,
                         amqpMessage.getMessageProperties().getMessageId(),
                         amqpMessage.getMessageProperties().getCorrelationId(),
                         amqpMessage);
 
-                MessageAcknowledgment ack = AmqpMessageAcknowledgmentFactory.from(mqMessage)
-                        .map(a -> (MessageAcknowledgment) a)
-                        .orElseGet(NoOpMessageAcknowledgment::new);
+                Acknowledgment ack = AmqpAcknowledgmentFactory.from(mqMessage)
+                        .map(a -> (Acknowledgment) a)
+                        .orElseGet(NoOpAcknowledgment::new);
 
                 handler.handle(mqMessage, ack);
             } catch (Exception ex) {
@@ -161,7 +161,7 @@ public class RabbitMQConsumerEndpointRegistrar {
     /**
      * 构建队列名：group.namespace.className.methodName。
      */
-    private String buildQueueName(MQListenerDefinition definition, String concat) {
+    private String buildQueueName(ListenerDefinition definition, String concat) {
         String group = definition.getGroup();
         String namespace = definition.getNamespace();
         String className = definition.getMethod().getDeclaringClass().getSimpleName();
@@ -172,7 +172,7 @@ public class RabbitMQConsumerEndpointRegistrar {
     /**
      * 构建路由键：namespace.topic[.tag]。
      */
-    private String buildRoutingKey(MQListenerDefinition definition, String concat) {
+    private String buildRoutingKey(ListenerDefinition definition, String concat) {
         String namespace = definition.getNamespace();
         String topic = definition.getTopic();
         String tags = definition.getTags();
@@ -186,7 +186,7 @@ public class RabbitMQConsumerEndpointRegistrar {
     /**
      * 解析连接符，默认 {@code .}。
      */
-    private String resolveConcat(MQListenerDefinition definition) {
+    private String resolveConcat(ListenerDefinition definition) {
         if (StringUtils.hasText(definition.getConcat())) {
             return definition.getConcat();
         }
@@ -196,7 +196,7 @@ public class RabbitMQConsumerEndpointRegistrar {
     /**
      * 构建端点 ID，保证在 registry 内唯一。
      */
-    private String buildEndpointId(MQListenerDefinition definition) {
+    private String buildEndpointId(ListenerDefinition definition) {
         return "ddd4j-" + definition.bindingName() + "-"
                 + definition.getMethod().getDeclaringClass().getSimpleName() + "-"
                 + definition.getMethod().getName();
