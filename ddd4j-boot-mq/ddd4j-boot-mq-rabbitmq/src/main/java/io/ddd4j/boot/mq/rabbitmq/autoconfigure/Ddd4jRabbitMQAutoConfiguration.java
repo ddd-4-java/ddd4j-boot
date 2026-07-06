@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.rabbitmq.autoconfigure;
 
-import io.ddd4j.boot.mq.rabbitmq.publisher.RabbitEventPublisher;
+import io.ddd4j.boot.mq.rabbitmq.publisher.RabbitMQEventPublisher;
 import io.ddd4j.mq.config.MQProperties;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.rabbit.consumer.RabbitMQConsumerEndpointRegistrar;
 import io.ddd4j.mq.rabbit.spi.RabbitBrokerAdapter;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -44,9 +44,9 @@ public class Ddd4jRabbitMQAutoConfiguration {
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public EventPublisher rabbitEventPublisher(
+    public MQEventPublisher rabbitEventPublisher(
             RabbitTemplate rabbitTemplate,
             MQProperties properties) {
-        return new RabbitEventPublisher(rabbitTemplate, properties);
+        return new RabbitMQEventPublisher(rabbitTemplate, properties);
     }
 }

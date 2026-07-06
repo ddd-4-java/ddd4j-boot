@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.nats.autoconfigure;
 
 import io.ddd4j.boot.mq.nats.consumer.NatsMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.nats.publisher.NatsEventPublisher;
+import io.ddd4j.boot.mq.nats.publisher.NatsMQEventPublisher;
 import io.ddd4j.boot.mq.nats.spi.NatsBrokerAdapter;
 import io.ddd4j.mq.config.MQProperties;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.nats.client.Connection;
 import io.nats.client.Nats;
 import io.nats.client.Options;
@@ -60,9 +60,9 @@ public class Ddd4jNatsMQAutoConfiguration {
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public EventPublisher natsEventPublisher(
+    public MQEventPublisher natsEventPublisher(
             ObjectProvider<Connection> connectionProvider,
             MQProperties properties) {
-        return new NatsEventPublisher(connectionProvider.getIfAvailable(), properties);
+        return new NatsMQEventPublisher(connectionProvider.getIfAvailable(), properties);
     }
 }

@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.rocketmq.autoconfigure;
 
-import io.ddd4j.boot.mq.rocketmq.publisher.RocketEventPublisher;
+import io.ddd4j.boot.mq.rocketmq.publisher.RocketMQEventPublisher;
 import io.ddd4j.mq.config.MQProperties;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.rocketmq.consumer.RocketMQConsumerEndpointRegistrar;
 import io.ddd4j.mq.rocketmq.spi.RocketBrokerAdapter;
 import org.springframework.context.ApplicationContext;
@@ -41,8 +41,8 @@ public class Ddd4jRocketMQAutoConfiguration {
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public EventPublisher rocketEventPublisher(
+    public MQEventPublisher rocketEventPublisher(
             MQProperties properties) {
-        return new RocketEventPublisher(rocketMQTemplate, properties);
+        return new RocketMQEventPublisher(rocketMQTemplate, properties);
     }
 }

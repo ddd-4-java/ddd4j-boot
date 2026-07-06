@@ -5,9 +5,9 @@ import io.ddd4j.mq.disruptor.config.DisruptorMQProperties;
 import io.ddd4j.mq.disruptor.consumer.DisruptorMQConsumerEndpointRegistrar;
 import io.ddd4j.mq.disruptor.core.DisruptorMQBus;
 import io.ddd4j.mq.disruptor.core.DisruptorMQEventDispatcher;
-import io.ddd4j.mq.disruptor.publisher.DisruptorEventPublisher;
+import io.ddd4j.mq.disruptor.publisher.DisruptorMQEventPublisher;
 import io.ddd4j.mq.disruptor.spi.DisruptorBrokerAdapter;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -46,9 +46,9 @@ public class Ddd4jDisruptorMQAutoConfiguration {
     }
 
     @Bean
-    public EventPublisher disruptorEventPublisher(
+    public MQEventPublisher disruptorEventPublisher(
             DisruptorMQBus disruptorMQBus,
             MQProperties properties) {
-        return new DisruptorEventPublisher(disruptorMQBus, properties);
+        return new DisruptorMQEventPublisher(disruptorMQBus, properties);
     }
 }

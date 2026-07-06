@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.pulsar.autoconfigure;
 
-import io.ddd4j.boot.mq.pulsar.publisher.PulsarEventPublisher;
+import io.ddd4j.boot.mq.pulsar.publisher.PulsarMQEventPublisher;
 import io.ddd4j.mq.config.MQProperties;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.pulsar.consumer.PulsarConsumerEndpointRegistrar;
 import io.ddd4j.mq.pulsar.spi.PulsarBrokerAdapter;
 import org.apache.pulsar.client.api.PulsarClient;
@@ -42,8 +42,8 @@ public class Ddd4jPulsarMQAutoConfiguration {
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public EventPublisher pulsarEventPublisher(
+    public MQEventPublisher pulsarEventPublisher(
             MQProperties properties) {
-        return new PulsarEventPublisher(pulsarTemplate, properties);
+        return new PulsarMQEventPublisher(pulsarTemplate, properties);
     }
 }

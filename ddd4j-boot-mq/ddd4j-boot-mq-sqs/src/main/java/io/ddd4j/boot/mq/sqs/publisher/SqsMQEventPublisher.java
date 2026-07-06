@@ -2,12 +2,12 @@ package io.ddd4j.boot.mq.sqs.publisher;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
-import io.ddd4j.core.event.MQEvent;
+import io.ddd4j.mq.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.kit.lang.StrKit;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.message.Destination;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class SqsEventPublisher implements EventPublisher {
+public class SqsMQEventPublisher implements MQEventPublisher {
 
     private final AmazonSQS amazonSqs;
     private final String defaultQueueUrl;

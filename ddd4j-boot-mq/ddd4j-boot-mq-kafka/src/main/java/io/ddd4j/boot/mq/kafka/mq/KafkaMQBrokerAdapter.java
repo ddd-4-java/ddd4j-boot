@@ -5,7 +5,7 @@ import io.ddd4j.mq.consume.NoOpAcknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.listener.BrokerType;
 import io.ddd4j.mq.listener.ListenerDefinition;
 import io.ddd4j.mq.serialization.EventSerialization;
@@ -18,7 +18,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.AcknowledgingMessageListener;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
@@ -62,10 +61,10 @@ public class KafkaBrokerAdapter implements BrokerAdapter, DisposableBean {
     }
 
     @Override
-    public EventPublisher createPublisher(MQProperties props) {
+    public MQEventPublisher createPublisher(MQProperties props) {
         Objects.requireNonNull(kafkaTemplate, "KafkaTemplate is required for KafkaEventPublisher");
         Objects.requireNonNull(serialization, "EventSerialization is required for KafkaEventPublisher");
-        return new KafkaEventPublisher(kafkaTemplate, serialization, props);
+        return new KafkaMQEventPublisher(kafkaTemplate, serialization, props);
     }
 
     /**

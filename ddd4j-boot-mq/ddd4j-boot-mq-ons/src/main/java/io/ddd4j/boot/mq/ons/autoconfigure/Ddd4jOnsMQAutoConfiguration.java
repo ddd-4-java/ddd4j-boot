@@ -4,10 +4,10 @@ import com.aliyun.openservices.ons.api.ONSFactory;
 import com.aliyun.openservices.ons.api.Producer;
 import com.aliyun.openservices.ons.api.PropertyKeyConst;
 import io.ddd4j.boot.mq.ons.consumer.OnsMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.ons.publisher.OnsEventPublisher;
+import io.ddd4j.boot.mq.ons.publisher.OnsMQEventPublisher;
 import io.ddd4j.boot.mq.ons.spi.OnsBrokerAdapter;
 import io.ddd4j.mq.config.MQProperties;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -75,9 +75,9 @@ public class Ddd4jOnsMQAutoConfiguration {
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public EventPublisher onsEventPublisher(
+    public MQEventPublisher onsEventPublisher(
             ObjectProvider<Producer> producerProvider,
             MQProperties properties) {
-        return new OnsEventPublisher(producerProvider.getIfAvailable(), properties);
+        return new OnsMQEventPublisher(producerProvider.getIfAvailable(), properties);
     }
 }

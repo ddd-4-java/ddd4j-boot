@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.kafka.mq;
 
-import io.ddd4j.core.event.MQEvent;
+import io.ddd4j.mq.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.message.Destination;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.serialization.EventSerialization;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +16,7 @@ import org.springframework.kafka.core.KafkaTemplate;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Slf4j
-public class KafkaEventPublisher implements EventPublisher {
+public class KafkaMQEventPublisher implements MQEventPublisher {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final EventSerialization serialization;
@@ -29,7 +29,7 @@ public class KafkaEventPublisher implements EventPublisher {
      * @param serialization 序列化器
      * @param properties    MQ 配置
      */
-    public KafkaEventPublisher(
+    public KafkaMQEventPublisher(
             KafkaTemplate<String, String> kafkaTemplate,
             EventSerialization serialization,
             MQProperties properties) {

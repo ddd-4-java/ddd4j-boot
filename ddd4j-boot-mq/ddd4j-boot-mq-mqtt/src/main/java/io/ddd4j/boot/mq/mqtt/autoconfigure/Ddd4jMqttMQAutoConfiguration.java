@@ -2,10 +2,10 @@ package io.ddd4j.boot.mq.mqtt.autoconfigure;
 
 import io.ddd4j.boot.mq.mqtt.config.Ddd4jMqttProperties;
 import io.ddd4j.boot.mq.mqtt.consumer.MqttMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.mqtt.publisher.MqttEventPublisher;
+import io.ddd4j.boot.mq.mqtt.publisher.MqttMQEventPublisher;
 import io.ddd4j.boot.mq.mqtt.spi.MqttBrokerAdapter;
 import io.ddd4j.mq.config.MQProperties;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -107,10 +107,10 @@ public class Ddd4jMqttMQAutoConfiguration {
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public EventPublisher mqttEventPublisher(
+    public MQEventPublisher mqttEventPublisher(
             MessageChannel mqttOutboundChannel,
             MQProperties mqProperties,
             Ddd4jMqttProperties mqttProperties) {
-        return new MqttEventPublisher(mqttOutboundChannel, mqProperties, mqttProperties.getQos());
+        return new MqttMQEventPublisher(mqttOutboundChannel, mqProperties, mqttProperties.getQos());
     }
 }

@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.pulsar.publisher;
 
-import io.ddd4j.core.event.MQEvent;
+import io.ddd4j.mq.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.message.Destination;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.pulsar.core.PulsarTemplate;
@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class PulsarEventPublisher implements EventPublisher {
+public class PulsarMQEventPublisher implements MQEventPublisher {
 
     private final PulsarTemplate<String> pulsarTemplate;
     private final MQProperties properties;

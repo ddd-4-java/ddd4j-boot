@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.kafka.mq;
 
 import io.ddd4j.mq.config.MQProperties;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.serialization.MessageSerialization;
 import io.ddd4j.mq.spi.BrokerAdapter;
 import org.springframework.beans.factory.ObjectProvider;
@@ -36,10 +36,10 @@ public class Ddd4jKafkaMQAutoConfiguration {
      * 注册领域事件发布 Bean（与 Rabbit 等 cmpt 模块对齐）。
      */
     @Bean
-    public EventPublisher kafkaEventPublisher(
+    public MQEventPublisher kafkaEventPublisher(
             KafkaTemplate<String, String> kafkaTemplate,
             MessageSerialization serialization,
             MQProperties properties) {
-        return new KafkaEventPublisher(kafkaTemplate, serialization, properties);
+        return new KafkaMQEventPublisher(kafkaTemplate, serialization, properties);
     }
 }

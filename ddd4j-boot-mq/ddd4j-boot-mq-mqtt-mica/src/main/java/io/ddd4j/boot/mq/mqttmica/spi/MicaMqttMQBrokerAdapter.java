@@ -4,12 +4,12 @@ import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttHeaders;
 import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttAcknowledgment;
 import io.ddd4j.boot.mq.mqttmica.ack.MicaMqttAcknowledgmentFactory;
 import io.ddd4j.boot.mq.mqttmica.consumer.MicaMqttMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.mqttmica.publisher.MicaMqttEventPublisher;
+import io.ddd4j.boot.mq.mqttmica.publisher.MicaMqttMQEventPublisher;
 import io.ddd4j.mq.consume.Acknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.listener.BrokerType;
 import io.ddd4j.mq.listener.ListenerDefinition;
 import io.ddd4j.mq.spi.BrokerAdapter;
@@ -38,8 +38,8 @@ public class MicaMqttBrokerAdapter implements BrokerAdapter {
     }
 
     @Override
-    public EventPublisher createPublisher(MQProperties props) {
-        return new MicaMqttEventPublisher(mqttClientTemplate, props, defaultQos);
+    public MQEventPublisher createPublisher(MQProperties props) {
+        return new MicaMqttMQEventPublisher(mqttClientTemplate, props, defaultQos);
     }
 
     @Override

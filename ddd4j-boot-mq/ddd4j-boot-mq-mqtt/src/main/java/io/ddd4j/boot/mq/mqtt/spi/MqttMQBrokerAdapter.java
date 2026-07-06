@@ -3,12 +3,12 @@ package io.ddd4j.boot.mq.mqtt.spi;
 import io.ddd4j.boot.mq.mqtt.ack.MqttAcknowledgment;
 import io.ddd4j.boot.mq.mqtt.ack.MqttAcknowledgmentFactory;
 import io.ddd4j.boot.mq.mqtt.consumer.MqttMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.mqtt.publisher.MqttEventPublisher;
+import io.ddd4j.boot.mq.mqtt.publisher.MqttMQEventPublisher;
 import io.ddd4j.mq.consume.Acknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.listener.BrokerType;
 import io.ddd4j.mq.listener.ListenerDefinition;
 import io.ddd4j.mq.spi.BrokerAdapter;
@@ -39,8 +39,8 @@ public class MqttBrokerAdapter implements BrokerAdapter {
     }
 
     @Override
-    public EventPublisher createPublisher(MQProperties props) {
-        return new MqttEventPublisher(mqttOutboundChannel, props, defaultQos);
+    public MQEventPublisher createPublisher(MQProperties props) {
+        return new MqttMQEventPublisher(mqttOutboundChannel, props, defaultQos);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.activemq.autoconfigure;
 
-import io.ddd4j.boot.mq.activemq.publisher.ActiveEventPublisher;
+import io.ddd4j.boot.mq.activemq.publisher.ActiveMQEventPublisher;
 import io.ddd4j.mq.activemq.consumer.ActiveMQConsumerEndpointRegistrar;
 import io.ddd4j.mq.activemq.spi.ActiveBrokerAdapter;
 import io.ddd4j.mq.config.MQProperties;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,9 +44,9 @@ public class Ddd4jActiveMQAutoConfiguration {
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public EventPublisher activeEventPublisher(
+    public MQEventPublisher activeEventPublisher(
             JmsTemplate jmsTemplate,
             MQProperties properties) {
-        return new ActiveEventPublisher(jmsTemplate, properties);
+        return new ActiveMQEventPublisher(jmsTemplate, properties);
     }
 }

@@ -3,9 +3,9 @@ package io.ddd4j.boot.mq.mqttmica.autoconfigure;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.boot.mq.mqttmica.config.Ddd4jMicaMqttProperties;
 import io.ddd4j.boot.mq.mqttmica.consumer.MicaMqttMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.mqttmica.publisher.MicaMqttEventPublisher;
+import io.ddd4j.boot.mq.mqttmica.publisher.MicaMqttMQEventPublisher;
 import io.ddd4j.boot.mq.mqttmica.spi.MicaMqttBrokerAdapter;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import org.dromara.mica.mqtt.spring.client.MqttClientTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,10 +48,10 @@ public class Ddd4jMicaMqttMQAutoConfiguration {
      * 注册领域事件发布 Bean。
      */
     @Bean
-    public EventPublisher micaMqttEventPublisher(
+    public MQEventPublisher micaMqttEventPublisher(
             MqttClientTemplate mqttClientTemplate,
             MQProperties mqProperties,
             Ddd4jMicaMqttProperties micaMqttProperties) {
-        return new MicaMqttEventPublisher(mqttClientTemplate, mqProperties, micaMqttProperties.getQos());
+        return new MicaMqttMQEventPublisher(mqttClientTemplate, mqProperties, micaMqttProperties.getQos());
     }
 }

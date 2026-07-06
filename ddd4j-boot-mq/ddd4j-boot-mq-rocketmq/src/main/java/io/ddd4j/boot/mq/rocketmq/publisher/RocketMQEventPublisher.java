@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.rocketmq.publisher;
 
-import io.ddd4j.core.event.MQEvent;
+import io.ddd4j.mq.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.message.Destination;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -24,7 +24,7 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class RocketEventPublisher implements EventPublisher {
+public class RocketMQEventPublisher implements MQEventPublisher {
 
     private final RocketMQTemplate rocketMQTemplate;
     private final MQProperties properties;

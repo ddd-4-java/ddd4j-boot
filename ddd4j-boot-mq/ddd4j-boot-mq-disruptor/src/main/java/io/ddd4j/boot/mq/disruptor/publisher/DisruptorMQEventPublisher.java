@@ -1,11 +1,11 @@
 package io.ddd4j.boot.mq.disruptor.publisher;
 
-import io.ddd4j.core.event.MQEvent;
+import io.ddd4j.mq.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.message.Destination;
 import io.ddd4j.mq.disruptor.core.DisruptorMQBus;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class DisruptorEventPublisher implements EventPublisher {
+public class DisruptorMQEventPublisher implements MQEventPublisher {
 
     private final DisruptorMQBus disruptorMQBus;
     private final MQProperties properties;

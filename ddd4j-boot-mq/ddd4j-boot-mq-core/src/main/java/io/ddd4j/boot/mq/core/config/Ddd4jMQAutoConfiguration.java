@@ -2,7 +2,7 @@ package io.ddd4j.boot.mq.core.config;
 
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerInterceptor;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.listener.ListenerDefinitionRegistry;
 import io.ddd4j.mq.listener.ListenerScanner;
 import io.ddd4j.mq.serialization.JsonSerialization;
@@ -44,8 +44,8 @@ public class Ddd4jMQAutoConfiguration {
      */
     @Bean
     @ConditionalOnBean(BrokerAdapter.class)
-    @ConditionalOnMissingBean(EventPublisher.class)
-    public EventPublisher mqEventPublisher(List<BrokerAdapter> adapters, MQProperties props) {
+    @ConditionalOnMissingBean(MQEventPublisher.class)
+    public MQEventPublisher mqEventPublisher(List<BrokerAdapter> adapters, MQProperties props) {
         return BrokerAdapters.createPublisher(adapters, props);
     }
 

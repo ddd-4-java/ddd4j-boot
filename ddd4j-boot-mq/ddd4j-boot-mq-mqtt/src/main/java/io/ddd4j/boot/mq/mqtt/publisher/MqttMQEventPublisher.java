@@ -1,10 +1,10 @@
 package io.ddd4j.boot.mq.mqtt.publisher;
 
-import io.ddd4j.core.event.MQEvent;
+import io.ddd4j.mq.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.message.Destination;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.integration.mqtt.support.MqttHeaders;
@@ -23,7 +23,7 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class MqttEventPublisher implements EventPublisher {
+public class MqttMQEventPublisher implements MQEventPublisher {
 
     private final MessageChannel mqttOutboundChannel;
     private final MQProperties mqProperties;

@@ -5,12 +5,11 @@ import com.amazonaws.services.sqs.model.Message;
 import io.ddd4j.boot.mq.sqs.ack.SqsAcknowledgment;
 import io.ddd4j.boot.mq.sqs.ack.SqsAcknowledgmentFactory;
 import io.ddd4j.boot.mq.sqs.consumer.SqsMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.sqs.publisher.SqsEventPublisher;
+import io.ddd4j.boot.mq.sqs.publisher.SqsMQEventPublisher;
 import io.ddd4j.mq.consume.Acknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
-import io.ddd4j.mq.message.Message;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.listener.BrokerType;
 import io.ddd4j.mq.listener.ListenerDefinition;
 import io.ddd4j.mq.spi.BrokerAdapter;
@@ -37,8 +36,8 @@ public class SqsBrokerAdapter implements BrokerAdapter {
     }
 
     @Override
-    public EventPublisher createPublisher(MQProperties props) {
-        return new SqsEventPublisher(amazonSqs, defaultQueueUrl, props);
+    public MQEventPublisher createPublisher(MQProperties props) {
+        return new SqsMQEventPublisher(amazonSqs, defaultQueueUrl, props);
     }
 
     @Override

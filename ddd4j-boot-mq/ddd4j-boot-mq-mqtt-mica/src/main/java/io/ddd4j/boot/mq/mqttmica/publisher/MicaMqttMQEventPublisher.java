@@ -1,11 +1,11 @@
 package io.ddd4j.boot.mq.mqttmica.publisher;
 
-import io.ddd4j.core.event.MQEvent;
+import io.ddd4j.mq.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.kit.lang.StrKit;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.message.Destination;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.mica.mqtt.codec.MqttQoS;
@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class MicaMqttEventPublisher implements EventPublisher {
+public class MicaMqttMQEventPublisher implements MQEventPublisher {
 
     private final MqttClientTemplate mqttClientTemplate;
     private final MQProperties mqProperties;

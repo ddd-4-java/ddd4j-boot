@@ -5,12 +5,11 @@ import com.aliyun.openservices.ons.api.Producer;
 import io.ddd4j.boot.mq.ons.ack.OnsAcknowledgment;
 import io.ddd4j.boot.mq.ons.ack.OnsAcknowledgmentFactory;
 import io.ddd4j.boot.mq.ons.consumer.OnsMQConsumerEndpointRegistrar;
-import io.ddd4j.boot.mq.ons.publisher.OnsEventPublisher;
+import io.ddd4j.boot.mq.ons.publisher.OnsMQEventPublisher;
 import io.ddd4j.mq.consume.Acknowledgment;
 import io.ddd4j.mq.config.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
-import io.ddd4j.mq.message.Message;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.listener.BrokerType;
 import io.ddd4j.mq.listener.ListenerDefinition;
 import io.ddd4j.mq.spi.BrokerAdapter;
@@ -36,8 +35,8 @@ public class OnsBrokerAdapter implements BrokerAdapter {
     }
 
     @Override
-    public EventPublisher createPublisher(MQProperties props) {
-        return new OnsEventPublisher(producer, props);
+    public MQEventPublisher createPublisher(MQProperties props) {
+        return new OnsMQEventPublisher(producer, props);
     }
 
     @Override

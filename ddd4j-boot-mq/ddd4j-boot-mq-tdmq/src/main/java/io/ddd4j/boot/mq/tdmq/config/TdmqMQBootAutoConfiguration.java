@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.tdmq.config;
 
 import io.ddd4j.mq.config.MQProperties;
-import io.ddd4j.mq.publish.EventPublisher;
+import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.serialization.JsonSerialization;
 import io.ddd4j.mq.serialization.EventSerialization;
 import io.ddd4j.mq.tdmq.client.TdmqClient;
@@ -52,7 +52,7 @@ public class TdmqMQBootAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(name = "tdmqEventPublisher")
-    public EventPublisher tdmqEventPublisher(
+    public MQEventPublisher tdmqEventPublisher(
             TdmqBrokerAdapter tdmqBrokerAdapter,
             MQProperties mqProperties) {
         return tdmqBrokerAdapter.createPublisher(mqProperties);
