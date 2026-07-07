@@ -6,7 +6,7 @@ import io.ddd4j.mq.consume.ack.NoOpAcknowledgment;
 import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;
-import io.ddd4j.mq.rabbit.ack.AmqpAcknowledgmentFactory;
+import io.ddd4j.mq.rabbitmq.ack.AmqpAcknowledgmentFactory;
 import io.ddd4j.mq.listener.ListenerDefinition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
