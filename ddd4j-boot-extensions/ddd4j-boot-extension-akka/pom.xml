@@ -14,11 +14,22 @@
     <description>Ddd4j Boot Akka Component</description>
 
     <dependencies>
+        <!-- For Ddd4j Core（Contexts / SPI 查找） -->
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-extension-akka</artifactId>
+            <artifactId>ddd4j-core</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
+        <!-- For Akka -->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-actor_3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-slf4j_3</artifactId>
+        </dependency>
+        <!-- For Spring Boot auto-config -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
