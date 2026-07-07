@@ -5,12 +5,12 @@ import lombok.Setter;
 
 /**
  * 备份文件状态类
- *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Getter
 @Setter
 public class BackupStatus {
+
     private final long offset;         // 备份的偏移量
     private final long createTime;     // 创建时间
     private boolean consumed;          // 是否已消费
