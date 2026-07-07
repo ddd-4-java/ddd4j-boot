@@ -6,7 +6,7 @@ import com.aliyun.openservices.ons.api.PropertyKeyConst;
 import io.ddd4j.boot.mq.ons.consumer.OnsMQConsumerEndpointRegistrar;
 import io.ddd4j.boot.mq.ons.publisher.OnsMQEventPublisher;
 import io.ddd4j.boot.mq.ons.spi.OnsBrokerAdapter;
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.event.MQEventPublisher;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;

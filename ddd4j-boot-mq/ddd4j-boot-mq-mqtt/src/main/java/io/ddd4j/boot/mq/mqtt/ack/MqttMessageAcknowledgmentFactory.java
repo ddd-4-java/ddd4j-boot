@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.mqtt.ack;
 
 import io.ddd4j.mq.consume.ack.NoOpAcknowledgment;
-import io.ddd4j.mq.consume.ack.Acknowledgment;
+import io.ddd4j.mq.message.Acknowledgment;
 import io.ddd4j.mq.message.Message;
 import org.springframework.integration.mqtt.support.MqttHeaders;
 

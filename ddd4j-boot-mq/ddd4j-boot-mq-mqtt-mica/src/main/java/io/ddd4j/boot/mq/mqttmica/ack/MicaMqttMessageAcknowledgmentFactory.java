@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.mqttmica.ack;
 
 import io.ddd4j.mq.consume.ack.NoOpAcknowledgment;
-import io.ddd4j.mq.consume.ack.Acknowledgment;
+import io.ddd4j.mq.message.Acknowledgment;
 import io.ddd4j.mq.message.Message;
 import org.dromara.mica.mqtt.codec.message.MqttPublishMessage;
 import org.dromara.mica.mqtt.codec.message.header.MqttPublishVariableHeader;

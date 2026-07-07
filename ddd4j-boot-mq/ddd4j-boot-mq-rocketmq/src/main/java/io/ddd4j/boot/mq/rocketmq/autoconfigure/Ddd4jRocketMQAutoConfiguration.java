@@ -1,7 +1,7 @@
 package io.ddd4j.boot.mq.rocketmq.autoconfigure;
 
 import io.ddd4j.boot.mq.rocketmq.publisher.RocketMQEventPublisher;
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.rocketmq.consumer.RocketMQConsumerEndpointRegistrar;
 import io.ddd4j.mq.rocketmq.spi.RocketBrokerAdapter;

@@ -4,7 +4,7 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.ChangeMessageVisibilityRequest;
 import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import com.amazonaws.services.sqs.model.Message;
-import io.ddd4j.mq.consume.ack.Acknowledgment;
+import io.ddd4j.mq.message.Acknowledgment;
 import io.ddd4j.mq.consume.UnsupportedAckOperationException;
 import io.ddd4j.mq.listener.BrokerType;
 import lombok.extern.slf4j.Slf4j;

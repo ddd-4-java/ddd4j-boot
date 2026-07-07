@@ -2,8 +2,8 @@ package io.ddd4j.boot.mq.mqtt.consumer;
 
 import io.ddd4j.boot.mq.mqtt.ack.MqttAcknowledgmentFactory;
 import io.ddd4j.boot.mq.mqtt.config.Ddd4jMqttProperties;
-import io.ddd4j.mq.consume.ack.Acknowledgment;
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.message.Acknowledgment;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;
 import io.ddd4j.mq.listener.ListenerDefinition;

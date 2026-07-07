@@ -1,8 +1,8 @@
 package io.ddd4j.boot.mq.kafka.mq;
 
-import io.ddd4j.mq.consume.ack.Acknowledgment;
+import io.ddd4j.mq.message.Acknowledgment;
 import io.ddd4j.mq.consume.ack.NoOpAcknowledgment;
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;
 import io.ddd4j.mq.event.MQEventPublisher;

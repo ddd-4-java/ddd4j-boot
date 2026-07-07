@@ -1,6 +1,6 @@
 package io.ddd4j.boot.mq.core.config;
 
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.consume.interceptor.ConsumerInterceptor;
 import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.listener.ListenerDefinitionRegistry;

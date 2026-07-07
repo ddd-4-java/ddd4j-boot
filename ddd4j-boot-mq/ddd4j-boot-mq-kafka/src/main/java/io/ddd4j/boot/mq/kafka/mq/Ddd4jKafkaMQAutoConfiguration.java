@@ -1,6 +1,6 @@
 package io.ddd4j.boot.mq.kafka.mq;
 
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.serialization.MessageSerialization;
 import io.ddd4j.mq.spi.BrokerAdapter;

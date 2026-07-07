@@ -6,7 +6,7 @@ import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import io.ddd4j.boot.mq.sqs.consumer.SqsMQConsumerEndpointRegistrar;
 import io.ddd4j.boot.mq.sqs.publisher.SqsMQEventPublisher;
 import io.ddd4j.boot.mq.sqs.spi.SqsBrokerAdapter;
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.event.MQEventPublisher;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;

@@ -4,7 +4,7 @@ import io.ddd4j.boot.mq.mqtt.config.Ddd4jMqttProperties;
 import io.ddd4j.boot.mq.mqtt.consumer.MqttMQConsumerEndpointRegistrar;
 import io.ddd4j.boot.mq.mqtt.publisher.MqttMQEventPublisher;
 import io.ddd4j.boot.mq.mqtt.spi.MqttBrokerAdapter;
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.event.MQEventPublisher;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.context.annotation.Bean;

@@ -1,6 +1,6 @@
 package io.ddd4j.boot.mq.mqttmica.autoconfigure;
 
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.boot.mq.mqttmica.config.Ddd4jMicaMqttProperties;
 import io.ddd4j.boot.mq.mqttmica.consumer.MicaMqttMQConsumerEndpointRegistrar;
 import io.ddd4j.boot.mq.mqttmica.publisher.MicaMqttMQEventPublisher;

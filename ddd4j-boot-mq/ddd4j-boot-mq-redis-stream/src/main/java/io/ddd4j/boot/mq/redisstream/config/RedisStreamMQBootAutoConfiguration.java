@@ -1,6 +1,6 @@
 package io.ddd4j.boot.mq.redisstream.config;
 
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.event.MQEventPublisher;
 import io.ddd4j.mq.redisstream.RedisStreamBrokerAdapter;
 import io.ddd4j.mq.redisstream.RedisStreamMQProperties;

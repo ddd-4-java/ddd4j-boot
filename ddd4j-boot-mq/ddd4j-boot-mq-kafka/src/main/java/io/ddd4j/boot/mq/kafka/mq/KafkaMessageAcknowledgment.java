@@ -1,6 +1,6 @@
 package io.ddd4j.boot.mq.kafka.mq;
 
-import io.ddd4j.mq.consume.ack.Acknowledgment;
+import io.ddd4j.mq.message.Acknowledgment;
 import io.ddd4j.mq.consume.UnsupportedAckOperationException;
 import io.ddd4j.mq.listener.BrokerType;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

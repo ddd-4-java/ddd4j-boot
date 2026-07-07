@@ -3,7 +3,7 @@ package io.ddd4j.boot.mq.nats.publisher;
 import io.ddd4j.mq.event.MQEvent;
 import io.ddd4j.kit.lang.JsonKit;
 import io.ddd4j.kit.lang.StrKit;
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.message.Destination;
 import io.ddd4j.mq.event.MQEventPublisher;
 import io.nats.client.Connection;

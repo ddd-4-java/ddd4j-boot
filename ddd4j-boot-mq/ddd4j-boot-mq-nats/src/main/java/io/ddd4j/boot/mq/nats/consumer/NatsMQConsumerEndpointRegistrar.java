@@ -1,9 +1,9 @@
 package io.ddd4j.boot.mq.nats.consumer;
 
 import io.ddd4j.boot.mq.nats.ack.NatsAcknowledgmentFactory;
-import io.ddd4j.mq.consume.ack.Acknowledgment;
+import io.ddd4j.mq.message.Acknowledgment;
 import io.ddd4j.mq.consume.ack.NoOpAcknowledgment;
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.consume.ConsumerHandler;
 import io.ddd4j.mq.message.Message;
 import io.ddd4j.mq.listener.ListenerDefinition;

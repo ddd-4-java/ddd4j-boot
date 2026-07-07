@@ -1,6 +1,6 @@
 package io.ddd4j.boot.mq.disruptor.autoconfigure;
 
-import io.ddd4j.mq.config.MQProperties;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.disruptor.config.DisruptorMQProperties;
 import io.ddd4j.mq.disruptor.consumer.DisruptorMQConsumerEndpointRegistrar;
 import io.ddd4j.mq.disruptor.core.DisruptorMQBus;

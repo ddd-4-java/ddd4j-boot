@@ -1,6 +1,6 @@
 package io.ddd4j.boot.mq.mqtt.ack;
 
-import io.ddd4j.mq.consume.ack.Acknowledgment;
+import io.ddd4j.mq.message.Acknowledgment;
 import io.ddd4j.mq.consume.UnsupportedAckOperationException;
 import io.ddd4j.mq.listener.BrokerType;
 import lombok.extern.slf4j.Slf4j;
