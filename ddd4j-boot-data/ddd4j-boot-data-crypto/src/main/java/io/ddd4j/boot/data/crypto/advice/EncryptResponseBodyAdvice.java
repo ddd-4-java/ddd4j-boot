@@ -7,7 +7,7 @@ import io.ddd4j.core.ApiCode;
 import io.ddd4j.core.ApiRestResponse;
 import io.ddd4j.core.dto.BaseDTO;
 import io.ddd4j.core.exception.CryptoException;
-import io.ddd4j.data.crypto.domain.annotation.ResponseEncrypt;
+import io.ddd4j.data.crypto.annotation.ResponseEncrypt;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

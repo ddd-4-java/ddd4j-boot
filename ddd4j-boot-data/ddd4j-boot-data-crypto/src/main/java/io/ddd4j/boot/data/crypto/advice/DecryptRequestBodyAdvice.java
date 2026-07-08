@@ -7,7 +7,7 @@ import io.ddd4j.core.dto.BaseDTO;
 import io.ddd4j.core.dto.RequestData;
 import io.ddd4j.core.exception.ParamException;
 import io.ddd4j.data.crypto.CryptoConstant;
-import io.ddd4j.data.crypto.domain.annotation.RequestDecryption;
+import io.ddd4j.data.crypto.annotation.RequestDecryption;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
