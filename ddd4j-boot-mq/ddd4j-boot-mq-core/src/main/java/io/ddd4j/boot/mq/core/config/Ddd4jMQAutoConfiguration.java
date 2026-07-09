@@ -1,97 +1,39 @@
 package io.ddd4j.boot.mq.core.config;
 
 import io.ddd4j.mq.MQProperties;
-import io.ddd4j.mq.consume.interceptor.ConsumerInterceptor;
-import io.ddd4j.mq.event.MQEventPublisher;
-import io.ddd4j.mq.listener.ListenerDefinitionRegistry;
-import io.ddd4j.mq.listener.ListenerScanner;
-import io.ddd4j.mq.serialization.JsonMQEventSerialization;
 import io.ddd4j.mq.event.MQEventSerialization;
-import io.ddd4j.mq.serialization.MessageSerialization;
-import io.ddd4j.mq.spi.BrokerAdapter;
-import io.ddd4j.mq.spi.BrokerAdapters;
-import io.ddd4j.mq.spring.registry.MQListenerBeanPostProcessor;
-import io.ddd4j.mq.spring.registry.MQListenerRegistrar;
-import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import io.ddd4j.mq.serialization.JsonMQEventSerialization;
+import io.ddd4j.mq.spring.config.Ddd4jMQPropertiesConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
+import org.springframework.context.annotation.Import;
 
 /**
- * ddd4j 消息队列自动配置（契约层）：注册属性、发布器与监听器编排。
+ * ddd4j 消息队列 Spring Boot 自动配置。
+ *
+ * <p>导入 ddd4j-mq-spring 的 {@link Ddd4jMQPropertiesConfiguration}（属性绑定 + 序列化器），
+ * 本类仅负责：
+ * <ul>
+ *   <li>绑定 {@link MQProperties} 配置属性</li>
+ *   <li>注册默认 {@link MQEventSerialization} Bean</li>
+ * </ul>
+ *
+ * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
+ * @since 2.0.x
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(MQProperties.class)
 @ConditionalOnProperty(prefix = "ddd4j.mq", name = "enabled", havingValue = "true")
+@Import(Ddd4jMQPropertiesConfiguration.class)
 public class Ddd4jMQAutoConfiguration {
 
-    /**
-     * 默认 JSON 序列化 Bean。
-     */
     @Bean
-    @ConditionalOnMissingBean(MessageSerialization.class)
-    public MessageSerialization mqMessageSerialization() {
+    @ConditionalOnMissingBean(MQEventSerialization.class)
+    public MQEventSerialization mqEventSerialization() {
         return new JsonMQEventSerialization();
     }
 
-    /**
-     * 注册领域事件发布 Bean。
-     */
-    @Bean
-    @ConditionalOnBean(BrokerAdapter.class)
-    @ConditionalOnMissingBean(MQEventPublisher.class)
-    public MQEventPublisher mqEventPublisher(List<BrokerAdapter> adapters, MQProperties props) {
-        return BrokerAdapters.createPublisher(adapters, props);
-    }
-
-    /**
-     * 监听器定义注册表（由 BeanPostProcessor 填充）。
-     */
-    @Bean
-    @ConditionalOnBean(BrokerAdapter.class)
-    public ListenerDefinitionRegistry mqListenerDefinitionRegistry() {
-        return new ListenerDefinitionRegistry();
-    }
-
-    /**
-     * 基于 BeanPostProcessor 发现 {@code @EventListener} 方法。
-     */
-    @Bean
-    @ConditionalOnBean(BrokerAdapter.class)
-    public MQListenerBeanPostProcessor mqListenerBeanPostProcessor(
-            ListenerDefinitionRegistry registry,
-            MQProperties props) {
-        return new MQListenerBeanPostProcessor(registry, props);
-    }
-
-    /**
-     * 监听器定义访问门面（读取 Registry）。
-     */
-    @Bean
-    @ConditionalOnBean(BrokerAdapter.class)
-    public ListenerScanner mqListenerScanner(ListenerDefinitionRegistry registry) {
-        return new ListenerScanner(registry);
-    }
-
-    /**
-     * 应用就绪后动态注册消费端点到 {@link BrokerAdapter}。
-     */
-    @Bean
-    @ConditionalOnBean(BrokerAdapter.class)
-    public MQListenerRegistrar mqListenerRegistrar(
-            ListenerScanner scanner,
-            List<BrokerAdapter> adapters,
-            MQProperties props,
-            ObjectProvider<MQEventSerialization> serializationProvider,
-            ObjectProvider<ConsumerInterceptor> interceptorsProvider) {
-
-        MQEventSerialization serialization = serializationProvider.getIfAvailable(JsonMQEventSerialization::new);
-        List<ConsumerInterceptor> interceptors = interceptorsProvider.orderedStream().toList();
-        return new MQListenerRegistrar(scanner, adapters, props, serialization, interceptors);
-    }
 }

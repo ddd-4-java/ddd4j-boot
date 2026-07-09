@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-data-mybatis</artifactId>
+            <artifactId>ddd4j-data-mybatisplus</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
         <dependency>

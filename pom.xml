@@ -66,7 +66,6 @@
     <modules>
         <module>ddd4j-boot-bom</module>
         <module>ddd4j-boot-dependencies</module>
-        <module>ddd4j-boot-ddd</module>
         <module>ddd4j-boot-cache</module>
         <!-- 领域聚合（对齐 ddd4j 库） -->
         <module>ddd4j-boot-data</module>

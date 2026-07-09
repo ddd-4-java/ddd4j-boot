@@ -11,7 +11,8 @@
     </parent>
 
     <artifactId>ddd4j-boot-data-crypto</artifactId>
-    <description>ddd4j-boot 数据层 - 加解密 Spring Boot 整合：CryptoStrategy Bean 装配 + WebMVC Decrypt/Encrypt Advice。
+    <description>ddd4j-boot 数据层 - 加解密 Spring Boot 整合：CryptoStrategy Bean 装配。
+        业务方可按需添加 WebMVC Advice 实现请求/响应加解密。
     </description>
 
     <dependencies>
@@ -23,10 +24,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>

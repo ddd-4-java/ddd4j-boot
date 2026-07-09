@@ -33,7 +33,7 @@
         <!-- 数据层（BaseRepositoryImpl 四泛型 + MP 官方插件） -->
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-data-mybatis</artifactId>
+            <artifactId>ddd4j-data-mybatisplus</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
         <!-- Web 底座 + ddd4j WebMVC 整合 -->

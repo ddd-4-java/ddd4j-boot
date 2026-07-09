@@ -5,13 +5,11 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import io.ddd4j.data.mybatis.config.BaseDataProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,26 +34,19 @@ import javax.sql.DataSource;
  */
 @AutoConfiguration
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties(BaseDataProperties.class)
 @ConditionalOnBean(DataSource.class)
 @AutoConfigureAfter({DataSourceAutoConfiguration.class})
 public class Ddd4jMybatisAutoConfiguration {
 
     /**
      * MyBatis Plus 官方拦截器，聚合多个 InnerInterceptor。
-     *
-     * <p>参考 ddd4j-cloud 的 MybatisPlusConfig 和 sample 的 MybatisPlusConfiguration。
-     * 业务项目可覆盖此 Bean 添加更多 InnerInterceptor（如 TenantLineInnerInterceptor）。
      */
     @Bean
     @ConditionalOnMissingBean(MybatisPlusInterceptor.class)
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        // 分页（默认 MySQL 方言，业务项目可覆盖此 Bean 指定其他 DbType）
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
-        // 乐观锁（配合 @Version 注解）
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
-        // 防全表攻击（阻止无 WHERE 的 UPDATE/DELETE）
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         return interceptor;
     }

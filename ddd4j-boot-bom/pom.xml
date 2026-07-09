@@ -18,11 +18,6 @@
         <dependencies>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-ddd</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cache</artifactId>
                 <version>${revision}</version>
             </dependency>

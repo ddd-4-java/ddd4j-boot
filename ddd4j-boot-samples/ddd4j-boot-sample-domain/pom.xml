@@ -13,10 +13,10 @@
     <artifactId>ddd4j-boot-sample-domain</artifactId>
 
     <dependencies>
-        <!-- ddd4j-data-mybatis: 提供 BaseEntity 等基础类 -->
+        <!-- ddd4j-data-mybatisplus: 提供 BaseEntity 等基础类 -->
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-data-mybatis</artifactId>
+            <artifactId>ddd4j-data-mybatisplus</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
         <!-- For Alibaba Cola -->
