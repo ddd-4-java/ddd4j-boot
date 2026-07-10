@@ -1,6 +1,6 @@
 package io.hiwepy.boot.sample.service.impl;
 
-import io.ddd4j.core.service.BaseServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 import io.hiwepy.boot.sample.entity.TxLogEntity;
 import io.hiwepy.boot.sample.mapper.DemoMapper;
@@ -42,7 +42,7 @@ import java.util.UUID;
 )
 @Service
 @Slf4j
-public class DemoServiceImpl extends BaseServiceImpl<DemoMapper, DemoEntity> implements RocketMQListener<DemoEntity>, IDemoService {
+public class DemoServiceImpl extends ServiceImpl<DemoMapper, DemoEntity> implements RocketMQListener<DemoEntity>, IDemoService {
 
     @Autowired
     private TxLogMapper txLogMapper;
@@ -81,7 +81,7 @@ public class DemoServiceImpl extends BaseServiceImpl<DemoMapper, DemoEntity> imp
         txLog.setTxLogId(txId);
         txLog.setContent("事物测试");
         txLog.setDate(new Date());
-        txLogMapper.insert(txLog);
+        txLogMapper.save(txLog);
     }
 
 }
