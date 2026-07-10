@@ -1,13 +1,18 @@
 package io.ddd4j.boot.sample.layered.domain.model;
 
 import io.ddd4j.core.cqrs.query.Query;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 用户查询对象（充血查询）。
+ * 用户查询对象（充血查询，COLA 合规 —— 零基础设施依赖）。
  *
- * <p>继承 {@link Query} 即获得全套查询能力：
+ * <p>继承 {@link Query}{@code <User>} —— P 绑聚合根类型（{@link User}），不再 import PO 类。
+ * Lambda 字段引用 {@code User::getPhone} 由基础设施层（{@code MybatisAggregateRepository}）
+ * 通过 MappingKit 注册的 MODEL_PO 映射翻译为 PO 列名。
+ *
+ * <p>业务方使用：
  * <pre>
  * UserQuery.builder()
  *     .phone("13800138000")
@@ -26,13 +31,12 @@ import lombok.EqualsAndHashCode;
  *     .notExist("该手机号已注册"); // 查不到才通过，查到则抛异常
  * </pre>
  *
- * <p>查询条件由业务层用 MyBatis Plus Wrapper 显式构造，不再使用字段后缀约定。
- *
  * @author wandl
  */
+@Builder
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserQuery extends Query {
+public class UserQuery extends Query<User> {
 
     /**
      * 用户ID
@@ -45,7 +49,7 @@ public class UserQuery extends Query {
     private String phone;
 
     /**
-     * 昵称（模糊匹配，业务层用 wrapper.like 构造）
+     * 昵称（模糊匹配）
      */
     private String nickname;
 
@@ -53,32 +57,5 @@ public class UserQuery extends Query {
      * 状态：0-禁用，1-启用
      */
     private Integer status;
-
-    /**
-     * 链式构造器（简化 Builder 模式）。
-     */
-    public static UserQuery builder() {
-        return new UserQuery();
-    }
-
-    public UserQuery id(String id) {
-        this.id = id;
-        return this;
-    }
-
-    public UserQuery phone(String phone) {
-        this.phone = phone;
-        return this;
-    }
-
-    public UserQuery nickname(String nickname) {
-        this.nickname = nickname;
-        return this;
-    }
-
-    public UserQuery status(Integer status) {
-        this.status = status;
-        return this;
-    }
 
 }

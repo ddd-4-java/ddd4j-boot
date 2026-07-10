@@ -1,0 +1,92 @@
+package io.ddd4j.data.advice;
+
+import cn.hutool.core.lang.ParameterizedTypeImpl;
+import cn.hutool.crypto.symmetric.AES;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.ddd4j.core.ApiCode;
+import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.dto.BaseDTO;
+import io.ddd4j.core.exception.CryptoException;
+import io.ddd4j.data.crypto.domain.annotation.ResponseEncrypt;
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.MethodParameter;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import java.lang.reflect.Type;
+import java.util.Objects;
+
+/**
+ * 响应内容自动加密。
+ *
+ * <p>从 {@code ddd4j-data-crypto} 迁入 boot 层（依赖 Spring WebMVC）。
+ *
+ * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
+ */
+@ControllerAdvice
+public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<ApiRestResponse<?>> {
+
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private AES aes;
+
+    @Override
+    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+
+        ParameterizedTypeImpl genericParameterType = (ParameterizedTypeImpl) returnType.getGenericParameterType();
+
+        if (genericParameterType.getRawType() == ApiRestResponse.class && returnType.hasMethodAnnotation(ResponseEncrypt.class)) {
+            return true;
+        }
+
+        if (genericParameterType.getRawType() != ResponseEntity.class) {
+            return false;
+        }
+
+        for (Type type : genericParameterType.getActualTypeArguments()) {
+            if (((ParameterizedTypeImpl) type).getRawType() == ApiRestResponse.class && returnType.hasMethodAnnotation(ResponseEncrypt.class)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @SneakyThrows
+    @Override
+    public ApiRestResponse<?> beforeBodyWrite(ApiRestResponse<?> body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+
+        Object data = body.getData();
+
+        if (Objects.isNull(data)) {
+            return body;
+        }
+
+        if (data instanceof BaseDTO) {
+            ((BaseDTO) data).setCurrentTimeMillis(System.currentTimeMillis());
+        }
+
+        String dataText = objectMapper.writeValueAsString(data);
+
+        if (StringUtils.isBlank(dataText)) {
+            return body;
+        }
+
+        if (dataText.length() < 16) {
+            throw new CryptoException(ApiCode.SC_FAIL, "加密失败，数据小于16位");
+        }
+
+        String encryptText = aes.encryptHex(dataText);
+
+        return ApiRestResponse.of(body.getCode(), body.getStatus(), body.getMessage(), encryptText);
+    }
+
+}
