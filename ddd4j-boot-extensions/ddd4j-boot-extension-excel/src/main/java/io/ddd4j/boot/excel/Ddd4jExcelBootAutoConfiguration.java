@@ -1,6 +1,5 @@
 package io.ddd4j.boot.excel;
 
-import io.ddd4j.extension.excel.ExcelAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;
