@@ -1,7 +1,7 @@
 package io.ddd4j.boot.qrcode;
 
-import io.github.hiwepy.zxing.exception.QrCodeErrorCode;
-import io.github.hiwepy.zxing.exception.QrCodeException;
+import com.google.zxing.exception.QrCodeErrorCode;
+import com.google.zxing.exception.QrCodeException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
