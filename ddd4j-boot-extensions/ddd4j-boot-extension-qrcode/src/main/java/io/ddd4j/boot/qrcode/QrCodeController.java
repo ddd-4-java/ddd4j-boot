@@ -2,6 +2,9 @@ package io.ddd4j.boot.qrcode;
 
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import io.ddd4j.extension.qrcode.QrCodeService;
+import io.ddd4j.extension.qrcode.batch.QrCodeBatchItem;
+import io.ddd4j.extension.qrcode.batch.QrCodeBatchItemResult;
+import io.ddd4j.extension.qrcode.batch.QrCodeBatchResult;
 import io.ddd4j.extension.qrcode.command.DecodeQrCodeCommand;
 import io.ddd4j.extension.qrcode.command.GenerateQrCodeCommand;
 import io.ddd4j.extension.qrcode.result.QrCodeArtifact;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** Opt-in QR code HTTP endpoints. Remote URL decoding is intentionally unsupported. */
@@ -37,17 +42,9 @@ public class QrCodeController {
 
     @PostMapping(value = "/render", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<byte[]> render(@RequestBody RenderRequest input) {
-        QrCodeImageFormat format = QrCodeImageFormat.valueOf(input.getFormat().toUpperCase());
-        QrCodeRequest request = QrCodeRequest.builder(input.getContent())
-                .size(input.getWidth(), input.getHeight())
-                .margin(input.getMargin())
-                .errorCorrectionLevel(ErrorCorrectionLevel.valueOf(input.getErrorCorrectionLevel().toUpperCase()))
-                .format(format)
-                .selfCheck(input.isSelfCheck())
-                .build();
         QrCodeArtifact artifact = service.generate(GenerateQrCodeCommand.builder()
                 .correlationId(input.getCorrelationId())
-                .request(request)
+                .request(toRequest(input))
                 .build());
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(artifact.getOutput().getFormat().getMimeType()))
@@ -68,6 +65,40 @@ public class QrCodeController {
                 .build());
     }
 
+    @PostMapping(value = "/batch", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<BatchItemResponse> batch(@RequestBody List<BatchRenderRequest> inputs) {
+        List<QrCodeBatchItem> items = new ArrayList<>(inputs.size());
+        for (BatchRenderRequest input : inputs) {
+            items.add(QrCodeBatchItem.builder()
+                    .itemId(input.getItemId())
+                    .command(GenerateQrCodeCommand.builder()
+                            .correlationId(input.getRequest().getCorrelationId())
+                            .request(toRequest(input.getRequest()))
+                            .build())
+                    .build());
+        }
+        QrCodeBatchResult result = service.generateBatch(items);
+        List<BatchItemResponse> response = new ArrayList<>(result.getItems().size());
+        for (QrCodeBatchItemResult item : result.getItems()) {
+            response.add(new BatchItemResponse(item.getItemId(), item.isSuccess(),
+                    item.isSuccess() ? item.getArtifact().getOutput().dataUri() : null,
+                    item.getErrorCode(), item.getErrorMessage()));
+        }
+        return response;
+    }
+
+    private QrCodeRequest toRequest(RenderRequest input) {
+        QrCodeImageFormat format = QrCodeImageFormat.valueOf(input.getFormat().toUpperCase());
+        return QrCodeRequest.builder(input.getContent())
+                .size(input.getWidth(), input.getHeight())
+                .margin(input.getMargin())
+                .errorCorrectionLevel(ErrorCorrectionLevel.valueOf(input.getErrorCorrectionLevel().toUpperCase()))
+                .format(format)
+                .selfCheck(input.isSelfCheck())
+                .build();
+    }
+
     @Data
     public static class RenderRequest {
 
@@ -79,5 +110,23 @@ public class QrCodeController {
         private String format = "PNG";
         private String errorCorrectionLevel = "M";
         private boolean selfCheck;
+    }
+
+    @Data
+    public static class BatchRenderRequest {
+
+        private String itemId;
+        private RenderRequest request;
+    }
+
+    @lombok.Getter
+    @lombok.AllArgsConstructor
+    public static class BatchItemResponse {
+
+        private final String itemId;
+        private final boolean success;
+        private final String dataUri;
+        private final String errorCode;
+        private final String errorMessage;
     }
 }

@@ -4,6 +4,7 @@ import io.ddd4j.extension.qrcode.DefaultQrCodeService;
 import io.ddd4j.extension.qrcode.QrCodeService;
 import io.ddd4j.extension.qrcode.resource.QrCodeResourceResolver;
 import io.ddd4j.extension.qrcode.template.QrCodeTemplateRegistry;
+import io.ddd4j.extension.qrcode.template.QrCodeTemplateBinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
@@ -22,6 +23,7 @@ class Ddd4jQrCodeBootAutoConfigurationTest {
         runner.run(context -> {
             assertThat(context).hasSingleBean(QrCodeService.class);
             assertThat(context).hasSingleBean(QrCodeTemplateRegistry.class);
+            assertThat(context).hasSingleBean(QrCodeTemplateBinder.class);
             assertThat(context).hasSingleBean(QrCodeResourceResolver.class);
         });
     }

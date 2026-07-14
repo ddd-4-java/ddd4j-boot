@@ -5,6 +5,7 @@ import io.ddd4j.extension.qrcode.QrCodeService;
 import io.ddd4j.extension.qrcode.resource.QrCodeResourceResolver;
 import io.ddd4j.extension.qrcode.template.InMemoryQrCodeTemplateRegistry;
 import io.ddd4j.extension.qrcode.template.QrCodeTemplateRegistry;
+import io.ddd4j.extension.qrcode.template.QrCodeTemplateBinder;
 import io.github.hiwepy.zxing.QrCodes;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -33,6 +34,12 @@ public class Ddd4jQrCodeBootAutoConfiguration {
     @ConditionalOnMissingBean(QrCodeTemplateRegistry.class)
     public QrCodeTemplateRegistry qrCodeTemplateRegistry() {
         return new InMemoryQrCodeTemplateRegistry();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(QrCodeTemplateBinder.class)
+    public QrCodeTemplateBinder qrCodeTemplateBinder() {
+        return new QrCodeTemplateBinder();
     }
 
     @Bean
