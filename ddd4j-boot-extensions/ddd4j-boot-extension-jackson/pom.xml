@@ -14,11 +14,10 @@
     <description>Ddd4j Boot Jackson Component</description>
 
     <dependencies>
-        <!-- For ddd4j library (authoritative Jackson serializers/annotations/modules) -->
+        <!-- Pure Java Jackson serializers, annotations and modules. -->
         <dependency>
-            <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-extension-jackson</artifactId>
-            <version>${ddd4j.version}</version>
+            <groupId>io.github.hiwepy</groupId>
+            <artifactId>jackson-extension</artifactId>
         </dependency>
         <!-- For Commons Lang3 -->
         <dependency>

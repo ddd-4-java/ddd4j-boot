@@ -7,8 +7,8 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import hitool.core.lang3.time.DateFormats;
-import io.ddd4j.extension.jackson.JavaTimeModule;
-import io.ddd4j.extension.jackson.ser.MyBeanSerializerModifier;
+import io.github.hiwepy.jackson.JavaTimeModule;
+import io.github.hiwepy.jackson.ser.MyBeanSerializerModifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -28,7 +28,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Spring Boot Jackson AutoConfiguration。
  * <p>
- * 依赖库侧 {@code io.ddd4j:ddd4j-extension-jackson} 提供的权威实现
+ * 依赖库侧 {@code io.github.hiwepy:jackson-extension} 提供的权威实现
  * （{@link JavaTimeModule}、{@link MyBeanSerializerModifier} 等），本类仅负责
  * Spring Boot 自动装配：向 {@link Jackson2ObjectMapperBuilder} 注入默认配置，
  * 并注册 {@code @Primary} 的 {@link ObjectMapper} Bean。
