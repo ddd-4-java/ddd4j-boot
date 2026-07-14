@@ -1,117 +1,144 @@
-# DDD4J Boot QL-Express Component
+# ddd4j-boot-extension-qlexpress
 
-基于 [Alibaba QLExpress](https://github.com/alibaba/QLExpress)、[JetCache](https://github.com/alibaba/jetcache)
-的动态规则引擎组件，采用DDD（领域驱动设计）架构。
+QLExpress 的 Spring Boot 适配和规则管理模块。
 
->
-说明：本文中部分逻辑来自 [基于SpringBoot + QLExpress打造动态规则引擎：让业务规则不再束缚代码！](https://mp.weixin.qq.com/s/h2XXYiq7Ty5-xqulFfxwug)
-一文。
+模块边界：
 
-## 架构说明
+- `ddd4j-extension-qlexpress`：纯 Java 表达式执行、校验、函数和安全选项
+- `ddd4j-boot-extension-qlexpress`：配置绑定、Bean 装配、规则 CRUD、仓储、缓存和事件
 
-本项目按照DDD思想进行分层：
+## 自动装配
 
-- **Domain层**：领域模型、值对象、仓储接口、领域服务接口
-- **Application层**：应用服务、DTO、用例编排
-- **Infrastructure层**：QLExpress配置、仓储实现、缓存实现、技术实现
-- **Interfaces层**：REST接口（可选，需要Spring Web支持）
+引入依赖后自动提供：
 
-## 使用说明
+- `QLExpressProperties`
+- `QLExpressEngine`
+- `RuleRepository`：缺省为 `InMemoryRuleRepository`
+- `RuleCache`：存在 `CacheManager` 时使用 Spring Cache，否则使用进程内缓存
+- `RuleService`
 
-### 1. 添加依赖
+所有 Bean 均支持业务侧通过自定义 Bean 覆盖。
 
-确保项目中已添加以下依赖：
+## 配置
 
-- `qlexpress4` - QLExpress表达式引擎
-- `jetcache` - JetCache 多级缓存
-- `spring-boot-starter-data-redis` - Redis缓存（可选）
-- `spring-boot-starter-web` - Web支持（可选，仅在使用REST接口时需要）
-- `spring-boot-starter-data-jpa` - JPA支持（可选，仅在使用JPA持久化时需要）
-
-### 2. QLExpress版本兼容性
-
-由于不同版本的QLExpress可能有不同的API，请根据实际使用的版本调整：
-
-- **qlexpress4 4.0.x**: 包名通常是 `com.ql.util.express`
-- 如果遇到编译错误，请检查QLExpress的实际包名和API
-
-### 3. 自定义函数
-
-自定义函数位于 `infrastructure.function` 包中，需要根据实际使用的QLExpress版本来实现。
-
-### 4. 持久化实现
-
-`RuleDefinitionRepositoryImpl` 是一个接口示例，实际使用时需要：
-
-- 如果使用JPA：创建JPA实体并实现Repository接口
-- 如果使用MyBatis：创建Mapper接口和XML
-- 如果使用其他持久化方案：实现 `RuleDefinitionRepository` 接口
-
-## 核心功能
-
-1. **规则定义管理**：规则的CRUD操作
-2. **规则执行**：根据规则编码和上下文执行规则
-3. **规则验证**：验证规则表达式的语法
-4. **规则缓存**：使用Redis缓存规则定义，提高性能
-5. **批量执行**：支持批量执行多个规则
-
-## API示例
-
-### 执行规则
-
-```java
-@Autowired
-private RuleEngineApplicationService ruleEngineApplicationService;
-
-Map<String, Object> context = new HashMap<>();
-context.put("orderAmount", 1000);
-context.put("customerLevel", "VIP");
-
-RuleExecutionResult result = ruleEngineApplicationService.executeRule("DISCOUNT_RULE_001", context);
+```yaml
+ddd4j:
+  qlexpress:
+    enabled: true
+    built-in-functions: true
+    timeout-millis: 3000
+    cache: true
+    precise: false
+    avoid-null-pointer: false
+    max-array-length: 10000
+    trace-expression: false
+    allow-private-access: false
+    rules:
+      enabled: true
+      cache-name: ddd4j:qlexpress:rules
 ```
 
-### 验证规则
+## 直接执行表达式
 
 ```java
-RuleValidationResult validation = ruleEngineApplicationService.validateRule("if (amount > 100) { return 0.1; }");
+@Service
+public class PricingService {
+
+    private final QLExpressEngine engine;
+
+    public PricingService(QLExpressEngine engine) {
+        this.engine = engine;
+    }
+
+    public BigDecimal calculate(BigDecimal amount, BigDecimal rate) {
+        return engine.execute(
+                "amount * rate",
+                Map.of("amount", amount, "rate", rate),
+                BigDecimal.class);
+    }
+}
 ```
 
-## Spring管理
+## 规则管理
 
-所有服务类通过 `ExpressAutoConfiguration` 自动配置类进行管理：
+```java
+RuleDefinition rule = RuleDefinition.builder()
+        .code("discount.vip")
+        .name("VIP 折扣")
+        .type(RuleType.CALCULATION)
+        .expression("amount * 0.8")
+        .enabled(true)
+        .priority(100)
+        .build();
 
-- `RuleEngineApplicationService` - 应用服务
-- `RuleEngineDomainServiceImpl` - 领域服务实现
-- `RedisRuleCacheService` - 缓存服务实现
+RuleDefinition saved = ruleService.create(rule);
+QLExpressExecutionResult<Object> result = ruleService.execute(
+        "discount.vip", Map.of("amount", new BigDecimal("100")));
+```
 
-## DDD设计原则
+规则变更后会发布 `RuleChangedEvent`，操作类型包括：
 
-本项目遵循DDD设计原则，但不依赖外部DDD框架：
+- `CREATED`
+- `UPDATED`
+- `DELETED`
+- `ENABLED`
+- `DISABLED`
 
-- `RuleDefinition` - 领域实体，包含业务逻辑
-- `RuleId` - 值对象，不可变，通过值相等性判断
-- 领域对象保持独立，不依赖技术框架
+## 替换持久化
 
-## 领域事件
+默认仓储只适合开发和无状态临时规则。生产系统应提供自己的 `RuleRepository` Bean：
 
-项目定义了以下领域事件，用于解耦业务逻辑：
+```java
+@Bean
+RuleRepository ruleRepository(MyRuleMapper mapper) {
+    return new MyBatisRuleRepository(mapper);
+}
+```
 
-- **RuleCreatedEvent** - 规则创建事件：当规则被创建时发布
-- **RuleUpdatedEvent** - 规则更新事件：当规则被更新时发布，包含变更信息
-- **RuleDeletedEvent** - 规则删除事件：当规则被删除时发布
+自动配置使用 `@ConditionalOnMissingBean`，业务实现会自然覆盖默认内存实现。
 
-所有事件都包含：
+## 缓存
 
-- 规则ID和编码
-- 规则名称和类型
-- 事件发生时间
+模块只依赖 Spring Cache 抽象，不绑定 Redis、JetCache、Redisson 或 Caffeine。
+业务系统只需提供 `CacheManager`，模块会使用 `ddd4j.qlexpress.rules.cache-name`
+对应的缓存实例；没有 `CacheManager` 时回退到进程内缓存。
 
-事件发布通过 `DomainEventPublisher` 接口进行，实现可以在基础设施层使用Spring的事件机制或消息中间件。
+## 自定义函数
 
-## 注意事项
+将 `NamedQLFunction` 注册成 Spring Bean，自动配置会在构建引擎时发现并注册：
 
-1. Controller是可选的，只有在需要REST接口时才需要Spring Web依赖
-2. 持久化实现需要根据实际使用的技术栈来调整
-3. QLExpress的自定义函数需要根据实际版本来实现
-4. ddd-4-java的包名可能需要根据实际版本调整
+```java
+@Bean
+NamedQLFunction tenantLevel() {
+    return new TenantLevelFunction();
+}
+```
 
+## 迁移说明
+
+原 `io.ddd4j.extension.express.*` 中的业务式规则模型已删除：
+
+| 旧能力 | 新位置 |
+| --- | --- |
+| `RuleDefinition` | `io.ddd4j.boot.qlexpress.rule.RuleDefinition` |
+| `RuleDefinitionRepository` | `RuleRepository` |
+| `RuleCacheService` | `RuleCache` |
+| `RuleManagementService` | `RuleService` |
+| 三个领域事件 | `RuleChangedEvent` |
+| `RuleEngineApplicationService` | 直接使用 `QLExpressEngine` 或 `RuleService.execute` |
+| Spring/JetCache/Redis 命名实现 | Spring Cache 适配或业务自定义 Bean |
+
+Web Controller、鉴权、审计、数据库表结构属于具体业务系统，不在通用 Boot 扩展中预设。
+
+## 后续优化方向
+
+1. **规则版本与发布态**：增加草稿、已发布、已下线状态，使用乐观锁避免并发覆盖。
+2. **仓储适配子模块**：按需提供独立的 JPA、MyBatis、配置中心适配器，不把技术依赖塞回主模块。
+3. **缓存一致性**：分布式部署时通过规则变更事件广播失效，避免节点本地缓存长期不一致。
+4. **事务事件**：数据库规则与 `RuleChangedEvent` 使用事务同步或 Outbox，避免保存成功但事件丢失。
+5. **表达式 Guardrails**：基于外部变量/函数分析增加白名单、复杂度、长度和危险调用检查。
+6. **编译预热**：规则发布时预校验并预编译，按规则版本管理编译缓存，降低首请求延迟。
+7. **可观测性**：单独提供 Micrometer/Tracing 适配，记录规则编码、版本、耗时、命中率和失败类型。
+8. **多租户隔离**：缓存键、规则编码和仓储查询显式携带 tenant/namespace，避免跨租户污染。
+9. **评测体系**：建立规则数据集、回归样本、边界值和历史流量回放，发布前比较新旧版本结果。
+10. **Web 能力拆分**：如需 CRUD API，创建独立 Web adapter，统一鉴权、审计、幂等和错误响应。
