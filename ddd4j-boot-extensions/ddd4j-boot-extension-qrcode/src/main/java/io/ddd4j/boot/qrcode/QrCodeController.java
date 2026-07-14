@@ -15,6 +15,7 @@ import io.github.hiwepy.zxing.model.QrCodeRequest;
 import lombok.Data;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +43,7 @@ public class QrCodeController {
 
     @PostMapping(value = "/render", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<byte[]> render(@RequestBody RenderRequest input) {
+        Objects.requireNonNull(input, "render request must not be null");
         QrCodeArtifact artifact = service.generate(GenerateQrCodeCommand.builder()
                 .correlationId(input.getCorrelationId())
                 .request(toRequest(input))
@@ -54,6 +56,7 @@ public class QrCodeController {
     @PostMapping(value = "/decode", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public QrCodeScanResult decode(@RequestPart("file") MultipartFile file) throws IOException {
+        Objects.requireNonNull(file, "file must not be null");
         if (file.getSize() > properties.getMaxUploadBytes()) {
             throw new IllegalArgumentException("QR code image exceeds configured upload limit");
         }
@@ -68,8 +71,11 @@ public class QrCodeController {
     @PostMapping(value = "/batch", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BatchItemResponse> batch(@RequestBody List<BatchRenderRequest> inputs) {
+        Objects.requireNonNull(inputs, "batch requests must not be null");
         List<QrCodeBatchItem> items = new ArrayList<>(inputs.size());
         for (BatchRenderRequest input : inputs) {
+            Objects.requireNonNull(input, "batch request must not be null");
+            Objects.requireNonNull(input.getRequest(), "batch render request must not be null");
             items.add(QrCodeBatchItem.builder()
                     .itemId(input.getItemId())
                     .command(GenerateQrCodeCommand.builder()
@@ -89,11 +95,15 @@ public class QrCodeController {
     }
 
     private QrCodeRequest toRequest(RenderRequest input) {
-        QrCodeImageFormat format = QrCodeImageFormat.valueOf(input.getFormat().toUpperCase());
+        Objects.requireNonNull(input, "render request must not be null");
+        String formatValue = StringUtils.hasText(input.getFormat()) ? input.getFormat() : "PNG";
+        String errorLevelValue = StringUtils.hasText(input.getErrorCorrectionLevel())
+                ? input.getErrorCorrectionLevel() : "M";
+        QrCodeImageFormat format = QrCodeImageFormat.valueOf(formatValue.toUpperCase());
         return QrCodeRequest.builder(input.getContent())
                 .size(input.getWidth(), input.getHeight())
                 .margin(input.getMargin())
-                .errorCorrectionLevel(ErrorCorrectionLevel.valueOf(input.getErrorCorrectionLevel().toUpperCase()))
+                .errorCorrectionLevel(ErrorCorrectionLevel.valueOf(errorLevelValue.toUpperCase()))
                 .format(format)
                 .selfCheck(input.isSelfCheck())
                 .build();
