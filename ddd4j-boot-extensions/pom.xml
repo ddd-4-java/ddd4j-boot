@@ -21,6 +21,7 @@
         <module>ddd4j-boot-extension-dubbo</module>
         <module>ddd4j-boot-extension-excel</module>
         <module>ddd4j-boot-extension-qlexpress</module>
+        <module>ddd4j-boot-extension-qrcode</module>
         <module>ddd4j-boot-extension-jackson</module>
         <module>ddd4j-boot-extension-monitor</module>
         <module>ddd4j-boot-extension-pf4j</module>
