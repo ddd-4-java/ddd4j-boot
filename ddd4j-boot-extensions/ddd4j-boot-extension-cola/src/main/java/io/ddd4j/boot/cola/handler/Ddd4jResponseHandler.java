@@ -5,7 +5,8 @@ import com.alibaba.cola.dto.Response;
 import com.alibaba.cola.exception.BaseException;
 import io.ddd4j.core.ApiCode;
 import io.ddd4j.core.ApiRestResponse;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -26,8 +27,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Order(0)
-@Slf4j
 public class Ddd4jResponseHandler implements ResponseHandlerI {
+
+    private static final Logger log = LoggerFactory.getLogger(Ddd4jResponseHandler.class);
 
     @Override
     public Object handle(Class returnType, String errCode, String errMsg) {

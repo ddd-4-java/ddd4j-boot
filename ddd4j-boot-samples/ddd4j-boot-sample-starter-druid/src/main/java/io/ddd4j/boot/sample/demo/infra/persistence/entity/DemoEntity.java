@@ -4,17 +4,22 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.ddd4j.core.entity.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import io.ddd4j.core.ddd.model.Entity;
+
+
 
 /**
  * Demo实体（持久化层）
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
+
+
 @TableName("t_demo")
-public class DemoEntity extends BaseEntity<DemoEntity> {
+public class DemoEntity implements Entity<Long> {
+
+    @Override
+    public Long id() {
+        return id;
+    }
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;

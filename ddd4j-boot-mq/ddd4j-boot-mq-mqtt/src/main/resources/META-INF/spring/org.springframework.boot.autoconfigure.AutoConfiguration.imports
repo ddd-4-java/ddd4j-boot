@@ -1,1 +1,1 @@
-io.ddd4j.boot.mq.mqtt.config.MqttMQBootAutoConfiguration
+io.ddd4j.boot.mq.mqtt.MqttMQBootAutoConfiguration

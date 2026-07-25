@@ -5,9 +5,9 @@ import io.ddd4j.boot.sample.order.domain.model.entity.OrderItem;
 import io.ddd4j.boot.sample.order.domain.model.vo.Address;
 import io.ddd4j.boot.sample.order.domain.model.vo.Money;
 import io.ddd4j.boot.sample.order.domain.model.vo.OrderStatus;
-import io.ddd4j.core.entity.BaseEntity;
-import lombok.Getter;
-import lombok.Setter;
+import io.ddd4j.core.ddd.model.Entity;
+
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,9 +18,14 @@ import java.util.List;
 /**
  * 订单聚合根
  */
-@Getter
-@Setter
-public class Order extends BaseEntity<Order> {
+
+
+public class Order implements Entity<Long> {
+
+    @Override
+    public Long id() {
+        return id;
+    }
 
     private Long id;
     private String orderNo;

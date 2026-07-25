@@ -2,13 +2,13 @@ package io.ddd4j.boot.sample.demo.app.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+
 
 /**
  * 更新Demo命令
  */
 @Schema(description = "更新Demo请求")
-@Data
+
 public class UpdateDemoCommand {
 
     @Schema(description = "ID", example = "1", required = true)

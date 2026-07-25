@@ -12,7 +12,6 @@ import io.ddd4j.extension.qrcode.result.QrCodeScanResult;
 import com.google.zxing.model.QrCodeDecodeRequest;
 import com.google.zxing.model.QrCodeImageFormat;
 import com.google.zxing.model.QrCodeRequest;
-import lombok.Data;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -109,7 +108,6 @@ public class QrCodeController {
                 .build();
     }
 
-    @Data
     public static class RenderRequest {
 
         private String correlationId;
@@ -120,17 +118,94 @@ public class QrCodeController {
         private String format = "PNG";
         private String errorCorrectionLevel = "M";
         private boolean selfCheck;
+
+        public String getCorrelationId() {
+            return correlationId;
+        }
+
+        public void setCorrelationId(String correlationId) {
+            this.correlationId = correlationId;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public int getWidth() {
+            return width;
+        }
+
+        public void setWidth(int width) {
+            this.width = width;
+        }
+
+        public int getHeight() {
+            return height;
+        }
+
+        public void setHeight(int height) {
+            this.height = height;
+        }
+
+        public int getMargin() {
+            return margin;
+        }
+
+        public void setMargin(int margin) {
+            this.margin = margin;
+        }
+
+        public String getFormat() {
+            return format;
+        }
+
+        public void setFormat(String format) {
+            this.format = format;
+        }
+
+        public String getErrorCorrectionLevel() {
+            return errorCorrectionLevel;
+        }
+
+        public void setErrorCorrectionLevel(String errorCorrectionLevel) {
+            this.errorCorrectionLevel = errorCorrectionLevel;
+        }
+
+        public boolean isSelfCheck() {
+            return selfCheck;
+        }
+
+        public void setSelfCheck(boolean selfCheck) {
+            this.selfCheck = selfCheck;
+        }
     }
 
-    @Data
     public static class BatchRenderRequest {
 
         private String itemId;
         private RenderRequest request;
+
+        public String getItemId() {
+            return itemId;
+        }
+
+        public void setItemId(String itemId) {
+            this.itemId = itemId;
+        }
+
+        public RenderRequest getRequest() {
+            return request;
+        }
+
+        public void setRequest(RenderRequest request) {
+            this.request = request;
+        }
     }
 
-    @lombok.Getter
-    @lombok.AllArgsConstructor
     public static class BatchItemResponse {
 
         private final String itemId;
@@ -138,5 +213,34 @@ public class QrCodeController {
         private final String dataUri;
         private final String errorCode;
         private final String errorMessage;
+
+        public BatchItemResponse(String itemId, boolean success, String dataUri,
+                String errorCode, String errorMessage) {
+            this.itemId = itemId;
+            this.success = success;
+            this.dataUri = dataUri;
+            this.errorCode = errorCode;
+            this.errorMessage = errorMessage;
+        }
+
+        public String getItemId() {
+            return itemId;
+        }
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public String getDataUri() {
+            return dataUri;
+        }
+
+        public String getErrorCode() {
+            return errorCode;
+        }
+
+        public String getErrorMessage() {
+            return errorMessage;
+        }
     }
 }

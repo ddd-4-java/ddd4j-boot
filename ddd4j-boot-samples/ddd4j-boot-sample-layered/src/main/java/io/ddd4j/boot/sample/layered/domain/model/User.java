@@ -2,9 +2,9 @@ package io.ddd4j.boot.sample.layered.domain.model;
 
 import io.ddd4j.core.ddd.model.AggregateRoot;
 import io.ddd4j.spring.annotation.DomainEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.util.StringUtils;
+
+import java.util.Objects;
 
 /**
  * 用户聚合根（充血模型）。
@@ -21,8 +21,6 @@ import org.springframework.util.StringUtils;
  * @author wandl
  */
 @DomainEntity(aggregateRoot = true)
-@Data
-@EqualsAndHashCode(callSuper = true)
 public class User extends AggregateRoot<String> {
 
     /**
@@ -89,6 +87,51 @@ public class User extends AggregateRoot<String> {
     public User enable() {
         this.status = 1;
         return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }

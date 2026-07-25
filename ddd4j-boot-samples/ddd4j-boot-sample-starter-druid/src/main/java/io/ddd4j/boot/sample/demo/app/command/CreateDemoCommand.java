@@ -2,13 +2,13 @@ package io.ddd4j.boot.sample.demo.app.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+
 
 /**
  * 创建Demo命令
  */
 @Schema(description = "创建Demo请求")
-@Data
+
 public class CreateDemoCommand {
 
     @Schema(description = "名称", example = "示例名称", required = true)

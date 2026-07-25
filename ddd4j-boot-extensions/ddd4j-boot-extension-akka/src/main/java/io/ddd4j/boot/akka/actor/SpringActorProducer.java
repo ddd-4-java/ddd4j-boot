@@ -41,7 +41,7 @@ public class SpringActorProducer implements IndirectActorProducer {
      */
     @Override
     public Actor produce() {
-        Optional<Actor> actor = Contexts.inject(ACTOR_BEAN_KEY_PREFIX + this.beanActorName, Actor.class);
+        Optional<Actor> actor = Contexts.get(ACTOR_BEAN_KEY_PREFIX + this.beanActorName, Actor.class);
         return actor.orElseThrow(() -> new IllegalStateException(
                 "Actor bean not found: name=" + this.beanActorName
                         + ". Ensure the actor is registered into Contexts under key '"
@@ -58,7 +58,7 @@ public class SpringActorProducer implements IndirectActorProducer {
     @Override
     @SuppressWarnings("unchecked")
     public Class<? extends Actor> actorClass() {
-        Actor actor = Contexts.inject(ACTOR_BEAN_KEY_PREFIX + this.beanActorName, Actor.class).orElse(null);
+        Actor actor = Contexts.get(ACTOR_BEAN_KEY_PREFIX + this.beanActorName, Actor.class).orElse(null);
         return actor == null ? Actor.class : (Class<? extends Actor>) actor.getClass();
     }
 

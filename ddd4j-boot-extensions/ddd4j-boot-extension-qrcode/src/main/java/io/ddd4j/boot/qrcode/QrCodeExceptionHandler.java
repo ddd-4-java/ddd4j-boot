@@ -2,8 +2,6 @@ package io.ddd4j.boot.qrcode;
 
 import com.google.zxing.exception.QrCodeErrorCode;
 import com.google.zxing.exception.QrCodeException;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,11 +43,22 @@ public class QrCodeExceptionHandler {
         return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
-    @Getter
-    @AllArgsConstructor
     public static class ErrorResponse {
 
         private final String code;
         private final String message;
+
+        public ErrorResponse(String code, String message) {
+            this.code = code;
+            this.message = message;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
     }
 }

@@ -1,15 +1,20 @@
 package io.ddd4j.boot.sample.demo.domain.model.entity;
 
-import io.ddd4j.core.entity.BaseEntity;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import io.ddd4j.core.ddd.model.Entity;
+
+
 
 /**
  * Demo实体（领域层）
  */
-@Data
-@Accessors(chain = true)
-public class DemoEntity extends BaseEntity<DemoEntity> {
+
+
+public class DemoEntity implements Entity<Long> {
+
+    @Override
+    public Long id() {
+        return id;
+    }
 
     private Long id;
 

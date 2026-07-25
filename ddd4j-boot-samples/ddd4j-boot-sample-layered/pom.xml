@@ -47,10 +47,15 @@
             <artifactId>ddd4j-web-webmvc</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
-        <!-- MyBatis Plus（BaseRepositoryImpl 需要） -->
+        <!-- MyBatis-Plus 官方 Spring Boot 3 starter（提供 MybatisPlusAutoConfiguration + DataSource 自动装配） -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        </dependency>
+        <!-- MyBatis-Spring 桥接（@MapperScan 来自 mybatis-spring-3.0.5） -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
         </dependency>
         <!-- MySQL 驱动 -->
         <dependency>

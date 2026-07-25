@@ -1,28 +1,34 @@
 package io.ddd4j.boot.mq.redisstream.config;
 
-import io.ddd4j.mq.MQProperties;
-import io.ddd4j.mq.event.MQEventPublisher;
-import io.ddd4j.mq.redisstream.RedisStreamBrokerAdapter;
+import io.ddd4j.mq.redisstream.RedisStreamMQClient;
 import io.ddd4j.mq.redisstream.RedisStreamMQProperties;
-import io.ddd4j.mq.serialization.JsonMQEventSerialization;
-import io.ddd4j.mq.event.MQEventSerialization;
-import org.springframework.beans.factory.ObjectProvider;
+import io.ddd4j.mq.spring.config.Ddd4jMQRegistrarConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 /**
- * Redis Stream Spring Boot auto-configuration.
+ * ddd4j-boot redis-stream 自动配置（薄适配）。
  *
- * <p>The broker implementation stays in {@code ddd4j-mq-redis-stream}; this module
- * only binds Boot properties and exposes Spring beans.
+ * <p>仅做两件事：
+ * <ol>
+ *   <li>绑定 {@code ddd4j.mq.redis-stream.*} 到 {@link RedisStreamMQProperties}</li>
+ *   <li>注册上游 {@link RedisStreamMQClient} Bean 并导入 {@link Ddd4jMQRegistrarConfiguration}
+ *       驱动 {@code @MQEventListener} 扫描与装配</li>
+ * </ol>
+ *
+ * <p>Publisher / Listener / Ack / Properties / Operations 均由上游 ddd4j-mq-redis-stream 提供，boot 侧不重复实现。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @AutoConfiguration
-@ConditionalOnClass(RedisStreamBrokerAdapter.class)
+@ConditionalOnClass(RedisStreamMQClient.class)
+@ConditionalOnProperty(prefix = "ddd4j.mq", name = "broker", havingValue = "redisStream")
+@Import(Ddd4jMQRegistrarConfiguration.class)
 public class RedisStreamMQBootAutoConfiguration {
 
     @Bean
@@ -34,19 +40,7 @@ public class RedisStreamMQBootAutoConfiguration {
 
     @Bean(destroyMethod = "close")
     @ConditionalOnMissingBean
-    public RedisStreamBrokerAdapter redisStreamBrokerAdapter(
-            RedisStreamMQProperties redisStreamProperties,
-            MQProperties mqProperties,
-            ObjectProvider<MQEventSerialization> serialization) {
-        MQEventSerialization MQEventSerialization = serialization.getIfAvailable(JsonMQEventSerialization::new);
-        return new RedisStreamBrokerAdapter(redisStreamProperties, mqProperties, MQEventSerialization, redisStreamProperties.newOperations());
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(name = "redisStreamEventPublisher")
-    public MQEventPublisher redisStreamEventPublisher(
-            RedisStreamBrokerAdapter redisStreamBrokerAdapter,
-            MQProperties mqProperties) {
-        return redisStreamBrokerAdapter.createPublisher(mqProperties);
+    public RedisStreamMQClient redisStreamMQClient(RedisStreamMQProperties properties) {
+        return new RedisStreamMQClient(properties);
     }
 }

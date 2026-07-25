@@ -1,1 +1,1 @@
-io.ddd4j.boot.mq.rocketmq.config.RocketMQBootAutoConfiguration
+io.ddd4j.boot.mq.rocketmq.RocketMQBootAutoConfiguration

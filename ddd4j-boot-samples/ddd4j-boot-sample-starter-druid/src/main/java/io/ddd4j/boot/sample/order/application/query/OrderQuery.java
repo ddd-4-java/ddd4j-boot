@@ -2,7 +2,7 @@ package io.ddd4j.boot.sample.order.application.query;
 
 import io.ddd4j.boot.sample.order.domain.model.vo.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * @since 1.0.0
  */
 @Schema(description = "订单查询参数")
-@Data
+
 public class OrderQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;

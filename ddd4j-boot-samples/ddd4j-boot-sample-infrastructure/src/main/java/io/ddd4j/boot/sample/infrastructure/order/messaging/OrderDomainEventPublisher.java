@@ -1,22 +1,17 @@
 package io.ddd4j.boot.sample.infrastructure.order.messaging;
 
 import io.ddd4j.boot.sample.domain.order.event.DomainEvent;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 /**
  * 领域事件发布器（基础设施层）
  * 负责将领域事件发布到Spring事件总线
  */
-@Slf4j
 @Component
-@RequiredArgsConstructor
 public class OrderDomainEventPublisher {
-
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrderDomainEventPublisher.class);
     private final ApplicationEventPublisher applicationEventPublisher;
 
     /**
@@ -37,5 +32,8 @@ public class OrderDomainEventPublisher {
             events.forEach(this::publish);
         }
     }
-}
 
+    public OrderDomainEventPublisher(final ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
+}

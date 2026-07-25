@@ -1,18 +1,23 @@
 package io.ddd4j.boot.sample.order.domain.model.entity;
 
 import io.ddd4j.boot.sample.order.domain.model.vo.Money;
-import io.ddd4j.core.entity.BaseEntity;
-import lombok.Getter;
-import lombok.Setter;
+import io.ddd4j.core.ddd.model.Entity;
+
+
 
 import java.math.BigDecimal;
 
 /**
  * 订单项实体
  */
-@Getter
-@Setter
-public class OrderItem extends BaseEntity<OrderItem> {
+
+
+public class OrderItem implements Entity<Long> {
+
+    @Override
+    public Long id() {
+        return id;
+    }
 
     private Long id;
     private Long orderId;

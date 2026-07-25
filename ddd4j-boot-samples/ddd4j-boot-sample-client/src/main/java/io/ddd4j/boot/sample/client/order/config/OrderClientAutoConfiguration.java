@@ -2,7 +2,8 @@ package io.ddd4j.boot.sample.client.order.config;
 
 import io.ddd4j.boot.sample.client.order.api.OrderServiceClient;
 import io.ddd4j.boot.sample.client.order.impl.OrderServiceClientImpl;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -12,17 +13,15 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 
 /**
- * 订单服务客户端自动配置
+ * 订单服务客户端自动配置。
  *
- * <p>自动配置 RestClient 和 OrderServiceClient 实现。</p>
- *
- * @author DDD4J
- * @since 1.0.0
+ * <p>本项目未启用 Lombok 注解处理器，因此显式使用 SLF4J Logger。</p>
  */
-@Slf4j
 @AutoConfiguration
 @EnableConfigurationProperties(OrderClientProperties.class)
 public class OrderClientAutoConfiguration {
+
+    private static final Logger log = LoggerFactory.getLogger(OrderClientAutoConfiguration.class);
 
     @Bean
     @ConditionalOnMissingBean
@@ -48,4 +47,3 @@ public class OrderClientAutoConfiguration {
         return new OrderServiceClientImpl(restClient, properties.getBaseUrl());
     }
 }
-

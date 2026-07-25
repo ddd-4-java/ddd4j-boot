@@ -2,7 +2,7 @@ package io.ddd4j.boot.sample.order.application.dto;
 
 import io.ddd4j.boot.sample.order.domain.model.vo.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,7 +20,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Schema(description = "订单信息")
-@Data
+
 public class OrderDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -136,7 +136,7 @@ public class OrderDTO implements Serializable {
      * 用于传输订单的收货地址信息
      */
     @Schema(description = "地址信息")
-    @Data
+    
     public static class AddressDTO implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -164,7 +164,7 @@ public class OrderDTO implements Serializable {
      * 用于传输订单项（商品）的详细信息
      */
     @Schema(description = "订单项信息")
-    @Data
+    
     public static class OrderItemDTO implements Serializable {
 
         private static final long serialVersionUID = 1L;

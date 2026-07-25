@@ -6,10 +6,10 @@ package io.hiwepy.boot.sample.web.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+
 
 @Schema(description = "xxx数据传输对象")
-@Data
+
 public class DemoDTO {
 
     @Schema(description = "xxID", requiredMode = Schema.RequiredMode.REQUIRED)

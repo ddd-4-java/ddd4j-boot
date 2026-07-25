@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Data;
+
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -29,7 +29,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Schema(description = "创建订单请求")
-@Data
+
 public class CreateOrderCommand implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,7 +56,7 @@ public class CreateOrderCommand implements Serializable {
      * 创建订单时包含的商品项信息
      */
     @Schema(description = "订单项信息")
-    @Data
+    
     public static class OrderItemCommand implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -85,7 +85,7 @@ public class CreateOrderCommand implements Serializable {
      * 创建订单时的收货地址信息
      */
     @Schema(description = "地址信息")
-    @Data
+    
     public static class AddressCommand implements Serializable {
 
         private static final long serialVersionUID = 1L;

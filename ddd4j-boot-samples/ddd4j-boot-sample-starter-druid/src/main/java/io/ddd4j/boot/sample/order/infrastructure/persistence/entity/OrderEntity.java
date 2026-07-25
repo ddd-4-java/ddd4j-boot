@@ -3,9 +3,9 @@ package io.ddd4j.boot.sample.order.infrastructure.persistence.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.ddd4j.core.entity.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import io.ddd4j.core.ddd.model.Entity;
+
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,10 +13,15 @@ import java.time.LocalDateTime;
 /**
  * 订单实体（持久化层）
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
+
+
 @TableName("t_order")
-public class OrderEntity extends BaseEntity<OrderEntity> {
+public class OrderEntity implements Entity<Long> {
+
+    @Override
+    public Long id() {
+        return id;
+    }
 
     @TableId(type = IdType.AUTO)
     private Long id;

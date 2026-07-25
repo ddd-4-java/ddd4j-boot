@@ -7,6 +7,7 @@ import io.ddd4j.sample.richmodel.order.domain.model.Order;
 import io.ddd4j.sample.richmodel.order.domain.model.OrderLine;
 import io.ddd4j.sample.richmodel.order.domain.model.OrderStatus;
 import io.ddd4j.sample.richmodel.order.domain.repository.OrderRepository;
+import io.ddd4j.core.cqrs.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -16,9 +17,13 @@ import java.util.Optional;
 
 /**
  * Spring Boot MyBatis adapter for the pure Order aggregate.
+ *
+ * <p>ddd4j 2.0.x 的 {@code MybatisAggregateRepository} 泛型为 5 个参数：
+ * {@code <MP, M, P, Q, ID>}，其中 M=聚合根、P=PO、Q=Query 对象、ID=聚合标识。
+ * 本示例没有独立 Query 对象，Q 使用 {@link Query}{@code <Order>} 的匿名子类占位。</p>
  */
 @Repository
-public class MybatisOrderRepository extends MybatisAggregateRepository<Order, OrderTablePO, String>
+public class MybatisOrderRepository extends MybatisAggregateRepository<OrderTableMapper, Order, OrderTablePO, Query<Order>, String>
         implements OrderRepository {
 
     private final OrderLineTableMapper lineMapper;
@@ -33,7 +38,7 @@ public class MybatisOrderRepository extends MybatisAggregateRepository<Order, Or
         if (!StringUtils.hasText(id)) {
             return Optional.empty();
         }
-        return Optional.ofNullable(mapper().selectById(id)).map(this::toModel);
+        return Optional.ofNullable(getBaseMapper().selectById(id)).map(this::toModel);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class MybatisOrderRepository extends MybatisAggregateRepository<Order, Or
     }
 
     @Override
-    public void save(Order aggregate) {
+    public Order save(Order aggregate) {
         Objects.requireNonNull(aggregate, "aggregate must not be null");
         super.save(aggregate);
         LambdaQueryWrapper<OrderLineTablePO> query = new LambdaQueryWrapper<OrderLineTablePO>()
@@ -57,6 +62,7 @@ public class MybatisOrderRepository extends MybatisAggregateRepository<Order, Or
         aggregate.lines().stream()
                 .map(line -> toLinePersistenceObject(aggregate.id(), line))
                 .forEach(lineMapper::insert);
+        return aggregate;
     }
 
     @Override
@@ -81,15 +87,15 @@ public class MybatisOrderRepository extends MybatisAggregateRepository<Order, Or
     public OrderTablePO toPersistenceObject(Order model) {
         Objects.requireNonNull(model, "model must not be null");
         Money totalAmount = model.totalAmount();
-        return OrderTablePO.builder()
-                .id(model.id())
-                .orderNo(model.orderNo())
-                .buyerId(model.buyerId())
-                .buyerName(model.buyerName())
-                .status(model.status().name())
-                .totalAmount(totalAmount.amount())
-                .currency(totalAmount.currency())
-                .build();
+        return new OrderTablePO(
+                model.id(),
+                model.orderNo(),
+                model.buyerId(),
+                model.buyerName(),
+                model.status().name(),
+                totalAmount.amount(),
+                totalAmount.currency()
+        );
     }
 
     private OrderLine toLineModel(OrderLineTablePO persistenceObject) {
@@ -105,14 +111,14 @@ public class MybatisOrderRepository extends MybatisAggregateRepository<Order, Or
 
     private OrderLineTablePO toLinePersistenceObject(String orderId, OrderLine line) {
         Objects.requireNonNull(line, "line must not be null");
-        return OrderLineTablePO.builder()
-                .id(line.id())
-                .orderId(orderId)
-                .productId(line.productId())
-                .productName(line.productName())
-                .quantity(line.quantity())
-                .unitPrice(line.unitPrice().amount())
-                .currency(line.unitPrice().currency())
-                .build();
+        return new OrderLineTablePO(
+                line.id(),
+                orderId,
+                line.productId(),
+                line.productName(),
+                line.quantity(),
+                line.unitPrice().amount(),
+                line.unitPrice().currency()
+        );
     }
 }

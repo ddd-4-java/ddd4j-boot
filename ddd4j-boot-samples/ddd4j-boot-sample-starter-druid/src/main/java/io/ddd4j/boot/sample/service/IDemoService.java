@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.service;
 
 import io.ddd4j.boot.sample.demo.infra.persistence.entity.DemoEntity;
-import io.ddd4j.core.service.IBaseService;
+
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import io.ddd4j.core.service.IBaseService;
  * @author wandl
  * @since 2023-08-06
  */
-public interface IDemoService extends IBaseService<DemoEntity> {
+public interface IDemoService {
 
 }

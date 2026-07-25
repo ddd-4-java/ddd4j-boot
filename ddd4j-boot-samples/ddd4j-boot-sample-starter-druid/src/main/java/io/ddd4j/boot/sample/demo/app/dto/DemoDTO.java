@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.demo.app.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+
 
 import java.time.LocalDateTime;
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * Demo数据传输对象
  */
 @Schema(description = "Demo信息")
-@Data
+
 public class DemoDTO {
 
     @Schema(description = "ID", example = "1")

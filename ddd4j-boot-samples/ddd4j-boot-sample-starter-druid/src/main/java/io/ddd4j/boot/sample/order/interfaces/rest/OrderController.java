@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.List;
 @Tag(name = "订单管理", description = "订单相关的API接口")
 @RestController
 @RequestMapping("/api/orders")
-@RequiredArgsConstructor
+
 public class OrderController {
 
     private final OrderApplicationService orderApplicationService;

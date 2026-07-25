@@ -2,9 +2,9 @@ package io.ddd4j.boot.sample.order.application.response;
 
 import io.ddd4j.boot.sample.order.application.dto.OrderDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+
+
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Schema(description = "订单分页响应")
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderPageResponse implements Serializable {

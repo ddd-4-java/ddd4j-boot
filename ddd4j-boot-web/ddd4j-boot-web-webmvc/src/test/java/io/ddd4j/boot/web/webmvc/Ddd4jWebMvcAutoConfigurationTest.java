@@ -1,6 +1,6 @@
 package io.ddd4j.boot.web.webmvc;
 
-import io.ddd4j.web.webmvc.webmvc.Ddd4jWebMvcInterceptor;
+import io.ddd4j.web.webmvc.Ddd4jWebMvcInterceptor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;

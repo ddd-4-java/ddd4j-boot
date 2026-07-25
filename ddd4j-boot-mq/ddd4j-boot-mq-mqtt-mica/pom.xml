@@ -15,6 +15,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-mq-mqtt-mica</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-mq-spring</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
@@ -24,9 +34,8 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-mq-core</artifactId>
-            <version>${ddd4j.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <dependency>
             <groupId>org.dromara.mica-mqtt</groupId>

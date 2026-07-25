@@ -611,7 +611,7 @@
         <spring-boot-starter-disruptor.version>3.3.x.20240823.RELEASE</spring-boot-starter-disruptor.version>
         <spring-boot-starter-dozermapper.version>${dozer-core.version}</spring-boot-starter-dozermapper.version>
         <spring-boot-starter-druid.version>${druid.version}</spring-boot-starter-druid.version>
-        <spring-boot-starter-druid-plus.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-druid-plus.version>
+        <spring-boot-starter-druid-plus.version>2.7.x.20240823.RELEASE</spring-boot-starter-druid-plus.version>
         <spring-boot-starter-dynamic-datasource.version>4.5.0</spring-boot-starter-dynamic-datasource.version>
         <spring-boot-starter-elasticjob.version>3.0.4</spring-boot-starter-elasticjob.version>
         <spring-boot-starter-fastdfs.version>3.3.x.20241003.RELEASE</spring-boot-starter-fastdfs.version>

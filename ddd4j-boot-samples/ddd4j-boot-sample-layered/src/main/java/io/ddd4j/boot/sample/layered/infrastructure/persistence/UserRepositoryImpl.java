@@ -28,7 +28,7 @@ import java.util.List;
  * @author wandl
  */
 @DomainRepository
-public class UserRepositoryImpl extends BaseRepositoryImpl<UserMapper, User, UserPO, UserQuery, Long> implements UserRepository {
+public class UserRepositoryImpl extends BaseRepositoryImpl<UserMapper, User, UserPO, UserQuery, String> implements UserRepository {
 
     /**
      * 聚合填充示例：查用户列表后自动填充关联数据。

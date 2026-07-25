@@ -13,29 +13,20 @@
     <artifactId>ddd4j-boot-mq-nats</artifactId>
     <description>Ddd4j Boot MQ nats Spring Boot AutoConfiguration</description>
 
-    <properties>
-        <jnats.version>2.20.5</jnats.version>
-    </properties>
-
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-mq-core</artifactId>
+            <artifactId>ddd4j-mq-nats</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.nats</groupId>
-            <artifactId>jnats</artifactId>
-            <version>${jnats.version}</version>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-mq-spring</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
 

@@ -1,23 +1,32 @@
 package io.ddd4j.boot.mq.disruptor.config;
 
-import io.ddd4j.boot.mq.disruptor.autoconfigure.Ddd4jDisruptorMQAutoConfiguration;
-import io.ddd4j.mq.disruptor.spi.DisruptorBrokerAdapter;
+import io.ddd4j.mq.disruptor.DisruptorMQClient;
+import io.ddd4j.mq.disruptor.DisruptorMQProperties;
+import io.ddd4j.mq.spring.config.Ddd4jMQRegistrarConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
-/**
- * ddd4j-boot disruptor 自动配置。
- *
- * <p>通过 {@link Import} 导入 ddd4j-boot disruptor 的 {@link Ddd4jDisruptorMQAutoConfiguration}，
- * 提供 disruptor 消息队列的 Spring Boot 自动配置支持。
- *
- * @author ddd4j
- * @since 4.0.x
- */
 @AutoConfiguration
-@ConditionalOnClass(DisruptorBrokerAdapter.class)
-@Import(Ddd4jDisruptorMQAutoConfiguration.class)
+@ConditionalOnClass(DisruptorMQClient.class)
+@ConditionalOnProperty(prefix = "ddd4j.mq", name = "broker", havingValue = "disruptor")
+@Import(Ddd4jMQRegistrarConfiguration.class)
 public class DisruptorMQBootAutoConfiguration {
 
+    @Bean
+    @ConditionalOnMissingBean
+    @ConfigurationProperties(prefix = "ddd4j.mq.disruptor")
+    public DisruptorMQProperties disruptorMQProperties() {
+        return new DisruptorMQProperties();
+    }
+
+    @Bean(destroyMethod = "close")
+    @ConditionalOnMissingBean
+    public DisruptorMQClient disruptorMQClient(DisruptorMQProperties properties) {
+        return new DisruptorMQClient(properties);
+    }
 }

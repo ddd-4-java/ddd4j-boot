@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-web-core</artifactId>
+            <artifactId>ddd4j-web-webmvc</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
         <!--For Spring Boot AutoConfigure -->

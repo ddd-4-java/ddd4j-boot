@@ -7,13 +7,9 @@
 
 package io.ddd4j.boot.akka;
 
-import lombok.Data;
-
 /**
  * Akka Properties
  */
-@Data
-// @ConfigurationProperties(prefix = "ddd4j.akka")
 public class AkkaProperties {
 
     /**
@@ -25,5 +21,21 @@ public class AkkaProperties {
      * Enable akka auto configuration
      */
     private boolean enabled = true;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
 }

@@ -6,7 +6,7 @@ import io.ddd4j.boot.sample.order.domain.repository.OrderItemRepository;
 import io.ddd4j.boot.sample.order.infrastructure.persistence.converter.OrderConverter;
 import io.ddd4j.boot.sample.order.infrastructure.persistence.entity.OrderItemEntity;
 import io.ddd4j.boot.sample.order.infrastructure.persistence.mapper.OrderItemMapper;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * 订单项仓储实现（基础设施层）
  */
 @Repository
-@RequiredArgsConstructor
+
 public class OrderItemRepositoryImpl implements OrderItemRepository {
 
     private final OrderItemMapper orderItemMapper;

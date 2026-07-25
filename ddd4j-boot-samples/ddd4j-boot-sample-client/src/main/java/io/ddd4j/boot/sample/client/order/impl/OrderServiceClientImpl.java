@@ -6,8 +6,8 @@ import io.ddd4j.boot.sample.client.order.dto.request.OrderQueryRequest;
 import io.ddd4j.boot.sample.client.order.dto.response.OrderPageResponse;
 import io.ddd4j.boot.sample.client.order.dto.response.OrderResponse;
 import io.ddd4j.core.ApiRestResponse;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,13 +31,17 @@ import java.util.List;
  * @author DDD4J
  * @since 1.0.0
  */
-@Slf4j
-@RequiredArgsConstructor
 public class OrderServiceClientImpl implements OrderServiceClient {
 
     private static final String API_PREFIX = "/api/orders";
+    private static final Logger log = LoggerFactory.getLogger(OrderServiceClientImpl.class);
     private final RestClient restClient;
     private final String baseUrl;
+
+    public OrderServiceClientImpl(RestClient restClient, String baseUrl) {
+        this.restClient = restClient;
+        this.baseUrl = baseUrl;
+    }
 
     @Override
     public OrderResponse createOrder(CreateOrderRequest request) {

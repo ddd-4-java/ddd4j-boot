@@ -12,8 +12,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisOperationTemplate;
-import org.springframework.web.client.RestClient;
-
+import java.net.http.HttpClient;
 import java.util.Objects;
 
 /**
@@ -30,8 +29,8 @@ public class Ddd4jExternalAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public RestClient restClient() {
-        return RestClient.builder().build();
+    public HttpClient httpClient() {
+        return HttpClient.newHttpClient();
     }
 
     @Bean
@@ -55,14 +54,14 @@ public class Ddd4jExternalAutoConfiguration {
     }
 
     @Bean
-    public BaiduRegionTemplate baiduRegionTemplate(ExternalProperties properties, RestClient restClient,
+    public BaiduRegionTemplate baiduRegionTemplate(ExternalProperties properties, HttpClient httpClient,
                                                    RegionCache regionCache) {
-        return new BaiduRegionTemplate(properties.getBaiduAk(), restClient, regionCache);
+        return new BaiduRegionTemplate(properties.getBaiduAk(), httpClient, regionCache);
     }
 
     @Bean
-    public PconlineRegionTemplate pconlineRegionTemplate(RestClient restClient, RegionCache regionCache) {
-        return new PconlineRegionTemplate(restClient, regionCache);
+    public PconlineRegionTemplate pconlineRegionTemplate(HttpClient httpClient, RegionCache regionCache) {
+        return new PconlineRegionTemplate(httpClient, regionCache);
     }
 
     @Bean
@@ -72,8 +71,8 @@ public class Ddd4jExternalAutoConfiguration {
     }
 
     @Bean
-    public WeatherTemplate weatherTemplate(RestClient restClient) {
-        return new WeatherTemplate(restClient);
+    public WeatherTemplate weatherTemplate(HttpClient httpClient) {
+        return new WeatherTemplate(httpClient);
     }
 
 }

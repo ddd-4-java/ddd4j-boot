@@ -1,11 +1,11 @@
 package io.ddd4j.boot.sample.order.domain.event;
 
-import lombok.Getter;
+
 
 /**
  * 订单创建事件
  */
-@Getter
+
 public class OrderCreatedEvent extends DomainEvent {
 
     private final Long orderId;

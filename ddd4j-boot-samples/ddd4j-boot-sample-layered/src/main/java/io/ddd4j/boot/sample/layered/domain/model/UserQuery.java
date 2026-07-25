@@ -1,9 +1,6 @@
 package io.ddd4j.boot.sample.layered.domain.model;
 
 import io.ddd4j.core.cqrs.query.Query;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * 用户查询对象（充血查询，COLA 合规 —— 零基础设施依赖）。
@@ -14,28 +11,15 @@ import lombok.EqualsAndHashCode;
  *
  * <p>业务方使用：
  * <pre>
- * UserQuery.builder()
- *     .phone("13800138000")
- *     .build()
- *     .one();  // 查单个
+ * new UserQuery().setPhone("13800138000").one("用户不存在");
  *
- * UserQuery.builder()
- *     .status(1)
- *     .current(1).size(10)
- *     .build()
- *     .page(); // 分页查询
+ * new UserQuery().setStatus(1).setCurrent(1).setSize(10).page();
  *
- * UserQuery.builder()
- *     .phone("13800138000")
- *     .build()
- *     .notExist("该手机号已注册"); // 查不到才通过，查到则抛异常
+ * new UserQuery().setPhone("13800138000").notExist("该手机号已注册");
  * </pre>
  *
  * @author wandl
  */
-@Builder
-@Data
-@EqualsAndHashCode(callSuper = true)
 public class UserQuery extends Query<User> {
 
     /**
@@ -57,5 +41,45 @@ public class UserQuery extends Query<User> {
      * 状态：0-禁用，1-启用
      */
     private Integer status;
+
+    public UserQuery() {
+        super();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public UserQuery setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public UserQuery setPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public UserQuery setNickname(String nickname) {
+        this.nickname = nickname;
+        return this;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public UserQuery setStatus(Integer status) {
+        this.status = status;
+        return this;
+    }
 
 }

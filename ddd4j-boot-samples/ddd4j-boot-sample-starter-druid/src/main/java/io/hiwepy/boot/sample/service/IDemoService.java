@@ -1,6 +1,6 @@
 package io.hiwepy.boot.sample.service;
 
-import io.ddd4j.core.service.IBaseService;
+
 import io.hiwepy.boot.sample.entity.DemoEntity;
 
 /**
@@ -11,6 +11,6 @@ import io.hiwepy.boot.sample.entity.DemoEntity;
  * @author wandl
  * @since 2023-08-06
  */
-public interface IDemoService extends IBaseService<DemoEntity> {
+public interface IDemoService {
 
 }
