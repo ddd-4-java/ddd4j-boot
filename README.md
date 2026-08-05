@@ -1,9 +1,13 @@
 ## Ddd4j Boot 3.x 简介
 
-**Ddd4j Boot** 是一个基于 **领域驱动设计（DDD）** 思想的 Java 微服务开发脚手架。采用 Spring Boot 3.5.x
-构建，使用轻量级 [ddd-4-java](https://github.com/fuinorg/ddd-4-java)
-和 [cqrs-4-java](https://github.com/fuinorg/cqrs-4-java) 库实现领域驱动设计、命令查询职责分离（CQRS）和事件溯源（Event
-Sourcing）。
+**Ddd4j Boot** 是一个基于 **领域驱动设计（DDD）** 思想的 Java 微服务开发脚手架。采用 Spring Boot 3.4.13
+构建，基于自研 [ddd4j](https://github.com/ddd-4-java/ddd4j)（feature/2.0.x）框架实现领域驱动设计、
+命令查询职责分离（CQRS）和事件驱动架构。
+
+> **版本基线**：Spring Boot `3.4.13` · Spring Framework `6.2.19` · Java 17（强制基线，21 兼容）·
+> ddd4j `2.0.x.20260630-SNAPSHOT` · ddd4j-boot `3.4.x.20260630-SNAPSHOT`
+>
+> 📖 从旧版本迁移请阅读 **[迁移指南（3.4.x ↔ 2.0.x）](./docs/migration-3.4x-2.0x.md)**
 
 本项目遵循 **Eric Evans** 和 **Vaughn Vernon** 的 DDD 经典理论，不依赖特殊框架，仅使用标准的 JEE/Spring
 规范，帮助开发者构建可维护、可扩展的复杂业务系统。
@@ -39,11 +43,11 @@ Sourcing）。
 
 - **1. 完整的 DDD 分层架构**：提供标准的领域层、应用层、接口层和基础设施层结构，支持 COLA V5 架构模式
 
-- **2. 轻量级 DDD 实现**：基于 [ddd-4-java](https://github.com/fuinorg/ddd-4-java)
-  和 [cqrs-4-java](https://github.com/fuinorg/cqrs-4-java) 库，无需引入重量级框架，保持代码简洁
+- **2. 轻量级 DDD 实现**：基于自研 [ddd4j](https://github.com/ddd-4-java/ddd4j)
+  框架（纯契约/核心模型 → 能力 SPI → 技术适配器 → runtime 容器桥），无需引入重量级框架，保持代码简洁
 
 - **3. 技术栈集成**：基于 Spring Boot
-  3.5.x（详见 [Spring Boot 官方文档](https://docs.spring.io/spring-boot/docs/3.5.x/reference/html/features.html#features.spring-application)
+  3.4.13（详见 [Spring Boot 官方文档](https://docs.spring.io/spring-boot/docs/3.4.x/reference/html/features.html#features.spring-application)
   ），集成 [MyBatis Plus](https://baomidou.com/introduce/)、Jackson、Guava、Swagger、SaToken 等常用组件，统一版本管理
 
 - **4. 双栈支持**：同时支持 WebMVC（传统 Servlet）和 WebFlux（响应式）两种编程模型
@@ -62,7 +66,7 @@ Sourcing）。
 
 - **[DDD 思维导图](./docs/DDD%20思维导图.md)**：涵盖战略设计（限界上下文、子域划分、统一语言）和战术设计（实体、值对象、聚合、领域服务、仓储、领域事件）的完整知识体系
 - **[CQRS 思维导图](./docs/CQRS%20思维导图.md)**：深入理解命令查询职责分离、事件处理、一致性模型等核心概念
-- **[参考示例项目](https://github.com/fuinorg/ddd-cqrs-4-java-example)**：Greg Young 风格的 DDD/CQRS/Event Sourcing 微服务示例
+- **参考示例**：本仓库 `ddd4j-boot-samples/ddd4j-boot-sample-order`（订单 + Outbox + Kafka）与 `ddd4j-boot-sample-cqrs-person-*`（CQRS 读写分离）
 
 **CQRS 架构概览图**：
 
@@ -94,11 +98,15 @@ Sourcing）。
 | 模块                                        | 说明                                                          |
 |-------------------------------------------|-------------------------------------------------------------|
 | ddd4j-boot-bom                            | BOM 依赖管理模块，统一管理所有子模块版本，外部项目通过 BOM 引用实现版本对齐                  |
-| ddd4j-boot-dependencies                   | 公共依赖声明模块，集中管理第三方组件版本，确保依赖版本一致性                              |
-| ddd4j / ddd4j-runtime-spring / ddd4j-data-mybatis | **核心能力来源**，分别承载 DDD 基础抽象、Spring/Web 基类与 MyBatis 基础能力        |
-| ddd4j-boot-cmpt                           | 组件模块父模块，提供各类技术组件的自动配置（WebMVC/WebFlux、消息队列、缓存、认证等），作为基础设施层实现 |
-| ddd4j-boot-parent                         | Maven 父 POM，定义统一的编译、打包、发布规则，所有业务服务模块继承此父 POM                |
-| ddd4j-boot-samples                        | 示例服务模块集合，展示基于 DDD 架构的业务服务实现，涵盖不同技术栈组合（数据源、消息队列等）            |
+| ddd4j-boot-dependencies                   | 公共依赖声明模块，集中管理第三方组件版本（含 Lombok annotation processor 配置）       |
+| ddd4j-boot-core                           | **核心自动配置**：SPI 生命周期桥接（DomainEventPublisher/Subject/I18n/CommandBus 注册）、Repository 自动注册、CommandBus 装配 |
+| ddd4j-boot-web                            | Web 装配（webmvc / webflux 两个薄适配模块，条件互斥）                       |
+| ddd4j-boot-mq                             | MQ 装配（mq-core + 13 个 broker 薄适配器，消费上游 MQClient 统一模型）          |
+| ddd4j-boot-data                           | 数据装配（mybatis / crypto / datascope / external / logs）          |
+| ddd4j-boot-auth                           | 认证装配（satoken / security / shiro / license）                    |
+| ddd4j-boot-cache                          | 缓存属性绑定（CacheKit 静态工具，注册外部缓存实例）                             |
+| ddd4j-boot-extensions                     | 扩展装配（akka / cola / dubbo / excel / jackson / monitor / qlexpress / qrcode 等） |
+| ddd4j-boot-samples                        | 示例服务模块集合，涵盖不同技术栈组合（数据源、消息队列、CQRS、富模型等）                    |
 
 **使用建议**：
 
@@ -117,40 +125,27 @@ Sourcing）。
 ```
 |--ddd4j-boot
 |----ddd4j-boot-bom                       #BOM依赖管理，用于外部项目引用 ddd4j-boot 模块版本管理
-|----ddd4j-boot-dependencies              #公共依赖，便于依赖组件版本控制
-|----ddd4j-boot-cmpt                      #组件模块父模块
-|------ddd4j-boot-cmpt-akka               #Akka组件
-|------ddd4j-boot-cmpt-crypto             #加解密组件
-|------ddd4j-boot-cmpt-datascope          #数据权限组件
-|------ddd4j-boot-cmpt-license            #License组件
-|------ddd4j-boot-cmpt-logs               #日志组件
-|------ddd4j-boot-cmpt-pf4j               #PF4J插件组件
-|------ddd4j-boot-cmpt-cola               #COLA组件
-|------ddd4j-boot-cmpt-satoken            #SaToken组件
-|------ddd4j-boot-cmpt-jackson            #Jackson组件
-|------ddd4j-web-webmvc                   #WebMVC组件
-|------ddd4j-web-webflux                  #WebFlux组件
-|------ddd4j-boot-cmpt-kafka              #Kafka组件
-|------ddd4j-boot-cmpt-external           #外部API集成组件
-|------ddd4j-boot-cmpt-validation         #验证组件
-|----ddd4j-boot-parent                    #子模块的父级工程，定义Maven配置
-|----ddd4j-boot-samples                   #具体业务服务
-|--------ddd4j-boot-sample-druid          #集成Druid数据源示例
-|--------ddd4j-boot-sample-druid-activemq #集成Druid数据源 + ActiveMQ 示例
-|--------ddd4j-boot-sample-druid-amqp     #集成Druid数据源 + RabbitMQ 示例
-|--------ddd4j-boot-sample-druid-kafka    #集成Druid数据源 + Kafka 示例
-|--------ddd4j-boot-sample-druid-mqtt-client1 #集成Druid数据源 + MQTT Client1 示例
-|--------ddd4j-boot-sample-druid-mqtt-client2 #集成Druid数据源 + MQTT Client2 示例
-|--------ddd4j-boot-sample-druid-mqtt-server  #集成Druid数据源 + MQTT Server 示例
-|--------ddd4j-boot-sample-druid-rocketmq #集成Druid数据源 + RocketMQ 示例
-|--------ddd4j-boot-sample-druid-war     #集成Druid数据源打War包示例
-|--------ddd4j-boot-sample-hikaricp      #集成 Hikaricp数据源示例
-|--------ddd4j-boot-sample-hikaricp-activemq #集成 Hikaricp数据源 + ActiveMQ 示例
-|--------ddd4j-boot-sample-hikaricp-amqp #集成 Hikaricp数据源 + RabbitMQ 示例
-|--------ddd4j-boot-sample-hikaricp-kafka #集成 Hikaricp数据源 + Kafka 示例
-|--------ddd4j-boot-sample-hikaricp-rocketmq #集成 Hikaricp数据源 + RocketMQ 示例
-|--------ddd4j-boot-sample-hikaricp-war  #集成 Hikaricp数据源打War包示例
-|--------ddd4j-boot-sample-r2dbc-webflux #集成 R2dbc + WebFlux 示例
+|----ddd4j-boot-dependencies              #公共依赖，便于依赖组件版本控制（含 Lombok 处理器配置）
+|----ddd4j-boot-core                      #核心自动配置：SPI 生命周期 / Repository 注册 / CommandBus
+|----ddd4j-boot-web                       #Web 装配父模块
+|------ddd4j-boot-web-webmvc              #WebMVC 装配（Servlet）
+|------ddd4j-boot-web-webflux             #WebFlux 装配（Reactive）
+|----ddd4j-boot-mq                        #MQ 装配父模块
+|------ddd4j-boot-mq-core                 #MQ 统一开关与属性绑定
+|------ddd4j-boot-mq-{activemq,disruptor,kafka,mqtt,mqtt-mica,nats,ons,pulsar,rabbitmq,redis-stream,rocketmq,sqs,tdmq}  #13 个 broker 薄适配器
+|----ddd4j-boot-data                      #数据装配父模块
+|------ddd4j-boot-data-{mybatis,crypto,datascope,external,logs}
+|----ddd4j-boot-auth                      #认证装配父模块
+|------ddd4j-boot-auth-{satoken,security,shiro,license}
+|----ddd4j-boot-cache                     #缓存属性绑定
+|----ddd4j-boot-extensions                #扩展装配父模块
+|------ddd4j-boot-extension-{akka,cola,dubbo,excel,jackson,monitor,qlexpress,qrcode,pf4j}
+|----ddd4j-boot-samples                   #示例服务
+|--------ddd4j-boot-sample-order          #Spring Boot + Postgres + Kafka + Outbox 综合示例
+|--------ddd4j-boot-sample-rich-model     #充血模型 + MyBatis-Plus 示例
+|--------ddd4j-boot-sample-layered        #分层架构示例
+|--------ddd4j-boot-sample-cqrs-person-*  #CQRS 读写分离示例
+|--------ddd4j-boot-sample-starter-*      #数据源（Druid/HikariCP）+ MQ（AMQ/Kafka/MQTT/RocketMQ）组合示例
 ```
 
 ### 📖 使用说明
@@ -178,12 +173,16 @@ Sourcing）。
 ```xml
 <dependencies>
     <dependency>
-        <groupId>io.ddd4j</groupId>
-        <artifactId>ddd4j-core</artifactId>
+        <groupId>io.ddd4j.boot</groupId>
+        <artifactId>ddd4j-boot-core</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.ddd4j</groupId>
-        <artifactId>ddd4j-web-webmvc</artifactId>
+        <groupId>io.ddd4j.boot</groupId>
+        <artifactId>ddd4j-boot-web-webmvc</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>io.ddd4j.boot</groupId>
+        <artifactId>ddd4j-boot-mq-kafka</artifactId>
     </dependency>
 </dependencies>
 ```
@@ -203,22 +202,22 @@ Sourcing）。
 
 #### 3. 组件模块说明
 
-| 组件模块                       | 说明                              |
-|----------------------------|---------------------------------|
-| ddd4j-boot-cmpt-akka       | Akka 组件，支持 Akka 3 Actor 系统      |
-| ddd4j-boot-cmpt-crypto     | 加解密组件，支持 AES、SM3、SM4 等加密算法      |
-| ddd4j-boot-cmpt-datascope  | 数据权限组件，支持数据范围权限控制               |
-| ddd4j-boot-cmpt-license    | License 组件，支持 TrueLicense 许可证管理 |
-| ddd4j-boot-cmpt-logs       | 日志组件，支持 API 操作日志记录              |
-| ddd4j-boot-cmpt-pf4j       | PF4J 插件组件，支持插件化开发               |
-| ddd4j-boot-cmpt-cola       | COLA 组件，支持 COLA 架构模式            |
-| ddd4j-boot-cmpt-satoken    | SaToken 组件，支持 SaToken 权限认证      |
-| ddd4j-boot-cmpt-jackson    | Jackson 组件，支持 Jackson 序列化配置     |
-| ddd4j-web-webmvc           | WebMVC 组件，支持 Spring MVC         |
-| ddd4j-web-webflux          | WebFlux 组件，支持 Spring WebFlux    | 
-| ddd4j-boot-cmpt-kafka      | Kafka 组件，支持 Kafka 消息队列集成        |
-| ddd4j-boot-cmpt-external   | 外部 API 集成组件，支持外部服务调用            |
-| ddd4j-boot-cmpt-validation | 验证组件，支持自定义验证规则                  |
+| 组件模块 | 说明 |
+| --- | --- |
+| ddd4j-boot-core | 核心自动配置：SPI 生命周期（DomainEventPublisher/Subject/I18n/CommandBus 注册与关闭清理）、Repository 自动注册、CommandBus 装配 |
+| ddd4j-boot-web-webmvc | WebMVC 装配（Servlet 条件互斥），统一异常/请求上下文/幂等防护 |
+| ddd4j-boot-web-webflux | WebFlux 装配（Reactive 条件互斥），统一错误处理与请求上下文 |
+| ddd4j-boot-mq-core | MQ 统一开关（`ddd4j.mq.enabled`）与属性绑定 |
+| ddd4j-boot-mq-{activemq,disruptor,kafka,mqtt,mqtt-mica,nats,ons,pulsar,rabbitmq,redis-stream,rocketmq,sqs,tdmq} | 13 个 broker 薄适配器，消费上游 `MQClient` 统一模型 |
+| ddd4j-boot-data-mybatis | MyBatis-Plus 拦截器装配（分页/乐观锁/防全表攻击） |
+| ddd4j-boot-data-crypto | 加解密策略装配（AES/SM 等，`crypto.enabled` 开关） |
+| ddd4j-boot-data-datascope | 数据权限装配（DataScopeProvider + 注解校验器） |
+| ddd4j-boot-data-external | 外部服务（地理位置/天气/行政区划）与全局序列号 |
+| ddd4j-boot-data-logs | API 操作日志切面装配 |
+| ddd4j-boot-auth-{satoken,security,shiro} | 三种认证框架的 SubjectProvider 适配（互斥装配） |
+| ddd4j-boot-auth-license | TrueLicense 许可证装配（`license.*` 配置） |
+| ddd4j-boot-cache | CacheKit 属性绑定（业务通过 `CacheKit.register(biz, cache)` 注册缓存） |
+| ddd4j-boot-extension-{akka,cola,dubbo,excel,jackson,monitor,qlexpress,qrcode} | 扩展组件装配（Actor 系统/COLA 架构/Dubbo 扫描/Excel 工具/Jackson 默认配置/监控/规则引擎/二维码） |
 
 ### 📁 DDD 分层目录结构
 
@@ -269,7 +268,7 @@ ddd4j/
 ##### 组件模块
 
 ```
-ddd4j-boot-cmpt-{模块}/
+ddd4j-boot-{模块}/
 ├── src/main/java/io/ddd4j/boot/{模块}
 │   ├── application/           # 应用层
 │   │   ├── command/           # 命令对象
