@@ -3,12 +3,10 @@ package io.ddd4j.boot.sample.demo.app.command;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
-
 /**
  * 创建Demo命令
  */
 @Schema(description = "创建Demo请求")
-
 public class CreateDemoCommand {
 
     @Schema(description = "名称", example = "示例名称", required = true)
@@ -24,5 +22,20 @@ public class CreateDemoCommand {
 
     @Schema(description = "状态（0:禁用|1:可用）", example = "1")
     private Integer status;
-}
 
+    public String getName() {
+        return name;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public Integer getOrderBy() {
+        return orderBy;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+}

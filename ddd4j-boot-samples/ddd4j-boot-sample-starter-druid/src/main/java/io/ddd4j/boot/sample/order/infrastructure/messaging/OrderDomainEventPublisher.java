@@ -19,12 +19,16 @@ public class OrderDomainEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
+    public OrderDomainEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
+
     /**
      * 发布领域事件
      */
     public void publish(DomainEvent event) {
         if (event != null) {
-            org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class).debug("发布领域事件: {}", event.getClass().getSimpleName());
+            org.slf4j.LoggerFactory.getLogger(OrderDomainEventPublisher.class).debug("发布领域事件: {}", event.getClass().getSimpleName());
             applicationEventPublisher.publishEvent(event);
         }
     }

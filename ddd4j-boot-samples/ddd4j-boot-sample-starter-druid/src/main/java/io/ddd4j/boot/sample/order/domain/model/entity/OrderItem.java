@@ -55,5 +55,62 @@ public class OrderItem implements Entity<Long> {
     public Money calculateTotal() {
         return unitPrice.multiply(BigDecimal.valueOf(quantity));
     }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Money getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(Money unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public Money getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Money totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 }
 

@@ -20,10 +20,26 @@
             <artifactId>ddd4j-auth-license</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
+        <!-- 上游 ddd4j-auth-license 的 POM 依赖 truelicense-core 但上游 BOM 未管理其版本，
+             导致该 POM 无效、truelicense 传递依赖不可用（CipherParam 缺失）。
+             这里显式声明 license 校验所需的 truelicense 构件。 -->
+        <dependency>
+            <groupId>de.schlichtherle.truelicense</groupId>
+            <artifactId>truelicense-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.schlichtherle.truelicense</groupId>
+            <artifactId>truelicense-xml</artifactId>
+        </dependency>
         <!-- Compile dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+            <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

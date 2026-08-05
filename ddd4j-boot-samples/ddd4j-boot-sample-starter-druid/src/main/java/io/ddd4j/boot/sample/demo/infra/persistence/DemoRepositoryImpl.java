@@ -22,6 +22,11 @@ public class DemoRepositoryImpl implements DemoRepository {
     private final DemoMapper demoMapper;
     private final DemoConverter demoConverter;
 
+    public DemoRepositoryImpl(DemoMapper demoMapper, DemoConverter demoConverter) {
+        this.demoMapper = demoMapper;
+        this.demoConverter = demoConverter;
+    }
+
     @Override
     public DemoEntity save(DemoEntity domain) {
         io.ddd4j.boot.sample.demo.infra.persistence.entity.DemoEntity entity = demoConverter.toEntity(domain);

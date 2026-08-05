@@ -11,13 +11,14 @@ import io.ddd4j.boot.sample.setup.LogConstant;
 import io.ddd4j.boot.sample.web.dto.DemoDTO;
 import io.ddd4j.boot.sample.web.dto.DemoNewDTO;
 import io.ddd4j.core.ApiRestResponse;
-import io.ddd4j.spring.web.BaseController;
+import io.ddd4j.web.webmvc.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.biz.utils.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,10 @@ import java.util.List;
 @RestController
 @RequestMapping("demo")
 public class DemoController extends BaseController {
+
+    public DemoController(NestedMessageSource messageSource, com.github.dozermapper.core.Mapper beanMapper) {
+        super(messageSource, beanMapper);
+    }
 
     @Autowired
     private IDemoService demoService;

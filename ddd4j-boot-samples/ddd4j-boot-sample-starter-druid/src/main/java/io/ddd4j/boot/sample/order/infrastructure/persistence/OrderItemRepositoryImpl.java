@@ -22,6 +22,11 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     private final OrderItemMapper orderItemMapper;
     private final OrderConverter orderConverter;
 
+    public OrderItemRepositoryImpl(OrderItemMapper orderItemMapper, OrderConverter orderConverter) {
+        this.orderItemMapper = orderItemMapper;
+        this.orderConverter = orderConverter;
+    }
+
     @Override
     public OrderItem save(OrderItem orderItem) {
         OrderItemEntity entity = orderConverter.toItemEntity(orderItem);

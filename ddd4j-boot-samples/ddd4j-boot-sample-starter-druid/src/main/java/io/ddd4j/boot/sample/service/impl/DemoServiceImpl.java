@@ -1,6 +1,7 @@
 package io.ddd4j.boot.sample.service.impl;
 
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 import io.hiwepy.boot.sample.mapper.DemoMapper;
 import io.hiwepy.boot.sample.service.IDemoService;
@@ -15,6 +16,6 @@ import org.springframework.stereotype.Service;
  * @since 2023-08-06
  */
 @Service
-public class DemoServiceImpl implements IDemoService {
+public class DemoServiceImpl extends ServiceImpl<DemoMapper, DemoEntity> implements IDemoService {
 
 }

@@ -19,5 +19,21 @@ public class OrderPaidEvent extends DomainEvent {
         this.userId = userId;
         this.paymentMethod = paymentMethod;
     }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
 }
 

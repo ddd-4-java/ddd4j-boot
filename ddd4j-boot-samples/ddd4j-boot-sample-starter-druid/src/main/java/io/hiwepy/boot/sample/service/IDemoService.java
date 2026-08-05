@@ -1,6 +1,7 @@
 package io.hiwepy.boot.sample.service;
 
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 
 /**
@@ -11,6 +12,6 @@ import io.hiwepy.boot.sample.entity.DemoEntity;
  * @author wandl
  * @since 2023-08-06
  */
-public interface IDemoService {
+public interface IDemoService extends IService<DemoEntity> {
 
 }

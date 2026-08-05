@@ -20,11 +20,23 @@ import java.util.List;
  */
 @Schema(description = "订单分页响应")
 
-@NoArgsConstructor
-@AllArgsConstructor
 public class OrderPageResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public OrderPageResponse() {
+    }
+
+    public OrderPageResponse(List<OrderDTO> records, Long total, Integer pageNum, Integer pageSize,
+            Integer totalPages, Boolean hasPrevious, Boolean hasNext) {
+        this.records = records;
+        this.total = total;
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+        this.totalPages = totalPages;
+        this.hasPrevious = hasPrevious;
+        this.hasNext = hasNext;
+    }
 
     /**
      * 订单列表数据

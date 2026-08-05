@@ -19,5 +19,21 @@ public class OrderCreatedEvent extends DomainEvent {
         this.userId = userId;
         this.totalAmount = totalAmount;
     }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getTotalAmount() {
+        return totalAmount;
+    }
 }
 

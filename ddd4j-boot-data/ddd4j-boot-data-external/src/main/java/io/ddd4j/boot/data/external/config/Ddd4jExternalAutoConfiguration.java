@@ -8,9 +8,11 @@ import io.ddd4j.data.external.region.*;
 import io.ddd4j.data.external.weather.WeatherTemplate;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisOperationTemplate;
 import java.net.http.HttpClient;
 import java.util.Objects;
@@ -21,11 +23,22 @@ import java.util.Objects;
  * <p>从 {@code ddd4j-data-external} 迁入 boot 层。
  * 通用层仅保留纯 Java 的 Template 实现。
  *
+ * <p>{@link ExternalProperties} 是上游零 Spring 依赖纯 POJO（不标注 {@code @ConfigurationProperties}），
+ * 因此不能用 {@code @EnableConfigurationProperties}（启动期抛 "No ConfigurationProperties annotation found"），
+ * 这里用 {@link Binder} 手动绑定。
+ *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties(ExternalProperties.class)
 public class Ddd4jExternalAutoConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean(ExternalProperties.class)
+    public ExternalProperties externalProperties(Environment environment) {
+        ExternalProperties properties = new ExternalProperties();
+        Binder.get(environment).bind(ExternalProperties.PREFIX, Bindable.ofInstance(properties));
+        return properties;
+    }
 
     @Bean
     @ConditionalOnMissingBean

@@ -24,6 +24,10 @@ public class DemoApplicationService {
 
     private final DemoRepository demoRepository;
 
+    public DemoApplicationService(DemoRepository demoRepository) {
+        this.demoRepository = demoRepository;
+    }
+
     /**
      * 创建Demo
      */
@@ -100,7 +104,7 @@ public class DemoApplicationService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void deleteDemos(List<Long> ids) {
-        org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class).info("批量删除Demo，IDs: {}", ids);
+        org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("批量删除Demo，IDs: {}", ids);
         ids.forEach(this::deleteDemo);
     }
 

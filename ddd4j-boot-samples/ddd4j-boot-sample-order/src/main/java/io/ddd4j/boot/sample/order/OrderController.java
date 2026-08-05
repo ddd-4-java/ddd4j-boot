@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,11 +25,14 @@ import java.util.UUID;
  * 显式订单用例路由，不使用动态 {@code /{model}} MVC 入口。
  */
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/orders")
 public class OrderController {
 
     private final OrderApplicationService applicationService;
+
+    public OrderController(OrderApplicationService applicationService) {
+        this.applicationService = applicationService;
+    }
 
     @PostMapping
     public R<OrderReadModel> create(@Valid @RequestBody CreateOrderRequest request) {

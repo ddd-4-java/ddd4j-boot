@@ -1,7 +1,5 @@
 package io.ddd4j.boot.qrcode;
 
-import com.google.zxing.exception.QrCodeErrorCode;
-import com.google.zxing.exception.QrCodeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,34 +11,22 @@ import java.io.IOException;
 @RestControllerAdvice(assignableTypes = QrCodeController.class)
 public class QrCodeExceptionHandler {
 
-    @ExceptionHandler(QrCodeException.class)
-    public ResponseEntity<ErrorResponse> handleQrCode(QrCodeException exception) {
-        return ResponseEntity.status(status(exception.getErrorCode()))
-                .body(new ErrorResponse(exception.getErrorCode().name(), exception.getMessage()));
-    }
-
-    @ExceptionHandler({IllegalArgumentException.class, IOException.class})
-    public ResponseEntity<ErrorResponse> handleBadRequest(Exception exception) {
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequest(IllegalArgumentException exception) {
         return ResponseEntity.badRequest()
-                .body(new ErrorResponse(QrCodeErrorCode.QRCODE_INVALID_ARGUMENT.name(), exception.getMessage()));
+                .body(new ErrorResponse("QRCODE_INVALID_ARGUMENT", exception.getMessage()));
     }
 
-    private HttpStatus status(QrCodeErrorCode errorCode) {
-        if (errorCode == QrCodeErrorCode.QRCODE_IMAGE_TOO_LARGE) {
-            return HttpStatus.PAYLOAD_TOO_LARGE;
-        }
-        if (errorCode == QrCodeErrorCode.QRCODE_UNSUPPORTED_FORMAT) {
-            return HttpStatus.UNSUPPORTED_MEDIA_TYPE;
-        }
-        if (errorCode == QrCodeErrorCode.QRCODE_DECODE_NOT_FOUND
-                || errorCode == QrCodeErrorCode.QRCODE_CAPACITY_EXCEEDED
-                || errorCode == QrCodeErrorCode.QRCODE_SELF_CHECK_FAILED) {
-            return HttpStatus.UNPROCESSABLE_ENTITY;
-        }
-        if (errorCode == QrCodeErrorCode.QRCODE_INVALID_ARGUMENT) {
-            return HttpStatus.BAD_REQUEST;
-        }
-        return HttpStatus.INTERNAL_SERVER_ERROR;
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<ErrorResponse> handleIo(IOException exception) {
+        return ResponseEntity.badRequest()
+                .body(new ErrorResponse("QRCODE_IO_ERROR", exception.getMessage()));
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleInternal(IllegalStateException exception) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("QRCODE_INTERNAL_ERROR", exception.getMessage()));
     }
 
     public static class ErrorResponse {

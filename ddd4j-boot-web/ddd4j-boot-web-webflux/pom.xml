@@ -19,6 +19,13 @@
             <artifactId>ddd4j-web-webflux</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
+        <!-- 上游 ddd4j-web-webflux 的 POM 依赖 jackson-extension 但上游 BOM 未管理其版本，
+             导致该 POM 无效、spring-biz 等传递依赖不可用（ResourceBasenameHandler 缺失）。
+             这里显式声明上游 webflux 运行所需的 hiwepy 依赖。 -->
+        <dependency>
+            <groupId>com.github.hiwepy</groupId>
+            <artifactId>spring-biz</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
@@ -40,6 +47,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-core</artifactId>
+            <version>${revision}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

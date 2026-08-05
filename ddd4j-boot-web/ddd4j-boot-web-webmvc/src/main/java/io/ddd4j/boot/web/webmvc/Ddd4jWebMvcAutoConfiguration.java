@@ -1,7 +1,10 @@
 package io.ddd4j.boot.web.webmvc;
 
+import io.ddd4j.cache.CacheKit;
+import io.ddd4j.cache.local.CaffeineCache;
 import io.ddd4j.core.BaseCoreProperties;
 import io.ddd4j.core.ProfileManager;
+import io.ddd4j.core.cache.CacheConfig;
 import io.ddd4j.core.constant.Constants;
 import io.ddd4j.web.core.AuthenticationMode;
 import io.ddd4j.web.core.BearerSubjectAuthenticator;
@@ -131,7 +134,23 @@ public class Ddd4jWebMvcAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public WebIdempotencyLifecycle webIdempotencyLifecycle() {
+        registerDefaultIdempotencyCache();
         return new WebIdempotencyLifecycle(new CacheIdempotencyGuard());
+    }
+
+    /**
+     * 为 Web 幂等防护注册默认 CAS 缓存。
+     *
+     * <p>{@link CacheIdempotencyGuard} 无参构造使用 {@code ddd4j-web-idempotency} 缓存名，
+     * 若该缓存未注册到 {@link CacheKit}，任何带幂等 Key 的请求都会因
+     * {@code IllegalStateException} 被翻译为 409。此处按需注册本地 Caffeine 实现，
+     * 业务方可自行注册同名缓存覆盖。
+     */
+    private static void registerDefaultIdempotencyCache() {
+        String cacheName = CacheIdempotencyGuard.DEFAULT_CACHE_NAME;
+        if (CacheKit.getCache(cacheName) == null) {
+            CacheKit.register(cacheName, CaffeineCache.create(CacheConfig.builder(cacheName).build()));
+        }
     }
 
     @Bean

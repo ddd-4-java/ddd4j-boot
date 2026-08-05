@@ -1,6 +1,9 @@
 package io.ddd4j.boot.sample.order;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.ddd4j.core.cache.CacheConfig;
+import io.ddd4j.cache.CacheKit;
+import io.ddd4j.cache.local.CaffeineCache;
 import io.ddd4j.sample.order.application.IdempotencyPort;
 import io.ddd4j.sample.order.application.IntegrationEventPublisher;
 import io.ddd4j.sample.order.application.OrderApplicationService;
@@ -20,7 +23,8 @@ import io.ddd4j.sample.order.kafka.KafkaIntegrationEventPublisher;
 import io.ddd4j.sample.order.redis.RedisIdempotencyPort;
 import io.ddd4j.web.core.CacheIdempotencyGuard;
 import io.ddd4j.web.core.IdempotencyGuard;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -47,8 +51,9 @@ import java.util.Objects;
 @EnableScheduling
 @EnableConfigurationProperties(OrderSampleProperties.class)
 @ConditionalOnProperty(prefix = "ddd4j.sample.order", name = "infrastructure", havingValue = "postgres")
-@Slf4j
 public class OrderPostgresInfrastructureConfiguration {
+
+    private static final Logger log = LoggerFactory.getLogger(OrderPostgresInfrastructureConfiguration.class);
 
     @Bean
     public JdbcOrderTransactionPort orderTransactionPort(DataSource dataSource) {
@@ -156,7 +161,15 @@ public class OrderPostgresInfrastructureConfiguration {
     private static final class CacheKitOrderIdempotencyPort implements IdempotencyPort {
 
         private static final String CACHE_NAME = "ddd4j-sample-order-idempotency";
-        private final IdempotencyGuard guard = new CacheIdempotencyGuard(CACHE_NAME);
+        private final IdempotencyGuard guard;
+
+        CacheKitOrderIdempotencyPort() {
+            // CacheIdempotencyGuard 要求 CAS 缓存已显式注册到 CacheKit，此处按需注册本地 Caffeine 实现
+            if (Objects.isNull(CacheKit.getCache(CACHE_NAME))) {
+                CacheKit.register(CACHE_NAME, CaffeineCache.create(CacheConfig.builder(CACHE_NAME).build()));
+            }
+            this.guard = new CacheIdempotencyGuard(CACHE_NAME);
+        }
 
         @Override
         public boolean acquire(String key, Duration ttl) {

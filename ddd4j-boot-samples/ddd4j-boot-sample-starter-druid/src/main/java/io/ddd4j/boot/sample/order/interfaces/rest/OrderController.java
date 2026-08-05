@@ -29,6 +29,10 @@ public class OrderController {
 
     private final OrderApplicationService orderApplicationService;
 
+    public OrderController(OrderApplicationService orderApplicationService) {
+        this.orderApplicationService = orderApplicationService;
+    }
+
     /**
      * 创建订单
      */

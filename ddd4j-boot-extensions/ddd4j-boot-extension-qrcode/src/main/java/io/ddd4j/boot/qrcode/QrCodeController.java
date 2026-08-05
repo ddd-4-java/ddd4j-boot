@@ -1,20 +1,17 @@
 package io.ddd4j.boot.qrcode;
 
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import io.ddd4j.extension.qrcode.QrCodeService;
 import io.ddd4j.extension.qrcode.batch.QrCodeBatchItem;
 import io.ddd4j.extension.qrcode.batch.QrCodeBatchItemResult;
 import io.ddd4j.extension.qrcode.batch.QrCodeBatchResult;
 import io.ddd4j.extension.qrcode.command.DecodeQrCodeCommand;
 import io.ddd4j.extension.qrcode.command.GenerateQrCodeCommand;
+import io.ddd4j.extension.qrcode.model.QrCodeDecodeRequest;
+import io.ddd4j.extension.qrcode.model.QrCodeRequest;
 import io.ddd4j.extension.qrcode.result.QrCodeArtifact;
 import io.ddd4j.extension.qrcode.result.QrCodeScanResult;
-import com.google.zxing.model.QrCodeDecodeRequest;
-import com.google.zxing.model.QrCodeImageFormat;
-import com.google.zxing.model.QrCodeRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,6 +29,8 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/qrcodes")
 public class QrCodeController {
+
+    private static final String PNG_DATA_URI_PREFIX = "data:image/png;base64,";
 
     private final QrCodeService service;
     private final QrCodeProperties properties;
@@ -47,8 +47,9 @@ public class QrCodeController {
                 .correlationId(input.getCorrelationId())
                 .request(toRequest(input))
                 .build());
+        // 上游 QrCodeService 统一输出 PNG bytes
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(artifact.getOutput().getFormat().getMimeType()))
+                .contentType(MediaType.IMAGE_PNG)
                 .body(artifact.getOutput().getBytes());
     }
 
@@ -60,10 +61,7 @@ public class QrCodeController {
             throw new IllegalArgumentException("QR code image exceeds configured upload limit");
         }
         return service.decode(DecodeQrCodeCommand.builder()
-                .request(QrCodeDecodeRequest.from(file.getBytes())
-                        .multiple(true)
-                        .maxInputBytes(properties.getMaxUploadBytes())
-                        .build())
+                .request(QrCodeDecodeRequest.from(file.getBytes()))
                 .build());
     }
 
@@ -87,7 +85,7 @@ public class QrCodeController {
         List<BatchItemResponse> response = new ArrayList<>(result.getItems().size());
         for (QrCodeBatchItemResult item : result.getItems()) {
             response.add(new BatchItemResponse(item.getItemId(), item.isSuccess(),
-                    item.isSuccess() ? item.getArtifact().getOutput().dataUri() : null,
+                    item.isSuccess() ? dataUri(item.getArtifact()) : null,
                     item.getErrorCode(), item.getErrorMessage()));
         }
         return response;
@@ -95,17 +93,13 @@ public class QrCodeController {
 
     private QrCodeRequest toRequest(RenderRequest input) {
         Objects.requireNonNull(input, "render request must not be null");
-        String formatValue = StringUtils.hasText(input.getFormat()) ? input.getFormat() : "PNG";
-        String errorLevelValue = StringUtils.hasText(input.getErrorCorrectionLevel())
-                ? input.getErrorCorrectionLevel() : "M";
-        QrCodeImageFormat format = QrCodeImageFormat.valueOf(formatValue.toUpperCase());
-        return QrCodeRequest.builder(input.getContent())
-                .size(input.getWidth(), input.getHeight())
-                .margin(input.getMargin())
-                .errorCorrectionLevel(ErrorCorrectionLevel.valueOf(errorLevelValue.toUpperCase()))
-                .format(format)
-                .selfCheck(input.isSelfCheck())
-                .build();
+        int width = input.getWidth() > 0 ? input.getWidth() : 300;
+        int height = input.getHeight() > 0 ? input.getHeight() : 300;
+        return new QrCodeRequest(input.getContent(), width, height);
+    }
+
+    private String dataUri(QrCodeArtifact artifact) {
+        return PNG_DATA_URI_PREFIX + Base64.getEncoder().encodeToString(artifact.getOutput().getBytes());
     }
 
     public static class RenderRequest {
@@ -114,10 +108,6 @@ public class QrCodeController {
         private String content;
         private int width = 256;
         private int height = 256;
-        private int margin = 2;
-        private String format = "PNG";
-        private String errorCorrectionLevel = "M";
-        private boolean selfCheck;
 
         public String getCorrelationId() {
             return correlationId;
@@ -149,38 +139,6 @@ public class QrCodeController {
 
         public void setHeight(int height) {
             this.height = height;
-        }
-
-        public int getMargin() {
-            return margin;
-        }
-
-        public void setMargin(int margin) {
-            this.margin = margin;
-        }
-
-        public String getFormat() {
-            return format;
-        }
-
-        public void setFormat(String format) {
-            this.format = format;
-        }
-
-        public String getErrorCorrectionLevel() {
-            return errorCorrectionLevel;
-        }
-
-        public void setErrorCorrectionLevel(String errorCorrectionLevel) {
-            this.errorCorrectionLevel = errorCorrectionLevel;
-        }
-
-        public boolean isSelfCheck() {
-            return selfCheck;
-        }
-
-        public void setSelfCheck(boolean selfCheck) {
-            this.selfCheck = selfCheck;
         }
     }
 

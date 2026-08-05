@@ -21,5 +21,25 @@ public class OrderShippedEvent extends DomainEvent {
         this.trackingNumber = trackingNumber;
         this.logisticsCompany = logisticsCompany;
     }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public String getLogisticsCompany() {
+        return logisticsCompany;
+    }
 }
 

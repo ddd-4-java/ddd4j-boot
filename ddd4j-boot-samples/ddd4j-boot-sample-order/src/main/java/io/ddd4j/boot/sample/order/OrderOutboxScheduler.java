@@ -2,7 +2,8 @@ package io.ddd4j.boot.sample.order;
 
 import io.ddd4j.sample.order.application.OutboxDispatchResult;
 import io.ddd4j.sample.order.jdbc.TransactionalOutboxPublisher;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.Objects;
@@ -10,8 +11,9 @@ import java.util.Objects;
 /**
  * 周期性发送事务 Outbox 中仍待发布的订单集成事件。
  */
-@Slf4j
 public final class OrderOutboxScheduler {
+
+    private static final Logger log = LoggerFactory.getLogger(OrderOutboxScheduler.class);
 
     private final TransactionalOutboxPublisher publisher;
     private final OrderSampleProperties properties;

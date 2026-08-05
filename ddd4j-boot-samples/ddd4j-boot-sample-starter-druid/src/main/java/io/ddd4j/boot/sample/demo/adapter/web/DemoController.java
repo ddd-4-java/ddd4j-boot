@@ -25,6 +25,10 @@ public class DemoController {
 
     private final DemoApplicationService demoApplicationService;
 
+    public DemoController(DemoApplicationService demoApplicationService) {
+        this.demoApplicationService = demoApplicationService;
+    }
+
     /**
      * 创建Demo
      */

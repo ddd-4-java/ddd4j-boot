@@ -35,6 +35,18 @@ public class OrderRepositoryImpl implements OrderRepository {
     private final OrderConverter orderConverter;
     private final OrderDomainEventPublisher domainEventPublisher;
 
+    public OrderRepositoryImpl(OrderMapper orderMapper,
+            OrderItemMapper orderItemMapper,
+            OrderItemRepository orderItemRepository,
+            OrderConverter orderConverter,
+            OrderDomainEventPublisher domainEventPublisher) {
+        this.orderMapper = orderMapper;
+        this.orderItemMapper = orderItemMapper;
+        this.orderItemRepository = orderItemRepository;
+        this.orderConverter = orderConverter;
+        this.domainEventPublisher = domainEventPublisher;
+    }
+
     @Override
     public Order save(Order order) {
         OrderEntity entity = orderConverter.toEntity(order);

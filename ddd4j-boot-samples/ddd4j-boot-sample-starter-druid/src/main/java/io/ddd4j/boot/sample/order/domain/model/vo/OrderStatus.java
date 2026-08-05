@@ -23,6 +23,14 @@ public enum OrderStatus {
         this.description = description;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public boolean canTransitionTo(OrderStatus target) {
         return switch (this) {
             case PENDING -> target == PAID || target == CANCELLED;
