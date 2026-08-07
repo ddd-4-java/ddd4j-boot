@@ -180,6 +180,26 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <!-- All Boot modules share Lombok only during compilation. -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- All Boot modules share the SLF4J logging facade. -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!-- All Boot modules inherit the Spring Boot-specific test runtime. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <repositories>
         <repository>
             <id>public</id>
