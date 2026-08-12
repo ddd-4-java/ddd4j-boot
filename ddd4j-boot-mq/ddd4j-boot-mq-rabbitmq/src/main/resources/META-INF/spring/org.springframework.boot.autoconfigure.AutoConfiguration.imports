@@ -1,1 +1,1 @@
-io.ddd4j.boot.mq.rabbitmq.config.RabbitMQBootAutoConfiguration
+io.ddd4j.boot.mq.rabbitmq.RabbitMQBootAutoConfiguration

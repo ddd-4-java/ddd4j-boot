@@ -5,9 +5,9 @@ import io.ddd4j.boot.sample.order.domain.model.entity.OrderItem;
 import io.ddd4j.boot.sample.order.domain.model.vo.Address;
 import io.ddd4j.boot.sample.order.domain.model.vo.Money;
 import io.ddd4j.boot.sample.order.domain.model.vo.OrderStatus;
-import io.ddd4j.core.entity.BaseEntity;
-import lombok.Getter;
-import lombok.Setter;
+import io.ddd4j.core.ddd.model.Entity;
+
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,9 +18,14 @@ import java.util.List;
 /**
  * 订单聚合根
  */
-@Getter
-@Setter
-public class Order extends BaseEntity<Order> {
+
+
+public class Order implements Entity<Long> {
+
+    @Override
+    public Long id() {
+        return id;
+    }
 
     private Long id;
     private String orderNo;
@@ -32,6 +37,8 @@ public class Order extends BaseEntity<Order> {
     private LocalDateTime paidTime;
     private LocalDateTime shippedTime;
     private LocalDateTime deliveredTime;
+    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
 
     private List<OrderItem> items = new ArrayList<>();
 
@@ -206,6 +213,111 @@ public class Order extends BaseEntity<Order> {
             throw new IllegalStateException("只有待支付状态的订单才能修改收货地址");
         }
         this.shippingAddress = newAddress;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public Money getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Money totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public LocalDateTime getPaidTime() {
+        return paidTime;
+    }
+
+    public void setPaidTime(LocalDateTime paidTime) {
+        this.paidTime = paidTime;
+    }
+
+    public LocalDateTime getShippedTime() {
+        return shippedTime;
+    }
+
+    public void setShippedTime(LocalDateTime shippedTime) {
+        this.shippedTime = shippedTime;
+    }
+
+    public LocalDateTime getDeliveredTime() {
+        return deliveredTime;
+    }
+
+    public void setDeliveredTime(LocalDateTime deliveredTime) {
+        this.deliveredTime = deliveredTime;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 }
 

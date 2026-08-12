@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.demo.app.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+
 
 import java.time.LocalDateTime;
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * Demo数据传输对象
  */
 @Schema(description = "Demo信息")
-@Data
+
 public class DemoDTO {
 
     @Schema(description = "ID", example = "1")
@@ -32,5 +32,62 @@ public class DemoDTO {
 
     @Schema(description = "更新时间")
     private LocalDateTime updateTime;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
+
+    public Integer getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(Integer orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
 }
 

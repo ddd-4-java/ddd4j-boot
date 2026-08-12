@@ -12,8 +12,8 @@ import io.ddd4j.boot.sample.order.domain.model.aggregate.Order;
 import io.ddd4j.boot.sample.order.domain.repository.OrderRepository;
 import io.ddd4j.boot.sample.order.domain.service.OrderDomainService;
 import io.ddd4j.core.exception.BizRuntimeException;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,21 +23,26 @@ import java.util.stream.Collectors;
 /**
  * 订单应用服务
  */
-@Slf4j
+
 @Service
-@RequiredArgsConstructor
+
 public class OrderApplicationService {
 
     private final OrderRepository orderRepository;
     private final OrderDomainService orderDomainService;
     private final OrderMapper orderMapper = OrderMapper.INSTANCE;
 
+    public OrderApplicationService(OrderRepository orderRepository, OrderDomainService orderDomainService) {
+        this.orderRepository = orderRepository;
+        this.orderDomainService = orderDomainService;
+    }
+
     /**
      * 创建订单
      */
     @Transactional(rollbackFor = Exception.class)
     public OrderDTO createOrder(CreateOrderCommand command) {
-        log.info("创建订单，用户ID: {}", command.getUserId());
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("创建订单，用户ID: {}", command.getUserId());
 
         // 生成订单号
         String orderNo = orderDomainService.generateOrderNo();
@@ -49,7 +54,7 @@ public class OrderApplicationService {
         // 保存订单
         Order savedOrder = orderRepository.save(order);
 
-        log.info("订单创建成功，订单号: {}", savedOrder.getOrderNo());
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("订单创建成功，订单号: {}", savedOrder.getOrderNo());
         return orderMapper.toDTO(savedOrder);
     }
 
@@ -58,7 +63,7 @@ public class OrderApplicationService {
      */
     @Transactional(rollbackFor = Exception.class)
     public OrderDTO payOrder(PayOrderCommand command) {
-        log.info("支付订单，订单号: {}", command.getOrderNo());
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("支付订单，订单号: {}", command.getOrderNo());
 
         Order order = findOrder(command.getOrderId(), command.getOrderNo());
 
@@ -73,7 +78,7 @@ public class OrderApplicationService {
         // 保存订单（会自动发布领域事件）
         Order savedOrder = orderRepository.save(order);
 
-        log.info("订单支付成功，订单号: {}", savedOrder.getOrderNo());
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("订单支付成功，订单号: {}", savedOrder.getOrderNo());
         return orderMapper.toDTO(savedOrder);
     }
 
@@ -82,7 +87,7 @@ public class OrderApplicationService {
      */
     @Transactional(rollbackFor = Exception.class)
     public OrderDTO shipOrder(ShipOrderCommand command) {
-        log.info("订单发货，订单号: {}", command.getOrderNo());
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("订单发货，订单号: {}", command.getOrderNo());
 
         Order order = findOrder(command.getOrderId(), command.getOrderNo());
 
@@ -92,7 +97,7 @@ public class OrderApplicationService {
         // 保存订单（会自动发布领域事件）
         Order savedOrder = orderRepository.save(order);
 
-        log.info("订单发货成功，订单号: {}", savedOrder.getOrderNo());
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("订单发货成功，订单号: {}", savedOrder.getOrderNo());
         return orderMapper.toDTO(savedOrder);
     }
 
@@ -101,7 +106,7 @@ public class OrderApplicationService {
      */
     @Transactional(rollbackFor = Exception.class)
     public OrderDTO confirmDelivery(Long orderId, String orderNo) {
-        log.info("确认收货，订单号: {}", orderNo);
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("确认收货，订单号: {}", orderNo);
 
         Order order = findOrder(orderId, orderNo);
 
@@ -111,7 +116,7 @@ public class OrderApplicationService {
         // 保存订单
         Order savedOrder = orderRepository.save(order);
 
-        log.info("确认收货成功，订单号: {}", savedOrder.getOrderNo());
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("确认收货成功，订单号: {}", savedOrder.getOrderNo());
         return orderMapper.toDTO(savedOrder);
     }
 
@@ -120,7 +125,7 @@ public class OrderApplicationService {
      */
     @Transactional(rollbackFor = Exception.class)
     public OrderDTO completeOrder(Long orderId, String orderNo) {
-        log.info("完成订单，订单号: {}", orderNo);
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("完成订单，订单号: {}", orderNo);
 
         Order order = findOrder(orderId, orderNo);
 
@@ -130,7 +135,7 @@ public class OrderApplicationService {
         // 保存订单
         Order savedOrder = orderRepository.save(order);
 
-        log.info("订单完成，订单号: {}", savedOrder.getOrderNo());
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("订单完成，订单号: {}", savedOrder.getOrderNo());
         return orderMapper.toDTO(savedOrder);
     }
 
@@ -139,7 +144,7 @@ public class OrderApplicationService {
      */
     @Transactional(rollbackFor = Exception.class)
     public OrderDTO cancelOrder(CancelOrderCommand command) {
-        log.info("取消订单，订单号: {}", command.getOrderNo());
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("取消订单，订单号: {}", command.getOrderNo());
 
         Order order = findOrder(command.getOrderId(), command.getOrderNo());
 
@@ -154,7 +159,7 @@ public class OrderApplicationService {
         // 保存订单（会自动发布领域事件）
         Order savedOrder = orderRepository.save(order);
 
-        log.info("订单取消成功，订单号: {}", savedOrder.getOrderNo());
+        org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class).info("订单取消成功，订单号: {}", savedOrder.getOrderNo());
         return orderMapper.toDTO(savedOrder);
     }
 

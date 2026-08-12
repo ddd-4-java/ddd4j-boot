@@ -1,11 +1,11 @@
 package io.ddd4j.boot.sample.order.domain.event;
 
-import lombok.Getter;
+
 
 /**
  * 订单支付事件
  */
-@Getter
+
 public class OrderPaidEvent extends DomainEvent {
 
     private final Long orderId;
@@ -18,6 +18,22 @@ public class OrderPaidEvent extends DomainEvent {
         this.orderNo = orderNo;
         this.userId = userId;
         this.paymentMethod = paymentMethod;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 }
 

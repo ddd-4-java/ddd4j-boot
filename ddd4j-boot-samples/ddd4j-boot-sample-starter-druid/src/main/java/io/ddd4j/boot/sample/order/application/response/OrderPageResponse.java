@@ -2,9 +2,9 @@ package io.ddd4j.boot.sample.order.application.response;
 
 import io.ddd4j.boot.sample.order.application.dto.OrderDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+
+
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,12 +19,24 @@ import java.util.List;
  * @since 1.0.0
  */
 @Schema(description = "订单分页响应")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class OrderPageResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public OrderPageResponse() {
+    }
+
+    public OrderPageResponse(List<OrderDTO> records, Long total, Integer pageNum, Integer pageSize,
+            Integer totalPages, Boolean hasPrevious, Boolean hasNext) {
+        this.records = records;
+        this.total = total;
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+        this.totalPages = totalPages;
+        this.hasPrevious = hasPrevious;
+        this.hasNext = hasNext;
+    }
 
     /**
      * 订单列表数据

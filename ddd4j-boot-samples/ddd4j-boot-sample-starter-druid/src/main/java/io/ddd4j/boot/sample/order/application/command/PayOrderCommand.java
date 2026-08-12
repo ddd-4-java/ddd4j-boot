@@ -2,7 +2,7 @@ package io.ddd4j.boot.sample.order.application.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+
 
 import java.io.Serializable;
 
@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @since 1.0.0
  */
 @Schema(description = "支付订单请求")
-@Data
+
 public class PayOrderCommand implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,4 +33,37 @@ public class PayOrderCommand implements Serializable {
 
     @Schema(description = "支付流水号", example = "PAY202312011234567890")
     private String paymentNo;
+
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentNo() {
+        return paymentNo;
+    }
+
+    public void setPaymentNo(String paymentNo) {
+        this.paymentNo = paymentNo;
+    }
 }

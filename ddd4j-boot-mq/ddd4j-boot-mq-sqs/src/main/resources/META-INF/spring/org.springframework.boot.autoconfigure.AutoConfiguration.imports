@@ -1,1 +1,1 @@
-io.ddd4j.boot.mq.sqs.config.SqsMQBootAutoConfiguration
+io.ddd4j.boot.mq.sqs.SqsMQBootAutoConfiguration

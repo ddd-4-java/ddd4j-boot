@@ -1,18 +1,23 @@
 package io.ddd4j.boot.sample.order.domain.model.entity;
 
 import io.ddd4j.boot.sample.order.domain.model.vo.Money;
-import io.ddd4j.core.entity.BaseEntity;
-import lombok.Getter;
-import lombok.Setter;
+import io.ddd4j.core.ddd.model.Entity;
+
+
 
 import java.math.BigDecimal;
 
 /**
  * 订单项实体
  */
-@Getter
-@Setter
-public class OrderItem extends BaseEntity<OrderItem> {
+
+
+public class OrderItem implements Entity<Long> {
+
+    @Override
+    public Long id() {
+        return id;
+    }
 
     private Long id;
     private Long orderId;
@@ -49,6 +54,63 @@ public class OrderItem extends BaseEntity<OrderItem> {
 
     public Money calculateTotal() {
         return unitPrice.multiply(BigDecimal.valueOf(quantity));
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Money getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(Money unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public Money getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Money totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
 

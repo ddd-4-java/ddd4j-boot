@@ -81,7 +81,7 @@ public class DemoServiceImpl extends ServiceImpl<DemoMapper, DemoEntity> impleme
         txLog.setTxLogId(txId);
         txLog.setContent("事物测试");
         txLog.setDate(new Date());
-        txLogMapper.save(txLog);
+        txLogMapper.insert(txLog);
     }
 
 }

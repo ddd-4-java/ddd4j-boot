@@ -2,7 +2,7 @@ package io.ddd4j.boot.sample.order.application.query;
 
 import io.ddd4j.boot.sample.order.domain.model.vo.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * @since 1.0.0
  */
 @Schema(description = "订单查询参数")
-@Data
+
 public class OrderQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -118,6 +118,94 @@ public class OrderQuery implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public java.math.BigDecimal getMinAmount() {
+        return minAmount;
+    }
+
+    public void setMinAmount(java.math.BigDecimal minAmount) {
+        this.minAmount = minAmount;
+    }
+
+    public java.math.BigDecimal getMaxAmount() {
+        return maxAmount;
+    }
+
+    public void setMaxAmount(java.math.BigDecimal maxAmount) {
+        this.maxAmount = maxAmount;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public Integer getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public String getSortField() {
+        return sortField;
+    }
+
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+
+    public String getSortDirection() {
+        return sortDirection;
+    }
+
+    public void setSortDirection(String sortDirection) {
+        this.sortDirection = sortDirection;
     }
 }
 

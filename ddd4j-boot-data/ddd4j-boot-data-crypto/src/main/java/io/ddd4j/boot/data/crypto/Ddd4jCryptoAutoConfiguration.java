@@ -7,10 +7,13 @@ import io.ddd4j.data.crypto.strategy.CryptoStrategy;
 import io.ddd4j.data.crypto.strategy.DefaultCryptoStrategy;
 import io.ddd4j.data.crypto.strategy.NoOpCryptoStrategy;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import java.util.stream.Collectors;
 
@@ -23,12 +26,23 @@ import java.util.stream.Collectors;
  * <p>注意：{@code FlksecCryptoStrategy} 需要 {@code java.net.http.HttpClient}，
  * 业务方可按需自行创建 Bean。
  *
+ * <p>{@link CryptoProperties} 是零 Spring 依赖纯 POJO（不标注 {@code @ConfigurationProperties}），
+ * 因此不能用 {@code @EnableConfigurationProperties}（启动期抛 "No ConfigurationProperties annotation found"），
+ * 这里用 {@link Binder} 手动绑定 {@code ddd4j.crypto.*}。
+ *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties(CryptoProperties.class)
 @ConditionalOnProperty(prefix = CryptoProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 public class Ddd4jCryptoAutoConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean(CryptoProperties.class)
+    public CryptoProperties cryptoProperties(Environment environment) {
+        CryptoProperties properties = new CryptoProperties();
+        Binder.get(environment).bind(CryptoProperties.PREFIX, Bindable.ofInstance(properties));
+        return properties;
+    }
 
     @Bean
     public DefaultCryptoProvider cryptoProvider(ObjectProvider<CryptoStrategy> cryptoStrategyProvider, CryptoProperties cryptoProperties) {

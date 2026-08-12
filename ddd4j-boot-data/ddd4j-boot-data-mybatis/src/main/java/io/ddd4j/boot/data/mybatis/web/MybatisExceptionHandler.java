@@ -9,7 +9,7 @@ package io.ddd4j.boot.data.mybatis.web;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import io.ddd4j.core.ApiCode;
 import io.ddd4j.core.ApiRestResponse;
-import io.ddd4j.web.exception.BaseExceptionHandler;
+import io.ddd4j.web.webmvc.exception.BaseExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.binding.BindingException;
 import org.apache.ibatis.cache.CacheException;

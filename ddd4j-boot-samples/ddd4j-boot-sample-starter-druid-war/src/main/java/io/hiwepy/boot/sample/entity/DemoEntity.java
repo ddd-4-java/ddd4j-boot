@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.ddd4j.core.entity.BaseEntity;
+import io.ddd4j.core.ddd.model.Entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @TableName("t_demo")
-public class DemoEntity extends BaseEntity<DemoEntity> {
+public class DemoEntity implements Entity<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,5 +53,9 @@ public class DemoEntity extends BaseEntity<DemoEntity> {
     @TableField("`status`")
     private Integer status;
 
+    @Override
+    public Long id() {
+        return id;
+    }
 
 }

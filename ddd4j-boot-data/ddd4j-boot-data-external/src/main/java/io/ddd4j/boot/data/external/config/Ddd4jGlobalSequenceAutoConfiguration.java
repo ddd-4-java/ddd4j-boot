@@ -5,9 +5,12 @@ import io.ddd4j.data.external.SequenceProperties;
 import io.ddd4j.data.external.sequence.GlobalSequence;
 import io.ddd4j.kit.lang.IdKit;
 import jakarta.annotation.PreDestroy;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import java.util.Objects;
 
@@ -16,13 +19,24 @@ import java.util.Objects;
  *
  * <p>从 {@code ddd4j-data-external} 迁入 boot 层。
  *
+ * <p>{@link SequenceProperties} 是上游零 Spring 依赖纯 POJO（不标注 {@code @ConfigurationProperties}），
+ * 因此不能用 {@code @EnableConfigurationProperties}（启动期抛 "No ConfigurationProperties annotation found"），
+ * 这里用 {@link Binder} 手动绑定。
+ *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties(SequenceProperties.class)
 public class Ddd4jGlobalSequenceAutoConfiguration {
 
     private GlobalSequence globalSequence;
+
+    @Bean
+    @ConditionalOnMissingBean(SequenceProperties.class)
+    public SequenceProperties sequenceProperties(Environment environment) {
+        SequenceProperties properties = new SequenceProperties();
+        Binder.get(environment).bind(SequenceProperties.PREFIX, Bindable.ofInstance(properties));
+        return properties;
+    }
 
     @Bean
     public GlobalSequence globalSequence(SequenceProperties properties) {

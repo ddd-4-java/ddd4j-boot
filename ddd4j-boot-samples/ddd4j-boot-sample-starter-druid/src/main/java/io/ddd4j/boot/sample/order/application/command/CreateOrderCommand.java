@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Data;
+
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -29,7 +29,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Schema(description = "创建订单请求")
-@Data
+
 public class CreateOrderCommand implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,7 +56,7 @@ public class CreateOrderCommand implements Serializable {
      * 创建订单时包含的商品项信息
      */
     @Schema(description = "订单项信息")
-    @Data
+    
     public static class OrderItemCommand implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -78,14 +78,55 @@ public class CreateOrderCommand implements Serializable {
 
         @Schema(description = "货币类型", example = "CNY")
         private String currency;
+
+
+    public String getProductId() {
+        return productId;
     }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+        }
 
     /**
      * 地址命令
      * 创建订单时的收货地址信息
      */
     @Schema(description = "地址信息")
-    @Data
+    
     public static class AddressCommand implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -105,5 +146,79 @@ public class CreateOrderCommand implements Serializable {
 
         @Schema(description = "邮编", example = "518000")
         private String zipCode;
+
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+        }
+
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public AddressCommand getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(AddressCommand shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public List<OrderItemCommand> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItemCommand> items) {
+        this.items = items;
     }
 }

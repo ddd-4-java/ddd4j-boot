@@ -33,10 +33,8 @@
         <module>ddd4j-boot-sample-app</module>
         <module>ddd4j-boot-sample-infrastructure</module>
         <module>ddd4j-boot-sample-common</module>
-        <module>ddd4j-boot-sample-cqrs-person-shared</module>
-        <module>ddd4j-boot-sample-cqrs-person-command</module>
-        <module>ddd4j-boot-sample-cqrs-person-query</module>
-        <module>ddd4j-boot-sample-rich-model</module>
+        <!-- 共享 Order 内核的 Boot 接线示例，覆盖 DDD、CQRS、Bearer 与幂等用例。 -->
+        <module>ddd4j-boot-sample-order</module>
         <module>ddd4j-boot-sample-starter-druid</module>
         <module>ddd4j-boot-sample-starter-druid-amqp</module>
         <module>ddd4j-boot-sample-starter-druid-kafka</module>

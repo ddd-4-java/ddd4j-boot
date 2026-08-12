@@ -6,7 +6,6 @@ import io.ddd4j.extension.qrcode.resource.QrCodeResourceResolver;
 import io.ddd4j.extension.qrcode.template.InMemoryQrCodeTemplateRegistry;
 import io.ddd4j.extension.qrcode.template.QrCodeTemplateRegistry;
 import io.ddd4j.extension.qrcode.template.QrCodeTemplateBinder;
-import com.google.zxing.QrCodes;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -26,8 +25,8 @@ public class Ddd4jQrCodeBootAutoConfiguration {
     @Bean(destroyMethod = "close")
     @ConditionalOnMissingBean(QrCodeService.class)
     public DefaultQrCodeService qrCodeService(QrCodeProperties properties) {
-        return new DefaultQrCodeService(QrCodes.encoder(), QrCodes.decoder(),
-                properties.getConcurrency(), properties.getMaxBatchSize());
+        // 上游 DefaultQrCodeService 仅提供 (int concurrency, int maxBatchSize) 构造
+        return new DefaultQrCodeService(properties.getConcurrency(), properties.getMaxBatchSize());
     }
 
     @Bean

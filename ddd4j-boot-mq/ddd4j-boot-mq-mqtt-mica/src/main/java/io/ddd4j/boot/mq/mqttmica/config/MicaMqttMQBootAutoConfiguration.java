@@ -1,23 +1,38 @@
 package io.ddd4j.boot.mq.mqttmica.config;
 
-import io.ddd4j.boot.mq.mqttmica.autoconfigure.Ddd4jMicaMqttMQAutoConfiguration;
-import io.ddd4j.boot.mq.mqttmica.spi.MicaMqttBrokerAdapter;
+import io.ddd4j.mq.mqttmica.MicaMqttMQClient;
+import io.ddd4j.mq.mqttmica.MicaMqttProperties;
+import io.ddd4j.mq.spring.config.Ddd4jMQRegistrarConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 /**
- * ddd4j-boot mqtt mica 自动配置。
- *
- * <p>通过 {@link Import} 导入 ddd4j-boot mqtt mica 的 {@link Ddd4jMicaMqttMQAutoConfiguration}，
- * 提供 mqtt mica 消息队列的 Spring Boot 自动配置支持。
+ * ddd4j-boot mqtt mica 自动配置（薄适配）。
  *
  * @author ddd4j
  * @since 4.0.x
  */
 @AutoConfiguration
-@ConditionalOnClass(MicaMqttBrokerAdapter.class)
-@Import(Ddd4jMicaMqttMQAutoConfiguration.class)
+@ConditionalOnClass(MicaMqttMQClient.class)
+@ConditionalOnProperty(prefix = "ddd4j.mq", name = "broker", havingValue = "mqtt-mica")
+@Import(Ddd4jMQRegistrarConfiguration.class)
 public class MicaMqttMQBootAutoConfiguration {
 
+    @Bean
+    @ConditionalOnMissingBean
+    @ConfigurationProperties(prefix = "ddd4j.mq.mqtt-mica")
+    public MicaMqttProperties micaMqttProperties() {
+        return new MicaMqttProperties();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public MicaMqttMQClient micaMqttMQClient(MicaMqttProperties properties) {
+        return new MicaMqttMQClient(properties);
+    }
 }

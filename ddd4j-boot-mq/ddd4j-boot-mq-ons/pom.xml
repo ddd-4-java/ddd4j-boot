@@ -15,22 +15,23 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
+            <groupId>io.ddd4j.boot</groupId>
+            <artifactId>ddd4j-boot-mq-core</artifactId>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>io.ddd4j</groupId>
-            <artifactId>ddd4j-mq-core</artifactId>
+            <artifactId>ddd4j-mq-ons</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.aliyun.openservices</groupId>
-            <artifactId>ons-client</artifactId>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-mq-spring</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
 

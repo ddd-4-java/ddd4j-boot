@@ -2,8 +2,6 @@ package io.ddd4j.boot.mq.mqttmica.bridge.consumer;
 
 import io.ddd4j.boot.mq.mqttmica.bridge.registry.MicaMqttClientSubscribeDefinition;
 import io.ddd4j.boot.mq.mqttmica.bridge.registry.MicaMqttClientSubscribeDefinitionRegistry;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.dromara.mica.mqtt.core.annotation.MqttClientSubscribe;
 import org.dromara.mica.mqtt.core.client.IMqttClientMessageListener;
 import org.springframework.aop.support.AopUtils;
@@ -24,12 +22,17 @@ import java.util.Objects;
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
-@Slf4j
-@RequiredArgsConstructor
 public class MicaMqttClientSubscribeScanner implements BeanPostProcessor, Ordered {
 
     private final MicaMqttClientSubscribeDefinitionRegistry registry;
     private final MicaMqttClientSubscribeRegistrar registrar;
+
+    public MicaMqttClientSubscribeScanner(
+            MicaMqttClientSubscribeDefinitionRegistry registry,
+            MicaMqttClientSubscribeRegistrar registrar) {
+        this.registry = registry;
+        this.registrar = registrar;
+    }
 
     @Override
     public int getOrder() {

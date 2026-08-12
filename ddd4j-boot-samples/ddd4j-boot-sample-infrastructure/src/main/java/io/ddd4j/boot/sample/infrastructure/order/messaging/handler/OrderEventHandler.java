@@ -4,7 +4,6 @@ import io.ddd4j.boot.sample.domain.order.event.OrderCancelledEvent;
 import io.ddd4j.boot.sample.domain.order.event.OrderCreatedEvent;
 import io.ddd4j.boot.sample.domain.order.event.OrderPaidEvent;
 import io.ddd4j.boot.sample.domain.order.event.OrderShippedEvent;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -13,9 +12,9 @@ import org.springframework.stereotype.Component;
  * 订单领域事件处理器
  * 处理订单相关的领域事件，可以触发后续的业务流程
  */
-@Slf4j
 @Component
 public class OrderEventHandler {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class);
 
     /**
      * 处理订单创建事件
@@ -69,4 +68,3 @@ public class OrderEventHandler {
         // 3. 恢复库存
     }
 }
-

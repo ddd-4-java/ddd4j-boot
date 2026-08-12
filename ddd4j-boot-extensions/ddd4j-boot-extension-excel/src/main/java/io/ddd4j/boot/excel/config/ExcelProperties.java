@@ -1,6 +1,5 @@
 package io.ddd4j.boot.excel.config;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -25,7 +24,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
-@Data
 @ConfigurationProperties(prefix = "ddd4j.excel")
 public class ExcelProperties {
 
@@ -59,7 +57,17 @@ public class ExcelProperties {
      */
     private Style style = new Style();
 
-    @Data
+    public boolean isEnabled() { return enabled; }
+    public void setEnabled(boolean enabled) { this.enabled = enabled; }
+    public int getBatchSize() { return batchSize; }
+    public void setBatchSize(int batchSize) { this.batchSize = batchSize; }
+    public int getMaxUploadMB() { return maxUploadMB; }
+    public void setMaxUploadMB(int maxUploadMB) { this.maxUploadMB = maxUploadMB; }
+    public String getCharset() { return charset; }
+    public void setCharset(String charset) { this.charset = charset; }
+    public Style getStyle() { return style; }
+    public void setStyle(Style style) { this.style = style; }
+
     public static class Style {
 
         /**
@@ -77,5 +85,12 @@ public class ExcelProperties {
          * <p>例如 600 表示 30 磅；默认 600。
          */
         private short headerRowHeight = 600;
+
+        public boolean isDefaultBorder() { return defaultBorder; }
+        public void setDefaultBorder(boolean defaultBorder) { this.defaultBorder = defaultBorder; }
+        public boolean isAutoSizeColumn() { return autoSizeColumn; }
+        public void setAutoSizeColumn(boolean autoSizeColumn) { this.autoSizeColumn = autoSizeColumn; }
+        public short getHeaderRowHeight() { return headerRowHeight; }
+        public void setHeaderRowHeight(short headerRowHeight) { this.headerRowHeight = headerRowHeight; }
     }
 }

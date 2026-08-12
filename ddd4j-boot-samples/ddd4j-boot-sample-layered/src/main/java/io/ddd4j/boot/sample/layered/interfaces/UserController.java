@@ -3,7 +3,7 @@ package io.ddd4j.boot.sample.layered.interfaces;
 import io.ddd4j.boot.sample.layered.domain.model.User;
 import io.ddd4j.boot.sample.layered.domain.model.UserQuery;
 import io.ddd4j.core.ApiRestResponse;
-import io.ddd4j.core.contract.Page;
+import io.ddd4j.core.api.Page;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -34,8 +34,8 @@ public class UserController {
      */
     @PostMapping("/{id}/rename")
     public ApiRestResponse<User> rename(@PathVariable String id, @RequestBody RenameRequest req) {
-        // 充血查询：UserQuery.builder().id(id).one("用户不存在")
-        User user = (User) UserQuery.builder().id(id).one("用户不存在");
+        // 充血查询：new UserQuery().setId(id).one("用户不存在")
+        User user = (User) new UserQuery().setId(id).one("用户不存在");
         user.rename(req.getNickname());
         user.update();
         return ApiRestResponse.success(user);
@@ -46,7 +46,7 @@ public class UserController {
      */
     @PostMapping("/{id}/disable")
     public ApiRestResponse<User> disable(@PathVariable String id) {
-        User user = (User) UserQuery.builder().id(id).one("用户不存在");
+        User user = (User) new UserQuery().setId(id).one("用户不存在");
         user.disable();
         user.update();
         return ApiRestResponse.success(user);
@@ -57,7 +57,7 @@ public class UserController {
      */
     @GetMapping("/phone/{phone}")
     public ApiRestResponse<User> getByPhone(@PathVariable String phone) {
-        User user = (User) UserQuery.builder().phone(phone).one("用户不存在");
+        User user = (User) new UserQuery().setPhone(phone).one("用户不存在");
         return ApiRestResponse.success(user);
     }
 
@@ -76,7 +76,7 @@ public class UserController {
     @GetMapping("/phone/{phone}/check")
     public ApiRestResponse<String> checkPhone(@PathVariable String phone) {
         // notExist: 查到就抛异常（该手机号已注册），查不到才通过
-        UserQuery.builder().phone(phone).notExist("该手机号已注册");
+        new UserQuery().setPhone(phone).notExist("该手机号已注册");
         return ApiRestResponse.success("手机号可用");
     }
 

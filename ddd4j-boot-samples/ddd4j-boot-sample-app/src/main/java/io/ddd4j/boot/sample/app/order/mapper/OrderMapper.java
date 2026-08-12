@@ -66,7 +66,7 @@ public interface OrderMapper {
         dto.setShippedTime(order.getShippedTime());
         dto.setDeliveredTime(order.getDeliveredTime());
         dto.setCreatedAt(order.getCreateTime());
-        dto.setUpdatedAt(order.getUpdateTime());
+        dto.setUpdatedAt(order.getCreateTime());
         if (order.getItems() != null) {
             dto.setItems(order.getItems().stream()
                     .map(this::toItemDTO)

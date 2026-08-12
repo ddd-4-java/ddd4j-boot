@@ -2,8 +2,9 @@ package io.ddd4j.extension.dubbo.exception;
 
 import io.ddd4j.core.ApiCode;
 import io.ddd4j.core.ApiRestResponse;
-import io.ddd4j.web.exception.BaseExceptionHandler;
-import lombok.extern.slf4j.Slf4j;
+import io.ddd4j.web.webmvc.exception.BaseExceptionHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.dubbo.rpc.RpcException;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,8 +30,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 @Order(0)
-@Slf4j
 public class DubboExceptionHandler extends BaseExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(DubboExceptionHandler.class);
 
     /**
      * 处理 Dubbo RPC 异常。

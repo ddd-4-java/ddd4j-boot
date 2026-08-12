@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.order.application.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @since 1.0.0
  */
 @Schema(description = "取消订单请求")
-@Data
+
 public class CancelOrderCommand implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,4 +28,29 @@ public class CancelOrderCommand implements Serializable {
 
     @Schema(description = "取消原因", example = "不想要了")
     private String reason;
+
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 }

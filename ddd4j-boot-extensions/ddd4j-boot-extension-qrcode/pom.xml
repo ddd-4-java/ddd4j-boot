@@ -19,6 +19,12 @@
             <artifactId>ddd4j-extension-qrcode</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
+        <!-- Boot qrcode 自动配置使用 hiwepy zxing-extension 的 fork API
+             （com.google.zxing.QrCodes / model / exception 包），需显式声明。 -->
+        <dependency>
+            <groupId>io.github.hiwepy</groupId>
+            <artifactId>zxing-extension</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>

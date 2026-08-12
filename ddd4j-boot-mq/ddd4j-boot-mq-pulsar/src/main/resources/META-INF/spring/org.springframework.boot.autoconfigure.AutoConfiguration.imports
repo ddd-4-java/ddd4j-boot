@@ -1,1 +1,1 @@
-io.ddd4j.boot.mq.pulsar.config.PulsarMQBootAutoConfiguration
+io.ddd4j.boot.mq.pulsar.PulsarMQBootAutoConfiguration

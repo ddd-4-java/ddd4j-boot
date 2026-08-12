@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +20,14 @@ import java.util.List;
 @Tag(name = "Demo管理", description = "Demo相关的API接口")
 @RestController
 @RequestMapping("/api/demos")
-@RequiredArgsConstructor
+
 public class DemoController {
 
     private final DemoApplicationService demoApplicationService;
+
+    public DemoController(DemoApplicationService demoApplicationService) {
+        this.demoApplicationService = demoApplicationService;
+    }
 
     /**
      * 创建Demo

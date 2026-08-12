@@ -1,11 +1,11 @@
 package io.ddd4j.boot.sample.order.domain.model.vo;
 
-import lombok.Getter;
+
 
 /**
  * 订单状态值对象
  */
-@Getter
+
 public enum OrderStatus {
 
     PENDING("PENDING", "待支付"),
@@ -21,6 +21,14 @@ public enum OrderStatus {
     OrderStatus(String code, String description) {
         this.code = code;
         this.description = description;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public boolean canTransitionTo(OrderStatus target) {

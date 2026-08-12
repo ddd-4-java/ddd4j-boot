@@ -6,8 +6,8 @@ import io.ddd4j.boot.sample.demo.app.dto.DemoDTO;
 import io.ddd4j.boot.sample.demo.domain.model.entity.DemoEntity;
 import io.ddd4j.boot.sample.demo.domain.repository.DemoRepository;
 import io.ddd4j.core.exception.BizRuntimeException;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,19 +17,23 @@ import java.util.stream.Collectors;
 /**
  * Demo应用服务
  */
-@Slf4j
+
 @Service
-@RequiredArgsConstructor
+
 public class DemoApplicationService {
 
     private final DemoRepository demoRepository;
+
+    public DemoApplicationService(DemoRepository demoRepository) {
+        this.demoRepository = demoRepository;
+    }
 
     /**
      * 创建Demo
      */
     @Transactional(rollbackFor = Exception.class)
     public DemoDTO createDemo(CreateDemoCommand command) {
-        log.info("创建Demo，名称: {}", command.getName());
+        org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("创建Demo，名称: {}", command.getName());
 
         DemoEntity entity = new DemoEntity();
         entity.setName(command.getName());
@@ -46,7 +50,7 @@ public class DemoApplicationService {
      */
     @Transactional(rollbackFor = Exception.class)
     public DemoDTO updateDemo(UpdateDemoCommand command) {
-        log.info("更新Demo，ID: {}", command.getId());
+        org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("更新Demo，ID: {}", command.getId());
 
         DemoEntity entity = demoRepository.findById(command.getId())
                 .orElseThrow(() -> new BizRuntimeException("Demo不存在"));
@@ -91,7 +95,7 @@ public class DemoApplicationService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void deleteDemo(Long id) {
-        log.info("删除Demo，ID: {}", id);
+        org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("删除Demo，ID: {}", id);
         demoRepository.delete(id);
     }
 
@@ -100,7 +104,7 @@ public class DemoApplicationService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void deleteDemos(List<Long> ids) {
-        log.info("批量删除Demo，IDs: {}", ids);
+        org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("批量删除Demo，IDs: {}", ids);
         ids.forEach(this::deleteDemo);
     }
 

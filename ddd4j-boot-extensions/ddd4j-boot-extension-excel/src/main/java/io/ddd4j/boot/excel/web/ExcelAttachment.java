@@ -1,7 +1,5 @@
 package io.ddd4j.boot.excel.web;
 
-import lombok.Getter;
-
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -20,7 +18,6 @@ import java.nio.charset.StandardCharsets;
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
-@Getter
 public final class ExcelAttachment {
 
     /**
@@ -47,6 +44,18 @@ public final class ExcelAttachment {
         this.filename = filename;
         this.contentType = contentType;
         this.charset = charset;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public Charset getCharset() {
+        return charset;
     }
 
     /**

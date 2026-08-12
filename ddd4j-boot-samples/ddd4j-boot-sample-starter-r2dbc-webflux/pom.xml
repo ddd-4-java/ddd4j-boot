@@ -28,6 +28,12 @@
             <artifactId>ddd4j-runtime-spring</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
+        <!-- 遗留 DemoController extends BaseController（2.0.x 已移至 ddd4j-web-webmvc） -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-web-webmvc</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.ddd4j</groupId>
             <artifactId>ddd4j-data-mybatisplus</artifactId>

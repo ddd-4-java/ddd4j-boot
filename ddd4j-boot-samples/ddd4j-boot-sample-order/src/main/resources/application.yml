@@ -1,0 +1,44 @@
+spring:
+  profiles:
+    default: in-memory
+
+---
+spring:
+  config:
+    activate:
+      on-profile: in-memory
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
+
+ddd4j:
+  sample:
+    order:
+      infrastructure: in-memory
+
+---
+spring:
+  config:
+    activate:
+      on-profile: postgres
+  datasource:
+    url: ${DDD4J_ORDER_JDBC_URL:jdbc:postgresql://localhost:5432/ddd4j_order}
+    username: ${DDD4J_ORDER_JDBC_USERNAME:ddd4j}
+    password: ${DDD4J_ORDER_JDBC_PASSWORD:ddd4j}
+  flyway:
+    locations: classpath:db/migration
+
+ddd4j:
+  sample:
+    order:
+      infrastructure: postgres
+      kafka-bootstrap-servers: ${DDD4J_ORDER_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+      kafka-topic: ${DDD4J_ORDER_KAFKA_TOPIC:ddd4j.sample.order.events}
+      redis-host: ${DDD4J_ORDER_REDIS_HOST:localhost}
+      redis-port: ${DDD4J_ORDER_REDIS_PORT:6379}
+      redis-enabled: ${DDD4J_ORDER_REDIS_ENABLED:true}
+      kafka-enabled: ${DDD4J_ORDER_KAFKA_ENABLED:true}
+      outbox-scheduler-enabled: ${DDD4J_ORDER_OUTBOX_SCHEDULER_ENABLED:true}
+      outbox-batch-size: ${DDD4J_ORDER_OUTBOX_BATCH_SIZE:100}
+      outbox-delay-millis: ${DDD4J_ORDER_OUTBOX_DELAY_MILLIS:5000}

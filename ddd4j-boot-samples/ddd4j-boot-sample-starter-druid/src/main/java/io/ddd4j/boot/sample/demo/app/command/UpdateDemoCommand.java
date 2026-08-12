@@ -2,13 +2,11 @@ package io.ddd4j.boot.sample.demo.app.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 
 /**
  * 更新Demo命令
  */
 @Schema(description = "更新Demo请求")
-@Data
 public class UpdateDemoCommand {
 
     @Schema(description = "ID", example = "1", required = true)
@@ -26,5 +24,28 @@ public class UpdateDemoCommand {
 
     @Schema(description = "状态（0:禁用|1:可用）", example = "1")
     private Integer status;
-}
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public Integer getOrderBy() {
+        return orderBy;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+}

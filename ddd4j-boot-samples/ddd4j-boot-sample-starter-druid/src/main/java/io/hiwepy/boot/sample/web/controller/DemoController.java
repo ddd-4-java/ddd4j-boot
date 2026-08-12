@@ -6,7 +6,7 @@ package io.hiwepy.boot.sample.web.controller;
 import io.ddd4j.annotation.BusinessType;
 import io.ddd4j.annotation.api.ApiOperationLog;
 import io.ddd4j.core.ApiRestResponse;
-import io.ddd4j.spring.web.BaseController;
+import io.ddd4j.web.webmvc.controller.BaseController;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 import io.hiwepy.boot.sample.service.IDemoService;
 import io.hiwepy.boot.sample.setup.LogConstant;
@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.biz.context.NestedMessageSource;
 import org.springframework.biz.utils.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,11 @@ public class DemoController extends BaseController {
 
     @Autowired
     private IDemoService demoService;
+
+    @Autowired
+    public DemoController(NestedMessageSource messageSource, com.github.dozermapper.core.Mapper beanMapper) {
+        super(messageSource, beanMapper);
+    }
 
     /**
      * 增加逻辑实现

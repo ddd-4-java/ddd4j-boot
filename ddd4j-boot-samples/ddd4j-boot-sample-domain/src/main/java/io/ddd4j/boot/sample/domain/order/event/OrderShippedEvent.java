@@ -1,11 +1,8 @@
 package io.ddd4j.boot.sample.domain.order.event;
 
-import lombok.Getter;
-
 /**
  * 订单发货事件
  */
-@Getter
 public class OrderShippedEvent extends DomainEvent {
 
     private final Long orderId;
@@ -21,5 +18,24 @@ public class OrderShippedEvent extends DomainEvent {
         this.trackingNumber = trackingNumber;
         this.logisticsCompany = logisticsCompany;
     }
-}
 
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public String getLogisticsCompany() {
+        return logisticsCompany;
+    }
+}

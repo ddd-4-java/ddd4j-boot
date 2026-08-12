@@ -2,7 +2,7 @@ package io.ddd4j.boot.sample.order.application.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+
 
 import java.io.Serializable;
 
@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @since 1.0.0
  */
 @Schema(description = "发货订单请求")
-@Data
+
 public class ShipOrderCommand implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,4 +34,37 @@ public class ShipOrderCommand implements Serializable {
     @Schema(description = "物流单号", example = "SF1234567890", required = true)
     @NotBlank(message = "物流单号不能为空")
     private String trackingNumber;
+
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public String getLogisticsCompany() {
+        return logisticsCompany;
+    }
+
+    public void setLogisticsCompany(String logisticsCompany) {
+        this.logisticsCompany = logisticsCompany;
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
 }

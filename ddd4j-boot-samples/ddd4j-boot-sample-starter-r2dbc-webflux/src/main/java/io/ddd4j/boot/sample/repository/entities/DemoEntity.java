@@ -4,13 +4,18 @@
  */
 package io.ddd4j.boot.sample.repository.entities;
 
-import io.ddd4j.core.entity.BaseEntity;
+import io.ddd4j.core.ddd.model.Entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class DemoEntity extends BaseEntity<DemoEntity> {
+public class DemoEntity implements Entity<Long> {
+
+    @Override
+    public Long id() {
+        return Long.valueOf(id);
+    }
 
     private static final long serialVersionUID = 6189820231775242317L;
 

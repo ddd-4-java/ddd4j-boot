@@ -5,9 +5,9 @@
 package io.ddd4j.boot.sample.service;
 
 import io.ddd4j.boot.sample.entity.DemoEntity;
-import io.ddd4j.core.service.IBaseService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
-public interface IDemoService extends IBaseService<DemoEntity> {
+public interface IDemoService extends IService<DemoEntity> {
 
 
 }
