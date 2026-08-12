@@ -1,5 +1,7 @@
 # ddd4j-boot 3.4.x ↔ ddd4j 2.0.x 迁移指南
 
+> **规格与计划**：本文档是面向用户的迁移指南。完整的实施计划与设计规格见 [docs/superpowers/](superpowers/README.md)，主计划见 [2026-08-12-ddd4j-boot-3.4x-adapt-ddd4j-2.0x.md](superpowers/plans/2026-08-12-ddd4j-boot-3.4x-adapt-ddd4j-2.0x.md)。
+
 本文档说明 `ddd4j-boot feature/3.4.x` 如何消费 `ddd4j feature/2.0.x`，
 以及从旧版本（Spring Boot 2.x / ddd4j 1.x 生态）迁移到当前基线的关键变化。
 
