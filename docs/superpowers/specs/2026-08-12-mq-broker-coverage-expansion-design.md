@@ -26,15 +26,26 @@
 
 ## 3. 模块结构
 
-| 模块 | 集成测试文件 | 容器镜像 |
-|------|-------------|---------|
-| mq-activemq | `ActiveMQClientIntegrationTest.java` | `apache/activemq-classic:5.18.3` |
-| mq-nats | `NatsClientIntegrationTest.java` | `nats:2.10-alpine` |
-| mq-ons | `OnsClientIntegrationTest.java` | 复用 RocketMQ 镜像 |
-| mq-pulsar | `PulsarClientIntegrationTest.java` | `apachepulsar/pulsar:3.2.0` |
-| mq-redis-stream | `RedisStreamClientIntegrationTest.java` | `redis:7.4-alpine` |
-| mq-sqs | `SqsClientIntegrationTest.java` | `localstack/localstack:3.4` |
-| mq-tdmq | `TdmqClientIntegrationTest.java` | 复用 Pulsar 镜像 |
+| 模块 | 集成测试文件 | 容器镜像 | 状态 |
+|------|-------------|---------|------|
+| mq-activemq | `ActiveMQClientIntegrationTest.java` | `apache/activemq-classic:5.18.3` | 待实施 |
+| mq-nats | `NatsClientIntegrationTest.java` | `nats:2.10-alpine` | 待实施 |
+| mq-ons | `OnsClientIntegrationTest.java` | 复用 RocketMQ 镜像 | 待实施 |
+| mq-pulsar | `PulsarMQClientIntegrationTest.java` | `apachepulsar/pulsar:3.2.0` | ✅ 已覆盖（2026-08-14，commit f68974c0） |
+| mq-redis-stream | `RedisStreamMQClientIntegrationTest.java` | `redis:7.4-alpine` | ✅ 已覆盖（2026-08-14，commit f68974c0） |
+| mq-sqs | `SqsClientIntegrationTest.java` | `localstack/localstack:3.4` | 待实施 |
+| mq-tdmq | `TdmqClientIntegrationTest.java` | 复用 Pulsar 镜像 | 待实施 |
+
+### 已知上游问题（2026-08-14 发现）
+
+1. **Pulsar 生产者/消费者 topic 不对称**：上游 `PulsarMQClient` 生产者把带 tag 的消息发往
+   `tenant/namespace/topic:tag`（tag 拼入 topic 名），消费者却订阅 `tenant/namespace/topic`
+   （不含 tag）。两者是不同的 Pulsar topic——**任何带 tag 的事件都会发到消费者永远读不到的
+   topic**。当前集成测试绕开（事件不带 tag、listener 不设 tags），测试 Javadoc 有记录。
+   修复需改上游 `ddd4j-mq-pulsar` 的 `physicalTopic` 对称性，属上游仓库任务。
+2. **Redis Stream 收尾竞态（外观问题）**：context 关闭时容器先停、消费守护线程读流中断，
+   日志出现 `JedisConnectionException: Unexpected end of stream` ERROR。测试已通过，
+   消息已消费；上游消费者线程缺少优雅停机。
 
 ## 4. 核心抽象
 
