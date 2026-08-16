@@ -16,7 +16,7 @@
     <dependencies>
         <!-- Pure Java Jackson serializers, annotations and modules. -->
         <dependency>
-            <groupId>io.github.hiwepy</groupId>
+            <groupId>io.github.easy4j</groupId>
             <artifactId>jackson-extension</artifactId>
         </dependency>
         <!-- For Commons Lang3 -->
