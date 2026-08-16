@@ -16,8 +16,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class DefaultJacksonAutoConfigurationTest {
 
+    // Jackson2ObjectMapperBuilder 由 Boot 的 JacksonAutoConfiguration 提供，
+    // 本配置 @AutoConfigureBefore 它；默认装配用例必须同时加载两者（对齐真实应用装配顺序）
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
-            .withConfiguration(AutoConfigurations.of(DefaultJacksonAutoConfiguration.class));
+            .withConfiguration(AutoConfigurations.of(
+                    DefaultJacksonAutoConfiguration.class,
+                    org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class));
 
     @Test
     void defaultAssemblyShouldProvidePrimaryObjectMapper() {
