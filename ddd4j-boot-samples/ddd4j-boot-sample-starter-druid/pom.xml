@@ -158,6 +158,11 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-jsqlparser</artifactId>
         </dependency>
+        <!-- 3.5.9+ 拆分后 ServiceImpl/IService 位于 mybatis-plus-spring，显式声明规避传递仲裁缺失 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring</artifactId>
+        </dependency>
         <!-- For Mybatis Plus Generator -->
         <dependency>
             <groupId>com.baomidou</groupId>

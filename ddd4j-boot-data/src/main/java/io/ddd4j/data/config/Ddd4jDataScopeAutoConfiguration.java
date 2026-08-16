@@ -1,7 +1,7 @@
 package io.ddd4j.data.config;
 
 import io.ddd4j.data.datascope.DataScopeProvider;
-import org.springframework.biz.context.SpringContextAwareContext;
+import org.springframework.extension.context.SpringContextAwareContext;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;

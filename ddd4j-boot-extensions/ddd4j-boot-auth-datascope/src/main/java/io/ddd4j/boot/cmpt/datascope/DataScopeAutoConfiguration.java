@@ -1,6 +1,6 @@
 package io.ddd4j.boot.cmpt.datascope;
 
-import org.springframework.biz.context.SpringContextAwareContext;
+import org.springframework.extension.context.SpringContextAwareContext;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

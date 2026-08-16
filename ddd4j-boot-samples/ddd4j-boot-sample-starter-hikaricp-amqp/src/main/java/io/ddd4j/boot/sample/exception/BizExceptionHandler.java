@@ -6,7 +6,7 @@ package io.ddd4j.boot.sample.exception;
 
 import io.ddd4j.web.webmvc.exception.BaseExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.biz.context.NestedMessageSource;
+import org.springframework.extension.context.NestedMessageSource;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 @ControllerAdvice

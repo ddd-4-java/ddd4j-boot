@@ -4,8 +4,8 @@ import io.ddd4j.core.ApiRestResponse;
 import io.ddd4j.core.constant.Constants;
 import io.ddd4j.core.CustomApiCode;
 import io.ddd4j.core.exception.BizRuntimeException;
-import org.springframework.biz.context.NestedMessageSource;
-import org.springframework.biz.utils.SpringContextUtils;
+import org.springframework.extension.context.NestedMessageSource;
+import org.springframework.extension.utils.SpringContextUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 /**
