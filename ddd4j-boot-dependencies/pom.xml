@@ -253,7 +253,7 @@
         <jackson-annotations.version>2.22</jackson-annotations.version>
         <jackson.version>2.22.0</jackson.version>
         <jackson-bom.version>${jackson.version}</jackson-bom.version>
-        <jackson-extension.version>2.0.x.20260630-SNAPSHOT</jackson-extension.version>
+        <jackson-extension.version>3.0.x.20260630-SNAPSHOT</jackson-extension.version>
         <zxing-extension.version>2.0.x.20260630-SNAPSHOT</zxing-extension.version>
         <jakarta-activation.version>2.1.4</jakarta-activation.version>
         <jakarta-annotation.version>3.0.0</jakarta-annotation.version>
@@ -524,7 +524,7 @@
         <!-- 第三方 Spring Boot starter 版本（ddd4j-dependencies 中 pin，供 Boot DM 引用） -->
         <spring-boot-starter-mybatis.version>3.0.5</spring-boot-starter-mybatis.version>
         <spring-boot-starter-ip2region.version>3.3.x.20241003.RELEASE</spring-boot-starter-ip2region.version>
-        <spring-boot-starter-redistpl-plus.version>2.3.x.20241003-SNAPSHOT</spring-boot-starter-redistpl-plus.version>
+        <spring-boot-starter-redistpl-plus.version>2.3.x.20260630-SNAPSHOT</spring-boot-starter-redistpl-plus.version>
         <spring-boot-starter-security-biz.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-biz.version>
         <spring-boot-starter-security-jwt.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-jwt.version>
         <spring-plugin.version>3.0.0</spring-plugin.version>
@@ -670,8 +670,7 @@
         <spring-boot-starter-sigar.version>3.3.x.20240823.RELEASE</spring-boot-starter-sigar.version>
         <spring-boot-starter-socketio.version>3.3.x.20240823.RELEASE</spring-boot-starter-socketio.version>
         <spring-boot-starter-tencentapi.version>3.3.x.20240823.RELEASE</spring-boot-starter-tencentapi.version>
-        <spring-boot-starter-validation-mimetypes.version>2.3.x.20250430-SNAPSHOT
-        </spring-boot-starter-validation-mimetypes.version>
+        <spring-boot-starter-validation-mimetypes.version>2.3.x.20260630-SNAPSHOT</spring-boot-starter-validation-mimetypes.version>
         <spring-boot-starter-webflux-swagger2.version>2.7.x.20240823.RELEASE
         </spring-boot-starter-webflux-swagger2.version>
         <spring-boot-starter-webmvc-swagger2.version>2.7.x.20240823.RELEASE
