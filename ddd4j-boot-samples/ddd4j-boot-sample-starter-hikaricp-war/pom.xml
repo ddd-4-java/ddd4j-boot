@@ -106,6 +106,7 @@
         </dependency>
         <dependency>
             <groupId>io.github.easy4j</groupId><artifactId>validation-mimetypes-spring-boot-starter</artifactId>
+            <version>${spring-boot-starter-validation-mimetypes.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -143,6 +144,7 @@
         <!-- For Redis -->
         <dependency>
             <groupId>io.github.easy4j</groupId><artifactId>redistpl-plus-spring-boot-starter</artifactId>
+            <version>${spring-boot-starter-redistpl-plus.version}</version>
         </dependency>
         <!-- For Log4j2 -->
         <dependency>
