@@ -105,8 +105,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>validation-mimetypes-spring-boot-starter</artifactId>
+            <groupId>io.github.easy4j</groupId><artifactId>validation-mimetypes-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -143,8 +142,7 @@
         </dependency>
         <!-- For Redis -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>redistpl-plus-spring-boot-starter</artifactId>
+            <groupId>io.github.easy4j</groupId><artifactId>redistpl-plus-spring-boot-starter</artifactId>
         </dependency>
         <!-- For Log4j2 -->
         <dependency>
