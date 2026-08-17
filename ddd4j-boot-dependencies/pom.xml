@@ -1071,7 +1071,7 @@
                 <version>${spring-boot-starter-disruptor.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.github.hiwepy</groupId>
+                <groupId>io.github.easy4j</groupId>
                 <artifactId>jackson-extension</artifactId>
                 <version>${jackson-extension.version}</version>
             </dependency>
@@ -1464,7 +1464,7 @@
                 <version>${rocketmq-remoting.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>com.github.easy4j</groupId>
                 <artifactId>redistpl-plus-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-redistpl-plus.version}</version>
             </dependency>
@@ -1620,7 +1620,7 @@
                 <version>${spring-boot-starter-webmvc-swagger2.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.github.easy4j</groupId>
                 <artifactId>validation-mimetypes-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-validation-mimetypes.version}</version>
             </dependency>
