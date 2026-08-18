@@ -29,7 +29,7 @@ PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$PROJECT_ROOT"
 
 # BOM 是发布给消费方的版本清单；ddd4j-dependencies 仅管理第三方依赖。
-BOM_POM="ddd4j-bom/pom.xml"
+if [ -f "ddd4j-bom/pom.xml" ]; then BOM_POM="ddd4j-bom/pom.xml"; else BOM_POM="ddd4j-boot-bom/pom.xml"; fi
 if [ ! -f "$BOM_POM" ]; then
     echo -e "${RED}❌ 找不到 $BOM_POM${NC}"
     exit 1
