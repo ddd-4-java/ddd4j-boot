@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: Branch to deploy from (1.0.x / 2.0.x / 3.0.x / 4.0.x / 3.4.x)
+        description: Branch to deploy from (2.3.x / 2.7.x / 3.0.x / 3.1.x / 3.2.x / 3.3.x / 3.4.x / 3.5.x / 4.0.x / 4.1.x)
         required: true
         type: choice
         default: '3.4.x'
@@ -48,8 +48,8 @@ jobs:
       - name: Validate inputs
         run: |
           BRANCH="${{ inputs.branch }}"
-          if [[ ! "$BRANCH" =~ ^feature/(1\.0\.x|2\.0\.x|3\.0\.x|4\.0\.x)$ ]] && [[ ! "$BRANCH" =~ ^(1\.0\.x|2\.0\.x|3\.0\.x|4\.0\.x)$ ]]; then
-            echo "ERROR: branch must be one of 1.0.x / 2.0.x / 3.0.x / 4.0.x (or feature/<branch>)" >&2
+          if [[ ! "$BRANCH" =~ ^feature/(2\.3\.x|2\.7\.x|3\.0\.x|3\.1\.x|3\.2\.x|3\.3\.x|3\.4\.x|3\.5\.x|4\.0\.x|4\.1\.x)$ ]] && [[ ! "$BRANCH" =~ ^(2\.3\.x|2\.7\.x|3\.0\.x|3\.1\.x|3\.2\.x|3\.3\.x|3\.4\.x|3\.5\.x|4\.0\.x|4\.1\.x)$ ]]; then
+            echo "ERROR: branch must be one of 2.3.x / 2.7.x / 3.0.x~4.1.x (or feature/<branch>)" >&2
             exit 1
           fi
           echo "Deploying branch: $BRANCH"
