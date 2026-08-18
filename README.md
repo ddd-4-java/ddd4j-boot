@@ -461,3 +461,4 @@ cola-platform/  (Maven父工程)
 └─ pom.xml                         # 父POM，管理所有子模块
 ```
 
+<!-- verify trigger 1787063200 -->
