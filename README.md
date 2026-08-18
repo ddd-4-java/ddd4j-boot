@@ -466,3 +466,5 @@ cola-platform/  (Maven父工程)
 └─ pom.xml                         # 父POM，管理所有子模块
 ```
 
+
+<!-- CI test Tue Aug 18 21:45:26 CST 2026 -->
