@@ -53,10 +53,10 @@ jobs:
             "https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-snapshot-3eoov3/io/github/easy4j/spring-extension/3.0.x.20260630-SNAPSHOT/maven-metadata.xml" || echo curl-failed)
           echo "credential check: HTTP $HTTP_CODE (user len ${#ALIYUN_USER})"
 
-      - name: Verify BOM publication contract
-        run: ./scripts/check-bom-alignment.sh
-      - name: Verify Java style guardrails
-        run: ./scripts/verify-java-style.sh
+      # [boot-removed: upstream ddd4j-only tool]      - name: Verify BOM publication contract
+      #         run: ./scripts/check-bom-alignment.sh
+      # [boot-removed: upstream ddd4j-only tool]      - name: Verify Java style guardrails
+      #         run: ./scripts/verify-java-style.sh
       - name: Verify release worktree state
         env:
           DDD4J_REQUIRE_CLEAN_WORKTREE: 'true'
