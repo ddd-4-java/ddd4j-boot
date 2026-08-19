@@ -16,7 +16,7 @@
 
     <properties>
         <!-- Dependency versions -->
-        <activemq.version>6.1.0</activemq.version>
+        <activemq.version>6.2.0</activemq.version>
         <activation.version>1.1.1</activation.version>
         <artemis.version>2.44.0</artemis.version>
         <akka.version>2.8.8</akka.version>
@@ -68,7 +68,7 @@
         <binlog4j.version>1.9.1</binlog4j.version>
         <brave.version>6.3.0</brave.version>
         <caffeine.version>3.2.3</caffeine.version>
-        <cassandra-driver.version>4.17.0</cassandra-driver.version>
+        <cassandra-driver.version>4.19.2</cassandra-driver.version>
         <canal.version>1.1.8</canal.version>
         <cas-client.version>4.0.4</cas-client.version>
         <camel.version>4.16.0</camel.version>
@@ -403,9 +403,7 @@
         <postgresql.version>42.7.8</postgresql.version>
         <poi.version>5.5.1</poi.version>
         <powerjob-client.version>5.1.2</powerjob-client.version>
-        <prometheus.version>1.4.3</prometheus.version>
-        <prometheus-pushgateway.version>0.16.0</prometheus-pushgateway.version>
-        <prometheus-client.version>0.16.0</prometheus-client.version>
+        <prometheus-client.version>1.4.3</prometheus-client.version>
         <prometheus-simpleclient.version>0.16.0</prometheus-simpleclient.version>
         <protostuff.version>1.8.0</protostuff.version>
         <protobuf-java.version>4.33.1</protobuf-java.version>
@@ -426,7 +424,7 @@
         <r2dbc-pool.version>1.0.2.RELEASE</r2dbc-pool.version>
         <r2dbc-proxy.version>1.1.6.RELEASE</r2dbc-proxy.version>
         <r2dbc-postgresql.version>1.1.1.RELEASE</r2dbc-postgresql.version>
-        <reactor-bom.version>2024.0.13</reactor-bom.version>
+        <reactor-bom.version>2025.0.0</reactor-bom.version>
         <reactive-streams.version>1.0.4</reactive-streams.version>
         <rabbit-amqp-client.version>5.27.1</rabbit-amqp-client.version>
         <rabbit-stream-client.version>0.24.0</rabbit-stream-client.version>
@@ -489,7 +487,7 @@
         <soapui-template.version>1.0.2.RELEASE</soapui-template.version>
         <socket-io.version>2.1.2</socket-io.version>
         <spring-framework.version>6.2.15</spring-framework.version>
-        <springdoc.version>2.6.0</springdoc.version>
+        <springdoc.version>2.8.14</springdoc.version>
         <springfox.version>3.0.0</springfox.version>
         <spring-biz.version>3.3.x.20241020.RELEASE</spring-biz.version>
         <spring-bytebuddy.version>6.1.x.20241003.RELEASE</spring-bytebuddy.version>
@@ -571,7 +569,6 @@
         <maven-alibaba-plugin.version>1.1.9</maven-alibaba-plugin.version>
         <maven-appassembler-plugin.version>2.1.0</maven-appassembler-plugin.version>
         <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
-        <maven-asciidoctor-plugin.version>3.0.0</maven-asciidoctor-plugin.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <maven-clirr-plugin.version>2.8</maven-clirr-plugin.version>
         <maven-codenarc-plugin.version>0.22-1</maven-codenarc-plugin.version>
@@ -634,7 +631,7 @@
         <spring-boot-starter-hikaricp-plus.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-hikaricp-plus.version>
         <spring-boot-starter-ip2region.version>3.3.x.20241003.RELEASE</spring-boot-starter-ip2region.version>
         <spring-boot-starter-ishumei.version>3.3.x.20241003.RELEASE</spring-boot-starter-ishumei.version>
-        <spring-boot-starter-jasypt.version>3.0.5</spring-boot-starter-jasypt.version>
+        <spring-boot-starter-jasypt.version>4.0.3</spring-boot-starter-jasypt.version>
         <spring-boot-starter-javamelody.version>${javamelody.version}</spring-boot-starter-javamelody.version>
         <spring-boot-starter-javamelody-ui.version>1.5.7.2</spring-boot-starter-javamelody-ui.version>
         <spring-boot-starter-jcaptcha.version>3.3.x.20240823.RELEASE</spring-boot-starter-jcaptcha.version>
@@ -651,7 +648,6 @@
         <spring-boot-starter-nacos-config.version>0.3.0-RC</spring-boot-starter-nacos-config.version>
         <spring-boot-starter-nacos-discovery.version>0.3.0-RC</spring-boot-starter-nacos-discovery.version>
         <spring-boot-starter-opentracing.version>3.1.1</spring-boot-starter-opentracing.version>
-        <spring-boot-starter-okhttp3.version>3.3.x.20241020.RELEASE</spring-boot-starter-okhttp3.version>
         <spring-boot-starter-p6spy.version>3.3.x.20241003.RELEASE</spring-boot-starter-p6spy.version>
         <spring-boot-starter-pac4j.version>3.3.x.20241003.RELEASE</spring-boot-starter-pac4j.version>
         <spring-boot-starter-pagehelper.version>2.1.1</spring-boot-starter-pagehelper.version>
@@ -5412,57 +5408,13 @@
                 <artifactId>powerjob-client</artifactId>
                 <version>${powerjob-client.version}</version>
             </dependency>
-
-            <!-- https://mvnrepository.com/artifact/io.prometheus/prometheus-metrics-core -->
+            <!-- https://mvnrepository.com/artifact/io.prometheus/prometheus-metrics-bom -->
             <dependency>
                 <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-core</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-model</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-config</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-instrumentation-jvm</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-exporter-servlet-jakarta</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-tracer-common</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-tracer-otel</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-tracer-otel-agent</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-exposition-formats</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>prometheus-metrics-exposition-textformats</artifactId>
-                <version>${prometheus.version}</version>
+                <artifactId>prometheus-metrics-bom</artifactId>
+                <version>${prometheus-client.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.prometheus/simpleclient -->
             <dependency>
@@ -7295,12 +7247,6 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>jcaptcha-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-jcaptcha.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.octo.captcha</groupId>
-                        <artifactId>jcaptcha-integration-simple-servlet</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/jpush-spring-boot-starter -->
             <dependency>
@@ -7421,12 +7367,6 @@
                 <groupId>io.opentracing.contrib</groupId>
                 <artifactId>opentracing-spring-jaeger-starter</artifactId>
                 <version>${spring-boot-starter-opentracing.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/okhttp3-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>okhttp3-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-okhttp3.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/pac4j-spring-boot-starter -->
             <dependency>
