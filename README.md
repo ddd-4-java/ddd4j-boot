@@ -467,3 +467,4 @@ cola-platform/  (Maven父工程)
 ```
 
 <!-- verify trigger 1787063208 -->
+<!-- verify ci-fix-1787107606 -->
