@@ -523,6 +523,9 @@
         <token-bucket.version>1.7</token-bucket.version>
         <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
         <truelicense.version>1.33</truelicense.version>
+        <easy4j-jackson-extension.version>3.0.x.20260630-SNAPSHOT</easy4j-jackson-extension.version>
+        <jackson-extension.version>${easy4j-jackson-extension.version}</jackson-extension.version>
+        <easy4j-zxing-extension.version>3.0.x.20260630-SNAPSHOT</easy4j-zxing-extension.version>
         <tika.version>3.2.3</tika.version>
         <twilio.version>10.8.0</twilio.version>
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
@@ -7314,6 +7317,11 @@
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-spring-boot-autoconfigure -->
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -7715,6 +7723,47 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>zxing-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-zxing.version}</version>
+            </dependency>
+            <!-- truelicense-xml（ddd4j-boot-auth-license 引用） -->
+            <dependency>
+                <groupId>de.schlichtherle.truelicense</groupId>
+                <artifactId>truelicense-xml</artifactId>
+                <version>${truelicense.version}</version>
+            </dependency>
+            <!-- testcontainers（ddd4j-boot-mq-kafka/pulsar 测试引用） -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>kafka</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <!-- testcontainers:rabbitmq（ddd4j-boot-mq-rabbitmq 引用） -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>rabbitmq</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <!-- zxing-extension（ddd4j-boot-extension-qrcode 引用） -->
+            <dependency>
+                <groupId>io.github.hiwepy</groupId>
+                <artifactId>zxing-extension</artifactId>
+                <version>${easy4j-zxing-extension.version}</version>
+            </dependency>
+            <!-- jackson-extension（ddd4j-boot-extension-jackson 引用） -->
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>jackson-extension</artifactId>
+                <version>${easy4j-jackson-extension.version}</version>
+            </dependency>
+            <!-- seata-spring-boot-starter（ddd4j-boot-tx-seata 引用） -->
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>${seata.version}</version>
             </dependency>
 
         </dependencies>

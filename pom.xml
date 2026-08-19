@@ -74,8 +74,6 @@
         <module>ddd4j-boot-auth</module>
         <module>ddd4j-boot-mq</module>
         <module>ddd4j-boot-extensions</module>
-        <!-- 分布式事务 -->
-        <module>ddd4j-boot-tx</module>
         <module>ddd4j-boot-parent</module>
         <module>ddd4j-boot-samples</module>
     </modules>
