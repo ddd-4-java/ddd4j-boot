@@ -70,7 +70,7 @@
         <cassandra-driver.version>4.17.0</cassandra-driver.version>
         <canal.version>1.1.8</canal.version>
         <cas-client.version>3.6.4</cas-client.version>
-        <camel.version>4.8.4</camel.version>
+        <camel.version>3.22.4</camel.version>
         <cglib.version>3.3.0</cglib.version>
         <classgraph.version>4.8.184</classgraph.version>
         <cola.version>5.0.0</cola.version>
@@ -308,7 +308,7 @@
         <libphonenumber-geocoder.version>3.19</libphonenumber-geocoder.version>
         <liquibase.version>4.29.2</liquibase.version>
         <lock4j.version>2.2.7</lock4j.version>
-        <lombok.version>1.18.30</lombok.version>
+        <lombok.version>1.18.38</lombok.version>
         <log4j2.version>2.23.1</log4j2.version>
         <!-- Logback 版本：Spring Boot 2.7.x 需要 Logback 1.2.x，1.3.x+ 移除了 StaticLoggerBinder -->
         <!-- 注意：必须使用 1.2.x，1.3+ 版本需要 SLF4J 2.x，而 Spring Boot 2.7.x 使用 SLF4J 1.x -->
@@ -557,6 +557,7 @@
         <xnio-netty-transport.version>0.1.10.Final</xnio-netty-transport.version>
         <xstream.version>1.4.21</xstream.version>
         <xxl-job.version>2.5.0</xxl-job.version>
+        <zstd-jni.version>1.5.7-6</zstd-jni.version>
         <zkclient.version>0.11</zkclient.version>
         <zookeeper.version>3.9.4</zookeeper.version>
         <zip4j.version>2.11.5</zip4j.version>
@@ -635,7 +636,7 @@
         <spring-boot-starter-ip2region.version>2.7.x.20240823.RELEASE</spring-boot-starter-ip2region.version>
         <spring-boot-starter-ishumei.version>2.7.x.20240823.RELEASE</spring-boot-starter-ishumei.version>
         <spring-boot-starter-j2cache.version>2.8.0-release</spring-boot-starter-j2cache.version>
-        <spring-boot-starter-jasypt.version>2.1.2</spring-boot-starter-jasypt.version>
+        <spring-boot-starter-jasypt.version>3.0.5</spring-boot-starter-jasypt.version>
         <spring-boot-starter-javamelody.version>${javamelody.version}</spring-boot-starter-javamelody.version>
         <spring-boot-starter-javamelody-ui.version>1.5.7.2</spring-boot-starter-javamelody-ui.version>
         <spring-boot-starter-jcaptcha.version>2.7.x.20241003.RELEASE</spring-boot-starter-jcaptcha.version>
@@ -665,7 +666,7 @@
         <spring-boot-starter-redisson.version>${redisson.version}</spring-boot-starter-redisson.version>
         <spring-boot-starter-redisson-plus.version>2.7.x.20240823.RELEASE</spring-boot-starter-redisson-plus.version>
         <spring-boot-starter-redistpl-plus.version>2.7.x.20241003-SNAPSHOT</spring-boot-starter-redistpl-plus.version>
-        <spring-boot-starter-rocketmq.version>2.3.4</spring-boot-starter-rocketmq.version>
+        <spring-boot-starter-rocketmq.version>2.3.5</spring-boot-starter-rocketmq.version>
         <spring-boot-starter-schemacrawler.version>1.0.7.RELEASE</spring-boot-starter-schemacrawler.version>
         <spring-boot-starter-seata.version>${seata.version}</spring-boot-starter-seata.version>
         <spring-boot-starter-security-biz.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-biz.version>
@@ -694,10 +695,22 @@
         <spring-boot-starter-xxljob.version>2.7.x.20260603-SNAPSHOT</spring-boot-starter-xxljob.version>
         <spring-boot-starter-zxing.version>2.7.x.20240823.RELEASE</spring-boot-starter-zxing.version>
 
+        <!-- DDD / CQRS / Event Store 基础设施版本（fuinorg，Java 8 兼容） -->
+        <esc-mem.version>0.7.0</esc-mem.version>
+
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- 导入 Ddd4j Boot BOM：管理本仓库内 ddd4j-boot-core / data / mq / monitor / ddd / extensions 全部子模块的版本 -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-bom</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!-- Third Party -->
 
@@ -5242,6 +5255,12 @@
                 <artifactId>reflections</artifactId>
                 <version>${reflections.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-common -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-common</artifactId>
+                <version>${rocketmq-client.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-acl -->
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
@@ -5252,6 +5271,12 @@
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-client</artifactId>
+                <version>${rocketmq-client.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-remoting -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-remoting</artifactId>
                 <version>${rocketmq-client.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.rsocket/rsocket-bom -->
@@ -6816,7 +6841,12 @@
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/com.github.luben/zstd-jni -->
+            <dependency>
+                <groupId>com.github.luben</groupId>
+                <artifactId>zstd-jni</artifactId>
+                <version>${zstd-jni.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.101tec/zkclient -->
             <dependency>
                 <groupId>com.101tec</groupId>
@@ -6944,11 +6974,13 @@
                 <artifactId>binlog4j-spring-boot-starter</artifactId>
                 <version>${binlog4j.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.apache.camel.springboot/camel-spring-boot-starter -->
+            <!-- Source: https://mvnrepository.com/artifact/org.apache.camel.springboot/camel-spring-boot-bom -->
             <dependency>
                 <groupId>org.apache.camel.springboot</groupId>
-                <artifactId>camel-spring-boot-starter</artifactId>
+                <artifactId>camel-spring-boot-bom</artifactId>
                 <version>${spring-boot-starter-camel.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/canal-spring-boot-starter -->
             <dependency>
@@ -7540,6 +7572,12 @@
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-rocketmq.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-v5-client-spring-boot-starter -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-v5-client-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-rocketmq.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/schemacrawler-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.hiwepy</groupId>
@@ -7762,7 +7800,7 @@
                 <artifactId>xmemcached-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-xmemcached.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/xxljob-spring-boot-starter -->
+            <!-- https://mvnrepository.com/artifact/io.github.hiwepy/xxljob-spring-boot-starter -->
             <dependency>
                 <groupId>io.github.hiwepy</groupId>
                 <artifactId>xxljob-spring-boot-starter</artifactId>
@@ -7773,6 +7811,18 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>zxing-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-zxing.version}</version>
+            </dependency>
+
+            <!-- ============================================================ -->
+            <!-- DDD / CQRS / Event Store 基础设施（fuinorg ddd4j，Java 8 兼容） -->
+            <!-- 与 3.4.x 的 ddd4j-boot-ddd 模块对齐 -->
+            <!-- 注：ddd-4-java-* 与 cqrs-4-java-* 已在上方（行 2478-2531）通过 ${fuin-ddd4j.version}/${fuin-cqrs4j.version} 统一管理 -->
+            <!-- ============================================================ -->
+            <!-- https://github.com/fuinorg/esc-mem （内存事件存储，仅 dev/test） -->
+            <dependency>
+                <groupId>org.fuin.esc</groupId>
+                <artifactId>esc-mem</artifactId>
+                <version>${esc-mem.version}</version>
             </dependency>
 
         </dependencies>
