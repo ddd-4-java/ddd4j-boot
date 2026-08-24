@@ -688,9 +688,8 @@
         <spring-boot-starter-xmemcached.version>3.3.x.20240823.RELEASE</spring-boot-starter-xmemcached.version>
         <spring-boot-starter-xxljob.version>3.3.x.20240823.RELEASE</spring-boot-starter-xxljob.version>
         <spring-boot-starter-zxing.version>3.3.x.20240823.RELEASE</spring-boot-starter-zxing.version>
-
-    
-        <easy4j-starter.version>${revision}</easy4j-starter.version></properties>
+        <easy4j-starter.version>${revision}</easy4j-starter.version>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
