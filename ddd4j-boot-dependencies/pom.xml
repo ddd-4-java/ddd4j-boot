@@ -15,89 +15,183 @@
     <description>Ddd4j Boot Dependencies</description>
 
     <properties>
-        <!-- Dependency versions -->  <!-- Note: 14.17.05 For Oracle 10g/11g -->
-
-        <!-- Maven Plugin versions -->
-
         <!-- Third Party Spring Boot Starter Dependency versions -->
         <spring-boot-admin.version>3.5.6</spring-boot-admin.version>
         <spring-boot-aliyun.version>1.0.0</spring-boot-aliyun.version>
-        <spring-boot-starter-agora.version>3.3.x.20240823.RELEASE</spring-boot-starter-agora.version>
+        <spring-boot-starter-agora.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-agora.version>
         <spring-boot-starter-aliyun-schedulerx2.version>1.13.1</spring-boot-starter-aliyun-schedulerx2.version>
-        <spring-boot-starter-aliyun-mps.version>3.3.x.20240823.RELEASE</spring-boot-starter-aliyun-mps.version>
-        <spring-boot-starter-aliyun-ons.version>3.3.x.20240823.RELEASE</spring-boot-starter-aliyun-ons.version>
-        <spring-boot-starter-aliyun-oss.version>3.3.x.20240823.RELEASE</spring-boot-starter-aliyun-oss.version>
+        <spring-boot-starter-aliyun-mps.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-aliyun-mps.version>
+        <spring-boot-starter-aliyun-ons.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-aliyun-ons.version>
+        <spring-boot-starter-aliyun-oss.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-aliyun-oss.version>
         <spring-boot-starter-arthas.version>4.1.3</spring-boot-starter-arthas.version>
-        <spring-boot-starter-baiduapi.version>3.3.x.20241003.RELEASE</spring-boot-starter-baiduapi.version>
+        <spring-boot-starter-baiduapi.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-baiduapi.version>
         <spring-boot-starter-camel.version>${camel.version}</spring-boot-starter-camel.version>
-        <spring-boot-starter-canal.version>3.3.x.20240823.RELEASE</spring-boot-starter-canal.version>
-        <spring-boot-starter-curator.version>3.3.x.20240823.RELEASE</spring-boot-starter-curator.version>
+        <spring-boot-starter-canal.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-canal.version>
+        <spring-boot-starter-curator.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-curator.version>
         <spring-boot-starter-cxf.version>${cxf.version}</spring-boot-starter-cxf.version>
-        <spring-boot-starter-disruptor.version>3.3.x.20240823.RELEASE</spring-boot-starter-disruptor.version>
+        <spring-boot-starter-disruptor.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-disruptor.version>
         <spring-boot-starter-dozermapper.version>${dozer-core.version}</spring-boot-starter-dozermapper.version>
-        <spring-boot-starter-dingtalk.version>3.3.x.20241003.RELEASE</spring-boot-starter-dingtalk.version>
+        <spring-boot-starter-dingtalk.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-dingtalk.version>
         <spring-boot-starter-druid.version>${druid.version}</spring-boot-starter-druid.version>
-        <spring-boot-starter-druid-plus.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-druid-plus.version>
+        <spring-boot-starter-druid-plus.version>4.1.x.20260820-SNAPSHOT</spring-boot-starter-druid-plus.version>
         <spring-boot-starter-dynamic-datasource.version>4.3.1</spring-boot-starter-dynamic-datasource.version>
         <spring-boot-starter-elasticjob.version>3.0.4</spring-boot-starter-elasticjob.version>
-        <spring-boot-starter-fastdfs.version>3.3.x.20241003.RELEASE</spring-boot-starter-fastdfs.version>
-        <spring-boot-starter-flyway-plus.version>2.7.x.20240823.RELEASE</spring-boot-starter-flyway-plus.version>
-        <spring-boot-starter-geoip.version>3.3.x.20241003.RELEASE</spring-boot-starter-geoip.version>
+        <spring-boot-starter-fastdfs.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-fastdfs.version>
+        <spring-boot-starter-flyway-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-flyway-plus.version>
+        <spring-boot-starter-geoip.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-geoip.version>
         <spring-boot-starter-grpc.version>5.2.0</spring-boot-starter-grpc.version>
         <spring-boot-starter-hikaricp-plus.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-hikaricp-plus.version>
-        <spring-boot-starter-ip2region.version>3.3.x.20241003.RELEASE</spring-boot-starter-ip2region.version>
-        <spring-boot-starter-ishumei.version>3.3.x.20241003.RELEASE</spring-boot-starter-ishumei.version>
+        <spring-boot-starter-ip2region.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-ip2region.version>
+        <spring-boot-starter-ishumei.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-ishumei.version>
         <spring-boot-starter-jasypt.version>4.0.3</spring-boot-starter-jasypt.version>
         <spring-boot-starter-javamelody.version>${javamelody.version}</spring-boot-starter-javamelody.version>
         <spring-boot-starter-javamelody-ui.version>1.5.7.2</spring-boot-starter-javamelody-ui.version>
-        <spring-boot-starter-jcaptcha.version>3.3.x.20240823.RELEASE</spring-boot-starter-jcaptcha.version>
-        <spring-boot-starter-jpush.version>3.3.x.20241003.RELEASE</spring-boot-starter-jpush.version>
-        <spring-boot-starter-kaptcha.version>3.3.x.20240823.RELEASE</spring-boot-starter-kaptcha.version>
-        <spring-boot-starter-log4j2-plus.version>3.3.x.20241003.RELEASE</spring-boot-starter-log4j2-plus.version>
+        <spring-boot-starter-jcaptcha.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-jcaptcha.version>
+        <spring-boot-starter-jpush.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-jpush.version>
+        <spring-boot-starter-kaptcha.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-kaptcha.version>
+        <spring-boot-starter-log4j2-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-log4j2-plus.version>
         <spring-boot-starter-mybatis.version>3.0.5</spring-boot-starter-mybatis.version>
         <spring-boot-starter-mybatis-tk.version>${mybatis-tk.version}</spring-boot-starter-mybatis-tk.version>
-        <spring-boot-starter-minio.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-minio.version>
+        <spring-boot-starter-minio.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-minio.version>
         <spring-boot-starter-nacos-config.version>0.3.0-RC</spring-boot-starter-nacos-config.version>
         <spring-boot-starter-nacos-discovery.version>0.3.0-RC</spring-boot-starter-nacos-discovery.version>
         <spring-boot-starter-opentracing.version>3.1.1</spring-boot-starter-opentracing.version>
-        <spring-boot-starter-pac4j.version>3.3.x.20241003.RELEASE</spring-boot-starter-pac4j.version>
+        <spring-boot-starter-pac4j.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-pac4j.version>
         <spring-boot-starter-pagehelper.version>2.1.1</spring-boot-starter-pagehelper.version>
-        <spring-boot-starter-pf4j.version>3.3.x.20241003.RELEASE</spring-boot-starter-pf4j.version>
+        <spring-boot-starter-pf4j.version>3.0.x.20260630-SNAPSHOT</spring-boot-starter-pf4j.version>
         <spring-boot-starter-pf4j2.version>3.3.x.20241003.RELEASE</spring-boot-starter-pf4j2.version>
         <spring-boot-starter-pf4j3.version>3.3.x.20241003.RELEASE</spring-boot-starter-pf4j3.version>
         <spring-boot-starter-picocli.version>${picocli.version}</spring-boot-starter-picocli.version>
         <spring-boot-starter-pinyin4j.version>0.0.4</spring-boot-starter-pinyin4j.version>
-        <spring-boot-starter-playwright.version>3.3.x.20241003-SNAPSHOT</spring-boot-starter-playwright.version>
-        <spring-boot-starter-qqwry.version>3.3.x.20241003.RELEASE</spring-boot-starter-qqwry.version>
+        <spring-boot-starter-playwright.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-playwright.version>
+        <spring-boot-starter-qqwry.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-qqwry.version>
         <spring-boot-starter-redisson.version>${redisson.version}</spring-boot-starter-redisson.version>
-        <spring-boot-starter-redisson-plus.version>3.3.x.20241003.RELEASE</spring-boot-starter-redisson-plus.version>
-        <spring-boot-starter-redistpl-plus.version>2.3.x.20260630-SNAPSHOT</spring-boot-starter-redistpl-plus.version>
+        <spring-boot-starter-redisson-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-redisson-plus.version>
+        <spring-boot-starter-redistpl-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-redistpl-plus.version>
         <spring-boot-starter-rocketmq.version>2.3.4</spring-boot-starter-rocketmq.version>
-        <spring-boot-starter-schemacrawler.version>1.0.7.RELEASE</spring-boot-starter-schemacrawler.version>
+        <spring-boot-starter-schemacrawler.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-schemacrawler.version>
         <spring-boot-starter-seata.version>${seata.version}</spring-boot-starter-seata.version>
         <spring-boot-starter-security-biz.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-biz.version>
-        <spring-boot-starter-security-cas.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-cas.version>
-        <spring-boot-starter-security-dingtalk.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-dingtalk.version>
-        <spring-boot-starter-security-facebook.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-facebook.version>
-        <spring-boot-starter-security-google.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-google.version>
-        <spring-boot-starter-security-jwt.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-jwt.version>
-        <spring-boot-starter-security-line.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-line.version>
-        <spring-boot-starter-security-qrcode.version>3.3.x.20241003.RELEASE</spring-boot-starter-security-qrcode.version>
-        <spring-boot-starter-security-weixin.version>3.3.x.20250712-SNAPSHOT</spring-boot-starter-security-weixin.version>
-        <spring-boot-starter-shanyan.version>3.3.x.20240823.RELEASE</spring-boot-starter-shanyan.version>
+        <spring-boot-starter-security-cas.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-cas.version>
+        <spring-boot-starter-security-dingtalk.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-dingtalk.version>
+        <spring-boot-starter-security-facebook.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-facebook.version>
+        <spring-boot-starter-security-google.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-google.version>
+        <spring-boot-starter-security-jwt.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-jwt.version>
+        <spring-boot-starter-security-line.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-line.version>
+        <spring-boot-starter-security-qrcode.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-qrcode.version>
+        <spring-boot-starter-security-weixin.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-weixin.version>
+        <spring-boot-starter-shanyan.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shanyan.version>
         <spring-boot-starter-shardingsphere-jdbc.version>5.2.1</spring-boot-starter-shardingsphere-jdbc.version>
-        <spring-boot-starter-sigar.version>3.3.x.20240823.RELEASE</spring-boot-starter-sigar.version>
-        <spring-boot-starter-socketio.version>3.3.x.20240823.RELEASE</spring-boot-starter-socketio.version>
-        <spring-boot-starter-tencentapi.version>3.3.x.20240823.RELEASE</spring-boot-starter-tencentapi.version>
-        <spring-boot-starter-validation-mimetypes.version>2.3.x.20260630-SNAPSHOT</spring-boot-starter-validation-mimetypes.version>
-        <spring-boot-starter-webflux-swagger2.version>2.7.x.20240823.RELEASE</spring-boot-starter-webflux-swagger2.version>
-        <spring-boot-starter-webmvc-swagger2.version>2.7.x.20240823.RELEASE</spring-boot-starter-webmvc-swagger2.version>
-        <spring-boot-starter-xmemcached.version>3.3.x.20240823.RELEASE</spring-boot-starter-xmemcached.version>
-        <spring-boot-starter-xxljob.version>3.3.x.20240823.RELEASE</spring-boot-starter-xxljob.version>
-        <spring-boot-starter-zxing.version>3.3.x.20240823.RELEASE</spring-boot-starter-zxing.version>
-        <easy4j-starter.version>${revision}</easy4j-starter.version>
-        <jackson-extension.version>${easy4j-jackson-extension.version}</jackson-extension.version>
-    </properties>
+        <spring-boot-starter-sigar.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-sigar.version>
+        <spring-boot-starter-socketio.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-socketio.version>
+        <spring-boot-starter-tencentapi.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-tencentapi.version>
+        <spring-boot-starter-validation-mimetypes.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-validation-mimetypes.version>
+        <spring-boot-starter-webflux-swagger2.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-webflux-swagger2.version>
+        <spring-boot-starter-webmvc-swagger2.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-webmvc-swagger2.version>
+        <spring-boot-starter-xmemcached.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-xmemcached.version>
+        <spring-boot-starter-xxljob.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-xxljob.version>
+        <spring-boot-starter-zxing.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-zxing.version>
+    
+        <!-- easy4j starter 逐个版本（与 ddd4j-boot-starters 仓库一一对应） -->
+        <spring-boot-starter-arcface.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-arcface.version>
+        <spring-boot-starter-axis.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-axis.version>
+        <spring-boot-starter-axis2-client.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-axis2-client.version>
+        <spring-boot-starter-axis2.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-axis2.version>
+        <spring-boot-starter-berkeley.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-berkeley.version>
+        <spring-boot-starter-calibre-invoker.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-calibre-invoker.version>
+        <spring-boot-starter-casclient.version>2.6.x.20260630-SNAPSHOT</spring-boot-starter-casclient.version>
+        <spring-boot-starter-cxf-client.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-cxf-client.version>
+        <spring-boot-starter-cxf-jaxrs-security.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-cxf-jaxrs-security.version>
+        <spring-boot-starter-cxf-jaxws-security.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-cxf-jaxws-security.version>
+        <spring-boot-starter-debezium-embedded.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-debezium-embedded.version>
+        <spring-boot-starter-derby.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-derby.version>
+        <spring-boot-starter-docx4j-exportfo.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-docx4j-exportfo.version>
+        <spring-boot-starter-docx4j.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-docx4j.version>
+        <spring-boot-starter-dreamina.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-dreamina.version>
+        <spring-boot-starter-dropwizard-metrics.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-dropwizard-metrics.version>
+        <spring-boot-starter-ehcache3.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-ehcache3.version>
+        <spring-boot-starter-esapi.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-esapi.version>
+        <spring-boot-starter-facenet.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-facenet.version>
+        <spring-boot-starter-faceplusplus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-faceplusplus.version>
+        <spring-boot-starter-fastxls.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-fastxls.version>
+        <spring-boot-starter-fetion4j.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-fetion4j.version>
+        <spring-boot-starter-ffmpeg.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-ffmpeg.version>
+        <spring-boot-starter-freemarker-taglibs.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-freemarker-taglibs.version>
+        <spring-boot-starter-ftpclient.version>2.3.x.20260630-SNAPSHOT</spring-boot-starter-ftpclient.version>
+        <spring-boot-starter-h2db.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-h2db.version>
+        <spring-boot-starter-hermes.version>4.1.x.20260730-SNAPSHOT</spring-boot-starter-hermes.version>
+        <spring-boot-starter-hsqldb.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-hsqldb.version>
+        <spring-boot-starter-httl.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-httl.version>
+        <spring-boot-starter-httpclient.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-httpclient.version>
+        <spring-boot-starter-httpclient3.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-httpclient3.version>
+        <spring-boot-starter-icepdf.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-icepdf.version>
+        <spring-boot-starter-itextpdf.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-itextpdf.version>
+        <spring-boot-starter-jcef.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-jcef.version>
+        <spring-boot-starter-jcifs.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-jcifs.version>
+        <spring-boot-starter-jmxtrans.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-jmxtrans.version>
+        <spring-boot-starter-karaf.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-karaf.version>
+        <spring-boot-starter-kettle8.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-kettle8.version>
+        <spring-boot-starter-maven-client.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-maven-client.version>
+        <spring-boot-starter-maven-embedder.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-maven-embedder.version>
+        <spring-boot-starter-maven-invoker.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-maven-invoker.version>
+        <spring-boot-starter-mbassador.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-mbassador.version>
+        <spring-boot-starter-mybatis-dbperms.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-mybatis-dbperms.version>
+        <spring-boot-starter-mysql-binlog-connector.version>2.3.x.20260630-SNAPSHOT</spring-boot-starter-mysql-binlog-connector.version>
+        <spring-boot-starter-okhttp3.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-okhttp3.version>
+        <spring-boot-starter-openclaw.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-openclaw.version>
+        <spring-boot-starter-opencli.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-opencli.version>
+        <spring-boot-starter-opencode.version>4.1.x.20260730-SNAPSHOT</spring-boot-starter-opencode.version>
+        <spring-boot-starter-opencv.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-opencv.version>
+        <spring-boot-starter-openfire.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-openfire.version>
+        <spring-boot-starter-p6spy.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-p6spy.version>
+        <spring-boot-starter-pdfbox.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-pdfbox.version>
+        <spring-boot-starter-pi4j.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-pi4j.version>
+        <spring-boot-starter-poi.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-poi.version>
+        <spring-boot-starter-rocketmq-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-rocketmq-plus.version>
+        <spring-boot-starter-rythm.version>2.3.x.20260630-SNAPSHOT</spring-boot-starter-rythm.version>
+        <spring-boot-starter-security-acl.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-acl.version>
+        <spring-boot-starter-security-extension.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-extension.version>
+        <spring-boot-starter-security-faceid.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-faceid.version>
+        <spring-boot-starter-security-guard.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-guard.version>
+        <spring-boot-starter-security-ldap.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-ldap.version>
+        <spring-boot-starter-security-oauth2.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-oauth2.version>
+        <spring-boot-starter-security-oidc.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-oidc.version>
+        <spring-boot-starter-security-openid.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-openid.version>
+        <spring-boot-starter-security-otp.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-otp.version>
+        <spring-boot-starter-security-pac4j.version>2.6.x.20260630-SNAPSHOT</spring-boot-starter-security-pac4j.version>
+        <spring-boot-starter-security-saml.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-saml.version>
+        <spring-boot-starter-security-sms.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-sms.version>
+        <spring-boot-starter-security-unionid.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-unionid.version>
+        <spring-boot-starter-security-yiban.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-yiban.version>
+        <spring-boot-starter-shiro-antisamy.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-antisamy.version>
+        <spring-boot-starter-shiro-cas.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-cas.version>
+        <spring-boot-starter-shiro-csrfguard.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-csrfguard.version>
+        <spring-boot-starter-shiro-dingtalk.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-dingtalk.version>
+        <spring-boot-starter-shiro-extension.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-extension.version>
+        <spring-boot-starter-shiro-faceid.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-faceid.version>
+        <spring-boot-starter-shiro-html-sanitizer.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-html-sanitizer.version>
+        <spring-boot-starter-shiro-jwt.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-jwt.version>
+        <spring-boot-starter-shiro-kisso.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-kisso.version>
+        <spring-boot-starter-shiro-ldap.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-ldap.version>
+        <spring-boot-starter-shiro-oauth2.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-oauth2.version>
+        <spring-boot-starter-shiro-oltu.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-oltu.version>
+        <spring-boot-starter-shiro-openid.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-openid.version>
+        <spring-boot-starter-shiro-pac4j.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-pac4j.version>
+        <spring-boot-starter-shiro-qrcode.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-qrcode.version>
+        <spring-boot-starter-shiro-saml.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-saml.version>
+        <spring-boot-starter-shiro-sentinel.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-sentinel.version>
+        <spring-boot-starter-shiro-sms.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-sms.version>
+        <spring-boot-starter-shiro-weixin.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-weixin.version>
+        <spring-boot-starter-simplecaptcha.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-simplecaptcha.version>
+        <spring-boot-starter-smack.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-smack.version>
+        <spring-boot-starter-smartcaptcha.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-smartcaptcha.version>
+        <spring-boot-starter-smartsocket.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-smartsocket.version>
+        <spring-boot-starter-smbclient.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-smbclient.version>
+        <spring-boot-starter-smslib.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-smslib.version>
+        <spring-boot-starter-snmp4j.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-snmp4j.version>
+        <spring-boot-starter-soapui.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-soapui.version>
+        <spring-boot-starter-webit.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-webit.version>
+        <spring-boot-starter-zbus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-zbus.version></properties>
 
     <dependencyManagement>
         <dependencies>
@@ -1075,497 +1169,497 @@
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>arcface-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-arcface.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>axis-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-axis.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>axis2-client-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-axis2-client.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>axis2-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-axis2.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>berkeley-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-berkeley.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>calibre-invoker-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-calibre-invoker.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>casclient-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-casclient.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>cxf-client-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-cxf-client.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>cxf-jaxrs-security-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-cxf-jaxrs-security.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>cxf-jaxws-security-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-cxf-jaxws-security.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>debezium-embedded-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-debezium-embedded.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>derby-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-derby.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>docx4j-exportfo-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-docx4j-exportfo.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>docx4j-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-docx4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>dreamina-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-dreamina.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>dropwizard-metrics-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-dropwizard-metrics.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>ehcache3-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-ehcache3.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>esapi-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-esapi.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>facenet-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-facenet.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>faceplusplus-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-faceplusplus.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>fastxls-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-fastxls.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>fetion4j-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-fetion4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>ffmpeg-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-ffmpeg.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>freemarker-taglibs-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-freemarker-taglibs.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.github.easy4j</groupId>
+                <groupId>net.jeebiz</groupId>
                 <artifactId>ftpclient-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-ftpclient.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>h2db-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-h2db.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>hermes-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-hermes.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>hsqldb-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-hsqldb.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>httl-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-httl.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>httpclient-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-httpclient.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>httpclient3-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-httpclient3.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>icepdf-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-icepdf.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.github.easy4j</groupId>
-                <artifactId>itextpdf-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <groupId>com.github.vindell</groupId>
+                <artifactId>spring-boot-starter-itextpdf</artifactId>
+                <version>${spring-boot-starter-itextpdf.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>jcef-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-jcef.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>jcifs-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-jcifs.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>jmxtrans-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-jmxtrans.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>karaf-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-karaf.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>kettle8-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-kettle8.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>maven-client-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-maven-client.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>maven-embedder-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-maven-embedder.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>maven-invoker-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-maven-invoker.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>mbassador-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-mbassador.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>mybatis-dbperms-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-mybatis-dbperms.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>mysql-binlog-connector-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-mysql-binlog-connector.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>okhttp3-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-okhttp3.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>openclaw-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-openclaw.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>opencli-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-opencli.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>opencode-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-opencode.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>opencv-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-opencv.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>openfire-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-openfire.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>p6spy-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-p6spy.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>pdfbox-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-pdfbox.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>pi4j-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-pi4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>poi-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-poi.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>rocketmq-plus-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-rocketmq-plus.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.github.easy4j</groupId>
+                <groupId>com.github.easy4j</groupId>
                 <artifactId>rythm-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-rythm.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-acl-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-acl.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-extension-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-extension.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-faceid-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-faceid.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-guard-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-guard.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-ldap-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-ldap.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-oauth2-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-oauth2.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-oidc-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-oidc.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-openid-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-openid.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-otp-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-otp.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-pac4j-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-pac4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-saml-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-saml.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-sms-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-sms.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-unionid-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-unionid.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>security-yiban-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-security-yiban.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-antisamy-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-antisamy.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-cas-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-cas.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-csrfguard-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-csrfguard.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-dingtalk-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-dingtalk.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-extension-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-extension.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-faceid-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-faceid.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-html-sanitizer-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-html-sanitizer.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-jwt-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-jwt.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-kisso-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-kisso.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-ldap-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-ldap.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-oauth2-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-oauth2.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-oltu-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-oltu.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-openid-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-openid.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-pac4j-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-pac4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-qrcode-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-qrcode.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-saml-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-saml.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-sentinel-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-sentinel.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-sms-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-sms.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>shiro-weixin-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-shiro-weixin.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>simplecaptcha-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-simplecaptcha.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>smack-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-smack.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>smartcaptcha-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-smartcaptcha.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>smartsocket-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-smartsocket.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>smbclient-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-smbclient.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>smslib-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-smslib.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>snmp4j-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-snmp4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>soapui-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-soapui.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>webit-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-webit.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>zbus-spring-boot-starter</artifactId>
-                <version>${easy4j-starter.version}</version>
+                <version>${spring-boot-starter-zbus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

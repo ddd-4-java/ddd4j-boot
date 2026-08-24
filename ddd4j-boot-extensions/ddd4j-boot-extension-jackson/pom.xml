@@ -18,7 +18,7 @@
         <dependency>
             <groupId>io.github.easy4j</groupId>
             <artifactId>jackson-extension</artifactId>
-            <version>${jackson-extension.version}</version>
+            <version>${easy4j-jackson-extension.version}</version>
         </dependency>
         <!-- For Commons Lang3 -->
         <dependency>
