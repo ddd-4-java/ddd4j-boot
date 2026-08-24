@@ -234,26 +234,6 @@
                 <artifactId>liteflow-spring-boot-starter</artifactId>
                 <version>${liteflow.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.zendesk/mysql-binlog-connector-java -->
-            <dependency>
-                <groupId>com.zendesk</groupId>
-                <artifactId>mysql-binlog-connector-java</artifactId>
-                <version>${mysql-binlog-connector-java.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-bom -->
-            <dependency>
-                <groupId>io.github.resilience4j</groupId>
-                <artifactId>resilience4j-bom</artifactId>
-                <version>${resilience4j.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <!-- For Tongweb -->
             <!-- 提供与springboot框架集成的jdbc规范支持。适配springboot的1.x版本。 -->
             <dependency>
@@ -736,11 +716,6 @@
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-spring</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-spring-boot-autoconfigure -->
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -1142,13 +1117,6 @@
                 <groupId>com.github.hiwepy</groupId>
                 <artifactId>zxing-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-zxing.version}</version>
-            </dependency>
-        
-            <!-- zxing-extension (hiwepy 版本，ddd4j-boot-extension-qrcode 使用) -->
-            <dependency>
-                <groupId>io.github.hiwepy</groupId>
-                <artifactId>zxing-extension</artifactId>
-                <version>${easy4j-zxing-extension.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
