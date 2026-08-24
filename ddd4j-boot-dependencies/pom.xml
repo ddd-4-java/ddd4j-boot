@@ -15,53 +15,7 @@
     <description>Ddd4j Boot Dependencies</description>
 
     <properties>
-        <!-- Dependency versions -->
-        <antlr4.version>4.13.2</antlr4.version>
-        <bcprov.version>1.83</bcprov.version>
-        <binlog4j.version>1.9.1</binlog4j.version>
-        <cas-client.version>4.0.4</cas-client.version>
-        <camel.version>4.16.0</camel.version>
-        <cxf.version>4.1.4</cxf.version>
-        <derby.version>10.17.1.0</derby.version>
-        <dozer-core.version>7.0.0</dozer-core.version>
-        <druid.version>1.2.28</druid.version>
-        <dubbo.version>3.3.6</dubbo.version>
-        <easy-captcha.version>1.0.2</easy-captcha.version>
-        <easypoi.version>4.5.0</easypoi.version>
-        <flowable.version>7.2.0</flowable.version>
-        <forest.version>1.8.0</forest.version>
-        <fuin-cqrs4j.version>0.6.0</fuin-cqrs4j.version>
-        <guerlab-sms.version>2.5.0</guerlab-sms.version>
-        <jackson.version>2.20.1</jackson.version>
-        <javamelody.version>2.5.0</javamelody.version>
-        <javers.version>7.9.0</javers.version>
-        <jetty.version>12.1.5</jetty.version>
-        <knife4j.version>4.5.0</knife4j.version>
-        <kotlin.version>2.2.21</kotlin.version>
-        <liteflow.version>2.15.2</liteflow.version>
-        <lock4j.version>2.2.7</lock4j.version>
-        <log4j2.version>2.24.3</log4j2.version>
-        <mybatis-plus.version>3.5.15</mybatis-plus.version>
-        <mybatis-plus-join.version>1.5.5</mybatis-plus-join.version>
-        <mybatis-tk.version>5.0.1</mybatis-tk.version>
-        <mysql-binlog-connector-java.version>0.30.1</mysql-binlog-connector-java.version>
-        <mica-mqtt.version>2.5.10</mica-mqtt.version>
-        <pac4j.version>6.3.1</pac4j.version>
-        <picocli.version>4.7.7</picocli.version>
-        <redisson.version>3.52.0</redisson.version>
-        <resilience4j.version>2.3.0</resilience4j.version>
-        <seata.version>2.0.0</seata.version>
-        <schemacrawler.version>17.1.7</schemacrawler.version>  <!-- Note: 14.17.05 For Oracle 10g/11g -->
-        <selenium.version>4.39.0</selenium.version>
-        <shardingsphere-jdbc.version>5.5.2</shardingsphere-jdbc.version>
-        <shiro.version>2.0.6</shiro.version>
-        <sms4j.version>3.3.5</sms4j.version>
-        <springdoc.version>2.8.14</springdoc.version>
-        <sshd.version>3.0.0-M2</sshd.version>
-        <tongweb.version>7.0.E.6_P5</tongweb.version>
-        <easy4j-jackson-extension.version>3.0.x.20260630-SNAPSHOT</easy4j-jackson-extension.version>
-        <easy4j-zxing-extension.version>3.0.x.20260630-SNAPSHOT</easy4j-zxing-extension.version>
-        <weixin-java.version>4.7.9.B</weixin-java.version>
+        <!-- Dependency versions -->  <!-- Note: 14.17.05 For Oracle 10g/11g -->
 
         <!-- Maven Plugin versions -->
 
