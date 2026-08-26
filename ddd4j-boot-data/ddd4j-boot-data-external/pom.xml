@@ -25,7 +25,7 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.github.easy4j</groupId>
             <artifactId>ip2region-spring-boot-starter</artifactId>
             <version>${spring-boot-starter-ip2region.version}</version>
         </dependency>

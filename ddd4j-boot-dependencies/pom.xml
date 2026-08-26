@@ -346,12 +346,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/agora-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>agora-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-agora.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/io.github.lucky845/easy-captcha-spring-boot-starter -->
             <dependency>
                 <groupId>io.github.lucky845</groupId>
@@ -364,35 +358,11 @@
                 <artifactId>schedulerx2-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-aliyun-schedulerx2.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/aliyun-ons-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>aliyun-ons-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-aliyun-ons.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/aliyun-oss-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>aliyun-oss-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-aliyun-oss.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/aliyun-mps-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>aliyun-mps-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-aliyun-mps.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/com.taobao.arthas/arthas-spring-boot-starter -->
             <dependency>
                 <groupId>com.taobao.arthas</groupId>
                 <artifactId>arthas-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-arthas.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/baiduapi-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>baiduapi-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-baiduapi.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.gitee.Jmysy/binlog4j-spring-boot-starter -->
             <dependency>
@@ -406,12 +376,6 @@
                 <artifactId>camel-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-camel.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/canal-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>canal-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-canal.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/org.apereo.cas.client/cas-client-support-springboot -->
             <dependency>
                 <groupId>org.apereo.cas.client</groupId>
@@ -423,12 +387,6 @@
                         <artifactId>bcpkix-jdk15on</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/curator-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>curator-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-curator.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-spring-boot-starter-jaxrs -->
             <dependency>
@@ -453,12 +411,6 @@
                         <artifactId>spring-boot-starter-logging</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/disruptor-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>disruptor-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-disruptor.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/dingtalk-spring-boot-starter -->
             <dependency>
@@ -495,11 +447,6 @@
                 <artifactId>druid-spring-boot-3-starter</artifactId>
                 <version>${spring-boot-starter-druid.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>druid-plus-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-druid-plus.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo-spring-boot-starter -->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
@@ -535,12 +482,6 @@
                 <groupId>org.apache.shardingsphere.elasticjob</groupId>
                 <artifactId>elasticjob-lite-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-elasticjob.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/fastdfs-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>fastdfs-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-fastdfs.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.flowable/flowable-spring-boot-starter -->
             <dependency>
@@ -625,18 +566,6 @@
                 <artifactId>flowable-spring-boot-starter-rest-api</artifactId>
                 <version>${flowable.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/flyway-plus-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>flyway-plus-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-flyway-plus.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/geoip-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>geoip-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-geoip.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/io.github.lognet/grpc-spring-boot-starter -->
             <dependency>
                 <groupId>io.github.lognet</groupId>
@@ -654,24 +583,6 @@
                 <groupId>net.guerlab.sms</groupId>
                 <artifactId>guerlab-sms-redis-repository-starter</artifactId>
                 <version>${guerlab-sms.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/hikaricp-plus-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>hikaricp-plus-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-hikaricp-plus.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/ip2region-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>ip2region-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-ip2region.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/ishumei-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>ishumei-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-ishumei.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
             <dependency>
@@ -691,24 +602,6 @@
                 <artifactId>spring-boot-admin-server-ui-javamelody</artifactId>
                 <version>${spring-boot-starter-javamelody-ui.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/jcaptcha-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>jcaptcha-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-jcaptcha.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/jpush-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>jpush-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-jpush.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/kaptcha-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>kaptcha-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-kaptcha.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/com.baomidou/lock4j-redisson-spring-boot-starter -->
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -726,12 +619,6 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>lock4j-zookeeper-spring-boot-starter</artifactId>
                 <version>${lock4j.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/log4j2-plus-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>log4j2-plus-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-log4j2-plus.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.dromara.mica-mqtt/mica-mqtt-client-spring-boot-starter -->
             <dependency>
@@ -787,12 +674,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/spring-boot-starter-minio -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>minio-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-minio.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/com.alibaba.boot/nacos-config-spring-boot-starter -->
             <dependency>
                 <groupId>com.alibaba.boot</groupId>
@@ -817,12 +698,6 @@
                 <artifactId>opentracing-spring-jaeger-starter</artifactId>
                 <version>${spring-boot-starter-opentracing.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/pac4j-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>pac4j-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-pac4j.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/org.pac4j/pac4j-springboot -->
             <dependency>
                 <groupId>org.pac4j</groupId>
@@ -834,24 +709,6 @@
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-pagehelper.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/pf4j-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>pf4j-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-pf4j.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/pf4j2-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>pf4j2-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-pf4j2.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/pf4j3-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>pf4j3-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-pf4j3.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/info.picocli/picocli-spring-boot-starter -->
             <dependency>
@@ -865,18 +722,6 @@
                 <artifactId>pinyin4j-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-pinyin4j.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/playwright-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>playwright-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-playwright.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/qqwry-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>qqwry-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-qqwry.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/redistpl-plus-spring-boot-starter -->
             <dependency>
                 <groupId>io.github.easy4j</groupId>
@@ -888,12 +733,6 @@
                         <artifactId>jackson-databind</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/redisson-plus-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>redisson-plus-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-redisson-plus.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter -->
             <dependency>
@@ -919,77 +758,11 @@
                 <artifactId>rocketmq-v5-client-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-rocketmq.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/schemacrawler-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>schemacrawler-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-schemacrawler.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/io.seata/seata-spring-boot-starter -->
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-seata.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-biz-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-biz-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-biz.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-cas-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-cas-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-cas.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-dingtalk-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-dingtalk-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-dingtalk.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-facebook-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-facebook-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-facebook.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-google-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-google-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-google.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-jwt-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-jwt-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-jwt.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-line-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-line-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-line.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-qrcode-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-qrcode-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-qrcode.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/security-weixin-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>security-weixin-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-security-weixin.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/shanyan-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>shanyan-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-shanyan.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-common -->
             <dependency>
@@ -1044,36 +817,6 @@
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>shardingsphere-encrypt-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-shardingsphere-jdbc.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/sigar-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>sigar-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-sigar.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/socketio-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>socketio-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-socketio.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/tencentapi-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>tencentapi-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-tencentapi.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/webflux-swagger2-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>webflux-swagger2-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-webflux-swagger2.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/webmvc-swagger2-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>webmvc-swagger2-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-webmvc-swagger2.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.hiwepy/validation-mimetypes-spring-boot-starter -->
             <dependency>
@@ -1146,24 +889,6 @@
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>wx-java-qidian-spring-boot-starter</artifactId>
                 <version>${weixin-java.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/xmemcached-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>xmemcached-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-xmemcached.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/xxljob-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>xxljob-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-xxljob.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/zxing-spring-boot-starter -->
-            <dependency>
-                <groupId>com.github.hiwepy</groupId>
-                <artifactId>zxing-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-zxing.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
@@ -1666,6 +1391,250 @@
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-localstack</artifactId>
                 <version>${testcontainers-bom.version}</version>
+            </dependency>
+        
+            <!-- 原 hiwepy 坐标迁至 easy4j（属性沿用） -->
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>agora-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-agora.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>aliyun-ons-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-aliyun-ons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>aliyun-oss-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-aliyun-oss.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>aliyun-mps-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-aliyun-mps.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>baiduapi-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-baiduapi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>canal-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-canal.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>curator-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>disruptor-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-disruptor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>druid-plus-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-druid-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>fastdfs-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-fastdfs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>flyway-plus-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-flyway-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>geoip-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-geoip.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>hikaricp-plus-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-hikaricp-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>ip2region-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-ip2region.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>ishumei-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-ishumei.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>jcaptcha-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-jcaptcha.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>jpush-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-jpush.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>kaptcha-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-kaptcha.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>log4j2-plus-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-log4j2-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>minio-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-minio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>pac4j-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-pac4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>pf4j-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-pf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>pf4j2-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-pf4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>pf4j3-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-pf4j3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>playwright-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-playwright.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>qqwry-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-qqwry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>redisson-plus-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-redisson-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>schemacrawler-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-schemacrawler.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>security-biz-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-security-biz.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>security-cas-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-security-cas.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>security-dingtalk-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-security-dingtalk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>security-facebook-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-security-facebook.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>security-google-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-security-google.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>security-jwt-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-security-jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>security-line-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-security-line.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>security-qrcode-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-security-qrcode.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>security-weixin-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-security-weixin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>shanyan-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-shanyan.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>sigar-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-sigar.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>socketio-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-socketio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>tencentapi-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-tencentapi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>webflux-swagger2-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-webflux-swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>webmvc-swagger2-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-webmvc-swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>xmemcached-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-xmemcached.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>xxljob-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-xxljob.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>zxing-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-zxing.version}</version>
+            </dependency>
+        
+            <!-- easy4j starter 逐个版本（与 ddd4j-boot-starters 仓库一一对应，外部提交丢失后补齐） -->
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>net.jeebiz</artifactId>
+                <version>${spring-boot-starter-ftpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>com.github.easy4j</artifactId>
+                <version>${spring-boot-starter-rythm.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
