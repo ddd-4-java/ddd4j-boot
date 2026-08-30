@@ -34,10 +34,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <revision>3.4.x.20260630-SNAPSHOT</revision>
         <ddd4j.version>2.0.x.20260630-SNAPSHOT</ddd4j.version>
-        <!-- Jackson BOM：父 POM 链来自 2.0.x 线（jackson.version=2.22.2），
-             但 ddd4j 3.x 主仓已迁 Jackson 3（tools.jackson groupId）。
-             显式覆盖版本与坐标与 3.x 一致。 -->
-        <jackson-bom.version>3.2.1</jackson-bom.version>
         <!-- Spring Boot 版本（不再继承 spring-boot-starter-parent，需显式声明） -->
         <spring-boot.version>3.4.13</spring-boot.version>
         <java.version>17</java.version>
@@ -185,7 +181,7 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>tools.jackson</groupId>
+                <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
                 <version>${jackson-bom.version}</version>
                 <type>pom</type>
