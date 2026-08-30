@@ -1,44 +1,33 @@
 package io.ddd4j.boot.jackson;
 
-import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
-import org.springframework.boot.test.context.FilteredClassLoader;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * {@link DefaultJacksonAutoConfiguration} 契约测试。
+ * {@link DefaultJacksonAutoConfiguration} 契约测试（Jackson 3.x 重写版）。
  *
- * <p>覆盖：默认装配（@Primary ObjectMapper）/ 缺类回退。
+ * <p>原版本基于 {@code Jackson2ObjectMapperBuilder}（Spring Boot 3.x 提供的 Jackson 2.x
+ * 集成点）。本测试针对 Jackson 3.x 重写后版本：直接构造 {@link JsonMapper}，绕开
+ * Spring Boot 的 Jackson 自动装配层（Spring Boot 3.5.x 仍仅支持 Jackson 2.x builder 系列）。
+ *
+ * <p>覆盖：默认装配（{@code @Primary JsonMapper} Bean）/ ApplicationContext 启动成功。
  */
 class DefaultJacksonAutoConfigurationTest {
 
-    // Jackson2ObjectMapperBuilder 由 Boot 的 JacksonAutoConfiguration 提供，
-    // 本配置 @AutoConfigureBefore 它；默认装配用例必须同时加载两者（对齐真实应用装配顺序）
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
-            .withConfiguration(AutoConfigurations.of(
-                    DefaultJacksonAutoConfiguration.class,
-                    org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class));
+            .withConfiguration(AutoConfigurations.of(DefaultJacksonAutoConfiguration.class));
 
     @Test
-    void defaultAssemblyShouldProvidePrimaryObjectMapper() {
+    void defaultAssemblyShouldProvidePrimaryJsonMapper() {
         runner.run(context -> {
             assertThat(context).hasNotFailed();
-            assertThat(context).hasSingleBean(ObjectMapper.class);
+            assertThat(context).hasSingleBean(JsonMapper.class);
+            JsonMapper mapper = context.getBean(JsonMapper.class);
+            assertThat(mapper).isNotNull();
         });
-    }
-
-    @Test
-    void shouldBackOffWhenJacksonBuilderMissing() {
-        new ApplicationContextRunner()
-                .withClassLoader(new FilteredClassLoader(Jackson2ObjectMapperBuilder.class))
-                .withConfiguration(AutoConfigurations.of(DefaultJacksonAutoConfiguration.class))
-                .run(context -> {
-                    assertThat(context).hasNotFailed();
-                    assertThat(context).doesNotHaveBean("jacksonObjectMapper");
-                });
     }
 }

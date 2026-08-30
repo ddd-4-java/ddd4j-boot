@@ -47,6 +47,30 @@
                     <skipTests>false</skipTests>
                 </configuration>
             </plugin>
+            <!--
+                flatten-maven-plugin 1.8.0（本地最高版本）不支持 parent POM 的
+                modelVersion 4.1.0（Maven 4 RC-6 自身限制），导致 reactor build
+                在 process-resources 之前的 flatten 阶段失败。该模块仅做 Jackson
+                配置类打包，无需生成 flattened POM（其它模块已经做了），故
+                显式禁用本模块的 flatten 阶段（phase=none + skip=true）。
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
