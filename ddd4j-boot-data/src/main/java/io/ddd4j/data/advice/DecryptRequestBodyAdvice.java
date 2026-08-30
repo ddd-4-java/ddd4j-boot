@@ -1,7 +1,7 @@
 package io.ddd4j.data.advice;
 
 import cn.hutool.crypto.symmetric.AES;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import io.ddd4j.core.ApiCode;
 import io.ddd4j.core.dto.BaseDTO;
 import io.ddd4j.core.dto.RequestData;

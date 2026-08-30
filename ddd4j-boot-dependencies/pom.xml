@@ -419,7 +419,7 @@
                 <version>${spring-boot-starter-dingtalk.version}</version>
                 <exclusions>
                     <exclusion>
-                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <groupId>tools.jackson.core</groupId>
                         <artifactId>jackson-databind</artifactId>
                     </exclusion>
                     <exclusion>
@@ -729,7 +729,7 @@
                 <version>${spring-boot-starter-redistpl-plus.version}</version>
                 <exclusions>
                     <exclusion>
-                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <groupId>tools.jackson.core</groupId>
                         <artifactId>jackson-databind</artifactId>
                     </exclusion>
                 </exclusions>
