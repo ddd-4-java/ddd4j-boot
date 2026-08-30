@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+         xmlns="http://maven.apache.org/POM/4.1.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.1.0 https://maven.apache.org/xsd/maven-4.1.0.xsd">
+    <modelVersion>4.1.0</modelVersion>
     <parent>
         <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-extensions</artifactId>
@@ -11,62 +11,26 @@
     </parent>
 
     <artifactId>ddd4j-boot-extension-jackson</artifactId>
-    <description>Ddd4j Boot Jackson Component</description>
+    <description>Ddd4j Boot Jackson 3.x Component</description>
 
     <dependencies>
-        <!-- Pure Java Jackson serializers, annotations and modules. -->
-        <dependency>
-            <groupId>io.github.easy4j</groupId>
-            <artifactId>jackson-extension</artifactId>
-            <version>${easy4j-jackson-extension.version}</version>
-        </dependency>
-        <!-- For Commons Lang3 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <!-- For HuTool -->
+        <!-- For HuTool (date patterns) -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
-        <!-- For Spring Biz -->
-        <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>spring-biz</artifactId>
-        </dependency>
-        <!-- For Spring Web -->
+        <!-- For Spring Web (HTTP message conversion integration) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
-        <!-- For Jackson -->
+        <!-- Jackson 3.x core: databind 已内置 javatime 子模块与 annotations 子包 -->
         <dependency>
             <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-bom.version}</version>
         </dependency>
-        <dependency>
-            <groupId>tools.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jdk8</artifactId>
-            <version>${jackson-bom.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>tools.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${jackson-bom.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>tools.jackson.module</groupId>
-            <artifactId>jackson-module-parameter-names</artifactId>
-            <version>${jackson-bom.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>tools.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson-bom.version}</version>
-        </dependency>
-        <!-- Compile dependencies -->
+        <!-- Spring Boot auto-configuration support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
