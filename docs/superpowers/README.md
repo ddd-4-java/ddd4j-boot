@@ -81,6 +81,7 @@ docs/superpowers/
 | [2026-08-12-configuration-metadata-design.md](specs/2026-08-12-configuration-metadata-design.md) | 配置属性元数据（spring-boot-configuration-processor） | 已完成 |
 | [2026-08-12-contract-test-strategy-design.md](specs/2026-08-12-contract-test-strategy-design.md) | ApplicationContextRunner 契约测试策略 | 已完成 |
 | [2026-08-31-cross-jdk-logical-consistency-design.md](specs/2026-08-31-cross-jdk-logical-consistency-design.md) | JDK 8/17/21 维护线逻辑能力契约与收敛规则 | 已确认，待执行 |
+| [2026-08-31-jdk8-ddd-core-bridge-design.md](specs/2026-08-31-jdk8-ddd-core-bridge-design.md) | JDK 8 / Boot 2 的 ddd4j 1.0.x Core、Repository 与 CQRS 桥接 | 待评审 |
 | [2026-08-12-mq-broker-coverage-expansion-design.md](specs/2026-08-12-mq-broker-coverage-expansion-design.md) | MQ broker Testcontainers 覆盖补齐 | 待实施 |
 | [2026-08-12-data-legacy-cleanup-design.md](specs/2026-08-12-data-legacy-cleanup-design.md) | ddd4j-boot-data legacy 重复源码清理 | 待实施 |
 | [2026-08-12-full-pipeline-smoke-test-design.md](specs/2026-08-12-full-pipeline-smoke-test-design.md) | 全链路 samples 烟雾测试 | 待实施 |
