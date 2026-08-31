@@ -1,2 +1,2 @@
 branch	contract_id	status	reason	migration_document	evidence_ref
-2.3.x	CORE_SPI_REPOSITORY_CQRS	BLOCKED	JDK 8 reactor cannot resolve compile dependency com.github.hiwepy:mybatis-plus-enhance:2.7.x.20251205-SNAPSHOT from the declared snapshot repository.		docs/superpowers/reports/2026-08-31-jdk8-2.3-build-blocked.md
+2.3.x	CORE_SPI_REPOSITORY_CQRS	BLOCKED	Candidate-repository resolution remains unavailable for the JDK 8 compatible mybatis-plus-enhance snapshot; local verification used a reproducibly built but unpublished exact revision.		docs/superpowers/reports/2026-08-31-jdk8-2.3-build-blocked.md
