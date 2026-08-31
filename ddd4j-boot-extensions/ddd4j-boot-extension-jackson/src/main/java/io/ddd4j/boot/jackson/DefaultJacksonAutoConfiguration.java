@@ -1,5 +1,6 @@
 package io.ddd4j.boot.jackson;
 
+import tools.jackson.core.JsonGenerator;
 import tools.jackson.databind.BeanDescription;
 import tools.jackson.databind.JavaType;
 import tools.jackson.databind.MapperFeature;
@@ -9,6 +10,7 @@ import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.module.SimpleModule;
 import tools.jackson.databind.ser.BeanPropertyWriter;
 import tools.jackson.databind.ser.ValueSerializerModifier;
+import tools.jackson.databind.SerializationContext;
 import tools.jackson.databind.ext.javatime.ser.LocalDateSerializer;
 import tools.jackson.databind.ext.javatime.ser.LocalDateTimeSerializer;
 import tools.jackson.databind.ext.javatime.ser.LocalTimeSerializer;
@@ -23,7 +25,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.Temporal;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Spring Boot Jackson 3.x AutoConfiguration。
@@ -87,10 +93,19 @@ public class DefaultJacksonAutoConfiguration {
     }
 
     /**
-     * 空值字段序列化策略修改器（替代原 {@code MyBeanSerializerModifier}）。
+     * null 值默认序列化策略：按属性类型将 {@code null} 序列化为类型默认值而非省略字段。
      *
-     * <p>Jackson 3.x 中所有 serializer modifier 统一继承自 {@link ValueSerializerModifier}。
-     * 简单实现：返回原 serializer；后续可按需扩展为针对特定类型返回 null value serializer。
+     * <p>对齐 {@code easy4j:jackson-extension} 的 {@code MyBeanSerializerModifier} 语义。
+     *
+     * <p>六类开关（{@code spring.jackson.default-null-*-serializer}）：
+     * <ul>
+     *   <li>array —— 数组/集合 → {@code []}</li>
+     *   <li>number —— 数值 → {@code 0}</li>
+     *   <li>string —— 字符串 → {@code ""}</li>
+     *   <li>date —— 日期/时间 → {@code ""}</li>
+     *   <li>boolean —— 布尔 → {@code false}</li>
+     *   <li>json-object —— 对象/Map → {@code {}}</li>
+     * </ul>
      */
     static final class NullValueSerializerModifier extends ValueSerializerModifier {
 
@@ -115,22 +130,92 @@ public class DefaultJacksonAutoConfiguration {
         }
 
         @Override
+        public List<BeanPropertyWriter> changeProperties(SerializationConfig config,
+                                                         BeanDescription.Supplier beanDesc,
+                                                         List<BeanPropertyWriter> beanProperties) {
+            List<BeanPropertyWriter> modified = new java.util.ArrayList<>(beanProperties.size());
+            for (BeanPropertyWriter writer : beanProperties) {
+                modified.add(wrapIfNeeded(writer));
+            }
+            return modified;
+        }
+
+        @Override
         public ValueSerializer<?> modifySerializer(SerializationConfig config,
                                                    BeanDescription.Supplier beanDesc,
                                                    ValueSerializer<?> serializer) {
             return serializer;
         }
 
-        @Override
-        public List<BeanPropertyWriter> changeProperties(SerializationConfig config,
-                                                         BeanDescription.Supplier beanDesc,
-                                                         List<BeanPropertyWriter> beanProperties) {
-            return beanProperties;
+        private BeanPropertyWriter wrapIfNeeded(BeanPropertyWriter writer) {
+            if (writer == null) {
+                return null;
+            }
+            JavaType type = writer.getType();
+            if (type == null) {
+                return writer;
+            }
+            Class<?> rawType = type.getRawClass();
+            if (rawType == null) {
+                return writer;
+            }
+            if (rawType.isArray() || Collection.class.isAssignableFrom(rawType)) {
+                return defaultForArray ? new NullValueBeanPropertyWriter(writer, "[]") : writer;
+            }
+            if (CharSequence.class.isAssignableFrom(rawType) || Character.class == rawType) {
+                return defaultForString ? new NullValueBeanPropertyWriter(writer, "\"\"") : writer;
+            }
+            if (Number.class.isAssignableFrom(rawType)
+                    || (rawType.isPrimitive() && rawType != boolean.class && rawType != void.class)) {
+                return defaultForNumber ? new NullValueBeanPropertyWriter(writer, "0") : writer;
+            }
+            if (Date.class.isAssignableFrom(rawType) || Temporal.class.isAssignableFrom(rawType)) {
+                return defaultForDate ? new NullValueBeanPropertyWriter(writer, "\"\"") : writer;
+            }
+            if (rawType == boolean.class || Boolean.class == rawType) {
+                return defaultForBoolean ? new NullValueBeanPropertyWriter(writer, "false") : writer;
+            }
+            if (Map.class.isAssignableFrom(rawType) || Object.class == rawType) {
+                return defaultForJsonObject ? new NullValueBeanPropertyWriter(writer, "{}") : writer;
+            }
+            return defaultForJsonObject ? new NullValueBeanPropertyWriter(writer, "{}") : writer;
+        }
+    }
+
+    /**
+     * {@code null} 属性写为固定 JSON 字面量（如 {@code []} / {@code ""} / {@code 0} / {@code {}}）的
+     * {@link BeanPropertyWriter} 装饰器。
+     */
+    static final class NullValueBeanPropertyWriter extends BeanPropertyWriter {
+
+        private static final long serialVersionUID = 1L;
+
+        private final BeanPropertyWriter delegate;
+        private final String nullLiteral;
+
+        NullValueBeanPropertyWriter(BeanPropertyWriter delegate, String nullLiteral) {
+            super(delegate);
+            this.delegate = delegate;
+            this.nullLiteral = nullLiteral;
         }
 
-        @SuppressWarnings("unused")
-        private static JavaType unusedTypeRef() { // 保留以便扩展时引用
-            return null;
+        @Override
+        public void serializeAsProperty(Object bean, JsonGenerator gen, SerializationContext ctxt)
+                throws Exception {
+            Object value;
+            try {
+                value = get(bean);
+            } catch (Exception e) {
+                // JacksonException 的双参数构造器是 protected；此处包成 RuntimeException
+                // 让 Jackson 框架继续以统一的异常类型处理。cause 保留原始失败原因。
+                throw new RuntimeException("Failed to read property '" + getName() + "'", e);
+            }
+            if (value == null) {
+                gen.writeName(getName());
+                gen.writeRawValue(nullLiteral);
+                return;
+            }
+            delegate.serializeAsProperty(bean, gen, ctxt);
         }
     }
 }
