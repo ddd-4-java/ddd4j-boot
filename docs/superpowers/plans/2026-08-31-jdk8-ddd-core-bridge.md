@@ -15,9 +15,59 @@
 - 串行处理 `2.3.x`、`2.4.x`、`2.5.x`、`2.6.x`，每次修改前验证 GitHub/Codeup SHA、`git status` 和 JDK 8。
 - 不使用 Git worktree、不推送、不删除或重命名现有 `io.ddd4j.boot.*` 类型、模块或配置键。
 - 只使用 `ddd4j 1.0.x.20260630-SNAPSHOT` 的 Java 8 构件；候选仓库不能解析时记录 `BLOCKED`，本地安装只作测试依赖。
+- `ddd4j 1.0.x` 保持 `com.github.hiwepy:mybatis-plus-enhance` 单体 ABI，并使用 `2.7.x.20260630-SNAPSHOT`；禁止用模块化 `io.github.easy4j` 构件伪装旧坐标。
 - Boot 2 自动配置使用 `META-INF/spring.factories`，禁止引入 Boot 3 `@AutoConfiguration` 或 `jakarta.*`。
 - 默认 Bean 必须 `@ConditionalOnMissingBean`；桥接不得主动关闭用户提供的 EventStore。
 - 每条线必须先产生失败的契约测试，再写最小实现；通过构建不等于行为契约通过。
+
+---
+
+### Task 0: 对齐并验证 ddd4j 1.0.x 的旧单体 ABI
+
+**Repository:** `/Users/wandl/workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j`, branch `feature/1.0.x`
+
+**Files:**
+
+- Modify: `ddd4j-dependencies/pom.xml`
+- Create: `docs/superpowers/reports/2026-08-31-jdk8-abi-compatibility.md`
+
+**Interfaces:**
+
+- Produces local Java 8 artifacts `io.ddd4j:ddd4j-ddd:1.0.x.20260630-SNAPSHOT` and `io.ddd4j:ddd4j-core:1.0.x.20260630-SNAPSHOT`.
+- Consumes `com.github.hiwepy:mybatis-plus-enhance:2.7.x.20260630-SNAPSHOT`, built from its Java 8 `2.7.x` source line.
+
+- [ ] **Step 1: Write the failing dependency-resolution proof**
+
+  With an isolated empty Maven local repository, run:
+
+  ```bash
+  JAVA_HOME=$(/usr/libexec/java_home -v 1.8) mvn -pl ddd4j-core -am -DskipTests compile
+  ```
+
+  Expected: FAIL while `ddd4j-dependencies` requests old `com.github.hiwepy:mybatis-plus-enhance:1.0.x.20260630-SNAPSHOT`.
+
+- [ ] **Step 2: Update only the dependency-management revision**
+
+  In `ddd4j-dependencies/pom.xml`, change `mybatis-plus-enhance.version` from `1.0.x.20260630-SNAPSHOT` to `2.7.x.20260630-SNAPSHOT`; retain groupId `com.github.hiwepy` and artifactId `mybatis-plus-enhance`.
+
+- [ ] **Step 3: Build and install the real Java 8 upstream artifacts**
+
+  Run:
+
+  ```bash
+  JAVA_HOME=$(/usr/libexec/java_home -v 1.8) mvn -q -DskipTests install
+  ```
+
+  Expected: PASS with `ddd4j-core` and `ddd4j-ddd` installed under revision `1.0.x.20260630-SNAPSHOT`.
+
+- [ ] **Step 4: Record ABI evidence and commit**
+
+  Record source SHA, exact coordinates, JDK, command and result in the report. Commit:
+
+  ```bash
+  git add ddd4j-dependencies/pom.xml docs/superpowers/reports/2026-08-31-jdk8-abi-compatibility.md
+  git commit -m "build: align ddd4j jdk8 enhance abi"
+  ```
 
 ---
 
@@ -32,7 +82,7 @@
 
 **Interfaces:**
 
-- Consumes: `io.ddd4j:ddd4j-ddd:1.0.x.20260630-SNAPSHOT`, `io.ddd4j:ddd4j-core:1.0.x.20260630-SNAPSHOT`.
+- Consumes Task 0 installed `io.ddd4j:ddd4j-ddd:1.0.x.20260630-SNAPSHOT` and `io.ddd4j:ddd4j-core:1.0.x.20260630-SNAPSHOT`.
 - Produces: Boot 2 contract tests for `Ddd4jJdk8CoreAutoConfiguration` and `Ddd4jJdk8RepositoryAutoConfiguration`.
 
 - [ ] **Step 1: Add failing test dependencies and test classes**

@@ -1,7 +1,7 @@
 # ddd4j-boot JDK 8 Core Bridge 设计
 
 - 日期：2026-08-31
-- 状态：待评审
+- 状态：已确认，待执行
 - 适用分支：`2.3.x`、`2.4.x`、`2.5.x`、`2.6.x`
 - 上游基线：`ddd4j feature/1.0.x`，revision `1.0.x.20260630-SNAPSHOT`，Java 8
 
@@ -42,6 +42,8 @@ flowchart LR
 ### 4.1 依赖管理
 
 每条 JDK 8 分支在 `ddd4j-boot-dependencies/pom.xml` 增加 `ddd4j.version=1.0.x.20260630-SNAPSHOT`，并管理 `io.ddd4j:ddd4j-ddd` 与 `io.ddd4j:ddd4j-core`。`ddd4j-boot-core/pom.xml` 仅依赖这些公开构件，不嵌入上游源码。
+
+`ddd4j feature/1.0.x` 保持既有 `com.github.hiwepy:mybatis-plus-enhance` 单体 ABI，并将其 dependency-management revision 对齐为 `2.7.x.20260630-SNAPSHOT`。不得把模块化 `io.github.easy4j:mybatis-plus-enhance-core` / `extension` / `spring` 构件以旧单体坐标安装或发布。
 
 候选仓库无法解析这些精确构件时，构建或发布报告必须标为 `BLOCKED`；本地安装只用于验证，不构成发布证据。
 
@@ -85,10 +87,11 @@ JDK 8 组内不得删除或改义既有公开配置键。新增键的默认值�
 
 ## 7. 分阶段交付
 
-1. 在 `2.3.x` 以 Java 8 引入依赖管理、核心桥接、Registry 与失败测试，完成本地 Maven 验证。
-2. 将行为差异而非文件文本移植到 `2.4.x`–`2.6.x`，逐线运行其 Boot 版本的测试。
-3. 更新跨分支证据表、同组 API/配置比较和候选仓库解析证据。
-4. 在 JDK 8 组通过后，继续 JDK 17 / JDK 21 分支与 ddd4j-cloud 的版本组合收敛。
+1. 先在 `ddd4j feature/1.0.x` 对齐旧单体 ABI 依赖并在 Java 8 下安装真实上游构件。
+2. 在 `2.3.x` 以 Java 8 引入依赖管理、核心桥接、Registry 与失败测试，完成本地 Maven 验证。
+3. 将行为差异而非文件文本移植到 `2.4.x`–`2.6.x`，逐线运行其 Boot 版本的测试。
+4. 更新跨分支证据表、同组 API/配置比较和候选仓库解析证据。
+5. 在 JDK 8 组通过后，继续 JDK 17 / JDK 21 分支与 ddd4j-cloud 的版本组合收敛。
 
 ## 8. 风险与非目标
 
