@@ -207,7 +207,7 @@
   git commit -m "test: gate boot branch consistency evidence"
   ```
 
-- [ ] **Task 5: 建立跨组配置与 API 迁移映射**
+- [x] **Task 5: 建立跨组配置与 API 迁移映射**（完成：`0a8a0f80`）
 
   **Files:**
   - Create: `config/consistency/ddd4j-boot-migration-map.tsv`
