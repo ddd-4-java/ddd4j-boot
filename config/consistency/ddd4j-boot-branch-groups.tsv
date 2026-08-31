@@ -1,0 +1,14 @@
+branch	jdk_group	boot_line	ddd4j_line	registration_mode
+2.3.x	jdk8	2.3.x	1.0.x	legacy-factories
+2.4.x	jdk8	2.4.x	1.0.x	legacy-factories
+2.5.x	jdk8	2.5.x	1.0.x	legacy-factories
+2.6.x	jdk8	2.6.x	1.0.x	legacy-factories
+2.7.x	jdk17	2.7.x	1.0.x	mixed
+3.0.x	jdk17	3.0.x	2.0.x	imports
+3.1.x	jdk17	3.1.x	2.0.x	imports
+3.2.x	jdk17	3.2.x	2.0.x	imports
+3.3.x	jdk17	3.3.x	2.0.x	imports
+3.4.x	jdk17	3.4.x	2.0.x	imports
+3.5.x	jdk17	3.5.x	2.0.x	imports
+4.0.x	jdk21	4.0.x	3.0.x	imports
+4.1.x	jdk21	4.1.x	3.0.x	imports
