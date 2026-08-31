@@ -1,7 +1,7 @@
 # ddd4j-boot 跨 JDK 维护线逻辑一致性设计
 
 - 日期：2026-08-31
-- 状态：待评审
+- 状态：已确认，待执行
 - 涉及模块：`ddd4j-boot` 全部维护线、BOM、Core、Web、Data、Auth、Cache、MQ、Extensions、Samples
 
 ## 1. 目标与范围
