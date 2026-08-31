@@ -1,0 +1,7 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <parent><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-parent</artifactId><version>2.6.15</version></parent>
+  <groupId>io.github.easy4j</groupId><artifactId>ddd4j-boot</artifactId><version>${revision}</version>
+  <properties><revision>2.6.x.20260630-SNAPSHOT</revision><java.version>1.8</java.version></properties>
+  <modules><module>ddd4j-boot-core</module><module>ddd4j-boot-cmpt</module></modules>
+</project>
