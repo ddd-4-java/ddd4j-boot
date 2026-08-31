@@ -69,7 +69,7 @@
   git commit -m "test: define boot logical consistency contracts"
   ```
 
-- [ ] **Task 2: 形成可重复的分支基线审计**
+- [x] **Task 2: 形成可重复的分支基线审计**（完成：`270de582`）
 
   **Files:**
   - Create: `scripts/consistency/audit_branch_baselines.py`
