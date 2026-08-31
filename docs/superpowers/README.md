@@ -63,6 +63,7 @@ docs/superpowers/
 |------|-----------|------|
 | [2026-08-12-ddd4j-boot-3.4x-adapt-ddd4j-2.0x.md](plans/2026-08-12-ddd4j-boot-3.4x-adapt-ddd4j-2.0x.md) | ddd4j-boot 3.4.x 适配 ddd4j 2.0.x 核心契约 | 实施中（Phase 1-6 已完成） |
 | [2026-08-31-ddd4j-boot-cross-jdk-logical-consistency.md](plans/2026-08-31-ddd4j-boot-cross-jdk-logical-consistency.md) | JDK 8/17/21 维护线逻辑一致性收敛、验证与发布证据 | 待实施 |
+| [2026-08-31-jdk8-ddd-core-bridge.md](plans/2026-08-31-jdk8-ddd-core-bridge.md) | JDK 8 / Boot 2 的 ddd4j 1.0.x Core、Repository 与 CQRS 桥接 | 待实施 |
 | [2026-08-12-ddd4j-quarkus-align-with-boot.md](plans/2026-08-12-ddd4j-quarkus-align-with-boot.md) | ddd4j-quarkus 对齐 ddd4j-boot 能力矩阵 | 待实施 |
 | [2026-08-12-ddd4j-javalin-align-with-boot.md](plans/2026-08-12-ddd4j-javalin-align-with-boot.md) | ddd4j-javalin 对齐 ddd4j-boot 能力矩阵 | 待实施 |
 
