@@ -25,7 +25,7 @@
 
 ## Phase 1：建立可执行的逻辑事实源
 
-- [ ] **Task 1: 定义分支、能力和例外的机器可读契约**
+- [x] **Task 1: 定义分支、能力和例外的机器可读契约**（完成：`9f1d02fc`）
 
   **Files:**
   - Create: `config/consistency/ddd4j-boot-branch-groups.tsv`
