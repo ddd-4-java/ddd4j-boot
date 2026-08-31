@@ -1,0 +1,4257 @@
+{
+  "audit_status": "PASS",
+  "branch_count": 13,
+  "branches": [
+    {
+      "branch": "2.3.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 18,
+      "registrations": [
+        {
+          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-cola/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-dubbo/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-mybatis/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.akka.AkkaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-akka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.crypto.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-crypto/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.excel.ExcelAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-excel/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.express.infrastructure.config.ExpressAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-express/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.external.ExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-external/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-jackson/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.kafka.DefaultKafkaAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-kafka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.logs.ApiLogAspectConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-logs/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-satoken/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityBizConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityJwtConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultWebFluxConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultWebMvcConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/2.3.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "2.4.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 18,
+      "registrations": [
+        {
+          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-cola/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-dubbo/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-mybatis/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.akka.AkkaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-akka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.crypto.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-crypto/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.excel.ExcelAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-excel/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.express.infrastructure.config.ExpressAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-express/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.external.ExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-external/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-jackson/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.kafka.DefaultKafkaAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-kafka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.logs.ApiLogAspectConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-logs/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-satoken/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityBizConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityJwtConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultWebFluxConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultWebMvcConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/2.4.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "2.5.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 18,
+      "registrations": [
+        {
+          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-cola/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-dubbo/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-mybatis/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.akka.AkkaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-akka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.crypto.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-crypto/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.excel.ExcelAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-excel/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.express.infrastructure.config.ExpressAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-express/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.external.ExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-external/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-jackson/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.kafka.DefaultKafkaAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-kafka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.logs.ApiLogAspectConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-logs/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-satoken/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityBizConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityJwtConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultWebFluxConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultWebMvcConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/2.5.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "2.6.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 18,
+      "registrations": [
+        {
+          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-cola/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-dubbo/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-mybatis/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.akka.AkkaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-akka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.crypto.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-crypto/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.excel.ExcelAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-excel/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.express.infrastructure.config.ExpressAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-express/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.external.ExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-external/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-jackson/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.kafka.DefaultKafkaAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-kafka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.logs.ApiLogAspectConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-logs/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-satoken/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityBizConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityJwtConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultWebFluxConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultWebMvcConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cmpt/ddd4j-boot-cmpt-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/2.6.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "2.7.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 38,
+      "registrations": [
+        {
+          "class_name": "io.ddd4j.boot.akka.Ddd4jAkkaBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-license/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-satoken/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.security.SecurityEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-security/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.shiro.ShiroEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-shiro/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cache.Ddd4jCacheAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cache/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cola.ColaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jCoreAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jRepositoryAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.crypto.Ddd4jCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-crypto/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.datascope.Ddd4jDataScopeAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-datascope/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jGlobalSequenceAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.logs.Ddd4jApiLogAspectAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-logs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.mybatis.Ddd4jMybatisAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-mybatis/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.excel.Ddd4jExcelBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-jackson/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.monitor.Ddd4jMonitorBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-monitor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.activemq.ActiveMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-activemq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.disruptor.config.DisruptorMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-disruptor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.kafka.config.KafkaMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-kafka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqtt.MqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.bridge.autoconfigure.Ddd4jMicaMqttSubscribeGuardAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.config.MicaMqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.nats.NatsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-nats/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.ons.OnsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-ons/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.pulsar.PulsarMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-pulsar/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rabbitmq.RabbitMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.redisstream.config.RedisStreamMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-redis-stream/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rocketmq.RocketMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rocketmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.sqs.SqsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-sqs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.tdmq.config.TdmqMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-tdmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qlexpress.Ddd4jQLExpressBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.Ddd4jQrCodeBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.QrCodeWebAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webflux.Ddd4jWebFluxAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webmvc.Ddd4jWebMvcAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.extension.dubbo.DubboAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/2.7.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "3.0.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 38,
+      "registrations": [
+        {
+          "class_name": "io.ddd4j.boot.akka.Ddd4jAkkaBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-license/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-satoken/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.security.SecurityEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-security/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.shiro.ShiroEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-shiro/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cache.Ddd4jCacheAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cache/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cola.ColaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jCoreAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jRepositoryAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.crypto.Ddd4jCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-crypto/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.datascope.Ddd4jDataScopeAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-datascope/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jGlobalSequenceAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.logs.Ddd4jApiLogAspectAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-logs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.mybatis.Ddd4jMybatisAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-mybatis/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.excel.Ddd4jExcelBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-jackson/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.monitor.Ddd4jMonitorBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-monitor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.activemq.ActiveMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-activemq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.disruptor.config.DisruptorMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-disruptor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.kafka.config.KafkaMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-kafka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqtt.MqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.bridge.autoconfigure.Ddd4jMicaMqttSubscribeGuardAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.config.MicaMqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.nats.NatsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-nats/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.ons.OnsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-ons/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.pulsar.PulsarMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-pulsar/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rabbitmq.RabbitMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.redisstream.config.RedisStreamMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-redis-stream/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rocketmq.RocketMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rocketmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.sqs.SqsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-sqs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.tdmq.config.TdmqMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-tdmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qlexpress.Ddd4jQLExpressBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.Ddd4jQrCodeBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.QrCodeWebAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webflux.Ddd4jWebFluxAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webmvc.Ddd4jWebMvcAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.extension.dubbo.DubboAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/3.0.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "3.1.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 38,
+      "registrations": [
+        {
+          "class_name": "io.ddd4j.boot.akka.Ddd4jAkkaBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-license/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-satoken/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.security.SecurityEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-security/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.shiro.ShiroEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-shiro/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cache.Ddd4jCacheAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cache/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cola.ColaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jCoreAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jRepositoryAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.crypto.Ddd4jCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-crypto/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.datascope.Ddd4jDataScopeAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-datascope/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jGlobalSequenceAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.logs.Ddd4jApiLogAspectAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-logs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.mybatis.Ddd4jMybatisAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-mybatis/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.excel.Ddd4jExcelBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-jackson/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.monitor.Ddd4jMonitorBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-monitor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.activemq.ActiveMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-activemq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.disruptor.config.DisruptorMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-disruptor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.kafka.config.KafkaMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-kafka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqtt.MqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.bridge.autoconfigure.Ddd4jMicaMqttSubscribeGuardAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.config.MicaMqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.nats.NatsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-nats/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.ons.OnsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-ons/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.pulsar.PulsarMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-pulsar/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rabbitmq.RabbitMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.redisstream.config.RedisStreamMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-redis-stream/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rocketmq.RocketMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rocketmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.sqs.SqsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-sqs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.tdmq.config.TdmqMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-tdmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qlexpress.Ddd4jQLExpressBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.Ddd4jQrCodeBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.QrCodeWebAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webflux.Ddd4jWebFluxAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webmvc.Ddd4jWebMvcAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.extension.dubbo.DubboAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/3.1.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "3.2.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 38,
+      "registrations": [
+        {
+          "class_name": "io.ddd4j.boot.akka.Ddd4jAkkaBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-license/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-satoken/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.security.SecurityEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-security/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.shiro.ShiroEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-shiro/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cache.Ddd4jCacheAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cache/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cola.ColaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jCoreAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jRepositoryAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.crypto.Ddd4jCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-crypto/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.datascope.Ddd4jDataScopeAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-datascope/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jGlobalSequenceAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.logs.Ddd4jApiLogAspectAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-logs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.mybatis.Ddd4jMybatisAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-mybatis/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.excel.Ddd4jExcelBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-jackson/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.monitor.Ddd4jMonitorBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-monitor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.activemq.ActiveMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-activemq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.disruptor.config.DisruptorMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-disruptor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.kafka.config.KafkaMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-kafka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqtt.MqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.bridge.autoconfigure.Ddd4jMicaMqttSubscribeGuardAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.config.MicaMqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.nats.NatsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-nats/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.ons.OnsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-ons/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.pulsar.PulsarMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-pulsar/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rabbitmq.RabbitMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.redisstream.config.RedisStreamMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-redis-stream/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rocketmq.RocketMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rocketmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.sqs.SqsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-sqs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.tdmq.config.TdmqMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-tdmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qlexpress.Ddd4jQLExpressBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.Ddd4jQrCodeBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.QrCodeWebAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webflux.Ddd4jWebFluxAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webmvc.Ddd4jWebMvcAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.extension.dubbo.DubboAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/3.2.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "3.3.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 38,
+      "registrations": [
+        {
+          "class_name": "io.ddd4j.boot.akka.Ddd4jAkkaBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-license/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-satoken/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.security.SecurityEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-security/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.shiro.ShiroEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-shiro/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cache.Ddd4jCacheAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cache/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cola.ColaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jCoreAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jRepositoryAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.crypto.Ddd4jCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-crypto/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.datascope.Ddd4jDataScopeAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-datascope/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jGlobalSequenceAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.logs.Ddd4jApiLogAspectAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-logs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.mybatis.Ddd4jMybatisAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-mybatis/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.excel.Ddd4jExcelBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-jackson/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.monitor.Ddd4jMonitorBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-monitor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.activemq.ActiveMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-activemq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.disruptor.config.DisruptorMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-disruptor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.kafka.config.KafkaMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-kafka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqtt.MqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.bridge.autoconfigure.Ddd4jMicaMqttSubscribeGuardAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.config.MicaMqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.nats.NatsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-nats/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.ons.OnsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-ons/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.pulsar.PulsarMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-pulsar/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rabbitmq.RabbitMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.redisstream.config.RedisStreamMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-redis-stream/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rocketmq.RocketMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rocketmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.sqs.SqsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-sqs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.tdmq.config.TdmqMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-tdmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qlexpress.Ddd4jQLExpressBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.Ddd4jQrCodeBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.QrCodeWebAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webflux.Ddd4jWebFluxAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webmvc.Ddd4jWebMvcAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.extension.dubbo.DubboAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/3.3.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "3.4.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 38,
+      "registrations": [
+        {
+          "class_name": "io.ddd4j.boot.akka.Ddd4jAkkaBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-license/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-satoken/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.security.SecurityEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-security/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.shiro.ShiroEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-shiro/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cache.Ddd4jCacheAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cache/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cola.ColaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jCoreAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jRepositoryAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.crypto.Ddd4jCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-crypto/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.datascope.Ddd4jDataScopeAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-datascope/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jGlobalSequenceAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.logs.Ddd4jApiLogAspectAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-logs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.mybatis.Ddd4jMybatisAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-mybatis/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.excel.Ddd4jExcelBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-jackson/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.monitor.Ddd4jMonitorBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-monitor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.activemq.ActiveMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-activemq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.disruptor.config.DisruptorMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-disruptor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.kafka.config.KafkaMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-kafka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqtt.MqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.bridge.autoconfigure.Ddd4jMicaMqttSubscribeGuardAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.config.MicaMqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.nats.NatsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-nats/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.ons.OnsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-ons/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.pulsar.PulsarMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-pulsar/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rabbitmq.RabbitMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.redisstream.config.RedisStreamMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-redis-stream/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rocketmq.RocketMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rocketmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.sqs.SqsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-sqs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.tdmq.config.TdmqMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-tdmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qlexpress.Ddd4jQLExpressBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.Ddd4jQrCodeBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.QrCodeWebAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webflux.Ddd4jWebFluxAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webmvc.Ddd4jWebMvcAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.extension.dubbo.DubboAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/3.4.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "3.5.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 38,
+      "registrations": [
+        {
+          "class_name": "io.ddd4j.boot.akka.Ddd4jAkkaBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-license/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-satoken/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.security.SecurityEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-security/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.auth.shiro.ShiroEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-auth/ddd4j-boot-auth-shiro/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cache.Ddd4jCacheAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-cache/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cola.ColaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jCoreAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.core.Ddd4jRepositoryAutoConfiguration",
+          "contract_id": "CORE_SPI_REPOSITORY_CQRS",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.crypto.Ddd4jCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-crypto/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.datascope.Ddd4jDataScopeAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-datascope/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.external.config.Ddd4jGlobalSequenceAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-external/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.logs.Ddd4jApiLogAspectAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-logs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.data.mybatis.Ddd4jMybatisAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-data/ddd4j-boot-data-mybatis/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.excel.Ddd4jExcelBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-jackson/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.monitor.Ddd4jMonitorBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-monitor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.activemq.ActiveMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-activemq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-core/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.disruptor.config.DisruptorMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-disruptor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.kafka.config.KafkaMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-kafka/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqtt.MqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.bridge.autoconfigure.Ddd4jMicaMqttSubscribeGuardAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.mqttmica.config.MicaMqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.nats.NatsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-nats/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.ons.OnsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-ons/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.pulsar.PulsarMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-pulsar/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rabbitmq.RabbitMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.redisstream.config.RedisStreamMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-redis-stream/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.rocketmq.RocketMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-rocketmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.sqs.SqsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-sqs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.mq.tdmq.config.TdmqMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-mq/ddd4j-boot-mq-tdmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qlexpress.Ddd4jQLExpressBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.Ddd4jQrCodeBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.qrcode.QrCodeWebAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webflux.Ddd4jWebFluxAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.web.webmvc.Ddd4jWebMvcAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-web/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.extension.dubbo.DubboAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/3.5.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "4.0.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 31,
+      "registrations": [
+        {
+          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-data-mybatis/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.akka.AkkaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.crypto.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-data-crypto/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.excel.ExcelAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.express.infrastructure.config.ExpressAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.external.ExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-data-external/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-jackson/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.kafka.DefaultKafkaAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-kafka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.logs.ApiLogAspectConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-data-logs/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.activemq.config.ActiveMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-activemq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.disruptor.config.DisruptorMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-disruptor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.mqtt.config.MqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-mqtt/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.mqttmica.config.MicaMqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.nats.config.NatsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-nats/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.ons.config.OnsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-ons/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.pulsar.config.PulsarMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-pulsar/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.rabbitmq.config.RabbitMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-rabbitmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.redisstream.config.RedisStreamMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-redis-stream/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.rocketmq.config.RocketMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-rocketmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.sqs.config.SqsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-sqs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.tdmq.config.TdmqMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-tdmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-satoken/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityBizConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityJwtConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultWebFluxConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultWebMvcConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.ddd.config.DddBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-ddd/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/4.0.x",
+      "unmapped_registration_count": 0
+    },
+    {
+      "branch": "4.1.x",
+      "duplicate_registration_count": 0,
+      "registration_file_count": 31,
+      "registrations": [
+        {
+          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-data-mybatis/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/resources/META-INF/spring.factories",
+            "ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.akka.AkkaAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.crypto.DefaultCryptoAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-data-crypto/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.datascope.DataScopeAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.excel.ExcelAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.express.infrastructure.config.ExpressAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.external.ExternalAutoConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-data-external/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.DefaultJacksonAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-extension-jackson/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.jackson.license.DefaultLicenseAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-license/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.kafka.DefaultKafkaAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-kafka/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.logs.ApiLogAspectConfiguration",
+          "contract_id": "DATA_CACHE",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-data-logs/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.activemq.config.ActiveMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-activemq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.disruptor.config.DisruptorMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-disruptor/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.mqtt.config.MqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-mqtt/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.mqttmica.config.MicaMqttMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-mqtt-mica/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.nats.config.NatsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-nats/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.ons.config.OnsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-ons/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.pulsar.config.PulsarMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-pulsar/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.rabbitmq.config.RabbitMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-rabbitmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.redisstream.config.RedisStreamMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-redis-stream/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.rocketmq.config.RocketMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-rocketmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.sqs.config.SqsMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-sqs/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.mq.tdmq.config.TdmqMQBootAutoConfiguration",
+          "contract_id": "MQ",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-mq-tdmq/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.satoken.SaTokenEnhanceAutoConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-satoken/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityBizConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.security.WebSecurityJwtConfiguration",
+          "contract_id": "AUTH",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-auth-security/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webflux.DefaultWebFluxConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webflux/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultMessageSourceAutoConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSequenceConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultSpringContextConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.cmpt.webmvc.DefaultWebMvcConfiguration",
+          "contract_id": "WEBMVC_WEBFLUX",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-extensions/ddd4j-boot-web-webmvc/src/main/resources/META-INF/spring.factories"
+          ],
+          "status": "LEGACY_FACTORY"
+        },
+        {
+          "class_name": "io.ddd4j.boot.ddd.config.DddBootAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-ddd/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        },
+        {
+          "class_name": "io.ddd4j.boot.sample.client.order.config.OrderClientAutoConfiguration",
+          "contract_id": "AUTO_CONFIGURATION",
+          "mapping_status": "MAPPED",
+          "registration_files": [
+            "ddd4j-boot-samples/ddd4j-boot-sample-client/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+          ],
+          "status": "AUTO_CONFIGURATION"
+        }
+      ],
+      "source_ref": "origin/4.1.x",
+      "unmapped_registration_count": 0
+    }
+  ]
+}
