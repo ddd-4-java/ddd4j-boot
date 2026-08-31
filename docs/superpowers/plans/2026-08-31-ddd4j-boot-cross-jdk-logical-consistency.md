@@ -162,7 +162,7 @@
 
 ## Phase 2：建立比较门禁与迁移基线
 
-- [ ] **Task 4: 渲染分支契约状态并阻断无证据通过**
+- [x] **Task 4: 渲染分支契约状态并阻断无证据通过**（完成：`fc32b2b5`）
 
   **Files:**
   - Create: `scripts/consistency/render_branch_consistency.py`
