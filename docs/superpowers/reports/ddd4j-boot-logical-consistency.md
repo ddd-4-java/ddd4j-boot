@@ -4,7 +4,7 @@
 
 | 分支 | 契约 | 状态 | 证据/原因 |
 |---|---|---|---|
-| 2.3.x | CORE_SPI_REPOSITORY_CQRS | MISSING_EVIDENCE | No executed contract test or reviewed evidence reference |
+| 2.3.x | CORE_SPI_REPOSITORY_CQRS | BLOCKED | docs/superpowers/reports/2026-08-31-jdk8-2.3-build-blocked.md |
 | 2.3.x | AUTO_CONFIGURATION | MISSING_EVIDENCE | No executed contract test or reviewed evidence reference |
 | 2.3.x | WEBMVC_WEBFLUX | MISSING_EVIDENCE | No executed contract test or reviewed evidence reference |
 | 2.3.x | AUTH | MISSING_EVIDENCE | No executed contract test or reviewed evidence reference |
