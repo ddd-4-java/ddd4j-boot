@@ -11,7 +11,14 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.http.HttpInputMessage;
+import org.springframework.http.HttpOutputMessage;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
 
 import java.util.Arrays;
 
@@ -31,6 +38,7 @@ class QrCodeControllerTest {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(new QrCodeController(service, props))
                 .setControllerAdvice(new QrCodeExceptionHandler())
+                .setMessageConverters(new Jackson3JsonHttpMessageConverter(), new org.springframework.http.converter.ByteArrayHttpMessageConverter())
                 .build();
     }
 
@@ -164,6 +172,7 @@ class QrCodeControllerTest {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(new QrCodeController(service, props))
                 .setControllerAdvice(new QrCodeExceptionHandler())
+                .setMessageConverters(new Jackson3JsonHttpMessageConverter(), new org.springframework.http.converter.ByteArrayHttpMessageConverter())
                 .build();
 
         byte[] bigBytes = new byte[100];
@@ -193,5 +202,53 @@ class QrCodeControllerTest {
         item.setItemId(itemId);
         item.setRequest(renderRequest(content, 256, 256));
         return item;
+    }
+    /**
+     * Jackson 3 最小 JSON 转换器（standalone MockMvc 用；Spring 6 无官方 Jackson3 集成）。
+     */
+    static class Jackson3JsonHttpMessageConverter extends AbstractHttpMessageConverter<Object> implements org.springframework.http.converter.GenericHttpMessageConverter<Object> {
+
+        private final ObjectMapper mapper = new ObjectMapper();
+
+        Jackson3JsonHttpMessageConverter() {
+            super(MediaType.APPLICATION_JSON, new MediaType("application", "*+json"));
+        }
+
+        @Override
+        protected boolean supports(Class<?> clazz) {
+            return true;
+        }
+
+        @Override
+        public boolean canRead(Type type, Class<?> contextClass, MediaType mediaType) {
+            return canRead(mediaType);
+        }
+
+        @Override
+        public boolean canWrite(Type type, Class<?> clazz, MediaType mediaType) {
+            return canWrite(mediaType);
+        }
+
+        @Override
+        public Object read(Type type, Class<?> contextClass, HttpInputMessage inputMessage) throws IOException, org.springframework.http.converter.HttpMessageNotReadableException {
+            // Jackson 3：泛型容器（List<BatchRenderRequest>）必须走 JavaType，否则退化为 LinkedHashMap
+            return mapper.readValue(inputMessage.getBody(), mapper.constructType(type));
+        }
+
+        @Override
+        protected Object readInternal(Class<?> clazz, HttpInputMessage inputMessage) throws IOException {
+            return mapper.readValue(inputMessage.getBody(), mapper.constructType(clazz));
+        }
+
+        @Override
+        public void write(Object o, Type type, MediaType contentType, HttpOutputMessage outputMessage)
+                throws IOException, org.springframework.http.converter.HttpMessageNotWritableException {
+            writeInternal(o, outputMessage);
+        }
+
+        @Override
+        protected void writeInternal(Object o, HttpOutputMessage outputMessage) throws IOException {
+            mapper.writeValue(outputMessage.getBody(), o);
+        }
     }
 }
