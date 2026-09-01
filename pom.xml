@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns="http://maven.apache.org/POM/4.1.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.1.0 https://maven.apache.org/xsd/maven-4.1.0.xsd">
     <!-- POM的模型版本 -->
-    <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.1.0</modelVersion>
 
     <!-- Inherit defaults from ddd4j-parent（对齐 ddd4j-javalin 模式） -->
     <!-- 版本约束：Spring Boot 锁定 3.4.x，不得升级至 4.x -->
     <parent>
         <groupId>io.ddd4j</groupId>
         <artifactId>ddd4j-parent</artifactId>
-        <version>2.0.x.20260630-SNAPSHOT</version>
+        <version>3.0.x.20260630-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -32,14 +32,14 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <revision>3.4.x.20260630-SNAPSHOT</revision>
-        <ddd4j.version>2.0.x.20260630-SNAPSHOT</ddd4j.version>
+        <revision>4.0.x.20260630-SNAPSHOT</revision>
+        <ddd4j.version>3.0.x.20260630-SNAPSHOT</ddd4j.version>
         <!-- Jackson BOM：父 POM 链来自 2.0.x 线（jackson.version=2.22.2），
              但 ddd4j 3.x 主仓已迁 Jackson 3（tools.jackson groupId）。
              显式覆盖版本与坐标与 3.x 一致。 -->
         <tools-jackson-bom.version>3.2.1</tools-jackson-bom.version>
         <!-- Spring Boot 版本（不再继承 spring-boot-starter-parent，需显式声明） -->
-        <spring-boot.version>3.4.13</spring-boot.version>
+        <spring-boot.version>4.0.7</spring-boot.version>
         <java.version>17</java.version>
         <!-- Maven Plugin versions -->
         <maven.version>3.6.3</maven.version>
@@ -69,20 +69,20 @@
         <spring-ws.version>4.0.13</spring-ws.version>
     </properties>
 
-    <modules>
-        <module>ddd4j-boot-bom</module>
-        <module>ddd4j-boot-dependencies</module>
-        <module>ddd4j-boot-core</module>
-        <module>ddd4j-boot-cache</module>
-        <module>ddd4j-boot-web</module>
+    <subprojects>
+        <subproject>ddd4j-boot-bom</subproject>
+        <subproject>ddd4j-boot-dependencies</subproject>
+        <subproject>ddd4j-boot-core</subproject>
+        <subproject>ddd4j-boot-cache</subproject>
+        <subproject>ddd4j-boot-web</subproject>
         <!-- 领域聚合（对齐 ddd4j 库） -->
-        <module>ddd4j-boot-data</module>
-        <module>ddd4j-boot-auth</module>
-        <module>ddd4j-boot-mq</module>
-        <module>ddd4j-boot-extensions</module>
-        <module>ddd4j-boot-parent</module>
-        <module>ddd4j-boot-samples</module>
-    </modules>
+        <subproject>ddd4j-boot-data</subproject>
+        <subproject>ddd4j-boot-auth</subproject>
+        <subproject>ddd4j-boot-mq</subproject>
+        <subproject>ddd4j-boot-extensions</subproject>
+        <subproject>ddd4j-boot-parent</subproject>
+        <subproject>ddd4j-boot-samples</subproject>
+    </subprojects>
 
     <!--开源协议采用Apache 2.0协议-->
     <licenses>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+         xmlns="http://maven.apache.org/POM/4.1.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.1.0 https://maven.apache.org/xsd/maven-4.1.0.xsd">
+    <modelVersion>4.1.0</modelVersion>
     <parent>
         <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-dependencies</artifactId>
@@ -17,11 +17,10 @@
         底层复用 io.ddd4j:ddd4j-auth-* 纯 Java 实现，本层提供 Spring Boot 自动装配、异常处理、Starter 封装。
     </description>
 
-    <modules>
-        <module>ddd4j-boot-auth-license</module>
-        <module>ddd4j-boot-auth-satoken</module>
-        <module>ddd4j-boot-auth-security</module>
-        <module>ddd4j-boot-auth-shiro</module>
-    </modules>
+    <subprojects>
+        <subproject>ddd4j-boot-auth-satoken</subproject>
+        <subproject>ddd4j-boot-auth-security</subproject>
+        <subproject>ddd4j-boot-auth-shiro</subproject>
+    </subprojects>
 
 </project>

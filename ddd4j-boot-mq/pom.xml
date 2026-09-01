@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+         xmlns="http://maven.apache.org/POM/4.1.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.1.0 https://maven.apache.org/xsd/maven-4.1.0.xsd">
+    <modelVersion>4.1.0</modelVersion>
     <parent>
         <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-dependencies</artifactId>
@@ -19,23 +19,23 @@
         - 各 broker 桥接 auto-config（kafka/rabbitmq/rocketmq/mqtt 等 13 种）
     </description>
 
-    <modules>
+    <subprojects>
         <!-- 核心 -->
-        <module>ddd4j-boot-mq-core</module>
+        <subproject>ddd4j-boot-mq-core</subproject>
         <!-- Broker 桥接（对齐 ddd4j-mq-{broker}） -->
-        <module>ddd4j-boot-mq-activemq</module>
-        <module>ddd4j-boot-mq-disruptor</module>
-        <module>ddd4j-boot-mq-kafka</module>
-        <module>ddd4j-boot-mq-mqtt</module>
-        <module>ddd4j-boot-mq-mqtt-mica</module>
-        <module>ddd4j-boot-mq-nats</module>
-        <module>ddd4j-boot-mq-ons</module>
-        <module>ddd4j-boot-mq-pulsar</module>
-        <module>ddd4j-boot-mq-rabbitmq</module>
-        <module>ddd4j-boot-mq-redis-stream</module>
-        <module>ddd4j-boot-mq-rocketmq</module>
-        <module>ddd4j-boot-mq-sqs</module>
-        <module>ddd4j-boot-mq-tdmq</module>
-    </modules>
+        <subproject>ddd4j-boot-mq-activemq</subproject>
+        <subproject>ddd4j-boot-mq-disruptor</subproject>
+        <subproject>ddd4j-boot-mq-kafka</subproject>
+        <subproject>ddd4j-boot-mq-mqtt</subproject>
+        <subproject>ddd4j-boot-mq-mqtt-mica</subproject>
+        <subproject>ddd4j-boot-mq-nats</subproject>
+        <subproject>ddd4j-boot-mq-ons</subproject>
+        <subproject>ddd4j-boot-mq-pulsar</subproject>
+        <subproject>ddd4j-boot-mq-rabbitmq</subproject>
+        <subproject>ddd4j-boot-mq-redis-stream</subproject>
+        <subproject>ddd4j-boot-mq-rocketmq</subproject>
+        <subproject>ddd4j-boot-mq-sqs</subproject>
+        <subproject>ddd4j-boot-mq-tdmq</subproject>
+    </subprojects>
 
 </project>
