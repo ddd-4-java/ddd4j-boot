@@ -188,6 +188,13 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>-->
 
+        <!-- For MQTT Server (t-io) -->
+        <dependency>
+            <groupId>org.t-io</groupId>
+            <artifactId>tio-core</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <build>

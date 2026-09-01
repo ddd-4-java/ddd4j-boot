@@ -1,6 +1,6 @@
 package io.hiwepy.boot.sample.service;
 
-import com.baomidou.mybatisplus.spring.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 
 /**

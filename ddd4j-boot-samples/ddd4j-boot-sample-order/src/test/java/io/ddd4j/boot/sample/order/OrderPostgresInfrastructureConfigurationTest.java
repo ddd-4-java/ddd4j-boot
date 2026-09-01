@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.order;
 
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ddd4j.sample.order.application.IdempotencyPort;
 import io.ddd4j.sample.order.application.IntegrationEventPublisher;
 import io.ddd4j.sample.order.application.OrderApplicationService;

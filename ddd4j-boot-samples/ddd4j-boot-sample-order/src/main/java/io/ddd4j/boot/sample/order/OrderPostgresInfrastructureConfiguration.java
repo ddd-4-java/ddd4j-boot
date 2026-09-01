@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.order;
 
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ddd4j.core.cache.CacheConfig;
 import io.ddd4j.cache.CacheKit;
 import io.ddd4j.cache.local.CaffeineCache;

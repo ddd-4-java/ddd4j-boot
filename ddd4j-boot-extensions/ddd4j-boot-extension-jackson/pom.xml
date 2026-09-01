@@ -28,7 +28,7 @@
         <dependency>
             <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson-bom.version}</version>
+            <version>${tools-jackson-bom.version}</version>
         </dependency>
         <!-- Spring Boot auto-configuration support -->
         <dependency>

@@ -1,6 +1,6 @@
 package io.ddd4j.data.config;
 
-import com.github.hiwepy.ip2region.spring.boot.IP2regionTemplate;
+import io.github.easy4j.ip2region.spring.boot.IP2regionTemplate;
 import io.ddd4j.data.external.ExternalProperties;
 import io.ddd4j.data.external.region.BaiduRegionTemplate;
 import io.ddd4j.data.external.region.NestedRegionTemplate;
