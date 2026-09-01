@@ -35,7 +35,7 @@ public class Ddd4jWebFluxAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public ObjectMapper objectMapper() {
-        return new ObjectMapper().findAndRegisterModules();
+        return new ObjectMapper();
     }
 
     @Bean
