@@ -70,6 +70,33 @@ jobs:
           DDD4J_REQUIRE_CLEAN_WORKTREE: 'true'
         run: ./scripts/verify-release-worktree.sh
 
+  consistency-check:
+    name: Cross-branch consistency
+    runs-on: ubuntu-latest
+    needs: [workflow-lint]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ensure ripgrep is available
+        run: |
+          if ! command -v rg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ripgrep
+          fi
+      - name: Auto Configuration contract audit
+        run: bash scripts/consistency/test-auto-configuration-contracts.sh
+      - name: Branch baseline audit
+        run: bash scripts/consistency/test-branch-baselines.sh
+      - name: Compare branch contracts
+        run: bash scripts/consistency/test-compare-branch-contracts.sh
+      - name: Contract data validation
+        run: bash scripts/consistency/test-contract-data.sh
+      - name: Consistency evidence rendering
+        run: bash scripts/consistency/test-render-branch-consistency.sh
+
   coverage-gate:
     name: Coverage gate (LINE >= 90%)
     runs-on: ubuntu-latest
