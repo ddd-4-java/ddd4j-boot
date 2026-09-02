@@ -24,6 +24,7 @@
         <subproject>ddd4j-boot-extension-qrcode</subproject>
         <subproject>ddd4j-boot-extension-jackson</subproject>
         <subproject>ddd4j-boot-extension-monitor</subproject>
+            <subproject>ddd4j-boot-extension-pf4j</subproject>
     </subprojects>
 
     <dependencies>
