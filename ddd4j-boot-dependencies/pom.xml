@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.1.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.1.0 https://maven.apache.org/xsd/maven-4.1.0.xsd">
-    <modelVersion>4.1.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot</artifactId>
@@ -198,6 +198,7 @@
         <resilience4j-spring-boot2.version>2.3.0</resilience4j-spring-boot2.version>
     
         <tio.version>3.8.6.v20240801-RELEASE</tio.version>
+            <jackson-annotations.version>2.22</jackson-annotations.version>
     </properties>
 
     <dependencyManagement>
