@@ -14,8 +14,17 @@
     <packaging>pom</packaging>
     <description>ddd4j Spring Boot Web 自动装配聚合。</description>
 
+<<<<<<< HEAD
     <subprojects>
         <subproject>ddd4j-boot-web-webmvc</subproject>
         <subproject>ddd4j-boot-web-webflux</subproject>
     </subprojects>
+=======
+    <modules>
+        <module>ddd4j-boot-web-webmvc</module>
+        <module>ddd4j-boot-web-webflux</module>
+        <module>ddd4j-boot-web-javalin</module>
+        <module>ddd4j-boot-web-vertx</module>
+    </modules>
+>>>>>>> 0c02ccaf (feat(web): 补 Javalin/Vert.x web 适配器（填充 web 模块缺失的 5 个框架）)
 </project>
