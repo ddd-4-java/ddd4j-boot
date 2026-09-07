@@ -35,7 +35,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '8'
+          java-version: '17'
           cache: maven
           overwrite-settings: true
       - name: Configure Easy4J Maven repositories
@@ -106,7 +106,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '8'
+          java-version: '17'
           cache: maven
           overwrite-settings: true
       - name: Configure Easy4J Maven repositories
@@ -142,7 +142,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '8'
+          java-version: '17'
           cache: maven
           overwrite-settings: true
       - name: Configure Easy4J Maven repositories
@@ -205,7 +205,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '8'
+          java-version: '17'
           cache: maven
           overwrite-settings: true
       - name: Configure Easy4J Maven repositories
