@@ -14,10 +14,10 @@
     <packaging>pom</packaging>
     <description>ddd4j Spring Boot Web 自动装配聚合。</description>
 
-    <modules>
-        <module>ddd4j-boot-web-webmvc</module>
-        <module>ddd4j-boot-web-webflux</module>
-        <module>ddd4j-boot-web-javalin</module>
-        <module>ddd4j-boot-web-vertx</module>
-    </modules>
+    <subprojects>
+        <subproject>ddd4j-boot-web-webmvc</subproject>
+        <subproject>ddd4j-boot-web-webflux</subproject>
+        <subproject>ddd4j-boot-web-javalin</subproject>
+        <subproject>ddd4j-boot-web-vertx</subproject>
+    </subprojects>
 </project>
