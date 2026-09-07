@@ -1398,8 +1398,8 @@
             <!-- localstack（ddd4j-boot-mq-sqs 集成测试） -->
             <dependency>
                 <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-localstack</artifactId>
-                <version>${testcontainers-bom.version}</version>
+                <artifactId>localstack</artifactId>
+                <version>${testcontainers.version}</version>
             </dependency>
         
             <!-- 原 hiwepy 坐标迁至 easy4j（属性沿用） -->
