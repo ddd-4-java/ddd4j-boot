@@ -38,6 +38,7 @@
         <testcontainers.version>1.21.4</testcontainers.version>
         <jna.version>5.13.0</jna.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
+        <artemis.version>2.19.0</artemis.version>
         <!-- Jackson BOM：父 POM 链来自 2.0.x 线（jackson.version=2.22.2），
              但 ddd4j 3.x 主仓已迁 Jackson 3（tools.jackson groupId）。
              显式覆盖版本与坐标与 3.x 一致。 -->
@@ -206,6 +207,27 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+            <!-- Artemis 客户端组件必须同版，避免 Boot 2.3 BOM 将 core 降级后出现 NoSuchMethodError。 -->
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>artemis-commons</artifactId>
+                <version>${artemis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>artemis-core-client</artifactId>
+                <version>${artemis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>artemis-jms-client</artifactId>
+                <version>${artemis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>artemis-selector</artifactId>
+                <version>${artemis.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
