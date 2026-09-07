@@ -53,8 +53,8 @@
         <maven-nexus-staging-plugin.version>1.7.0</maven-nexus-staging-plugin.version>
         <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
         <!-- Dependency versions -->
-        <!-- Spring Boot 2.3.12.RELEASE 对应的 Spring Framework 基线。 -->
-        <spring-framework.version>5.2.15.RELEASE</spring-framework.version>
+        <!-- Spring Boot 2.4.13 对应的 Spring Framework 基线。 -->
+        <spring-framework.version>5.3.13</spring-framework.version>
     </properties>
 
     <modules>
