@@ -11,32 +11,21 @@
     </parent>
 
     <artifactId>ddd4j-boot-extension-jackson</artifactId>
-    <description>Ddd4j Boot Jackson 3.x Component</description>
+    <description>Ddd4j Boot Jackson 2 Component</description>
 
     <dependencies>
-        <!-- For HuTool (date patterns) -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
-        <!-- For Spring Web (HTTP message conversion integration) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
-        <!-- Jackson 3.x core: databind 已内置 javatime 子模块与 annotations 子包 -->
-        <dependency>
-            <groupId>tools.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${tools-jackson-bom.version}</version>
-        </dependency>
-        <!-- Jackson 3 databind 3.2.1 需要 annotations 2.22 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson-annotations.version}</version>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
-        <!-- Spring Boot auto-configuration support -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
@@ -51,30 +40,6 @@
                 <configuration>
                     <skip>false</skip>
                     <skipTests>false</skipTests>
-                </configuration>
-            </plugin>
-            <!--
-                flatten-maven-plugin 1.8.0（本地最高版本）不支持 parent POM 的
-                modelVersion 4.1.0（Maven 4 RC-6 自身限制），导致 reactor build
-                在 process-resources 之前的 flatten 阶段失败。该模块仅做 Jackson
-                配置类打包，无需生成 flattened POM（其它模块已经做了），故
-                显式禁用本模块的 flatten 阶段（phase=none + skip=true）。
-            -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>

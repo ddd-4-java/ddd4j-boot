@@ -34,10 +34,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <revision>3.2.x.20260630-SNAPSHOT</revision>
         <ddd4j.version>2.0.x.20260630-SNAPSHOT</ddd4j.version>
-        <!-- Jackson BOM：父 POM 链来自 2.0.x 线（jackson.version=2.22.2），
-             但 ddd4j 3.x 主仓已迁 Jackson 3（tools.jackson groupId）。
-             显式覆盖版本与坐标与 3.x 一致。 -->
-        <tools-jackson-bom.version>3.2.1</tools-jackson-bom.version>
+        <!-- Spring Boot 3.0 与 ddd4j 2.0.x 均使用 Jackson 2。 -->
         <!-- Spring Boot 版本（不再继承 spring-boot-starter-parent，需显式声明） -->
         <spring-boot.version>3.2.12</spring-boot.version>
         <java.version>17</java.version>
@@ -50,23 +47,6 @@
         <maven-nexus-staging-plugin.version>1.7.0</maven-nexus-staging-plugin.version>
         <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
         <!-- Dependency versions -->
-        <spring-amqp.version>3.2.5</spring-amqp.version>
-        <spring-authorization-server.version>1.4.3</spring-authorization-server.version>
-        <spring-batch.version>5.2.2</spring-batch.version>
-        <spring-data-bom.version>2024.1.5</spring-data-bom.version>
-        <!-- 版本约束：Spring Framework 锁定 6.x，不得升级至 7.x -->
-        <spring-framework.version>6.2.19</spring-framework.version>
-        <spring-graphql.version>1.3.5</spring-graphql.version>
-        <spring-hateoas.version>2.4.1</spring-hateoas.version>
-        <spring-integration.version>6.4.4</spring-integration.version>
-        <spring-kafka.version>3.3.5</spring-kafka.version>
-        <spring-ldap.version>3.2.12</spring-ldap.version>
-        <spring-pulsar.version>1.2.5</spring-pulsar.version>
-        <spring-restdocs.version>3.0.3</spring-restdocs.version>
-        <spring-retry.version>2.0.11</spring-retry.version>
-        <spring-security.version>6.4.5</spring-security.version>
-        <spring-session.version>3.4.3</spring-session.version>
-        <spring-ws.version>4.0.13</spring-ws.version>
     </properties>
 
     <modules>
@@ -159,35 +139,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-framework-bom</artifactId>
-                <version>${spring-framework.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-bom</artifactId>
-                <version>${spring-security.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/io.projectreactor/reactor-bom -->
-            <dependency>
-                <groupId>io.projectreactor</groupId>
-                <artifactId>reactor-bom</artifactId>
-                <version>${reactor-bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>tools.jackson</groupId>
-                <artifactId>jackson-bom</artifactId>
-                <version>${tools-jackson-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

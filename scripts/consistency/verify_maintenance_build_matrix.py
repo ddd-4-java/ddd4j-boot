@@ -176,8 +176,14 @@ def validate_workflows(repo: Path, ref: str, row: dict[str, str], errors: list[s
                 errors.append(f"{row['branch']}: {path} does not trigger for its own branch")
 
 
-def validate_branch(repo: Path, prefix: str, row: dict[str, str], errors: list[str]) -> None:
-    ref = f"{prefix}{row['branch']}"
+def validate_branch(
+    repo: Path,
+    prefix: str,
+    row: dict[str, str],
+    errors: list[str],
+    explicit_ref: str | None = None,
+) -> None:
+    ref = explicit_ref or f"{prefix}{row['branch']}"
     root = parse_pom(git(repo, "show", f"{ref}:pom.xml"), f"{ref}:pom.xml")
     paths = git(repo, "ls-tree", "-r", "--name-only", ref).splitlines()
     validate_root_pom(row, root, errors)
@@ -191,12 +197,17 @@ def main() -> int:
     parser.add_argument("--repo", type=Path, required=True)
     parser.add_argument("--matrix", type=Path, required=True)
     parser.add_argument("--ref-prefix", default="origin/")
+    parser.add_argument("--branch")
+    parser.add_argument("--ref")
     args = parser.parse_args()
     try:
         rows = read_matrix(args.matrix)
+        selected_rows = [row for row in rows if not args.branch or row["branch"] == args.branch]
+        if not selected_rows:
+            raise ValueError(f"branch is not in build matrix: {args.branch}")
         errors: list[str] = []
-        for row in rows:
-            validate_branch(args.repo, args.ref_prefix, row, errors)
+        for row in selected_rows:
+            validate_branch(args.repo, args.ref_prefix, row, errors, args.ref)
     except ValueError as error:
         print(f"ERROR: {error}", file=sys.stderr)
         return 1
@@ -205,7 +216,7 @@ def main() -> int:
             print(f"ERROR: {error}", file=sys.stderr)
         print(f"FAIL: {len(errors)} maintenance build matrix violations", file=sys.stderr)
         return 1
-    print(f"PASS: {len(rows)} maintenance lines match the build matrix")
+    print(f"PASS: {len(selected_rows)} maintenance lines match the build matrix")
     return 0
 
 
