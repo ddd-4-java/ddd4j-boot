@@ -3,7 +3,7 @@
          xmlns="http://maven.apache.org/POM/4.1.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.1.0 https://maven.apache.org/xsd/maven-4.1.0.xsd">
     <!-- POM的模型版本 -->
-    <modelVersion>4.1.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
     <!-- Inherit defaults from ddd4j-parent（对齐 ddd4j-javalin 模式） -->
     <!-- 版本约束：Spring Boot 锁定 3.4.x，不得升级至 4.x -->
@@ -69,7 +69,7 @@
         <spring-ws.version>4.0.13</spring-ws.version>
     </properties>
 
-    <subprojects>
+    <modules>
         <subproject>ddd4j-boot-bom</subproject>
         <subproject>ddd4j-boot-dependencies</subproject>
         <subproject>ddd4j-boot-core</subproject>
@@ -82,7 +82,7 @@
         <subproject>ddd4j-boot-extensions</subproject>
         <subproject>ddd4j-boot-parent</subproject>
         <subproject>ddd4j-boot-samples</subproject>
-    </subprojects>
+    </modules>
 
     <!--开源协议采用Apache 2.0协议-->
     <licenses>
