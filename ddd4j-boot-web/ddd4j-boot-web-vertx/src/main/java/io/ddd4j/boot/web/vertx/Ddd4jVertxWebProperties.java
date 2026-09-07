@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
 public class Ddd4jVertxWebProperties {
 
     /** 无需认证即可访问的路径。 */
-    private List<String> publicPaths = new ArrayList<>(List.of(
+    private List<String> publicPaths = new ArrayList<>(Arrays.asList(
             "/health", "/health/readiness", "/health/liveness"));
 
     /** 默认认证模式。 */

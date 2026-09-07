@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+io.ddd4j.boot.data.external.config.Ddd4jExternalAutoConfiguration,\
+io.ddd4j.boot.data.external.config.Ddd4jGlobalSequenceAutoConfiguration
