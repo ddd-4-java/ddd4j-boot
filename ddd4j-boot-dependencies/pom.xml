@@ -73,7 +73,7 @@
         <spring-boot-starter-httpclient.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-httpclient.version>
         <spring-boot-starter-httpclient3.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-httpclient3.version>
         <spring-boot-starter-icepdf.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-icepdf.version>
-        <spring-boot-starter-ip2region.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-ip2region.version>
+        <spring-boot-starter-ip2region.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-ip2region.version>
         <spring-boot-starter-ishumei.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-ishumei.version>
         <spring-boot-starter-itextpdf.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-itextpdf.version>
         <spring-boot-starter-jasypt.version>4.0.3</spring-boot-starter-jasypt.version>
@@ -121,7 +121,7 @@
         <spring-boot-starter-qqwry.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-qqwry.version>
         <spring-boot-starter-redisson-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-redisson-plus.version>
         <spring-boot-starter-redisson.version>${redisson.version}</spring-boot-starter-redisson.version>
-        <spring-boot-starter-redistpl-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-redistpl-plus.version>
+        <spring-boot-starter-redistpl-plus.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-redistpl-plus.version>
         <spring-boot-starter-rocketmq-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-rocketmq-plus.version>
         <spring-boot-starter-rocketmq.version>2.3.4</spring-boot-starter-rocketmq.version>
         <spring-boot-starter-rythm.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-rythm.version>
@@ -428,7 +428,7 @@
                 <version>${spring-boot-starter-dingtalk.version}</version>
                 <exclusions>
                     <exclusion>
-                        <groupId>tools.jackson.core</groupId>
+                        <groupId>com.fasterxml.jackson.core</groupId>
                         <artifactId>jackson-databind</artifactId>
                     </exclusion>
                     <exclusion>
@@ -738,7 +738,7 @@
                 <version>${spring-boot-starter-redistpl-plus.version}</version>
                 <exclusions>
                     <exclusion>
-                        <groupId>tools.jackson.core</groupId>
+                        <groupId>com.fasterxml.jackson.core</groupId>
                         <artifactId>jackson-databind</artifactId>
                     </exclusion>
                 </exclusions>
