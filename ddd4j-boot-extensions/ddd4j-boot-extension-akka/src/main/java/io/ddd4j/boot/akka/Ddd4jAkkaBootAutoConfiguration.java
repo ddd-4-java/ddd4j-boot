@@ -1,7 +1,7 @@
 package io.ddd4j.boot.akka;
 
 import akka.actor.ActorSystem;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
  * @author ddd4j
  * @since 4.0.x
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(ActorSystem.class)
 @ConditionalOnProperty(prefix = "ddd4j.akka", name = "enabled", havingValue = "true", matchIfMissing = true)
 @Configuration(proxyBeanMethods = false)

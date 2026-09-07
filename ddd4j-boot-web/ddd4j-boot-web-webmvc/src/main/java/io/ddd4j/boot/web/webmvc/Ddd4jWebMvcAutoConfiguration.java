@@ -28,7 +28,7 @@ import io.ddd4j.web.webmvc.DefaultSequenceConfiguration;
 import io.ddd4j.web.webmvc.DefaultWebMvcConfigurer;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -44,7 +44,7 @@ import java.util.List;
 /**
  * ddd4j WebMVC 的 Spring Boot 条件装配入口。
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnClass({DispatcherServlet.class, Ddd4jWebMvcInterceptor.class})
 @EnableConfigurationProperties(Ddd4jWebMvcProperties.class)

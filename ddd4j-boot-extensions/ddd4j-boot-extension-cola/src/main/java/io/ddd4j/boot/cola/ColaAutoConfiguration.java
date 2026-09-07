@@ -1,7 +1,7 @@
 package io.ddd4j.boot.cola;
 
 import io.ddd4j.boot.cola.handler.Ddd4jResponseHandler;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -36,7 +36,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author wandl
  * @since 3.4.x
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(name = "com.alibaba.cola.extension.Extension")
 @ConditionalOnProperty(prefix = "ddd4j.cola", name = "enabled", havingValue = "true", matchIfMissing = true)
 @ComponentScan(basePackages = {"com.alibaba.cola"})

@@ -12,7 +12,7 @@ import io.ddd4j.extension.qlexpress.QLExpressEngineBuilder;
 import io.ddd4j.extension.qlexpress.function.NamedQLFunction;
 import io.ddd4j.extension.qlexpress.model.QLExpressExecutionOptions;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -27,7 +27,7 @@ import java.util.Objects;
 /**
  * QLExpress 工具引擎与可选规则管理能力的 Spring Boot 自动配置。
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(QLExpress.class)
 @ConditionalOnProperty(prefix = QLExpressProperties.PREFIX, name = "enabled",
         havingValue = "true", matchIfMissing = true)

@@ -6,7 +6,7 @@ import io.ddd4j.extension.qrcode.resource.QrCodeResourceResolver;
 import io.ddd4j.extension.qrcode.template.InMemoryQrCodeTemplateRegistry;
 import io.ddd4j.extension.qrcode.template.QrCodeTemplateRegistry;
 import io.ddd4j.extension.qrcode.template.QrCodeTemplateBinder;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ResourceLoader;
 
 /** Spring Boot assembly for the framework-neutral QR code application service. */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(QrCodeService.class)
 @ConditionalOnProperty(prefix = QrCodeProperties.PREFIX, name = "enabled",
         havingValue = "true", matchIfMissing = true)

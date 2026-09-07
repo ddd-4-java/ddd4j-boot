@@ -1,7 +1,7 @@
 package io.ddd4j.extension.dubbo;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
@@ -34,7 +34,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
  * @author wandl
  * @since 3.4.x
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(name = "org.apache.dubbo.config.spring.context.annotation.EnableDubbo")
 @ConditionalOnProperty(prefix = "ddd4j.dubbo", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class DubboAutoConfiguration {
