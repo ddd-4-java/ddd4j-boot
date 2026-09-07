@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * {@code ActiveMQClient(ActiveMQConnectionFactory)}），由测试以容器地址注入
  * Artemis 默认凭据（artemis/artemis）。无 Docker 环境时自动跳过，不伪报通过。
  */
-@Testcontainers(disabledWithoutDocker = true)
+@Testcontainers(disabledWithoutDocker = false)
 class ActiveMQClientIntegrationTest {
 
     private static final String USER = "artemis";
