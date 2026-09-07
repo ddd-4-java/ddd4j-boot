@@ -112,12 +112,12 @@ public class RuleService {
                 .sorted(Comparator.comparing(
                         rule -> Objects.nonNull(rule.getPriority()) ? rule.getPriority() : 0,
                         Comparator.reverseOrder()))
-                .toList();
+                .collect(java.util.stream.Collectors.toList());
     }
 
     public QLExpressExecutionResult<Object> execute(String code, Map<String, Object> context) {
         Optional<RuleDefinition> rule = findByCode(code);
-        if (rule.isEmpty()) {
+        if (!rule.isPresent()) {
             return QLExpressExecutionResult.failure("RULE_NOT_FOUND", "规则不存在: " + code, 0L);
         }
         if (!rule.get().isAvailable()) {

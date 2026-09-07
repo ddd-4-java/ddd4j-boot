@@ -7,6 +7,8 @@ import io.ddd4j.extension.qlexpress.model.QLExpressExecutionResult;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,8 +35,10 @@ class RuleServiceTest {
                 .priority(10)
                 .build());
 
-        QLExpressExecutionResult<Object> first = service.execute(
-                "pricing.total", Map.of("price", 20, "quantity", 3));
+        Map<String, Object> firstContext = new HashMap<>();
+        firstContext.put("price", 20);
+        firstContext.put("quantity", 3);
+        QLExpressExecutionResult<Object> first = service.execute("pricing.total", firstContext);
         assertThat(first.success()).isTrue();
         assertThat(first.value()).isEqualTo(60);
 
@@ -45,11 +49,14 @@ class RuleServiceTest {
                 .enabled(true)
                 .priority(20)
                 .build());
-        assertThat(service.execute("pricing.total",
-                Map.of("price", 20, "quantity", 3, "fee", 5)).value()).isEqualTo(65);
+        Map<String, Object> updatedContext = new HashMap<>();
+        updatedContext.put("price", 20);
+        updatedContext.put("quantity", 3);
+        updatedContext.put("fee", 5);
+        assertThat(service.execute("pricing.total", updatedContext).value()).isEqualTo(65);
 
         service.disable(created.getId());
-        assertThat(service.execute("pricing.total", Map.of()).errorCode()).isEqualTo("RULE_DISABLED");
+        assertThat(service.execute("pricing.total", Collections.emptyMap()).errorCode()).isEqualTo("RULE_DISABLED");
 
         service.enable(created.getId());
         service.delete(created.getId());

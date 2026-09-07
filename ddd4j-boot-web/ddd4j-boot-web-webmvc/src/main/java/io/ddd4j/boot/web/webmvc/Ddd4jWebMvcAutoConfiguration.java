@@ -39,7 +39,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * ddd4j WebMVC 的 Spring Boot 条件装配入口。
@@ -111,7 +111,7 @@ public class Ddd4jWebMvcAutoConfiguration {
     public WebAccessPolicy webAccessPolicy(Environment environment) {
         String[] publicPaths = environment.getProperty("ddd4j.web.public-paths", String[].class,
                 new String[]{"/health", "/health/readiness", "/health/liveness", "/assets/**", "/webjars/**"});
-        return new PathWebAccessPolicy(List.of(publicPaths), AuthenticationMode.REQUIRED);
+        return new PathWebAccessPolicy(Arrays.asList(publicPaths), AuthenticationMode.REQUIRED);
     }
 
     @Bean

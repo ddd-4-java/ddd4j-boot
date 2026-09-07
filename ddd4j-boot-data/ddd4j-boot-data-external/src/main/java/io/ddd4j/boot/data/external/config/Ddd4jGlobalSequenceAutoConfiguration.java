@@ -4,7 +4,7 @@ import cn.hutool.core.util.IdUtil;
 import io.ddd4j.data.external.SequenceProperties;
 import io.ddd4j.data.external.sequence.GlobalSequence;
 import io.ddd4j.kit.lang.IdKit;
-import jakarta.annotation.PreDestroy;
+import javax.annotation.PreDestroy;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;

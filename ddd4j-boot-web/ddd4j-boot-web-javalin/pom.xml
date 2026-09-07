@@ -15,7 +15,7 @@
 
     <properties>
         <!-- 与上游 ddd4j-dependencies（${ddd4j.version}）的 javalin.version 保持一致。 -->
-        <javalin.version>7.2.2</javalin.version>
+        <javalin.version>4.6.8</javalin.version>
     </properties>
 
     <dependencies>

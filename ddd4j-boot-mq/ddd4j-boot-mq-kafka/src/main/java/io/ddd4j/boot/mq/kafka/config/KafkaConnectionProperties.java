@@ -4,6 +4,7 @@ import lombok.Data;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,7 +107,7 @@ public class KafkaConnectionProperties {
     }
 
     private void putBootstrapServers(Map<String, Object> props) {
-        if (bootstrapServers != null && !bootstrapServers.isBlank()) {
+        if (StringUtils.hasText(bootstrapServers)) {
             props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
             props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
             props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);

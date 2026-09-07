@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
@@ -33,7 +32,6 @@ import javax.sql.DataSource;
  * @since 3.4.x
  */
 @AutoConfiguration
-@Configuration(proxyBeanMethods = false)
 @ConditionalOnBean(DataSource.class)
 @AutoConfigureAfter({DataSourceAutoConfiguration.class})
 public class Ddd4jMybatisAutoConfiguration {

@@ -1,8 +1,8 @@
 package io.ddd4j.boot.cmpt.datascope.annotation;
 
 import io.ddd4j.boot.cmpt.datascope.RequiresDataPermissionsValidator;
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
+import javax.validation.Constraint;
+import javax.validation.Payload;
 
 import java.lang.annotation.*;
 

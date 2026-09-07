@@ -74,8 +74,8 @@ public class Ddd4jRepositoryAutoConfiguration {
 
         @Override
         public Object postProcessAfterInitialization(Object bean, String beanName) {
-            if (bean instanceof Repository repository) {
-                registerRepository(beanName, repository);
+            if (bean instanceof Repository) {
+                registerRepository(beanName, (Repository) bean);
             }
             return bean;
         }
@@ -114,7 +114,8 @@ public class Ddd4jRepositoryAutoConfiguration {
         private Class<?> extractAggregateType(Repository repository) {
             // 遍历实现的接口，查找 Repository<M, ID> 的泛型参数
             for (java.lang.reflect.Type type : repository.getClass().getGenericInterfaces()) {
-                if (type instanceof java.lang.reflect.ParameterizedType pt) {
+                if (type instanceof java.lang.reflect.ParameterizedType) {
+                    java.lang.reflect.ParameterizedType pt = (java.lang.reflect.ParameterizedType) type;
                     if (pt.getRawType() == Repository.class) {
                         java.lang.reflect.Type[] typeArgs = pt.getActualTypeArguments();
                         if (typeArgs.length > 0 && typeArgs[0] instanceof Class) {
@@ -127,7 +128,8 @@ public class Ddd4jRepositoryAutoConfiguration {
             Class<?> superClass = repository.getClass().getSuperclass();
             while (Objects.nonNull(superClass) && superClass != Object.class) {
                 for (java.lang.reflect.Type type : superClass.getGenericInterfaces()) {
-                    if (type instanceof java.lang.reflect.ParameterizedType pt) {
+                    if (type instanceof java.lang.reflect.ParameterizedType) {
+                        java.lang.reflect.ParameterizedType pt = (java.lang.reflect.ParameterizedType) type;
                         if (pt.getRawType() == Repository.class) {
                             java.lang.reflect.Type[] typeArgs = pt.getActualTypeArguments();
                             if (typeArgs.length > 0 && typeArgs[0] instanceof Class) {
