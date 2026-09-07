@@ -3,17 +3,6 @@ name: Deploy ddd4j-boot to Aliyun Maven repository
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: Branch to deploy from (1.0.x / 2.0.x / 3.0.x / 4.0.x / 3.4.x)
-        required: true
-        type: choice
-        default: '3.4.x'
-        options:
-          - '1.0.x'
-          - '2.0.x'
-          - '3.0.x'
-          - '4.0.x'
-          - '3.4.x'
       repository:
         description: Target Aliyun repository
         required: true
@@ -45,27 +34,6 @@ jobs:
     timeout-minutes: 60
     environment: aliyun-maven
     steps:
-      - name: Validate inputs
-        run: |
-          BRANCH="${{ inputs.branch }}"
-          if [[ ! "$BRANCH" =~ ^feature/(1\.0\.x|2\.0\.x|3\.0\.x|4\.0\.x)$ ]] && [[ ! "$BRANCH" =~ ^(1\.0\.x|2\.0\.x|3\.0\.x|4\.0\.x)$ ]]; then
-            echo "ERROR: branch must be one of 1.0.x / 2.0.x / 3.0.x / 4.0.x (or feature/<branch>)" >&2
-            exit 1
-          fi
-          echo "Deploying branch: $BRANCH"
-          echo "Target repository: ${{ inputs.repository }}"
-          echo "Dry run: ${{ inputs.dry_run }}"
-
-      - name: Determine ref
-        id: ref
-        run: |
-          BRANCH="${{ inputs.branch }}"
-          if [[ "$BRANCH" =~ ^feature/ ]]; then
-            echo "ref=$BRANCH" >> "$GITHUB_OUTPUT"
-          else
-            echo "ref=$BRANCH" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Determine target repository
         id: repo
         run: |
@@ -81,7 +49,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ steps.ref.outputs.ref }}
           fetch-depth: 0
 
       - name: Set up JDK 21
@@ -117,17 +84,16 @@ jobs:
           fi
 
       - name: Install reactor artifacts
-        run: ./mvnw -U -Denforcer.skip=true -B -DskipTests install -pl '!ddd4j-boot-samples/ddd4j-boot-sample-adapter,!ddd4j-boot-samples/ddd4j-boot-sample-app,!ddd4j-boot-samples/ddd4j-boot-sample-auth-satoken,!ddd4j-boot-samples/ddd4j-boot-sample-auth-security,!ddd4j-boot-samples/ddd4j-boot-sample-auth-shiro,!ddd4j-boot-samples/ddd4j-boot-sample-client,!ddd4j-boot-samples/ddd4j-boot-sample-common,!ddd4j-boot-samples/ddd4j-boot-sample-domain,!ddd4j-boot-samples/ddd4j-boot-sample-infrastructure,!ddd4j-boot-samples/ddd4j-boot-sample-layered,!ddd4j-boot-samples/ddd4j-boot-sample-order,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-server,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-rocketmq,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-amqp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-kafka,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-rocketmq,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-war,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-r2dbc-webflux'
+        run: ./mvnw -U -Denforcer.skip=true -B -DskipTests install -pl '!ddd4j-boot-samples/ddd4j-boot-sample-adapter,!ddd4j-boot-samples/ddd4j-boot-sample-app,!ddd4j-boot-samples/ddd4j-boot-sample-auth-satoken,!ddd4j-boot-samples/ddd4j-boot-sample-auth-security,!ddd4j-boot-samples/ddd4j-boot-sample-auth-shiro,!ddd4j-boot-samples/ddd4j-boot-sample-client,!ddd4j-boot-samples/ddd4j-boot-sample-common,!ddd4j-boot-samples/ddd4j-boot-sample-domain,!ddd4j-boot-samples/ddd4j-boot-sample-infrastructure,!ddd4j-boot-samples/ddd4j-boot-sample-layered,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-server,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-rocketmq,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-amqp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-kafka,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-rocketmq,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-war,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-r2dbc-webflux'
 
       - name: Deploy to Aliyun
         env:
           MAVEN_SETTINGS_XML: ${{ secrets.MAVEN_SETTINGS_XML }}
         shell: bash
         run: |
-          DRY_RUN_ARG=""
           if [[ "${{ inputs.dry_run }}" == "true" ]]; then
-            DRY_RUN_ARG="-DdryRun=true"
             echo "::notice::Dry run mode — no artifacts will be deployed"
+            exit 0
           fi
           REPO="${{ steps.repo.outputs.repo }}"
           # 验证版本号与目标仓库匹配：
@@ -145,8 +111,8 @@ jobs:
             exit 1
           fi
           # 部署到 Aliyun（sample 模块被排除）
-          ./mvnw -U -Denforcer.skip=true -B $DRY_RUN_ARG -DskipTests \
-            -pl '!ddd4j-boot-samples/ddd4j-boot-sample-adapter,!ddd4j-boot-samples/ddd4j-boot-sample-app,!ddd4j-boot-samples/ddd4j-boot-sample-auth-satoken,!ddd4j-boot-samples/ddd4j-boot-sample-auth-security,!ddd4j-boot-samples/ddd4j-boot-sample-auth-shiro,!ddd4j-boot-samples/ddd4j-boot-sample-client,!ddd4j-boot-samples/ddd4j-boot-sample-common,!ddd4j-boot-samples/ddd4j-boot-sample-domain,!ddd4j-boot-samples/ddd4j-boot-sample-infrastructure,!ddd4j-boot-samples/ddd4j-boot-sample-layered,!ddd4j-boot-samples/ddd4j-boot-sample-order,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-server,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-rocketmq,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-amqp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-kafka,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-rocketmq,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-war,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-r2dbc-webflux' \
+          ./mvnw -U -Denforcer.skip=true -B -DskipTests \
+            -pl '!ddd4j-boot-samples/ddd4j-boot-sample-adapter,!ddd4j-boot-samples/ddd4j-boot-sample-app,!ddd4j-boot-samples/ddd4j-boot-sample-auth-satoken,!ddd4j-boot-samples/ddd4j-boot-sample-auth-security,!ddd4j-boot-samples/ddd4j-boot-sample-auth-shiro,!ddd4j-boot-samples/ddd4j-boot-sample-client,!ddd4j-boot-samples/ddd4j-boot-sample-common,!ddd4j-boot-samples/ddd4j-boot-sample-domain,!ddd4j-boot-samples/ddd4j-boot-sample-infrastructure,!ddd4j-boot-samples/ddd4j-boot-sample-layered,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-server,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-rocketmq,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-amqp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-kafka,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-rocketmq,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-war,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-r2dbc-webflux' \
             deploy
 
       - name: Generate deploy report
@@ -157,7 +123,7 @@ jobs:
           {
             echo "# Deploy Report"
             echo ""
-            echo "- Branch: ${{ inputs.branch }}"
+            echo "- Ref: ${{ github.ref_name }}"
             echo "- Target repository: ${{ steps.repo.outputs.repo }}"
             echo "- Dry run: ${{ inputs.dry_run }}"
             echo "- Commit: ${{ github.sha }}"
