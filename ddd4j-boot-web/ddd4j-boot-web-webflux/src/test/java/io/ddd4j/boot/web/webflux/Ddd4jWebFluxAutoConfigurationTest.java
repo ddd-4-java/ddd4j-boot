@@ -1,6 +1,6 @@
 package io.ddd4j.boot.web.webflux;
 
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ddd4j.boot.core.Ddd4jCoreAutoConfiguration;
 import io.ddd4j.web.webflux.Ddd4jWebFluxFilter;
 import io.ddd4j.web.webflux.DefaultWebFluxConfiguration;
