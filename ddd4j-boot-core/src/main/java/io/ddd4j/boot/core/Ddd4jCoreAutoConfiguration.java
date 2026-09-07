@@ -1,7 +1,7 @@
 package io.ddd4j.boot.core;
 
 import io.ddd4j.core.context.Contexts;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
@@ -23,7 +23,7 @@ import io.ddd4j.spring.event.SpringDomainEventPublisher;
  * @author wandl
  * @since 3.4.x
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({Contexts.class, SpringContext.class})
 @Import({SpringCoreConfig.class, SpringDomainEventPublisher.class, SpringContextBridge.class})
 @Order(Ordered.HIGHEST_PRECEDENCE + 100)

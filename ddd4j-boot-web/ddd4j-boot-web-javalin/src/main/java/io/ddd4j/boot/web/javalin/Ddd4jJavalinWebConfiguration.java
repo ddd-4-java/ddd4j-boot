@@ -19,7 +19,7 @@ import io.javalin.Javalin;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Bean;
  * 请求上下文、鉴权、异常翻译与幂等防护的默认 Bean，业务方可通过注册同类型
  * Bean 全量覆盖。
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({Javalin.class, Ddd4jJavalinWeb.class})
 @ConditionalOnProperty(prefix = "ddd4j.web.javalin", name = "enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(Ddd4jJavalinWebProperties.class)
