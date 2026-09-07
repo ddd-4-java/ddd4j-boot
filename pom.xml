@@ -150,6 +150,22 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- Override Spring Boot coordinates leaked by upstream platform BOMs. -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
             <!-- Override the older Testcontainers versions managed by Boot 2. -->
             <dependency>
                 <groupId>org.testcontainers</groupId>
