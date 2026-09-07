@@ -111,9 +111,7 @@ jobs:
             exit 1
           fi
           # 部署到 Aliyun（sample 模块被排除）
-          ./mvnw -U -Denforcer.skip=true -B -DskipTests \
-            -pl '!ddd4j-boot-samples/ddd4j-boot-sample-adapter,!ddd4j-boot-samples/ddd4j-boot-sample-app,!ddd4j-boot-samples/ddd4j-boot-sample-auth-satoken,!ddd4j-boot-samples/ddd4j-boot-sample-auth-security,!ddd4j-boot-samples/ddd4j-boot-sample-auth-shiro,!ddd4j-boot-samples/ddd4j-boot-sample-client,!ddd4j-boot-samples/ddd4j-boot-sample-common,!ddd4j-boot-samples/ddd4j-boot-sample-domain,!ddd4j-boot-samples/ddd4j-boot-sample-infrastructure,!ddd4j-boot-samples/ddd4j-boot-sample-layered,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-server,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-rocketmq,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war,!ddd4j-boot-samples/ddd4j-boot-sample-starter-druid,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-amqp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-kafka,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-rocketmq,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-war,!ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp,!ddd4j-boot-samples/ddd4j-boot-sample-starter-r2dbc-webflux' \
-            deploy
+          ./scripts/deploy-maven4-aliyun.sh "$REPO"
 
       - name: Generate deploy report
         if: always()
