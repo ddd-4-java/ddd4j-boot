@@ -42,11 +42,13 @@
         <spring-boot.version>4.1.0</spring-boot.version>
         <java.version>21</java.version>
         <!-- Maven Plugin versions -->
-        <maven.version>3.6.3</maven.version>
+        <maven.version>4.0.0-rc-6</maven.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
         <maven-flatten-plugin.version>1.8.0</maven-flatten-plugin.version>
+        <!-- Maven 4 原生生成 consumer POM；旧 Flatten 插件不支持 Model 4.1。 -->
+        <flatten.skip>true</flatten.skip>
         <maven-nexus-staging-plugin.version>1.7.0</maven-nexus-staging-plugin.version>
         <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
         <!-- Dependency versions -->
