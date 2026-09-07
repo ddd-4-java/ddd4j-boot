@@ -17,9 +17,11 @@ import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -62,19 +64,18 @@ class RocketMQClientIntegrationTest {
     /**
      * 覆盖镜像自带 broker.conf 的完整配置（含公告地址/namesrv/自动建 topic）。
      */
-    private static final String BROKER_CONF_TEMPLATE = """
-            brokerClusterName = DefaultCluster
-            brokerName = broker-a
-            brokerId = 0
-            deleteWhen = 04
-            fileReservedTime = 48
-            brokerRole = ASYNC_MASTER
-            flushDiskType = ASYNC_FLUSH
-            brokerIP1 = 127.0.0.1
-            brokerPort1 = %d
-            namesrvAddr = 127.0.0.1:9876
-            autoCreateTopicEnable = true
-            """;
+    private static final String BROKER_CONF_TEMPLATE =
+            "brokerClusterName = DefaultCluster\n"
+                    + "brokerName = broker-a\n"
+                    + "brokerId = 0\n"
+                    + "deleteWhen = 04\n"
+                    + "fileReservedTime = 48\n"
+                    + "brokerRole = ASYNC_MASTER\n"
+                    + "flushDiskType = ASYNC_FLUSH\n"
+                    + "brokerIP1 = 127.0.0.1\n"
+                    + "brokerPort1 = %d\n"
+                    + "namesrvAddr = 127.0.0.1:9876\n"
+                    + "autoCreateTopicEnable = true\n";
 
     private static String nameServerAddress;
 
@@ -86,7 +87,8 @@ class RocketMQClientIntegrationTest {
             // 临时文件默认 0600，Testcontainers 以 root 拷入容器后 broker（rocketmq 用户）无法读取，
             // 必须显式放宽到 0644
             Path brokerConf = Files.createTempFile("ddd4j-rocketmq-broker", ".conf");
-            Files.writeString(brokerConf, String.format(BROKER_CONF_TEMPLATE, BROKER_PORT));
+            Files.write(brokerConf,
+                    String.format(BROKER_CONF_TEMPLATE, BROKER_PORT).getBytes(StandardCharsets.UTF_8));
             Files.setPosixFilePermissions(brokerConf,
                     java.nio.file.attribute.PosixFilePermissions.fromString("rw-r--r--"));
             GenericContainer<?> container = new GenericContainer<>(
@@ -99,7 +101,8 @@ class RocketMQClientIntegrationTest {
                             "/home/rocketmq/rocketmq-5.3.2/conf/broker.conf")
                     .withExposedPorts(9876)
                     .waitingFor(Wait.forLogMessage(".*boot success.*", 2));
-            container.setPortBindings(List.of(BROKER_PORT + ":10911", (BROKER_PORT - 2) + ":10909"));
+            container.setPortBindings(Arrays.asList(
+                    BROKER_PORT + ":10911", (BROKER_PORT - 2) + ":10909"));
             return container;
         } catch (IOException e) {
             throw new IllegalStateException("Prepare RocketMQ broker.conf failed", e);
