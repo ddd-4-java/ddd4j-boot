@@ -95,8 +95,8 @@ class ActiveMQClientIntegrationTest {
         @Bean
         ActiveMQConnectionFactory activeMQConnectionFactory() {
             return new ActiveMQConnectionFactory(
-                    USER, PASSWORD,
-                    "tcp://" + ARTEMIS.getHost() + ":" + ARTEMIS.getMappedPort(61616));
+                    "tcp://" + ARTEMIS.getHost() + ":" + ARTEMIS.getMappedPort(61616),
+                    USER, PASSWORD);
         }
 
         @Bean
