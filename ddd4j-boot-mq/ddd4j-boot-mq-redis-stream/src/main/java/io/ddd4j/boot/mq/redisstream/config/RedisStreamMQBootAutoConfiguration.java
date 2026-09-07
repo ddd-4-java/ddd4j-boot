@@ -3,7 +3,7 @@ package io.ddd4j.boot.mq.redisstream.config;
 import io.ddd4j.mq.redisstream.RedisStreamMQClient;
 import io.ddd4j.mq.redisstream.RedisStreamMQProperties;
 import io.ddd4j.mq.spring.config.Ddd4jMQRegistrarConfiguration;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Import;
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(RedisStreamMQClient.class)
 @ConditionalOnProperty(prefix = "ddd4j.mq", name = "broker", havingValue = "redisStream")
 @Import(Ddd4jMQRegistrarConfiguration.class)

@@ -8,7 +8,7 @@ import io.ddd4j.auth.spring.AuthSpringConfiguration;
 import io.ddd4j.auth.spring.satoken.SaTokenExceptionHandler;
 import io.ddd4j.core.subject.SubjectProvider;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -32,7 +32,7 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(name = "cn.dev33.satoken.stp.StpUtil")
 @Import(AuthSpringConfiguration.class)
 public class SaTokenEnhanceAutoConfiguration implements InitializingBean {

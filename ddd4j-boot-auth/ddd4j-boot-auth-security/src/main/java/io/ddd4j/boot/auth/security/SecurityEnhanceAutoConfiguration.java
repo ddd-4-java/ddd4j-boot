@@ -4,7 +4,7 @@ import io.ddd4j.auth.security.handler.SecurityExceptionHandler;
 import io.ddd4j.auth.security.subject.SecuritySubjectProvider;
 import io.ddd4j.auth.spring.AuthSpringConfiguration;
 import io.ddd4j.core.subject.SubjectProvider;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -26,7 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(name = "org.springframework.security.core.context.SecurityContextHolder")
 @Import(AuthSpringConfiguration.class)
 public class SecurityEnhanceAutoConfiguration {
