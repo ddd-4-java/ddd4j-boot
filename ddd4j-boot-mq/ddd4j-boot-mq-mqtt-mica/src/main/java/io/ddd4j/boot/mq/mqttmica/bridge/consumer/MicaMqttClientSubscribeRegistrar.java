@@ -14,7 +14,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -84,7 +86,7 @@ public class MicaMqttClientSubscribeRegistrar implements AutoCloseable {
      * 返回已注册定义（只读视图）。
      */
     public List<MicaMqttClientSubscribeDefinition> registeredDefinitions() {
-        return List.copyOf(registeredDefinitions);
+        return Collections.unmodifiableList(new ArrayList<>(registeredDefinitions));
     }
 
     @Override
@@ -127,7 +129,7 @@ public class MicaMqttClientSubscribeRegistrar implements AutoCloseable {
         if (paramCount < 2 || paramCount > 3) {
             throw new IllegalArgumentException("@MqttClientSubscribe on method " + method + " parameter count must 2 ~ 3.");
         }
-        if (!method.canAccess(null) && !method.trySetAccessible()) {
+        if (!method.isAccessible()) {
             method.setAccessible(true);
         }
     }
