@@ -1,26 +1,30 @@
 package io.ddd4j.boot.jackson;
 
-import tools.jackson.core.JsonGenerator;
-import tools.jackson.databind.BeanDescription;
-import tools.jackson.databind.JavaType;
-import tools.jackson.databind.MapperFeature;
-import tools.jackson.databind.SerializationConfig;
-import tools.jackson.databind.ValueSerializer;
-import tools.jackson.databind.json.JsonMapper;
-import tools.jackson.databind.module.SimpleModule;
-import tools.jackson.databind.ser.BeanPropertyWriter;
-import tools.jackson.databind.ser.ValueSerializerModifier;
-import tools.jackson.databind.SerializationContext;
-import tools.jackson.databind.ext.javatime.ser.LocalDateSerializer;
-import tools.jackson.databind.ext.javatime.ser.LocalDateTimeSerializer;
-import tools.jackson.databind.ext.javatime.ser.LocalTimeSerializer;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.BeanDescription;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
+import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -32,22 +36,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Spring Boot Jackson 3.x AutoConfiguration。
+ * Spring Boot 2 Jackson 自动配置。
  *
- * <p>基于 Jackson 3.x 原生 API（{@link JsonMapper#builder()} + {@link SimpleModule}）
- * 构造 {@code ObjectMapper} Bean。Jackson 3.x 的 JSR310 模块已并入 databind 主 artifact
- * （{@code tools.jackson.databind.ext.javatime}），开箱即用。
- *
- * <p>此实现替代了原 Jackson 2.x 版本中基于
- * {@code Jackson2ObjectMapperBuilder}/{@code Jackson2ObjectMapperBuilderCustomizer}
- * 的 Spring Boot 集成（Spring Boot 3.x 仍仅支持 Jackson 2.x 的 builder 系列），
- * 以及 {@code io.github.easy4j:jackson-extension} 提供的 {@code JavaTimeModule} 与
- * {@code MyBeanSerializerModifier}（Jackson 3.x 已不再需要）。
- *
- * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
+ * <p>使用 Jackson 2 原生扩展点配置时间格式和六类空值序列化策略，避免引入
+ * 需要 Java 17 的 Jackson 3 或外部扩展制品。
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass(JsonMapper.class)
+@ConditionalOnClass({ObjectMapper.class, Jackson2ObjectMapperBuilder.class})
+@AutoConfigureBefore(JacksonAutoConfiguration.class)
 public class DefaultJacksonAutoConfiguration {
 
     @Value("${spring.jackson.default-null-array-serializer:true}")
@@ -64,50 +60,35 @@ public class DefaultJacksonAutoConfiguration {
     private boolean defaultNullJsonObjectSerializer;
 
     @Bean
+    public Jackson2ObjectMapperBuilderCustomizer defaultJacksonObjectMapperBuilderCustomizer() {
+        return builder -> builder.simpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .failOnEmptyBeans(false)
+                .failOnUnknownProperties(false)
+                .featuresToEnable(MapperFeature.USE_GETTERS_AS_SETTERS,
+                        MapperFeature.ALLOW_FINAL_FIELDS_AS_MUTATORS);
+    }
+
+    @Bean
     @Order(Integer.MIN_VALUE)
     @Primary
-    public JsonMapper jacksonObjectMapper() {
+    public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
+        ObjectMapper objectMapper = builder.createXmlMapper(false).build();
         SimpleModule module = new SimpleModule("ddd4j-jackson-module");
-        // JSR310 序列化器（Jackson 3 内置）
         module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         module.addSerializer(LocalDate.class, new LocalDateSerializer(
                 DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         module.addSerializer(LocalTime.class, new LocalTimeSerializer(
                 DateTimeFormatter.ofPattern("HH:mm:ss")));
-        // 空值序列化策略
-        NullValueSerializerModifier nullModifier = new NullValueSerializerModifier(
-                defaultNullArraySerializer,
-                defaultNullNumberSerializer,
-                defaultNullStringSerializer,
-                defaultNullDateSerializer,
-                defaultNullBooleanSerializer,
-                defaultNullJsonObjectSerializer);
-        module.setSerializerModifier(nullModifier);
-
-        return JsonMapper.builder()
-                .enable(MapperFeature.USE_GETTERS_AS_SETTERS)
-                .enable(MapperFeature.ALLOW_FINAL_FIELDS_AS_MUTATORS)
-                .addModule(module)
-                .build();
+        module.setSerializerModifier(new NullValueSerializerModifier(
+                defaultNullArraySerializer, defaultNullNumberSerializer,
+                defaultNullStringSerializer, defaultNullDateSerializer,
+                defaultNullBooleanSerializer, defaultNullJsonObjectSerializer));
+        objectMapper.registerModule(module);
+        return objectMapper;
     }
 
-    /**
-     * null 值默认序列化策略：按属性类型将 {@code null} 序列化为类型默认值而非省略字段。
-     *
-     * <p>对齐 {@code easy4j:jackson-extension} 的 {@code MyBeanSerializerModifier} 语义。
-     *
-     * <p>六类开关（{@code spring.jackson.default-null-*-serializer}）：
-     * <ul>
-     *   <li>array —— 数组/集合 → {@code []}</li>
-     *   <li>number —— 数值 → {@code 0}</li>
-     *   <li>string —— 字符串 → {@code ""}</li>
-     *   <li>date —— 日期/时间 → {@code ""}</li>
-     *   <li>boolean —— 布尔 → {@code false}</li>
-     *   <li>json-object —— 对象/Map → {@code {}}</li>
-     * </ul>
-     */
-    static final class NullValueSerializerModifier extends ValueSerializerModifier {
+    static final class NullValueSerializerModifier extends BeanSerializerModifier {
 
         private static final long serialVersionUID = 1L;
 
@@ -131,91 +112,80 @@ public class DefaultJacksonAutoConfiguration {
 
         @Override
         public List<BeanPropertyWriter> changeProperties(SerializationConfig config,
-                                                         BeanDescription.Supplier beanDesc,
-                                                         List<BeanPropertyWriter> beanProperties) {
-            List<BeanPropertyWriter> modified = new java.util.ArrayList<>(beanProperties.size());
-            for (BeanPropertyWriter writer : beanProperties) {
-                modified.add(wrapIfNeeded(writer));
+                                                         BeanDescription beanDescription,
+                                                         List<BeanPropertyWriter> properties) {
+            for (BeanPropertyWriter writer : properties) {
+                Class<?> rawType = writer.getType().getRawClass();
+                JsonSerializer<Object> serializer = nullSerializer(rawType);
+                if (serializer != null) {
+                    writer.assignNullSerializer(serializer);
+                }
             }
-            return modified;
+            return properties;
         }
 
-        @Override
-        public ValueSerializer<?> modifySerializer(SerializationConfig config,
-                                                   BeanDescription.Supplier beanDesc,
-                                                   ValueSerializer<?> serializer) {
-            return serializer;
-        }
-
-        private BeanPropertyWriter wrapIfNeeded(BeanPropertyWriter writer) {
-            if (writer == null) {
-                return null;
+        private JsonSerializer<Object> nullSerializer(Class<?> rawType) {
+            if ((rawType.isArray() || Collection.class.isAssignableFrom(rawType)) && defaultForArray) {
+                return NullArraySerializer.INSTANCE;
             }
-            JavaType type = writer.getType();
-            if (type == null) {
-                return writer;
+            if ((CharSequence.class.isAssignableFrom(rawType) || Character.class == rawType) && defaultForString) {
+                return NullStringSerializer.INSTANCE;
             }
-            Class<?> rawType = type.getRawClass();
-            if (rawType == null) {
-                return writer;
+            if (Number.class.isAssignableFrom(rawType) && defaultForNumber) {
+                return NullNumberSerializer.INSTANCE;
             }
-            if (rawType.isArray() || Collection.class.isAssignableFrom(rawType)) {
-                return defaultForArray ? new NullValueBeanPropertyWriter(writer, "[]") : writer;
+            if ((Date.class.isAssignableFrom(rawType) || Temporal.class.isAssignableFrom(rawType)) && defaultForDate) {
+                return NullStringSerializer.INSTANCE;
             }
-            if (CharSequence.class.isAssignableFrom(rawType) || Character.class == rawType) {
-                return defaultForString ? new NullValueBeanPropertyWriter(writer, "\"\"") : writer;
+            if (Boolean.class == rawType && defaultForBoolean) {
+                return NullBooleanSerializer.INSTANCE;
             }
-            if (Number.class.isAssignableFrom(rawType)
-                    || (rawType.isPrimitive() && rawType != boolean.class && rawType != void.class)) {
-                return defaultForNumber ? new NullValueBeanPropertyWriter(writer, "0") : writer;
+            if ((Map.class.isAssignableFrom(rawType) || !rawType.isPrimitive()) && defaultForJsonObject) {
+                return NullObjectSerializer.INSTANCE;
             }
-            if (Date.class.isAssignableFrom(rawType) || Temporal.class.isAssignableFrom(rawType)) {
-                return defaultForDate ? new NullValueBeanPropertyWriter(writer, "\"\"") : writer;
-            }
-            if (rawType == boolean.class || Boolean.class == rawType) {
-                return defaultForBoolean ? new NullValueBeanPropertyWriter(writer, "false") : writer;
-            }
-            if (Map.class.isAssignableFrom(rawType) || Object.class == rawType) {
-                return defaultForJsonObject ? new NullValueBeanPropertyWriter(writer, "{}") : writer;
-            }
-            return defaultForJsonObject ? new NullValueBeanPropertyWriter(writer, "{}") : writer;
+            return null;
         }
     }
 
-    /**
-     * {@code null} 属性写为固定 JSON 字面量（如 {@code []} / {@code ""} / {@code 0} / {@code {}}）的
-     * {@link BeanPropertyWriter} 装饰器。
-     */
-    static final class NullValueBeanPropertyWriter extends BeanPropertyWriter {
-
-        private static final long serialVersionUID = 1L;
-
-        private final BeanPropertyWriter delegate;
-        private final String nullLiteral;
-
-        NullValueBeanPropertyWriter(BeanPropertyWriter delegate, String nullLiteral) {
-            super(delegate);
-            this.delegate = delegate;
-            this.nullLiteral = nullLiteral;
-        }
-
+    private static final class NullArraySerializer extends JsonSerializer<Object> {
+        private static final NullArraySerializer INSTANCE = new NullArraySerializer();
         @Override
-        public void serializeAsProperty(Object bean, JsonGenerator gen, SerializationContext ctxt)
-                throws Exception {
-            Object value;
-            try {
-                value = get(bean);
-            } catch (Exception e) {
-                // JacksonException 的双参数构造器是 protected；此处包成 RuntimeException
-                // 让 Jackson 框架继续以统一的异常类型处理。cause 保留原始失败原因。
-                throw new RuntimeException("Failed to read property '" + getName() + "'", e);
-            }
-            if (value == null) {
-                gen.writeName(getName());
-                gen.writeRawValue(nullLiteral);
-                return;
-            }
-            delegate.serializeAsProperty(bean, gen, ctxt);
+        public void serialize(Object value, JsonGenerator generator, SerializerProvider serializers) throws IOException {
+            generator.writeStartArray();
+            generator.writeEndArray();
+        }
+    }
+
+    private static final class NullStringSerializer extends JsonSerializer<Object> {
+        private static final NullStringSerializer INSTANCE = new NullStringSerializer();
+        @Override
+        public void serialize(Object value, JsonGenerator generator, SerializerProvider serializers) throws IOException {
+            generator.writeString("");
+        }
+    }
+
+    private static final class NullNumberSerializer extends JsonSerializer<Object> {
+        private static final NullNumberSerializer INSTANCE = new NullNumberSerializer();
+        @Override
+        public void serialize(Object value, JsonGenerator generator, SerializerProvider serializers) throws IOException {
+            generator.writeNumber(0);
+        }
+    }
+
+    private static final class NullBooleanSerializer extends JsonSerializer<Object> {
+        private static final NullBooleanSerializer INSTANCE = new NullBooleanSerializer();
+        @Override
+        public void serialize(Object value, JsonGenerator generator, SerializerProvider serializers) throws IOException {
+            generator.writeBoolean(false);
+        }
+    }
+
+    private static final class NullObjectSerializer extends JsonSerializer<Object> {
+        private static final NullObjectSerializer INSTANCE = new NullObjectSerializer();
+        @Override
+        public void serialize(Object value, JsonGenerator generator, SerializerProvider serializers) throws IOException {
+            generator.writeStartObject();
+            generator.writeEndObject();
         }
     }
 }
