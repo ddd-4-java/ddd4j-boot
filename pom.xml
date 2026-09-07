@@ -10,7 +10,7 @@
     <parent>
         <groupId>io.ddd4j</groupId>
         <artifactId>ddd4j-parent</artifactId>
-        <version>3.0.x.20260630-SNAPSHOT</version>
+        <version>1.0.x.20260630-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -32,14 +32,14 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <revision>4.1.x.20260630-SNAPSHOT</revision>
-        <ddd4j.version>3.0.x.20260630-SNAPSHOT</ddd4j.version>
+        <revision>2.4.x.20260630-SNAPSHOT</revision>
+        <ddd4j.version>1.0.x.20260630-SNAPSHOT</ddd4j.version>
         <!-- Jackson BOM：父 POM 链来自 2.0.x 线（jackson.version=2.22.2），
              但 ddd4j 3.x 主仓已迁 Jackson 3（tools.jackson groupId）。
              显式覆盖版本与坐标与 3.x 一致。 -->
         <tools-jackson-bom.version>3.2.1</tools-jackson-bom.version>
         <!-- Spring Boot 版本（不再继承 spring-boot-starter-parent，需显式声明） -->
-        <spring-boot.version>4.1.0</spring-boot.version>
+        <spring-boot.version>2.4.13</spring-boot.version>
         <java.version>17</java.version>
         <!-- Maven Plugin versions -->
         <maven.version>3.6.3</maven.version>
