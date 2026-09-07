@@ -4,7 +4,7 @@ import com.alibaba.excel.EasyExcel;
 import io.ddd4j.boot.excel.config.ExcelProperties;
 import io.ddd4j.boot.excel.web.ExcelHttpKit;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Bean;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  * @since 4.0.x
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(EasyExcel.class)
 @ConditionalOnProperty(prefix = ExcelProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(ExcelProperties.class)
