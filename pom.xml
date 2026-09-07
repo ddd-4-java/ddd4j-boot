@@ -34,6 +34,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <revision>2.6.x.20260630-SNAPSHOT</revision>
         <ddd4j.version>1.0.x.20260630-SNAPSHOT</ddd4j.version>
+        <!-- Testcontainers 1.x 保持 JDK 8 兼容，并支持近期 Docker Engine。 -->
+        <testcontainers.version>1.21.4</testcontainers.version>
+        <jna.version>5.13.0</jna.version>
+        <commons-lang3.version>3.17.0</commons-lang3.version>
         <!-- Jackson BOM：父 POM 链来自 2.0.x 线（jackson.version=2.22.2），
              但 ddd4j 3.x 主仓已迁 Jackson 3（tools.jackson groupId）。
              显式覆盖版本与坐标与 3.x 一致。 -->
@@ -190,6 +194,18 @@
                 <version>${tools-jackson-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- Testcontainers 1.x 在 Apple ARM64 上需要包含原生 arm64 库的 JNA。 -->
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>${jna.version}</version>
+            </dependency>
+            <!-- commons-compress 1.28 使用 SystemProperties/ArrayFill，需较新的 Java8 兼容 Lang3。 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -397,6 +413,9 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
+                        <!-- 覆盖 ddd4j 1.0 父 POM 的历史性全局跳过配置。 -->
+                        <skip>false</skip>
+                        <skipTests>false</skipTests>
                         <argLine>-Xmx1024m -Dfile.encoding=UTF-8</argLine>
                         <additionalClasspathElements>
                             <additionalClasspathElement>${basedir}/target/test-classes</additionalClasspathElement>
