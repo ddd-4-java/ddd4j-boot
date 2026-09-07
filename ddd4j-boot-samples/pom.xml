@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.1.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.1.0 https://maven.apache.org/xsd/maven-4.1.0.xsd">
-    <modelVersion>4.1.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>io.ddd4j.boot</groupId>
@@ -24,35 +24,35 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
-    <subprojects>
+    <modules>
         <!-- DDD 分层架构示例（Level 2）：充血 Model + BaseRepository + DDD 注解 -->
-        <subproject>ddd4j-boot-sample-layered</subproject>
-        <subproject>ddd4j-boot-sample-domain</subproject>
-        <subproject>ddd4j-boot-sample-adapter</subproject>
-        <subproject>ddd4j-boot-sample-client</subproject>
-        <subproject>ddd4j-boot-sample-app</subproject>
-        <subproject>ddd4j-boot-sample-infrastructure</subproject>
-        <subproject>ddd4j-boot-sample-common</subproject>
+        <module>ddd4j-boot-sample-layered</module>
+        <module>ddd4j-boot-sample-domain</module>
+        <module>ddd4j-boot-sample-adapter</module>
+        <module>ddd4j-boot-sample-client</module>
+        <module>ddd4j-boot-sample-app</module>
+        <module>ddd4j-boot-sample-infrastructure</module>
+        <module>ddd4j-boot-sample-common</module>
         <!-- 共享 Order 内核的 Boot 接线示例，覆盖 DDD、CQRS、Bearer 与幂等用例。 -->
-        <subproject>ddd4j-boot-sample-order</subproject>
-        <subproject>ddd4j-boot-sample-starter-druid</subproject>
-        <subproject>ddd4j-boot-sample-starter-druid-amqp</subproject>
-        <subproject>ddd4j-boot-sample-starter-druid-kafka</subproject>
-        <subproject>ddd4j-boot-sample-starter-druid-mqtt-client1</subproject>
-        <subproject>ddd4j-boot-sample-starter-druid-mqtt-client2</subproject>
-        <subproject>ddd4j-boot-sample-starter-druid-mqtt-server</subproject>
-        <subproject>ddd4j-boot-sample-starter-druid-rocketmq</subproject>
-        <subproject>ddd4j-boot-sample-starter-druid-war</subproject>
-        <subproject>ddd4j-boot-sample-starter-hikaricp</subproject>
-        <subproject>ddd4j-boot-sample-starter-hikaricp-amqp</subproject>
-        <subproject>ddd4j-boot-sample-starter-hikaricp-kafka</subproject>
-        <subproject>ddd4j-boot-sample-starter-hikaricp-rocketmq</subproject>
-        <subproject>ddd4j-boot-sample-starter-hikaricp-war</subproject>
-        <subproject>ddd4j-boot-sample-starter-r2dbc-webflux</subproject>
+        <module>ddd4j-boot-sample-order</module>
+        <module>ddd4j-boot-sample-starter-druid</module>
+        <module>ddd4j-boot-sample-starter-druid-amqp</module>
+        <module>ddd4j-boot-sample-starter-druid-kafka</module>
+        <module>ddd4j-boot-sample-starter-druid-mqtt-client1</module>
+        <module>ddd4j-boot-sample-starter-druid-mqtt-client2</module>
+        <module>ddd4j-boot-sample-starter-druid-mqtt-server</module>
+        <module>ddd4j-boot-sample-starter-druid-rocketmq</module>
+        <module>ddd4j-boot-sample-starter-druid-war</module>
+        <module>ddd4j-boot-sample-starter-hikaricp</module>
+        <module>ddd4j-boot-sample-starter-hikaricp-amqp</module>
+        <module>ddd4j-boot-sample-starter-hikaricp-kafka</module>
+        <module>ddd4j-boot-sample-starter-hikaricp-rocketmq</module>
+        <module>ddd4j-boot-sample-starter-hikaricp-war</module>
+        <module>ddd4j-boot-sample-starter-r2dbc-webflux</module>
         <!-- Auth 鉴权示例：演示 SubjectKit 统一鉴权入口（与 ddd4j-samples 同源） -->
-        <subproject>ddd4j-boot-sample-auth-satoken</subproject>
-        <subproject>ddd4j-boot-sample-auth-security</subproject>
-        <subproject>ddd4j-boot-sample-auth-shiro</subproject>
-    </subprojects>
+        <module>ddd4j-boot-sample-auth-satoken</module>
+        <module>ddd4j-boot-sample-auth-security</module>
+        <module>ddd4j-boot-sample-auth-shiro</module>
+    </modules>
 
 </project>
