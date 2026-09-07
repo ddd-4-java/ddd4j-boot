@@ -9,8 +9,10 @@ import io.ddd4j.spring.context.SpringContextBridge;
 import io.ddd4j.spring.event.SpringDomainEventPublisher;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.FilteredClassLoader;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
+import org.springframework.core.io.support.SpringFactoriesLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,6 +34,14 @@ class Ddd4jCoreAutoConfigurationTest {
             assertThat(context).hasSingleBean(SpringContextBridge.class);
             assertThat(context).hasSingleBean(SpringDomainEventPublisher.class);
         });
+    }
+
+    @Test
+    void springFactoriesShouldExposeCoreAutoConfigurations() {
+        assertThat(SpringFactoriesLoader.loadFactoryNames(
+                EnableAutoConfiguration.class, getClass().getClassLoader()))
+                .contains(Ddd4jCoreAutoConfiguration.class.getName(),
+                        Ddd4jRepositoryAutoConfiguration.class.getName());
     }
 
     @Test
@@ -59,7 +69,7 @@ class Ddd4jCoreAutoConfigurationTest {
                         .isPresent());
         // runner.run 返回前上下文已关闭，SPI 应被对称移除，无全局残留
         assertThat(BaseContext.get(SpiKeys.DOMAIN_EVENT_PUBLISHER, DomainEventPublisher.class))
-                .isEmpty();
+                .isNotPresent();
     }
 
     @Test
@@ -69,6 +79,6 @@ class Ddd4jCoreAutoConfigurationTest {
         runner.run(context -> assertThat(context).hasNotFailed());
         runner.run(context -> assertThat(context).hasNotFailed());
         assertThat(BaseContext.get(SpiKeys.DOMAIN_EVENT_PUBLISHER, DomainEventPublisher.class))
-                .isEmpty();
+                .isNotPresent();
     }
 }

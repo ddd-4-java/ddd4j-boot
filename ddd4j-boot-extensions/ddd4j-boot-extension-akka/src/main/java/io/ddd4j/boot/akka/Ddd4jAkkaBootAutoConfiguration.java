@@ -25,7 +25,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(ActorSystem.class)
 @ConditionalOnProperty(prefix = "ddd4j.akka", name = "enabled", havingValue = "true", matchIfMissing = true)
-@Configuration(proxyBeanMethods = false)
 public class Ddd4jAkkaBootAutoConfiguration {
 
     /**

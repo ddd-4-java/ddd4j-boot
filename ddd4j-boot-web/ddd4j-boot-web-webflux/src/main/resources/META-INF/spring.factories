@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.ddd4j.boot.web.webflux.Ddd4jWebFluxAutoConfiguration

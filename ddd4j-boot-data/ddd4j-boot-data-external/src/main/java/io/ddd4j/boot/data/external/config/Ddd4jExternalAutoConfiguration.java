@@ -1,6 +1,6 @@
 package io.ddd4j.boot.data.external.config;
 
-import io.github.easy4j.ip2region.spring.boot.IP2regionTemplate;
+import com.github.hiwepy.ip2region.spring.boot.IP2regionTemplate;
 import io.ddd4j.boot.data.external.adapter.HiwepyIpRegionTemplateAdapter;
 import io.ddd4j.boot.data.external.adapter.RedisOperationRegionCache;
 import io.ddd4j.data.external.ExternalProperties;
@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisOperationTemplate;
-import java.net.http.HttpClient;
 import java.util.Objects;
 
 /**
@@ -42,12 +41,6 @@ public class Ddd4jExternalAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public HttpClient httpClient() {
-        return HttpClient.newHttpClient();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
     public RegionCache regionCache(ObjectProvider<RedisOperationTemplate> redisOperationProvider) {
         RedisOperationTemplate redisOperation = redisOperationProvider.getIfAvailable();
         if (Objects.isNull(redisOperation)) {
@@ -67,14 +60,13 @@ public class Ddd4jExternalAutoConfiguration {
     }
 
     @Bean
-    public BaiduRegionTemplate baiduRegionTemplate(ExternalProperties properties, HttpClient httpClient,
-                                                   RegionCache regionCache) {
-        return new BaiduRegionTemplate(properties.getBaiduAk(), httpClient, regionCache);
+    public BaiduRegionTemplate baiduRegionTemplate(ExternalProperties properties, RegionCache regionCache) {
+        return new BaiduRegionTemplate(properties.getBaiduAk(), regionCache);
     }
 
     @Bean
-    public PconlineRegionTemplate pconlineRegionTemplate(HttpClient httpClient, RegionCache regionCache) {
-        return new PconlineRegionTemplate(httpClient, regionCache);
+    public PconlineRegionTemplate pconlineRegionTemplate(RegionCache regionCache) {
+        return new PconlineRegionTemplate(regionCache);
     }
 
     @Bean
@@ -84,8 +76,8 @@ public class Ddd4jExternalAutoConfiguration {
     }
 
     @Bean
-    public WeatherTemplate weatherTemplate(HttpClient httpClient) {
-        return new WeatherTemplate(httpClient);
+    public WeatherTemplate weatherTemplate() {
+        return new WeatherTemplate();
     }
 
 }

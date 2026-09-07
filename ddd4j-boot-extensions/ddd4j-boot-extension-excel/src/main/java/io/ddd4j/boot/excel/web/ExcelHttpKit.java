@@ -5,7 +5,7 @@ import io.ddd4j.core.exception.BizRuntimeException;
 import io.ddd4j.extension.excel.ExcelKit;
 import io.ddd4j.extension.excel.importer.ImportResult;
 import com.alibaba.excel.read.listener.ReadListener;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -221,7 +221,7 @@ public class ExcelHttpKit {
      * @param file 上传文件
      */
     public void validate(MultipartFile file) {
-        validate(file, properties.getMaxUploadMB(), List.of(".xlsx", ".xls"));
+        validate(file, properties.getMaxUploadMB(), java.util.Arrays.asList(".xlsx", ".xls"));
     }
 
     /**

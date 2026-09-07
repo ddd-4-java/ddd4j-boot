@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -121,7 +121,7 @@ class Ddd4jRepositoryAutoConfigurationTest {
 
         @Bean
         CommandBus customCommandBus() {
-            return new DefaultCommandBus(List.of());
+            return new DefaultCommandBus(Collections.emptyList());
         }
     }
 }

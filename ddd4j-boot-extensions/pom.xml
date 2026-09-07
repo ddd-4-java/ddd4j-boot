@@ -24,20 +24,20 @@
         <module>ddd4j-boot-extension-qrcode</module>
         <module>ddd4j-boot-extension-jackson</module>
         <module>ddd4j-boot-extension-monitor</module>
-            <module>ddd4j-boot-extension-pf4j</module>
+        <module>ddd4j-boot-extension-pf4j</module>
     </modules>
 
     <dependencies>
 
         <!-- For Servlet Api -->
         <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
         </dependency>
         <!-- For Validation Api -->
         <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>
