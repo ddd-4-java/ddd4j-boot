@@ -12,6 +12,7 @@
 
     <artifactId>ddd4j-boot-extension-pf4j</artifactId>
     <description>Ddd4j Boot PF4J Component</description>
+    <packaging>pom</packaging>
 
     <dependencies>
         <dependency>
