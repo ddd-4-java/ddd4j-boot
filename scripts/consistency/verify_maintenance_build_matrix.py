@@ -169,6 +169,11 @@ def validate_workflows(repo: Path, ref: str, row: dict[str, str], errors: list[s
             errors.append(f"{row['branch']}: {path} Java versions are {versions}, expected {[row['jdk']]}")
         if "MAVEN_SETTINGS_XML" not in content:
             errors.append(f"{row['branch']}: {path} does not consume MAVEN_SETTINGS_XML")
+        if path.endswith("verify.yml"):
+            push_block = content.split("push:", 1)[-1].split("pull_request:", 1)[0]
+            branch_pattern = re.compile(rf"^\s*-\s*['\"]?{re.escape(row['branch'])}['\"]?\s*$", re.MULTILINE)
+            if not branch_pattern.search(push_block):
+                errors.append(f"{row['branch']}: {path} does not trigger for its own branch")
 
 
 def validate_branch(repo: Path, prefix: str, row: dict[str, str], errors: list[str]) -> None:
