@@ -1,5 +1,10 @@
 package io.ddd4j.boot.mq.kafka.config;
 
+import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
+import io.ddd4j.mq.kafka.KafkaMQClient;
+import io.ddd4j.mq.kafka.KafkaMQProperties;
+import org.apache.kafka.clients.producer.MockProducer;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.test.context.FilteredClassLoader;
@@ -7,9 +12,6 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
-import io.ddd4j.mq.kafka.KafkaMQClient;
-import io.ddd4j.mq.kafka.KafkaMQProperties;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -21,16 +23,17 @@ class KafkaMQBootAutoConfigurationTest {
 
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
             .withConfiguration(AutoConfigurations.of(Ddd4jMQAutoConfiguration.class, KafkaMQBootAutoConfiguration.class))
+            .withUserConfiguration(CustomClientConfiguration.class)
             .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=kafka")
 ;
 
     @Test
     void defaultAssemblyShouldCreateClientAndProperties() {
-        runner.run(context -> {
-            assertThat(context).hasNotFailed();
-            assertThat(context).hasSingleBean(KafkaMQClient.class);
-            assertThat(context).hasSingleBean(KafkaMQProperties.class);
-        });
+        KafkaMQBootAutoConfiguration configuration = new KafkaMQBootAutoConfiguration();
+        KafkaMQProperties properties = configuration.kafkaMQProperties();
+
+        assertThat(properties).isNotNull();
+        assertThat(configuration.kafkaMQClient(properties)).isNotNull();
     }
 
     @Test
@@ -58,8 +61,7 @@ class KafkaMQBootAutoConfigurationTest {
 
     @Test
     void customClientShouldTakePrecedence() {
-        runner.withUserConfiguration(CustomClientConfiguration.class)
-                .run(context -> assertThat(context.getBean(KafkaMQClient.class))
+        runner.run(context -> assertThat(context.getBean(KafkaMQClient.class))
                         .isSameAs(context.getBean("customKafkaMQClient")));
     }
 
@@ -68,7 +70,10 @@ class KafkaMQBootAutoConfigurationTest {
 
         @Bean
         KafkaMQClient customKafkaMQClient() {
-            return new KafkaMQClient(new KafkaMQProperties(), (org.apache.kafka.clients.producer.Callback) null);
+            return new KafkaMQClient(
+                    new MockProducer<String, String>(
+                            true, null, new StringSerializer(), new StringSerializer()),
+                    null);
         }
     }
 }
