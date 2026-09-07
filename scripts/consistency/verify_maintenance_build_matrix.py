@@ -96,6 +96,13 @@ def validate_root_pom(row: dict[str, str], root: element_tree.Element, errors: l
     for name, expected in expected_properties.items():
         if actual_properties.get(name) != expected:
             errors.append(f"{branch}: {name} is {actual_properties.get(name)!r}, expected {expected!r}")
+    declared_maven_version = actual_properties.get("maven.version", "")
+    if declared_maven_version.split(".", 1)[0] != row["maven_major"]:
+        errors.append(
+            f"{branch}: maven.version is {declared_maven_version!r}, expected Maven {row['maven_major']}"
+        )
+    if row["maven_major"] == "4" and actual_properties.get("flatten.skip") != "true":
+        errors.append(f"{branch}: Maven 4 build must set flatten.skip=true")
     container = next((item for item in root if local_name(item.tag) == row["aggregator_container"]), None)
     if container is None:
         errors.append(f"{branch}: missing root {row['aggregator_container']} element")
