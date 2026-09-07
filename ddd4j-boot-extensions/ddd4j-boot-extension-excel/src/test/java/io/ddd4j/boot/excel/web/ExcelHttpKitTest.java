@@ -13,6 +13,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,7 +44,7 @@ class ExcelHttpKitTest {
     @Test
     void write_roundTrip_shouldPreserveData() {
         MockHttpServletResponse response = new MockHttpServletResponse();
-        List<SimpleUser> data = List.of(
+        List<SimpleUser> data = Arrays.asList(
                 new SimpleUser(1L, "Alice"),
                 new SimpleUser(2L, "Bob"));
 
@@ -69,7 +70,7 @@ class ExcelHttpKitTest {
     void upload_validFile_shouldReturnRows() {
         // First export some data
         byte[] bytes = ExcelKit.export(SimpleUser.class,
-                List.of(new SimpleUser(10L, "Charlie")));
+                Arrays.asList(new SimpleUser(10L, "Charlie")));
         MockMultipartFile file = new MockMultipartFile(
                 "file", "data.xlsx",
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -91,7 +92,7 @@ class ExcelHttpKitTest {
                 bytes);
 
         // maxMB = 0 means maxBytes = 0, any non-empty file exceeds it
-        assertThatThrownBy(() -> ExcelHttpKit.validate(file, 0, List.of(".xlsx")))
+        assertThatThrownBy(() -> ExcelHttpKit.validate(file, 0, Arrays.asList(".xlsx")))
                 .isInstanceOf(BizRuntimeException.class)
                 .satisfies(ex -> {
                     BizRuntimeException biz = (BizRuntimeException) ex;
@@ -109,7 +110,7 @@ class ExcelHttpKitTest {
                 "file", "data.csv",
                 "text/csv", bytes);
 
-        assertThatThrownBy(() -> ExcelHttpKit.validate(file, 50, List.of(".xlsx", ".xls")))
+        assertThatThrownBy(() -> ExcelHttpKit.validate(file, 50, Arrays.asList(".xlsx", ".xls")))
                 .isInstanceOf(BizRuntimeException.class)
                 .satisfies(ex -> {
                     BizRuntimeException biz = (BizRuntimeException) ex;

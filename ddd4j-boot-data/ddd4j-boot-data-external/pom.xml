@@ -25,12 +25,13 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.easy4j</groupId>
+            <groupId>com.github.hiwepy</groupId>
             <artifactId>ip2region-spring-boot-starter</artifactId>
             <version>${spring-boot-starter-ip2region.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.easy4j</groupId><artifactId>redistpl-plus-spring-boot-starter</artifactId>
+            <groupId>com.github.hiwepy</groupId>
+            <artifactId>redistpl-plus-spring-boot-starter</artifactId>
             <version>${spring-boot-starter-redistpl-plus.version}</version>
         </dependency>
     </dependencies>

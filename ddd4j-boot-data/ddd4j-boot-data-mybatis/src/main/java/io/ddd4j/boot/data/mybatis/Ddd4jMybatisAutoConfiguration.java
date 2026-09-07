@@ -33,7 +33,6 @@ import javax.sql.DataSource;
  * @since 3.4.x
  */
 @Configuration(proxyBeanMethods = false)
-@Configuration(proxyBeanMethods = false)
 @ConditionalOnBean(DataSource.class)
 @AutoConfigureAfter({DataSourceAutoConfiguration.class})
 public class Ddd4jMybatisAutoConfiguration {

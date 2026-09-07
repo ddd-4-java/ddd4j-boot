@@ -15,7 +15,7 @@
 
     <properties>
         <!-- 与上游 ddd4j-dependencies（${ddd4j.version}）的 vertx.version 保持一致。 -->
-        <vertx.version>5.1.5</vertx.version>
+        <vertx.version>4.5.33</vertx.version>
     </properties>
 
     <dependencies>
