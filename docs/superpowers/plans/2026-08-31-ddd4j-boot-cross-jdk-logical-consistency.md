@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- 维护线分组是唯一输入：JDK 8 为 `2.3.x`、`2.4.x`、`2.5.x`、`2.6.x`；JDK 17 为 `2.7.x`、`3.0.x`–`3.5.x`；JDK 21 为 `4.0.x`、`4.1.x`。
+- 维护线分组是唯一输入：JDK 8 为 `2.3.x`–`2.7.x`；JDK 17 为 `3.0.x`–`3.5.x`；JDK 21 为 `4.0.x`、`4.1.x`。
 - 每次变更某条维护线前，先记录 `git status --short --branch`、GitHub/Codeup 两端 SHA、POM revision、JDK 和 Boot 版本。只有双方 SHA 与本次基线记录一致时才能开始该线工作。
 - 本计划只接受行为、公开 API、公开配置和资源生命周期一致；不以文件文本、模块目录数或自动配置资源文件名相同作为通过条件。
 - `REQUIRED`、`ADAPTED`、`NOT_APPLICABLE`、`BLOCKED` 是仅有的能力状态；后两者必须有可追溯原因，`NOT_APPLICABLE` 还必须有迁移说明。
@@ -245,7 +245,7 @@
 
 ## Phase 3：收敛 JDK 8 历史兼容组
 
-- [ ] **Task 6: 为 2.3.x–2.6.x 建立等价自动配置与生命周期测试**
+- [ ] **Task 6: 为 2.3.x–2.7.x 建立等价自动配置与生命周期测试**
 
   **Files (each branch; verify actual packages before editing):**
   - Modify: `pom.xml`
@@ -259,7 +259,7 @@
 
   **Step 1: Capture each branch baseline before source edits.**
 
-  For each of `2.3.x`, `2.4.x`, `2.5.x`, `2.6.x`, verify remote SHA parity, switch serially, run `mvn -q -DskipTests install`, and record the precise Java/Boot/revision into the generated report. If a dependency cannot resolve, create a `BLOCKED` entry with the Maven coordinate and failure output reference; do not substitute a newer JDK.
+  For each of `2.3.x`, `2.4.x`, `2.5.x`, `2.6.x`, `2.7.x`, verify remote SHA parity, switch serially, run `mvn -q -DskipTests install`, and record the precise Java/Boot/revision into the generated report. If a dependency cannot resolve, create a `BLOCKED` entry with the Maven coordinate and failure output reference; do not substitute a newer JDK.
 
   **Step 2: Write failing JDK 8-equivalent contract tests.**
 
@@ -291,7 +291,7 @@
 
 ## Phase 4：收敛 JDK 17 主能力组
 
-- [ ] **Task 7: 对 2.7.x–3.5.x 执行主能力契约回归与最小修复**
+- [ ] **Task 7: 对 3.0.x–3.5.x 执行主能力契约回归与最小修复**
 
   **Files (each branch; 3.4.x is the source-location reference):**
   - Modify: `pom.xml`, `ddd4j-boot-bom/pom.xml`, `ddd4j-boot-dependencies/pom.xml`
@@ -307,7 +307,7 @@
 
   **Step 1: Derive a branch-specific failure list.**
 
-  Process `2.7.x`, then `3.0.x` through `3.5.x`, never assuming the registration form from the version label. Run Phase 1 scanners and focused existing tests. Check each POM resolves to its declared ddd4j/Spring versions before comparing behavior.
+  Process `3.0.x` through `3.5.x`, never assuming the registration form from the version label. Run Phase 1 scanners and focused existing tests. Check each POM resolves to its declared ddd4j/Spring versions before comparing behavior.
 
   **Step 2: Add failing tests for only absent behavior.**
 
