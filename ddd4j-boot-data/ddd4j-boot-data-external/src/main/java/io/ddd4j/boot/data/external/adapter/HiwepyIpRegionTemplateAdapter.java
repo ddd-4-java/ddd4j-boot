@@ -1,6 +1,6 @@
 package io.ddd4j.boot.data.external.adapter;
 
-import io.github.easy4j.ip2region.spring.boot.IP2regionTemplate;
+import com.github.hiwepy.ip2region.spring.boot.IP2regionTemplate;
 import io.ddd4j.data.external.region.IpRegionTemplate;
 import io.ddd4j.data.external.region.RegionAddress;
 import io.ddd4j.data.external.region.RegionEnum;
@@ -26,7 +26,7 @@ public class HiwepyIpRegionTemplateAdapter implements IpRegionTemplate {
 
     @Override
     public RegionAddress getRegionAddress(String ip) {
-        io.github.easy4j.ip2region.spring.boot.ext.RegionAddress address = delegate.getRegionAddress(ip);
+        com.github.hiwepy.ip2region.spring.boot.ext.RegionAddress address = delegate.getRegionAddress(ip);
         if (Objects.isNull(address)) {
             return XdbSearcher.NOT_MATCH_REGION_ADDRESS;
         }
@@ -36,7 +36,7 @@ public class HiwepyIpRegionTemplateAdapter implements IpRegionTemplate {
 
     @Override
     public RegionEnum getRegionByIp(String ip) {
-        io.github.easy4j.ip2region.spring.boot.ext.RegionEnum region = delegate.getRegionByIp(ip);
+        com.github.hiwepy.ip2region.spring.boot.ext.RegionEnum region = delegate.getRegionByIp(ip);
         if (Objects.isNull(region)) {
             return RegionEnum.UK;
         }

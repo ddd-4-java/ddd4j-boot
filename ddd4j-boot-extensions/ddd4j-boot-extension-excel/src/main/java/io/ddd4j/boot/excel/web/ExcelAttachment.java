@@ -1,5 +1,6 @@
 package io.ddd4j.boot.excel.web;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -98,8 +99,12 @@ public final class ExcelAttachment {
      * @return Content-Disposition 头值
      */
     public String contentDisposition() {
-        String encoded = URLEncoder.encode(filename, charset).replace("+", "%20");
-        return "attachment;filename*=" + charset.name().toLowerCase() + "''" + encoded;
+        try {
+            String encoded = URLEncoder.encode(filename, charset.name()).replace("+", "%20");
+            return "attachment;filename*=" + charset.name().toLowerCase() + "''" + encoded;
+        } catch (UnsupportedEncodingException exception) {
+            throw new IllegalStateException("Unsupported attachment charset: " + charset.name(), exception);
+        }
     }
 
     /**

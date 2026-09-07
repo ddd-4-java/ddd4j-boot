@@ -38,11 +38,9 @@
         <testcontainers.version>1.21.4</testcontainers.version>
         <jna.version>5.13.0</jna.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
+        <commons-pool2.version>2.12.1</commons-pool2.version>
         <artemis.version>2.19.0</artemis.version>
-        <!-- Jackson BOM：父 POM 链来自 2.0.x 线（jackson.version=2.22.2），
-             但 ddd4j 3.x 主仓已迁 Jackson 3（tools.jackson groupId）。
-             显式覆盖版本与坐标与 3.x 一致。 -->
-        <tools-jackson-bom.version>3.2.1</tools-jackson-bom.version>
+        <!-- Boot 2 使用其 BOM 管理的 Jackson 2 坐标和版本。 -->
         <!-- Spring Boot 版本（不再继承 spring-boot-starter-parent，需显式声明） -->
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
         <java.version>1.8</java.version>
@@ -55,23 +53,8 @@
         <maven-nexus-staging-plugin.version>1.7.0</maven-nexus-staging-plugin.version>
         <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
         <!-- Dependency versions -->
-        <spring-amqp.version>3.2.5</spring-amqp.version>
-        <spring-authorization-server.version>1.4.3</spring-authorization-server.version>
-        <spring-batch.version>5.2.2</spring-batch.version>
-        <spring-data-bom.version>2024.1.5</spring-data-bom.version>
-        <!-- 版本约束：Spring Framework 锁定 6.x，不得升级至 7.x -->
-        <spring-framework.version>6.2.19</spring-framework.version>
-        <spring-graphql.version>1.3.5</spring-graphql.version>
-        <spring-hateoas.version>2.4.1</spring-hateoas.version>
-        <spring-integration.version>6.4.4</spring-integration.version>
-        <spring-kafka.version>3.3.5</spring-kafka.version>
-        <spring-ldap.version>3.2.12</spring-ldap.version>
-        <spring-pulsar.version>1.2.5</spring-pulsar.version>
-        <spring-restdocs.version>3.0.3</spring-restdocs.version>
-        <spring-retry.version>2.0.11</spring-retry.version>
-        <spring-security.version>6.4.5</spring-security.version>
-        <spring-session.version>3.4.3</spring-session.version>
-        <spring-ws.version>4.0.13</spring-ws.version>
+        <!-- Spring Boot 2.3.12.RELEASE 对应的 Spring Framework 基线。 -->
+        <spring-framework.version>5.2.15.RELEASE</spring-framework.version>
     </properties>
 
     <modules>
@@ -167,34 +150,31 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- Override the older Testcontainers versions managed by Boot 2. -->
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-framework-bom</artifactId>
-                <version>${spring-framework.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${testcontainers.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-bom</artifactId>
-                <version>${spring-security.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/io.projectreactor/reactor-bom -->
-            <dependency>
-                <groupId>io.projectreactor</groupId>
-                <artifactId>reactor-bom</artifactId>
-                <version>${reactor-bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${testcontainers.version}</version>
             </dependency>
             <dependency>
-                <groupId>tools.jackson</groupId>
-                <artifactId>jackson-bom</artifactId>
-                <version>${tools-jackson-bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>kafka</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>rabbitmq</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>localstack</artifactId>
+                <version>${testcontainers.version}</version>
             </dependency>
             <!-- Testcontainers 1.x 在 Apple ARM64 上需要包含原生 arm64 库的 JNA。 -->
             <dependency>
@@ -207,6 +187,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
             </dependency>
             <!-- Artemis 客户端组件必须同版，避免 Boot 2.3 BOM 将 core 降级后出现 NoSuchMethodError。 -->
             <dependency>

@@ -1,6 +1,6 @@
 package io.ddd4j.boot.web.webflux;
 
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ddd4j.web.webflux.DefaultMessageSourceConfiguration;
 import io.ddd4j.web.webflux.DefaultSequenceConfiguration;
 import io.ddd4j.web.webflux.DefaultWebFluxConfiguration;
