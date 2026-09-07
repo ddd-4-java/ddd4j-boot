@@ -46,6 +46,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+        <maven-deploy-plugin.version>4.0.0-beta-2</maven-deploy-plugin.version>
         <maven-flatten-plugin.version>1.8.0</maven-flatten-plugin.version>
         <!-- Maven 4 原生生成 consumer POM；旧 Flatten 插件不支持 Model 4.1。 -->
         <flatten.skip>true</flatten.skip>
