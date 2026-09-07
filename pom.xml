@@ -32,7 +32,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <revision>4.1.x.20260630-SNAPSHOT</revision>
+        <revision>3.4.x.20260630-SNAPSHOT</revision>
         <ddd4j.version>2.0.x.20260630-SNAPSHOT</ddd4j.version>
         <!-- Jackson BOM：父 POM 链来自 2.0.x 线（jackson.version=2.22.2），
              但 ddd4j 3.x 主仓已迁 Jackson 3（tools.jackson groupId）。
