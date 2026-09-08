@@ -29,13 +29,13 @@ class Ddd4jMonitorBootAutoConfigurationTest {
     }
 
     @Test
-    void shouldBackOffWhenLogbackMissing() {
+    void shouldBindPropertiesWhenLogbackMissing() {
         new ApplicationContextRunner()
                 .withClassLoader(new FilteredClassLoader("ch.qos.logback.classic.LoggerContext"))
                 .withConfiguration(AutoConfigurations.of(Ddd4jMonitorBootAutoConfiguration.class))
                 .run(context -> {
                     assertThat(context).hasNotFailed();
-                    assertThat(context).doesNotHaveBean(BaseMonitorProperties.class);
+                    assertThat(context).hasSingleBean(BaseMonitorProperties.class);
                 });
     }
 

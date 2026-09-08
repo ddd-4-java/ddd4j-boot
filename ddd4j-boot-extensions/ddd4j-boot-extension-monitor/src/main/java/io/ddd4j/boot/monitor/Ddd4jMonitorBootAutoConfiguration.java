@@ -1,6 +1,5 @@
 package io.ddd4j.boot.monitor;
 
-import ch.qos.logback.classic.LoggerContext;
 import io.ddd4j.extension.monitor.config.BaseMonitorProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -16,7 +15,7 @@ import org.springframework.context.annotation.Bean;
  * 本自动配置只负责在 Spring Boot 环境下启用 monitor 配置绑定能力。
  */
 @AutoConfiguration
-@ConditionalOnClass(LoggerContext.class)
+@ConditionalOnClass(BaseMonitorProperties.class)
 public class Ddd4jMonitorBootAutoConfiguration {
 
     /**
