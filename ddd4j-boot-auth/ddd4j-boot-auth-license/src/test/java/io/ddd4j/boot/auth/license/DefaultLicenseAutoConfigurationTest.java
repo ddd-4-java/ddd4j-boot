@@ -30,6 +30,23 @@ class DefaultLicenseAutoConfigurationTest {
     }
 
     @Test
+    void shouldPropagateConfiguredSignatureAlgorithm() {
+        runner.withPropertyValues(
+                        "license.subject=ddd4j-test",
+                        "license.public-alias=public",
+                        "license.store-pass=store-password",
+                        "license.license-path=target/missing.lic",
+                        "license.public-keys-store-path=target/missing.jks",
+                        "license.signature-algorithm=SHA256withDSA")
+                .run(context -> {
+                    assertThat(context).hasNotFailed();
+                    assertThat(context.getBean(LicenseVerify.class))
+                            .extracting("signatureAlgorithm")
+                            .isEqualTo("SHA256withDSA");
+                });
+    }
+
+    @Test
     void shouldBackOffWhenLicenseVerifyMissing() {
         new ApplicationContextRunner()
                 .withClassLoader(new FilteredClassLoader(LicenseVerify.class))
