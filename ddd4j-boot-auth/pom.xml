@@ -21,6 +21,7 @@
         <module>ddd4j-boot-auth-satoken</module>
         <module>ddd4j-boot-auth-security</module>
         <module>ddd4j-boot-auth-shiro</module>
+        <module>ddd4j-boot-auth-license</module>
     </modules>
 
 </project>
