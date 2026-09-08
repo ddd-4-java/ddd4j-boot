@@ -41,6 +41,8 @@
         <!-- Spring Boot 版本（不再继承 spring-boot-starter-parent，需显式声明） -->
         <spring-boot.version>4.1.0</spring-boot.version>
         <java.version>21</java.version>
+        <!-- 覆盖 ddd4j 3.0 父 POM 的历史测试跳过默认值，Verify 必须真实执行测试。 -->
+        <skipTests>false</skipTests>
         <!-- Maven Plugin versions -->
         <maven.version>4.0.0-rc-6</maven.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -341,6 +343,11 @@
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <maxmem>512M</maxmem>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
                 </plugin>
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-deploy-plugin -->
                 <plugin>

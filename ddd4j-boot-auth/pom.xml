@@ -21,6 +21,7 @@
         <subproject>ddd4j-boot-auth-satoken</subproject>
         <subproject>ddd4j-boot-auth-security</subproject>
         <subproject>ddd4j-boot-auth-shiro</subproject>
+        <subproject>ddd4j-boot-auth-license</subproject>
     </subprojects>
 
 </project>
