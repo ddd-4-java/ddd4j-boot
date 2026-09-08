@@ -194,7 +194,6 @@
         <truelicense-core.version>1.33</truelicense-core.version>
         <truelicense-xml.version>1.33</truelicense-xml.version>
         <zxing-extension.version>2.4.x.20260630-SNAPSHOT</zxing-extension.version>
-        <mybatis-plus-spring.version>3.5.16</mybatis-plus-spring.version>
         <resilience4j-spring-boot2.version>2.3.0</resilience4j-spring-boot2.version>
     
         <tio.version>3.8.6.v20240801-RELEASE</tio.version>
@@ -652,10 +651,10 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-spring-boot3-starter -->
+            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-spring-boot-autoconfigure -->
@@ -1660,11 +1659,6 @@
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>zxing-extension</artifactId>
                 <version>${zxing-extension.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-spring</artifactId>
-                <version>${mybatis-plus-spring.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.resilience4j</groupId>
