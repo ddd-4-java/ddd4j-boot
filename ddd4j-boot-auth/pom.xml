@@ -12,15 +12,13 @@
 
     <artifactId>ddd4j-boot-auth</artifactId>
     <packaging>pom</packaging>
-    <description>
-        ddd4j-boot 认证授权整合聚合：satoken / security / shiro 三鉴权、license 授权校验，与 Spring Boot 深度整合。
-        底层复用 io.ddd4j:ddd4j-auth-* 纯 Java 实现，本层提供 Spring Boot 自动装配、异常处理、Starter 封装。
-    </description>
+    <description>ddd4j-boot 认证授权整合聚合：satoken / security / shiro 三鉴权、license 授权校验；底层复用 io.ddd4j:ddd4j-auth-* 纯 Java 实现，本层提供 Spring Boot 自动装配、异常处理、Starter 封装。</description>
 
     <modules>
         <module>ddd4j-boot-auth-satoken</module>
         <module>ddd4j-boot-auth-security</module>
         <module>ddd4j-boot-auth-shiro</module>
+        <module>ddd4j-boot-auth-license</module>
     </modules>
 
 </project>

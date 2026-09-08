@@ -1,17 +1,34 @@
 package io.ddd4j.boot.sample.domain.order.model.vo;
 
+import lombok.Value;
+import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 地址值对象
  */
-public record Address(String province, String city, String district, String detail, String zipCode) {
+@Value
+@Accessors(fluent = true)
+public class Address {
 
-    public Address {
-        if (province == null || province.trim().isEmpty()) {
+    String province;
+    String city;
+    String district;
+    String detail;
+    String zipCode;
+
+    public Address(String province, String city, String district, String detail, String zipCode) {
+        if (StringUtils.isBlank(province)) {
             throw new IllegalArgumentException("省份不能为空");
         }
-        if (city == null || city.trim().isEmpty()) {
+        if (StringUtils.isBlank(city)) {
             throw new IllegalArgumentException("城市不能为空");
         }
+        this.province = province;
+        this.city = city;
+        this.district = district;
+        this.detail = detail;
+        this.zipCode = zipCode;
     }
 
     public String getFullAddress() {
@@ -19,4 +36,3 @@ public record Address(String province, String city, String district, String deta
     }
 
 }
-
