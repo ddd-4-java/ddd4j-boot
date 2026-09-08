@@ -1,19 +1,31 @@
 package io.ddd4j.boot.sample.domain.order.model.vo;
 
+import lombok.Value;
+import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
+
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * 金额值对象
  */
-public record Money(BigDecimal amount, String currency) {
+@Value
+@Accessors(fluent = true)
+public class Money {
 
-    public Money {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
+    BigDecimal amount;
+    String currency;
+
+    public Money(BigDecimal amount, String currency) {
+        if (Objects.isNull(amount) || amount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("金额不能为负数");
         }
-        if (currency == null || currency.trim().isEmpty()) {
+        if (StringUtils.isBlank(currency)) {
             throw new IllegalArgumentException("货币类型不能为空");
         }
+        this.amount = amount;
+        this.currency = currency;
     }
 
     public Money add(Money other) {
@@ -35,4 +47,3 @@ public record Money(BigDecimal amount, String currency) {
     }
 
 }
-
