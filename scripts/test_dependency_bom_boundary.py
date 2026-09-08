@@ -23,6 +23,11 @@ class DependencyBomBoundaryTest(unittest.TestCase):
         path.write_text(content)
         return path
 
+    def test_base_components_use_current_truelicense_coordinates(self):
+        self.assertIn(("global.namespace.truelicense", "truelicense-v1"), BASE_COMPONENTS)
+        self.assertNotIn(("de.schlichtherle.truelicense", "truelicense-core"), BASE_COMPONENTS)
+        self.assertNotIn(("de.schlichtherle.truelicense", "truelicense-xml"), BASE_COMPONENTS)
+
     def test_base_components_must_be_managed_by_every_upstream_line(self):
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary)

@@ -32,13 +32,19 @@ public enum OrderStatus {
     }
 
     public boolean canTransitionTo(OrderStatus target) {
-        return switch (this) {
-            case PENDING -> target == PAID || target == CANCELLED;
-            case PAID -> target == SHIPPED || target == CANCELLED;
-            case SHIPPED -> target == DELIVERED;
-            case DELIVERED -> target == COMPLETED;
-            case COMPLETED, CANCELLED -> false;
-        };
+        switch (this) {
+            case PENDING:
+                return target == PAID || target == CANCELLED;
+            case PAID:
+                return target == SHIPPED || target == CANCELLED;
+            case SHIPPED:
+                return target == DELIVERED;
+            case DELIVERED:
+                return target == COMPLETED;
+            case COMPLETED:
+            case CANCELLED:
+            default:
+                return false;
+        }
     }
 }
-

@@ -7,8 +7,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 BASE_COMPONENTS = {
-    ("de.schlichtherle.truelicense", "truelicense-core"),
-    ("de.schlichtherle.truelicense", "truelicense-xml"),
+    ("global.namespace.truelicense", "truelicense-v1"),
     ("io.github.easy4j", "zxing-extension"),
     ("com.baomidou", "mybatis-plus-spring"),
 }
