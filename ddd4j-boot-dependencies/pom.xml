@@ -16,7 +16,7 @@
 
     <properties>
         <!-- Third Party Spring Boot Starter Dependency versions -->
-        <spring-boot-admin.version>3.5.6</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.4</spring-boot-admin.version>
         <spring-boot-aliyun.version>1.0.0</spring-boot-aliyun.version>
         <spring-boot-starter-agora.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-agora.version>
         <spring-boot-starter-aliyun-mps.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-aliyun-mps.version>
