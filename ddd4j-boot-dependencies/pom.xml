@@ -121,7 +121,7 @@
         <spring-boot-starter-qqwry.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-qqwry.version>
         <spring-boot-starter-redisson-plus.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-redisson-plus.version>
         <spring-boot-starter-redisson.version>${redisson.version}</spring-boot-starter-redisson.version>
-        <spring-boot-starter-redistpl-plus.version>2.3.x.20240824.RELEASE</spring-boot-starter-redistpl-plus.version>
+        <spring-boot-starter-redistpl-plus.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-redistpl-plus.version>
         <spring-boot-starter-rocketmq-plus.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-rocketmq-plus.version>
         <spring-boot-starter-rocketmq.version>2.3.4</spring-boot-starter-rocketmq.version>
         <spring-boot-starter-rythm.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-rythm.version>
