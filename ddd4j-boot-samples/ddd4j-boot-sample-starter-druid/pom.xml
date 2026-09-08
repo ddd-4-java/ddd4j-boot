@@ -146,7 +146,7 @@
         <!-- For Mybatis -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.freemarker</groupId>
@@ -156,7 +156,7 @@
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <artifactId>mybatis-plus-jsqlparser-4.9</artifactId>
         </dependency>
         <!-- 3.5.9+ 拆分后 ServiceImpl/IService 位于 mybatis-plus-spring，显式声明规避传递仲裁缺失 -->
         <dependency>
