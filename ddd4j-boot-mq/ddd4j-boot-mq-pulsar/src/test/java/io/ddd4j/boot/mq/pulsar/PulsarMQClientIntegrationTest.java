@@ -11,6 +11,9 @@ import org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAut
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.apache.pulsar.client.api.Producer;
+import org.apache.pulsar.client.api.PulsarClient;
+import org.apache.pulsar.client.api.Schema;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
@@ -51,6 +54,7 @@ class PulsarMQClientIntegrationTest {
     @Test
     void shouldPublishAndConsumeEventThroughRealPulsar() {
         String serviceUrl = "pulsar://" + PULSAR.getHost() + ":" + PULSAR.getMappedPort(6650);
+        ensureTopicExists(serviceUrl);
 
         ApplicationContextRunner runner = new ApplicationContextRunner()
                 .withConfiguration(AutoConfigurations.of(
@@ -86,6 +90,17 @@ class PulsarMQClientIntegrationTest {
             // Explicitly close PulsarMQClient to avoid JVM hang from non-daemon threads
             context.getBean(PulsarMQClient.class).close();
         });
+    }
+
+    private static void ensureTopicExists(String serviceUrl) {
+        try (PulsarClient client = PulsarClient.builder().serviceUrl(serviceUrl).build();
+             Producer<byte[]> ignored = client.newProducer(Schema.BYTES)
+                     .topic("public/default/order")
+                     .create()) {
+            // Creating the producer provisions the topic before the consumer subscribes.
+        } catch (Exception exception) {
+            throw new IllegalStateException("Failed to provision Pulsar integration-test topic", exception);
+        }
     }
 
     private static void await(java.util.function.BooleanSupplier condition, Duration timeout) throws InterruptedException {
