@@ -108,8 +108,9 @@ consumer POM 并清理 Boot 重复管理后为 `181,401`。该增加表示上游
 - MyBatis-Plus `IService` / `ServiceImpl` 未进入样例编译类路径。
 
 这些错误及后续 TestRestTemplate、Easy4J Validation、MyBatis-Plus ActiveRecord、WebFlux API
-和 Resilience4j Boot Starter 迁移均已完成。`ddd4j-boot-dependencies` 4.x 直接管理
-`resilience4j-spring-boot4:2.4.0`；`ddd4j-dependencies` 生成的 consumer POM 不再包含 Boot/Cloud
+和 Resilience4j Boot Starter 迁移均已完成。`ddd4j-boot-dependencies` 4.x 通过
+`spring-boot-starter-resilience4j.version=${resilience4j.version}` 管理 `resilience4j-spring-boot4`；
+当前 effective version 为 `2.4.0`。`ddd4j-dependencies` 生成的 consumer POM 不再包含 Boot/Cloud
 专属 Starter。
 
 ## BOM 冲突精确治理
