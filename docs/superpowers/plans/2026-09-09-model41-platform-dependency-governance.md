@@ -443,15 +443,15 @@ git commit -m "fix(deps): restore platform dependency ownership"
 - Consumes: Task 7's ownership invariant.
 - Produces: the same invariant with Spring Boot `4.0.7` and revision `4.0.x.20260630-SNAPSHOT` preserved.
 
-- [ ] **Step 1: Apply the tested governance commit to 4.0**
+- [x] **Step 1: Apply the tested governance commit to 4.0**
 
 Resolve only branch-specific Spring Boot differences; do not copy 4.1 dependency versions into 4.0.
 
-- [ ] **Step 2: Run ownership, effective-version and focused Maven checks**
+- [x] **Step 2: Run ownership, effective-version and focused Maven checks**
 
 Use Maven 4/JDK 21 and the same commands as Task 7 against branch 4.0.
 
-- [ ] **Step 3: Commit independently**
+- [x] **Step 3: Commit independently**
 
 ```bash
 git add ddd4j-boot-dependencies/pom.xml config/consistency scripts
