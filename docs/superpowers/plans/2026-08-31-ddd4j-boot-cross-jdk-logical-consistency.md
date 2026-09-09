@@ -413,7 +413,7 @@
   git commit -m "test: record boot integration contract evidence"
   ```
 
-- [ ] **Task 10: 建立同组 API/配置差异门禁和最终报告**
+- [x] **Task 10: 建立同组 API/配置差异门禁和最终报告**（完成：10 个同组比较 PASS；发布状态保留 BLOCKED）
 
   **Files:**
   - Create: `scripts/consistency/verify_same_group_compatibility.sh`

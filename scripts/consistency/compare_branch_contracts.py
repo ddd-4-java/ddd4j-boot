@@ -43,14 +43,24 @@ def main() -> int:
                     fail(f"cross-group mapping requires {field}: {mapping['from_group']}->{mapping['to_group']}")
         baseline = {(row["jdk_group"], row["surface"]): row for row in read_tsv(args.baseline_surfaces, SURFACE_COLUMNS)}
         candidate = {(row["jdk_group"], row["surface"]): row for row in read_tsv(args.candidate_surfaces, SURFACE_COLUMNS)}
+        removed = sorted(set(baseline) - set(candidate))
+        if removed:
+            fail("undocumented same-group removal: "
+                 + ", ".join(f"{group}/{surface}" for group, surface in removed))
         drift = []
+        review_required = []
         for key in sorted(set(baseline) & set(candidate)):
             before, after = baseline[key], candidate[key]
-            if before["value"] != after["value"] and after["deprecated"].lower() != "true":
-                drift.append({"jdk_group": key[0], "surface": key[1], "before": before["value"], "after": after["value"]})
+            if before["value"] != after["value"]:
+                item = {"jdk_group": key[0], "surface": key[1],
+                        "before": before["value"], "after": after["value"]}
+                if after["deprecated"].lower() == "true":
+                    review_required.append(item)
+                else:
+                    drift.append(item)
         if drift:
             fail("undocumented same-group drift: " + ", ".join(f"{item['jdk_group']}/{item['surface']}" for item in drift))
-        result = {"migration_count": len(mappings), "migrations": [{**mapping, "status": "ADAPTED"} for mapping in mappings], "same_group_drift": drift, "status": "PASS"}
+        result = {"migration_count": len(mappings), "migrations": [{**mapping, "status": "ADAPTED"} for mapping in mappings], "same_group_drift": drift, "review_required": review_required, "status": "REVIEW_REQUIRED" if review_required else "PASS"}
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     except ValueError as error:

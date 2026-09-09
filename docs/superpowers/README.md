@@ -2,6 +2,8 @@
 
 本目录是 ddd4j-boot 项目的**规格事实源**，遵循 Spec-Driven Development (SDD) 方法论。
 
+- [跨 JDK 逻辑一致性最终报告](reports/ddd4j-boot-cross-jdk-consistency-final.md)
+
 ## 目录结构
 
 ```

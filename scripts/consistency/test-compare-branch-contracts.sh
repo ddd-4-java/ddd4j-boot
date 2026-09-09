@@ -10,6 +10,7 @@ printf "${header}jdk8\tjdk17\tWEBMVC_WEBFLUX\tjavax.servlet\tjakarta.servlet\tsa
 printf "${header}jdk8\tjdk17\tWEBMVC_WEBFLUX\t\tjakarta.servlet\t\tmvn -pl ddd4j-boot-core -am test\n" > "${tmp_dir}/invalid-map.tsv"
 printf 'jdk_group\tsurface\tvalue\tdeprecated\njdk17\tddd4j.web.public-paths\t/api/**\tfalse\n' > "${tmp_dir}/baseline.tsv"
 printf 'jdk_group\tsurface\tvalue\tdeprecated\njdk17\tddd4j.web.public-paths\t/public/**\tfalse\n' > "${tmp_dir}/drift.tsv"
+printf 'jdk_group\tsurface\tvalue\tdeprecated\n' > "${tmp_dir}/removed.tsv"
 
 if python3 "${comparator}" --migration-map "${tmp_dir}/invalid-map.tsv" --baseline-surfaces "${tmp_dir}/baseline.tsv" --candidate-surfaces "${tmp_dir}/baseline.tsv" --output "${tmp_dir}/invalid.json" >"${tmp_dir}/invalid.out" 2>&1; then
   echo 'expected incomplete cross-group mapping to fail' >&2
@@ -22,6 +23,12 @@ if python3 "${comparator}" --migration-map "${tmp_dir}/valid-map.tsv" --baseline
   exit 1
 fi
 rg -Fq 'undocumented same-group drift' "${tmp_dir}/drift.out"
+
+if python3 "${comparator}" --migration-map "${tmp_dir}/valid-map.tsv" --baseline-surfaces "${tmp_dir}/baseline.tsv" --candidate-surfaces "${tmp_dir}/removed.tsv" --output "${tmp_dir}/removed.json" >"${tmp_dir}/removed.out" 2>&1; then
+  echo 'expected undocumented same-group removal to fail' >&2
+  exit 1
+fi
+rg -Fq 'undocumented same-group removal' "${tmp_dir}/removed.out"
 
 python3 "${comparator}" --migration-map "${tmp_dir}/valid-map.tsv" --baseline-surfaces "${tmp_dir}/baseline.tsv" --candidate-surfaces "${tmp_dir}/baseline.tsv" --output "${tmp_dir}/valid.json"
 rg -Fq '"status": "ADAPTED"' "${tmp_dir}/valid.json"
