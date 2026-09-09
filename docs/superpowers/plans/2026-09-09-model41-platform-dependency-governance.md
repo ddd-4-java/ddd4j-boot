@@ -178,7 +178,7 @@ git commit -m "fix(model): normalize Maven 4.1 parent references"
 - Consumes: the tested verifier and transformation contract from Tasks 1-2.
 - Produces: the same parent invariant on `4.0.x` without changing Spring Boot `4.0.7`.
 
-- [ ] **Step 1: Switch to the existing 4.0 branch after a clean status check**
+- [x] **Step 1: Switch to the existing 4.0 branch after a clean status check**
 
 ```bash
 git status --short
@@ -187,11 +187,11 @@ git fetch github 4.0.x
 git rev-list --left-right --count github/4.0.x...4.0.x
 ```
 
-- [ ] **Step 2: Apply the verified parent-only change**
+- [x] **Step 2: Apply the verified parent-only change**
 
 Apply Task 2's exact invariant; preserve `4.0.x.20260630-SNAPSHOT`, Spring Boot `4.0.7`, JDK 21 and `<subprojects>`.
 
-- [ ] **Step 3: Run structure and Maven verification**
+- [x] **Step 3: Run structure and Maven verification**
 
 ```bash
 python3 scripts/test_model41_parent_contract.py
@@ -202,7 +202,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-
 
 Expected: structure PASS, zero `parent.relativePath` warnings, focused reactor SUCCESS.
 
-- [ ] **Step 4: Commit 4.0 independently**
+- [x] **Step 4: Commit 4.0 independently**
 
 ```bash
 git add -u -- ':(glob)**/pom.xml'
@@ -220,7 +220,7 @@ git commit -m "fix(model): normalize Maven 4.1 parent references"
 - Produces: `OwnershipRule(scope: str, group_id: str, artifact_id: str)` and `verify_ownership(boot_pom: Path, rules: list[OwnershipRule]) -> list[str]`.
 - Consumes: explicit properties, direct dependencyManagement entries and BOM imports from an ecosystem POM.
 
-- [ ] **Step 1: Add failing ownership tests**
+- [x] **Step 1: Add failing ownership tests**
 
 ```python
 def test_boot_rejects_platform_property_and_direct_version(self):
@@ -233,13 +233,13 @@ def test_boot_accepts_boot_starter(self):
     self.assertEqual(verify_ownership(self.boot_starter_pom(), rules), [])
 ```
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run: `python3 scripts/test_dependency_bom_boundary.py`
 
 Expected: FAIL because `OwnershipRule` and `verify_ownership` do not exist.
 
-- [ ] **Step 3: Add the coordinate-level manifest**
+- [x] **Step 3: Add the coordinate-level manifest**
 
 ```tsv
 scope\tgroup_id\tartifact_id
@@ -257,7 +257,7 @@ spring-boot\torg.springframework.boot\tspring-boot-starter-web
 
 Expand the manifest only with coordinates observed in the current POM audit; do not infer ownership from groupId alone.
 
-- [ ] **Step 4: Implement manifest loading and explicit-management checks**
+- [x] **Step 4: Implement manifest loading and explicit-management checks**
 
 ```python
 @dataclass(frozen=True)
@@ -279,7 +279,7 @@ def verify_ownership(boot_pom: Path, rules: list[OwnershipRule]) -> list[str]:
 Property checks must map `${name.version}` usages back to the dependency coordinate so that generic names such as
 `jackson.version` are rejected only when Boot actively uses them for a platform coordinate.
 
-- [ ] **Step 5: Verify GREEN and current-repository RED**
+- [x] **Step 5: Verify GREEN and current-repository RED**
 
 ```bash
 python3 scripts/test_dependency_bom_boundary.py
@@ -290,7 +290,7 @@ python3 scripts/verify_dependency_bom_boundary.py \
 
 Expected: unit tests PASS; current repository verification reports every Boot-layer platform ownership violation.
 
-- [ ] **Step 6: Commit the ownership gate**
+- [x] **Step 6: Commit the ownership gate**
 
 ```bash
 git add config/consistency/dependency-ownership.tsv scripts/verify_dependency_bom_boundary.py scripts/test_dependency_bom_boundary.py

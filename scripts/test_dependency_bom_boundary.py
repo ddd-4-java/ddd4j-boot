@@ -4,7 +4,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from verify_dependency_bom_boundary import BASE_COMPONENTS, verify
+from verify_dependency_bom_boundary import (
+    BASE_COMPONENTS,
+    OwnershipRule,
+    load_ownership,
+    verify,
+    verify_ownership,
+)
 
 
 def pom(properties, dependencies):
@@ -57,6 +63,57 @@ class DependencyBomBoundaryTest(unittest.TestCase):
                 [(group, artifact, None) for group, artifact in BASE_COMPONENTS]))
             upstream = self.write(directory, "upstream.xml", pom([], complete))
             self.assertEqual(verify(boot, [("8", upstream), ("17", upstream), ("21", upstream)]), [])
+
+    def test_boot_rejects_platform_property_and_direct_version(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            boot = self.write(directory, "boot.xml", pom(
+                ["slf4j.version"], [("org.slf4j", "slf4j-api", "${slf4j.version}")]))
+            rules = [OwnershipRule("platform", "org.slf4j", "slf4j-api")]
+
+            errors = verify_ownership(boot, rules)
+
+            self.assertIn("Boot BOM directly versions platform component org.slf4j:slf4j-api", errors)
+            self.assertIn("Boot BOM owns platform version property slf4j.version", errors)
+
+    def test_boot_accepts_boot_starter(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            boot = self.write(directory, "boot.xml", pom(
+                ["spring-boot-starter-web.version"],
+                [("org.springframework.boot", "spring-boot-starter-web",
+                  "${spring-boot-starter-web.version}")]))
+            rules = [OwnershipRule(
+                "spring-boot", "org.springframework.boot", "spring-boot-starter-web")]
+
+            self.assertEqual(verify_ownership(boot, rules), [])
+
+    def test_boot_rejects_orphaned_platform_version_property(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            boot = self.write(directory, "boot.xml", pom(["jackson-annotations.version"], []))
+            rules = [OwnershipRule(
+                "platform", "com.fasterxml.jackson.core", "jackson-annotations",
+                "jackson-annotations.version")]
+
+            errors = verify_ownership(boot, rules)
+
+            self.assertIn("Boot BOM owns platform version property jackson-annotations.version", errors)
+
+    def test_ownership_manifest_loads_coordinate_level_rules(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            manifest = self.write(directory, "ownership.tsv", """\
+scope\tgroup_id\tartifact_id\tproperty_name
+platform\torg.slf4j\tslf4j-api\tslf4j.version
+spring-boot\torg.springframework.boot\tspring-boot-starter-web\tspring-boot-starter-web.version
+""")
+
+            self.assertEqual(load_ownership(manifest), [
+                OwnershipRule("platform", "org.slf4j", "slf4j-api", "slf4j.version"),
+                OwnershipRule("spring-boot", "org.springframework.boot", "spring-boot-starter-web",
+                              "spring-boot-starter-web.version"),
+            ])
 
 
 if __name__ == "__main__":
