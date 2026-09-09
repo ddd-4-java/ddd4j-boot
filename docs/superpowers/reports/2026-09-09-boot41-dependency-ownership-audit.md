@@ -95,25 +95,28 @@ consumer POM 后，Boot 4.1 有效模型已通过四项平台版本契约。
 | 平台有效版本契约 | 4/4 | 4/4 |
 | License 测试 | 3/3 | 3/3 |
 | License + Jackson 聚焦编译 | 通过 | 通过 |
-| 完整 reactor | 56/73 通过，第 57 失败 | 56/73 通过，第 57 失败 |
+| 完整 reactor | 73/73，通过（Boot 4.0.8） | 73/73，通过（Boot 4.1.0） |
 
 Boot 4.0 模型问题从原始 `180,303` 经父引用修复降为 `180,244`，在换用新 ddd4j
 consumer POM 并清理 Boot 重复管理后为 `181,401`。该增加表示上游 BOM 冲突展开条目变化，
 不表示关键有效版本契约失败。
 
-两条完整 reactor 均停在 `ddd4j-boot-sample-starter-druid`，首批编译错误为：
+两条完整 reactor 原先均停在 `ddd4j-boot-sample-starter-druid`，首批编译错误为：
 
 - Boot 4 不再提供旧 `org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer`；
 - `com.github.dozermapper.extra.converters` 转换器缺失；
 - MyBatis-Plus `IService` / `ServiceImpl` 未进入样例编译类路径。
 
-这些错误属于 Boot 4 样例迁移，不通过把普通组件版本重新填回
-`ddd4j-boot-dependencies` 规避。
+这些错误及后续 TestRestTemplate、Easy4J Validation、MyBatis-Plus ActiveRecord、WebFlux API
+和 Resilience4j Boot Starter 迁移均已完成。`ddd4j-boot-dependencies` 4.x 直接管理
+`resilience4j-spring-boot4:2.4.0`；`ddd4j-dependencies` 生成的 consumer POM 不再包含 Boot/Cloud
+专属 Starter。
 
-## 剩余 BOM 冲突
+## BOM 冲突精确治理
 
-Boot 4.1 最终 Maven 4 `-e validate` 报告 `175,007` 个展开模型问题，其中有
-`7,286` 条 `Ignored POM import` 记录，去重后是 `233` 个冲突组合。数量最多的组为：
+Boot 4.1 最终 Maven 4 消费模型仍报告 `175,007` 个展开模型问题，其中有 `7,286` 条
+`Ignored POM import` 记录；按坐标和两侧版本精确归一后为 232 个元组。旧报告的 233 是按完整
+消息文本去重所得。数量最多的组仍包括：
 
 | Group | 展开条数 |
 |---|---:|
@@ -125,5 +128,10 @@ Boot 4.1 最终 Maven 4 `-e validate` 报告 `175,007` 个展开模型问题，�
 | `com.sun.xml.bind` | 240 |
 | `com.oracle.database.jdbc` | 192 |
 
-这些冲突主要由 `ddd4j-dependencies` 内多个上游 BOM 交集产生，不再是 Boot 层显式重复管理。
-关键有效版本已受契约约束，但 233 个冲突尚未逐个完成上游 BOM 源头收敛，因此本规格状态为“部分实施”。
+ddd4j 源头日志的 `11,786` 条展开记录归一为 449 个精确元组，全部进入坐标、两侧版本、最终版本、
+authority 和 reason 完整的白名单。Boot 消费侧另有 232 个精确元组；自动化验证确认 232/232 的
+Boot effective final version 与 ddd4j effective version 一致，`drift=0`、`missing_upstream=0`。
+
+独立代码审查最初发现 3 个 Important：上游仍发布四个生态 Starter、effective POM 参数可省略、
+authority 仅为自声明。修复后复审结果为 Critical 0、Important 0。Maven deploy、空缓存消费和
+GitHub Actions 未作为本次完成证明执行。

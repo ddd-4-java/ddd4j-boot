@@ -10,6 +10,7 @@ from verify_dependency_bom_boundary import (
     load_ownership,
     verify,
     verify_ownership,
+    verify_consumer_conflicts,
 )
 
 
@@ -24,6 +25,23 @@ def pom(properties, dependencies):
 
 
 class DependencyBomBoundaryTest(unittest.TestCase):
+
+    def test_consumer_conflict_requires_exact_allowlist_and_upstream_final_version(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            log = self.write(directory, "maven.log", """\
+[WARNING] Ignored POM import for: org.slf4j:slf4j-api:jar:2.0.17@compile as already imported org.slf4j:slf4j-api:jar:2.0.18@compile.
+""")
+            boot = self.write(directory, "boot.xml", pom([], [("org.slf4j", "slf4j-api", "2.0.18")]))
+            upstream = self.write(directory, "upstream.xml", pom([], [("org.slf4j", "slf4j-api", "2.0.17")]))
+            allowlist = self.write(directory, "allowlist.tsv", """\
+group_id\tartifact_id\tcurrent_version\tignored_version\tfinal_version\tauthority\treason
+org.slf4j\tslf4j-api\t2.0.18\t2.0.17\t2.0.18\tddd4j-dependencies\tBoot import overlap
+""")
+
+            errors = verify_consumer_conflicts(log, allowlist, boot, upstream)
+
+            self.assertTrue(any("differs from ddd4j effective 2.0.17" in error for error in errors))
     def write(self, directory, name, content):
         path = directory / name
         path.write_text(content)
