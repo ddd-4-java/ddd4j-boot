@@ -14,7 +14,7 @@
 
 | 指标 | 修改前 | 方案 1 后 | 结论 |
 |---|---:|---:|---|
-| 总模型问题 | 178,859 | 178,800 | 减少 59 |
+| 总模型问题 | 178,859 | 175,007 | 减少 3,852 |
 | Model 4.1 同时声明 GAV/relativePath | 72 | 0 | 已消除 |
 | Maven rc6 默认 `..` 路径不匹配 | 0 | 13 | 精确白名单 |
 | `parent.version is missing` | 0 | 0 | 构建可解析 |
@@ -72,11 +72,15 @@ Spring Boot 的以下项目符合生态归属，保留在根 POM：
 - Easy4J 各 Spring Boot Starter；
 - Spring Boot Admin 和 Aliyun Spring Boot BOM。
 
-## 当前阻塞
+## 上游闭环
 
-需要修改 `ddd4j feature/3.0.x` 的项目有三项：Testcontainers LocalStack、Spring Security 基线和
-ZXing Extension 3.0 线，并应同时删除两个旧 TrueLicense 管理项。该分支仍被既有 worktree 占用，
-本任务禁止绕过、使用或移除该 worktree，因此上游修复必须等待分支从外部释放。
+为避免操作已有 worktree，本任务使用独立 Git clone 处理 `ddd4j feature/3.0.x`。上游提交
+`7c2da70b` 已完成：
 
-在上游修复前，可以安全删除版本完全一致的下游重复项，但不得提前删除会造成版本降级或代际变化的
-Testcontainers、Spring Security 和 ZXing 覆盖。
+- Spring Security `7.1.0`；
+- Testcontainers LocalStack `2.0.5` 直接约束；
+- ZXing Extension `3.0.x.20260630-SNAPSHOT`；
+- TrueLicense 旧坐标在当前远程基线中已为 0。
+
+Maven 4 需要在安装前执行 `clean`，否则可能复用修改前的 `target/consumer-*.pom`。重新生成
+consumer POM 后，Boot 4.1 有效模型已通过四项平台版本契约。
