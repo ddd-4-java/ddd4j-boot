@@ -1,6 +1,6 @@
 # Maven Model 4.1 与平台依赖权威治理规格
 
-状态：前两阶段已实施；Boot 4 样例闭环、上游 BOM 冲突治理和独立审查的扩展设计已批准，书面规格待审阅。
+状态：前两阶段已实施；Boot 4 样例闭环、上游 BOM 冲突治理和独立审查的扩展规格已审阅批准，待实施。
 
 ## 背景
 
@@ -183,13 +183,13 @@ flowchart TD
 Boot 4.0 和 4.1 均在完整 73 模块 reactor 的第 57 个模块 `ddd4j-boot-sample-starter-druid` 停止，前 56 个模块通过。已证实三类失败：
 
 - `MeterRegistryCustomizer` 仍引用 Boot 3 Actuator 包；Boot 4 包为 `org.springframework.boot.micrometer.metrics.autoconfigure.MeterRegistryCustomizer`。
-- `io.github.easy4j:dozer-extra-converters` 2.0/3.0 本地 JAR 均无 class；两份 `DozerMapperConfiguration` 是该空制品的唯一调用者。
+- `io.github.easy4j:dozer-extra-converters` 2.0/3.0 本地 JAR 均无 class；全树扫描确认 15 份 `DozerMapperConfiguration` 引用其类，14 个样例 POM 声明该空制品。
 - MyBatis-Plus 3.5.17 已将 `IService` / `ServiceImpl` 迁移到 `com.baomidou.mybatisplus.spring.service` 包。
 
 实施规则：
 
 - 修改两份 `DemoApplication` 的 MeterRegistryCustomizer import，保持公共标签行为。
-- 删除两份无实现依赖的 `DozerMapperConfiguration` 和空 converter 依赖，保留 Dozer 核心 Starter。
+- 删除 15 份无实现依赖的 `DozerMapperConfiguration` 和 14 个样例 POM 中的空 converter 依赖，保留 Dozer 核心 Starter；静态契约必须保证两类引用均归零。
 - 将样例 MyBatis-Plus Service import 迁移到 3.5.17 新包，不创建兼容空壳。
 - 4.1 先完成测试和 73/73，再传播到 4.0；禁止排除样例或跳过编译刷绿。
 

@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 修正 ddd4j-boot 4.0/4.1 的 Maven Model 4.1 父引用，并建立“普通组件由 ddd4j-dependencies 统一管理、生态 BOM 只管生态增量”的可执行门禁。
+**Goal:** 完成 ddd4j-boot 4.0/4.1 的 Model 4.1、平台依赖权威、Boot 4 样例兼容和完整 73 模块 reactor 闭环，并治理上游 ddd4j 的 233 个 BOM 冲突。
 
-**Architecture:** `ddd4j-dependencies` 作为平台基础 BOM，Boot/Javalin/Quarkus/Cloud 依赖 BOM 只提供各自生态增量。通过 Maven Model 4.1 结构检查、坐标级归属清单和有效模型版本契约防止下游重复管理。
+**Architecture:** `ddd4j-dependencies` 作为平台基础 BOM，Boot/Javalin/Quarkus/Cloud 依赖 BOM 只提供各自生态增量。通过 Model 4.1 结构检查、样例源码静态契约、坐标级归属清单、有效模型版本断言和精确 BOM 冲突白名单形成分层门禁；先在 4.1 验证，再传播至 4.0，最后执行独立审查。
 
 **Tech Stack:** Maven 4.0.0-rc-6, Maven POM Model 4.1, Python 3 `unittest`/`xml.etree.ElementTree`, JDK 21, GitHub maintenance branches.
 
@@ -17,7 +17,7 @@
 - 不得为消除告警而删除 ddd4j 对 Jackson、SLF4J、Logback、Netty、Hibernate、Micrometer、JAXB、数据库驱动和 MQ 客户端的源头管理。
 - 4.0/4.1 使用 Maven Model 4.1 与 `<subprojects>`，JDK 21，Maven 4.0.0-rc-6。
 - 不创建、使用或移除 Git worktree；不 force push；不重写已推送历史。
-- `ddd4j feature/3.0.x` 被既有 worktree 占用时，上游 POM 修改必须停止在授权边界。
+- `ddd4j feature/3.0.x` 只在 `/Users/wandl/workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j-v3.0.x-independent` 独立 clone 中修改；不得操作既有 worktree。
 - commit、push、Maven deploy、空缓存消费和 Actions 运行是互相独立的证据层。
 
 ---
@@ -443,15 +443,15 @@ git commit -m "fix(deps): restore platform dependency ownership"
 - Consumes: Task 7's ownership invariant.
 - Produces: the same invariant with Spring Boot `4.0.7` and revision `4.0.x.20260630-SNAPSHOT` preserved.
 
-- [ ] **Step 1: Apply the tested governance commit to 4.0**
+- [x] **Step 1: Apply the tested governance commit to 4.0**
 
 Resolve only branch-specific Spring Boot differences; do not copy 4.1 dependency versions into 4.0.
 
-- [ ] **Step 2: Run ownership, effective-version and focused Maven checks**
+- [x] **Step 2: Run ownership, effective-version and focused Maven checks**
 
 Use Maven 4/JDK 21 and the same commands as Task 7 against branch 4.0.
 
-- [ ] **Step 3: Commit independently**
+- [x] **Step 3: Commit independently**
 
 ```bash
 git add ddd4j-boot-dependencies/pom.xml config/consistency scripts
@@ -505,3 +505,343 @@ git ls-remote github refs/heads/<branch>
 ```
 
 Expected: clean worktree and identical local/remote SHA after push. Do not deploy Maven artifacts or run `workflow_dispatch` in this task.
+
+### Task 10: Boot 4 Sample Compatibility Contract
+
+**Files:**
+- Create: `scripts/verify_boot4_sample_compatibility.py`
+- Create: `scripts/test_boot4_sample_compatibility.py`
+- Scan: `ddd4j-boot-samples/**/pom.xml`
+- Scan: `ddd4j-boot-samples/**/src/main/java/**/*.java`
+
+**Interfaces:**
+- Produces: `verify(root: Path) -> list[str]`, reporting the exact file and forbidden Boot 3, empty Dozer converter, or old MyBatis-Plus reference.
+- Consumes: the full samples source tree; it does not depend on Maven reaching the next reactor module.
+
+- [ ] **Step 1: Write failing fixture tests**
+
+```python
+def test_rejects_all_three_boot4_incompatibilities(self):
+    errors = verify(self.fixture_root)
+    self.assertTrue(any("old MeterRegistryCustomizer package" in item for item in errors))
+    self.assertTrue(any("empty dozer-extra-converters dependency" in item for item in errors))
+    self.assertTrue(any("old MyBatis-Plus service package" in item for item in errors))
+
+def test_accepts_boot4_packages_without_empty_converter(self):
+    self.assertEqual(verify(self.compatible_fixture_root), [])
+```
+
+- [ ] **Step 2: Run RED**
+
+Run: `python3 scripts/test_boot4_sample_compatibility.py`
+
+Expected: FAIL because `verify_boot4_sample_compatibility` does not exist.
+
+- [ ] **Step 3: Implement the exhaustive scanner**
+
+```python
+FORBIDDEN = {
+    "org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer": "old MeterRegistryCustomizer package",
+    "com.github.dozermapper.extra.converters": "empty Dozer converter API",
+    "com.baomidou.mybatisplus.extension.service": "old MyBatis-Plus service package",
+}
+
+def verify(root: Path) -> list[str]:
+    errors = []
+    for source in sorted(root.glob("ddd4j-boot-samples/**/src/main/java/**/*.java")):
+        content = source.read_text(encoding="utf-8")
+        for token, reason in FORBIDDEN.items():
+            if token in content:
+                errors.append(f"{source}: {reason}: {token}")
+    for pom in sorted(root.glob("ddd4j-boot-samples/**/pom.xml")):
+        content = pom.read_text(encoding="utf-8")
+        if "<artifactId>dozer-extra-converters</artifactId>" in content:
+            errors.append(f"{pom}: empty dozer-extra-converters dependency")
+    return errors
+```
+
+- [ ] **Step 4: Prove unit GREEN and repository RED**
+
+```bash
+python3 scripts/test_boot4_sample_compatibility.py
+python3 scripts/verify_boot4_sample_compatibility.py .
+```
+
+Expected: unit tests PASS; repository scan FAILS with 15 old MeterRegistry imports, 15 Dozer source users, 14 converter dependencies, and 24 old MyBatis-Plus service-package files.
+
+- [ ] **Step 5: Commit the contract**
+
+```bash
+git add scripts/verify_boot4_sample_compatibility.py scripts/test_boot4_sample_compatibility.py
+git commit -m "test(samples): enforce Boot 4 source compatibility"
+```
+
+### Task 11: Repair All Boot 4.1 Samples And Reach 73/73
+
+**Files:**
+- Modify: the 15 Java files reported for the old `MeterRegistryCustomizer` import
+- Delete: the 15 `ddd4j-boot-samples/**/DozerMapperConfiguration.java` files reported by Task 10
+- Modify: the 14 sample POMs reported for `dozer-extra-converters`
+- Modify: the 24 service Java files reported for `com.baomidou.mybatisplus.extension.service`
+- Test: `scripts/test_boot4_sample_compatibility.py`
+
+**Interfaces:**
+- Consumes: Task 10's exact repository scan.
+- Produces: a source tree with no known Boot 3 metrics import, empty converter use, or pre-3.5.17 MyBatis-Plus service import.
+
+- [ ] **Step 1: Preserve the RED evidence**
+
+Run: `python3 scripts/verify_boot4_sample_compatibility.py .`
+
+Expected: non-zero exit with the exact 68 baseline findings described in Task 10.
+
+- [ ] **Step 2: Apply the minimal source migrations**
+
+Use these exact replacements:
+
+```java
+import org.springframework.boot.micrometer.metrics.autoconfigure.MeterRegistryCustomizer;
+import com.baomidou.mybatisplus.spring.service.IService;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
+```
+
+Delete each reported `DozerMapperConfiguration.java` rather than recreating unavailable converter behavior. Remove only the complete dependency block whose artifactId is `dozer-extra-converters`; retain the Dozer Spring Boot starter.
+
+- [ ] **Step 3: Run the static contract GREEN**
+
+```bash
+python3 scripts/test_boot4_sample_compatibility.py
+python3 scripts/verify_boot4_sample_compatibility.py .
+git diff --check
+```
+
+Expected: all commands PASS and each forbidden reference count is zero.
+
+- [ ] **Step 4: Run focused sample reactors**
+
+```bash
+JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn \
+  -nsu -B -ntp -pl ddd4j-boot-samples/ddd4j-boot-sample-starter-druid -am clean test
+JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn \
+  -nsu -B -ntp -pl ddd4j-boot-samples -am clean test
+```
+
+Expected: both reactors SUCCESS; tests are not skipped by the command line.
+
+- [ ] **Step 5: Run the full 4.1 reactor**
+
+```bash
+JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn \
+  -nsu -B -ntp clean verify
+```
+
+Expected: reactor summary reports 73 successful projects and no failed or skipped project.
+
+- [ ] **Step 6: Commit and push 4.1**
+
+```bash
+git add -u ddd4j-boot-samples
+git add scripts/verify_boot4_sample_compatibility.py scripts/test_boot4_sample_compatibility.py
+git commit -m "fix(samples): restore Boot 4 compatibility"
+git fetch origin 4.1.x
+git rev-list --left-right --count HEAD...origin/4.1.x
+git push origin 4.1.x
+```
+
+Expected: fetch comparison is `0 0` before push except for the local commits being published; no force push.
+
+### Task 12: Propagate The Proven Sample Repair To 4.0
+
+**Files:**
+- Modify/delete on `4.0.x`: the same paths selected by Task 10's scanner
+- Add on `4.0.x`: `scripts/verify_boot4_sample_compatibility.py`
+- Add on `4.0.x`: `scripts/test_boot4_sample_compatibility.py`
+
+**Interfaces:**
+- Consumes: Task 11's tested changes, preserving Spring Boot `4.0.7` and revision `4.0.x.20260630-SNAPSHOT`.
+- Produces: the same zero-finding sample contract and 73/73 reactor result on 4.0.
+
+- [ ] **Step 1: Switch only after a clean-tree and divergence check**
+
+```bash
+git status --short
+git fetch origin 4.0.x
+git switch 4.0.x
+git rev-list --left-right --count HEAD...origin/4.0.x
+```
+
+- [ ] **Step 2: Apply the 4.1 sample commit without copying branch metadata**
+
+Resolve and apply the tested commit without a hand-written hash:
+
+```bash
+sample_fix_commit=$(git log 4.1.x -1 --format=%H --grep='fix(samples): restore Boot 4 compatibility')
+test -n "$sample_fix_commit"
+git cherry-pick "$sample_fix_commit"
+```
+
+Resolve only genuine 4.0 sample-source differences. Verify `pom.xml` still declares Spring Boot `4.0.7` and revision `4.0.x.20260630-SNAPSHOT`.
+
+- [ ] **Step 3: Run static, focused, and full verification**
+
+Run the four Task 11 commands under JDK 21/Maven 4.
+
+Expected: static contract PASS, focused sample reactors SUCCESS, and full reactor 73/73.
+
+- [ ] **Step 4: Push 4.0 after remote reconciliation**
+
+```bash
+git fetch origin 4.0.x
+git rev-list --left-right --count HEAD...origin/4.0.x
+git push origin 4.0.x
+```
+
+### Task 13: Create A Coordinate-Level Maven BOM Conflict Contract
+
+**Files:**
+- Create in the independent ddd4j clone: `scripts/verify_bom_import_conflicts.py`
+- Create in the independent ddd4j clone: `scripts/test_bom_import_conflicts.py`
+- Create in the independent ddd4j clone: `config/dependencies/bom-conflict-allowlist.tsv`
+- Modify in the independent ddd4j clone: `scripts/test_platform_version_contract.py`
+- Modify in the independent ddd4j clone: `scripts/verify_platform_version_contract.py`
+
+**Interfaces:**
+- Produces: `Conflict(imported_by, group_id, artifact_id, current_version, ignored_version)` and `verify(log: Path, allowlist: Path) -> list[str]`.
+- The allowlist schema is `group_id<TAB>artifact_id<TAB>current_version<TAB>ignored_version<TAB>final_version<TAB>authority<TAB>reason`.
+
+- [ ] **Step 1: Write RED parser and allowlist tests**
+
+```python
+def test_unlisted_conflict_fails(self):
+    errors = verify(self.maven_log("org.slf4j:slf4j-api:2.0.18", "2.0.17"), self.empty_allowlist)
+    self.assertEqual(len(errors), 1)
+
+def test_exact_allowlist_entry_passes_but_version_drift_fails(self):
+    self.assertEqual(verify(self.maven_log("org.slf4j:slf4j-api:2.0.18", "2.0.17"), self.allowlist), [])
+    self.assertNotEqual(verify(self.maven_log("org.slf4j:slf4j-api:2.0.19", "2.0.17"), self.allowlist), [])
+```
+
+- [ ] **Step 2: Run RED, implement exact matching, and run GREEN**
+
+```bash
+python3 scripts/test_bom_import_conflicts.py
+```
+
+Expected before implementation: import or assertion failure. Expected after implementation: PASS; matching never falls back to group-only or artifact-only rules.
+
+- [ ] **Step 3: Capture the current 233-conflict baseline**
+
+Generate `ddd4j-dependencies` effective POM under JDK 21/Maven 4, save Maven diagnostics outside Git, and feed the log to the verifier with an empty allowlist.
+
+Expected: 7,286 expanded warnings normalize to 233 unique conflict tuples.
+
+- [ ] **Step 4: Commit the RED governance contract**
+
+```bash
+git add scripts/verify_bom_import_conflicts.py scripts/test_bom_import_conflicts.py \
+  scripts/test_platform_version_contract.py scripts/verify_platform_version_contract.py \
+  config/dependencies/bom-conflict-allowlist.tsv
+git commit -m "test(deps): enforce exact BOM conflict governance"
+```
+
+### Task 14: Resolve ddd4j BOM Conflicts By Authority Family
+
+**Files:**
+- Modify in the independent ddd4j clone: `ddd4j-dependencies/pom.xml`
+- Modify in the independent ddd4j clone: `scripts/test_platform_version_contract.py`
+- Modify in the independent ddd4j clone: `scripts/verify_platform_version_contract.py`
+- Modify only for irreducible conflicts: `config/dependencies/bom-conflict-allowlist.tsv`
+
+**Interfaces:**
+- Consumes: Task 13's 233-tuple baseline.
+- Produces: one final platform-owned version per coordinate, with no unlisted import conflict.
+
+- [ ] **Step 1: Resolve ActiveMQ, then Micrometer, Hibernate, SLF4J and JAXB**
+
+For each family, first add exact expected-version assertions to `test_platform_version_contract.py`, run them RED, then change `ddd4j-dependencies/pom.xml`. Remove an imported BOM only after comparing its managed coordinate set with the remaining effective model; otherwise add direct dependencyManagement entries using the platform property.
+
+- [ ] **Step 2: Resolve the remaining named families in order**
+
+Repeat the RED/GREEN cycle for Oracle JDBC, Brave, gRPC, GraphQL, Ehcache, and Elasticsearch. Do not reorder imports as the sole fix.
+
+- [ ] **Step 3: Classify any irreducible residue exactly**
+
+Add one TSV row per remaining tuple with both observed versions, the effective final version, authority `ddd4j-dependencies`, and a concrete compatibility reason. The verifier must fail if any field or version changes.
+
+- [ ] **Step 4: Verify after every family and finally clean-install**
+
+```bash
+python3 scripts/test_platform_version_contract.py
+python3 scripts/test_bom_import_conflicts.py
+JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn \
+  -nsu -B -ntp -pl ddd4j-dependencies -am clean install
+```
+
+Expected: tests PASS, install SUCCESS, and the conflict verifier reports zero unlisted or drifted tuple.
+
+- [ ] **Step 5: Commit and push the upstream authority changes**
+
+```bash
+git add ddd4j-dependencies/pom.xml scripts config/dependencies/bom-conflict-allowlist.tsv
+git commit -m "fix(deps): converge platform BOM imports"
+git fetch origin feature/3.0.x
+git rev-list --left-right --count HEAD...origin/feature/3.0.x
+git push origin feature/3.0.x
+```
+
+### Task 15: Revalidate Boot 4.1 And 4.0 Against The Governed Upstream BOM
+
+**Files:**
+- Modify: `docs/superpowers/reports/2026-09-09-boot41-dependency-ownership-audit.md`
+- Modify: `docs/superpowers/specs/2026-09-09-model41-platform-dependency-governance.md`
+
+**Interfaces:**
+- Consumes: Task 14's locally installed `ddd4j-dependencies:3.0.x.20260630-SNAPSHOT`.
+- Produces: branch-specific final model, reactor, Git, and unpublished-publication evidence.
+
+- [ ] **Step 1: Run both Boot branches against the new local upstream**
+
+On each branch run parent, ownership, sample compatibility, platform version, license, focused sample, and full `clean verify` gates under JDK 21/Maven 4.
+
+- [ ] **Step 2: Record exact warning and reactor deltas**
+
+Update the report with old and final totals for model problems, expanded ignored imports, unique conflict tuples, allowlisted tuples, and reactor successes. Do not describe allowlisted diagnostics as eliminated.
+
+- [ ] **Step 3: Update formal status only from evidence**
+
+Set the specification to implemented only if both reactors are 73/73 and Task 13 reports no unlisted conflict. Explicitly retain Maven deploy, empty-cache consumption, and Actions as unexecuted evidence layers.
+
+- [ ] **Step 4: Commit and push evidence independently on each Boot branch**
+
+Use `git diff --check`, fetch/divergence checks, normal push, and local/remote SHA comparison. Do not force push or deploy.
+
+### Task 16: Independent Review And Completion Gate
+
+**Files:**
+- Review: all commits produced by Tasks 10-15 in the Boot and ddd4j repositories
+- Modify only when findings require a correction: affected source, test, POM, or evidence file
+
+**Interfaces:**
+- Consumes: final Git diffs and command evidence.
+- Produces: an independent severity-ranked review with no unresolved Critical or Important finding.
+
+- [ ] **Step 1: Dispatch one independent code reviewer after implementation**
+
+The reviewer checks behavioral correctness, dependency authority, exact allowlist safety, Boot 4.0/4.1 compatibility, consumer-facing effective POMs, and whether 73/73 evidence is reproducible.
+
+- [ ] **Step 2: Fix every Critical or Important finding with a focused RED/GREEN cycle**
+
+Run the smallest reproducer first, implement the minimal correction, then rerun the affected branch's full gate. Commit corrections separately.
+
+- [ ] **Step 3: Run completion verification**
+
+```bash
+git diff --check
+git status --short
+git rev-parse HEAD
+current_branch=$(git branch --show-current)
+test -n "$current_branch"
+git ls-remote origin "refs/heads/$current_branch"
+```
+
+Expected: clean trees, matching local/remote SHAs, Boot 4.1 and 4.0 at 73/73, no unlisted BOM conflict, and no unresolved Critical/Important review finding.
