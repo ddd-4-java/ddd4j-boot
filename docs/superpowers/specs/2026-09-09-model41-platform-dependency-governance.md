@@ -1,6 +1,6 @@
 # Maven Model 4.1 与平台依赖权威治理规格
 
-状态：已实施。Boot 4.0.8/4.1.0 完整 reactor、平台/生态依赖边界、精确 BOM 冲突契约和独立审查均已闭环；远端发布与 Actions 仍为独立证据层。
+状态：前五阶段已实施；阶段六“13 线阿里云空缓存消费与 Redistpl 解耦”设计已批准，书面规格待审阅。远端发布与 Actions 仍为独立证据层。
 
 ## 背景
 
@@ -221,3 +221,52 @@ Boot 4.1 当前有 `7,286` 条 `Ignored POM import` 展开记录，去重后为 
 - 独立审查无未处理的 Critical/Important 问题。
 - 两个 Boot 分支及 ddd4j `feature/3.0.x` 的本地/远程 SHA 一致。
 - Maven deploy、空缓存消费和 Actions 仍作为独立证据层，未执行时不声称完成。
+
+## 阶段六：13 线阿里云空缓存消费与 Redistpl 解耦
+
+### 已验证基线
+
+- 13 条 Boot 维护线均使用独立空 Maven 本地仓库，从阿里云 snapshot 仓库取得对应 ddd4j
+  时间戳制品；Boot 2.x、3.x、4.x 分别消费 ddd4j 1.0.x、2.0.x、3.0.x。
+- 13 条线的 Resilience4j Starter 代际和 effective version 均正确。
+- 13 条线的 License 聚焦 reactor 均为 `BUILD SUCCESS`，各执行 3 个测试且零失败、零跳过。
+- Boot 2.3 完整 reactor 的首个远端阻塞位于 `ddd4j-boot-data-external`：阿里云仓库不存在
+  `io.github.easy4j:redistpl-plus-spring-boot-starter:2.3.x.20260630-SNAPSHOT`。
+
+### 适配设计
+
+`ddd4j-boot-data-external` 不再依赖未发布的 Redistpl Starter。`RedisOperationRegionCache` 被
+`RedisTemplateRegionCache` 替代，使用 Spring Data Redis 原生 `StringRedisTemplate` 实现
+`RegionCache`：
+
+- `getString(key)` 调用 `stringRedisTemplate.opsForValue().get(key)`；
+- `set(key, value, ttl)` 调用 `stringRedisTemplate.opsForValue().set(key, value, ttl)`；
+- 构造器使用 `Objects.requireNonNull` 保持 fail-fast；
+- 自动配置使用 `ObjectProvider<StringRedisTemplate>`，没有 Redis Bean 时返回 `RegionCache.none()`；
+- 模块依赖改为对应 Spring Boot 线的 `spring-boot-starter-data-redis`，不得在 Boot BOM 复制 Redis
+  客户端普通组件版本。
+
+原 `RedisOperationRegionCache(RedisOperationTemplate)` 是公开类型但属于 Boot 内部 adapter 包；本阶段
+明确接受以 `RedisTemplateRegionCache(StringRedisTemplate)` 替代该 API，不提供反射兼容层，也不保留对
+未发布 Redistpl 类型的二进制依赖。
+
+### 测试与传播
+
+- 先在 2.3.x 编写单元测试，验证 get、带 TTL 的 set、构造器 null 拒绝和无 Redis Bean 回退；测试必须
+  先因新适配器不存在而失败。
+- 使用 `GenericContainer` 和 `redis:7.4-alpine` 增加真实 Redis 往返与 TTL 集成测试；Docker 不可用时可
+  自动跳过，但本机 Docker 可用验收必须实际启动容器，不能以 skip 计通过。
+- 2.3.x 聚焦与完整 reactor 通过后，按 2.4–2.7、3.0–3.5、4.0–4.1 顺序传播；每条线保留自己的
+  Spring Boot、JDK、Maven、POM Model 和聚合标签契约。
+- 每条线使用独立空 Maven 本地仓库和阿里云 settings，分别记录远端解析、源码编译、测试、容器测试、
+  完整 reactor 和首个失败模块。
+- 新出现的缺失制品或源码兼容问题必须继续按 RED→GREEN 修复；禁止排除模块、关闭测试或复用已有
+  `~/.m2` 制品伪造远端消费成功。
+
+### 阶段六完成定义
+
+- 13 条线均不再声明 `redistpl-plus-spring-boot-starter`，且不再引用 `RedisOperationTemplate`。
+- 13 条线单元测试、Redis Testcontainers 测试和完整 reactor 均通过；任何 skip 必须单独报告且不计为
+  容器验收通过。
+- 13 条线的本地、Codeup、GitHub SHA 一致；不能访问远端时保留未推送状态，不声称完成远端对账。
+- Maven deploy 和 GitHub Actions 仍是独立证据层，不因本地或空缓存构建成功自动视为完成。
