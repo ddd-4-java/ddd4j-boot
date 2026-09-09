@@ -19,12 +19,12 @@ public class MyEventController {
     @Autowired
     private MyEventRepository myEventRepository;
 
-    @PostMapping(path = "", consumes = MediaType.APPLICATION_STREAM_JSON_VALUE) // 1
+    @PostMapping(path = "", consumes = MediaType.APPLICATION_NDJSON_VALUE) // 1
     public Mono<Void> loadEvents(@RequestBody Flux<MyEvent> events) {
         return this.myEventRepository.insert(events).then();    // 2
     }
 
-    @GetMapping(path = "", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    @GetMapping(path = "", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<MyEvent> getEvents() {
         return this.myEventRepository.findBy();
     }
