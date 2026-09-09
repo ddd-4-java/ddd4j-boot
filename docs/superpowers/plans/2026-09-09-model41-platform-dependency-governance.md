@@ -661,7 +661,7 @@ Expected: fetch comparison is `0 0` before push except for the local commits bei
 - Consumes: Task 11's tested changes, preserving Spring Boot `4.0.7` and revision `4.0.x.20260630-SNAPSHOT`.
 - Produces: the same zero-finding sample contract and 73/73 reactor result on 4.0.
 
-- [ ] **Step 1: Switch only after a clean-tree and divergence check**
+- [x] **Step 1: Switch only after a clean-tree and divergence check**
 
 ```bash
 git status --short
@@ -670,7 +670,7 @@ git switch 4.0.x
 git rev-list --left-right --count HEAD...origin/4.0.x
 ```
 
-- [ ] **Step 2: Apply the 4.1 sample commit without copying branch metadata**
+- [x] **Step 2: Apply the 4.1 sample commit without copying branch metadata**
 
 Resolve and apply the tested commit without a hand-written hash:
 
@@ -682,13 +682,13 @@ git cherry-pick "$sample_fix_commit"
 
 Resolve only genuine 4.0 sample-source differences. Verify `pom.xml` still declares Spring Boot `4.0.7` and revision `4.0.x.20260630-SNAPSHOT`.
 
-- [ ] **Step 3: Run static, focused, and full verification**
+- [x] **Step 3: Run static, focused, and full verification**
 
 Run the four Task 11 commands under JDK 21/Maven 4.
 
 Expected: static contract PASS, focused sample reactors SUCCESS, and full reactor 73/73.
 
-- [ ] **Step 4: Push 4.0 after remote reconciliation**
+- [x] **Step 4: Push 4.0 after remote reconciliation**
 
 ```bash
 git fetch origin 4.0.x
@@ -709,7 +709,7 @@ git push origin 4.0.x
 - Produces: `Conflict(imported_by, group_id, artifact_id, current_version, ignored_version)` and `verify(log: Path, allowlist: Path) -> list[str]`.
 - The allowlist schema is `group_id<TAB>artifact_id<TAB>current_version<TAB>ignored_version<TAB>final_version<TAB>authority<TAB>reason`.
 
-- [ ] **Step 1: Write RED parser and allowlist tests**
+- [x] **Step 1: Write RED parser and allowlist tests**
 
 ```python
 def test_unlisted_conflict_fails(self):
@@ -721,7 +721,7 @@ def test_exact_allowlist_entry_passes_but_version_drift_fails(self):
     self.assertNotEqual(verify(self.maven_log("org.slf4j:slf4j-api:2.0.19", "2.0.17"), self.allowlist), [])
 ```
 
-- [ ] **Step 2: Run RED, implement exact matching, and run GREEN**
+- [x] **Step 2: Run RED, implement exact matching, and run GREEN**
 
 ```bash
 python3 scripts/test_bom_import_conflicts.py
@@ -729,13 +729,13 @@ python3 scripts/test_bom_import_conflicts.py
 
 Expected before implementation: import or assertion failure. Expected after implementation: PASS; matching never falls back to group-only or artifact-only rules.
 
-- [ ] **Step 3: Capture the current 233-conflict baseline**
+- [x] **Step 3: Capture the current 233-conflict baseline**
 
 Generate `ddd4j-dependencies` effective POM under JDK 21/Maven 4, save Maven diagnostics outside Git, and feed the log to the verifier with an empty allowlist.
 
 Expected: 7,286 expanded warnings normalize to 233 unique conflict tuples.
 
-- [ ] **Step 4: Commit the RED governance contract**
+- [x] **Step 4: Commit the RED governance contract**
 
 ```bash
 git add scripts/verify_bom_import_conflicts.py scripts/test_bom_import_conflicts.py \
@@ -756,19 +756,19 @@ git commit -m "test(deps): enforce exact BOM conflict governance"
 - Consumes: Task 13's 233-tuple baseline.
 - Produces: one final platform-owned version per coordinate, with no unlisted import conflict.
 
-- [ ] **Step 1: Resolve ActiveMQ, then Micrometer, Hibernate, SLF4J and JAXB**
+- [x] **Step 1: Resolve ActiveMQ, then Micrometer, Hibernate, SLF4J and JAXB**
 
 For each family, first add exact expected-version assertions to `test_platform_version_contract.py`, run them RED, then change `ddd4j-dependencies/pom.xml`. Remove an imported BOM only after comparing its managed coordinate set with the remaining effective model; otherwise add direct dependencyManagement entries using the platform property.
 
-- [ ] **Step 2: Resolve the remaining named families in order**
+- [x] **Step 2: Resolve the remaining named families in order**
 
 Repeat the RED/GREEN cycle for Oracle JDBC, Brave, gRPC, GraphQL, Ehcache, and Elasticsearch. Do not reorder imports as the sole fix.
 
-- [ ] **Step 3: Classify any irreducible residue exactly**
+- [x] **Step 3: Classify any irreducible residue exactly**
 
 Add one TSV row per remaining tuple with both observed versions, the effective final version, authority `ddd4j-dependencies`, and a concrete compatibility reason. The verifier must fail if any field or version changes.
 
-- [ ] **Step 4: Verify after every family and finally clean-install**
+- [x] **Step 4: Verify after every family and finally clean-install**
 
 ```bash
 python3 scripts/test_platform_version_contract.py
@@ -779,7 +779,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-
 
 Expected: tests PASS, install SUCCESS, and the conflict verifier reports zero unlisted or drifted tuple.
 
-- [ ] **Step 5: Commit and push the upstream authority changes**
+- [x] **Step 5: Commit and push the upstream authority changes**
 
 ```bash
 git add ddd4j-dependencies/pom.xml scripts config/dependencies/bom-conflict-allowlist.tsv
@@ -799,19 +799,19 @@ git push origin feature/3.0.x
 - Consumes: Task 14's locally installed `ddd4j-dependencies:3.0.x.20260630-SNAPSHOT`.
 - Produces: branch-specific final model, reactor, Git, and unpublished-publication evidence.
 
-- [ ] **Step 1: Run both Boot branches against the new local upstream**
+- [x] **Step 1: Run both Boot branches against the new local upstream**
 
 On each branch run parent, ownership, sample compatibility, platform version, license, focused sample, and full `clean verify` gates under JDK 21/Maven 4.
 
-- [ ] **Step 2: Record exact warning and reactor deltas**
+- [x] **Step 2: Record exact warning and reactor deltas**
 
 Update the report with old and final totals for model problems, expanded ignored imports, unique conflict tuples, allowlisted tuples, and reactor successes. Do not describe allowlisted diagnostics as eliminated.
 
-- [ ] **Step 3: Update formal status only from evidence**
+- [x] **Step 3: Update formal status only from evidence**
 
 Set the specification to implemented only if both reactors are 73/73 and Task 13 reports no unlisted conflict. Explicitly retain Maven deploy, empty-cache consumption, and Actions as unexecuted evidence layers.
 
-- [ ] **Step 4: Commit and push evidence independently on each Boot branch**
+- [x] **Step 4: Commit and push evidence independently on each Boot branch**
 
 Use `git diff --check`, fetch/divergence checks, normal push, and local/remote SHA comparison. Do not force push or deploy.
 
@@ -825,15 +825,15 @@ Use `git diff --check`, fetch/divergence checks, normal push, and local/remote S
 - Consumes: final Git diffs and command evidence.
 - Produces: an independent severity-ranked review with no unresolved Critical or Important finding.
 
-- [ ] **Step 1: Dispatch one independent code reviewer after implementation**
+- [x] **Step 1: Dispatch one independent code reviewer after implementation**
 
 The reviewer checks behavioral correctness, dependency authority, exact allowlist safety, Boot 4.0/4.1 compatibility, consumer-facing effective POMs, and whether 73/73 evidence is reproducible.
 
-- [ ] **Step 2: Fix every Critical or Important finding with a focused RED/GREEN cycle**
+- [x] **Step 2: Fix every Critical or Important finding with a focused RED/GREEN cycle**
 
 Run the smallest reproducer first, implement the minimal correction, then rerun the affected branch's full gate. Commit corrections separately.
 
-- [ ] **Step 3: Run completion verification**
+- [x] **Step 3: Run completion verification**
 
 ```bash
 git diff --check
