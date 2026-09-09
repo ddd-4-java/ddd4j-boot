@@ -9,6 +9,8 @@
   configuration metadata；10 个同组比较全部通过。
 - JDK 8 组每线 423 个 surface；JDK 17 和 JDK 21 组每线 421 个 surface。
 - 4.1.x 的 Data/Cache/MQ 真实依赖矩阵执行 52 个测试，0 failures、0 errors、0 skipped。
+- 2.3.x–2.7.x Core/Repository 契约分别为每线 6/6 与 5/5；3.0.x–3.5.x 和 4.0.x/4.1.x
+  主能力 clean reactor 全部通过。
 - 阶段六 Redistpl 解耦和 13 线完整 reactor 仍未完成，因此总体发布状态仍为 `BLOCKED`。
 
 ## 同组比较

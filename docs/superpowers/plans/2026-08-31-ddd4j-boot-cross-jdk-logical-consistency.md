@@ -245,7 +245,7 @@
 
 ## Phase 3：收敛 JDK 8 历史兼容组
 
-- [ ] **Task 6: 为 2.3.x–2.7.x 建立等价自动配置与生命周期测试**
+- [x] **Task 6: 为 2.3.x–2.7.x 建立等价自动配置与生命周期测试**（完成：每线 Core 6/6、Repository 5/5）
 
   **Files (each branch; verify actual packages before editing):**
   - Modify: `pom.xml`
@@ -291,7 +291,7 @@
 
 ## Phase 4：收敛 JDK 17 主能力组
 
-- [ ] **Task 7: 对 3.0.x–3.5.x 执行主能力契约回归与最小修复**
+- [x] **Task 7: 对 3.0.x–3.5.x 执行主能力契约回归与最小修复**（完成：六线主能力 clean reactor 全部通过）
 
   **Files (each branch; 3.4.x is the source-location reference):**
   - Modify: `pom.xml`, `ddd4j-boot-bom/pom.xml`, `ddd4j-boot-dependencies/pom.xml`
@@ -338,7 +338,7 @@
 
 ## Phase 5：收敛 JDK 21 / Boot 4 组
 
-- [ ] **Task 8: 审计并适配 4.0.x 与 4.1.x 的 Boot 4 能力**
+- [x] **Task 8: 审计并适配 4.0.x 与 4.1.x 的 Boot 4 能力**（完成：两线 Maven 4 主能力 clean reactor 通过）
 
   **Files (resolve actual module paths from Phase 1 before edits):**
   - Modify: `pom.xml`

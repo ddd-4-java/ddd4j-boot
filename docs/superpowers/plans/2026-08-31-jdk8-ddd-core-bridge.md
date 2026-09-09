@@ -1,5 +1,10 @@
 # ddd4j-boot JDK 8 DDD Core Bridge Implementation Plan
 
+> **状态：已被实际实现路线与跨 JDK 逻辑一致性计划取代，不再逐步执行。** 当前 2.3.x–2.7.x
+> 保留公开类型 `Ddd4jCoreAutoConfiguration` 与 `Ddd4jRepositoryAutoConfiguration`，而非新建本文
+> 设想的 `Ddd4jJdk8*` 平行 API。五条线已实际执行 Core 6/6、Repository 5/5 契约测试。
+> 本文原始复选框保留，用于说明当时未观察 RED 的历史步骤；不得补造 RED 或重复创建桥接类型。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 在 `2.3.x`–`2.6.x` 的 Java 8 / Spring Boot 2 维护线上，以 ddd4j 1.0.x 实现默认 DDD 基础设施、用户覆盖、缺类回退和 Repository 生命周期的逻辑等价桥接，同时保持既有 `io.ddd4j.boot.*` API。
