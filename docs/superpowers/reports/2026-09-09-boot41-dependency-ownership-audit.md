@@ -84,3 +84,46 @@ Spring Boot 的以下项目符合生态归属，保留在根 POM：
 
 Maven 4 需要在安装前执行 `clean`，否则可能复用修改前的 `target/consumer-*.pom`。重新生成
 consumer POM 后，Boot 4.1 有效模型已通过四项平台版本契约。
+
+## 最终验证
+
+| 项目 | Boot 4.0 | Boot 4.1 |
+|---|---|---|
+| Model 4.1 结构门禁 | 通过 | 通过 |
+| 默认父路径白名单 | 13/13 | 13/13 |
+| 依赖归属门禁 | 通过 | 通过 |
+| 平台有效版本契约 | 4/4 | 4/4 |
+| License 测试 | 3/3 | 3/3 |
+| License + Jackson 聚焦编译 | 通过 | 通过 |
+| 完整 reactor | 56/73 通过，第 57 失败 | 56/73 通过，第 57 失败 |
+
+Boot 4.0 模型问题从原始 `180,303` 经父引用修复降为 `180,244`，在换用新 ddd4j
+consumer POM 并清理 Boot 重复管理后为 `181,401`。该增加表示上游 BOM 冲突展开条目变化，
+不表示关键有效版本契约失败。
+
+两条完整 reactor 均停在 `ddd4j-boot-sample-starter-druid`，首批编译错误为：
+
+- Boot 4 不再提供旧 `org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer`；
+- `com.github.dozermapper.extra.converters` 转换器缺失；
+- MyBatis-Plus `IService` / `ServiceImpl` 未进入样例编译类路径。
+
+这些错误属于 Boot 4 样例迁移，不通过把普通组件版本重新填回
+`ddd4j-boot-dependencies` 规避。
+
+## 剩余 BOM 冲突
+
+Boot 4.1 最终 Maven 4 `-e validate` 报告 `175,007` 个展开模型问题，其中有
+`7,286` 条 `Ignored POM import` 记录，去重后是 `233` 个冲突组合。数量最多的组为：
+
+| Group | 展开条数 |
+|---|---:|
+| `org.apache.activemq` | 4,181 |
+| `io.micrometer` | 825 |
+| `org.hibernate.orm` | 672 |
+| `org.slf4j` | 336 |
+| `org.glassfish.jaxb` | 336 |
+| `com.sun.xml.bind` | 240 |
+| `com.oracle.database.jdbc` | 192 |
+
+这些冲突主要由 `ddd4j-dependencies` 内多个上游 BOM 交集产生，不再是 Boot 层显式重复管理。
+关键有效版本已受契约约束，但 233 个冲突尚未逐个完成上游 BOM 源头收敛，因此本规格状态为“部分实施”。
