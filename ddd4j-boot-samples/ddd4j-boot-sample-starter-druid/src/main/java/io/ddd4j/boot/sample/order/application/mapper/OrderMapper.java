@@ -6,18 +6,16 @@ import io.ddd4j.boot.sample.order.domain.model.aggregate.Order;
 import io.ddd4j.boot.sample.order.domain.model.entity.OrderItem;
 import io.ddd4j.boot.sample.order.domain.model.vo.Address;
 import io.ddd4j.boot.sample.order.domain.model.vo.Money;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 订单对象映射器
  */
-@Mapper
 public interface OrderMapper {
 
-    OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
+    OrderMapper INSTANCE = new OrderMapper() {
+    };
 
     /**
      * 命令转领域对象
@@ -113,6 +111,10 @@ public interface OrderMapper {
     /**
      * 订单列表转DTO列表
      */
-    List<OrderDTO> toDTOList(List<Order> orders);
+    default List<OrderDTO> toDTOList(List<Order> orders) {
+        if (Objects.isNull(orders)) {
+            return null;
+        }
+        return orders.stream().map(this::toDTO).collect(java.util.stream.Collectors.toList());
+    }
 }
-

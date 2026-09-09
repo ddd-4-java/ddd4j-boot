@@ -129,7 +129,7 @@ spring:
       routable: true
       # Druid监控配置
       aop-patterns:
-        - io.hiwepy.boot.demo.web.mvc
+        - io.ddd4j.boot.sample.demo.adapter.web
       stat-view-servlet:
         enabled: true
         reset-enable: false

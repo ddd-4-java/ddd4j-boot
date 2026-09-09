@@ -15,7 +15,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan({"io.ddd4j.boot.sample.**.mapper", "io.ddd4j.boot.sample.**.infrastructure.persistence.mapper"})
+@MapperScan(basePackages = {
+        "io.ddd4j.boot.sample.demo.infra.persistence.mapper",
+        "io.ddd4j.boot.sample.order.infrastructure.persistence.mapper"
+})
 public class MybatisPlusConfiguration {
 
     /**
