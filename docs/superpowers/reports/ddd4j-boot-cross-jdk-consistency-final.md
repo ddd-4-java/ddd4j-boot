@@ -60,11 +60,12 @@ RocketMQ 测试动态选择 broker/VIP 端口对，并使用 `listenPort` 同步
 | 3.3.x | af5d3553f2a4 | af5d3553f2a4 | MATCH |
 | 3.4.x | 3c5e1022cc96 | 3c5e1022cc96 | MATCH |
 | 3.5.x | b2c96bbce581 | b2c96bbce581 | MATCH |
-| 4.0.x | 69e8ec5b026e | 145b5c8ebcac | BLOCKED：GitHub 缺 1 commit |
+| 4.0.x | 69e8ec5b026e | 69e8ec5b026e | MATCH |
 | 4.1.x | 8376107b138b | 8376107b138b | MATCH |
 
-4.0.x 的 `69e8ec5b fix(bom): manage all Boot production modules` 已存在于 Codeup，本报告不在未经
-验证的情况下把它推送到 GitHub；Task 11 必须先审查并构建该提交。
+4.0.x 的 `69e8ec5b fix(bom): manage all Boot production modules` 已通过 BOM alignment 与 Maven 4
+聚焦 verify，并同步到 GitHub。release-line TSV 中的 SHA 是本报告生成前实际验证的代码基线，
+不把包含报告自身的证据提交伪装成已重新执行的代码验证。
 
 ## 剩余门禁
 

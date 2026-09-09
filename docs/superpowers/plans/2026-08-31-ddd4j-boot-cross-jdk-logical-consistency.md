@@ -458,7 +458,7 @@
 
 ## Phase 7：发布前复核与 ddd4j-cloud 输入
 
-- [ ] **Task 11: 复核双远端和向 ddd4j-cloud 提供版本组合输入**
+- [x] **Task 11: 复核双远端和向 ddd4j-cloud 提供版本组合输入**（完成：13 行输入完整；未通过完整 reactor 的行保持 BLOCKED）
 
   **Files:**
   - Create: `docs/superpowers/reports/ddd4j-boot-release-line-input.tsv`
