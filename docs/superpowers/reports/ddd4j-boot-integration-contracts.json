@@ -1,6 +1,6 @@
 {
   "branch": "4.1.x",
-  "command": "/Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn -B -ntp  -pl ddd4j-boot-mq/ddd4j-boot-mq-activemq,ddd4j-boot-mq/ddd4j-boot-mq-kafka,ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica,ddd4j-boot-mq/ddd4j-boot-mq-nats,ddd4j-boot-mq/ddd4j-boot-mq-pulsar,ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq,ddd4j-boot-mq/ddd4j-boot-mq-redis-stream,ddd4j-boot-mq/ddd4j-boot-mq-rocketmq,ddd4j-boot-mq/ddd4j-boot-mq-sqs -am -DskipTests=false -Dmaven.test.skip=false test",
+  "command": "/Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn -B -ntp  -pl ddd4j-boot-cache,ddd4j-boot-data/ddd4j-boot-data-mybatis,ddd4j-boot-mq/ddd4j-boot-mq-activemq,ddd4j-boot-mq/ddd4j-boot-mq-kafka,ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica,ddd4j-boot-mq/ddd4j-boot-mq-nats,ddd4j-boot-mq/ddd4j-boot-mq-pulsar,ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq,ddd4j-boot-mq/ddd4j-boot-mq-redis-stream,ddd4j-boot-mq/ddd4j-boot-mq-rocketmq,ddd4j-boot-mq/ddd4j-boot-mq-sqs -am -DskipTests=false -Dmaven.test.skip=false test",
   "ddd4j": "3.0.x.20260630-SNAPSHOT",
   "exit_code": 0,
   "images": [
@@ -10,12 +10,13 @@
     "confluentinc/cp-kafka:7.7.2",
     "eclipse-mosquitto:1.6.15",
     "localstack/localstack:3.8.0",
+    "mysql:8.4",
     "nats:2.10.22",
     "rabbitmq:3.13-management",
     "redis:7.4-alpine"
   ],
   "jdk": "21",
-  "log": "/var/folders/_s/9_xnnkz141920t1yv5zhvd1r0000gn/T/tmp.g63kRH0qNW/integration-contracts.log",
+  "log": "/var/folders/_s/9_xnnkz141920t1yv5zhvd1r0000gn/T/tmp.q4fdn82hmL/integration-contracts.log",
   "profile": "integration",
   "reason": "All selected integration contracts executed",
   "spring_boot": "4.1.0",
@@ -24,6 +25,6 @@
     "errors": 0,
     "failures": 0,
     "skipped": 0,
-    "total": 45
+    "total": 52
   }
 }

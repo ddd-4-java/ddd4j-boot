@@ -372,7 +372,7 @@
 
 ## Phase 6：外部依赖、API 与发布证据
 
-- [ ] **Task 9: 为 Data、Cache 与 MQ 补齐真实依赖的契约证据**
+- [x] **Task 9: 为 Data、Cache 与 MQ 补齐真实依赖的契约证据**（完成：Data/Cache/9 MQ，52 tests，0 failures/errors/skips）
 
   **Files:**
   - Create: `scripts/consistency/run_integration_contracts.sh`

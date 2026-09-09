@@ -89,6 +89,8 @@ if ! "$docker_cmd" info >/dev/null 2>&1; then
 fi
 
 candidate_modules=(
+  ddd4j-boot-cache
+  ddd4j-boot-data/ddd4j-boot-data-mybatis
   ddd4j-boot-mq/ddd4j-boot-mq-activemq
   ddd4j-boot-mq/ddd4j-boot-mq-kafka
   ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica

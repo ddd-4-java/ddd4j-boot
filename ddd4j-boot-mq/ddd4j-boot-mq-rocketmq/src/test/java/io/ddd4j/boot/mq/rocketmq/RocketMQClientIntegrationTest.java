@@ -17,6 +17,7 @@ import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
@@ -37,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * <p>三个关键配置（官方镜像不提供开箱即用的单容器组合）：
  * <ul>
- *   <li><b>brokerIP1/brokerPort1</b>：broker 向 namesrv 公告的对外地址。客户端（宿主机）
+     *   <li><b>brokerIP1/listenPort</b>：broker 向 namesrv 公告的对外地址。客户端（宿主机）
  *       经 namesrv 拿到该地址直连 broker，故必须等于宿主机可达地址 + 固定映射端口
  *       （{@code 10911:10911}，VIP 通道另需 {@code 10909:10909}，可用
  *       {@code -Dddd4j.test.rocketmq.brokerPort=} 覆盖固定端口以规避 CI 冲突）</li>
@@ -57,7 +58,8 @@ class RocketMQClientIntegrationTest {
     /**
      * broker 对外公告端口（brokerIP1/brokerPort1 必须与宿主机固定映射一致）。
      */
-    private static final int BROKER_PORT = Integer.getInteger("ddd4j.test.rocketmq.brokerPort", 10911);
+    private static final int BROKER_PORT = Integer.getInteger(
+            "ddd4j.test.rocketmq.brokerPort", availableBrokerPort());
 
     /**
      * 覆盖镜像自带 broker.conf 的完整配置（含公告地址/namesrv/自动建 topic）。
@@ -71,7 +73,7 @@ class RocketMQClientIntegrationTest {
             brokerRole = ASYNC_MASTER
             flushDiskType = ASYNC_FLUSH
             brokerIP1 = 127.0.0.1
-            brokerPort1 = %d
+            listenPort = %d
             namesrvAddr = 127.0.0.1:9876
             autoCreateTopicEnable = true
             """;
@@ -99,11 +101,25 @@ class RocketMQClientIntegrationTest {
                             "/home/rocketmq/rocketmq-5.3.2/conf/broker.conf")
                     .withExposedPorts(9876)
                     .waitingFor(Wait.forLogMessage(".*boot success.*", 2));
-            container.setPortBindings(List.of(BROKER_PORT + ":10911", (BROKER_PORT - 2) + ":10909"));
+            container.setPortBindings(List.of(
+                    BROKER_PORT + ":" + BROKER_PORT,
+                    (BROKER_PORT - 2) + ":" + (BROKER_PORT - 2)));
             return container;
         } catch (IOException e) {
             throw new IllegalStateException("Prepare RocketMQ broker.conf failed", e);
         }
+    }
+
+    private static int availableBrokerPort() {
+        for (int candidate = 20011; candidate < 30000; candidate += 10) {
+            try (ServerSocket broker = new ServerSocket(candidate);
+                 ServerSocket vip = new ServerSocket(candidate - 2)) {
+                return candidate;
+            } catch (IOException ignored) {
+                // Try the next port pair.
+            }
+        }
+        throw new IllegalStateException("No available RocketMQ broker/VIP port pair");
     }
 
     @BeforeAll

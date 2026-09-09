@@ -93,14 +93,24 @@ class PulsarMQClientIntegrationTest {
     }
 
     private static void ensureTopicExists(String serviceUrl) {
-        try (PulsarClient client = PulsarClient.builder().serviceUrl(serviceUrl).build();
-             Producer<byte[]> ignored = client.newProducer(Schema.BYTES)
-                     .topic("public/default/order")
-                     .create()) {
-            // Creating the producer provisions the topic before the consumer subscribes.
+        Exception lastFailure = null;
+        try (PulsarClient client = PulsarClient.builder().serviceUrl(serviceUrl).build()) {
+            long deadline = System.nanoTime() + Duration.ofSeconds(60).toNanos();
+            while (System.nanoTime() < deadline) {
+                try (Producer<byte[]> ignored = client.newProducer(Schema.BYTES)
+                        .topic("public/default/order")
+                        .create()) {
+                    // Creating the producer provisions the topic before the consumer subscribes.
+                    return;
+                } catch (Exception exception) {
+                    lastFailure = exception;
+                    Thread.sleep(500);
+                }
+            }
         } catch (Exception exception) {
-            throw new IllegalStateException("Failed to provision Pulsar integration-test topic", exception);
+            lastFailure = exception;
         }
+        throw new IllegalStateException("Failed to provision Pulsar integration-test topic", lastFailure);
     }
 
     private static void await(java.util.function.BooleanSupplier condition, Duration timeout) throws InterruptedException {
