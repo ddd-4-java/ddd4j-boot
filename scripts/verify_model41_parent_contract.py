@@ -16,16 +16,32 @@ def value(parent, name):
     return (element.text or "").strip() if element is not None else ""
 
 
-def parent_target(pom, relative_path):
-    target = (pom.parent / relative_path).resolve()
-    return target / "pom.xml" if target.is_dir() else target
+def artifact_id(pom):
+    if not pom.is_file():
+        return ""
+    project = ET.parse(pom).getroot()
+    return value(project, "artifactId")
 
 
-def verify(root):
+def load_allowlist(path):
+    if path is None:
+        return set()
+    entries = set()
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line or line.startswith("#") or line.startswith("path\t"):
+            continue
+        entries.add(line.split("\t", 1)[0])
+    return entries
+
+
+def verify(root, allowed_default_mismatches=None):
     root = Path(root)
     errors = []
-    for pom in sorted(root.rglob("pom.xml")):
-        project = ET.parse(pom).getroot()
+    allowed = set(allowed_default_mismatches or ())
+    observed_mismatches = set()
+    models = [(pom, ET.parse(pom).getroot()) for pom in sorted(root.rglob("pom.xml"))]
+    reactor_projects = {value(project, "artifactId") for _, project in models}
+    for pom, project in models:
         if value(project, "modelVersion") != "4.1.0":
             continue
         parent = child(project, "parent")
@@ -33,27 +49,29 @@ def verify(root):
             continue
 
         relative_element = child(parent, "relativePath")
-        relative_path = value(parent, "relativePath")
         coordinates = tuple(value(parent, name) for name in ("groupId", "artifactId", "version"))
-
-        if relative_element is None:
-            if not all(coordinates):
-                errors.append(f"{pom}: external parent must use coordinates only")
-            continue
-        if not relative_path:
-            errors.append(f"{pom}: external parent must use coordinates only")
-        elif any(coordinates):
-            errors.append(f"{pom}: reactor parent must use relativePath only")
-        elif not parent_target(pom, relative_path).is_file():
-            errors.append(f"{pom}: relativePath does not exist: {relative_path}")
+        _, parent_artifact, _ = coordinates
+        if relative_element is not None:
+            errors.append(f"{pom}: parent must not declare relativePath")
+        if not all(coordinates):
+            errors.append(f"{pom}: parent must use full coordinates")
+        default_parent_artifact = artifact_id(pom.parent.parent / "pom.xml")
+        if parent_artifact in reactor_projects and default_parent_artifact != parent_artifact:
+            relative = pom.relative_to(root).as_posix()
+            observed_mismatches.add(relative)
+            if relative not in allowed:
+                errors.append(f"{pom}: default parent path mismatch is not allowlisted")
+    for relative in sorted(allowed - observed_mismatches):
+        errors.append(f"{relative}: allowlist entry no longer matches a default parent path mismatch")
     return errors
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("root", type=Path)
+    parser.add_argument("--allowlist", type=Path)
     args = parser.parse_args()
-    errors = verify(args.root)
+    errors = verify(args.root, load_allowlist(args.allowlist))
     if errors:
         print("\n".join(errors))
         return 1

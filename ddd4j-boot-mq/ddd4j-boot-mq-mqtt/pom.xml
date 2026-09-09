@@ -7,7 +7,6 @@
         <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-mq</artifactId>
         <version>${revision}</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>ddd4j-boot-mq-mqtt</artifactId>
