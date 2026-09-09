@@ -189,7 +189,7 @@
         <spring-boot-starter-xxljob.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-xxljob.version>
         <spring-boot-starter-zbus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-zbus.version>
         <spring-boot-starter-zxing.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-zxing.version>
-        <resilience4j-spring-boot2.version>2.3.0</resilience4j-spring-boot2.version>
+        <resilience4j-spring-boot4.version>2.4.0</resilience4j-spring-boot4.version>
     </properties>
 
     <dependencyManagement>
@@ -1631,8 +1631,8 @@
             </dependency>
             <dependency>
                 <groupId>io.github.resilience4j</groupId>
-                <artifactId>resilience4j-spring-boot2</artifactId>
-                <version>${resilience4j-spring-boot2.version}</version>
+                <artifactId>resilience4j-spring-boot4</artifactId>
+                <version>${resilience4j-spring-boot4.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

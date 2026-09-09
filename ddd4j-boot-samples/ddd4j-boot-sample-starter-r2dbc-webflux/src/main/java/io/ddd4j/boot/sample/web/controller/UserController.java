@@ -36,7 +36,7 @@ public class UserController {
         return this.userService.findByUsername(username);
     }
 
-    @GetMapping(value = "", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    @GetMapping(value = "", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<User> findAll() {
         return this.userService.findAll().delayElements(Duration.ofSeconds(1));
     }

@@ -56,10 +56,6 @@
             <groupId>com.github.dozermapper</groupId>
             <artifactId>dozer-spring-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.github.easy4j</groupId>
-            <artifactId>dozer-extra-converters</artifactId>
-        </dependency>
         <!-- For AOP -->
         <dependency>
             <groupId>org.springframework</groupId>
