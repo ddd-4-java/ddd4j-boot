@@ -178,7 +178,7 @@ git commit -m "fix(model): normalize Maven 4.1 parent references"
 - Consumes: the tested verifier and transformation contract from Tasks 1-2.
 - Produces: the same parent invariant on `4.0.x` without changing Spring Boot `4.0.7`.
 
-- [ ] **Step 1: Switch to the existing 4.0 branch after a clean status check**
+- [x] **Step 1: Switch to the existing 4.0 branch after a clean status check**
 
 ```bash
 git status --short
@@ -187,11 +187,11 @@ git fetch github 4.0.x
 git rev-list --left-right --count github/4.0.x...4.0.x
 ```
 
-- [ ] **Step 2: Apply the verified parent-only change**
+- [x] **Step 2: Apply the verified parent-only change**
 
 Apply Task 2's exact invariant; preserve `4.0.x.20260630-SNAPSHOT`, Spring Boot `4.0.7`, JDK 21 and `<subprojects>`.
 
-- [ ] **Step 3: Run structure and Maven verification**
+- [x] **Step 3: Run structure and Maven verification**
 
 ```bash
 python3 scripts/test_model41_parent_contract.py
@@ -202,7 +202,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-
 
 Expected: structure PASS, zero `parent.relativePath` warnings, focused reactor SUCCESS.
 
-- [ ] **Step 4: Commit 4.0 independently**
+- [x] **Step 4: Commit 4.0 independently**
 
 ```bash
 git add -u -- ':(glob)**/pom.xml'
