@@ -1,0 +1,59 @@
+/**
+ * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
+ * All Rights Reserved.
+ */
+package io.ddd4j.boot.sample;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.ResponseEntity;
+
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.jupiter.api.Disabled;
+
+@SpringBootTest(classes = DemoApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Disabled("需要外部基础设施（MQ/数据库等服务），通过显式 profile 启用")
+public class DemoApplication_Test {
+
+
+    /**
+     * @LocalServerPort 提供了 @Value("${local.server.port}") 的代替
+     */
+    @LocalServerPort
+    private int port;
+    private URL base;
+
+    @Autowired
+    private TestRestTemplate restTemplate;
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        String url = String.format("http://localhost:%d/", port);
+        System.out.println(String.format("port is : [%d]", port));
+        this.base = new URL(url);
+    }
+
+    /**
+     * 向"/test"地址发送请求，并打印返回结果
+     *
+     * @throws Exception
+     */
+    @Test
+    public void test1() throws Exception {
+
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("name", 1);
+        requestBody.put("text", 60);
+
+        ResponseEntity<String> response = this.restTemplate.postForEntity(
+                this.base.toString() + "/demo/new", requestBody, String.class);
+        System.out.println(String.format("测试结果为：%s", response.getBody()));
+    }
+
+}
