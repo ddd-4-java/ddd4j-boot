@@ -24,6 +24,21 @@ class OwnershipRule:
     property_name: str = ""
 
 
+@dataclass(frozen=True, order=True)
+class Conflict:
+    group_id: str
+    artifact_id: str
+    current_version: str
+    ignored_version: str
+
+
+CONFLICT_PATTERN = re.compile(
+    r"Ignored POM import for: (?P<group>[^:]+):(?P<artifact>[^:]+):[^:]+:"
+    r"(?P<ignored>[^@ ]+)@\S+ as already imported (?P=group):(?P=artifact):[^:]+:"
+    r"(?P<current>[^@ ]+)@\S+"
+)
+
+
 def load_ownership(path):
     with Path(path).open(encoding="utf-8", newline="") as source:
         return [OwnershipRule(row["scope"], row["group_id"], row["artifact_id"],
@@ -65,6 +80,38 @@ def verify_ownership(boot_pom, rules):
     return errors
 
 
+def verify_consumer_conflicts(log_path, allowlist_path, boot_effective, upstream_effective):
+    conflicts = set()
+    for line in Path(log_path).read_text(encoding="utf-8").splitlines():
+        match = CONFLICT_PATTERN.search(line)
+        if match:
+            conflicts.add(Conflict(match.group("group"), match.group("artifact"),
+                                   match.group("current"), match.group("ignored")))
+    with Path(allowlist_path).open(encoding="utf-8", newline="") as source:
+        rows = {Conflict(row["group_id"], row["artifact_id"], row["current_version"],
+                         row["ignored_version"]): row
+                for row in csv.DictReader(source, delimiter="\t")}
+    errors = [f"unlisted Boot consumer conflict: {item}" for item in sorted(conflicts - rows.keys())]
+    errors.extend(f"stale Boot consumer allowlist entry: {item}"
+                  for item in sorted(rows.keys() - conflicts))
+    _, boot_versions = model(boot_effective)
+    _, upstream_versions = model(upstream_effective)
+    for item in sorted(conflicts & rows.keys()):
+        coordinate = (item.group_id, item.artifact_id)
+        row = rows[item]
+        boot_version = boot_versions.get(coordinate)
+        upstream_version = upstream_versions.get(coordinate)
+        if row["final_version"] != boot_version:
+            errors.append(f"{':'.join(coordinate)} final version differs from Boot effective {boot_version}")
+        if boot_version != upstream_version:
+            errors.append(f"{':'.join(coordinate)} Boot effective {boot_version} differs from ddd4j effective {upstream_version}")
+        if row["authority"] != "ddd4j-dependencies":
+            errors.append(f"{':'.join(coordinate)} authority must be ddd4j-dependencies")
+        if not row["reason"].strip():
+            errors.append(f"{':'.join(coordinate)} reason must not be empty")
+    return errors
+
+
 def verify(boot_pom, upstream_effective):
     errors = []
     properties, boot_dependencies = model(boot_pom)
@@ -92,11 +139,21 @@ def main():
     parser.add_argument("--upstream-effective", action="append", nargs=2,
                         metavar=("JDK", "POM"))
     parser.add_argument("--ownership", type=Path)
+    parser.add_argument("--consumer-log", type=Path)
+    parser.add_argument("--consumer-allowlist", type=Path)
+    parser.add_argument("--boot-effective", type=Path)
+    parser.add_argument("--platform-effective", type=Path)
     args = parser.parse_args()
     effective = [(label, Path(path)) for label, path in (args.upstream_effective or [])]
     errors = verify(args.boot_pom, effective) if effective else []
     if args.ownership:
         errors.extend(verify_ownership(args.boot_pom, load_ownership(args.ownership)))
+    consumer_args = (args.consumer_log, args.consumer_allowlist,
+                     args.boot_effective, args.platform_effective)
+    if any(consumer_args) and not all(consumer_args):
+        errors.append("consumer conflict verification requires log, allowlist, Boot effective and platform effective")
+    elif all(consumer_args):
+        errors.extend(verify_consumer_conflicts(*consumer_args))
     if errors:
         print("\n".join(errors))
         return 1
