@@ -194,7 +194,7 @@
         <truelicense-core.version>1.33</truelicense-core.version>
         <truelicense-xml.version>1.33</truelicense-xml.version>
         <zxing-extension.version>3.4.x.20260630-SNAPSHOT</zxing-extension.version>
-        <resilience4j-spring-boot2.version>2.3.0</resilience4j-spring-boot2.version>
+        <spring-boot-starter-resilience4j.version>${resilience4j.version}</spring-boot-starter-resilience4j.version>
     
         <tio.version>3.8.6.v20240801-RELEASE</tio.version>
             <jackson-annotations.version>2.22</jackson-annotations.version>
@@ -1663,8 +1663,8 @@
             </dependency>
             <dependency>
                 <groupId>io.github.resilience4j</groupId>
-                <artifactId>resilience4j-spring-boot2</artifactId>
-                <version>${resilience4j-spring-boot2.version}</version>
+                <artifactId>resilience4j-spring-boot3</artifactId>
+                <version>${spring-boot-starter-resilience4j.version}</version>
             </dependency>
         
             <!-- t-io（mqtt-server sample 引用；org.tio 坐标已死，Central 仅存 org.t-io） -->
