@@ -1,0 +1,82 @@
+# ddd4j-boot 4.1 依赖归属审计
+
+## 结论
+
+`ddd4j-boot` 4.1 当前存在两类越界：根 POM 主动导入或直接管理普通 Spring/Reactor/Jackson
+组件，`ddd4j-boot-dependencies` 又直接管理 Testcontainers、TrueLicense、ZXing 和 Tio。它们都应由
+`ddd4j-dependencies` 统一管理；Boot 层只保留 Spring Boot BOM、Boot 核心制品、Starter 与 Boot
+专属集成。
+
+本报告依据结构化 XML 解析和本地已安装的
+`io.ddd4j:ddd4j-dependencies:3.0.x.20260630-SNAPSHOT` 有效 POM，不以属性名或注释推断版本来源。
+
+## 父模型告警基线
+
+| 指标 | 修改前 | 方案 1 后 | 结论 |
+|---|---:|---:|---|
+| 总模型问题 | 178,859 | 178,800 | 减少 59 |
+| Model 4.1 同时声明 GAV/relativePath | 72 | 0 | 已消除 |
+| Maven rc6 默认 `..` 路径不匹配 | 0 | 13 | 精确白名单 |
+| `parent.version is missing` | 0 | 0 | 构建可解析 |
+
+13 条默认路径提示由 `config/consistency/model41-parent-warning-allowlist.tsv` 管理。白名单新增、遗漏或
+失效都会使 `verify_model41_parent_contract.py` 失败。
+
+## 根 POM 归属清单
+
+| Coordinate | Current owner | Required owner | Current version | Present upstream | Action |
+|---|---|---|---|---|---|
+| org.springframework:spring-framework-bom | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, BOM 6.2.16 and direct components 7.0.8 | remove downstream BOM import after effective-version test |
+| org.springframework.security:spring-security-bom | ddd4j-boot root | ddd4j-dependencies | 7.1.0 | yes, components 7.0.6 | align upstream baseline before removing downstream import |
+| io.projectreactor:reactor-bom | ddd4j-boot root | ddd4j-dependencies | 2025.0.6 inherited | yes, effective reactor-core 3.8.6 | remove downstream duplicate after effective-version test |
+| tools.jackson:jackson-bom | ddd4j-boot root | ddd4j-dependencies | 3.2.1 | yes, effective Jackson 3.2.1 | remove downstream duplicate |
+| org.springframework:spring-aop | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+| org.springframework:spring-beans | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+| org.springframework:spring-context | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+| org.springframework:spring-core | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+| org.springframework:spring-expression | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+| org.springframework:spring-jms | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+| org.springframework:spring-messaging | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+| org.springframework:spring-test | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+| org.springframework:spring-web | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+| org.springframework:spring-webflux | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+| org.springframework:spring-webmvc | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+
+Spring Boot 的以下项目符合生态归属，保留在根 POM：
+
+- `org.springframework.boot:spring-boot-dependencies:4.1.0`；
+- `org.springframework.boot:spring-boot:4.1.0`；
+- `org.springframework.boot:spring-boot-starter:4.1.0`；
+- `org.springframework.boot:spring-boot-starter-web:4.1.0`。
+
+## ddd4j-boot-dependencies 归属清单
+
+| Coordinate | Current owner | Required owner | Current version | Present upstream | Action |
+|---|---|---|---|---|---|
+| com.fasterxml.jackson.core:jackson-annotations | ddd4j-boot-dependencies property | ddd4j-dependencies | 2.22 | yes, 2.22 | remove orphan property |
+| org.testcontainers:testcontainers-localstack | ddd4j-boot-dependencies | ddd4j-dependencies | requested 2.0.5 | yes, effective 2.0.3 | update upstream to 2.0.5 before removing direct version |
+| de.schlichtherle.truelicense:truelicense-core | ddd4j-boot-dependencies | ddd4j-dependencies | 1.33 | yes, 1.33 legacy | remove Boot duplicate; remove upstream legacy entry in platform repair |
+| de.schlichtherle.truelicense:truelicense-xml | ddd4j-boot-dependencies | ddd4j-dependencies | 1.33 | yes, 1.33 legacy | remove Boot duplicate; remove upstream legacy entry in platform repair |
+| io.github.easy4j:zxing-extension | ddd4j-boot-dependencies | ddd4j-dependencies | 4.1.x.20260630-SNAPSHOT | yes, 2.0.x.20260630-SNAPSHOT | verify and correct upstream 3.0-line version before removing duplicate |
+| org.t-io:tio-core | ddd4j-boot-dependencies | ddd4j-dependencies | 3.8.6.v20240801-RELEASE | yes, same version | remove downstream duplicate |
+
+## 保留的 Boot 生态依赖
+
+以下坐标虽不都以 `spring-boot` 命名，但实际是 Boot Starter 或 Boot 专属聚合，不迁移到平台层：
+
+- Guerlab SMS `*-starter`；
+- OpenTracing Spring Jaeger Starter；
+- Springdoc OpenAPI Starter；
+- Knife4j Spring Boot Starter；
+- TongWeb Spring Boot Starter；
+- Easy4J 各 Spring Boot Starter；
+- Spring Boot Admin 和 Aliyun Spring Boot BOM。
+
+## 当前阻塞
+
+需要修改 `ddd4j feature/3.0.x` 的项目有三项：Testcontainers LocalStack、Spring Security 基线和
+ZXing Extension 3.0 线，并应同时删除两个旧 TrueLicense 管理项。该分支仍被既有 worktree 占用，
+本任务禁止绕过、使用或移除该 worktree，因此上游修复必须等待分支从外部释放。
+
+在上游修复前，可以安全删除版本完全一致的下游重复项，但不得提前删除会造成版本降级或代际变化的
+Testcontainers、Spring Security 和 ZXing 覆盖。

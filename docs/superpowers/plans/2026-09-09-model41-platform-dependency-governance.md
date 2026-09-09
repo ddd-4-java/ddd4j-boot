@@ -307,11 +307,11 @@ git commit -m "test(deps): enforce ecosystem BOM ownership"
 - Consumes: Task 4 verifier output and current 4.1 effective model.
 - Produces: an exact ledger with coordinate, current owner, required owner, current version, upstream availability and action.
 
-- [ ] **Step 1: Generate the explicit-management inventory**
+- [x] **Step 1: Generate the explicit-management inventory**
 
 Run a structured XML audit over `ddd4j-boot-dependencies/pom.xml`; record each property-backed dependency and imported BOM. Do not derive the inventory from comments or `rg` counts.
 
-- [ ] **Step 2: Classify every violation**
+- [x] **Step 2: Classify every violation**
 
 Use this exact table schema:
 
@@ -323,17 +323,17 @@ Use this exact table schema:
 
 `Present upstream` must be proven from the effective `ddd4j-dependencies:3.0.x` POM, not the source property name.
 
-- [ ] **Step 3: Record Maven warning baseline by coordinate**
+- [x] **Step 3: Record Maven warning baseline by coordinate**
 
 Capture total model problems, `parent.relativePath`, `Ignored POM import`, and top conflicting groups for 4.1 after Task 2.
 
-- [ ] **Step 4: Verify the report contains no unresolved classification**
+- [x] **Step 4: Verify the report contains no unresolved classification**
 
 Run: `rg -n 'TBD|TODO|unknown|unclassified' docs/superpowers/reports/2026-09-09-boot41-dependency-ownership-audit.md`
 
 Expected: no output.
 
-- [ ] **Step 5: Commit the audit**
+- [x] **Step 5: Commit the audit**
 
 ```bash
 git add config/consistency/dependency-ownership.tsv docs/superpowers/reports/2026-09-09-boot41-dependency-ownership-audit.md
