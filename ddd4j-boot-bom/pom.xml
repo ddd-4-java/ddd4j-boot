@@ -15,6 +15,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Boot core -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cache</artifactId>
@@ -39,6 +45,11 @@
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-auth-shiro</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-auth-datascope</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!-- Boot 聚合 pom（供业务项目按需 import） -->
@@ -76,6 +87,16 @@
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-web-webflux</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-web-javalin</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-web-vertx</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
