@@ -131,7 +131,7 @@ class DemoApplicationTest {}
 
             errors = verify(root)
 
-            self.assertTrue(any("must manage resilience4j-spring-boot4 at 2.4.0" in item
+            self.assertTrue(any("must alias resilience4j-spring-boot4 to resilience4j.version" in item
                                 for item in errors))
 
 

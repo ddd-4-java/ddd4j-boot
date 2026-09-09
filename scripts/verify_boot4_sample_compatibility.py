@@ -44,10 +44,16 @@ def verify(root):
     boot_bom = root / "ddd4j-boot-dependencies/pom.xml"
     if boot_bom.exists():
         boot_bom_content = boot_bom.read_text(encoding="utf-8")
-        expected_property = "<resilience4j-spring-boot4.version>2.4.0</resilience4j-spring-boot4.version>"
+        expected_property = ("<spring-boot-starter-resilience4j.version>"
+                             "${resilience4j.version}"
+                             "</spring-boot-starter-resilience4j.version>")
         expected_artifact = "<artifactId>resilience4j-spring-boot4</artifactId>"
-        if expected_property not in boot_bom_content or expected_artifact not in boot_bom_content:
-            errors.append(f"{boot_bom}: must manage resilience4j-spring-boot4 at 2.4.0")
+        expected_version = "<version>${spring-boot-starter-resilience4j.version}</version>"
+        if (expected_property not in boot_bom_content or expected_artifact not in boot_bom_content
+                or expected_version not in boot_bom_content):
+            errors.append(
+                f"{boot_bom}: must alias resilience4j-spring-boot4 to resilience4j.version"
+            )
     return errors
 
 
