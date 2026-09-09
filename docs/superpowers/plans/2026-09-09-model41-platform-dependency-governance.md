@@ -350,7 +350,7 @@ git commit -m "docs(deps): classify Boot dependency ownership"
 - Consumes: Task 5 rows whose `Required owner` is `ddd4j-dependencies` and `Present upstream` is `no`.
 - Produces: effective platform management for every ordinary coordinate required by Boot 4.x.
 
-- [ ] **Step 1: Enforce the branch-availability gate**
+- [x] **Step 1: Enforce the branch-availability gate**
 
 ```bash
 git -C /Users/wandl/workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j status --short
@@ -360,25 +360,25 @@ git -C /Users/wandl/workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j switch
 
 Expected: proceed only if the primary checkout can switch normally. If Git reports that the branch is already checked out by another worktree, stop Task 6 without bypassing or removing it.
 
-- [ ] **Step 2: Add failing effective-version assertions**
+- [x] **Step 2: Add failing effective-version assertions**
 
 For each missing coordinate, extend the existing dependency alignment test with the exact expected version chosen by the platform baseline.
 
-- [ ] **Step 3: Verify RED**
+- [x] **Step 3: Verify RED**
 
 Run the repository's dependency alignment test under JDK 21.
 
 Expected: FAIL only for coordinates absent from the current upstream effective model.
 
-- [ ] **Step 4: Add missing platform management**
+- [x] **Step 4: Add missing platform management**
 
 Add the version property and dependencyManagement entry to `ddd4j-dependencies/pom.xml`. Do not modify Boot/Javalin/Quarkus/Cloud POMs in this task.
 
-- [ ] **Step 5: Verify GREEN and effective POM**
+- [x] **Step 5: Verify GREEN and effective POM**
 
 Run the dependency alignment test and generate the effective POM with Maven 4. Assert every Task 5 platform coordinate resolves to the expected version.
 
-- [ ] **Step 6: Commit and publish only to the local Maven repository**
+- [x] **Step 6: Commit and publish only to the local Maven repository**
 
 ```bash
 git add ddd4j-dependencies/pom.xml scripts
@@ -400,15 +400,15 @@ Expected: local install SUCCESS. Remote Maven deploy remains unauthorized.
 - Consumes: Task 5 ownership ledger and Task 6 effective upstream POM.
 - Produces: a Boot ecosystem BOM with no active platform-coordinate versions outside approved imports.
 
-- [ ] **Step 1: Verify the ownership gate is RED against current 4.1**
+- [x] **Step 1: Verify the ownership gate is RED against current 4.1**
 
 Run Task 4's repository verification command.
 
-- [ ] **Step 2: Remove only rows proven available upstream**
+- [x] **Step 2: Remove only rows proven available upstream**
 
 For each report row with `Present upstream=yes`, remove its Boot property and direct versioned dependencyManagement entry. Keep Spring Boot BOMs, Boot starters and Boot-specific integrations.
 
-- [ ] **Step 3: Verify GREEN**
+- [x] **Step 3: Verify GREEN**
 
 Run:
 
@@ -421,11 +421,11 @@ python3 scripts/verify_dependency_bom_boundary.py \
 
 Expected: both commands PASS.
 
-- [ ] **Step 4: Verify critical effective versions and focused reactor**
+- [x] **Step 4: Verify critical effective versions and focused reactor**
 
 Generate the 4.1 effective model with Maven 4 and assert the Task 5 versions for Jackson, SLF4J, Logback, Hibernate, Micrometer, ActiveMQ, JAXB, Netty and database drivers. Then compile the license reactor.
 
-- [ ] **Step 5: Commit Boot cleanup**
+- [x] **Step 5: Commit Boot cleanup**
 
 ```bash
 git add pom.xml ddd4j-boot-dependencies/pom.xml config/consistency scripts

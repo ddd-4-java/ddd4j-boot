@@ -27,13 +27,11 @@
         <dependency>
             <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${tools-jackson-bom.version}</version>
         </dependency>
-        <!-- Jackson 3 databind 3.2.1 需要 annotations 2.22 -->
+        <!-- Jackson 3 annotations 版本由 ddd4j-dependencies 统一管理 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>${jackson-annotations.version}</version>
         </dependency>
         <!-- Spring Boot auto-configuration support -->
         <dependency>
