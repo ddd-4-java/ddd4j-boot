@@ -7,7 +7,6 @@
         <!-- 特别注意：真实的业务系统应继承 ddd4j-boot-parent -->
         <artifactId>ddd4j-boot-samples</artifactId>
         <version>${revision}</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>ddd4j-boot-sample-domain</artifactId>

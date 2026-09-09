@@ -32,7 +32,7 @@
 - Produces: `verify(root: Path) -> list[str]`, 返回每个违规 POM 的精确路径和原因。
 - Consumes: Maven 4.1 POM 中的 `modelVersion` 和 `parent` 节点。
 
-- [ ] **Step 1: Write failing tests for external and reactor parents**
+- [x] **Step 1: Write failing tests for external and reactor parents**
 
 ```python
 def test_reactor_parent_rejects_coordinates_with_relative_path(self):
@@ -44,13 +44,13 @@ def test_external_parent_rejects_relative_path(self):
     self.assertTrue(any("external parent must use coordinates only" in error for error in errors))
 ```
 
-- [ ] **Step 2: Run the tests and verify RED**
+- [x] **Step 2: Run the tests and verify RED**
 
 Run: `python3 scripts/test_model41_parent_contract.py`
 
 Expected: FAIL because `verify_model41_parent_contract` does not exist.
 
-- [ ] **Step 3: Implement the structure verifier**
+- [x] **Step 3: Implement the structure verifier**
 
 ```python
 def verify(root: Path) -> list[str]:
@@ -74,7 +74,7 @@ def verify(root: Path) -> list[str]:
     return errors
 ```
 
-- [ ] **Step 4: Verify the unit tests pass and current 4.1 tree fails**
+- [x] **Step 4: Verify the unit tests pass and current 4.1 tree fails**
 
 Run:
 
@@ -85,7 +85,7 @@ python3 scripts/verify_model41_parent_contract.py .
 
 Expected: unit tests PASS; repository verification FAILS and reports the current Model 4.1 parent violations.
 
-- [ ] **Step 5: Commit the gate**
+- [x] **Step 5: Commit the gate**
 
 ```bash
 git add scripts/verify_model41_parent_contract.py scripts/test_model41_parent_contract.py
@@ -102,15 +102,15 @@ git commit -m "test(model): enforce Maven 4.1 parent contracts"
 
 **Interfaces:**
 - Consumes: `verify(root: Path) -> list[str]` from Task 1.
-- Produces: a Model 4.1 reactor in which external parents use GAV only and internal parents use `relativePath` only.
+- Produces: a Model 4.1 reactor in which all parents use full GAV without `relativePath`.
 
-- [ ] **Step 1: Capture the exact RED count**
+- [x] **Step 1: Capture the exact RED count**
 
 Run: `python3 scripts/verify_model41_parent_contract.py .`
 
 Expected: FAIL with one error per invalid parent declaration; save the count in the commit message notes.
 
-- [ ] **Step 2: Convert the root external parent**
+- [x] **Step 2: Convert the root external parent**
 
 Change the root parent to coordinates only:
 
@@ -122,19 +122,21 @@ Change the root parent to coordinates only:
 </parent>
 ```
 
-- [ ] **Step 3: Convert every internal parent to relative-path-only form**
+- [x] **Step 3: Convert every internal parent to coordinate-only form**
 
 For example:
 
 ```xml
 <parent>
-    <relativePath>../ddd4j-boot-dependencies/pom.xml</relativePath>
+    <groupId>io.ddd4j.boot</groupId>
+    <artifactId>ddd4j-boot-dependencies</artifactId>
+    <version>${revision}</version>
 </parent>
 ```
 
 Do not change `artifactId`, `${revision}`, packaging, coordinates, dependency declarations or `<subprojects>`.
 
-- [ ] **Step 4: Verify GREEN and Maven warning removal**
+- [x] **Step 4: Verify GREEN and Maven warning reduction**
 
 Run:
 
@@ -147,7 +149,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-
 
 Expected: both Python commands PASS; Maven output contains zero `parent.relativePath` warnings.
 
-- [ ] **Step 5: Run focused compilation**
+- [x] **Step 5: Run focused compilation**
 
 Run:
 
@@ -158,7 +160,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-
 
 Expected: reactor SUCCESS; existing BOM conflict warnings remain separately measurable.
 
-- [ ] **Step 6: Commit the 4.1 parent normalization**
+- [x] **Step 6: Commit the 4.1 parent normalization**
 
 ```bash
 git add -u -- ':(glob)**/pom.xml'

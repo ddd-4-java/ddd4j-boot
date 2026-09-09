@@ -1,0 +1,14 @@
+path	reason
+ddd4j-boot-auth/pom.xml	Maven rc6 defaults to ../pom.xml while the declared parent is the sibling ddd4j-boot-dependencies project
+ddd4j-boot-core/pom.xml	Maven rc6 defaults to ../pom.xml while the declared parent is the sibling ddd4j-boot-dependencies project
+ddd4j-boot-cache/pom.xml	Maven rc6 defaults to ../pom.xml while the declared parent is the sibling ddd4j-boot-dependencies project
+ddd4j-boot-data/pom.xml	Maven rc6 defaults to ../pom.xml while the declared parent is the sibling ddd4j-boot-dependencies project
+ddd4j-boot-extensions/pom.xml	Maven rc6 defaults to ../pom.xml while the declared parent is the sibling ddd4j-boot-dependencies project
+ddd4j-boot-mq/pom.xml	Maven rc6 defaults to ../pom.xml while the declared parent is the sibling ddd4j-boot-dependencies project
+ddd4j-boot-parent/pom.xml	Maven rc6 defaults to ../pom.xml while the declared parent is the sibling ddd4j-boot-dependencies project
+ddd4j-boot-samples/ddd4j-boot-sample-auth-satoken/pom.xml	Sample intentionally inherits the Boot dependency parent instead of the containing samples aggregator
+ddd4j-boot-samples/ddd4j-boot-sample-auth-security/pom.xml	Sample intentionally inherits the Boot dependency parent instead of the containing samples aggregator
+ddd4j-boot-samples/ddd4j-boot-sample-auth-shiro/pom.xml	Sample intentionally inherits the Boot dependency parent instead of the containing samples aggregator
+ddd4j-boot-samples/ddd4j-boot-sample-layered/pom.xml	Sample intentionally inherits the Boot dependency parent instead of the containing samples aggregator
+ddd4j-boot-samples/pom.xml	Samples intentionally inherits the sibling ddd4j-boot-parent project
+ddd4j-boot-web/pom.xml	Maven rc6 defaults to ../pom.xml while the declared parent is the sibling ddd4j-boot-dependencies project

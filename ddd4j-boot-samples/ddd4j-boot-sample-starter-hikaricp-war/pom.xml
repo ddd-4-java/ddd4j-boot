@@ -6,7 +6,6 @@
         <groupId>io.ddd4j.boot</groupId>
         <artifactId>ddd4j-boot-samples</artifactId>
         <version>${revision}</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>ddd4j-boot-sample-starter-hikaricp-war</artifactId>
