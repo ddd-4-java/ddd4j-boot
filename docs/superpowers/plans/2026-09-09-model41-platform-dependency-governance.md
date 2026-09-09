@@ -518,7 +518,7 @@ Expected: clean worktree and identical local/remote SHA after push. Do not deplo
 - Produces: `verify(root: Path) -> list[str]`, reporting the exact file and forbidden Boot 3, empty Dozer converter, or old MyBatis-Plus reference.
 - Consumes: the full samples source tree; it does not depend on Maven reaching the next reactor module.
 
-- [ ] **Step 1: Write failing fixture tests**
+- [x] **Step 1: Write failing fixture tests**
 
 ```python
 def test_rejects_all_three_boot4_incompatibilities(self):
@@ -531,13 +531,13 @@ def test_accepts_boot4_packages_without_empty_converter(self):
     self.assertEqual(verify(self.compatible_fixture_root), [])
 ```
 
-- [ ] **Step 2: Run RED**
+- [x] **Step 2: Run RED**
 
 Run: `python3 scripts/test_boot4_sample_compatibility.py`
 
 Expected: FAIL because `verify_boot4_sample_compatibility` does not exist.
 
-- [ ] **Step 3: Implement the exhaustive scanner**
+- [x] **Step 3: Implement the exhaustive scanner**
 
 ```python
 FORBIDDEN = {
@@ -560,16 +560,16 @@ def verify(root: Path) -> list[str]:
     return errors
 ```
 
-- [ ] **Step 4: Prove unit GREEN and repository RED**
+- [x] **Step 4: Prove unit GREEN and repository RED**
 
 ```bash
 python3 scripts/test_boot4_sample_compatibility.py
 python3 scripts/verify_boot4_sample_compatibility.py .
 ```
 
-Expected: unit tests PASS; repository scan FAILS with 15 old MeterRegistry imports, 15 Dozer source users, 14 converter dependencies, and 24 old MyBatis-Plus service-package files.
+Expected: unit tests PASS; repository scan FAILS with 15 old MeterRegistry imports, 14 Dozer source users, 14 converter dependencies, and 24 old MyBatis-Plus service-package files (67 findings total).
 
-- [ ] **Step 5: Commit the contract**
+- [x] **Step 5: Commit the contract**
 
 ```bash
 git add scripts/verify_boot4_sample_compatibility.py scripts/test_boot4_sample_compatibility.py
@@ -580,7 +580,7 @@ git commit -m "test(samples): enforce Boot 4 source compatibility"
 
 **Files:**
 - Modify: the 15 Java files reported for the old `MeterRegistryCustomizer` import
-- Delete: the 15 `ddd4j-boot-samples/**/DozerMapperConfiguration.java` files reported by Task 10
+- Delete: the 14 `ddd4j-boot-samples/**/DozerMapperConfiguration.java` files reported by Task 10
 - Modify: the 14 sample POMs reported for `dozer-extra-converters`
 - Modify: the 24 service Java files reported for `com.baomidou.mybatisplus.extension.service`
 - Test: `scripts/test_boot4_sample_compatibility.py`
@@ -589,13 +589,13 @@ git commit -m "test(samples): enforce Boot 4 source compatibility"
 - Consumes: Task 10's exact repository scan.
 - Produces: a source tree with no known Boot 3 metrics import, empty converter use, or pre-3.5.17 MyBatis-Plus service import.
 
-- [ ] **Step 1: Preserve the RED evidence**
+- [x] **Step 1: Preserve the RED evidence**
 
 Run: `python3 scripts/verify_boot4_sample_compatibility.py .`
 
-Expected: non-zero exit with the exact 68 baseline findings described in Task 10.
+Expected: non-zero exit with the exact 67 baseline findings described in Task 10.
 
-- [ ] **Step 2: Apply the minimal source migrations**
+- [x] **Step 2: Apply the minimal source migrations**
 
 Use these exact replacements:
 
@@ -607,7 +607,7 @@ import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 
 Delete each reported `DozerMapperConfiguration.java` rather than recreating unavailable converter behavior. Remove only the complete dependency block whose artifactId is `dozer-extra-converters`; retain the Dozer Spring Boot starter.
 
-- [ ] **Step 3: Run the static contract GREEN**
+- [x] **Step 3: Run the static contract GREEN**
 
 ```bash
 python3 scripts/test_boot4_sample_compatibility.py
@@ -617,7 +617,7 @@ git diff --check
 
 Expected: all commands PASS and each forbidden reference count is zero.
 
-- [ ] **Step 4: Run focused sample reactors**
+- [x] **Step 4: Run focused sample reactors**
 
 ```bash
 JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn \
@@ -628,7 +628,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-
 
 Expected: both reactors SUCCESS; tests are not skipped by the command line.
 
-- [ ] **Step 5: Run the full 4.1 reactor**
+- [x] **Step 5: Run the full 4.1 reactor**
 
 ```bash
 JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn \
@@ -637,7 +637,7 @@ JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-
 
 Expected: reactor summary reports 73 successful projects and no failed or skipped project.
 
-- [ ] **Step 6: Commit and push 4.1**
+- [x] **Step 6: Commit and push 4.1**
 
 ```bash
 git add -u ddd4j-boot-samples

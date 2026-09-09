@@ -183,14 +183,19 @@ flowchart TD
 Boot 4.0 和 4.1 均在完整 73 模块 reactor 的第 57 个模块 `ddd4j-boot-sample-starter-druid` 停止，前 56 个模块通过。已证实三类失败：
 
 - `MeterRegistryCustomizer` 仍引用 Boot 3 Actuator 包；Boot 4 包为 `org.springframework.boot.micrometer.metrics.autoconfigure.MeterRegistryCustomizer`。
-- `io.github.easy4j:dozer-extra-converters` 2.0/3.0 本地 JAR 均无 class；全树扫描确认 15 份 `DozerMapperConfiguration` 引用其类，14 个样例 POM 声明该空制品。
+- `io.github.easy4j:dozer-extra-converters` 2.0/3.0 本地 JAR 均无 class；全树扫描确认 14 份 `DozerMapperConfiguration` 引用其类，14 个样例 POM 声明该空制品。
 - MyBatis-Plus 3.5.17 已将 `IService` / `ServiceImpl` 迁移到 `com.baomidou.mybatisplus.spring.service` 包。
+- Boot 4 将 `TestRestTemplate` 移入 `spring-boot-resttestclient`，并要求 `@AutoConfigureTestRestTemplate`。
+- Easy4J Validation、MyBatis-Plus ActiveRecord 和 Spring WebFlux 7 均有命名空间或常量迁移。
+- Resilience4j 的 Boot 专属 Starter 由 `ddd4j-boot-dependencies` 按生态线管理：4.x 使用 `resilience4j-spring-boot4:2.4.0`，不得下放到 `ddd4j-dependencies`。
 
 实施规则：
 
 - 修改两份 `DemoApplication` 的 MeterRegistryCustomizer import，保持公共标签行为。
-- 删除 15 份无实现依赖的 `DozerMapperConfiguration` 和 14 个样例 POM 中的空 converter 依赖，保留 Dozer 核心 Starter；静态契约必须保证两类引用均归零。
+- 删除 14 份无实现依赖的 `DozerMapperConfiguration` 和 14 个样例 POM 中的空 converter 依赖，保留 Dozer 核心 Starter；静态契约必须保证两类引用均归零。
 - 将样例 MyBatis-Plus Service import 迁移到 3.5.17 新包，不创建兼容空壳。
+- 将测试、Validation、ActiveRecord 和 WebFlux 旧 API 迁移到当前 Boot 4 / Spring 7 坐标，并由全树静态契约防止回归。
+- `ddd4j-boot-dependencies` 直接管理 `resilience4j-spring-boot4:2.4.0`；4.x 样例禁止依赖 Boot 2 Starter。
 - 4.1 先完成测试和 73/73，再传播到 4.0；禁止排除样例或跳过编译刷绿。
 
 验收：两个分支的目标样例测试通过，完整 reactor 都达到 73/73。
