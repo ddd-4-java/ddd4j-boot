@@ -47,7 +47,7 @@
             <artifactId>ddd4j-web-webmvc</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
-        <!-- MyBatis-Plus 官方 Spring Boot 3 starter（提供 MybatisPlusAutoConfiguration + DataSource 自动装配） -->
+        <!-- MyBatis-Plus 官方 Spring Boot starter（提供 MybatisPlusAutoConfiguration + DataSource 自动装配） -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
