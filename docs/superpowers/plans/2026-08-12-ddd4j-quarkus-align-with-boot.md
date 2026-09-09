@@ -1,5 +1,11 @@
 # ddd4j-quarkus 对齐 ddd4j-boot 框架集成实施计划
 
+> **状态：已被后续 P0–P5 规格体系取代，不再作为可执行待办。** 本文复选框保留最初方案的
+> 历史状态，不代表当前 17 项仍未实施。当前完成事实以 ddd4j-quarkus 仓库的
+> `docs/superpowers/specs/2026-08-05-quarkus-alignment-overview-design.md` 为准（P0–P3 已完成）；
+> 当前未完成工作以 `docs/superpowers/specs/2026-09-08-quarkus-production-extension-convergence-design.md`
+> 和 P5-B–E 后续计划为准，不得回到本计划重复创建模块。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 保留 ddd4j-quarkus 现有 87 个 Java 文件作为基线，按对齐 ddd4j-boot 的要求补齐所有空 starter，并为每个模块新增 Testcontainers 集成测试。版本基线锁定 `quarkus-bom 3.36.3` + `ddd4j.version 2.0.x.20260630-SNAPSHOT`，消除版本漂移。

@@ -1,5 +1,12 @@
 # ddd4j-javalin 能力对齐 ddd4j-boot 实施计划
 
+> **状态：已被后续规格取代，不再作为可执行待办。** 本文保留最初拆解及未勾选状态用于历史审计；
+> 已实现能力和剩余发布门禁以 ddd4j-javalin 仓库中的
+> `docs/superpowers/plans/2026-07-29-javalin-capability-matrix.md` 与
+> `docs/superpowers/plans/2026-09-07-three-branch-convergence.md` 为准。后者已记录三条线的
+> OIDC、MyBatis、Data、MQ Testcontainers、扩展治理与私库消费证据；GitHub Actions/Billing
+> 仍作为独立外部门禁。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** ddd4j-javalin (feature/6.3.x) 对齐 ddd4j-boot (feature/3.4.x) 的能力矩阵，完成与 ddd4j (feature/2.0.x) 的全面适配，集成 Testcontainers 完善集成测试。保留 Guice + Javalin 编程式路由范式，不引入 Spring。
