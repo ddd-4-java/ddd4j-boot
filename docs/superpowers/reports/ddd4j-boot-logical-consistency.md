@@ -109,5 +109,5 @@
 - `3.3.x`: SHA `18132c4530e5ecf2a264bad1b2793e27e023dd38`, Java `17`, Boot `3.3.13`, auto-registration unmapped `0`, duplicate `0`.
 - `3.4.x`: SHA `1a73c0a7c650b0d63d75ee5a8999217776f661ba`, Java `17`, Boot `3.4.13`, auto-registration unmapped `0`, duplicate `0`.
 - `3.5.x`: SHA `2adf76f00ad004fb5438efa0c3b5c54e1ad68a21`, Java `17`, Boot `3.5.16`, auto-registration unmapped `0`, duplicate `0`.
-- `4.0.x`: SHA `b17c630d39b4dc15bb429b52ae3ee442bb44d284`, Java `21`, Boot `4.0.7`, auto-registration unmapped `0`, duplicate `0`.
+- `4.0.x`: Java `21`, Boot `4.0.8`, auto-registration unmapped `0`, duplicate `0`; see the current branch SHA for execution evidence.
 - `4.1.x`: SHA `36db77b5b0cffbf3278d71e823b96e46d976edea`, Java `21`, Boot `4.1.0`, auto-registration unmapped `0`, duplicate `0`.

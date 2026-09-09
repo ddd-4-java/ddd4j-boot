@@ -29,7 +29,7 @@
 | `3.3.x` | `3.3.13` | `3.3.x.20260630-SNAPSHOT` | `feature/2.0.x` | 17 | 4.0 / `<modules>` |
 | `3.4.x` | `3.4.13` | `3.4.x.20260630-SNAPSHOT` | `feature/2.0.x` | 17 | 4.0 / `<modules>` |
 | `3.5.x` | `3.5.16` | `3.5.x.20260630-SNAPSHOT` | `feature/2.0.x` | 17 | 4.0 / `<modules>` |
-| `4.0.x` | `4.0.7` | `4.0.x.20260630-SNAPSHOT` | `feature/3.0.x` | 21 | 4.1 / `<subprojects>` |
+| `4.0.x` | `4.0.8` | `4.0.x.20260630-SNAPSHOT` | `feature/3.0.x` | 21 | 4.1 / `<subprojects>` |
 | `4.1.x` | `4.1.0` | `4.1.x.20260630-SNAPSHOT` | `feature/3.0.x` | 21 | 4.1 / `<subprojects>` |
 
 ## TrueLicense 4 可观察行为
@@ -76,4 +76,3 @@
 - 不把各维护线重构为同一份源码，不升级用户指定的 Spring Boot 版本。
 - 不在仓库保存 Maven 凭据，不提高 GitHub Actions 付费额度。
 - 不使用 Git worktree，不重写已推送历史。
-

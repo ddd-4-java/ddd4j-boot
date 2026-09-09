@@ -176,7 +176,7 @@ git commit -m "fix(model): normalize Maven 4.1 parent references"
 
 **Interfaces:**
 - Consumes: the tested verifier and transformation contract from Tasks 1-2.
-- Produces: the same parent invariant on `4.0.x` without changing Spring Boot `4.0.7`.
+- Produces: the same parent invariant on `4.0.x` with Spring Boot `4.0.8`.
 
 - [x] **Step 1: Switch to the existing 4.0 branch after a clean status check**
 
@@ -189,7 +189,7 @@ git rev-list --left-right --count github/4.0.x...4.0.x
 
 - [x] **Step 2: Apply the verified parent-only change**
 
-Apply Task 2's exact invariant; preserve `4.0.x.20260630-SNAPSHOT`, Spring Boot `4.0.7`, JDK 21 and `<subprojects>`.
+Apply Task 2's exact invariant; preserve `4.0.x.20260630-SNAPSHOT`, Spring Boot `4.0.8`, JDK 21 and `<subprojects>`.
 
 - [x] **Step 3: Run structure and Maven verification**
 
@@ -441,7 +441,7 @@ git commit -m "fix(deps): restore platform dependency ownership"
 
 **Interfaces:**
 - Consumes: Task 7's ownership invariant.
-- Produces: the same invariant with Spring Boot `4.0.7` and revision `4.0.x.20260630-SNAPSHOT` preserved.
+- Produces: the same invariant with Spring Boot `4.0.8` and revision `4.0.x.20260630-SNAPSHOT` preserved.
 
 - [x] **Step 1: Apply the tested governance commit to 4.0**
 

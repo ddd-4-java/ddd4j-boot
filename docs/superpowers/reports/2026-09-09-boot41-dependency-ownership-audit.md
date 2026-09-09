@@ -87,7 +87,7 @@ consumer POM 后，Boot 4.1 有效模型已通过四项平台版本契约。
 
 ## Boot 4.0 传播结果
 
-Boot 4.0 保留 Spring Boot `4.0.7`，同时继承与 4.1 相同的 ddd4j 3.0 平台基线。归属门禁、
+Boot 4.0 使用 Spring Boot `4.0.8`，同时继承与 4.1 相同的 ddd4j 3.0 平台基线。归属门禁、
 四项有效版本契约、license/Jackson 聚焦编译均通过。
 
 4.0 总模型问题从原始 `180,303` 经父模型修复降为 `180,244`，换用新 ddd4j consumer POM 并清理
