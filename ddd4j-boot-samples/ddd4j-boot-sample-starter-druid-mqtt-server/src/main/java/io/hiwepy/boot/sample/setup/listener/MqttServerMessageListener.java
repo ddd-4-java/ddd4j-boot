@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.dromara.mica.mqtt.codec.message.MqttPublishMessage;
 import org.dromara.mica.mqtt.core.annotation.MqttServerFunction;
 import org.springframework.stereotype.Service;
-import org.tio.core.ChannelContext;
-import org.tio.core.Node;
+import net.dreamlu.mica.net.core.ChannelContext;
+import net.dreamlu.mica.net.core.Node;
 
 /**
  * 注解消息监听，注意：如果自行实现了 IMqttMessageListener，MqttServerFunction 注解就不生效了。

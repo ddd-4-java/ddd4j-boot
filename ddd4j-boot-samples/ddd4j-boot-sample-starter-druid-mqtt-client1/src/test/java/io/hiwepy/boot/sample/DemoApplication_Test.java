@@ -13,6 +13,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Disabled;
 
@@ -46,7 +47,9 @@ public class DemoApplication_Test {
     @Test
     public void test1() throws Exception {
 
-        Map<String, Object> requestBody = Map.of("name", 1, "text", 60);
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("name", 1);
+        requestBody.put("text", 60);
 
         ResponseEntity<String> response = this.restTemplate.postForEntity(
                 this.base.toString() + "/demo/new", requestBody, String.class);

@@ -78,12 +78,12 @@
         <!-- For Swagger3 (OpenAPI 3) -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <artifactId>springdoc-openapi-ui</artifactId>
         </dependency>
         <!-- Swagger3 Annotations -->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations-jakarta</artifactId>
+            <artifactId>swagger-annotations</artifactId>
         </dependency>
         <!-- For Validation -->
         <dependency>
@@ -136,7 +136,6 @@
         <!-- For Redis -->
         <dependency>
             <groupId>io.github.easy4j</groupId><artifactId>redistpl-plus-spring-boot-starter</artifactId>
-            <version>${spring-boot-starter-redistpl-plus.version}</version>
         </dependency>
         <!-- For Log4j2 -->
         <dependency>

@@ -4,9 +4,9 @@
  */
 package io.ddd4j.boot.sample.web.vo;
 
-import com.github.hiwepy.validation.constraints.FileNotEmpty;
+import io.github.easy4j.validation.constraints.FileNotEmpty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
 @Schema(description = "xxx数据传输对象")
