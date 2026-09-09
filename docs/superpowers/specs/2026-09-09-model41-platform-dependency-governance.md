@@ -1,6 +1,6 @@
 # Maven Model 4.1 与平台依赖权威治理规格
 
-状态：已部分实施。Model 4.1 父引用和依赖归属已闭环；上游 ddd4j 多 BOM 交集仍有 233 个唯一冲突，完整 reactor 仍被 Boot 4 样例兼容问题阻塞。
+状态：前两阶段已实施；Boot 4 样例闭环、上游 BOM 冲突治理和独立审查的扩展设计已批准，书面规格待审阅。
 
 ## 背景
 
@@ -81,7 +81,7 @@ flowchart TD
 ### 可观察验收
 
 - 4.0、4.1 所有实际 `pom.xml` 都通过结构检查。
-- Maven 4 输出中的 `parent.relativePath` 告警从当前 72 条降为 0。
+- Maven 4 输出中的 Model 4.1 `GAV + relativePath` 语法告警从 72 条降为 0；当前 Maven rc6 默认 `..` 路径检查保留 13 条精确白名单。
 - 根、BOM、dependencies、parent、license 聚焦 reactor 均能解析和编译。
 - 不改变任何制品坐标、版本号和模块集合。
 
@@ -156,8 +156,7 @@ flowchart TD
 ## 分支与发布策略
 
 1. 先在 `ddd4j-boot` `4.1.x` 建立测试和实现，再传播到 `4.0.x`。
-2. 平台依赖缺口必须在 `ddd4j` `feature/3.0.x` 修复；该分支当前被既有 worktree 占用，在用户从
-   外部释放前不得绕过占用、使用或删除该 worktree。
+2. 平台依赖缺口必须在 `ddd4j` `feature/3.0.x` 修复。本任务使用独立 Git clone，不操作既有 worktree。
 3. 每个仓库、每条分支独立提交并验证。
 4. commit、push、Maven deploy、空缓存消费和 Actions 是独立证据层。
 5. 本规格不授权 Maven deploy；push 沿用当前用户授权，但必须先处理远端并行提交且禁止 force push。
@@ -178,3 +177,42 @@ flowchart TD
 - 关键版本的最终值和权威来源均有自动化断言。
 - 4.0/4.1 聚焦构建通过，并记录完整 reactor 的真实结果。
 - 本地、跟踪分支和 GitHub SHA 完成对账；发布与空缓存消费状态单独报告。
+
+## 阶段三：Boot 4 样例 reactor 闭环
+
+Boot 4.0 和 4.1 均在完整 73 模块 reactor 的第 57 个模块 `ddd4j-boot-sample-starter-druid` 停止，前 56 个模块通过。已证实三类失败：
+
+- `MeterRegistryCustomizer` 仍引用 Boot 3 Actuator 包；Boot 4 包为 `org.springframework.boot.micrometer.metrics.autoconfigure.MeterRegistryCustomizer`。
+- `io.github.easy4j:dozer-extra-converters` 2.0/3.0 本地 JAR 均无 class；两份 `DozerMapperConfiguration` 是该空制品的唯一调用者。
+- MyBatis-Plus 3.5.17 已将 `IService` / `ServiceImpl` 迁移到 `com.baomidou.mybatisplus.spring.service` 包。
+
+实施规则：
+
+- 修改两份 `DemoApplication` 的 MeterRegistryCustomizer import，保持公共标签行为。
+- 删除两份无实现依赖的 `DozerMapperConfiguration` 和空 converter 依赖，保留 Dozer 核心 Starter。
+- 将样例 MyBatis-Plus Service import 迁移到 3.5.17 新包，不创建兼容空壳。
+- 4.1 先完成测试和 73/73，再传播到 4.0；禁止排除样例或跳过编译刷绿。
+
+验收：两个分支的目标样例测试通过，完整 reactor 都达到 73/73。
+
+## 阶段四：ddd4j 多 BOM 冲突源头治理
+
+Boot 4.1 当前有 `7,286` 条 `Ignored POM import` 展开记录，去重后为 `233` 个冲突组合。治理顺序为 ActiveMQ、Micrometer、Hibernate、SLF4J/JAXB，再处理 Oracle JDBC、Brave、gRPC、GraphQL、Ehcache、Elasticsearch 等剩余组。
+
+每个冲突族必须在 `ddd4j-dependencies` 选定唯一期望版本并由有效 POM 契约断言。优先删除与平台基线重复的 BOM import，但只有该 BOM 的独有坐标仍被平台管理时才能删除；必须保留的 BOM 由 ddd4j 源头添加直接约束。
+
+禁止仅交换 BOM 顺序、关闭告警或扩大模糊白名单。每完成一族，必须运行 ddd4j 有效模型、`clean install`、Boot 4.1/4.0 有效模型和聚焦 reactor。
+
+验收：233 个基线冲突全部消除，或进入包含两侧版本、最终版本、权威来源和原因的坐标级精确白名单；新增或版本变化的冲突必须使验证失败。
+
+## 阶段五：独立代码审查
+
+样例 73/73 和 BOM 契约完成后，对实际 Git 变更派发独立代码审查。审查覆盖正确性、版本权威、Boot 4.0/4.1 兼容、consumer POM 和回归证据。Critical/Important 问题必须修复并重新验证。
+
+## 扩展完成定义
+
+- Boot 4.1 和 4.0 完整 reactor 均为 73/73。
+- 233 个冲突已消除或进入带最终版本和权威来源的精确白名单。
+- 独立审查无未处理的 Critical/Important 问题。
+- 两个 Boot 分支及 ddd4j `feature/3.0.x` 的本地/远程 SHA 一致。
+- Maven deploy、空缓存消费和 Actions 仍作为独立证据层，未执行时不声称完成。
