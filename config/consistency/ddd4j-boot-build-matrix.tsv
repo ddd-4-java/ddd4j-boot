@@ -10,5 +10,5 @@ branch	jdk	boot_version	ddd4j_version	revision	maven_major	model_version	pom_nam
 3.3.x	17	3.3.13	2.0.x.20260630-SNAPSHOT	3.3.x.20260630-SNAPSHOT	3	4.0.0	http://maven.apache.org/POM/4.0.0	modules	module
 3.4.x	17	3.4.13	2.0.x.20260630-SNAPSHOT	3.4.x.20260630-SNAPSHOT	3	4.0.0	http://maven.apache.org/POM/4.0.0	modules	module
 3.5.x	17	3.5.16	2.0.x.20260630-SNAPSHOT	3.5.x.20260630-SNAPSHOT	3	4.0.0	http://maven.apache.org/POM/4.0.0	modules	module
-4.0.x	21	4.0.7	3.0.x.20260630-SNAPSHOT	4.0.x.20260630-SNAPSHOT	4	4.1.0	http://maven.apache.org/POM/4.1.0	subprojects	subproject
+4.0.x	21	4.0.8	3.0.x.20260630-SNAPSHOT	4.0.x.20260630-SNAPSHOT	4	4.1.0	http://maven.apache.org/POM/4.1.0	subprojects	subproject
 4.1.x	21	4.1.0	3.0.x.20260630-SNAPSHOT	4.1.x.20260630-SNAPSHOT	4	4.1.0	http://maven.apache.org/POM/4.1.0	subprojects	subproject
