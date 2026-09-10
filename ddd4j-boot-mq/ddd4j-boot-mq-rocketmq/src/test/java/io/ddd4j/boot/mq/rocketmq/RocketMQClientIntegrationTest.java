@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
+import java.nio.channels.OverlappingFileLockException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -119,6 +120,7 @@ class RocketMQClientIntegrationTest {
                     (BROKER_PORT - 2) + ":" + (BROKER_PORT - 2)));
             return container;
         } catch (IOException e) {
+            releasePortLockResources();
             throw new IllegalStateException("Prepare RocketMQ broker.conf failed", e);
         }
     }
@@ -145,18 +147,57 @@ class RocketMQClientIntegrationTest {
     }
 
     private static FileLock acquirePortLock() {
-        try {
-            return PORT_LOCK_CHANNEL.lock();
-        } catch (IOException e) {
-            throw new IllegalStateException("Acquire RocketMQ test port lock failed", e);
+        long deadline = System.nanoTime() + Duration.ofMinutes(2).toNanos();
+        while (System.nanoTime() < deadline) {
+            try {
+                FileLock lock = PORT_LOCK_CHANNEL.tryLock();
+                if (lock != null) {
+                    Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            releasePortLockResources();
+                        }
+                    }));
+                    return lock;
+                }
+            } catch (OverlappingFileLockException ignored) {
+                // Another RocketMQ test in this JVM owns the lock.
+            } catch (IOException e) {
+                releasePortLockResources();
+                throw new IllegalStateException("Acquire RocketMQ test port lock failed", e);
+            }
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                releasePortLockResources();
+                throw new IllegalStateException("Interrupted while acquiring RocketMQ test port lock", e);
+            }
         }
+        releasePortLockResources();
+        throw new IllegalStateException("Acquire RocketMQ test port lock timed out after PT2M");
     }
 
     @AfterAll
     static void releasePortLock() throws IOException {
-        ROCKETMQ.stop();
-        PORT_LOCK.release();
-        PORT_LOCK_CHANNEL.close();
+        try {
+            ROCKETMQ.stop();
+        } finally {
+            releasePortLockResources();
+        }
+    }
+
+    private static void releasePortLockResources() {
+        try {
+            if (PORT_LOCK != null && PORT_LOCK.isValid()) {
+                PORT_LOCK.release();
+            }
+            if (PORT_LOCK_CHANNEL.isOpen()) {
+                PORT_LOCK_CHANNEL.close();
+            }
+        } catch (IOException ignored) {
+            // Best-effort cleanup also runs from the JVM shutdown hook.
+        }
     }
 
     @BeforeAll
