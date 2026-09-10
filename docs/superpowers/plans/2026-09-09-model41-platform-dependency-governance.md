@@ -991,7 +991,7 @@ Codeup/GitHub SHA equality on every branch.
 - Consumes: Task 20 clean, reviewed, pushed branch SHAs.
 - Produces: Aliyun snapshot publication plus new empty-cache consumption evidence per line.
 
-- [ ] **Step 1: Run the publication preflight**
+- [x] **Step 1: Run the publication preflight**
 
 Verify `~/.m2/settings.xml` contains the `2624322-snapshot-3EoOv3` server without printing credentials. Check
 each branch revision remains `X.Y.x.20260630-SNAPSHOT` and distributionManagement targets the snapshot repository.

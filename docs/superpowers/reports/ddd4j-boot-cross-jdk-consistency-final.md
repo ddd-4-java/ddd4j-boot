@@ -98,5 +98,7 @@ release-line TSV 中的 SHA 是本报告生成前实际执行 `clean verify` 的
 ## 剩余门禁
 
 - Task 20 代码审查与 Critical/Important 闭环已完成；Codeup 凭据缺失使双远端验证仍未完成。
+- Task 21 发布预检已通过：13 线 revision/Boot/ddd4j 映射、snapshot 仓库 ID、
+  4.x Maven Model 4.1 `<subprojects>` 及 13 份 `review3` 日志均已核对。
 - Task 21 的 13 线阿里云 Maven deploy 与发布后新空缓存回拉尚未执行。
 - GitHub Actions 仅在组织 Secret `MAVEN_SETTINGS_XML` 和 Actions 账户门禁可用时单独执行。
