@@ -37,6 +37,23 @@ def verify(root):
             errors.append(f"{pom}: empty dozer-extra-converters dependency")
         if "<artifactId>resilience4j-spring-boot2</artifactId>" in content:
             errors.append(f"{pom}: Boot 2 Resilience4j starter in Boot 4 sample")
+        if pom.parent.name == "ddd4j-boot-sample-starter-druid":
+            if "<artifactId>flyway-core</artifactId>" not in content:
+                errors.append(f"{pom}: Druid sample must retain native Flyway migration")
+            if "<artifactId>druid-spring-boot-3-starter</artifactId>" not in content:
+                errors.append(f"{pom}: Druid sample must retain the standard Druid pool integration")
+        if pom.parent.name == "ddd4j-boot-sample-starter-hikaricp":
+            if "<artifactId>spring-boot-starter-jdbc</artifactId>" not in content:
+                errors.append(f"{pom}: Hikari sample must retain Boot JDBC/Hikari integration")
+    representative = root / "ddd4j-boot-samples/ddd4j-boot-sample-starter-druid"
+    if representative.exists():
+        application = representative / "src/main/resources/application.yaml"
+        content = application.read_text(encoding="utf-8") if application.exists() else ""
+        if "flyway:" not in content or "classpath:db/migration/{vendor}" not in content:
+            errors.append(f"{application}: missing native Flyway migration location")
+        migrations = list(representative.glob("src/main/resources/db/migration/*.sql"))
+        if not migrations:
+            errors.append(f"{representative}: missing native Flyway SQL migration")
     root_pom = root / "pom.xml"
     root_content = root_pom.read_text(encoding="utf-8") if root_pom.exists() else ""
     if "<artifactId>spring-boot-resttestclient</artifactId>" not in root_content:

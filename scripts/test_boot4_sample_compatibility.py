@@ -134,6 +134,28 @@ class DemoApplicationTest {}
             self.assertTrue(any("must alias resilience4j-spring-boot4 to resilience4j.version" in item
                                 for item in errors))
 
+    def test_rejects_sample_migration_that_only_deletes_the_old_easy4j_integrations(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.write(root, "pom.xml", "<project><artifactId>spring-boot-resttestclient</artifactId></project>")
+            self.write(
+                root,
+                "ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/pom.xml",
+                "<project><dependencies /></project>",
+            )
+            self.write(
+                root,
+                "ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/resources/application.yaml",
+                "spring: {}",
+            )
+
+            errors = verify(root)
+
+            self.assertTrue(any("retain native Flyway migration" in item for item in errors))
+            self.assertTrue(any("retain the standard Druid pool integration" in item for item in errors))
+            self.assertTrue(any("missing native Flyway migration location" in item for item in errors))
+            self.assertTrue(any("missing native Flyway SQL migration" in item for item in errors))
+
 
 if __name__ == "__main__":
     unittest.main()
