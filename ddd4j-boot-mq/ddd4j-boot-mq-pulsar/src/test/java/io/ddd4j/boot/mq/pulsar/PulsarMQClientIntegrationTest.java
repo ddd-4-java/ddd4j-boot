@@ -18,6 +18,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import java.time.Duration;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -44,13 +46,14 @@ class PulsarMQClientIntegrationTest {
     @Container
     static final GenericContainer<?> PULSAR = new GenericContainer<>(DockerImageName.parse("apachepulsar/pulsar:3.2.0"))
             .withCommand("bin/pulsar", "standalone")
-            .withExposedPorts(6650)
+            .withExposedPorts(6650, 8080)
             .waitingFor(Wait.forLogMessage(".*messaging service is ready.*", 1)
                     .withStartupTimeout(Duration.ofSeconds(180)));
 
     @Test
-    void shouldPublishAndConsumeEventThroughRealPulsar() {
+    void shouldPublishAndConsumeEventThroughRealPulsar() throws Exception {
         String serviceUrl = "pulsar://" + PULSAR.getHost() + ":" + PULSAR.getMappedPort(6650);
+        ensureDefaultNamespace();
 
         ApplicationContextRunner runner = new ApplicationContextRunner()
                 .withConfiguration(AutoConfigurations.of(
@@ -86,6 +89,28 @@ class PulsarMQClientIntegrationTest {
             // Explicitly close PulsarMQClient to avoid JVM hang from non-daemon threads
             context.getBean(PulsarMQClient.class).close();
         });
+    }
+
+    private static void ensureDefaultNamespace() throws Exception {
+        URL namespaceUrl = new URL("http://" + PULSAR.getHost() + ":" + PULSAR.getMappedPort(8080)
+                + "/admin/v2/namespaces/public/default");
+        long deadline = System.nanoTime() + Duration.ofSeconds(60).toNanos();
+        while (System.nanoTime() < deadline) {
+            HttpURLConnection connection = (HttpURLConnection) namespaceUrl.openConnection();
+            connection.setRequestMethod("PUT");
+            connection.setConnectTimeout(2000);
+            connection.setReadTimeout(2000);
+            connection.setDoOutput(true);
+            connection.getOutputStream().close();
+            int responseCode = connection.getResponseCode();
+            connection.disconnect();
+            if (responseCode == HttpURLConnection.HTTP_NO_CONTENT
+                    || responseCode == HttpURLConnection.HTTP_CONFLICT) {
+                return;
+            }
+            Thread.sleep(500);
+        }
+        throw new AssertionError("Pulsar namespace public/default was not ready within PT60S");
     }
 
     private static void await(java.util.function.BooleanSupplier condition, Duration timeout) throws InterruptedException {
