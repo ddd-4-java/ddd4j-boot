@@ -4,7 +4,7 @@
  */
 package io.hiwepy.boot.sample.web.vo;
 
-import io.github.easy4j.validation.constraints.FileNotEmpty;
+import jakarta.validation.constraints.NotNull;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +21,7 @@ public class DemoVo {
     @NotBlank(message = "描述必填")
     private String text;
     @Schema(description = "文件")
-    @FileNotEmpty
+    @NotNull
     private MultipartFile file;
 
     public String getId() {
