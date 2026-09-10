@@ -76,7 +76,7 @@ RocketMQ 测试动态选择 broker/VIP 端口对，并使用 `listenPort` 同步
 
 ## 双远端状态
 
-| 分支 | Codeup | GitHub | 状态 |
+| 分支 | GitHub | Codeup | 状态 |
 |---|---|---|---|
 | 2.3.x | 0637141de9ba | bc130cd10361 | DRIFT: Codeup credential required |
 | 2.4.x | 644239934e5f | fd043cb4532e | DRIFT: Codeup credential required |
