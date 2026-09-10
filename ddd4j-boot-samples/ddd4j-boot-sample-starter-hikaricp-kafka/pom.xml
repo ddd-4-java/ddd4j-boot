@@ -102,10 +102,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>io.github.easy4j</groupId><artifactId>validation-mimetypes-spring-boot-starter</artifactId>
-            <version>${spring-boot-starter-validation-mimetypes.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
         </dependency>
@@ -113,10 +109,6 @@
         <dependency>
             <groupId>com.github.dozermapper</groupId>
             <artifactId>dozer-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.github.easy4j</groupId>
-            <artifactId>dozer-extra-converters</artifactId>
         </dependency>
         <!-- For AOP -->
         <dependency>
@@ -179,13 +171,13 @@
         </dependency>
         <!-- For Flyway -->
         <dependency>
-            <groupId>io.github.easy4j</groupId>
-            <artifactId>flyway-plus-spring-boot-starter</artifactId>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
         </dependency>
         <!-- For HikariCP -->
         <dependency>
-            <groupId>io.github.easy4j</groupId>
-            <artifactId>hikaricp-plus-spring-boot-starter</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
             
         </dependency>
         <dependency>
