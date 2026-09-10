@@ -106,6 +106,18 @@ org.slf4j\tslf4j-api\t2.0.18\t2.0.17\t2.0.18\tddd4j-dependencies\tBoot import ov
 
             self.assertEqual(verify_ownership(boot, rules), [])
 
+    def test_boot_accepts_exact_platform_override_owned_by_boot_ecosystem(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            boot = self.write(directory, "boot.xml", pom(
+                ["spring-boot-micrometer.version"],
+                [("io.micrometer", "micrometer-core", "${spring-boot-micrometer.version}")]))
+            rules = [OwnershipRule(
+                "spring-boot-platform-override", "io.micrometer", "micrometer-core",
+                "spring-boot-micrometer.version")]
+
+            self.assertEqual(verify_ownership(boot, rules), [])
+
     def test_boot_rejects_orphaned_platform_version_property(self):
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary)

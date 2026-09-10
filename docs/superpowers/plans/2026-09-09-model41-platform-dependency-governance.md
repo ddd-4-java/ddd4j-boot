@@ -862,12 +862,12 @@ Expected: clean trees, matching local/remote SHAs, Boot 4.1 and 4.0 at 73/73, no
 - Produces: `RedisTemplateRegionCache(StringRedisTemplate)` implementing `RegionCache`.
 - Removes: compile/runtime dependency on `RedisOperationTemplate` and `redistpl-plus-spring-boot-starter`.
 
-- [ ] **Step 1: Write unit RED tests**
+- [x] **Step 1: Write unit RED tests**
 
 Assert null-constructor rejection, `opsForValue().get`, TTL-aware `set`, and auto-configuration fallback to
 `RegionCache.none()` when no `StringRedisTemplate` is present.
 
-- [ ] **Step 2: Run unit RED**
+- [x] **Step 2: Run unit RED**
 
 ```bash
 JAVA_HOME=$(/usr/libexec/java_home -v 1.8) ./mvnw -B -ntp \
@@ -878,23 +878,23 @@ JAVA_HOME=$(/usr/libexec/java_home -v 1.8) ./mvnw -B -ntp \
 
 Expected: compilation fails because `RedisTemplateRegionCache` does not exist.
 
-- [ ] **Step 3: Implement the minimal adapter and dependency change**
+- [x] **Step 3: Implement the minimal adapter and dependency change**
 
 Use `StringRedisTemplate.opsForValue()` for string get/set, retain `Objects.requireNonNull`, replace the
 auto-configuration provider type, add `spring-boot-starter-data-redis`, and remove the Redistpl dependency and
 version property/management entry.
 
-- [ ] **Step 4: Run unit GREEN and Redis Testcontainers RED/GREEN**
+- [x] **Step 4: Run unit GREEN and Redis Testcontainers RED/GREEN**
 
 Add `testcontainers-junit-jupiter` and a `GenericContainer` using `redis:7.4-alpine`. Prove write/read and TTL
 expiry against the real container; Docker skip is not accepted as PASS.
 
-- [ ] **Step 5: Run 2.3.x focused and empty-cache full reactor**
+- [x] **Step 5: Run 2.3.x focused and empty-cache full reactor**
 
 Use JDK 8/Maven 3.9.16 and the existing isolated repository `/tmp/ddd4j-boot23-remote.JK74bt`. Run external
 module tests, samples smoke targets, then `clean verify`. Record the next first failure rather than excluding it.
 
-- [ ] **Step 6: Commit and push 2.3.x**
+- [x] **Step 6: Commit and push 2.3.x**
 
 ```bash
 git add ddd4j-boot-data ddd4j-boot-dependencies/pom.xml
@@ -912,21 +912,21 @@ git push github 2.3.x
 - Consumes: Task 17 behavior contract.
 - Produces: branch-native Spring Data Redis integration with no Redistpl coordinate or type reference.
 
-- [ ] **Step 1: Propagate 2.4.x–2.7.x under JDK 8**
+- [x] **Step 1: Propagate 2.4.x–2.7.x under JDK 8**
 
 Apply tests before implementation on each branch, preserve Java 8/`javax`, run external module unit and container
 tests, commit independently and push both remotes.
 
-- [ ] **Step 2: Propagate 3.0.x–3.5.x under JDK 17**
+- [x] **Step 2: Propagate 3.0.x–3.5.x under JDK 17**
 
 Use Boot 3/Jakarta branch-native sources, run the same observable contract, commit independently and push.
 
-- [ ] **Step 3: Propagate 4.0.x–4.1.x under JDK 21/Maven 4**
+- [x] **Step 3: Propagate 4.0.x–4.1.x under JDK 21/Maven 4**
 
 Preserve Model 4.1 `<subprojects>`, Boot 4.0.8/4.1.0 and branch-specific conflict allowlists. Run parent,
 ownership, sample-compatibility and external-data tests before push.
 
-- [ ] **Step 4: Run the negative cross-line scan**
+- [x] **Step 4: Run the negative cross-line scan**
 
 For all 13 refs, fail if either `redistpl-plus-spring-boot-starter` or `RedisOperationTemplate` remains in a POM,
 Java source or generated consumer POM.
@@ -941,23 +941,23 @@ Java source or generated consumer POM.
 **Interfaces:**
 - Produces: one exact per-line result for remote resolution, compile, tests, Testcontainers, sample smoke and full reactor.
 
-- [ ] **Step 1: Execute representative samples per JDK group**
+- [x] **Step 1: Execute representative samples per JDK group**
 
 Run order/layered and the available WebMVC/WebFlux starter samples with branch-native test infrastructure.
 Replace unconditional `@Disabled` only when a Testcontainers or in-memory fixture supplies every dependency;
 never enable a test that still reaches an unmanaged external system.
 
-- [ ] **Step 2: Run 13 isolated `clean verify` reactors**
+- [x] **Step 2: Run 13 isolated `clean verify` reactors**
 
 Use each line's already-created `/tmp/ddd4j-boot*-remote.*` repository and Aliyun settings. JDK8/JDK17 use
 Maven 3.9.16; JDK21 uses Maven 4.0.0-rc-6. Zero tests or skipped required Testcontainers tests cannot pass.
 
-- [ ] **Step 3: Repair each new first failure by RED/GREEN**
+- [x] **Step 3: Repair each new first failure by RED/GREEN**
 
 Classify missing private artifacts, source compatibility, container provisioning and behavior failures separately;
 make only branch-native fixes and restart from the failed module before the final clean run.
 
-- [ ] **Step 4: Update evidence and task states**
+- [x] **Step 4: Update evidence and task states**
 
 Promote a release-line row from `BLOCKED` to `PASS` only after its full reactor and required container/smoke tests
 pass. Mark the Boot 3.4 sample-smoke/full-verify plan items complete only from this evidence.

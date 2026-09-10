@@ -11,7 +11,10 @@
 - 4.1.x 的 Data/Cache/MQ 真实依赖矩阵执行 52 个测试，0 failures、0 errors、0 skipped。
 - 2.3.x–2.7.x Core/Repository 契约分别为每线 6/6 与 5/5；3.0.x–3.5.x 和 4.0.x/4.1.x
   主能力 clean reactor 全部通过。
-- 阶段六 Redistpl 解耦和 13 线完整 reactor 仍未完成，因此总体发布状态仍为 `BLOCKED`。
+- 阶段六 Redistpl 解耦、样例修复和 13 线完整 `clean verify` reactor 均已完成。
+- 13 线均从隔离 Maven 仓库消费阿里云上游制品；Boot 4.0 另用第二个全新仓库确认消费
+  `ddd4j-dependencies:3.0.x` 时间戳 `20260910.113831-20`。
+- 发布准入当前进入 Task 20 独立审查；Boot 13 线尚未 deploy，不提前声称发布完成。
 
 ## 同组比较
 
@@ -47,32 +50,51 @@ bash scripts/consistency/verify_same_group_compatibility.sh
 Pulsar 测试在 Spring 上下文前按条件等待并创建 topic，避免 standalone namespace 初始化竞态。
 RocketMQ 测试动态选择 broker/VIP 端口对，并使用 `listenPort` 同步容器监听和 namesrv 公告。
 
+## 阶段六完整 reactor 证据
+
+| 分支 | 工具链 | reactor | `clean verify` | SHA |
+|---|---|---:|---:|---|
+| 2.3.x | JDK 8 / Maven 3 | 72/72 | 03:21 | `bc130cd10361` |
+| 2.4.x | JDK 8 / Maven 3 | 72/72 | 03:33 | `fd043cb4532e` |
+| 2.5.x | JDK 8 / Maven 3 | 72/72 | 06:35 | `a838d5c6b6bc` |
+| 2.6.x | JDK 8 / Maven 3 | 72/72 | 03:34 | `5ceae4487be9` |
+| 2.7.x | JDK 8 / Maven 3 | 72/72 | 03:55 | `0efc5ffdd7e6` |
+| 3.0.x | JDK 17 / Maven 3 | 73/73 | 03:58 | `eda53010509c` |
+| 3.1.x | JDK 17 / Maven 3 | 73/73 | 03:20 | `7ba17973e507` |
+| 3.2.x | JDK 17 / Maven 3 | 73/73 | 03:36 | `a26089a4620c` |
+| 3.3.x | JDK 17 / Maven 3 | 73/73 | 03:48 | `dccea9dcbc55` |
+| 3.4.x | JDK 17 / Maven 3 | 73/73 | 04:25 | `3ac7e4a8144a` |
+| 3.5.x | JDK 17 / Maven 3 | 73/73 | 06:13 | `032bc72d403e` |
+| 4.0.x | JDK 21 / Maven 4 | 73/73 | 05:35 | `2d47f31b6930` |
+| 4.1.x | JDK 21 / Maven 4 | 73/73 | 06:07 | `3d5b3256bf8b` |
+
+13/13 负向扫描通过：POM、Java 源码和 generated consumer POM 中均无
+`RedisOperationTemplate` 或 `redistpl-plus-spring-boot-starter` 残留。RocketMQ Testcontainers
+已按分支 JDK 语法改为动态 broker/VIP 端口对，并在宿主机 10911 被占用时通过聚焦测试。
+
 ## 双远端状态
 
 | 分支 | Codeup | GitHub | 状态 |
 |---|---|---|---|
-| 2.3.x | 7e5e3bae5335 | 7e5e3bae5335 | MATCH |
-| 2.4.x | 4fa5cc54ded2 | 4fa5cc54ded2 | MATCH |
-| 2.5.x | fef7d48b1380 | fef7d48b1380 | MATCH |
-| 2.6.x | 1ca18a4facac | 1ca18a4facac | MATCH |
-| 2.7.x | 60a07ce5aac7 | 60a07ce5aac7 | MATCH |
-| 3.0.x | e2094e55b9c5 | e2094e55b9c5 | MATCH |
-| 3.1.x | ed8bf1c47520 | ed8bf1c47520 | MATCH |
-| 3.2.x | 142363ad2112 | 142363ad2112 | MATCH |
-| 3.3.x | af5d3553f2a4 | af5d3553f2a4 | MATCH |
-| 3.4.x | 3c5e1022cc96 | 3c5e1022cc96 | MATCH |
-| 3.5.x | b2c96bbce581 | b2c96bbce581 | MATCH |
-| 4.0.x | 69e8ec5b026e | 69e8ec5b026e | MATCH |
-| 4.1.x | 8376107b138b | 8376107b138b | MATCH |
+| 2.3.x | bc130cd10361 | bc130cd10361 | MATCH |
+| 2.4.x | fd043cb4532e | fd043cb4532e | MATCH |
+| 2.5.x | a838d5c6b6bc | a838d5c6b6bc | MATCH |
+| 2.6.x | 5ceae4487be9 | 5ceae4487be9 | MATCH |
+| 2.7.x | 0efc5ffdd7e6 | 0efc5ffdd7e6 | MATCH |
+| 3.0.x | eda53010509c | eda53010509c | MATCH |
+| 3.1.x | 7ba17973e507 | 7ba17973e507 | MATCH |
+| 3.2.x | a26089a4620c | a26089a4620c | MATCH |
+| 3.3.x | dccea9dcbc55 | dccea9dcbc55 | MATCH |
+| 3.4.x | 3ac7e4a8144a | 3ac7e4a8144a | MATCH |
+| 3.5.x | 032bc72d403e | 032bc72d403e | MATCH |
+| 4.0.x | 2d47f31b6930 | 2d47f31b6930 | MATCH |
+| 4.1.x | 3d5b3256bf8b | 3d5b3256bf8b | MATCH |
 
-4.0.x 的 `69e8ec5b fix(bom): manage all Boot production modules` 已通过 BOM alignment 与 Maven 4
-聚焦 verify，并同步到 GitHub。release-line TSV 中的 SHA 是本报告生成前实际验证的代码基线，
-不把包含报告自身的证据提交伪装成已重新执行的代码验证。
+release-line TSV 中的 SHA 是本报告生成前实际执行 `clean verify` 的代码基线，
+不把后续仅修改报告的提交伪装成已重新执行的代码验证。
 
 ## 剩余门禁
 
-- `ddd4j-boot-data-external` 仍依赖未发布的 `redistpl-plus-spring-boot-starter`，2.3.x 空缓存完整
-  reactor 在此停止。
-- 阶段六规格尚待书面审阅确认后实施。
-- 13 条线完整 reactor、独立审查、阿里云 Maven deploy 与发布后空缓存回拉均未完成。
+- Task 20 独立审查与其 Critical/Important 问题闭环尚未完成。
+- Task 21 的 13 线阿里云 Maven deploy 与发布后新空缓存回拉尚未执行。
 - GitHub Actions 仅在组织 Secret `MAVEN_SETTINGS_XML` 和 Actions 账户门禁可用时单独执行。
