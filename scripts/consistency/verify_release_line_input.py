@@ -74,7 +74,7 @@ def verify(matrix_path: Path, input_path: Path, repository: Path | None = None,
                 if row["github_sha"][:12] not in content or "clean verify" not in content:
                     errors.append(f"{branch}: report_ref is not bound to verified SHA and clean verify")
         if evidence_dir is not None:
-            log = evidence_dir / f"ddd4j-boot-{branch}-clean-verify-review-final.log"
+            log = evidence_dir / f"ddd4j-boot-{branch}-clean-verify-review2-final.log"
             content = log.read_text(encoding="utf-8", errors="replace") if log.is_file() else ""
             if ("BUILD SUCCESS" not in content or
                     f"Reactor Summary for ddd4j-boot {branch}.20260630-SNAPSHOT" not in content):
