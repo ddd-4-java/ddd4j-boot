@@ -3,6 +3,7 @@ package io.ddd4j.boot.data.external.config;
 import io.ddd4j.data.external.ExternalProperties;
 import io.ddd4j.data.external.region.BaiduRegionTemplate;
 import io.ddd4j.data.external.region.PconlineRegionTemplate;
+import io.ddd4j.data.external.region.RegionCache;
 import io.ddd4j.data.external.weather.WeatherTemplate;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
@@ -29,6 +30,15 @@ class Ddd4jExternalAutoConfigurationTest {
             assertThat(context).hasSingleBean(PconlineRegionTemplate.class);
             assertThat(context).hasSingleBean(WeatherTemplate.class);
             assertThat(context).hasBean("globalSequence");
+        });
+    }
+
+    @Test
+    void shouldUseNoneRegionCacheWhenStringRedisTemplateIsMissing() {
+        runner.run(context -> {
+            assertThat(context).hasNotFailed();
+            assertThat(context).hasSingleBean(RegionCache.class);
+            assertThat(context.getBean(RegionCache.class).getString("missing")).isNull();
         });
     }
 }

@@ -51,7 +51,7 @@ public class AuthController {
     @PostMapping("/logout")
     public Map<String, Object> logout() {
         SubjectKit.logout();
-        return Map.of("success", true);
+        return java.util.Collections.singletonMap("success", true);
     }
 
     /**
@@ -61,7 +61,7 @@ public class AuthController {
     public Map<String, Object> me() {
         AuthPrincipal principal = SubjectKit.getPrincipal();
         if (principal == null) {
-            return Map.of("authenticated", false);
+            return java.util.Collections.singletonMap("authenticated", false);
         }
         Map<String, Object> result = new HashMap<>();
         result.put("authenticated", true);
@@ -77,7 +77,10 @@ public class AuthController {
     @GetMapping("/check/permission")
     public Map<String, Object> checkPermission(String permission) {
         boolean has = SubjectKit.hasPermission(permission);
-        return Map.of("permission", permission, "has", has);
+        Map<String, Object> result = new HashMap<>();
+        result.put("permission", permission);
+        result.put("has", has);
+        return result;
     }
 
     /**
@@ -86,7 +89,10 @@ public class AuthController {
     @GetMapping("/check/role")
     public Map<String, Object> checkRole(String role) {
         boolean has = SubjectKit.hasRole(role);
-        return Map.of("role", role, "has", has);
+        Map<String, Object> result = new HashMap<>();
+        result.put("role", role);
+        result.put("has", has);
+        return result;
     }
 
     /**
@@ -94,7 +100,7 @@ public class AuthController {
      */
     @GetMapping("/status")
     public Map<String, Object> status() {
-        return Map.of("login", SubjectKit.isLogin());
+        return java.util.Collections.singletonMap("login", SubjectKit.isLogin());
     }
 
 }
