@@ -2,7 +2,7 @@ package io.ddd4j.boot.data.external.config;
 
 import com.github.hiwepy.ip2region.spring.boot.IP2regionTemplate;
 import io.ddd4j.boot.data.external.adapter.HiwepyIpRegionTemplateAdapter;
-import io.ddd4j.boot.data.external.adapter.RedisOperationRegionCache;
+import io.ddd4j.boot.data.external.adapter.RedisTemplateRegionCache;
 import io.ddd4j.data.external.ExternalProperties;
 import io.ddd4j.data.external.region.*;
 import io.ddd4j.data.external.weather.WeatherTemplate;
@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.data.redis.core.RedisOperationTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import java.util.Objects;
 
 /**
@@ -41,12 +41,12 @@ public class Ddd4jExternalAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public RegionCache regionCache(ObjectProvider<RedisOperationTemplate> redisOperationProvider) {
-        RedisOperationTemplate redisOperation = redisOperationProvider.getIfAvailable();
-        if (Objects.isNull(redisOperation)) {
+    public RegionCache regionCache(ObjectProvider<StringRedisTemplate> redisTemplateProvider) {
+        StringRedisTemplate redisTemplate = redisTemplateProvider.getIfAvailable();
+        if (Objects.isNull(redisTemplate)) {
             return RegionCache.none();
         }
-        return new RedisOperationRegionCache(redisOperation);
+        return new RedisTemplateRegionCache(redisTemplate);
     }
 
     @Bean
