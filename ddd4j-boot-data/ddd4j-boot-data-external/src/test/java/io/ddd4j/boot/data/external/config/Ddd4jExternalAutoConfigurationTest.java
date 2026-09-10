@@ -7,7 +7,9 @@ import io.ddd4j.data.external.region.RegionCache;
 import io.ddd4j.data.external.weather.WeatherTemplate;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
+import org.springframework.boot.test.context.FilteredClassLoader;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -40,5 +42,15 @@ class Ddd4jExternalAutoConfigurationTest {
             assertThat(context).hasSingleBean(RegionCache.class);
             assertThat(context.getBean(RegionCache.class).getString("missing")).isNull();
         });
+    }
+
+    @Test
+    void shouldUseNoneRegionCacheWhenSpringDataRedisIsNotOnTheConsumerClasspath() {
+        runner.withClassLoader(new FilteredClassLoader(StringRedisTemplate.class))
+                .run(context -> {
+                    assertThat(context).hasNotFailed();
+                    assertThat(context).hasSingleBean(RegionCache.class);
+                    assertThat(context.getBean(RegionCache.class).getString("missing")).isNull();
+                });
     }
 }
