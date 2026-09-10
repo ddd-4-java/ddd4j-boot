@@ -120,7 +120,6 @@
         <spring-boot-starter-qqwry.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-qqwry.version>
         <spring-boot-starter-redisson-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-redisson-plus.version>
         <spring-boot-starter-redisson.version>${redisson.version}</spring-boot-starter-redisson.version>
-        <spring-boot-starter-redistpl-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-redistpl-plus.version>
         <spring-boot-starter-rocketmq-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-rocketmq-plus.version>
         <spring-boot-starter-rocketmq.version>2.3.4</spring-boot-starter-rocketmq.version>
         <spring-boot-starter-rythm.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-rythm.version>
@@ -190,10 +189,26 @@
         <spring-boot-starter-zbus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-zbus.version>
         <spring-boot-starter-zxing.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-zxing.version>
         <spring-boot-starter-resilience4j.version>${resilience4j.version}</spring-boot-starter-resilience4j.version>
+        <spring-boot-starter-satoken.version>1.45.0</spring-boot-starter-satoken.version>
+        <spring-boot-artemis.version>2.53.0</spring-boot-artemis.version>
+        <spring-boot-lettuce.version>7.5.2.RELEASE</spring-boot-lettuce.version>
+        <spring-boot-micrometer.version>1.17.0</spring-boot-micrometer.version>
+        <spring-boot-logback.version>1.5.34</spring-boot-logback.version>
+        <spring-boot-slf4j.version>2.0.18</spring-boot-slf4j.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>artemis-jakarta-client</artifactId>
+                <version>${spring-boot-artemis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot3-starter</artifactId>
+                <version>${spring-boot-starter-satoken.version}</version>
+            </dependency>
             <!-- 导入上游 ddd4j-dependencies BOM（基础组件版本统一管理） -->
             <dependency>
                 <groupId>io.ddd4j</groupId>
@@ -201,6 +216,74 @@
                 <version>${ddd4j.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-bom</artifactId>
+                <version>${spring-boot-micrometer.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.lettuce</groupId>
+                <artifactId>lettuce-core</artifactId>
+                <version>${spring-boot-lettuce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-commons</artifactId>
+                <version>${spring-boot-micrometer.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-core</artifactId>
+                <version>${spring-boot-micrometer.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-jakarta9</artifactId>
+                <version>${spring-boot-micrometer.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-observation</artifactId>
+                <version>${spring-boot-micrometer.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+                <version>${spring-boot-micrometer.version}</version>
+            </dependency>
+            <!-- Boot 3.3 logging system binary compatibility baseline. -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${spring-boot-logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${spring-boot-logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${spring-boot-slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jul-to-slf4j</artifactId>
+                <version>${spring-boot-slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${spring-boot-slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>log4j-over-slf4j</artifactId>
+                <version>${spring-boot-slf4j.version}</version>
             </dependency>
             <!-- Spring Boot Starter 依赖 -->
             <!-- https://mvnrepository.com/artifact/com.dtflys.forest/forest-spring-boot-starter -->
@@ -721,18 +804,6 @@
                 <groupId>com.github.liuzhuoming23</groupId>
                 <artifactId>pinyin4j-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-pinyin4j.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/redistpl-plus-spring-boot-starter -->
-            <dependency>
-                <groupId>io.github.easy4j</groupId>
-                <artifactId>redistpl-plus-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-redistpl-plus.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>tools.jackson.core</groupId>
-                        <artifactId>jackson-databind</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter -->
             <dependency>

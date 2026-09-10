@@ -47,12 +47,12 @@ class PulsarMQClientIntegrationTest {
     @Container
     static final GenericContainer<?> PULSAR = new GenericContainer<>(DockerImageName.parse("apachepulsar/pulsar:3.2.0"))
             .withCommand("bin/pulsar", "standalone")
-            .withExposedPorts(6650)
+            .withExposedPorts(6650, 8080)
             .waitingFor(Wait.forLogMessage(".*messaging service is ready.*", 1)
                     .withStartupTimeout(Duration.ofSeconds(180)));
 
     @Test
-    void shouldPublishAndConsumeEventThroughRealPulsar() {
+    void shouldPublishAndConsumeEventThroughRealPulsar() throws Exception {
         String serviceUrl = "pulsar://" + PULSAR.getHost() + ":" + PULSAR.getMappedPort(6650);
         ensureTopicExists(serviceUrl);
 
