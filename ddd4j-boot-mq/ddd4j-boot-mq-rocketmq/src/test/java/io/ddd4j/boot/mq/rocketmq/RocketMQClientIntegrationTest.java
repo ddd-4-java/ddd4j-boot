@@ -102,7 +102,7 @@ class RocketMQClientIntegrationTest {
             Files.writeString(brokerConf, String.format(BROKER_CONF_TEMPLATE, BROKER_PORT));
             Files.setPosixFilePermissions(brokerConf,
                     java.nio.file.attribute.PosixFilePermissions.fromString("rw-r--r--"));
-            GenericContainer<?> container = new GenericContainer<>(
+            GenericContainer<?> container = new LockedRocketMQContainer(
                     DockerImageName.parse("apache/rocketmq:5.3.2"))
                     .withEnv("JAVA_OPT_EXT", "-Xms512m -Xmx512m -Xmn256m")
                     .withCommand("sh", "-c",
@@ -119,6 +119,9 @@ class RocketMQClientIntegrationTest {
         } catch (IOException e) {
             releasePortLockResources();
             throw new IllegalStateException("Prepare RocketMQ broker.conf failed", e);
+        } catch (RuntimeException e) {
+            releasePortLockResources();
+            throw e;
         }
     }
 
@@ -131,6 +134,7 @@ class RocketMQClientIntegrationTest {
                 // Try the next port pair.
             }
         }
+        releasePortLockResources();
         throw new IllegalStateException("No available RocketMQ broker/VIP port pair");
     }
 
@@ -190,6 +194,23 @@ class RocketMQClientIntegrationTest {
             }
         } catch (IOException ignored) {
             // Best-effort cleanup also runs from the JVM shutdown hook.
+        }
+    }
+
+    private static final class LockedRocketMQContainer extends GenericContainer<LockedRocketMQContainer> {
+
+        private LockedRocketMQContainer(DockerImageName imageName) {
+            super(imageName);
+        }
+
+        @Override
+        public void start() {
+            try {
+                super.start();
+            } catch (RuntimeException e) {
+                releasePortLockResources();
+                throw e;
+            }
         }
     }
 
