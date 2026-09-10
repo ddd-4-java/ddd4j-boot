@@ -968,12 +968,12 @@ pass. Mark the Boot 3.4 sample-smoke/full-verify plan items complete only from t
 - Review all Task 17–19 commits and generated consumer POMs.
 - Modify only files required by Critical/Important findings.
 
-- [ ] **Step 1: Dispatch an independent reviewer**
+- [x] **Step 1: Dispatch an independent reviewer**
 
 Review API compatibility, Redis serialization/TTL semantics, branch-native Java compatibility, Testcontainers
 isolation, Maven Model 4.1, remote-consumer evidence and task-status truthfulness.
 
-- [ ] **Step 2: Resolve all Critical/Important findings**
+- [x] **Step 2: Resolve all Critical/Important findings**
 
 Use focused RED/GREEN tests and rerun each affected line's full reactor.
 

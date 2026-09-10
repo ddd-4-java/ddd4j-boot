@@ -32,7 +32,7 @@ mkdir -p "$TMP_DIR/evidence"
 cat > "$TMP_DIR/report.md" <<'EOF'
 clean verify 111111111111
 EOF
-cat > "$TMP_DIR/evidence/ddd4j-boot-2.3.x-clean-verify-final.log" <<'EOF'
+cat > "$TMP_DIR/evidence/ddd4j-boot-2.3.x-clean-verify-review-final.log" <<'EOF'
 [INFO] Reactor Summary for ddd4j-boot 2.3.x.20260630-SNAPSHOT:
 [INFO] BUILD SUCCESS
 EOF

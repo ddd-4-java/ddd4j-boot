@@ -12,9 +12,11 @@
 - 2.3.x–2.7.x Core/Repository 契约分别为每线 6/6 与 5/5；3.0.x–3.5.x 和 4.0.x/4.1.x
   主能力 clean reactor 全部通过。
 - 阶段六 Redistpl 解耦、样例修复和 13 线完整 `clean verify` reactor 均已完成。
-- 13 线均从隔离 Maven 仓库消费阿里云上游制品；Boot 4.0 另用第二个全新仓库确认消费
+- 13 线均从隔离 Maven 仓库消费阿里云上游制品；Boot 4.0 与 4.1 的全新仓库均确认消费
   `ddd4j-dependencies:3.0.x` 时间戳 `20260910.113831-20`。
-- 发布准入当前进入 Task 20 独立审查；Boot 13 线尚未 deploy，不提前声称发布完成。
+- Task 20 独立审查已执行，Critical/Important 代码项已闭环并完成 13 线重验。
+- Codeup URL 内嵌凭据已从本地 Git config 移除；当前无可用 Codeup SSH/Keychain 凭据，
+  因此新提交仅已同步 GitHub，Task 20 远端对齐与 Task 21 仍为 `BLOCKED`。
 
 ## 同组比较
 
@@ -54,19 +56,19 @@ RocketMQ 测试动态选择 broker/VIP 端口对，并使用 `listenPort` 同步
 
 | 分支 | 工具链 | reactor | `clean verify` | SHA |
 |---|---|---:|---:|---|
-| 2.3.x | JDK 8 / Maven 3 | 72/72 | 03:21 | `bc130cd10361` |
-| 2.4.x | JDK 8 / Maven 3 | 72/72 | 03:33 | `fd043cb4532e` |
-| 2.5.x | JDK 8 / Maven 3 | 72/72 | 06:35 | `a838d5c6b6bc` |
-| 2.6.x | JDK 8 / Maven 3 | 72/72 | 03:34 | `5ceae4487be9` |
-| 2.7.x | JDK 8 / Maven 3 | 72/72 | 03:55 | `0efc5ffdd7e6` |
-| 3.0.x | JDK 17 / Maven 3 | 73/73 | 03:58 | `eda53010509c` |
-| 3.1.x | JDK 17 / Maven 3 | 73/73 | 03:20 | `7ba17973e507` |
-| 3.2.x | JDK 17 / Maven 3 | 73/73 | 03:36 | `a26089a4620c` |
-| 3.3.x | JDK 17 / Maven 3 | 73/73 | 03:48 | `dccea9dcbc55` |
-| 3.4.x | JDK 17 / Maven 3 | 73/73 | 04:25 | `3ac7e4a8144a` |
-| 3.5.x | JDK 17 / Maven 3 | 73/73 | 06:13 | `032bc72d403e` |
-| 4.0.x | JDK 21 / Maven 4 | 73/73 | 05:35 | `2d47f31b6930` |
-| 4.1.x | JDK 21 / Maven 4 | 73/73 | 06:07 | `3d5b3256bf8b` |
+| 2.3.x | JDK 8 / Maven 3 | 72/72 | 03:45 | `0637141de9ba` |
+| 2.4.x | JDK 8 / Maven 3 | 72/72 | 03:41 | `644239934e5f` |
+| 2.5.x | JDK 8 / Maven 3 | 72/72 | 03:36 | `bf183824a028` |
+| 2.6.x | JDK 8 / Maven 3 | 72/72 | 03:31 | `245d77932041` |
+| 2.7.x | JDK 8 / Maven 3 | 72/72 | 03:32 | `b1fc0455b6f7` |
+| 3.0.x | JDK 17 / Maven 3 | 73/73 | 03:08 | `88ed29482800` |
+| 3.1.x | JDK 17 / Maven 3 | 73/73 | 03:23 | `0a350752d129` |
+| 3.2.x | JDK 17 / Maven 3 | 73/73 | 03:22 | `1c19d6a5dea9` |
+| 3.3.x | JDK 17 / Maven 3 | 73/73 | 03:24 | `1157e482964a` |
+| 3.4.x | JDK 17 / Maven 3 | 73/73 | 03:18 | `17be8417a4ab` |
+| 3.5.x | JDK 17 / Maven 3 | 73/73 | 03:21 | `f27f3c638f09` |
+| 4.0.x | JDK 21 / Maven 4 | 73/73 | 02:54 | `3c04d79f0c3e` |
+| 4.1.x | JDK 21 / Maven 4 | 73/73 | 03:22 | `561d1809e2d3` |
 
 13/13 负向扫描通过：POM、Java 源码和 generated consumer POM 中均无
 `RedisOperationTemplate` 或 `redistpl-plus-spring-boot-starter` 残留。RocketMQ Testcontainers
@@ -76,25 +78,25 @@ RocketMQ 测试动态选择 broker/VIP 端口对，并使用 `listenPort` 同步
 
 | 分支 | Codeup | GitHub | 状态 |
 |---|---|---|---|
-| 2.3.x | bc130cd10361 | bc130cd10361 | MATCH |
-| 2.4.x | fd043cb4532e | fd043cb4532e | MATCH |
-| 2.5.x | a838d5c6b6bc | a838d5c6b6bc | MATCH |
-| 2.6.x | 5ceae4487be9 | 5ceae4487be9 | MATCH |
-| 2.7.x | 0efc5ffdd7e6 | 0efc5ffdd7e6 | MATCH |
-| 3.0.x | eda53010509c | eda53010509c | MATCH |
-| 3.1.x | 7ba17973e507 | 7ba17973e507 | MATCH |
-| 3.2.x | a26089a4620c | a26089a4620c | MATCH |
-| 3.3.x | dccea9dcbc55 | dccea9dcbc55 | MATCH |
-| 3.4.x | 3ac7e4a8144a | 3ac7e4a8144a | MATCH |
-| 3.5.x | 032bc72d403e | 032bc72d403e | MATCH |
-| 4.0.x | 2d47f31b6930 | 2d47f31b6930 | MATCH |
-| 4.1.x | 3d5b3256bf8b | 3d5b3256bf8b | MATCH |
+| 2.3.x | 0637141de9ba | bc130cd10361 | DRIFT: Codeup credential required |
+| 2.4.x | 644239934e5f | fd043cb4532e | DRIFT: Codeup credential required |
+| 2.5.x | bf183824a028 | a838d5c6b6bc | DRIFT: Codeup credential required |
+| 2.6.x | 245d77932041 | 5ceae4487be9 | DRIFT: Codeup credential required |
+| 2.7.x | b1fc0455b6f7 | 0efc5ffdd7e6 | DRIFT: Codeup credential required |
+| 3.0.x | 88ed29482800 | eda53010509c | DRIFT: Codeup credential required |
+| 3.1.x | 0a350752d129 | 7ba17973e507 | DRIFT: Codeup credential required |
+| 3.2.x | 1c19d6a5dea9 | a26089a4620c | DRIFT: Codeup credential required |
+| 3.3.x | 1157e482964a | dccea9dcbc55 | DRIFT: Codeup credential required |
+| 3.4.x | 17be8417a4ab | 3ac7e4a8144a | DRIFT: Codeup credential required |
+| 3.5.x | f27f3c638f09 | 032bc72d403e | DRIFT: Codeup credential required |
+| 4.0.x | 3c04d79f0c3e | 2d47f31b6930 | DRIFT: Codeup credential required |
+| 4.1.x | 561d1809e2d3 | d8c120b0aaad | DRIFT: Codeup credential required |
 
 release-line TSV 中的 SHA 是本报告生成前实际执行 `clean verify` 的代码基线，
 不把后续仅修改报告的提交伪装成已重新执行的代码验证。
 
 ## 剩余门禁
 
-- Task 20 独立审查与其 Critical/Important 问题闭环尚未完成。
+- Task 20 代码审查与 Critical/Important 闭环已完成；Codeup 凭据缺失使双远端验证仍未完成。
 - Task 21 的 13 线阿里云 Maven deploy 与发布后新空缓存回拉尚未执行。
 - GitHub Actions 仅在组织 Secret `MAVEN_SETTINGS_XML` 和 Actions 账户门禁可用时单独执行。
