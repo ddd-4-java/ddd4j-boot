@@ -56,19 +56,19 @@ RocketMQ 测试动态选择 broker/VIP 端口对，并使用 `listenPort` 同步
 
 | 分支 | 工具链 | reactor | `clean verify` | SHA |
 |---|---|---:|---:|---|
-| 2.3.x | JDK 8 / Maven 3 | 72/72 | 04:19 | `96aac92ee8f5` |
-| 2.4.x | JDK 8 / Maven 3 | 72/72 | 04:28 | `ccf2d92b8d15` |
-| 2.5.x | JDK 8 / Maven 3 | 72/72 | 03:55 | `ff2f932c59ae` |
-| 2.6.x | JDK 8 / Maven 3 | 72/72 | 03:34 | `dd02c9722135` |
-| 2.7.x | JDK 8 / Maven 3 | 72/72 | 03:43 | `ec28a3dcad3b` |
-| 3.0.x | JDK 17 / Maven 3 | 73/73 | 03:08 | `17bafd215f16` |
-| 3.1.x | JDK 17 / Maven 3 | 73/73 | 03:23 | `fda3e8bc8c7a` |
-| 3.2.x | JDK 17 / Maven 3 | 73/73 | 03:20 | `84a57b525471` |
-| 3.3.x | JDK 17 / Maven 3 | 73/73 | 03:18 | `dd12d9b4b4f2` |
-| 3.4.x | JDK 17 / Maven 3 | 73/73 | 03:21 | `6940899d645e` |
-| 3.5.x | JDK 17 / Maven 3 | 73/73 | 03:21 | `79418e7d3ee5` |
-| 4.0.x | JDK 21 / Maven 4 | 73/73 | 03:03 | `122a76650f86` |
-| 4.1.x | JDK 21 / Maven 4 | 73/73 | 03:10 | `39f84ef7c45f` |
+| 2.3.x | JDK 8 / Maven 3 | 72/72 | 04:00 | `343d34cd08fb` |
+| 2.4.x | JDK 8 / Maven 3 | 72/72 | 04:45 | `ed30a330ddbc` |
+| 2.5.x | JDK 8 / Maven 3 | 72/72 | 04:33 | `bf7bfa8a5ebd` |
+| 2.6.x | JDK 8 / Maven 3 | 72/72 | 03:44 | `3c5c4c432443` |
+| 2.7.x | JDK 8 / Maven 3 | 72/72 | 03:53 | `6a3481944a25` |
+| 3.0.x | JDK 17 / Maven 3 | 73/73 | 04:07 | `301a4d59c152` |
+| 3.1.x | JDK 17 / Maven 3 | 73/73 | 03:40 | `7e457d18079b` |
+| 3.2.x | JDK 17 / Maven 3 | 73/73 | 03:24 | `2c9752497069` |
+| 3.3.x | JDK 17 / Maven 3 | 73/73 | 03:26 | `d77241b9dae5` |
+| 3.4.x | JDK 17 / Maven 3 | 73/73 | 03:33 | `1f977a0eb25c` |
+| 3.5.x | JDK 17 / Maven 3 | 73/73 | 03:39 | `f76684ab26c3` |
+| 4.0.x | JDK 21 / Maven 4 | 73/73 | 03:15 | `e9dc153fcab7` |
+| 4.1.x | JDK 21 / Maven 4 | 73/73 | 04:03 | `2ce4476b1c96` |
 
 13/13 负向扫描通过：POM、Java 源码和 generated consumer POM 中均无
 `RedisOperationTemplate` 或 `redistpl-plus-spring-boot-starter` 残留。RocketMQ Testcontainers
@@ -78,19 +78,19 @@ RocketMQ 测试动态选择 broker/VIP 端口对，并使用 `listenPort` 同步
 
 | 分支 | GitHub | Codeup | 状态 |
 |---|---|---|---|
-| 2.3.x | 96aac92ee8f5 | bc130cd10361 | DRIFT: Codeup credential required |
-| 2.4.x | ccf2d92b8d15 | fd043cb4532e | DRIFT: Codeup credential required |
-| 2.5.x | ff2f932c59ae | a838d5c6b6bc | DRIFT: Codeup credential required |
-| 2.6.x | dd02c9722135 | 5ceae4487be9 | DRIFT: Codeup credential required |
-| 2.7.x | ec28a3dcad3b | 0efc5ffdd7e6 | DRIFT: Codeup credential required |
-| 3.0.x | 17bafd215f16 | eda53010509c | DRIFT: Codeup credential required |
-| 3.1.x | fda3e8bc8c7a | 7ba17973e507 | DRIFT: Codeup credential required |
-| 3.2.x | 84a57b525471 | a26089a4620c | DRIFT: Codeup credential required |
-| 3.3.x | dd12d9b4b4f2 | dccea9dcbc55 | DRIFT: Codeup credential required |
-| 3.4.x | 6940899d645e | 3ac7e4a8144a | DRIFT: Codeup credential required |
-| 3.5.x | 79418e7d3ee5 | 032bc72d403e | DRIFT: Codeup credential required |
-| 4.0.x | 122a76650f86 | 2d47f31b6930 | DRIFT: Codeup credential required |
-| 4.1.x | 39f84ef7c45f | d8c120b0aaad | DRIFT: Codeup credential required |
+| 2.3.x | 343d34cd08fb | bc130cd10361 | DRIFT: Codeup credential required |
+| 2.4.x | ed30a330ddbc | fd043cb4532e | DRIFT: Codeup credential required |
+| 2.5.x | bf7bfa8a5ebd | a838d5c6b6bc | DRIFT: Codeup credential required |
+| 2.6.x | 3c5c4c432443 | 5ceae4487be9 | DRIFT: Codeup credential required |
+| 2.7.x | 6a3481944a25 | 0efc5ffdd7e6 | DRIFT: Codeup credential required |
+| 3.0.x | 301a4d59c152 | eda53010509c | DRIFT: Codeup credential required |
+| 3.1.x | 7e457d18079b | 7ba17973e507 | DRIFT: Codeup credential required |
+| 3.2.x | 2c9752497069 | a26089a4620c | DRIFT: Codeup credential required |
+| 3.3.x | d77241b9dae5 | dccea9dcbc55 | DRIFT: Codeup credential required |
+| 3.4.x | 1f977a0eb25c | 3ac7e4a8144a | DRIFT: Codeup credential required |
+| 3.5.x | f76684ab26c3 | 032bc72d403e | DRIFT: Codeup credential required |
+| 4.0.x | e9dc153fcab7 | 2d47f31b6930 | DRIFT: Codeup credential required |
+| 4.1.x | 2ce4476b1c96 | d8c120b0aaad | DRIFT: Codeup credential required |
 
 release-line TSV 中的 SHA 是本报告生成前实际执行 `clean verify` 的代码基线，
 不把后续仅修改报告的提交伪装成已重新执行的代码验证。
