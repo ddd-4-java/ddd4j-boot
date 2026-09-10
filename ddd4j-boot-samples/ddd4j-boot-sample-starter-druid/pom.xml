@@ -90,10 +90,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>io.github.easy4j</groupId><artifactId>validation-mimetypes-spring-boot-starter</artifactId>
-            <version>${spring-boot-starter-validation-mimetypes.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
         </dependency>
@@ -128,7 +124,7 @@
         </dependency>
         <!-- For Redis -->
         <dependency>
-            <groupId>io.github.easy4j</groupId><artifactId>redistpl-plus-spring-boot-starter</artifactId>
+            <groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <!-- For Log4j2 -->
         <dependency>
@@ -166,13 +162,14 @@
         </dependency>
         <!-- For Flyway -->
         <dependency>
-            <groupId>io.github.easy4j</groupId>
-            <artifactId>flyway-plus-spring-boot-starter</artifactId>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
         </dependency>
         <!-- For Druid -->
         <dependency>
-            <groupId>io.github.easy4j</groupId>
-            <artifactId>druid-plus-spring-boot-starter</artifactId>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
         </dependency>
         <!-- JDBC Driver For MySQL -->
         <dependency>

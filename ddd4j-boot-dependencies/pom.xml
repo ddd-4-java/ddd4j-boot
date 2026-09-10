@@ -121,7 +121,6 @@
         <spring-boot-starter-qqwry.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-qqwry.version>
         <spring-boot-starter-redisson-plus.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-redisson-plus.version>
         <spring-boot-starter-redisson.version>${redisson.version}</spring-boot-starter-redisson.version>
-        <spring-boot-starter-redistpl-plus.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-redistpl-plus.version>
         <spring-boot-starter-rocketmq-plus.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-rocketmq-plus.version>
         <spring-boot-starter-rocketmq.version>2.3.4</spring-boot-starter-rocketmq.version>
         <spring-boot-starter-rythm.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-rythm.version>
@@ -722,18 +721,6 @@
                 <groupId>com.github.liuzhuoming23</groupId>
                 <artifactId>pinyin4j-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-pinyin4j.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/redistpl-plus-spring-boot-starter -->
-            <dependency>
-                <groupId>io.github.easy4j</groupId>
-                <artifactId>redistpl-plus-spring-boot-starter</artifactId>
-                <version>${spring-boot-starter-redistpl-plus.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.fasterxml.jackson.core</groupId>
-                        <artifactId>jackson-databind</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter -->
             <dependency>
