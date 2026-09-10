@@ -3,6 +3,7 @@ package io.ddd4j.boot.mq.rocketmq;
 import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
 import io.ddd4j.mq.annotation.MQEventListener;
 import io.ddd4j.mq.event.MQEvent;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
@@ -18,8 +19,11 @@ import org.testcontainers.utility.MountableFile;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -54,6 +58,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @Testcontainers(disabledWithoutDocker = true)
 class RocketMQClientIntegrationTest {
+
+    /**
+     * 跨 JVM 串行 RocketMQ 端口选择与容器生命周期，避免并行构建选中同一端口对。
+     */
+    private static final FileChannel PORT_LOCK_CHANNEL = openPortLockChannel();
+    private static final FileLock PORT_LOCK = acquirePortLock();
 
     /**
      * broker 对外公告端口（brokerIP1/brokerPort1 必须与宿主机固定映射一致）。
@@ -120,6 +130,30 @@ class RocketMQClientIntegrationTest {
             }
         }
         throw new IllegalStateException("No available RocketMQ broker/VIP port pair");
+    }
+
+    private static FileChannel openPortLockChannel() {
+        try {
+            return FileChannel.open(Path.of(System.getProperty("java.io.tmpdir"), "ddd4j-rocketmq-test.lock"),
+                    StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+        } catch (IOException e) {
+            throw new IllegalStateException("Open RocketMQ test port lock failed", e);
+        }
+    }
+
+    private static FileLock acquirePortLock() {
+        try {
+            return PORT_LOCK_CHANNEL.lock();
+        } catch (IOException e) {
+            throw new IllegalStateException("Acquire RocketMQ test port lock failed", e);
+        }
+    }
+
+    @AfterAll
+    static void releasePortLock() throws IOException {
+        ROCKETMQ.stop();
+        PORT_LOCK.release();
+        PORT_LOCK_CHANNEL.close();
     }
 
     @BeforeAll
