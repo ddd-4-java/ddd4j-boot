@@ -41,6 +41,7 @@ import redis.clients.jedis.UnifiedJedis;
 
 import javax.sql.DataSource;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -100,13 +101,13 @@ public class OrderPostgresInfrastructureConfiguration {
     @ConditionalOnProperty(prefix = "ddd4j.sample.order", name = "kafka-enabled", havingValue = "true",
             matchIfMissing = true)
     public Producer<String, String> orderKafkaProducer(OrderSampleProperties properties) {
-        return new KafkaProducer<>(Map.of(
-                ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getKafkaBootstrapServers(),
-                ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName(),
-                ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName(),
-                ProducerConfig.ACKS_CONFIG, "all",
-                ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true
-        ));
+        Map<String, Object> producerProperties = new HashMap<>();
+        producerProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getKafkaBootstrapServers());
+        producerProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        producerProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        producerProperties.put(ProducerConfig.ACKS_CONFIG, "all");
+        producerProperties.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
+        return new KafkaProducer<>(producerProperties);
     }
 
     @Bean

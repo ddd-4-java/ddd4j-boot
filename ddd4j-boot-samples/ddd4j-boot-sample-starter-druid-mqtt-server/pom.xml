@@ -67,10 +67,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>io.github.easy4j</groupId><artifactId>validation-mimetypes-spring-boot-starter</artifactId>
-            <version>${spring-boot-starter-validation-mimetypes.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
         </dependency>
@@ -145,7 +141,8 @@
         <!-- For Druid -->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-3-starter</artifactId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
         </dependency>
         <!-- JDBC Driver For MySQL -->
         <dependency>
@@ -171,7 +168,6 @@
             <artifactId>mica-mqtt-server-spring-boot-starter</artifactId>
             <version>${mica-mqtt.version}</version>
         </dependency>
-
         <!-- For Embed Tomcat -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

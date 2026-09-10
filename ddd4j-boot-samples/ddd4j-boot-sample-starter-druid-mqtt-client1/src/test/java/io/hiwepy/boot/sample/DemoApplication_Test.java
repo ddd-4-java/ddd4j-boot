@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 
 import java.net.URL;
@@ -46,7 +46,9 @@ public class DemoApplication_Test {
     @Test
     public void test1() throws Exception {
 
-        Map<String, Object> requestBody = Map.of("name", 1, "text", 60);
+        Map<String, Object> requestBody = new java.util.HashMap<>();
+        requestBody.put("name", 1);
+        requestBody.put("text", 60);
 
         ResponseEntity<String> response = this.restTemplate.postForEntity(
                 this.base.toString() + "/demo/new", requestBody, String.class);
