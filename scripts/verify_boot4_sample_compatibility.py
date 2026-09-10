@@ -40,6 +40,8 @@ def verify(root):
         if pom.parent.name == "ddd4j-boot-sample-starter-druid":
             if "<artifactId>flyway-core</artifactId>" not in content:
                 errors.append(f"{pom}: Druid sample must retain native Flyway migration")
+            if "<artifactId>flyway-mysql</artifactId>" not in content:
+                errors.append(f"{pom}: Druid sample must retain Flyway MySQL database support")
             if "<artifactId>druid-spring-boot-3-starter</artifactId>" not in content:
                 errors.append(f"{pom}: Druid sample must retain the standard Druid pool integration")
         if pom.parent.name == "ddd4j-boot-sample-starter-hikaricp":
@@ -49,7 +51,7 @@ def verify(root):
     if representative.exists():
         application = representative / "src/main/resources/application.yaml"
         content = application.read_text(encoding="utf-8") if application.exists() else ""
-        if "flyway:" not in content or "classpath:db/migration/{vendor}" not in content:
+        if "flyway:" not in content or "classpath:db/migration" not in content:
             errors.append(f"{application}: missing native Flyway migration location")
         migrations = list(representative.glob("src/main/resources/db/migration/*.sql"))
         if not migrations:
