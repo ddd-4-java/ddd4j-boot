@@ -6,8 +6,10 @@ import org.springframework.boot.test.context.FilteredClassLoader;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.mqtt.MqttMQClient;
 import io.ddd4j.mq.mqtt.MqttMQProperties;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,6 +23,7 @@ class MqttMQBootAutoConfigurationTest {
 
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
             .withConfiguration(AutoConfigurations.of(Ddd4jMQAutoConfiguration.class, MqttMQBootAutoConfiguration.class))
+            .withUserConfiguration(DisabledMQInitializationConfiguration.class)
             .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=mqtt")
 ;
 
@@ -69,6 +72,19 @@ class MqttMQBootAutoConfigurationTest {
         @Bean
         MqttMQClient customMqttMQClient() {
             return new MqttMQClient(new MqttMQProperties());
+        }
+    }
+
+    @Configuration(proxyBeanMethods = false)
+    static class DisabledMQInitializationConfiguration {
+
+
+        @Bean
+        @Primary
+        MQProperties disabledMQProperties() {
+            MQProperties properties = new MQProperties();
+            properties.setEnabled(false);
+            return properties;
         }
     }
 }

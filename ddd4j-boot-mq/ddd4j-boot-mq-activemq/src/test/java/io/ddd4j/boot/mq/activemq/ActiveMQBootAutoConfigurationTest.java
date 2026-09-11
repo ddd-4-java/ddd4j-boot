@@ -6,8 +6,10 @@ import org.springframework.boot.test.context.FilteredClassLoader;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
+import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.activemq.ActiveMQClient;
 import io.ddd4j.mq.activemq.ActiveMQProperties;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,6 +73,14 @@ class ActiveMQBootAutoConfigurationTest {
         @Bean
         org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory activeMQConnectionFactory() {
             return new org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory();
+        }
+
+        @Bean
+        @Primary
+        MQProperties disabledMQProperties() {
+            MQProperties properties = new MQProperties();
+            properties.setEnabled(false);
+            return properties;
         }
     }
 
