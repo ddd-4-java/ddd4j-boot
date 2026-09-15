@@ -92,6 +92,7 @@
         <spring-boot-starter-maven-embedder.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-maven-embedder.version>
         <spring-boot-starter-maven-invoker.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-maven-invoker.version>
         <spring-boot-starter-mbassador.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-mbassador.version>
+        <spring-boot-starter-meituan.version>3.2.x.20260630-SNAPSHOT</spring-boot-starter-meituan.version>
         <spring-boot-starter-minio.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-minio.version>
         <spring-boot-starter-mybatis-dbperms.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-mybatis-dbperms.version>
         <spring-boot-starter-mybatis-tk.version>${mybatis-tk.version}</spring-boot-starter-mybatis-tk.version>
@@ -1127,6 +1128,11 @@
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>mbassador-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-mbassador.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>meituan-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-meituan.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.easy4j</groupId>
