@@ -79,7 +79,8 @@
         <spring-boot-starter-ip2region.version>2.3.x.20240823.RELEASE</spring-boot-starter-ip2region.version>
         <spring-boot-starter-ishumei.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-ishumei.version>
         <spring-boot-starter-itextpdf.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-itextpdf.version>
-        <spring-boot-starter-jasypt.version>4.0.3</spring-boot-starter-jasypt.version>
+        <!-- jasypt-spring-boot 锁 3.0.5：4.x（4.0.3+）为 Java 17 字节码（major 61），Boot 2.7/JDK 8 线运行时直接 UnsupportedClassVersionError -->
+        <spring-boot-starter-jasypt.version>3.0.5</spring-boot-starter-jasypt.version>
         <spring-boot-starter-javamelody-ui.version>1.5.7.2</spring-boot-starter-javamelody-ui.version>
         <spring-boot-starter-javamelody.version>${javamelody.version}</spring-boot-starter-javamelody.version>
         <spring-boot-starter-jcaptcha.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-jcaptcha.version>
@@ -479,6 +480,12 @@
                 <artifactId>druid-spring-boot-3-starter</artifactId>
                 <version>${spring-boot-starter-druid.version}</version>
             </dependency>
+            <!-- Boot 2.x 线 starter（autoconfigure 包名 javax 系，与 -3-starter 的 jakarta 系相对） -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-druid.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo-spring-boot-starter -->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
@@ -620,6 +627,11 @@
             <dependency>
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${spring-boot-starter-jasypt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot</artifactId>
                 <version>${spring-boot-starter-jasypt.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/net.bull.javamelody/javamelody-spring-boot-starter -->
