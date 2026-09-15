@@ -18,6 +18,9 @@
         <!-- Third Party Spring Boot Starter Dependency versions -->
         <spring-boot-admin.version>2.7.16</spring-boot-admin.version>
         <spring-boot-aliyun.version>1.0.0</spring-boot-aliyun.version>
+        <!-- Jackson 2.22.2：与 ddd4j-dependencies 1.0.x 对齐，Boot 2.7.18 默认 2.13.5 经显式条目统一覆盖 -->
+        <jackson.version>2.22.2</jackson.version>
+        <jackson-bom.version>2.22.2</jackson-bom.version>
         <spring-boot-starter-agora.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-agora.version>
         <spring-boot-starter-aliyun-mps.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-aliyun-mps.version>
         <spring-boot-starter-aliyun-ons.version>2.7.x.20260630-SNAPSHOT</spring-boot-starter-aliyun-ons.version>
@@ -346,6 +349,34 @@
                 <version>${spring-boot-aliyun.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- Jackson 2.22.2 统一：父 pom(ddd4j-boot) import 的 spring-boot-dependencies 2.7.18
+                 携带 jackson 2.13.5 全家，且实测其 inherited import 会压制子层 BOM import，
+                 故此处必须用显式条目（child 显式 dM 必赢 parent 继承）逐模块对齐到 2.22.2 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jdk8</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-parameter-names</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-yaml</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-cbor</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.github.lucky845/easy-captcha-spring-boot-starter -->
             <dependency>
