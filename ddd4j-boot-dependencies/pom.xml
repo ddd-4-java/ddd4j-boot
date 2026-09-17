@@ -56,7 +56,9 @@
         <spring-boot-starter-dropwizard-metrics.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-dropwizard-metrics.version>
         <spring-boot-starter-druid-plus.version>4.1.x.20260820-SNAPSHOT</spring-boot-starter-druid-plus.version>
         <spring-boot-starter-druid.version>${druid.version}</spring-boot-starter-druid.version>
-        <spring-boot-starter-dynamic-datasource.version>4.3.1</spring-boot-starter-dynamic-datasource.version>
+        <!-- CVE-2026-7045（SpEL 注入，DsSpelExpressionProcessor）：4.3.1 不含修复，
+             修复随 v4.50 tag 发布（Maven 构件 4.5.0），默认禁用 SpEL T()/new 表达式 -->
+        <spring-boot-starter-dynamic-datasource.version>4.5.0</spring-boot-starter-dynamic-datasource.version>
         <spring-boot-starter-ehcache3.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-ehcache3.version>
         <spring-boot-starter-elasticjob.version>3.0.4</spring-boot-starter-elasticjob.version>
         <spring-boot-starter-esapi.version>3.4.x.20260630-SNAPSHOT</spring-boot-starter-esapi.version>
@@ -237,6 +239,18 @@
                 <groupId>org.apache.httpcomponents.core5</groupId>
                 <artifactId>httpcore5-h2</artifactId>
                 <version>5.4.3</version>
+            </dependency>
+            <!-- dynamic-datasource-spring/creator 被深层 BOM 钉在 4.3.1（CVE-2026-7045 受影响版），
+                 直接条目覆盖到 4.5.0 与 starter/common 配套 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring</artifactId>
+                <version>4.5.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-creator</artifactId>
+                <version>4.5.0</version>
             </dependency>
             <!-- 导入上游 ddd4j-dependencies BOM（基础组件版本统一管理） -->
             <dependency>
