@@ -212,8 +212,8 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- 安全修复直接条目（OSV 实测下游命中；声明于 ddd4j-dependencies import 之后，
-                 直接条目优先级高于 import，覆盖其硬编码的 jackson-databind/core 2.21.4）：
+            <!-- 安全修复直接条目（OSV 实测下游命中；直接条目优先级高于 import BOM，
+                 覆盖 ddd4j-dependencies 硬编码的 jackson-databind/core 2.21.4）：
                  jackson-databind 2.21.5（3 条 GHSA）、httpclient5 5.6.3 / httpcore5(-h2) 5.4.3（各 1 条） -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
