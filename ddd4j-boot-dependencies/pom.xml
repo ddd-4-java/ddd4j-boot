@@ -1122,6 +1122,11 @@
                 </exclusions>
             </dependency>
             <dependency>
+                <groupId>com.github.hiwepy</groupId>
+                <artifactId>dozer-extra-converters</artifactId>
+                <version>${dozer-extra-converters.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-3-starter</artifactId>
                 <version>${spring-boot-starter-druid.version}</version>
