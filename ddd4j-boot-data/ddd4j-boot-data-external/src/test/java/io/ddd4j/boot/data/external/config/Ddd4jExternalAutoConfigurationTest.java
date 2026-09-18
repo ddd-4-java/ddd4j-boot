@@ -1,13 +1,15 @@
 package io.ddd4j.boot.data.external.config;
 
+import io.ddd4j.data.external.ExternalProperties;
+import io.ddd4j.data.external.region.BaiduRegionTemplate;
+import io.ddd4j.data.external.region.PconlineRegionTemplate;
+import io.ddd4j.data.external.region.RegionCache;
+import io.ddd4j.data.external.weather.WeatherTemplate;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
+import org.springframework.boot.test.context.FilteredClassLoader;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import java.net.http.HttpClient;
-
+import org.springframework.data.redis.core.StringRedisTemplate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -25,24 +27,30 @@ class Ddd4jExternalAutoConfigurationTest {
     void defaultAssemblyShouldProvideExternalBeans() {
         runner.run(context -> {
             assertThat(context).hasNotFailed();
-            assertThat(context).hasSingleBean(HttpClient.class);
+            assertThat(context).hasSingleBean(ExternalProperties.class);
+            assertThat(context).hasSingleBean(BaiduRegionTemplate.class);
+            assertThat(context).hasSingleBean(PconlineRegionTemplate.class);
+            assertThat(context).hasSingleBean(WeatherTemplate.class);
             assertThat(context).hasBean("globalSequence");
         });
     }
 
     @Test
-    void customHttpClientShouldTakePrecedence() {
-        runner.withUserConfiguration(CustomHttpClientConfiguration.class)
-                .run(context -> assertThat(context.getBean(HttpClient.class))
-                        .isSameAs(context.getBean("customHttpClient")));
+    void shouldUseNoneRegionCacheWhenStringRedisTemplateIsMissing() {
+        runner.run(context -> {
+            assertThat(context).hasNotFailed();
+            assertThat(context).hasSingleBean(RegionCache.class);
+            assertThat(context.getBean(RegionCache.class).getString("missing")).isNull();
+        });
     }
 
-    @Configuration(proxyBeanMethods = false)
-    static class CustomHttpClientConfiguration {
-
-        @Bean
-        HttpClient customHttpClient() {
-            return HttpClient.newHttpClient();
-        }
+    @Test
+    void shouldUseNoneRegionCacheWhenSpringDataRedisIsNotOnTheConsumerClasspath() {
+        runner.withClassLoader(new FilteredClassLoader(StringRedisTemplate.class))
+                .run(context -> {
+                    assertThat(context).hasNotFailed();
+                    assertThat(context).hasSingleBean(RegionCache.class);
+                    assertThat(context.getBean(RegionCache.class).getString("missing")).isNull();
+                });
     }
 }

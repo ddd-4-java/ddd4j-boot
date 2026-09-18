@@ -40,7 +40,7 @@ public class Ddd4jGlobalSequenceAutoConfiguration {
 
     @Bean
     public GlobalSequence globalSequence(SequenceProperties properties) {
-        long workerId = Objects.isNull(properties.getWorkerId()) ? 0x000000FF & IdKit.getLastIPAddress() : properties.getWorkerId();
+        long workerId = Objects.isNull(properties.getWorkerId()) ? 0x0000001F & IdKit.getLastIPAddress() : properties.getWorkerId();
         long dataCenterId = Objects.isNull(properties.getDataCenterId()) ? 0L : properties.getDataCenterId();
         long timeOffset = Objects.isNull(properties.getTimeOffset()) ? 5L : properties.getTimeOffset();
         long randomSequenceLimit = Objects.isNull(properties.getRandomSequenceLimit()) ? 0L : properties.getRandomSequenceLimit();
