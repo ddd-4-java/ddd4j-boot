@@ -11,13 +11,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * {@link DefaultJacksonAutoConfiguration} 契约测试。
- *
- * <p>覆盖：默认装配（@Primary ObjectMapper）/ 缺类回退。
  */
 class DefaultJacksonAutoConfigurationTest {
 
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
-            .withConfiguration(AutoConfigurations.of(DefaultJacksonAutoConfiguration.class));
+            .withConfiguration(AutoConfigurations.of(
+                    DefaultJacksonAutoConfiguration.class,
+                    org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class));
 
     @Test
     void defaultAssemblyShouldProvidePrimaryObjectMapper() {
