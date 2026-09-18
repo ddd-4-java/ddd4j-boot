@@ -410,6 +410,8 @@
                         <charset>${project.build.sourceEncoding}</charset>
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <docencoding>${project.build.sourceEncoding}</docencoding>
+                        <!-- 对齐 ddd4j-parent 2.0.x：JDK21 doclint 将未解析 {@link} 升级为 error，快照发布不因 javadoc 中断 -->
+                        <failOnError>false</failOnError>
                     </configuration>
                     <executions>
                         <execution>
