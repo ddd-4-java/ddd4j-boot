@@ -90,8 +90,6 @@ public class DefaultJacksonAutoConfiguration {
 
     static final class NullValueSerializerModifier extends BeanSerializerModifier {
 
-        private static final long serialVersionUID = 1L;
-
         private final boolean defaultForArray;
         private final boolean defaultForNumber;
         private final boolean defaultForString;
@@ -125,25 +123,40 @@ public class DefaultJacksonAutoConfiguration {
         }
 
         private JsonSerializer<Object> nullSerializer(Class<?> rawType) {
-            if ((rawType.isArray() || Collection.class.isAssignableFrom(rawType)) && defaultForArray) {
-                return NullArraySerializer.INSTANCE;
+            // Primitive fields never receive a null value from Jackson — skip early.
+            if (rawType.isPrimitive()) {
+                return null;
             }
-            if ((CharSequence.class.isAssignableFrom(rawType) || Character.class == rawType) && defaultForString) {
-                return NullStringSerializer.INSTANCE;
+            // Array / Collection → []
+            if (rawType.isArray() || Collection.class.isAssignableFrom(rawType)) {
+                return defaultForArray ? NullArraySerializer.INSTANCE : null;
             }
-            if (Number.class.isAssignableFrom(rawType) && defaultForNumber) {
-                return NullNumberSerializer.INSTANCE;
+            // String / CharSequence / Character → ""
+            if (CharSequence.class.isAssignableFrom(rawType) || Character.class == rawType) {
+                return defaultForString ? NullStringSerializer.INSTANCE : null;
             }
-            if ((Date.class.isAssignableFrom(rawType) || Temporal.class.isAssignableFrom(rawType)) && defaultForDate) {
-                return NullStringSerializer.INSTANCE;
+            // Number → 0
+            if (Number.class.isAssignableFrom(rawType)) {
+                return defaultForNumber ? NullNumberSerializer.INSTANCE : null;
             }
-            if (Boolean.class == rawType && defaultForBoolean) {
-                return NullBooleanSerializer.INSTANCE;
+            // Boolean → false
+            if (Boolean.class == rawType) {
+                return defaultForBoolean ? NullBooleanSerializer.INSTANCE : null;
             }
-            if ((Map.class.isAssignableFrom(rawType) || !rawType.isPrimitive()) && defaultForJsonObject) {
-                return NullObjectSerializer.INSTANCE;
+            // Date / Temporal → ""
+            if (Date.class.isAssignableFrom(rawType) || Temporal.class.isAssignableFrom(rawType)) {
+                return defaultForDate ? NullStringSerializer.INSTANCE : null;
             }
-            return null;
+            // Enum → ""
+            if (rawType.isEnum()) {
+                return defaultForString ? NullStringSerializer.INSTANCE : null;
+            }
+            // Map → {}
+            if (Map.class.isAssignableFrom(rawType)) {
+                return defaultForJsonObject ? NullObjectSerializer.INSTANCE : null;
+            }
+            // Other non-primitive types (custom POJOs) → {}
+            return defaultForJsonObject ? NullObjectSerializer.INSTANCE : null;
         }
     }
 
