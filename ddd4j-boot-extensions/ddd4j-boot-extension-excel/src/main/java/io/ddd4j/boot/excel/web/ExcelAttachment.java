@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
  *
  * <p>封装 Web 下载时所需的 HTTP 响应头字段，统一处理中文文件名编码（RFC 5987）。
  *
- * <h3>典型用法</h3>
+ * <b>典型用法</b>
  * <pre>{@code
  * ExcelAttachment attachment = ExcelAttachment.xlsx("订单.xlsx");
  * response.setContentType(attachment.contentType());

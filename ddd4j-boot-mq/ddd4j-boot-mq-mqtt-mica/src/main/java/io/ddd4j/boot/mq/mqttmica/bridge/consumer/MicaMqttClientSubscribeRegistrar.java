@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 将 {@link MqttClientSubscribe} 定义编程式注册到 mica {@link IMqttClientSession}。
+ * 将 {@code MqttClientSubscribe} 定义编程式注册到 mica {@code IMqttClientSession}。
  * <p>
  * 注册 API 与 mica 内置 {@code MqttClientSubscribeDetector} 一致：
  * {@code clientSession.addSubscriptionList(topicFilters, qos, listener)}。
@@ -38,7 +38,7 @@ public class MicaMqttClientSubscribeRegistrar implements AutoCloseable {
     }
 
     /**
-     * 注册单条 {@link MqttClientSubscribe} 定义到 mica 客户端会话。
+     * 注册单条 {@code MqttClientSubscribe} 定义到 mica 客户端会话。
      */
     public void register(MicaMqttClientSubscribeDefinition definition) {
         Objects.requireNonNull(definition, "definition");

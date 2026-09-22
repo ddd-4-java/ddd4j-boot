@@ -13,10 +13,10 @@ import java.util.Iterator;
 /**
  * @author ： <a href="https://github.com/wandl">wandl</a>
  * @version V1.0
- * @className ： ApplicationEnvironmentPreparedEventListener
- * @description ： Spring Boot 配置环境事件监听
+ * className ： ApplicationEnvironmentPreparedEventListener
+ * description ： Spring Boot 配置环境事件监听
  * ApplicationEnvironmentPreparedEvent：Spring Boot 对应Enviroment已经准备完毕，但此时上下文context还没有创建。
- * @date ： 2017年11月10日 下午4:55:22
+ * date ： 2017年11月10日 下午4:55:22
  */
 public class ApplicationEnvironmentPreparedEventListener implements
         ApplicationListener<ApplicationEnvironmentPreparedEvent> {

@@ -20,7 +20,7 @@ import java.util.List;
  *
  * <p>使用Spring 6.1+ 的 RestClient 实现订单服务的HTTP调用。</p>
  *
- * <h3>配置说明：</h3>
+ * <b>配置说明：</b>
  * <pre>{@code
  * # application.yml
  * order:

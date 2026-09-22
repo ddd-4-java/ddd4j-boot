@@ -21,7 +21,7 @@ import java.util.List;
  *   <li>包含验证规则</li>
  *   <li>表达用户意图</li>
  * </ul>
- * </p>
+ * 
  *
  * @author DDD4J
  * @since 1.0.0

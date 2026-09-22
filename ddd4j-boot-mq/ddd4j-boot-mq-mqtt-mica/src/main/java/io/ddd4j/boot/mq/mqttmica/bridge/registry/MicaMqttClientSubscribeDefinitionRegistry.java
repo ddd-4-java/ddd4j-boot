@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 存储由桥接扫描器发现的 {@link MqttClientSubscribe} 定义。
+ * 存储由桥接扫描器发现的 {@code MqttClientSubscribe} 定义。
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
