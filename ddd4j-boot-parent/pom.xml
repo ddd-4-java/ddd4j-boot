@@ -1319,9 +1319,7 @@
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
-                                    <argument>echo '${docker.registry.password}' | docker login -u
-                                        ${docker.registry.username} --password-stdin https://${docker.registry.host}
-                                    </argument>
+                                    <argument>echo '${docker.registry.password}' | docker login -u ${docker.registry.username} --password-stdin https://${docker.registry.host}</argument>
                                 </arguments>
                             </configuration>
                         </execution>
