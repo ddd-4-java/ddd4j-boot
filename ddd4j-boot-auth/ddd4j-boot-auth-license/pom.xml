@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.ddd4j.boot</groupId>
@@ -19,17 +19,6 @@
             <groupId>io.ddd4j</groupId>
             <artifactId>ddd4j-auth-license</artifactId>
             <version>${ddd4j.version}</version>
-        </dependency>
-        <!-- 上游 ddd4j-auth-license 的 POM 依赖 truelicense-core 但上游 BOM 未管理其版本，
-             导致该 POM 无效、truelicense 传递依赖不可用（CipherParam 缺失）。
-             这里显式声明 license 校验所需的 truelicense 构件。 -->
-        <dependency>
-            <groupId>de.schlichtherle.truelicense</groupId>
-            <artifactId>truelicense-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.schlichtherle.truelicense</groupId>
-            <artifactId>truelicense-xml</artifactId>
         </dependency>
         <!-- Compile dependencies -->
         <dependency>

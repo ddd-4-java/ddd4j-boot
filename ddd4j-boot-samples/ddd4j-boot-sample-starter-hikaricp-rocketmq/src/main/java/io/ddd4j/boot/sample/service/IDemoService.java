@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import io.ddd4j.boot.sample.entity.DemoEntity;
 
 /**

@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.service.impl;
 
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 import io.hiwepy.boot.sample.mapper.DemoMapper;
 import io.hiwepy.boot.sample.service.IDemoService;

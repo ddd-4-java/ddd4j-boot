@@ -19,12 +19,6 @@
             <artifactId>ddd4j-extension-qrcode</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
-        <!-- Boot qrcode 自动配置使用 hiwepy zxing-extension 的 fork API
-             （com.google.zxing.QrCodes / model / exception 包），需显式声明。 -->
-        <dependency>
-            <groupId>io.github.hiwepy</groupId>
-            <artifactId>zxing-extension</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
@@ -38,6 +32,20 @@
             <artifactId>spring-webmvc</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Jackson 3 databind 需要 annotations 2.22（JsonApplyView）；类路径被降级到 2.21 时 NoClassDefFound -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.22</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

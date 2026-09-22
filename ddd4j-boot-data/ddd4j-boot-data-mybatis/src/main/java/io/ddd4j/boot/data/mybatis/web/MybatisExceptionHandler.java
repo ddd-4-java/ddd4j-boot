@@ -19,7 +19,7 @@ import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.apache.ibatis.executor.result.ResultMapException;
 import org.apache.ibatis.plugin.PluginException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.biz.context.NestedMessageSource;
+import org.springframework.extension.context.NestedMessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

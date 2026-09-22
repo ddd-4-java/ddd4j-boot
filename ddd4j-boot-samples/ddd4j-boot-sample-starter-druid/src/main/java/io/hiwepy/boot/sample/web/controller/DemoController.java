@@ -18,8 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.biz.context.NestedMessageSource;
-import org.springframework.biz.utils.StringUtils;
+import org.springframework.extension.context.NestedMessageSource;
+import org.springframework.extension.utils.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;

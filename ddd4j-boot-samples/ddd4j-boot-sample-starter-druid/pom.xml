@@ -1,5 +1,5 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.ddd4j.boot</groupId>
@@ -97,10 +97,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>validation-mimetypes-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
         </dependency>
@@ -109,14 +105,10 @@
             <groupId>com.github.dozermapper</groupId>
             <artifactId>dozer-spring-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>dozer-extra-converters</artifactId>
-        </dependency>
         <!-- For AOP -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -135,8 +127,7 @@
         </dependency>
         <!-- For Redis -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>redistpl-plus-spring-boot-starter</artifactId>
+            <groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <!-- For Log4j2 -->
         <dependency>
@@ -158,6 +149,11 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-jsqlparser</artifactId>
         </dependency>
+        <!-- 3.5.9+ 拆分后 ServiceImpl/IService 位于 mybatis-plus-spring，显式声明规避传递仲裁缺失 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring</artifactId>
+        </dependency>
         <!-- For Mybatis Plus Generator -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -169,17 +165,13 @@
         </dependency>
         <!-- For Flyway -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>flyway-plus-spring-boot-starter</artifactId>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
         </dependency>
         <!-- For Druid -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-3-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>druid-plus-spring-boot-starter</artifactId>
         </dependency>
         <!-- JDBC Driver For MySQL -->
         <dependency>

@@ -3,6 +3,7 @@ package io.ddd4j.boot.mq.rocketmq;
 import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
 import io.ddd4j.mq.annotation.MQEventListener;
 import io.ddd4j.mq.event.MQEvent;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
@@ -17,8 +18,13 @@ import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.channels.OverlappingFileLockException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -55,9 +61,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RocketMQClientIntegrationTest {
 
     /**
-     * broker 对外公告端口（brokerIP1/brokerPort1 必须与宿主机固定映射一致）。
+     * 跨 JVM 串行 RocketMQ 端口选择与容器生命周期，避免并行构建选中同一端口对。
      */
-    private static final int BROKER_PORT = Integer.getInteger("ddd4j.test.rocketmq.brokerPort", 10911);
+    private static final FileChannel PORT_LOCK_CHANNEL = openPortLockChannel();
+    private static final FileLock PORT_LOCK = acquirePortLock();
+
+    /**
+     * broker 对外公告端口，每次测试动态选择可用的 broker/VIP 端口对。
+     */
+    private static final int BROKER_PORT = Integer.getInteger(
+            "ddd4j.test.rocketmq.brokerPort", availableBrokerPort());
 
     /**
      * 覆盖镜像自带 broker.conf 的完整配置（含公告地址/namesrv/自动建 topic）。
@@ -71,7 +84,7 @@ class RocketMQClientIntegrationTest {
             brokerRole = ASYNC_MASTER
             flushDiskType = ASYNC_FLUSH
             brokerIP1 = 127.0.0.1
-            brokerPort1 = %d
+            listenPort = %d
             namesrvAddr = 127.0.0.1:9876
             autoCreateTopicEnable = true
             """;
@@ -89,7 +102,7 @@ class RocketMQClientIntegrationTest {
             Files.writeString(brokerConf, String.format(BROKER_CONF_TEMPLATE, BROKER_PORT));
             Files.setPosixFilePermissions(brokerConf,
                     java.nio.file.attribute.PosixFilePermissions.fromString("rw-r--r--"));
-            GenericContainer<?> container = new GenericContainer<>(
+            GenericContainer<?> container = new LockedRocketMQContainer(
                     DockerImageName.parse("apache/rocketmq:5.3.2"))
                     .withEnv("JAVA_OPT_EXT", "-Xms512m -Xmx512m -Xmn256m")
                     .withCommand("sh", "-c",
@@ -99,10 +112,105 @@ class RocketMQClientIntegrationTest {
                             "/home/rocketmq/rocketmq-5.3.2/conf/broker.conf")
                     .withExposedPorts(9876)
                     .waitingFor(Wait.forLogMessage(".*boot success.*", 2));
-            container.setPortBindings(List.of(BROKER_PORT + ":10911", (BROKER_PORT - 2) + ":10909"));
+            container.setPortBindings(List.of(
+                    BROKER_PORT + ":" + BROKER_PORT,
+                    (BROKER_PORT - 2) + ":" + (BROKER_PORT - 2)));
             return container;
         } catch (IOException e) {
+            releasePortLockResources();
             throw new IllegalStateException("Prepare RocketMQ broker.conf failed", e);
+        } catch (RuntimeException e) {
+            releasePortLockResources();
+            throw e;
+        }
+    }
+
+    private static int availableBrokerPort() {
+        for (int candidate = 20011; candidate < 30000; candidate += 10) {
+            try (ServerSocket broker = new ServerSocket(candidate);
+                 ServerSocket vip = new ServerSocket(candidate - 2)) {
+                return candidate;
+            } catch (IOException ignored) {
+                // Try the next port pair.
+            }
+        }
+        releasePortLockResources();
+        throw new IllegalStateException("No available RocketMQ broker/VIP port pair");
+    }
+
+    private static FileChannel openPortLockChannel() {
+        try {
+            return FileChannel.open(Path.of(System.getProperty("java.io.tmpdir"), "ddd4j-rocketmq-test.lock"),
+                    StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+        } catch (IOException e) {
+            throw new IllegalStateException("Open RocketMQ test port lock failed", e);
+        }
+    }
+
+    private static FileLock acquirePortLock() {
+        long deadline = System.nanoTime() + Duration.ofMinutes(2).toNanos();
+        while (System.nanoTime() < deadline) {
+            try {
+                FileLock lock = PORT_LOCK_CHANNEL.tryLock();
+                if (lock != null) {
+                    Runtime.getRuntime().addShutdownHook(new Thread(
+                            RocketMQClientIntegrationTest::releasePortLockResources));
+                    return lock;
+                }
+            } catch (OverlappingFileLockException ignored) {
+                // Another RocketMQ test in this JVM owns the lock.
+            } catch (IOException e) {
+                releasePortLockResources();
+                throw new IllegalStateException("Acquire RocketMQ test port lock failed", e);
+            }
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                releasePortLockResources();
+                throw new IllegalStateException("Interrupted while acquiring RocketMQ test port lock", e);
+            }
+        }
+        releasePortLockResources();
+        throw new IllegalStateException("Acquire RocketMQ test port lock timed out after PT2M");
+    }
+
+    @AfterAll
+    static void releasePortLock() throws IOException {
+        try {
+            ROCKETMQ.stop();
+        } finally {
+            releasePortLockResources();
+        }
+    }
+
+    private static void releasePortLockResources() {
+        try {
+            if (PORT_LOCK != null && PORT_LOCK.isValid()) {
+                PORT_LOCK.release();
+            }
+            if (PORT_LOCK_CHANNEL.isOpen()) {
+                PORT_LOCK_CHANNEL.close();
+            }
+        } catch (IOException ignored) {
+            // Best-effort cleanup also runs from the JVM shutdown hook.
+        }
+    }
+
+    private static final class LockedRocketMQContainer extends GenericContainer<LockedRocketMQContainer> {
+
+        private LockedRocketMQContainer(DockerImageName imageName) {
+            super(imageName);
+        }
+
+        @Override
+        public void start() {
+            try {
+                super.start();
+            } catch (RuntimeException e) {
+                releasePortLockResources();
+                throw e;
+            }
         }
     }
 

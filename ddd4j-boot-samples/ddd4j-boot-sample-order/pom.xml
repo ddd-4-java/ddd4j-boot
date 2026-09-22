@@ -85,5 +85,6 @@
             <artifactId>slf4j-simple</artifactId>
             <scope>runtime</scope>
         </dependency>
+
     </dependencies>
 </project>

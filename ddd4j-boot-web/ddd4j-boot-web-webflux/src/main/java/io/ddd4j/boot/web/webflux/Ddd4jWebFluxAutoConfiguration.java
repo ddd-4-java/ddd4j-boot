@@ -10,7 +10,7 @@ import io.ddd4j.web.webflux.error.GlobalErrorAttributes;
 import io.ddd4j.web.webflux.error.GlobalErrorWebExceptionHandler;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -23,7 +23,7 @@ import org.springframework.web.reactive.DispatcherHandler;
 /**
  * ddd4j WebFlux 的 Spring Boot 条件装配入口。
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
 @ConditionalOnClass({DispatcherHandler.class, DefaultWebFluxConfiguration.class})
 @ConditionalOnProperty(prefix = "ddd4j.web.webflux", name = "enabled", havingValue = "true", matchIfMissing = true)
@@ -35,7 +35,7 @@ public class Ddd4jWebFluxAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public ObjectMapper objectMapper() {
-        return new ObjectMapper().findAndRegisterModules();
+        return new ObjectMapper();
     }
 
     @Bean
