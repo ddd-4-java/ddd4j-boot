@@ -1373,16 +1373,14 @@
                                         else \
                                         echo "Builder $BUILDER_NAME is unhealthy, removing and recreating..."; \
                                         docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
                                         true; \
                                         fi; \
                                         else \
                                         echo "Builder $BUILDER_NAME does not exist, creating..."; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
                                         true; \
@@ -1410,8 +1408,7 @@
                                         echo "Preparing buildx builder $BUILDER_NAME before build..."; \
                                         if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
                                         echo "Builder exists, restarting BuildKit container to ensure clean state..."; \
-                                        BUILDER_CONTAINER=$(docker ps -a --filter "name=buildx_buildkit_${BUILDER_NAME}"
-                                        --format "{{.Names}}" | head -1); \
+                                        BUILDER_CONTAINER=$(docker ps -a --filter "name=buildx_buildkit_${BUILDER_NAME}" --format "{{.Names}}" | head -1); \
                                         if [ -n "$BUILDER_CONTAINER" ]; then \
                                         echo "Stopping and removing BuildKit container: $BUILDER_CONTAINER"; \
                                         docker stop "$BUILDER_CONTAINER" 2&gt;/dev/null || true; \
@@ -1419,8 +1416,7 @@
                                         fi; \
                                         echo "Recreating builder with fresh BuildKit container..."; \
                                         docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         echo "Booting BuildKit container..."; \
                                         docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
@@ -1429,8 +1425,7 @@
                                         sleep 2; \
                                         else \
                                         echo "Builder does not exist, creating new builder..."; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
                                         true; \
