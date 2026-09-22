@@ -6,8 +6,8 @@ comparator="${script_dir}/compare_branch_contracts.py"
 tmp_dir="$(mktemp -d)"
 trap 'rm -rf "${tmp_dir}"' EXIT
 header='from_group\tto_group\tcontract_id\tsource_surface\ttarget_surface\tbehavior_delta\tvalidation_command\n'
-printf "${header}jdk8\tjdk17\tWEBMVC_WEBFLUX\tjavax.servlet\tjakarta.servlet\tsame HTTP error semantics\tmvn -pl ddd4j-boot-core -am test\n" > "${tmp_dir}/valid-map.tsv"
-printf "${header}jdk8\tjdk17\tWEBMVC_WEBFLUX\t\tjakarta.servlet\t\tmvn -pl ddd4j-boot-core -am test\n" > "${tmp_dir}/invalid-map.tsv"
+printf '%b' "${header}jdk8\tjdk17\tWEBMVC_WEBFLUX\tjavax.servlet\tjakarta.servlet\tsame HTTP error semantics\tmvn -pl ddd4j-boot-core -am test\n" > "${tmp_dir}/valid-map.tsv"
+printf '%b' "${header}jdk8\tjdk17\tWEBMVC_WEBFLUX\t\tjakarta.servlet\t\tmvn -pl ddd4j-boot-core -am test\n" > "${tmp_dir}/invalid-map.tsv"
 printf 'jdk_group\tsurface\tvalue\tdeprecated\njdk17\tddd4j.web.public-paths\t/api/**\tfalse\n' > "${tmp_dir}/baseline.tsv"
 printf 'jdk_group\tsurface\tvalue\tdeprecated\njdk17\tddd4j.web.public-paths\t/public/**\tfalse\n' > "${tmp_dir}/drift.tsv"
 

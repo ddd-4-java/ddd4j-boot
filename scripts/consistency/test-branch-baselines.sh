@@ -2,7 +2,6 @@
 set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-repo_root="$(cd "${script_dir}/../.." && pwd)"
 auditor="${script_dir}/audit_branch_baselines.py"
 fixtures="${script_dir}/fixtures"
 tmp_dir="$(mktemp -d)"
