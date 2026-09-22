@@ -175,6 +175,9 @@ public class DefaultJacksonAutoConfiguration {
             if (rawType == boolean.class || Boolean.class == rawType) {
                 return defaultForBoolean ? new NullValueBeanPropertyWriter(writer, "false") : writer;
             }
+            if (rawType.isEnum()) {
+                return defaultForString ? new NullValueBeanPropertyWriter(writer, "\"\"") : writer;
+            }
             if (Map.class.isAssignableFrom(rawType) || Object.class == rawType) {
                 return defaultForJsonObject ? new NullValueBeanPropertyWriter(writer, "{}") : writer;
             }

@@ -4,10 +4,12 @@ import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.module.SimpleModule;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -115,5 +117,34 @@ class DefaultJacksonAutoConfigurationNullTest {
                 .contains("\"active\":true")
                 .contains("\"tags\":[\"a\"]")
                 .contains("\"meta\":{\"k\":\"v\"}");
+    }
+
+    enum Status { ACTIVE, INACTIVE }
+
+    static final class ExtendedBean {
+        public UUID uuid;
+        public Status status;
+        public LocalDateTime dateTime;
+    }
+
+    @Test
+    void 枚举跟随字符串开关() throws Exception {
+        // string=true, jsonObject=false → enum 序列化为 ""
+        String json = mapperWith(false, false, true, false, false, false)
+                .writeValueAsString(new ExtendedBean());
+        assertThat(json)
+                .contains("\"status\":\"\"")
+                .contains("\"uuid\":null")
+                .contains("\"dateTime\":null");
+    }
+
+    @Test
+    void 字符串关闭时枚举不泄漏到对象回退() throws Exception {
+        // string=false, jsonObject=true → enum 必须保持 null，不得泄漏为 {}
+        String json = mapperWith(false, false, false, false, false, true)
+                .writeValueAsString(new ExtendedBean());
+        assertThat(json)
+                .contains("\"status\":null")
+                .contains("\"uuid\":{}");
     }
 }
