@@ -196,6 +196,15 @@
         <spring-boot-micrometer.version>1.17.0</spring-boot-micrometer.version>
         <spring-boot-logback.version>1.5.34</spring-boot-logback.version>
         <spring-boot-slf4j.version>2.0.18</spring-boot-slf4j.version>
+        <!--
+            链路追踪版本 pin（对应 change: establish-boot-observability / 家族规格 family-observability）。
+            选版理由：micrometer-tracing 1.7.0 与 Spring Boot 4.1.0 BOM 管理版本完全一致
+            （spring-boot-dependencies 4.1.0 声明 micrometer-tracing.version=1.7.0、opentelemetry.version=1.62.0），
+            micrometer-tracing-bridge-otel 传递依赖 OpenTelemetry SDK 1.62.0 同代对齐，避免 SDK 双版本共存；
+            与既有 micrometer / actuator / prometheus 栈同生态（design D1）。
+        -->
+        <spring-boot-micrometer-tracing.version>1.7.0</spring-boot-micrometer-tracing.version>
+        <spring-boot-opentelemetry.version>1.62.0</spring-boot-opentelemetry.version>
     </properties>
 
     <dependencyManagement>
@@ -209,6 +218,46 @@
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-spring-boot3-starter</artifactId>
                 <version>${spring-boot-starter-satoken.version}</version>
+            </dependency>
+            <!-- 链路追踪（micrometer-tracing + OpenTelemetry bridge，版本理由见 properties 注释） -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing-bom</artifactId>
+                <version>${spring-boot-micrometer-tracing.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing</artifactId>
+                <version>${spring-boot-micrometer-tracing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing-bridge-otel</artifactId>
+                <version>${spring-boot-micrometer-tracing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-bom</artifactId>
+                <version>${spring-boot-opentelemetry.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-api</artifactId>
+                <version>${spring-boot-opentelemetry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-sdk</artifactId>
+                <version>${spring-boot-opentelemetry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-exporter-otlp</artifactId>
+                <version>${spring-boot-opentelemetry.version}</version>
             </dependency>
             <!-- 导入上游 ddd4j-dependencies BOM（基础组件版本统一管理） -->
             <dependency>

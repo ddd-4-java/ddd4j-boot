@@ -55,6 +55,7 @@
         <subproject>ddd4j-boot-bom</subproject>
         <subproject>ddd4j-boot-dependencies</subproject>
         <subproject>ddd4j-boot-core</subproject>
+        <subproject>ddd4j-boot-observability</subproject> <!-- 链路追踪可观测性（change: establish-boot-observability） -->
         <subproject>ddd4j-boot-cache</subproject>
         <subproject>ddd4j-boot-web</subproject>
         <!-- 领域聚合（对齐 ddd4j 库） -->

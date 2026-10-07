@@ -27,4 +27,15 @@ public class Ddd4jMonitorBootAutoConfiguration {
     public BaseMonitorProperties baseMonitorProperties() {
         return new BaseMonitorProperties();
     }
+
+    /**
+     * 告警追踪关联渲染器（业务发送告警时调用 {@link AlertTraceContext#decorate(String)}
+     * 即可携带 traceId/correlationId，使告警可一键回溯调用链；
+     * 对应 spec：boot-trace-observability / Alert correlation，D9 冻结字段名）。
+     */
+    @Bean
+    @ConditionalOnMissingBean(AlertTraceContext.class)
+    public AlertTraceContext alertTraceContext() {
+        return new AlertTraceContext();
+    }
 }
