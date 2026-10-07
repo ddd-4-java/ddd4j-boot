@@ -11,7 +11,7 @@
 
     <artifactId>ddd4j-boot-extensions</artifactId>
     <packaging>pom</packaging>
-    <description>Ddd4j Boot 跨领域扩展（akka/cola/dubbo/excel/jackson/pf4j/qlexpress/monitor，对齐 ddd4j-extensions）
+    <description>Ddd4j Boot 跨领域扩展（akka/cola/dubbo/excel/jackson/qlexpress/monitor，对齐 ddd4j-extensions）
     </description>
 
     <subprojects>
@@ -23,7 +23,8 @@
         <subproject>ddd4j-boot-extension-qrcode</subproject>
         <subproject>ddd4j-boot-extension-jackson</subproject>
         <subproject>ddd4j-boot-extension-monitor</subproject>
-            <subproject>ddd4j-boot-extension-pf4j</subproject>
+        <!-- ddd4j-boot-extension-pf4j 已移除：空壳模块（无 src、全仓零引用），
+             裁定记录见 docs/decisions/（对应家族任务 7.1 / 缺陷 F-B3） -->
     </subprojects>
 
     <dependencies>
@@ -209,7 +210,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <configuration>
-                        <!-- 跳过单元测试 -->
+                        <!-- 显式豁免（测试成熟度 5.1）：本行为家族历史约定的默认跳过，
+                             不代表免除验收责任；承担验收职责的子模块必须在自身 pom 显式 skip=false 开启 surefire
+                             （样板：extension-monitor / extension-data / extension-feign / extension-tenant） -->
                         <skip>true</skip>
                         <skipTests>true</skipTests>
                         <!-- forkMode 可设置值有 “never”， “once”， “always” 和 “pertest”。 pretest：
