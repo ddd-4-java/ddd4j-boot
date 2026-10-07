@@ -198,6 +198,12 @@
         <spring-boot-spring-integration.version>5.3.8.RELEASE</spring-boot-spring-integration.version>
     
         <tio.version>3.8.6.v20240801-RELEASE</tio.version>
+        <!--
+            JDK 8 线（Boot 2.3.12.RELEASE）可观测性范围裁定（design 风险预案）：Boot 2.x 生态无 micrometer-tracing/OTel 同代栈，
+            本线 ddd4j-boot-observability 为纯 Java 退化最小集（traceparent 编解码 + MDC/TTL 因果桥 +
+            RestTemplate 出站注入 + 告警关联），不引入 micrometer-tracing/OTel 版本钉；
+            配置键与字段命名契约（D9）与 3.0.x+/4.0.x+ 完整版一致。
+        -->
     </properties>
 
     <dependencyManagement>

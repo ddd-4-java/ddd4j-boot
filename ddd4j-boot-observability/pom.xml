@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.ddd4j.boot</groupId>
+        <artifactId>ddd4j-boot-dependencies</artifactId>
+        <version>${revision}</version>
+        <relativePath>../ddd4j-boot-dependencies/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ddd4j-boot-observability</artifactId>
+    <description>ddd4j-boot 可观测性模块（JDK 8 线最小集）：W3C traceparent 编解码、
+        MDC + TTL ThreadContext 追踪桥接与因果链并列双写、RestTemplate 出站 traceparent 注入。
+        Boot 2.x 生态无 micrometer-tracing/OTel 同代栈，本线为纯 Java 退化最小集
+        （design 风险预案），配置键与字段命名契约（D9）与 3.0.x+/4.0.x+ 完整版一致；
+        行为契约：traceparent 编解码/继承语义、因果三键互查、出站头恒合法——均不变。
+        对应家族规格 family-observability（change: establish-boot-observability）。</description>
+
+    <dependencies>
+        <!-- ddd4j 核心：TTL ThreadContext（追踪上下文与因果链并列双写） -->
+        <dependency>
+            <groupId>io.ddd4j</groupId>
+            <artifactId>ddd4j-core</artifactId>
+            <version>${ddd4j.version}</version>
+        </dependency>
+        <!-- RestTemplate 出站注入（ClientHttpRequestInterceptor），spring-core/slf4j 随之传递 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- 本模块测试承担链路追踪最小集验收门禁（family-observability / Evidence gate），
+                         必须真实执行，不受父 POM 历史跳过默认值影响。 -->
+                    <skip>false</skip>
+                    <skipTests>false</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
