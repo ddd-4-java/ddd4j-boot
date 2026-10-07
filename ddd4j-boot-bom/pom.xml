@@ -21,6 +21,12 @@
                 <artifactId>ddd4j-boot-core</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <!-- Boot 可观测性（micrometer-tracing + OTel bridge，change: establish-boot-observability） -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-observability</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cache</artifactId>
@@ -227,11 +233,8 @@
                 <artifactId>ddd4j-boot-extension-jackson</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <dependency>
-                <groupId>io.ddd4j.boot</groupId>
-                <artifactId>ddd4j-boot-extension-pf4j</artifactId>
-                <version>${revision}</version>
-            </dependency>
+            <!-- ddd4j-boot-extension-pf4j 已移除：空壳模块（无 src、全仓零引用），
+                 裁定记录见 docs/decisions/（对应家族任务 7.1 / 缺陷 F-B3） -->
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-extension-qlexpress</artifactId>

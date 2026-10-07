@@ -6,7 +6,7 @@
     <modelVersion>4.1.0</modelVersion>
 
     <!-- Inherit defaults from ddd4j-parent（对齐 ddd4j-javalin 模式） -->
-    <!-- 版本约束：Spring Boot 锁定 3.4.x，不得升级至 4.x -->
+    <!-- 版本约束：本分支（4.0.x）锁定 Spring Boot 4.0.x 线 + JDK 21，由 properties 中 spring-boot.version 统一管理 -->
     <parent>
         <groupId>io.ddd4j</groupId>
         <artifactId>ddd4j-parent</artifactId>
@@ -55,6 +55,7 @@
         <subproject>ddd4j-boot-bom</subproject>
         <subproject>ddd4j-boot-dependencies</subproject>
         <subproject>ddd4j-boot-core</subproject>
+        <subproject>ddd4j-boot-observability</subproject>
         <subproject>ddd4j-boot-cache</subproject>
         <subproject>ddd4j-boot-web</subproject>
         <!-- 领域聚合（对齐 ddd4j 库） -->

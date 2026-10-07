@@ -193,8 +193,25 @@
         <spring-boot-starter-satoken.version>1.45.0</spring-boot-starter-satoken.version>
         <spring-boot-artemis.version>2.43.0</spring-boot-artemis.version>
         <spring-boot-micrometer.version>1.16.7</spring-boot-micrometer.version>
+        <!--
+            链路追踪版本 pin（对应 change: establish-boot-observability / 家族规格 family-observability）。
+            选版理由：micrometer-tracing 1.6.7 与 Spring Boot 4.0.8 BOM 管理版本完全一致
+            （spring-boot-dependencies 4.0.8 声明 micrometer-tracing.version=1.6.7、opentelemetry.version=1.55.0），
+            micrometer-tracing-bridge-otel 1.6.7 传递依赖 OpenTelemetry SDK 1.55.0 同代对齐，避免 SDK 双版本共存；
+            与既有 micrometer 1.16.x / actuator / prometheus 栈同生态（design D1）。
+        -->
+        <spring-boot-micrometer-tracing.version>1.6.7</spring-boot-micrometer-tracing.version>
+        <spring-boot-opentelemetry.version>1.55.0</spring-boot-opentelemetry.version>
         <spring-boot-logback.version>1.5.38</spring-boot-logback.version>
         <spring-boot-slf4j.version>2.0.18</spring-boot-slf4j.version>
+        <!--
+            testcontainers 版本 pin（对应 change: establish-boot-container-it / 家族统一版本）。
+            选版理由：1.21.4 为 ddd4j 家族统一 testcontainers 版本（ddd4j 仓 *ContainerSupport IT 同版），
+            org.testcontainers.containers.* 经典 API 与各 mq/data 模块既有测试代码兼容；
+            spring-boot-dependencies 4.0.8 自管 2.0.5（经典 containers.* API 已收缩），为避免家族内
+            双版本漂移，统一钉到 1.21.4。
+        -->
+        <spring-boot-testcontainers.version>1.21.4</spring-boot-testcontainers.version>
     </properties>
 
     <dependencyManagement>
@@ -248,6 +265,63 @@
                 <groupId>io.micrometer</groupId>
                 <artifactId>micrometer-registry-prometheus</artifactId>
                 <version>${spring-boot-micrometer.version}</version>
+            </dependency>
+            <!-- 链路追踪（micrometer-tracing + OpenTelemetry bridge，版本理由见 properties 注释） -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing-bom</artifactId>
+                <version>${spring-boot-micrometer-tracing.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing</artifactId>
+                <version>${spring-boot-micrometer-tracing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing-bridge-otel</artifactId>
+                <version>${spring-boot-micrometer-tracing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-bom</artifactId>
+                <version>${spring-boot-opentelemetry.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-api</artifactId>
+                <version>${spring-boot-opentelemetry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-sdk</artifactId>
+                <version>${spring-boot-opentelemetry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-exporter-otlp</artifactId>
+                <version>${spring-boot-opentelemetry.version}</version>
+            </dependency>
+            <!-- testcontainers（版本理由见 properties 注释；家族统一 1.21.4；
+                 显式条目优先于上游 BOM import（ddd4j-dependencies 3.0.x 自管 2.0.5），避免双版本漂移 -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${spring-boot-testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${spring-boot-testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>mysql</artifactId>
+                <version>${spring-boot-testcontainers.version}</version>
             </dependency>
             <!-- Boot 3.3 logging system binary compatibility baseline. -->
             <dependency>
