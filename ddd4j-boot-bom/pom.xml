@@ -16,6 +16,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Boot 可观测性（micrometer-tracing + OTel bridge，change: establish-boot-observability） -->
+            <dependency>
+                <groupId>io.ddd4j.boot</groupId>
+                <artifactId>ddd4j-boot-observability</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>io.ddd4j.boot</groupId>
                 <artifactId>ddd4j-boot-cache</artifactId>
