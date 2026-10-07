@@ -50,6 +50,23 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <optional>true</optional>
         </dependency>
+            <!-- 真实 Servlet 容器登录流 IT（RANDOM_PORT 真实 Tomcat + 真实 sa-token 过滤链） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- sa-token SaBeanInject 需要 Jackson 2 databind + jsr310（Boot 4 默认 Jackson 3，测试环境补齐） -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
