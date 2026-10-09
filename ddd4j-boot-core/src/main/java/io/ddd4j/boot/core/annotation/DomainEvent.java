@@ -8,6 +8,6 @@ import java.lang.annotation.*;
 @DDDAnnotation
 @Retention(RetentionPolicy.SOURCE)
 @Documented
-@Target(value = {ElementType.TYPE,ElementType.FIELD})
+@Target(value = {ElementType.TYPE, ElementType.FIELD})
 public @interface DomainEvent {
 }

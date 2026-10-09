@@ -9,7 +9,7 @@ import org.tio.core.ChannelContext;
 import org.tio.core.Node;
 
 /**
- *  注解消息监听，注意：如果自行实现了 IMqttMessageListener，MqttServerFunction 注解就不生效了。
+ * 注解消息监听，注意：如果自行实现了 IMqttMessageListener，MqttServerFunction 注解就不生效了。
  */
 @Slf4j
 @Service

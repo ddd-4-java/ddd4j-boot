@@ -40,7 +40,8 @@
         <apiguardian-api.version>1.1.2</apiguardian-api.version>
         <appium.version>9.3.0</appium.version>
         <aspectj.version>1.9.25</aspectj.version>
-        <assertj.version>3.26.3</assertj.version><asmsupport.version>0.4.3</asmsupport.version>
+        <assertj.version>3.26.3</assertj.version>
+        <asmsupport.version>0.4.3</asmsupport.version>
         <async-http-client.version>3.0.4</async-http-client.version>
         <auth0-java-jwt.version>4.5.0</auth0-java-jwt.version>
         <auth0-jwks-rsa.version>0.23.0</auth0-jwks-rsa.version>
@@ -446,7 +447,8 @@
         <schemacrawler-mysql.version>${schemacrawler.version}</schemacrawler-mysql.version>
         <schemacrawler-hana.version>${schemacrawler.version}</schemacrawler-hana.version>
         <schemacrawler-hsqldb.version>${schemacrawler.version}</schemacrawler-hsqldb.version>
-        <schemacrawler-oracle.version>${schemacrawler.version}</schemacrawler-oracle.version>  <!-- Note: 14.17.05 For Oracle 10g/11g -->
+        <schemacrawler-oracle.version>${schemacrawler.version}
+        </schemacrawler-oracle.version>  <!-- Note: 14.17.05 For Oracle 10g/11g -->
         <schemacrawler-postgresql.version>${schemacrawler.version}</schemacrawler-postgresql.version>
         <schemacrawler-sqlserver.version>${schemacrawler.version}</schemacrawler-sqlserver.version>
         <schemacrawler-sqlite.version>${schemacrawler.version}</schemacrawler-sqlite.version>
@@ -622,7 +624,8 @@
         <spring-boot-starter-docx4j.version>2.7.x.20241003.RELEASE</spring-boot-starter-docx4j.version>
         <spring-boot-starter-dozermapper.version>${dozer-core.version}</spring-boot-starter-dozermapper.version>
         <spring-boot-starter-dingtalk.version>2.7.x.20241004.RELEASE</spring-boot-starter-dingtalk.version>
-        <spring-boot-starter-dropwizard-metrics.version>2.7.x.20240823.RELEASE</spring-boot-starter-dropwizard-metrics.version>
+        <spring-boot-starter-dropwizard-metrics.version>2.7.x.20240823.RELEASE
+        </spring-boot-starter-dropwizard-metrics.version>
         <spring-boot-starter-druid.version>${druid.version}</spring-boot-starter-druid.version>
         <spring-boot-starter-druid-plus.version>2.7.x.20240823.RELEASE</spring-boot-starter-druid-plus.version>
         <spring-boot-starter-dynamic-datasource.version>4.3.1</spring-boot-starter-dynamic-datasource.version>
@@ -671,14 +674,19 @@
         <spring-boot-starter-seata.version>${seata.version}</spring-boot-starter-seata.version>
         <spring-boot-starter-security-biz.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-biz.version>
         <spring-boot-starter-security-cas.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-cas.version>
-        <spring-boot-starter-security-dingtalk.version>2.7.x.20241004.RELEASE</spring-boot-starter-security-dingtalk.version>
-        <spring-boot-starter-security-facebook.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-facebook.version>
-        <spring-boot-starter-security-google.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-google.version>
+        <spring-boot-starter-security-dingtalk.version>2.7.x.20241004.RELEASE
+        </spring-boot-starter-security-dingtalk.version>
+        <spring-boot-starter-security-facebook.version>2.7.x.20241003.RELEASE
+        </spring-boot-starter-security-facebook.version>
+        <spring-boot-starter-security-google.version>2.7.x.20241003.RELEASE
+        </spring-boot-starter-security-google.version>
         <spring-boot-starter-security-jwt.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-jwt.version>
         <spring-boot-starter-security-line.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-line.version>
         <spring-boot-starter-security-pac4j.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-pac4j.version>
-        <spring-boot-starter-security-qrcode.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-qrcode.version>
-        <spring-boot-starter-security-weixin.version>2.7.x.20241003.RELEASE</spring-boot-starter-security-weixin.version>
+        <spring-boot-starter-security-qrcode.version>2.7.x.20241003.RELEASE
+        </spring-boot-starter-security-qrcode.version>
+        <spring-boot-starter-security-weixin.version>2.7.x.20241003.RELEASE
+        </spring-boot-starter-security-weixin.version>
         <spring-boot-starter-shanyan.version>2.7.x.20240823.RELEASE</spring-boot-starter-shanyan.version>
         <spring-boot-starter-shardingsphere-jdbc.version>5.2.1</spring-boot-starter-shardingsphere-jdbc.version>
         <spring-boot-starter-sigar.version>2.7.x.20240824.RELEASE</spring-boot-starter-sigar.version>
@@ -688,9 +696,12 @@
         <spring-boot-starter-soapui.version>2.7.x.20240823.RELEASE</spring-boot-starter-soapui.version>
         <spring-boot-starter-socketio.version>2.7.x.20240823.RELEASE</spring-boot-starter-socketio.version>
         <spring-boot-starter-tencentapi.version>2.7.x.20240823.RELEASE</spring-boot-starter-tencentapi.version>
-        <spring-boot-starter-validation-mimetypes.version>2.7.x.20250430-SNAPSHOT</spring-boot-starter-validation-mimetypes.version>
-        <spring-boot-starter-webflux-swagger2.version>2.7.x.20240823.RELEASE</spring-boot-starter-webflux-swagger2.version>
-        <spring-boot-starter-webmvc-swagger2.version>2.7.x.20240823.RELEASE</spring-boot-starter-webmvc-swagger2.version>
+        <spring-boot-starter-validation-mimetypes.version>2.7.x.20250430-SNAPSHOT
+        </spring-boot-starter-validation-mimetypes.version>
+        <spring-boot-starter-webflux-swagger2.version>2.7.x.20240823.RELEASE
+        </spring-boot-starter-webflux-swagger2.version>
+        <spring-boot-starter-webmvc-swagger2.version>2.7.x.20240823.RELEASE
+        </spring-boot-starter-webmvc-swagger2.version>
         <spring-boot-starter-xmemcached.version>2.7.x.20240823.RELEASE</spring-boot-starter-xmemcached.version>
         <spring-boot-starter-xxljob.version>2.7.x.20260603-SNAPSHOT</spring-boot-starter-xxljob.version>
         <spring-boot-starter-zxing.version>2.7.x.20240823.RELEASE</spring-boot-starter-zxing.version>

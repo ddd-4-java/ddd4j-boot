@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DemoConverter {
-    
+
     /**
      * 领域对象转持久化实体
      */
@@ -16,7 +16,7 @@ public class DemoConverter {
         if (domain == null) {
             return null;
         }
-        
+
         io.ddd4j.boot.sample.demo.infra.persistence.entity.DemoEntity entity =
                 new io.ddd4j.boot.sample.demo.infra.persistence.entity.DemoEntity();
         entity.setId(domain.getId());
@@ -24,10 +24,10 @@ public class DemoConverter {
         entity.setIntro(domain.getIntro());
         entity.setOrderBy(domain.getOrderBy());
         entity.setStatus(domain.getStatus());
-        
+
         return entity;
     }
-    
+
     /**
      * 持久化实体转领域对象
      */
@@ -35,7 +35,7 @@ public class DemoConverter {
         if (entity == null) {
             return null;
         }
-        
+
         DemoEntity domain = new DemoEntity();
         domain.setId(entity.getId());
         domain.setName(entity.getName());
@@ -44,7 +44,7 @@ public class DemoConverter {
         domain.setStatus(entity.getStatus());
         domain.setCreateTime(entity.getCreateTime());
         domain.setUpdateTime(entity.getUpdateTime());
-        
+
         return domain;
     }
 }

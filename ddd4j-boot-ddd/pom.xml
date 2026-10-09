@@ -11,7 +11,9 @@
     </parent>
 
     <artifactId>ddd4j-boot-ddd</artifactId>
-    <description>Ddd4j Boot DDD - 纯净 DDD Event Sourcing 轨道（基于 fuinorg ddd-4-java + cqrs-4-java）。显式排除 MyBatis Plus 以保持领域层零 ORM 依赖。</description>
+    <description>Ddd4j Boot DDD - 纯净 DDD Event Sourcing 轨道（基于 fuinorg ddd-4-java + cqrs-4-java）。显式排除 MyBatis
+        Plus 以保持领域层零 ORM 依赖。
+    </description>
 
     <dependencies>
         <!-- 基础契约层（ApiCode / Subject / 异常体系） -->

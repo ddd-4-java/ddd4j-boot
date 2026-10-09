@@ -7,12 +7,12 @@ import lombok.Getter;
  */
 @Getter
 public class OrderCancelledEvent extends DomainEvent {
-    
+
     private final Long orderId;
     private final String orderNo;
     private final Long userId;
     private final String reason;
-    
+
     public OrderCancelledEvent(Long orderId, String orderNo, Long userId, String reason) {
         this.orderId = orderId;
         this.orderNo = orderNo;

@@ -42,7 +42,7 @@ public enum BizExceptionCode implements CustomApiCode {
     SMS_ERROR("sms.send.backlist.limit", 1505, "sms error,验证码发送失败请重试"),
     SMS_CODE_ERROR("sms.check.fail", 1506, "code is error,验证码验证失败"),
 
-    DEVICE_BAN("login.device.ban", 20017,  "该设备已封禁，请联系客服"),
+    DEVICE_BAN("login.device.ban", 20017, "该设备已封禁，请联系客服"),
     SIGN_EXPIRED("login.token.expired", 20018, "Sign expired,Please log in again,签名过期"),
 
     // 用户相关 30000-40000

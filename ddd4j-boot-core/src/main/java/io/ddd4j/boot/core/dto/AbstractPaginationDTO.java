@@ -24,11 +24,15 @@ public abstract class AbstractPaginationDTO {
     @Min(value = 1, message = "最小页码不能小于1")
     private int pageNo = 1;
 
-    /** 开始时间 */
+    /**
+     * 开始时间
+     */
     @ApiModelProperty(value = "开始时间")
     private String beginTime;
 
-    /** 结束时间 */
+    /**
+     * 结束时间
+     */
     @ApiModelProperty(value = "结束时间")
     private String endTime;
 
