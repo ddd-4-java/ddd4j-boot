@@ -26,15 +26,15 @@
 
 ## 3. 模块结构
 
-| 模块 | 集成测试文件 | 容器镜像 |
-|------|-------------|---------|
-| mq-activemq | `ActiveMQClientIntegrationTest.java` | `apache/activemq-classic:5.18.3` |
-| mq-nats | `NatsClientIntegrationTest.java` | `nats:2.10-alpine` |
-| mq-ons | `OnsClientIntegrationTest.java` | 复用 RocketMQ 镜像 |
-| mq-pulsar | `PulsarClientIntegrationTest.java` | `apachepulsar/pulsar:3.2.0` |
-| mq-redis-stream | `RedisStreamClientIntegrationTest.java` | `redis:7.4-alpine` |
-| mq-sqs | `SqsClientIntegrationTest.java` | `localstack/localstack:3.4` |
-| mq-tdmq | `TdmqClientIntegrationTest.java` | 复用 Pulsar 镜像 |
+| 模块            | 集成测试文件                            | 容器镜像                         |
+|-----------------|-----------------------------------------|----------------------------------|
+| mq-activemq     | `ActiveMQClientIntegrationTest.java`    | `apache/activemq-classic:5.18.3` |
+| mq-nats         | `NatsClientIntegrationTest.java`        | `nats:2.10-alpine`               |
+| mq-ons          | `OnsClientIntegrationTest.java`         | 复用 RocketMQ 镜像               |
+| mq-pulsar       | `PulsarClientIntegrationTest.java`      | `apachepulsar/pulsar:3.2.0`      |
+| mq-redis-stream | `RedisStreamClientIntegrationTest.java` | `redis:7.4-alpine`               |
+| mq-sqs          | `SqsClientIntegrationTest.java`         | `localstack/localstack:3.4`      |
+| mq-tdmq         | `TdmqClientIntegrationTest.java`        | 复用 Pulsar 镜像                 |
 
 ## 4. 核心抽象
 
@@ -69,10 +69,10 @@ class XxxClientIntegrationTest {
 
 ## 8. 实施风险与缓解
 
-| 风险 | 缓解 |
-|------|------|
-| Docker 镜像拉取慢 | 用 `withReuse(true)` 启用 Docker reuse |
-| 部分 broker 容器启动慢 | `waitingFor` 策略 + 超时配置 |
+| 风险                   | 缓解                                   |
+|------------------------|----------------------------------------|
+| Docker 镜像拉取慢      | 用 `withReuse(true)` 启用 Docker reuse |
+| 部分 broker 容器启动慢 | `waitingFor` 策略 + 超时配置           |
 
 ## 9. 交付物清单
 

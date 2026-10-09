@@ -74,7 +74,7 @@ public class ExcelHttpKit {
     /**
      * 下载自定义附件类型的字节数组。
      *
-     * @param response  HTTP 响应
+     * @param response   HTTP 响应
      * @param attachment 附件元数据
      * @param bytes      xlsx 字节
      */
@@ -100,9 +100,9 @@ public class ExcelHttpKit {
      * 本方法不会自行 reset 响应。如需"成功返回 Excel / 失败返回 JSON"的混合模式，
      * 由调用方在 catch 块中 {@code response.reset()} 后写 JSON。
      *
-     * @param response HTTP 响应
-     * @param filename 文件名
-     * @param bytes    xlsx 字节
+     * @param response        HTTP 响应
+     * @param filename        文件名
+     * @param bytes           xlsx 字节
      * @param autoCloseStream 是否在写完后自动关闭流（默认 true）
      */
     public static void download(HttpServletResponse response, String filename, byte[] bytes,

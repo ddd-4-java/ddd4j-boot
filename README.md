@@ -66,7 +66,8 @@
 
 - **[DDD 思维导图](./docs/DDD%20思维导图.md)**：涵盖战略设计（限界上下文、子域划分、统一语言）和战术设计（实体、值对象、聚合、领域服务、仓储、领域事件）的完整知识体系
 - **[CQRS 思维导图](./docs/CQRS%20思维导图.md)**：深入理解命令查询职责分离、事件处理、一致性模型等核心概念
-- **参考示例**：本仓库 `ddd4j-boot-samples/ddd4j-boot-sample-order`（订单 + Outbox + Kafka）与 `ddd4j-boot-sample-cqrs-person-*`（CQRS 读写分离）
+- **参考示例**：本仓库 `ddd4j-boot-samples/ddd4j-boot-sample-order`（订单 + Outbox + Kafka）与
+  `ddd4j-boot-sample-cqrs-person-*`（CQRS 读写分离）
 
 **CQRS 架构概览图**：
 
@@ -95,18 +96,18 @@
 
 **Maven 模块架构**：
 
-| 模块                                        | 说明                                                          |
-|-------------------------------------------|-------------------------------------------------------------|
-| ddd4j-boot-bom                            | BOM 依赖管理模块，统一管理所有子模块版本，外部项目通过 BOM 引用实现版本对齐                  |
-| ddd4j-boot-dependencies                   | 公共依赖声明模块，集中管理第三方组件版本（含 Lombok annotation processor 配置）       |
-| ddd4j-boot-core                           | **核心自动配置**：SPI 生命周期桥接（DomainEventPublisher/Subject/I18n/CommandBus 注册）、Repository 自动注册、CommandBus 装配 |
-| ddd4j-boot-web                            | Web 装配（webmvc / webflux 两个薄适配模块，条件互斥）                       |
-| ddd4j-boot-mq                             | MQ 装配（mq-core + 13 个 broker 薄适配器，消费上游 MQClient 统一模型）          |
-| ddd4j-boot-data                           | 数据装配（mybatis / crypto / datascope / external / logs）          |
-| ddd4j-boot-auth                           | 认证装配（satoken / security / shiro / license）                    |
-| ddd4j-boot-cache                          | 缓存属性绑定（CacheKit 静态工具，注册外部缓存实例）                             |
-| ddd4j-boot-extensions                     | 扩展装配（akka / cola / dubbo / excel / jackson / monitor / qlexpress / qrcode 等） |
-| ddd4j-boot-samples                        | 示例服务模块集合，涵盖不同技术栈组合（数据源、消息队列、CQRS、富模型等）                    |
+| 模块                    | 说明                                                                                                                          |
+|-------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| ddd4j-boot-bom          | BOM 依赖管理模块，统一管理所有子模块版本，外部项目通过 BOM 引用实现版本对齐                                                   |
+| ddd4j-boot-dependencies | 公共依赖声明模块，集中管理第三方组件版本（含 Lombok annotation processor 配置）                                               |
+| ddd4j-boot-core         | **核心自动配置**：SPI 生命周期桥接（DomainEventPublisher/Subject/I18n/CommandBus 注册）、Repository 自动注册、CommandBus 装配 |
+| ddd4j-boot-web          | Web 装配（webmvc / webflux 两个薄适配模块，条件互斥）                                                                         |
+| ddd4j-boot-mq           | MQ 装配（mq-core + 13 个 broker 薄适配器，消费上游 MQClient 统一模型）                                                        |
+| ddd4j-boot-data         | 数据装配（mybatis / crypto / datascope / external / logs）                                                                    |
+| ddd4j-boot-auth         | 认证装配（satoken / security / shiro / license）                                                                              |
+| ddd4j-boot-cache        | 缓存属性绑定（CacheKit 静态工具，注册外部缓存实例）                                                                           |
+| ddd4j-boot-extensions   | 扩展装配（akka / cola / dubbo / excel / jackson / monitor / qlexpress / qrcode 等）                                           |
+| ddd4j-boot-samples      | 示例服务模块集合，涵盖不同技术栈组合（数据源、消息队列、CQRS、富模型等）                                                      |
 
 **使用建议**：
 
@@ -202,22 +203,22 @@
 
 #### 3. 组件模块说明
 
-| 组件模块 | 说明 |
-| --- | --- |
-| ddd4j-boot-core | 核心自动配置：SPI 生命周期（DomainEventPublisher/Subject/I18n/CommandBus 注册与关闭清理）、Repository 自动注册、CommandBus 装配 |
-| ddd4j-boot-web-webmvc | WebMVC 装配（Servlet 条件互斥），统一异常/请求上下文/幂等防护 |
-| ddd4j-boot-web-webflux | WebFlux 装配（Reactive 条件互斥），统一错误处理与请求上下文 |
-| ddd4j-boot-mq-core | MQ 统一开关（`ddd4j.mq.enabled`）与属性绑定 |
-| ddd4j-boot-mq-{activemq,disruptor,kafka,mqtt,mqtt-mica,nats,ons,pulsar,rabbitmq,redis-stream,rocketmq,sqs,tdmq} | 13 个 broker 薄适配器，消费上游 `MQClient` 统一模型 |
-| ddd4j-boot-data-mybatis | MyBatis-Plus 拦截器装配（分页/乐观锁/防全表攻击） |
-| ddd4j-boot-data-crypto | 加解密策略装配（AES/SM 等，`crypto.enabled` 开关） |
-| ddd4j-boot-data-datascope | 数据权限装配（DataScopeProvider + 注解校验器） |
-| ddd4j-boot-data-external | 外部服务（地理位置/天气/行政区划）与全局序列号 |
-| ddd4j-boot-data-logs | API 操作日志切面装配 |
-| ddd4j-boot-auth-{satoken,security,shiro} | 三种认证框架的 SubjectProvider 适配（互斥装配） |
-| ddd4j-boot-auth-license | TrueLicense 许可证装配（`license.*` 配置） |
-| ddd4j-boot-cache | CacheKit 属性绑定（业务通过 `CacheKit.register(biz, cache)` 注册缓存） |
-| ddd4j-boot-extension-{akka,cola,dubbo,excel,jackson,monitor,qlexpress,qrcode} | 扩展组件装配（Actor 系统/COLA 架构/Dubbo 扫描/Excel 工具/Jackson 默认配置/监控/规则引擎/二维码） |
+| 组件模块                                                                                                        | 说明                                                                                                                            |
+|-----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| ddd4j-boot-core                                                                                                 | 核心自动配置：SPI 生命周期（DomainEventPublisher/Subject/I18n/CommandBus 注册与关闭清理）、Repository 自动注册、CommandBus 装配 |
+| ddd4j-boot-web-webmvc                                                                                           | WebMVC 装配（Servlet 条件互斥），统一异常/请求上下文/幂等防护                                                                   |
+| ddd4j-boot-web-webflux                                                                                          | WebFlux 装配（Reactive 条件互斥），统一错误处理与请求上下文                                                                     |
+| ddd4j-boot-mq-core                                                                                              | MQ 统一开关（`ddd4j.mq.enabled`）与属性绑定                                                                                     |
+| ddd4j-boot-mq-{activemq,disruptor,kafka,mqtt,mqtt-mica,nats,ons,pulsar,rabbitmq,redis-stream,rocketmq,sqs,tdmq} | 13 个 broker 薄适配器，消费上游 `MQClient` 统一模型                                                                             |
+| ddd4j-boot-data-mybatis                                                                                         | MyBatis-Plus 拦截器装配（分页/乐观锁/防全表攻击）                                                                               |
+| ddd4j-boot-data-crypto                                                                                          | 加解密策略装配（AES/SM 等，`crypto.enabled` 开关）                                                                              |
+| ddd4j-boot-data-datascope                                                                                       | 数据权限装配（DataScopeProvider + 注解校验器）                                                                                  |
+| ddd4j-boot-data-external                                                                                        | 外部服务（地理位置/天气/行政区划）与全局序列号                                                                                  |
+| ddd4j-boot-data-logs                                                                                            | API 操作日志切面装配                                                                                                            |
+| ddd4j-boot-auth-{satoken,security,shiro}                                                                        | 三种认证框架的 SubjectProvider 适配（互斥装配）                                                                                 |
+| ddd4j-boot-auth-license                                                                                         | TrueLicense 许可证装配（`license.*` 配置）                                                                                      |
+| ddd4j-boot-cache                                                                                                | CacheKit 属性绑定（业务通过 `CacheKit.register(biz, cache)` 注册缓存）                                                          |
+| ddd4j-boot-extension-{akka,cola,dubbo,excel,jackson,monitor,qlexpress,qrcode}                                   | 扩展组件装配（Actor 系统/COLA 架构/Dubbo 扫描/Excel 工具/Jackson 默认配置/监控/规则引擎/二维码）                                |
 
 ### 📁 DDD 分层目录结构
 

@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class DefaultJacksonAutoConfigurationNullTest {
 
-    enum Status { ACTIVE, INACTIVE }
+    enum Status {ACTIVE, INACTIVE}
 
     static final class SampleBean {
         public String name;
