@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.ddd4j.core.ddd.model.Entity;
 
 
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

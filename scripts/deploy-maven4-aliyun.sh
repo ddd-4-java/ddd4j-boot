@@ -4,22 +4,22 @@ set -euo pipefail
 
 repository=${1:-snapshot}
 repo_root=$(cd "$(dirname "$0")/.." && pwd -P)
-version=$("$repo_root/mvnw" -q -N -B help:evaluate -Dexpression=project.version -DforceStdout \
-  | sed -n 's/^\[INFO\] \[stdout\] //p' | tail -1)
+version=$("$repo_root/mvnw" -q -N -B help:evaluate -Dexpression=project.version -DforceStdout |
+  sed -n 's/^\[INFO\] \[stdout\] //p' | tail -1)
 
 case "$repository" in
-  snapshot)
-    repository_id=2624322-snapshot-3EoOv3
-    repository_url=https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-snapshot-3eoov3
-    ;;
-  release)
-    repository_id=2624322-release-6F6h6R
-    repository_url=https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-release-6f6h6r
-    ;;
-  *)
-    echo "ERROR: repository must be snapshot or release" >&2
-    exit 1
-    ;;
+snapshot)
+  repository_id=2624322-snapshot-3EoOv3
+  repository_url=https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-snapshot-3eoov3
+  ;;
+release)
+  repository_id=2624322-release-6F6h6R
+  repository_url=https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-release-6f6h6r
+  ;;
+*)
+  echo "ERROR: repository must be snapshot or release" >&2
+  exit 1
+  ;;
 esac
 
 if ! mvn -version | head -1 | grep -Eq 'Apache Maven 3\.'; then
@@ -32,9 +32,9 @@ artifact_list="$stage_dir/artifacts.txt"
 
 find "$HOME/.m2/repository/io/ddd4j/boot" \
   -mindepth 3 -maxdepth 3 -type f -name "*-${version}.pom" \
-  -path "*/${version}/*" -print \
-  | sed -E 's#/[^/]+/[^/]+$##; s#.*/##' \
-  | sort -u > "$artifact_list"
+  -path "*/${version}/*" -print |
+  sed -E 's#/[^/]+/[^/]+$##; s#.*/##' |
+  sort -u >"$artifact_list"
 
 if [[ ! -s "$artifact_list" ]]; then
   echo "ERROR: no installed ddd4j-boot ${version} artifacts were found" >&2
@@ -84,4 +84,4 @@ xargs -P 4 -I '{}' bash -c '
       "-Durl=$repository_url"
   fi
   echo "DEPLOYED $artifact_id:$version"
-' bash '{}' < "$artifact_list"
+' bash '{}' <"$artifact_list"

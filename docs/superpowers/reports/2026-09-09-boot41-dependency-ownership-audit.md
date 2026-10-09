@@ -12,35 +12,35 @@
 
 ## 父模型告警基线
 
-| 指标 | 修改前 | 方案 1 后 | 结论 |
-|---|---:|---:|---|
-| 总模型问题 | 178,859 | 175,007 | 减少 3,852 |
-| Model 4.1 同时声明 GAV/relativePath | 72 | 0 | 已消除 |
-| Maven rc6 默认 `..` 路径不匹配 | 0 | 13 | 精确白名单 |
-| `parent.version is missing` | 0 | 0 | 构建可解析 |
+| 指标                                |  修改前 | 方案 1 后 | 结论       |
+|-------------------------------------|--------:|----------:|------------|
+| 总模型问题                          | 178,859 |   175,007 | 减少 3,852 |
+| Model 4.1 同时声明 GAV/relativePath |      72 |         0 | 已消除     |
+| Maven rc6 默认 `..` 路径不匹配      |       0 |        13 | 精确白名单 |
+| `parent.version is missing`         |       0 |         0 | 构建可解析 |
 
 13 条默认路径提示由 `config/consistency/model41-parent-warning-allowlist.tsv` 管理。白名单新增、遗漏或
 失效都会使 `verify_model41_parent_contract.py` 失败。
 
 ## 根 POM 归属清单
 
-| Coordinate | Current owner | Required owner | Current version | Present upstream | Action |
-|---|---|---|---|---|---|
-| org.springframework:spring-framework-bom | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, BOM 6.2.16 and direct components 7.0.8 | remove downstream BOM import after effective-version test |
-| org.springframework.security:spring-security-bom | ddd4j-boot root | ddd4j-dependencies | 7.1.0 | yes, components 7.0.6 | align upstream baseline before removing downstream import |
-| io.projectreactor:reactor-bom | ddd4j-boot root | ddd4j-dependencies | 2025.0.6 inherited | yes, effective reactor-core 3.8.6 | remove downstream duplicate after effective-version test |
-| tools.jackson:jackson-bom | ddd4j-boot root | ddd4j-dependencies | 3.2.1 | yes, effective Jackson 3.2.1 | remove downstream duplicate |
-| org.springframework:spring-aop | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
-| org.springframework:spring-beans | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
-| org.springframework:spring-context | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
-| org.springframework:spring-core | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
-| org.springframework:spring-expression | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
-| org.springframework:spring-jms | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
-| org.springframework:spring-messaging | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
-| org.springframework:spring-test | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
-| org.springframework:spring-web | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
-| org.springframework:spring-webflux | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
-| org.springframework:spring-webmvc | ddd4j-boot root | ddd4j-dependencies | 7.0.8 | yes, 7.0.8 | remove downstream duplicate |
+| Coordinate                                       | Current owner   | Required owner     | Current version    | Present upstream                            | Action                                                    |
+|--------------------------------------------------|-----------------|--------------------|--------------------|---------------------------------------------|-----------------------------------------------------------|
+| org.springframework:spring-framework-bom         | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, BOM 6.2.16 and direct components 7.0.8 | remove downstream BOM import after effective-version test |
+| org.springframework.security:spring-security-bom | ddd4j-boot root | ddd4j-dependencies | 7.1.0              | yes, components 7.0.6                       | align upstream baseline before removing downstream import |
+| io.projectreactor:reactor-bom                    | ddd4j-boot root | ddd4j-dependencies | 2025.0.6 inherited | yes, effective reactor-core 3.8.6           | remove downstream duplicate after effective-version test  |
+| tools.jackson:jackson-bom                        | ddd4j-boot root | ddd4j-dependencies | 3.2.1              | yes, effective Jackson 3.2.1                | remove downstream duplicate                               |
+| org.springframework:spring-aop                   | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, 7.0.8                                  | remove downstream duplicate                               |
+| org.springframework:spring-beans                 | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, 7.0.8                                  | remove downstream duplicate                               |
+| org.springframework:spring-context               | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, 7.0.8                                  | remove downstream duplicate                               |
+| org.springframework:spring-core                  | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, 7.0.8                                  | remove downstream duplicate                               |
+| org.springframework:spring-expression            | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, 7.0.8                                  | remove downstream duplicate                               |
+| org.springframework:spring-jms                   | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, 7.0.8                                  | remove downstream duplicate                               |
+| org.springframework:spring-messaging             | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, 7.0.8                                  | remove downstream duplicate                               |
+| org.springframework:spring-test                  | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, 7.0.8                                  | remove downstream duplicate                               |
+| org.springframework:spring-web                   | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, 7.0.8                                  | remove downstream duplicate                               |
+| org.springframework:spring-webflux               | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, 7.0.8                                  | remove downstream duplicate                               |
+| org.springframework:spring-webmvc                | ddd4j-boot root | ddd4j-dependencies | 7.0.8              | yes, 7.0.8                                  | remove downstream duplicate                               |
 
 Spring Boot 的以下项目符合生态归属，保留在根 POM：
 
@@ -51,14 +51,14 @@ Spring Boot 的以下项目符合生态归属，保留在根 POM：
 
 ## ddd4j-boot-dependencies 归属清单
 
-| Coordinate | Current owner | Required owner | Current version | Present upstream | Action |
-|---|---|---|---|---|---|
-| com.fasterxml.jackson.core:jackson-annotations | ddd4j-boot-dependencies property | ddd4j-dependencies | 2.22 | yes, 2.22 | remove orphan property |
-| org.testcontainers:testcontainers-localstack | ddd4j-boot-dependencies | ddd4j-dependencies | requested 2.0.5 | yes, effective 2.0.3 | update upstream to 2.0.5 before removing direct version |
-| de.schlichtherle.truelicense:truelicense-core | ddd4j-boot-dependencies | ddd4j-dependencies | 1.33 | yes, 1.33 legacy | remove Boot duplicate; remove upstream legacy entry in platform repair |
-| de.schlichtherle.truelicense:truelicense-xml | ddd4j-boot-dependencies | ddd4j-dependencies | 1.33 | yes, 1.33 legacy | remove Boot duplicate; remove upstream legacy entry in platform repair |
-| io.github.easy4j:zxing-extension | ddd4j-boot-dependencies | ddd4j-dependencies | 4.1.x.20260630-SNAPSHOT | yes, 2.0.x.20260630-SNAPSHOT | verify and correct upstream 3.0-line version before removing duplicate |
-| org.t-io:tio-core | ddd4j-boot-dependencies | ddd4j-dependencies | 3.8.6.v20240801-RELEASE | yes, same version | remove downstream duplicate |
+| Coordinate                                     | Current owner                    | Required owner     | Current version         | Present upstream             | Action                                                                 |
+|------------------------------------------------|----------------------------------|--------------------|-------------------------|------------------------------|------------------------------------------------------------------------|
+| com.fasterxml.jackson.core:jackson-annotations | ddd4j-boot-dependencies property | ddd4j-dependencies | 2.22                    | yes, 2.22                    | remove orphan property                                                 |
+| org.testcontainers:testcontainers-localstack   | ddd4j-boot-dependencies          | ddd4j-dependencies | requested 2.0.5         | yes, effective 2.0.3         | update upstream to 2.0.5 before removing direct version                |
+| de.schlichtherle.truelicense:truelicense-core  | ddd4j-boot-dependencies          | ddd4j-dependencies | 1.33                    | yes, 1.33 legacy             | remove Boot duplicate; remove upstream legacy entry in platform repair |
+| de.schlichtherle.truelicense:truelicense-xml   | ddd4j-boot-dependencies          | ddd4j-dependencies | 1.33                    | yes, 1.33 legacy             | remove Boot duplicate; remove upstream legacy entry in platform repair |
+| io.github.easy4j:zxing-extension               | ddd4j-boot-dependencies          | ddd4j-dependencies | 4.1.x.20260630-SNAPSHOT | yes, 2.0.x.20260630-SNAPSHOT | verify and correct upstream 3.0-line version before removing duplicate |
+| org.t-io:tio-core                              | ddd4j-boot-dependencies          | ddd4j-dependencies | 3.8.6.v20240801-RELEASE | yes, same version            | remove downstream duplicate                                            |
 
 ## 保留的 Boot 生态依赖
 

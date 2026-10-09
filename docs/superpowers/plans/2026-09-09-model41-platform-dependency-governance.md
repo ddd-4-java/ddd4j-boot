@@ -1,12 +1,16 @@
 # Maven Model 4.1 And Platform Dependency Governance Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:
+> executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 修正 ddd4j-boot 4.0/4.1 的 Maven Model 4.1 父引用，并建立“普通组件由 ddd4j-dependencies 统一管理、生态 BOM 只管生态增量”的可执行门禁。
+**Goal:** 修正 ddd4j-boot 4.0/4.1 的 Maven Model 4.1 父引用，并建立“普通组件由 ddd4j-dependencies 统一管理、生态 BOM
+只管生态增量”的可执行门禁。
 
-**Architecture:** `ddd4j-dependencies` 作为平台基础 BOM，Boot/Javalin/Quarkus/Cloud 依赖 BOM 只提供各自生态增量。通过 Maven Model 4.1 结构检查、坐标级归属清单和有效模型版本契约防止下游重复管理。
+**Architecture:** `ddd4j-dependencies` 作为平台基础 BOM，Boot/Javalin/Quarkus/Cloud 依赖 BOM 只提供各自生态增量。通过
+Maven Model 4.1 结构检查、坐标级归属清单和有效模型版本契约防止下游重复管理。
 
-**Tech Stack:** Maven 4.0.0-rc-6, Maven POM Model 4.1, Python 3 `unittest`/`xml.etree.ElementTree`, JDK 21, GitHub maintenance branches.
+**Tech Stack:** Maven 4.0.0-rc-6, Maven POM Model 4.1, Python 3 `unittest`/`xml.etree.ElementTree`, JDK 21, GitHub
+maintenance branches.
 
 **Spec:** `docs/superpowers/specs/2026-09-09-model41-platform-dependency-governance.md`
 
@@ -25,10 +29,12 @@
 ### Task 1: Model 4.1 Parent Structure Gate
 
 **Files:**
+
 - Create: `scripts/verify_model41_parent_contract.py`
 - Create: `scripts/test_model41_parent_contract.py`
 
 **Interfaces:**
+
 - Produces: `verify(root: Path) -> list[str]`, 返回每个违规 POM 的精确路径和原因。
 - Consumes: Maven 4.1 POM 中的 `modelVersion` 和 `parent` 节点。
 
@@ -95,12 +101,14 @@ git commit -m "test(model): enforce Maven 4.1 parent contracts"
 ### Task 2: Normalize All 4.1 Parent Declarations
 
 **Files:**
+
 - Modify: `pom.xml`
 - Modify: `ddd4j-boot-bom/pom.xml`
 - Modify: every Model 4.1 child `pom.xml` reported by Task 1
 - Test: `scripts/test_model41_parent_contract.py`
 
 **Interfaces:**
+
 - Consumes: `verify(root: Path) -> list[str]` from Task 1.
 - Produces: a Model 4.1 reactor in which all parents use full GAV without `relativePath`.
 
@@ -170,11 +178,13 @@ git commit -m "fix(model): normalize Maven 4.1 parent references"
 ### Task 3: Propagate Parent Contract To 4.0
 
 **Files:**
+
 - Modify: Model 4.1 `pom.xml` files on branch `4.0.x`
 - Add/modify: `scripts/verify_model41_parent_contract.py`
 - Add/modify: `scripts/test_model41_parent_contract.py`
 
 **Interfaces:**
+
 - Consumes: the tested verifier and transformation contract from Tasks 1-2.
 - Produces: the same parent invariant on `4.0.x` with Spring Boot `4.0.8`.
 
@@ -212,12 +222,15 @@ git commit -m "fix(model): normalize Maven 4.1 parent references"
 ### Task 4: Dependency Ownership Manifest And Gate
 
 **Files:**
+
 - Create: `config/consistency/dependency-ownership.tsv`
 - Modify: `scripts/verify_dependency_bom_boundary.py`
 - Modify: `scripts/test_dependency_bom_boundary.py`
 
 **Interfaces:**
-- Produces: `OwnershipRule(scope: str, group_id: str, artifact_id: str)` and `verify_ownership(boot_pom: Path, rules: list[OwnershipRule]) -> list[str]`.
+
+- Produces: `OwnershipRule(scope: str, group_id: str, artifact_id: str)` and
+  `verify_ownership(boot_pom: Path, rules: list[OwnershipRule]) -> list[str]`.
 - Consumes: explicit properties, direct dependencyManagement entries and BOM imports from an ecosystem POM.
 
 - [x] **Step 1: Add failing ownership tests**
@@ -300,16 +313,20 @@ git commit -m "test(deps): enforce ecosystem BOM ownership"
 ### Task 5: Audit And Classify Boot Dependency Management
 
 **Files:**
+
 - Create: `docs/superpowers/reports/2026-09-09-boot41-dependency-ownership-audit.md`
 - Modify: `config/consistency/dependency-ownership.tsv`
 
 **Interfaces:**
+
 - Consumes: Task 4 verifier output and current 4.1 effective model.
-- Produces: an exact ledger with coordinate, current owner, required owner, current version, upstream availability and action.
+- Produces: an exact ledger with coordinate, current owner, required owner, current version, upstream availability and
+  action.
 
 - [x] **Step 1: Generate the explicit-management inventory**
 
-Run a structured XML audit over `ddd4j-boot-dependencies/pom.xml`; record each property-backed dependency and imported BOM. Do not derive the inventory from comments or `rg` counts.
+Run a structured XML audit over `ddd4j-boot-dependencies/pom.xml`; record each property-backed dependency and imported
+BOM. Do not derive the inventory from comments or `rg` counts.
 
 - [x] **Step 2: Classify every violation**
 
@@ -325,7 +342,8 @@ Use this exact table schema:
 
 - [x] **Step 3: Record Maven warning baseline by coordinate**
 
-Capture total model problems, `parent.relativePath`, `Ignored POM import`, and top conflicting groups for 4.1 after Task 2.
+Capture total model problems, `parent.relativePath`, `Ignored POM import`, and top conflicting groups for 4.1 after Task
+2.
 
 - [x] **Step 4: Verify the report contains no unresolved classification**
 
@@ -343,10 +361,12 @@ git commit -m "docs(deps): classify Boot dependency ownership"
 ### Task 6: Close Platform Dependency Gaps In ddd4j 3.0
 
 **Files:**
+
 - Modify in ddd4j repository: `ddd4j-dependencies/pom.xml`
 - Modify in ddd4j repository: dependency alignment tests selected by current source
 
 **Interfaces:**
+
 - Consumes: Task 5 rows whose `Required owner` is `ddd4j-dependencies` and `Present upstream` is `no`.
 - Produces: effective platform management for every ordinary coordinate required by Boot 4.x.
 
@@ -358,11 +378,13 @@ git -C /Users/wandl/workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j worktr
 git -C /Users/wandl/workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j switch feature/3.0.x
 ```
 
-Expected: proceed only if the primary checkout can switch normally. If Git reports that the branch is already checked out by another worktree, stop Task 6 without bypassing or removing it.
+Expected: proceed only if the primary checkout can switch normally. If Git reports that the branch is already checked
+out by another worktree, stop Task 6 without bypassing or removing it.
 
 - [x] **Step 2: Add failing effective-version assertions**
 
-For each missing coordinate, extend the existing dependency alignment test with the exact expected version chosen by the platform baseline.
+For each missing coordinate, extend the existing dependency alignment test with the exact expected version chosen by the
+platform baseline.
 
 - [x] **Step 3: Verify RED**
 
@@ -372,11 +394,13 @@ Expected: FAIL only for coordinates absent from the current upstream effective m
 
 - [x] **Step 4: Add missing platform management**
 
-Add the version property and dependencyManagement entry to `ddd4j-dependencies/pom.xml`. Do not modify Boot/Javalin/Quarkus/Cloud POMs in this task.
+Add the version property and dependencyManagement entry to `ddd4j-dependencies/pom.xml`. Do not modify
+Boot/Javalin/Quarkus/Cloud POMs in this task.
 
 - [x] **Step 5: Verify GREEN and effective POM**
 
-Run the dependency alignment test and generate the effective POM with Maven 4. Assert every Task 5 platform coordinate resolves to the expected version.
+Run the dependency alignment test and generate the effective POM with Maven 4. Assert every Task 5 platform coordinate
+resolves to the expected version.
 
 - [x] **Step 6: Commit and publish only to the local Maven repository**
 
@@ -392,11 +416,14 @@ Expected: local install SUCCESS. Remote Maven deploy remains unauthorized.
 ### Task 7: Remove Boot-Layer Platform Duplicates
 
 **Files:**
+
 - Modify: `ddd4j-boot-dependencies/pom.xml`
-- Modify: root `pom.xml` only where a platform coordinate is explicitly duplicated outside the official Boot compatibility import
+- Modify: root `pom.xml` only where a platform coordinate is explicitly duplicated outside the official Boot
+  compatibility import
 - Test: `scripts/test_dependency_bom_boundary.py`
 
 **Interfaces:**
+
 - Consumes: Task 5 ownership ledger and Task 6 effective upstream POM.
 - Produces: a Boot ecosystem BOM with no active platform-coordinate versions outside approved imports.
 
@@ -406,7 +433,8 @@ Run Task 4's repository verification command.
 
 - [x] **Step 2: Remove only rows proven available upstream**
 
-For each report row with `Present upstream=yes`, remove its Boot property and direct versioned dependencyManagement entry. Keep Spring Boot BOMs, Boot starters and Boot-specific integrations.
+For each report row with `Present upstream=yes`, remove its Boot property and direct versioned dependencyManagement
+entry. Keep Spring Boot BOMs, Boot starters and Boot-specific integrations.
 
 - [x] **Step 3: Verify GREEN**
 
@@ -423,7 +451,8 @@ Expected: both commands PASS.
 
 - [x] **Step 4: Verify critical effective versions and focused reactor**
 
-Generate the 4.1 effective model with Maven 4 and assert the Task 5 versions for Jackson, SLF4J, Logback, Hibernate, Micrometer, ActiveMQ, JAXB, Netty and database drivers. Then compile the license reactor.
+Generate the 4.1 effective model with Maven 4 and assert the Task 5 versions for Jackson, SLF4J, Logback, Hibernate,
+Micrometer, ActiveMQ, JAXB, Netty and database drivers. Then compile the license reactor.
 
 - [x] **Step 5: Commit Boot cleanup**
 
@@ -435,11 +464,13 @@ git commit -m "fix(deps): restore platform dependency ownership"
 ### Task 8: Propagate Dependency Governance To 4.0
 
 **Files:**
+
 - Modify on branch `4.0.x`: `ddd4j-boot-dependencies/pom.xml`
 - Modify on branch `4.0.x`: `config/consistency/dependency-ownership.tsv`
 - Modify on branch `4.0.x`: dependency boundary scripts
 
 **Interfaces:**
+
 - Consumes: Task 7's ownership invariant.
 - Produces: the same invariant with Spring Boot `4.0.8` and revision `4.0.x.20260630-SNAPSHOT` preserved.
 
@@ -461,10 +492,12 @@ git commit -m "fix(deps): restore platform dependency ownership"
 ### Task 9: Final Verification, Warning Ledger And Push
 
 **Files:**
+
 - Modify: `docs/superpowers/reports/2026-09-09-boot41-dependency-ownership-audit.md`
 - Modify: `docs/superpowers/specs/2026-09-09-model41-platform-dependency-governance.md`
 
 **Interfaces:**
+
 - Consumes: all prior task outputs.
 - Produces: branch-specific evidence for source, tests, model warnings, Git and publication state.
 
@@ -477,19 +510,23 @@ python3 scripts/test_dependency_bom_boundary.py
 bash scripts/consistency/test-maintenance-build-matrix.sh
 ```
 
-Run the Maven 4/JDK 21 license tests on each branch with `<skipTests>false</skipTests>` where the parent defaults skip tests.
+Run the Maven 4/JDK 21 license tests on each branch with `<skipTests>false</skipTests>` where the parent defaults skip
+tests.
 
 - [ ] **Step 2: Capture warning deltas**
 
-Record before/after values for total model problems, parent warnings, ignored imports and conflicting coordinate groups. Do not report an unchanged or whitelisted warning as fixed.
+Record before/after values for total model problems, parent warnings, ignored imports and conflicting coordinate groups.
+Do not report an unchanged or whitelisted warning as fixed.
 
 - [ ] **Step 3: Run the largest safe reactor**
 
-Run the full 4.x reactor when all required local artifacts resolve. If it stops, record the exact first failing module, command, error and passed module count.
+Run the full 4.x reactor when all required local artifacts resolve. If it stops, record the exact first failing module,
+command, error and passed module count.
 
 - [ ] **Step 4: Update status documents**
 
-Set the specification status to `implemented` only when all unblocked acceptance criteria pass. List Task 6 as blocked if `feature/3.0.x` remains occupied.
+Set the specification status to `implemented` only when all unblocked acceptance criteria pass. List Task 6 as blocked
+if `feature/3.0.x` remains occupied.
 
 - [ ] **Step 5: Verify Git state and push without rewriting history**
 
@@ -504,4 +541,5 @@ git rev-parse HEAD
 git ls-remote github refs/heads/<branch>
 ```
 
-Expected: clean worktree and identical local/remote SHA after push. Do not deploy Maven artifacts or run `workflow_dispatch` in this task.
+Expected: clean worktree and identical local/remote SHA after push. Do not deploy Maven artifacts or run
+`workflow_dispatch` in this task.

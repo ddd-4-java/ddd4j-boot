@@ -7,7 +7,9 @@
 
 ## 1. 目标与范围
 
-`ddd4j-boot-mq-core` 提供统一配置和默认 `MQEventSerialization`。所有 broker 自动配置明确 `after = Ddd4jMQAutoConfiguration` 以及各自 Spring 原生自动配置。复用核心 `MQListenerDefinition`、`MQListenerMethodInvoker`、`MQConsumeTemplates`、acknowledgment 和上下文清理流程。
+`ddd4j-boot-mq-core` 提供统一配置和默认 `MQEventSerialization`。所有 broker 自动配置明确
+`after = Ddd4jMQAutoConfiguration` 以及各自 Spring 原生自动配置。复用核心 `MQListenerDefinition`、
+`MQListenerMethodInvoker`、`MQConsumeTemplates`、acknowledgment 和上下文清理流程。
 
 ### 非目标
 
@@ -38,37 +40,37 @@ ddd4j-boot-mq/
 
 ## 3. 模块结构
 
-| 模块 | 自动配置类 | 契约测试 | Testcontainers |
-|------|-----------|---------|----------------|
-| mq-core | `Ddd4jMQAutoConfiguration` | Yes | - |
-| mq-kafka | `KafkaMQBootAutoConfiguration` | Yes | Yes |
-| mq-rabbitmq | `RabbitMQBootAutoConfiguration` | Yes | Yes |
-| mq-rocketmq | `RocketMQBootAutoConfiguration` | Yes | Yes |
-| mq-activemq | `ActiveMQBootAutoConfiguration` | Yes | 待补 |
-| mq-disruptor | `DisruptorMQBootAutoConfiguration` | Yes | -（本地内存） |
-| mq-mqtt | `MqttMQBootAutoConfiguration` | Yes | 待补 |
-| mq-mqtt-mica | `MicaMqttMQBootAutoConfiguration` | Yes | 待补 |
-| mq-nats | `NatsMQBootAutoConfiguration` | Yes | 待补 |
-| mq-ons | `OnsMQBootAutoConfiguration` | Yes | 待补 |
-| mq-pulsar | `PulsarMQBootAutoConfiguration` | Yes | 待补 |
-| mq-redis-stream | `RedisStreamMQBootAutoConfiguration` | Yes | 待补 |
-| mq-sqs | `SqsMQBootAutoConfiguration` | Yes | 待补 |
-| mq-tdmq | `TdmqMQBootAutoConfiguration` | Yes | 待补 |
+| 模块            | 自动配置类                           | 契约测试 | Testcontainers |
+|-----------------|--------------------------------------|----------|----------------|
+| mq-core         | `Ddd4jMQAutoConfiguration`           | Yes      | -              |
+| mq-kafka        | `KafkaMQBootAutoConfiguration`       | Yes      | Yes            |
+| mq-rabbitmq     | `RabbitMQBootAutoConfiguration`      | Yes      | Yes            |
+| mq-rocketmq     | `RocketMQBootAutoConfiguration`      | Yes      | Yes            |
+| mq-activemq     | `ActiveMQBootAutoConfiguration`      | Yes      | 待补           |
+| mq-disruptor    | `DisruptorMQBootAutoConfiguration`   | Yes      | -（本地内存）  |
+| mq-mqtt         | `MqttMQBootAutoConfiguration`        | Yes      | 待补           |
+| mq-mqtt-mica    | `MicaMqttMQBootAutoConfiguration`    | Yes      | 待补           |
+| mq-nats         | `NatsMQBootAutoConfiguration`        | Yes      | 待补           |
+| mq-ons          | `OnsMQBootAutoConfiguration`         | Yes      | 待补           |
+| mq-pulsar       | `PulsarMQBootAutoConfiguration`      | Yes      | 待补           |
+| mq-redis-stream | `RedisStreamMQBootAutoConfiguration` | Yes      | 待补           |
+| mq-sqs          | `SqsMQBootAutoConfiguration`         | Yes      | 待补           |
+| mq-tdmq         | `TdmqMQBootAutoConfiguration`        | Yes      | 待补           |
 
 ## 4. 核心抽象
 
-| 类 | 职责 |
-|----|------|
-| `Ddd4jMQAutoConfiguration` | 统一配置、Binder 绑定 MQProperties、MQEventSerialization |
-| `KafkaMQBootAutoConfiguration` | Kafka client Bean 注册、导入 MQRegistrarConfiguration |
+| 类                             | 职责                                                     |
+|--------------------------------|----------------------------------------------------------|
+| `Ddd4jMQAutoConfiguration`     | 统一配置、Binder 绑定 MQProperties、MQEventSerialization |
+| `KafkaMQBootAutoConfiguration` | Kafka client Bean 注册、导入 MQRegistrarConfiguration    |
 
 ## 5. 配置结构
 
-| 前缀 | 属性 | 默认值 | 说明 |
-|------|------|--------|------|
-| `ddd4j.mq` | `enabled` | - | MQ 总开关 |
-| `ddd4j.mq` | `broker` | - | broker 选择（kafka/rabbit/rocket/...） |
-| `ddd4j.mq.<broker>` | `*` | - | broker 专属配置 |
+| 前缀                | 属性      | 默认值 | 说明                                   |
+|---------------------|-----------|--------|----------------------------------------|
+| `ddd4j.mq`          | `enabled` | -      | MQ 总开关                              |
+| `ddd4j.mq`          | `broker`  | -      | broker 选择（kafka/rabbit/rocket/...） |
+| `ddd4j.mq.<broker>` | `*`       | -      | broker 专属配置                        |
 
 ## 6. 测试策略
 
@@ -82,10 +84,10 @@ ddd4j-boot-mq/
 
 ## 8. 实施风险与缓解
 
-| 风险 | 缓解 |
-|------|------|
-| 上游 MQProperties 循环依赖 | Ddd4jMQAutoConfiguration 不导入上游配置类，自行 Binder 绑定 |
-| broker classpath 顺序不确定 | 所有 broker 明确 after = Ddd4jMQAutoConfiguration |
+| 风险                        | 缓解                                                        |
+|-----------------------------|-------------------------------------------------------------|
+| 上游 MQProperties 循环依赖  | Ddd4jMQAutoConfiguration 不导入上游配置类，自行 Binder 绑定 |
+| broker classpath 顺序不确定 | 所有 broker 明确 after = Ddd4jMQAutoConfiguration           |
 
 ## 9. 交付物清单
 

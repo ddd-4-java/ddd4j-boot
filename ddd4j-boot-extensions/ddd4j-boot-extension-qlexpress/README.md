@@ -118,15 +118,15 @@ NamedQLFunction tenantLevel() {
 
 原 `io.ddd4j.extension.express.*` 中的业务式规则模型已删除：
 
-| 旧能力 | 新位置 |
-| --- | --- |
-| `RuleDefinition` | `io.ddd4j.boot.qlexpress.rule.RuleDefinition` |
-| `RuleDefinitionRepository` | `RuleRepository` |
-| `RuleCacheService` | `RuleCache` |
-| `RuleManagementService` | `RuleService` |
-| 三个领域事件 | `RuleChangedEvent` |
+| 旧能力                         | 新位置                                              |
+|--------------------------------|-----------------------------------------------------|
+| `RuleDefinition`               | `io.ddd4j.boot.qlexpress.rule.RuleDefinition`       |
+| `RuleDefinitionRepository`     | `RuleRepository`                                    |
+| `RuleCacheService`             | `RuleCache`                                         |
+| `RuleManagementService`        | `RuleService`                                       |
+| 三个领域事件                   | `RuleChangedEvent`                                  |
 | `RuleEngineApplicationService` | 直接使用 `QLExpressEngine` 或 `RuleService.execute` |
-| Spring/JetCache/Redis 命名实现 | Spring Cache 适配或业务自定义 Bean |
+| Spring/JetCache/Redis 命名实现 | Spring Cache 适配或业务自定义 Bean                  |
 
 Web Controller、鉴权、审计、数据库表结构属于具体业务系统，不在通用 Boot 扩展中预设。
 

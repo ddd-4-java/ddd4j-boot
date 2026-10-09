@@ -1,40 +1,44 @@
 # ddd4j-boot 与 ddd4j 跨版本适配规格
 
-状态：已批准，实施中。`2.7.x` 基线代码与目标测试已闭合；完整 reactor 在第 56/72 模块因三个外部 Easy4J Starter 未发布而停止，详见 `docs/superpowers/reports/2026-09-09-boot-2.7-adaptation-baseline.md`。
+状态：已批准，实施中。`2.7.x` 基线代码与目标测试已闭合；完整 reactor 在第 56/72 模块因三个外部 Easy4J Starter 未发布而停止，详见
+`docs/superpowers/reports/2026-09-09-boot-2.7-adaptation-baseline.md`。
 
 ## 目标
 
-在不抹平各 Spring Boot 维护线差异的前提下，使 13 条 `ddd4j-boot` 分支分别消费对应的 `ddd4j` 主版本，并完成 TrueLicense 4、依赖边界、自动配置、构建模型和集成测试契约的适配。
+在不抹平各 Spring Boot 维护线差异的前提下，使 13 条 `ddd4j-boot` 分支分别消费对应的 `ddd4j` 主版本，并完成 TrueLicense
+4、依赖边界、自动配置、构建模型和集成测试契约的适配。
 
 ## 架构边界
 
 - `ddd4j` 是框架无关的领域、CQRS、事件存储、投影和可靠消息内核。
 - `ddd4j-boot` 只承担 Spring Boot 组合根职责：属性绑定、条件装配、SPI 桥接、资源生命周期和 Starter 依赖组织。
-- TrueLicense 的文件格式、默认签名算法及校验实现属于 `ddd4j-auth-license`；Boot 层只绑定配置并创建、安装、卸载 `LicenseVerify`。
+- TrueLicense 的文件格式、默认签名算法及校验实现属于 `ddd4j-auth-license`；Boot 层只绑定配置并创建、安装、卸载
+  `LicenseVerify`。
 - Boot 层不得重新声明已由对应 `ddd4j-dependencies` 管理的旧 TrueLicense 1.x 构件。
 - 全局静态注册表或资源必须具有对称的注册/注销或初始化/销毁路径，测试上下文关闭后不得泄漏状态。
 
 ## 分支矩阵
 
-| Boot 分支 | Spring Boot | 制品版本 | ddd4j 分支 | JDK | Maven 模型 |
-|---|---|---|---|---:|---|
-| `2.3.x` | `2.3.12.RELEASE` | `2.3.x.20260630-SNAPSHOT` | `feature/1.0.x` | 8 | 4.0 / `<modules>` |
-| `2.4.x` | `2.4.13` | `2.4.x.20260630-SNAPSHOT` | `feature/1.0.x` | 8 | 4.0 / `<modules>` |
-| `2.5.x` | `2.5.15` | `2.5.x.20260630-SNAPSHOT` | `feature/1.0.x` | 8 | 4.0 / `<modules>` |
-| `2.6.x` | `2.6.15` | `2.6.x.20260630-SNAPSHOT` | `feature/1.0.x` | 8 | 4.0 / `<modules>` |
-| `2.7.x` | `2.7.18` | `2.7.x.20260630-SNAPSHOT` | `feature/1.0.x` | 8 | 4.0 / `<modules>` |
-| `3.0.x` | `3.0.13` | `3.0.x.20260630-SNAPSHOT` | `feature/2.0.x` | 17 | 4.0 / `<modules>` |
-| `3.1.x` | `3.1.12` | `3.1.x.20260630-SNAPSHOT` | `feature/2.0.x` | 17 | 4.0 / `<modules>` |
-| `3.2.x` | `3.2.12` | `3.2.x.20260630-SNAPSHOT` | `feature/2.0.x` | 17 | 4.0 / `<modules>` |
-| `3.3.x` | `3.3.13` | `3.3.x.20260630-SNAPSHOT` | `feature/2.0.x` | 17 | 4.0 / `<modules>` |
-| `3.4.x` | `3.4.13` | `3.4.x.20260630-SNAPSHOT` | `feature/2.0.x` | 17 | 4.0 / `<modules>` |
-| `3.5.x` | `3.5.16` | `3.5.x.20260630-SNAPSHOT` | `feature/2.0.x` | 17 | 4.0 / `<modules>` |
-| `4.0.x` | `4.0.8` | `4.0.x.20260630-SNAPSHOT` | `feature/3.0.x` | 21 | 4.1 / `<subprojects>` |
-| `4.1.x` | `4.1.0` | `4.1.x.20260630-SNAPSHOT` | `feature/3.0.x` | 21 | 4.1 / `<subprojects>` |
+| Boot 分支 | Spring Boot      | 制品版本                  | ddd4j 分支      | JDK | Maven 模型            |
+|-----------|------------------|---------------------------|-----------------|----:|-----------------------|
+| `2.3.x`   | `2.3.12.RELEASE` | `2.3.x.20260630-SNAPSHOT` | `feature/1.0.x` |   8 | 4.0 / `<modules>`     |
+| `2.4.x`   | `2.4.13`         | `2.4.x.20260630-SNAPSHOT` | `feature/1.0.x` |   8 | 4.0 / `<modules>`     |
+| `2.5.x`   | `2.5.15`         | `2.5.x.20260630-SNAPSHOT` | `feature/1.0.x` |   8 | 4.0 / `<modules>`     |
+| `2.6.x`   | `2.6.15`         | `2.6.x.20260630-SNAPSHOT` | `feature/1.0.x` |   8 | 4.0 / `<modules>`     |
+| `2.7.x`   | `2.7.18`         | `2.7.x.20260630-SNAPSHOT` | `feature/1.0.x` |   8 | 4.0 / `<modules>`     |
+| `3.0.x`   | `3.0.13`         | `3.0.x.20260630-SNAPSHOT` | `feature/2.0.x` |  17 | 4.0 / `<modules>`     |
+| `3.1.x`   | `3.1.12`         | `3.1.x.20260630-SNAPSHOT` | `feature/2.0.x` |  17 | 4.0 / `<modules>`     |
+| `3.2.x`   | `3.2.12`         | `3.2.x.20260630-SNAPSHOT` | `feature/2.0.x` |  17 | 4.0 / `<modules>`     |
+| `3.3.x`   | `3.3.13`         | `3.3.x.20260630-SNAPSHOT` | `feature/2.0.x` |  17 | 4.0 / `<modules>`     |
+| `3.4.x`   | `3.4.13`         | `3.4.x.20260630-SNAPSHOT` | `feature/2.0.x` |  17 | 4.0 / `<modules>`     |
+| `3.5.x`   | `3.5.16`         | `3.5.x.20260630-SNAPSHOT` | `feature/2.0.x` |  17 | 4.0 / `<modules>`     |
+| `4.0.x`   | `4.0.8`          | `4.0.x.20260630-SNAPSHOT` | `feature/3.0.x` |  21 | 4.1 / `<subprojects>` |
+| `4.1.x`   | `4.1.0`          | `4.1.x.20260630-SNAPSHOT` | `feature/3.0.x` |  21 | 4.1 / `<subprojects>` |
 
 ## TrueLicense 4 可观察行为
 
-1. 对应 `ddd4j-dependencies` 必须管理 `global.namespace.truelicense:truelicense-v1:4.1.4`，且不得管理 `de.schlichtherle.truelicense:truelicense-core` 或 `truelicense-xml`。
+1. 对应 `ddd4j-dependencies` 必须管理 `global.namespace.truelicense:truelicense-v1:4.1.4`，且不得管理
+   `de.schlichtherle.truelicense:truelicense-core` 或 `truelicense-xml`。
 2. `ddd4j-boot-auth-license` 只依赖 `io.ddd4j:ddd4j-auth-license`，不直接补回旧 TrueLicense 坐标。
 3. `license.signature-algorithm` 必须传入六参数 `LicenseVerify` 构造器；未显式配置时沿用 ddd4j 的兼容默认值。
 4. 缺失许可证文件可以导致安装失败日志，但不得破坏 Spring 应用上下文创建和条件退让行为。

@@ -50,7 +50,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <optional>true</optional>
         </dependency>
-            <!-- 真实 Servlet 容器登录流 IT（RANDOM_PORT 真实 Tomcat + 真实 sa-token 过滤链） -->
+        <!-- 真实 Servlet 容器登录流 IT（RANDOM_PORT 真实 Tomcat + 真实 sa-token 过滤链） -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

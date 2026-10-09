@@ -203,6 +203,7 @@ class QrCodeControllerTest {
         item.setRequest(renderRequest(content, 256, 256));
         return item;
     }
+
     /**
      * Jackson 3 最小 JSON 转换器（standalone MockMvc 用；Spring 6 无官方 Jackson3 集成）。
      */

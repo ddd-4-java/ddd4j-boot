@@ -53,7 +53,9 @@ class ObservabilityGoldenMustTest {
     private static final String INBOUND_TRACE_ID = "4bf92f3577b34da6a3ce929d0e0e4736";
     private static final Pattern TRACE_ID_PATTERN = Pattern.compile("^[0-9a-f]{32}$");
 
-    /** Servlet Web 上下文 runner：验证入站过滤器等仅 Web 环境装配的 Bean。 */
+    /**
+     * Servlet Web 上下文 runner：验证入站过滤器等仅 Web 环境装配的 Bean。
+     */
     private final WebApplicationContextRunner enabledRunner = new WebApplicationContextRunner(
             GenericWebApplicationContext::new)
             .withConfiguration(AutoConfigurations.of(Ddd4jObservabilityAutoConfiguration.class))
@@ -319,7 +321,9 @@ class ObservabilityGoldenMustTest {
         TraceOverheadBaseline.write("trace-overhead-baseline", iterations, offMicros, onMicros);
     }
 
-    /** 关闭态高吞吐路径：无追踪装配，仅等价的直通请求处理。 */
+    /**
+     * 关闭态高吞吐路径：无追踪装配，仅等价的直通请求处理。
+     */
     private long timePlainPath(int iterations) {
         jakarta.servlet.Filter plainFilter = (req, res, chain) -> chain.doFilter(req, res);
         long start = System.nanoTime();
@@ -335,7 +339,9 @@ class ObservabilityGoldenMustTest {
         return System.nanoTime() - start;
     }
 
-    /** 开启态高吞吐路径：完整追踪过滤器（span 创建 + MDC/TTL 双写 + X-Trace-Id 回传）。 */
+    /**
+     * 开启态高吞吐路径：完整追踪过滤器（span 创建 + MDC/TTL 双写 + X-Trace-Id 回传）。
+     */
     private long timeTracingPath(int iterations) {
         final long[] total = {0L};
         enabledRunner.run(context -> {
@@ -363,7 +369,9 @@ class ObservabilityGoldenMustTest {
                 .findFirst().orElse(null);
     }
 
-    /** 测试用导出捕获器：记录被导出的 span 快照。 */
+    /**
+     * 测试用导出捕获器：记录被导出的 span 快照。
+     */
     static final class CapturingExporter implements SpanExporter {
 
         private final List<SpanData> sink;

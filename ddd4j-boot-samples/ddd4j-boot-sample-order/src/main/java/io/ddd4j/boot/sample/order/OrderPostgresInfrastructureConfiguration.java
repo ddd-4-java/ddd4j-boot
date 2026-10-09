@@ -114,8 +114,8 @@ public class OrderPostgresInfrastructureConfiguration {
     @ConditionalOnProperty(prefix = "ddd4j.sample.order", name = "kafka-enabled", havingValue = "true",
             matchIfMissing = true)
     public IntegrationEventPublisher orderIntegrationEventPublisher(Producer<String, String> orderKafkaProducer,
-                                                                     ObjectMapper objectMapper,
-                                                                     OrderSampleProperties properties) {
+                                                                    ObjectMapper objectMapper,
+                                                                    OrderSampleProperties properties) {
         return new KafkaIntegrationEventPublisher(orderKafkaProducer, objectMapper, properties.getKafkaTopic());
     }
 
@@ -133,7 +133,7 @@ public class OrderPostgresInfrastructureConfiguration {
 
     @Bean
     public TransactionalOutboxPublisher transactionalOutboxPublisher(JdbcOrderTransactionPort transaction,
-                                                                      OutboxPublisher orderOutboxPublisher) {
+                                                                     OutboxPublisher orderOutboxPublisher) {
         return new TransactionalOutboxPublisher(transaction, orderOutboxPublisher);
     }
 
@@ -141,7 +141,7 @@ public class OrderPostgresInfrastructureConfiguration {
     @ConditionalOnProperty(prefix = "ddd4j.sample.order", name = "outbox-scheduler-enabled", havingValue = "true",
             matchIfMissing = true)
     public OrderOutboxScheduler orderOutboxScheduler(TransactionalOutboxPublisher transactionalOutboxPublisher,
-                                                      OrderSampleProperties properties) {
+                                                     OrderSampleProperties properties) {
         return new OrderOutboxScheduler(transactionalOutboxPublisher, properties);
     }
 

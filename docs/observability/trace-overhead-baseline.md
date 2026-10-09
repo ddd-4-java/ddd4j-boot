@@ -1,21 +1,23 @@
 # 追踪开启开销基线比对说明
 
-> 对应 `trace-overhead-baseline.json`（ObservabilityGoldenMustTest 同族基准用例产出）。任务 1.5/4.2（harden-family-test-maturity）。
+> 对应 `trace-overhead-baseline.json`（ObservabilityGoldenMustTest 同族基准用例产出）。任务
+> 1.5/4.2（harden-family-test-maturity）。
 
 ## 基线口径
 
-| 路径 | 单次开销（24 核/Win11 x64/JDK 21） |
-|---|---|
-| 追踪关闭（`ddd4j.observability.tracing.enabled=false`） | 1.193 µs |
-| 追踪开启（采样率 1.0） | 3.127 µs |
-| 开启/关闭比率 | 2.62 |
+| 路径                                                    | 单次开销（24 核/Win11 x64/JDK 21） |
+|---------------------------------------------------------|------------------------------------|
+| 追踪关闭（`ddd4j.observability.tracing.enabled=false`） | 1.193 µs                           |
+| 追踪开启（采样率 1.0）                                  | 3.127 µs                           |
+| 开启/关闭比率                                           | 2.62                               |
 
 ## 与启用前的对比
 
-追踪开启时单次桥接+透传开销为关闭时的 **2.62 倍**（绝对值 ≈ +1.9 µs/次，常量级）；换来的是 traceparent 生成/继承、MDC+TTL 因果链与告警可关联性。高吞吐路径应按需配置采样率（`ddd4j.observability.tracing.sampling-rate`）。
+追踪开启时单次桥接+透传开销为关闭时的 **2.62 倍**（绝对值 ≈ +1.9 µs/次，常量级）；换来的是 traceparent 生成/继承、MDC+TTL
+因果链与告警可关联性。高吞吐路径应按需配置采样率（`ddd4j.observability.tracing.sampling-rate`）。
 
 ## 劣化阈值校准（首版）
 
-- 与基线**同数量级**（≤10×基线）：正常波动，记录即可；
+- 与基线 **同数量级**（≤10×基线）：正常波动，记录即可；
 - 超过 **10 倍劣化**：告警并回归排查（桥接/透传路径出现非预期分配或锁竞争）；
 - 后续版本以本文件与 JSON 为基线对比，`ratio` 显著漂移需回归。

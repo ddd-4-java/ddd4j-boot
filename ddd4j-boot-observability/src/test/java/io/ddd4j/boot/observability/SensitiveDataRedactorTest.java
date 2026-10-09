@@ -29,7 +29,7 @@ class SensitiveDataRedactorTest {
     @DisplayName("D9 敏感 key 匹配集默认全部拒绝")
     void defaultSensitiveKeySetMustBeDenied() {
         SensitiveDataRedactor redactor = SensitiveDataRedactor.withDefaults();
-        for (String key : new String[] {
+        for (String key : new String[]{
                 "privateKey", "private_key", "mnemonic", "seed",
                 "seedPhrase", "secretKey", "keystore"}) {
             assertThat(redactor.isSensitive(key)).as("key %s 应被判定为敏感", key).isTrue();

@@ -75,7 +75,8 @@ flowchart TD
 
 1. 外部父 POM：保留 `groupId/artifactId/version`，不声明 `relativePath`。
 2. reactor 内部父 POM：保留 `groupId/artifactId/version`，不声明 `relativePath`；父坐标由 Maven 4 reactor 解析。
-3. 本规则已通过 Maven 4.0.0-rc-6 的非默认父目录场景验证。仅保留 `relativePath` 会触发模型告警；只保留 `groupId/artifactId` 则无法在真实多层 reactor 中解析父版本。
+3. 本规则已通过 Maven 4.0.0-rc-6 的非默认父目录场景验证。仅保留 `relativePath` 会触发模型告警；只保留 `groupId/artifactId`
+   则无法在真实多层 reactor 中解析父版本。
 4. 4.x 聚合仍使用 `<subprojects>`，不得退回 `<modules>`。
 
 ### 可观察验收
