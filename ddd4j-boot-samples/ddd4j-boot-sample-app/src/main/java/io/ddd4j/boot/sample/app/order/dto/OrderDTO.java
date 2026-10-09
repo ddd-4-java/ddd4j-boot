@@ -2,6 +2,7 @@ package io.ddd4j.boot.sample.app.order.dto;
 
 import io.ddd4j.boot.sample.domain.order.model.vo.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -206,7 +207,8 @@ public class OrderDTO implements Serializable {
             if (this$zipCode == null ? other$zipCode != null : !this$zipCode.equals(other$zipCode)) return false;
             final java.lang.Object this$fullAddress = this.getFullAddress();
             final java.lang.Object other$fullAddress = other.getFullAddress();
-            if (this$fullAddress == null ? other$fullAddress != null : !this$fullAddress.equals(other$fullAddress)) return false;
+            if (this$fullAddress == null ? other$fullAddress != null : !this$fullAddress.equals(other$fullAddress))
+                return false;
             return true;
         }
 
@@ -335,16 +337,20 @@ public class OrderDTO implements Serializable {
             if (this$quantity == null ? other$quantity != null : !this$quantity.equals(other$quantity)) return false;
             final java.lang.Object this$productId = this.getProductId();
             final java.lang.Object other$productId = other.getProductId();
-            if (this$productId == null ? other$productId != null : !this$productId.equals(other$productId)) return false;
+            if (this$productId == null ? other$productId != null : !this$productId.equals(other$productId))
+                return false;
             final java.lang.Object this$productName = this.getProductName();
             final java.lang.Object other$productName = other.getProductName();
-            if (this$productName == null ? other$productName != null : !this$productName.equals(other$productName)) return false;
+            if (this$productName == null ? other$productName != null : !this$productName.equals(other$productName))
+                return false;
             final java.lang.Object this$unitPrice = this.getUnitPrice();
             final java.lang.Object other$unitPrice = other.getUnitPrice();
-            if (this$unitPrice == null ? other$unitPrice != null : !this$unitPrice.equals(other$unitPrice)) return false;
+            if (this$unitPrice == null ? other$unitPrice != null : !this$unitPrice.equals(other$unitPrice))
+                return false;
             final java.lang.Object this$totalPrice = this.getTotalPrice();
             final java.lang.Object other$totalPrice = other.getTotalPrice();
-            if (this$totalPrice == null ? other$totalPrice != null : !this$totalPrice.equals(other$totalPrice)) return false;
+            if (this$totalPrice == null ? other$totalPrice != null : !this$totalPrice.equals(other$totalPrice))
+                return false;
             final java.lang.Object this$currency = this.getCurrency();
             final java.lang.Object other$currency = other.getCurrency();
             if (this$currency == null ? other$currency != null : !this$currency.equals(other$currency)) return false;
@@ -645,16 +651,19 @@ public class OrderDTO implements Serializable {
         if (this$status == null ? other$status != null : !this$status.equals(other$status)) return false;
         final java.lang.Object this$statusDescription = this.getStatusDescription();
         final java.lang.Object other$statusDescription = other.getStatusDescription();
-        if (this$statusDescription == null ? other$statusDescription != null : !this$statusDescription.equals(other$statusDescription)) return false;
+        if (this$statusDescription == null ? other$statusDescription != null : !this$statusDescription.equals(other$statusDescription))
+            return false;
         final java.lang.Object this$totalAmount = this.getTotalAmount();
         final java.lang.Object other$totalAmount = other.getTotalAmount();
-        if (this$totalAmount == null ? other$totalAmount != null : !this$totalAmount.equals(other$totalAmount)) return false;
+        if (this$totalAmount == null ? other$totalAmount != null : !this$totalAmount.equals(other$totalAmount))
+            return false;
         final java.lang.Object this$currency = this.getCurrency();
         final java.lang.Object other$currency = other.getCurrency();
         if (this$currency == null ? other$currency != null : !this$currency.equals(other$currency)) return false;
         final java.lang.Object this$shippingAddress = this.getShippingAddress();
         final java.lang.Object other$shippingAddress = other.getShippingAddress();
-        if (this$shippingAddress == null ? other$shippingAddress != null : !this$shippingAddress.equals(other$shippingAddress)) return false;
+        if (this$shippingAddress == null ? other$shippingAddress != null : !this$shippingAddress.equals(other$shippingAddress))
+            return false;
         final java.lang.Object this$remark = this.getRemark();
         final java.lang.Object other$remark = other.getRemark();
         if (this$remark == null ? other$remark != null : !this$remark.equals(other$remark)) return false;
@@ -663,10 +672,12 @@ public class OrderDTO implements Serializable {
         if (this$paidTime == null ? other$paidTime != null : !this$paidTime.equals(other$paidTime)) return false;
         final java.lang.Object this$shippedTime = this.getShippedTime();
         final java.lang.Object other$shippedTime = other.getShippedTime();
-        if (this$shippedTime == null ? other$shippedTime != null : !this$shippedTime.equals(other$shippedTime)) return false;
+        if (this$shippedTime == null ? other$shippedTime != null : !this$shippedTime.equals(other$shippedTime))
+            return false;
         final java.lang.Object this$deliveredTime = this.getDeliveredTime();
         final java.lang.Object other$deliveredTime = other.getDeliveredTime();
-        if (this$deliveredTime == null ? other$deliveredTime != null : !this$deliveredTime.equals(other$deliveredTime)) return false;
+        if (this$deliveredTime == null ? other$deliveredTime != null : !this$deliveredTime.equals(other$deliveredTime))
+            return false;
         final java.lang.Object this$createdAt = this.getCreatedAt();
         final java.lang.Object other$createdAt = other.getCreatedAt();
         if (this$createdAt == null ? other$createdAt != null : !this$createdAt.equals(other$createdAt)) return false;

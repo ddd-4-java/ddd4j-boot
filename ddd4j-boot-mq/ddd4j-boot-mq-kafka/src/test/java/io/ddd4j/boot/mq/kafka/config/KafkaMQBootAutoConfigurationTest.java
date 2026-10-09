@@ -24,8 +24,7 @@ class KafkaMQBootAutoConfigurationTest {
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
             .withConfiguration(AutoConfigurations.of(Ddd4jMQAutoConfiguration.class, KafkaMQBootAutoConfiguration.class))
             .withUserConfiguration(CustomClientConfiguration.class)
-            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=kafka")
-;
+            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=kafka");
 
     @Test
     void defaultAssemblyShouldCreateClientAndProperties() {
@@ -62,7 +61,7 @@ class KafkaMQBootAutoConfigurationTest {
     @Test
     void customClientShouldTakePrecedence() {
         runner.run(context -> assertThat(context.getBean(KafkaMQClient.class))
-                        .isSameAs(context.getBean("customKafkaMQClient")));
+                .isSameAs(context.getBean("customKafkaMQClient")));
     }
 
     @Configuration(proxyBeanMethods = false)

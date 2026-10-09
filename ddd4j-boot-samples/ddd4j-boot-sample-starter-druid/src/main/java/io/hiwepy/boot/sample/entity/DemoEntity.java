@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.ddd4j.core.ddd.model.Entity;
 
 
-
 /**
  * <p>
  * Demo示例表
