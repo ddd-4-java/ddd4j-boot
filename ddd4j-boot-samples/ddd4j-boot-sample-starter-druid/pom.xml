@@ -97,7 +97,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>io.github.easy4j</groupId><artifactId>validation-mimetypes-spring-boot-starter</artifactId>
+            <groupId>io.github.easy4j</groupId>
+            <artifactId>validation-mimetypes-spring-boot-starter</artifactId>
             <version>${spring-boot-starter-validation-mimetypes.version}</version>
         </dependency>
         <dependency>
@@ -135,7 +136,8 @@
         </dependency>
         <!-- For Redis -->
         <dependency>
-            <groupId>io.github.easy4j</groupId><artifactId>redistpl-plus-spring-boot-starter</artifactId>
+            <groupId>io.github.easy4j</groupId>
+            <artifactId>redistpl-plus-spring-boot-starter</artifactId>
             <version>${spring-boot-starter-redistpl-plus.version}</version>
         </dependency>
         <!-- For Log4j2 -->

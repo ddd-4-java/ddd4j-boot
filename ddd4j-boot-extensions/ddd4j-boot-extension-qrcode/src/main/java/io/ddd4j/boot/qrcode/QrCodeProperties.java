@@ -2,7 +2,9 @@ package io.ddd4j.boot.qrcode;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-/** QR code service and HTTP delivery settings. */
+/**
+ * QR code service and HTTP delivery settings.
+ */
 @ConfigurationProperties(prefix = QrCodeProperties.PREFIX)
 public class QrCodeProperties {
 
