@@ -8,7 +8,6 @@ import io.ddd4j.boot.sample.order.domain.model.vo.OrderStatus;
 import io.ddd4j.core.ddd.model.Entity;
 
 
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

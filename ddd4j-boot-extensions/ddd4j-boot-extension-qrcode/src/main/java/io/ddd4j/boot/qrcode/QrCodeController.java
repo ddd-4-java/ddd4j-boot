@@ -25,7 +25,9 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
-/** Opt-in QR code HTTP endpoints. Remote URL decoding is intentionally unsupported. */
+/**
+ * Opt-in QR code HTTP endpoints. Remote URL decoding is intentionally unsupported.
+ */
 @RestController
 @RequestMapping("/qrcodes")
 public class QrCodeController {
@@ -173,7 +175,7 @@ public class QrCodeController {
         private final String errorMessage;
 
         public BatchItemResponse(String itemId, boolean success, String dataUri,
-                String errorCode, String errorMessage) {
+                                 String errorCode, String errorMessage) {
             this.itemId = itemId;
             this.success = success;
             this.dataUri = dataUri;

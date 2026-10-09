@@ -38,14 +38,37 @@ public class CreateOrderRequest implements Serializable {
     @Valid
     private List<OrderItemRequest> items;
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
-    public AddressRequest getShippingAddress() { return shippingAddress; }
-    public void setShippingAddress(AddressRequest shippingAddress) { this.shippingAddress = shippingAddress; }
-    public String getRemark() { return remark; }
-    public void setRemark(String remark) { this.remark = remark; }
-    public List<OrderItemRequest> getItems() { return items; }
-    public void setItems(List<OrderItemRequest> items) { this.items = items; }
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public AddressRequest getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(AddressRequest shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public List<OrderItemRequest> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItemRequest> items) {
+        this.items = items;
+    }
 
     /**
      * 订单项请求。
@@ -74,16 +97,45 @@ public class CreateOrderRequest implements Serializable {
         @Schema(description = "货币类型", example = "CNY", defaultValue = "CNY")
         private String currency = "CNY";
 
-        public String getProductId() { return productId; }
-        public void setProductId(String productId) { this.productId = productId; }
-        public String getProductName() { return productName; }
-        public void setProductName(String productName) { this.productName = productName; }
-        public Integer getQuantity() { return quantity; }
-        public void setQuantity(Integer quantity) { this.quantity = quantity; }
-        public BigDecimal getUnitPrice() { return unitPrice; }
-        public void setUnitPrice(BigDecimal unitPrice) { this.unitPrice = unitPrice; }
-        public String getCurrency() { return currency; }
-        public void setCurrency(String currency) { this.currency = currency; }
+        public String getProductId() {
+            return productId;
+        }
+
+        public void setProductId(String productId) {
+            this.productId = productId;
+        }
+
+        public String getProductName() {
+            return productName;
+        }
+
+        public void setProductName(String productName) {
+            this.productName = productName;
+        }
+
+        public Integer getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(Integer quantity) {
+            this.quantity = quantity;
+        }
+
+        public BigDecimal getUnitPrice() {
+            return unitPrice;
+        }
+
+        public void setUnitPrice(BigDecimal unitPrice) {
+            this.unitPrice = unitPrice;
+        }
+
+        public String getCurrency() {
+            return currency;
+        }
+
+        public void setCurrency(String currency) {
+            this.currency = currency;
+        }
     }
 
     /**
@@ -111,15 +163,44 @@ public class CreateOrderRequest implements Serializable {
         @Schema(description = "邮编", example = "518000")
         private String zipCode;
 
-        public String getProvince() { return province; }
-        public void setProvince(String province) { this.province = province; }
-        public String getCity() { return city; }
-        public void setCity(String city) { this.city = city; }
-        public String getDistrict() { return district; }
-        public void setDistrict(String district) { this.district = district; }
-        public String getDetail() { return detail; }
-        public void setDetail(String detail) { this.detail = detail; }
-        public String getZipCode() { return zipCode; }
-        public void setZipCode(String zipCode) { this.zipCode = zipCode; }
+        public String getProvince() {
+            return province;
+        }
+
+        public void setProvince(String province) {
+            this.province = province;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getDistrict() {
+            return district;
+        }
+
+        public void setDistrict(String district) {
+            this.district = district;
+        }
+
+        public String getDetail() {
+            return detail;
+        }
+
+        public void setDetail(String detail) {
+            this.detail = detail;
+        }
+
+        public String getZipCode() {
+            return zipCode;
+        }
+
+        public void setZipCode(String zipCode) {
+            this.zipCode = zipCode;
+        }
     }
 }

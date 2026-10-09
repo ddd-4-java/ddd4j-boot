@@ -16,6 +16,7 @@ import io.ddd4j.boot.sample.infrastructure.order.persistence.entity.OrderItemEnt
 import io.ddd4j.boot.sample.infrastructure.order.persistence.mapper.OrderItemMapper;
 import io.ddd4j.boot.sample.infrastructure.order.persistence.mapper.OrderMapper;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

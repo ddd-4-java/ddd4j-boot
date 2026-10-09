@@ -136,7 +136,7 @@ public class OrderDTO implements Serializable {
      * 用于传输订单的收货地址信息
      */
     @Schema(description = "地址信息")
-    
+
     public static class AddressDTO implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -159,61 +159,61 @@ public class OrderDTO implements Serializable {
         private String fullAddress;
 
 
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getFullAddress() {
-        return fullAddress;
-    }
-
-    public void setFullAddress(String fullAddress) {
-        this.fullAddress = fullAddress;
-    }
+        public String getProvince() {
+            return province;
         }
+
+        public void setProvince(String province) {
+            this.province = province;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getDistrict() {
+            return district;
+        }
+
+        public void setDistrict(String district) {
+            this.district = district;
+        }
+
+        public String getDetail() {
+            return detail;
+        }
+
+        public void setDetail(String detail) {
+            this.detail = detail;
+        }
+
+        public String getZipCode() {
+            return zipCode;
+        }
+
+        public void setZipCode(String zipCode) {
+            this.zipCode = zipCode;
+        }
+
+        public String getFullAddress() {
+            return fullAddress;
+        }
+
+        public void setFullAddress(String fullAddress) {
+            this.fullAddress = fullAddress;
+        }
+    }
 
     /**
      * 订单项DTO
      * 用于传输订单项（商品）的详细信息
      */
     @Schema(description = "订单项信息")
-    
+
     public static class OrderItemDTO implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -239,62 +239,62 @@ public class OrderDTO implements Serializable {
         private String currency;
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public java.math.BigDecimal getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(java.math.BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public java.math.BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(java.math.BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
+        public Long getId() {
+            return id;
         }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getProductId() {
+            return productId;
+        }
+
+        public void setProductId(String productId) {
+            this.productId = productId;
+        }
+
+        public String getProductName() {
+            return productName;
+        }
+
+        public void setProductName(String productName) {
+            this.productName = productName;
+        }
+
+        public Integer getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(Integer quantity) {
+            this.quantity = quantity;
+        }
+
+        public java.math.BigDecimal getUnitPrice() {
+            return unitPrice;
+        }
+
+        public void setUnitPrice(java.math.BigDecimal unitPrice) {
+            this.unitPrice = unitPrice;
+        }
+
+        public java.math.BigDecimal getTotalPrice() {
+            return totalPrice;
+        }
+
+        public void setTotalPrice(java.math.BigDecimal totalPrice) {
+            this.totalPrice = totalPrice;
+        }
+
+        public String getCurrency() {
+            return currency;
+        }
+
+        public void setCurrency(String currency) {
+            this.currency = currency;
+        }
+    }
 
 
     public Long getId() {

@@ -1,26 +1,27 @@
 # ddd4j-boot 3.4.x ↔ ddd4j 2.0.x 迁移指南
 
-> **规格与计划**：本文档是面向用户的迁移指南。完整的实施计划与设计规格见 [docs/superpowers/](superpowers/README.md)，主计划见 [2026-08-12-ddd4j-boot-3.4x-adapt-ddd4j-2.0x.md](superpowers/plans/2026-08-12-ddd4j-boot-3.4x-adapt-ddd4j-2.0x.md)。
+> **规格与计划**：本文档是面向用户的迁移指南。完整的实施计划与设计规格见 [docs/superpowers/](superpowers/README.md)
+> ，主计划见 [2026-08-12-ddd4j-boot-3.4x-adapt-ddd4j-2.0x.md](superpowers/plans/2026-08-12-ddd4j-boot-3.4x-adapt-ddd4j-2.0x.md)。
 
 本文档说明 `ddd4j-boot feature/3.4.x` 如何消费 `ddd4j feature/2.0.x`，
 以及从旧版本（Spring Boot 2.x / ddd4j 1.x 生态）迁移到当前基线的关键变化。
 
 ## 1. 版本基线
 
-| 组件 | 版本 |
-| --- | --- |
-| ddd4j-boot | `3.4.x.20260630-SNAPSHOT` |
-| ddd4j | `2.0.x.20260630-SNAPSHOT` |
-| Spring Boot | `3.4.13` |
-| Spring Framework | `6.2.19` |
-| Java | 17（强制基线，21 兼容） |
+| 组件             | 版本                      |
+|------------------|---------------------------|
+| ddd4j-boot       | `3.4.x.20260630-SNAPSHOT` |
+| ddd4j            | `2.0.x.20260630-SNAPSHOT` |
+| Spring Boot      | `3.4.13`                  |
+| Spring Framework | `6.2.19`                  |
+| Java             | 17（强制基线，21 兼容）   |
 
 两条版本线共用一个 revision 风格（`3.4.x` / `2.0.x` + 日期快照），通过根 POM 的
 `${revision}` 与 `${ddd4j.version}` 统一管理。
 
 ## 2. ddd4j-boot 的定位
 
-`ddd4j-boot` 只承担四类职责，**不复制上游已实现的能力**：
+`ddd4j-boot` 只承担四类职责， **不复制上游已实现的能力**：
 
 1. **依赖选择器**：`ddd4j-boot-dependencies` 统一管理第三方与 ddd4j 构件版本，
    `ddd4j-boot-bom` 供外部项目 import。
@@ -35,11 +36,11 @@
 
 ### 3.1 实体基类
 
-| 旧（1.x / 2.0 早期） | 新（2.0.x） |
-| --- | --- |
-| `io.ddd4j.core.entity.BaseEntity` | `io.ddd4j.core.ddd.model.Entity<ID>`（接口） |
-| `extends BaseEntity<DemoEntity>` | `implements Entity<Long>` + `@Override public Long id()` |
-| `io.ddd4j.core.entity.BaseEntity` 泛型自身引用 | 不再需要（`Entity<ID>` 只声明 `ID id()`） |
+| 旧（1.x / 2.0 早期）                           | 新（2.0.x）                                              |
+|------------------------------------------------|----------------------------------------------------------|
+| `io.ddd4j.core.entity.BaseEntity`              | `io.ddd4j.core.ddd.model.Entity<ID>`（接口）             |
+| `extends BaseEntity<DemoEntity>`               | `implements Entity<Long>` + `@Override public Long id()` |
+| `io.ddd4j.core.entity.BaseEntity` 泛型自身引用 | 不再需要（`Entity<ID>` 只声明 `ID id()`）                |
 
 ```java
 // 旧写法（已删除）
@@ -62,9 +63,9 @@ public class Order implements Entity<Long> {
 - **只有 `findById` 与 `save` 两个抽象方法**，其余（`updateById`/`deleteById`/`findList`/`page`/`count` 等）
   均为 default 方法。
 - 注册与查找：
-  - 静态注册：`RepositoryRegistry.register(Order.class, repository)` / `unregister(Order.class)`
-  - **Spring Boot 自动注册**：引入 `ddd4j-boot-core` 后，容器中的 `Repository` Bean 会被
-    `Ddd4jRepositoryRegistrar`（BeanPostProcessor）自动注册；上下文关闭时对称注销。
+    - 静态注册：`RepositoryRegistry.register(Order.class, repository)` / `unregister(Order.class)`
+    - **Spring Boot 自动注册**：引入 `ddd4j-boot-core` 后，容器中的 `Repository` Bean 会被
+      `Ddd4jRepositoryRegistrar`（BeanPostProcessor）自动注册；上下文关闭时对称注销。
 - 旧版的 `RichRepository` 已被合并进 `Repository`；`Query<P>` 已绑定 PO 类型，不需要再区分两个接口。
 
 ### 3.3 CQRS
@@ -78,11 +79,11 @@ public class Order implements Entity<Long> {
 
 ### 3.4 Web 包结构
 
-| 旧 | 新（2.0.x） |
-| --- | --- |
-| `io.ddd4j.spring.web.BaseController` | `io.ddd4j.web.webmvc.controller.BaseController`（构造器注入 `NestedMessageSource` + `Mapper`） |
-| `io.ddd4j.web.exception.BaseExceptionHandler` | `io.ddd4j.web.webmvc.exception.BaseExceptionHandler` |
-| `io.ddd4j.web.webmvc.webmvc.*`（笔误包） | `io.ddd4j.web.webmvc.*` |
+| 旧                                            | 新（2.0.x）                                                                                    |
+|-----------------------------------------------|------------------------------------------------------------------------------------------------|
+| `io.ddd4j.spring.web.BaseController`          | `io.ddd4j.web.webmvc.controller.BaseController`（构造器注入 `NestedMessageSource` + `Mapper`） |
+| `io.ddd4j.web.exception.BaseExceptionHandler` | `io.ddd4j.web.webmvc.exception.BaseExceptionHandler`                                           |
+| `io.ddd4j.web.webmvc.webmvc.*`（笔误包）      | `io.ddd4j.web.webmvc.*`                                                                        |
 
 ### 3.5 其他已删除/重命名类型
 
@@ -100,7 +101,7 @@ public class Order implements Entity<Long> {
 - **`MQEventSerialization`**：消息序列化（默认 `JsonMQEventSerialization`）
 - **`MQEventStorer`**：可选的事件持久化端口
 
-每个 broker 在 boot 侧只保留**一个薄适配器**自动配置，注册上游 `XxxMQClient` Bean
+每个 broker 在 boot 侧只保留 **一个薄适配器**自动配置，注册上游 `XxxMQClient` Bean
 并导入 `Ddd4jMQRegistrarConfiguration` 驱动监听器装配：
 
 ```java
@@ -133,44 +134,44 @@ ddd4j:
 
 ## 5. 配置属性索引
 
-| 前缀 | 模块 | 说明 |
-| --- | --- | --- |
-| `ddd4j.mq.enabled` / `ddd4j.mq.broker` | boot-mq-core / broker | MQ 总开关与 broker 选择 |
-| `ddd4j.mq.<broker>.*` | 各 broker | broker 专属配置（kafka/rabbit/rocket/...） |
-| `ddd4j.web.webflux.enabled` | boot-web-webflux | WebFlux 装配开关（默认 true） |
-| `ddd4j.web.public-paths` / `ddd4j.web.trust-forwarded-headers` | boot-web-webmvc | 公开路径 / 信任转发头 |
-| `ddd4j.akka.enabled` | extension-akka | Akka 开关（默认 true） |
-| `ddd4j.cola.enabled` | extension-cola | COLA 集成开关（默认 true） |
-| `ddd4j.dubbo.enabled` | extension-dubbo | Dubbo 开关（默认 true） |
-| `ddd4j.excel.enabled` | extension-excel | Excel 开关（默认 true） |
-| `ddd4j.qrcode.enabled` / `ddd4j.qrcode.web.enabled` | extension-qrcode | 二维码开关 / Web 端点开关（web 需显式 true） |
-| `ddd4j.datascope.enabled` | data-datascope | 数据权限开关（默认 true） |
-| `ddd4j.logs.enabled` | data-logs | API 日志开关（默认 true） |
-| `crypto.enabled`（历史前缀，无 ddd4j 命名空间） | data-crypto | 加解密开关（默认 true） |
-| `license.*`（历史前缀） | auth-license | License 配置（subject/alias/storePass/路径） |
-| `ddd4j.sequence` | data-external | 全局序列号（雪花）配置 |
+| 前缀                                                           | 模块                  | 说明                                         |
+|----------------------------------------------------------------|-----------------------|----------------------------------------------|
+| `ddd4j.mq.enabled` / `ddd4j.mq.broker`                         | boot-mq-core / broker | MQ 总开关与 broker 选择                      |
+| `ddd4j.mq.<broker>.*`                                          | 各 broker             | broker 专属配置（kafka/rabbit/rocket/...）   |
+| `ddd4j.web.webflux.enabled`                                    | boot-web-webflux      | WebFlux 装配开关（默认 true）                |
+| `ddd4j.web.public-paths` / `ddd4j.web.trust-forwarded-headers` | boot-web-webmvc       | 公开路径 / 信任转发头                        |
+| `ddd4j.akka.enabled`                                           | extension-akka        | Akka 开关（默认 true）                       |
+| `ddd4j.cola.enabled`                                           | extension-cola        | COLA 集成开关（默认 true）                   |
+| `ddd4j.dubbo.enabled`                                          | extension-dubbo       | Dubbo 开关（默认 true）                      |
+| `ddd4j.excel.enabled`                                          | extension-excel       | Excel 开关（默认 true）                      |
+| `ddd4j.qrcode.enabled` / `ddd4j.qrcode.web.enabled`            | extension-qrcode      | 二维码开关 / Web 端点开关（web 需显式 true） |
+| `ddd4j.datascope.enabled`                                      | data-datascope        | 数据权限开关（默认 true）                    |
+| `ddd4j.logs.enabled`                                           | data-logs             | API 日志开关（默认 true）                    |
+| `crypto.enabled`（历史前缀，无 ddd4j 命名空间）                | data-crypto           | 加解密开关（默认 true）                      |
+| `license.*`（历史前缀）                                        | auth-license          | License 配置（subject/alias/storePass/路径） |
+| `ddd4j.sequence`                                               | data-external         | 全局序列号（雪花）配置                       |
 
 ## 6. 已知注意事项
 
 ### 6.1 上游 BOM 缺陷与 Boot 侧 workaround
 
-以下问题源自上游 `ddd4j` BOM/模块，boot 侧已做适配，迁移时**不要回退这些修复**：
+以下问题源自上游 `ddd4j` BOM/模块，boot 侧已做适配，迁移时 **不要回退这些修复**：
 
-| 问题 | Boot 侧处理 |
-| --- | --- |
-| `MQProperties` / `CryptoProperties` / `ExternalProperties` / `SequenceProperties` / `LicenseProperties` 是零 Spring 依赖纯 POJO（无 `@ConfigurationProperties` 注解） | 不用 `@EnableConfigurationProperties`，改用 `Binder` 手动绑定 |
-| 上游 `Ddd4jMQPropertiesConfiguration.mqEventStorer` 存在循环依赖 | `Ddd4jMQAutoConfiguration` 不导入该配置类，自行 Binder 绑定 |
-| 上游 POM 无效导致传递依赖丢失（`jackson-extension`、`truelicense-core/xml`） | Boot BOM 补充版本管理 + 模块显式声明 |
-| `resilience4j` 上游管理 2.4.0（Central 不存在） | Boot BOM 统一 2.2.0（全家桶直接条目） |
-| `opentelemetry-api` 被第三方 BOM 压到 1.25.0（pulsar 需要 1.40+） | Boot BOM 统一 1.57.0 |
-| `jedis` 7.1.0 缺少 `RedisClient`（上游需要 7.4.1+） | Boot BOM 对齐 7.5.2 |
-| `rocketmq-remoting` 与 client 版本错位 | Boot BOM 管理 remoting/common 与 client 同版本 |
-| 若干 `3.3.x-SNAPSHOT` 构件在远端不存在 | 降级到远端可用版本（如 redistpl-plus 2.3.x、validation-mimetypes 2.3.x） |
+| 问题                                                                                                                                                                  | Boot 侧处理                                                              |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| `MQProperties` / `CryptoProperties` / `ExternalProperties` / `SequenceProperties` / `LicenseProperties` 是零 Spring 依赖纯 POJO（无 `@ConfigurationProperties` 注解） | 不用 `@EnableConfigurationProperties`，改用 `Binder` 手动绑定            |
+| 上游 `Ddd4jMQPropertiesConfiguration.mqEventStorer` 存在循环依赖                                                                                                      | `Ddd4jMQAutoConfiguration` 不导入该配置类，自行 Binder 绑定              |
+| 上游 POM 无效导致传递依赖丢失（`jackson-extension`、`truelicense-core/xml`）                                                                                          | Boot BOM 补充版本管理 + 模块显式声明                                     |
+| `resilience4j` 上游管理 2.4.0（Central 不存在）                                                                                                                       | Boot BOM 统一 2.2.0（全家桶直接条目）                                    |
+| `opentelemetry-api` 被第三方 BOM 压到 1.25.0（pulsar 需要 1.40+）                                                                                                     | Boot BOM 统一 1.57.0                                                     |
+| `jedis` 7.1.0 缺少 `RedisClient`（上游需要 7.4.1+）                                                                                                                   | Boot BOM 对齐 7.5.2                                                      |
+| `rocketmq-remoting` 与 client 版本错位                                                                                                                                | Boot BOM 管理 remoting/common 与 client 同版本                           |
+| 若干 `3.3.x-SNAPSHOT` 构件在远端不存在                                                                                                                                | 降级到远端可用版本（如 redistpl-plus 2.3.x、validation-mimetypes 2.3.x） |
 
 ### 6.2 Lombok
 
-项目父 POM（`ddd4j-boot-dependencies`）已配置 Lombok annotation processor。
-**模块代码可以继续使用 Lombok 注解**（`@Data` / `@Slf4j` 等）；不使用 Lombok 的模块
+项目父 POM（`ddd4j-boot-dependencies`）已配置 Lombok annotation processor。 **模块代码可以继续使用 Lombok 注解**（`@Data` /
+`@Slf4j` 等）；不使用 Lombok 的模块
 请保持显式 JavaBean 风格。不要在同一个类上同时写 Lombok 注解和手写方法（会产生重复方法）。
 
 ### 6.3 外部基础设施测试
