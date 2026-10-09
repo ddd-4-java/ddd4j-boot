@@ -1,6 +1,7 @@
 package io.ddd4j.boot.sample.app.order.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
@@ -76,10 +77,12 @@ public class ShipOrderCommand implements Serializable {
         if (this$orderNo == null ? other$orderNo != null : !this$orderNo.equals(other$orderNo)) return false;
         final java.lang.Object this$logisticsCompany = this.getLogisticsCompany();
         final java.lang.Object other$logisticsCompany = other.getLogisticsCompany();
-        if (this$logisticsCompany == null ? other$logisticsCompany != null : !this$logisticsCompany.equals(other$logisticsCompany)) return false;
+        if (this$logisticsCompany == null ? other$logisticsCompany != null : !this$logisticsCompany.equals(other$logisticsCompany))
+            return false;
         final java.lang.Object this$trackingNumber = this.getTrackingNumber();
         final java.lang.Object other$trackingNumber = other.getTrackingNumber();
-        if (this$trackingNumber == null ? other$trackingNumber != null : !this$trackingNumber.equals(other$trackingNumber)) return false;
+        if (this$trackingNumber == null ? other$trackingNumber != null : !this$trackingNumber.equals(other$trackingNumber))
+            return false;
         return true;
     }
 

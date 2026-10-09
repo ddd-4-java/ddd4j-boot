@@ -4,8 +4,6 @@ import io.ddd4j.boot.sample.order.application.dto.OrderDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class OrderPageResponse implements Serializable {
     }
 
     public OrderPageResponse(List<OrderDTO> records, Long total, Integer pageNum, Integer pageSize,
-            Integer totalPages, Boolean hasPrevious, Boolean hasNext) {
+                             Integer totalPages, Boolean hasPrevious, Boolean hasNext) {
         this.records = records;
         this.total = total;
         this.pageNum = pageNum;

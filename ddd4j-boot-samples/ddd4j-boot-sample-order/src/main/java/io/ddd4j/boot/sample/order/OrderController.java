@@ -5,10 +5,12 @@ import io.ddd4j.sample.order.application.AddOrderLineCommand;
 import io.ddd4j.sample.order.application.CreateOrderCommand;
 import io.ddd4j.sample.order.application.OrderApplicationService;
 import io.ddd4j.sample.order.application.OrderReadModel;
+
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

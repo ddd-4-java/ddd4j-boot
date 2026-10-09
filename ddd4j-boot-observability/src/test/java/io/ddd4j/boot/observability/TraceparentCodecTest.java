@@ -12,7 +12,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class TraceparentCodecTest {
 
-    /** W3C 规范示例值（RFC 4122 UUID 大小写混合不允许，规范示例为小写十六进制） */
+    /**
+     * W3C 规范示例值（RFC 4122 UUID 大小写混合不允许，规范示例为小写十六进制）
+     */
     private static final String VALID = "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01";
 
     @Test

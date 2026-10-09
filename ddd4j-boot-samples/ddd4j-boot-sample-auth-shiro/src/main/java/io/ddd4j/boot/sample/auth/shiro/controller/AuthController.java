@@ -45,14 +45,18 @@ public class AuthController {
     @PostMapping("/logout")
     public Map<String, Object> logout() {
         SubjectKit.logout();
-        Map<String, Object> result = new HashMap<>(); result.put("success", true); return result;
+        Map<String, Object> result = new HashMap<>();
+        result.put("success", true);
+        return result;
     }
 
     @GetMapping("/me")
     public Map<String, Object> me() {
         AuthPrincipal principal = SubjectKit.getPrincipal();
         if (principal == null) {
-            Map<String, Object> result = new HashMap<>(); result.put("authenticated", false); return result;
+            Map<String, Object> result = new HashMap<>();
+            result.put("authenticated", false);
+            return result;
         }
         Map<String, Object> result = new HashMap<>();
         result.put("authenticated", true);
@@ -64,18 +68,26 @@ public class AuthController {
     @GetMapping("/check/permission")
     public Map<String, Object> checkPermission(String permission) {
         boolean has = SubjectKit.hasPermission(permission);
-        Map<String, Object> result = new HashMap<>(); result.put("permission", permission); result.put("has", has); return result;
+        Map<String, Object> result = new HashMap<>();
+        result.put("permission", permission);
+        result.put("has", has);
+        return result;
     }
 
     @GetMapping("/check/role")
     public Map<String, Object> checkRole(String role) {
         boolean has = SubjectKit.hasRole(role);
-        Map<String, Object> result = new HashMap<>(); result.put("role", role); result.put("has", has); return result;
+        Map<String, Object> result = new HashMap<>();
+        result.put("role", role);
+        result.put("has", has);
+        return result;
     }
 
     @GetMapping("/status")
     public Map<String, Object> status() {
-        Map<String, Object> result = new HashMap<>(); result.put("login", SubjectKit.isLogin()); return result;
+        Map<String, Object> result = new HashMap<>();
+        result.put("login", SubjectKit.isLogin());
+        return result;
     }
 
 }

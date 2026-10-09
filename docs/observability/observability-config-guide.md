@@ -8,7 +8,7 @@
 ## 0. 本线范围裁定（design 风险预案）
 
 Spring Boot 2.x（2.3–2.7）生态无 micrometer-tracing / OpenTelemetry 同代栈（Boot 3.0 才引入
-micrometer-tracing BOM），本线为**纯 Java 退化最小集**，不引入 micrometer-tracing/OTel 依赖：
+micrometer-tracing BOM），本线为 **纯 Java 退化最小集**，不引入 micrometer-tracing/OTel 依赖：
 
 - `TraceparentCodec`：W3C traceparent 编解码/生成（纯 Java，无 OTel SpanContext 转换）；
 - `TraceContextBridge` + `MdcTtlTraceContextBridge`：traceId/correlationId/causationId

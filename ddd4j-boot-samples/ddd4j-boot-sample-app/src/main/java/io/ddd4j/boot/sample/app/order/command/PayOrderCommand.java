@@ -1,6 +1,7 @@
 package io.ddd4j.boot.sample.app.order.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
@@ -75,7 +76,8 @@ public class PayOrderCommand implements Serializable {
         if (this$orderNo == null ? other$orderNo != null : !this$orderNo.equals(other$orderNo)) return false;
         final java.lang.Object this$paymentMethod = this.getPaymentMethod();
         final java.lang.Object other$paymentMethod = other.getPaymentMethod();
-        if (this$paymentMethod == null ? other$paymentMethod != null : !this$paymentMethod.equals(other$paymentMethod)) return false;
+        if (this$paymentMethod == null ? other$paymentMethod != null : !this$paymentMethod.equals(other$paymentMethod))
+            return false;
         final java.lang.Object this$paymentNo = this.getPaymentNo();
         final java.lang.Object other$paymentNo = other.getPaymentNo();
         if (this$paymentNo == null ? other$paymentNo != null : !this$paymentNo.equals(other$paymentNo)) return false;

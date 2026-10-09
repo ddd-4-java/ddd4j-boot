@@ -1,6 +1,7 @@
 package io.ddd4j.boot.sample.demo.app.command;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.validation.constraints.NotBlank;
 
 /**

@@ -1,7 +1,6 @@
 package io.ddd4j.boot.sample.order.domain.event;
 
 
-
 /**
  * 订单发货事件
  */

@@ -51,7 +51,8 @@ public class OrderServiceClientImpl implements OrderServiceClient {
         log.debug("调用创建订单接口，用户ID: {}", request.getUserId());
 
         ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = post(baseUrl + API_PREFIX, request,
-                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() { });
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {
+                });
 
         return handleResponse(responseEntity.getBody());
     }
@@ -65,7 +66,8 @@ public class OrderServiceClientImpl implements OrderServiceClient {
 
         ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = post(
                 baseUrl + API_PREFIX + "/{orderId}/pay", request,
-                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() { }, orderId);
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {
+                }, orderId);
 
         return handleResponse(responseEntity.getBody());
     }
@@ -80,7 +82,8 @@ public class OrderServiceClientImpl implements OrderServiceClient {
 
         ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = post(
                 baseUrl + API_PREFIX + "/{orderId}/ship", request,
-                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() { }, orderId);
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {
+                }, orderId);
 
         return handleResponse(responseEntity.getBody());
     }
@@ -91,7 +94,8 @@ public class OrderServiceClientImpl implements OrderServiceClient {
 
         ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = post(
                 baseUrl + API_PREFIX + "/{orderId}/confirm-delivery", null,
-                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() { }, orderId);
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {
+                }, orderId);
 
         return handleResponse(responseEntity.getBody());
     }
@@ -102,7 +106,8 @@ public class OrderServiceClientImpl implements OrderServiceClient {
 
         ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = post(
                 baseUrl + API_PREFIX + "/{orderId}/complete", null,
-                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() { }, orderId);
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {
+                }, orderId);
 
         return handleResponse(responseEntity.getBody());
     }
@@ -116,7 +121,8 @@ public class OrderServiceClientImpl implements OrderServiceClient {
 
         ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = post(
                 baseUrl + API_PREFIX + "/{orderId}/cancel", request,
-                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() { }, orderId);
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {
+                }, orderId);
 
         return handleResponse(responseEntity.getBody());
     }
@@ -127,7 +133,8 @@ public class OrderServiceClientImpl implements OrderServiceClient {
 
         ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = get(
                 baseUrl + API_PREFIX + "/{id}",
-                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() { }, id);
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {
+                }, id);
 
         return handleResponse(responseEntity.getBody());
     }
@@ -138,7 +145,8 @@ public class OrderServiceClientImpl implements OrderServiceClient {
 
         ResponseEntity<ApiRestResponse<OrderResponse>> responseEntity = get(
                 baseUrl + API_PREFIX + "/order-no/{orderNo}",
-                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() { }, orderNo);
+                new ParameterizedTypeReference<ApiRestResponse<OrderResponse>>() {
+                }, orderNo);
 
         return handleResponse(responseEntity.getBody());
     }
@@ -149,7 +157,8 @@ public class OrderServiceClientImpl implements OrderServiceClient {
 
         ResponseEntity<ApiRestResponse<List<OrderResponse>>> responseEntity = get(
                 baseUrl + API_PREFIX + "/user/{userId}",
-                new ParameterizedTypeReference<ApiRestResponse<List<OrderResponse>>>() { }, userId);
+                new ParameterizedTypeReference<ApiRestResponse<List<OrderResponse>>>() {
+                }, userId);
 
         return handleResponse(responseEntity.getBody());
     }
@@ -164,7 +173,8 @@ public class OrderServiceClientImpl implements OrderServiceClient {
 
         ResponseEntity<ApiRestResponse<OrderPageResponse>> responseEntity = post(
                 baseUrl + API_PREFIX + "/query", query,
-                new ParameterizedTypeReference<ApiRestResponse<OrderPageResponse>>() { });
+                new ParameterizedTypeReference<ApiRestResponse<OrderPageResponse>>() {
+                });
 
         return handleResponse(responseEntity.getBody());
     }
@@ -186,12 +196,12 @@ public class OrderServiceClientImpl implements OrderServiceClient {
     }
 
     private <T> ResponseEntity<ApiRestResponse<T>> get(String uri,
-            ParameterizedTypeReference<ApiRestResponse<T>> responseType, Object... uriVariables) {
+                                                       ParameterizedTypeReference<ApiRestResponse<T>> responseType, Object... uriVariables) {
         return restTemplate.exchange(uri, HttpMethod.GET, HttpEntity.EMPTY, responseType, uriVariables);
     }
 
     private <T> ResponseEntity<ApiRestResponse<T>> post(String uri, Object body,
-            ParameterizedTypeReference<ApiRestResponse<T>> responseType, Object... uriVariables) {
+                                                        ParameterizedTypeReference<ApiRestResponse<T>> responseType, Object... uriVariables) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         return restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<Object>(body, headers),

@@ -5,7 +5,9 @@
 package io.ddd4j.boot.sample.web.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.validation.constraints.NotBlank;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @Schema(description = "xxx数据传输对象")
