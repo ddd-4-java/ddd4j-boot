@@ -12,6 +12,7 @@ import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
 import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.rocketmq.RocketMQClient;
 import io.ddd4j.mq.rocketmq.RocketMQProperties;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -24,8 +25,7 @@ class RocketMQBootAutoConfigurationTest {
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
             .withConfiguration(AutoConfigurations.of(Ddd4jMQAutoConfiguration.class, RocketMQBootAutoConfiguration.class))
             .withUserConfiguration(DisabledMQInitializationConfiguration.class)
-            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=rocket")
-;
+            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=rocket");
 
     @Test
     void defaultAssemblyShouldCreateClientAndProperties() {

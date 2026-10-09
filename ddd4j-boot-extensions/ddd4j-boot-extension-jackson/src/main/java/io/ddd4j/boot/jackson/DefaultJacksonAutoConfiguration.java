@@ -162,6 +162,7 @@ public class DefaultJacksonAutoConfiguration {
 
     private static final class NullArraySerializer extends JsonSerializer<Object> {
         private static final NullArraySerializer INSTANCE = new NullArraySerializer();
+
         @Override
         public void serialize(Object value, JsonGenerator generator, SerializerProvider serializers) throws IOException {
             generator.writeStartArray();
@@ -171,6 +172,7 @@ public class DefaultJacksonAutoConfiguration {
 
     private static final class NullStringSerializer extends JsonSerializer<Object> {
         private static final NullStringSerializer INSTANCE = new NullStringSerializer();
+
         @Override
         public void serialize(Object value, JsonGenerator generator, SerializerProvider serializers) throws IOException {
             generator.writeString("");
@@ -179,6 +181,7 @@ public class DefaultJacksonAutoConfiguration {
 
     private static final class NullNumberSerializer extends JsonSerializer<Object> {
         private static final NullNumberSerializer INSTANCE = new NullNumberSerializer();
+
         @Override
         public void serialize(Object value, JsonGenerator generator, SerializerProvider serializers) throws IOException {
             generator.writeNumber(0);
@@ -187,6 +190,7 @@ public class DefaultJacksonAutoConfiguration {
 
     private static final class NullBooleanSerializer extends JsonSerializer<Object> {
         private static final NullBooleanSerializer INSTANCE = new NullBooleanSerializer();
+
         @Override
         public void serialize(Object value, JsonGenerator generator, SerializerProvider serializers) throws IOException {
             generator.writeBoolean(false);
@@ -195,6 +199,7 @@ public class DefaultJacksonAutoConfiguration {
 
     private static final class NullObjectSerializer extends JsonSerializer<Object> {
         private static final NullObjectSerializer INSTANCE = new NullObjectSerializer();
+
         @Override
         public void serialize(Object value, JsonGenerator generator, SerializerProvider serializers) throws IOException {
             generator.writeStartObject();

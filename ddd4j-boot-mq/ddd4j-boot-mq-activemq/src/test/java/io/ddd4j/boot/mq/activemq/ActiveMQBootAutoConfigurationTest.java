@@ -12,6 +12,7 @@ import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
 import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.activemq.ActiveMQClient;
 import io.ddd4j.mq.activemq.ActiveMQProperties;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

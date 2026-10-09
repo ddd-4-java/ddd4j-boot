@@ -65,7 +65,8 @@ class RuleServiceTest {
                 new InMemoryRuleRepository(),
                 new InMemoryRuleCache(),
                 QLExpress.create(),
-                event -> { });
+                event -> {
+                });
 
         RuleDefinition valid = RuleDefinition.builder()
                 .code("validation.age")
@@ -102,10 +103,11 @@ class RuleServiceTest {
                 new InMemoryRuleRepository(),
                 new InMemoryRuleCache(),
                 QLExpress.create(),
-                event -> { });
+                event -> {
+                });
 
         assertThatThrownBy(() -> service.update("  ", RuleDefinition.builder()
-                        .name("x").expression("1").type(RuleType.CALCULATION).build()))
+                .name("x").expression("1").type(RuleType.CALCULATION).build()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("id 不能为空");
     }
@@ -120,7 +122,7 @@ class RuleServiceTest {
                 events::add);
 
         assertThatThrownBy(() -> service.update("no-such-id", RuleDefinition.builder()
-                        .name("x").expression("1").type(RuleType.CALCULATION).build()))
+                .name("x").expression("1").type(RuleType.CALCULATION).build()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("规则不存在")
                 .hasMessageContaining("no-such-id");
@@ -134,7 +136,8 @@ class RuleServiceTest {
                 new InMemoryRuleRepository(),
                 new InMemoryRuleCache(),
                 QLExpress.create(),
-                event -> { });
+                event -> {
+                });
 
         RuleDefinition created = service.create(RuleDefinition.builder()
                 .code("npe.rule")
@@ -154,7 +157,8 @@ class RuleServiceTest {
                 new InMemoryRuleRepository(),
                 new InMemoryRuleCache(),
                 QLExpress.create(),
-                event -> { });
+                event -> {
+                });
 
         RuleDefinition created = service.create(RuleDefinition.builder()
                 .code("immutable.code")
@@ -164,11 +168,11 @@ class RuleServiceTest {
                 .build());
 
         assertThatThrownBy(() -> service.update(created.getId(), RuleDefinition.builder()
-                        .code("new.code")
-                        .name("x")
-                        .expression("2")
-                        .type(RuleType.CALCULATION)
-                        .build()))
+                .code("new.code")
+                .name("x")
+                .expression("2")
+                .type(RuleType.CALCULATION)
+                .build()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("规则编码不允许修改")
                 .hasMessageContaining("immutable.code");
@@ -180,7 +184,8 @@ class RuleServiceTest {
                 new InMemoryRuleRepository(),
                 new InMemoryRuleCache(),
                 QLExpress.create(),
-                event -> { });
+                event -> {
+                });
 
         RuleDefinition created = service.create(RuleDefinition.builder()
                 .code("expr.rule")
@@ -190,10 +195,10 @@ class RuleServiceTest {
                 .build());
 
         assertThatThrownBy(() -> service.update(created.getId(), RuleDefinition.builder()
-                        .name("x")
-                        .expression("if (")
-                        .type(RuleType.CALCULATION)
-                        .build()))
+                .name("x")
+                .expression("if (")
+                .type(RuleType.CALCULATION)
+                .build()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("规则表达式无效");
     }
@@ -204,7 +209,8 @@ class RuleServiceTest {
                 new InMemoryRuleRepository(),
                 new InMemoryRuleCache(),
                 QLExpress.create(),
-                event -> { });
+                event -> {
+                });
 
         RuleDefinition created = service.create(RuleDefinition.builder()
                 .code("partial.update")

@@ -10,8 +10,8 @@ trap 'rm -rf "${tmp_dir}"' EXIT
 
 tree_dir="${tmp_dir}/tree"
 mkdir -p "${tree_dir}/starter/src/main/resources/META-INF/spring"
-printf 'org.example.LegacyAutoConfiguration\n' > "${tree_dir}/starter/src/main/resources/META-INF/spring.factories"
-printf 'org.example.CurrentAutoConfiguration\n' > "${tree_dir}/starter/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+printf 'org.example.LegacyAutoConfiguration\n' >"${tree_dir}/starter/src/main/resources/META-INF/spring.factories"
+printf 'org.example.CurrentAutoConfiguration\n' >"${tree_dir}/starter/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
 
 assert_inspection() {
   local fixture="$1"
@@ -30,7 +30,7 @@ assert_inspection baseline-jdk8-pom 1.8 2.6.15
 assert_inspection baseline-jdk17-pom 17 3.4.13
 assert_inspection baseline-jdk21-pom 21 4.1.0
 
-printf '<project><broken></project>' > "${tmp_dir}/invalid-pom.xml"
+printf '<project><broken></project>' >"${tmp_dir}/invalid-pom.xml"
 if python3 "${auditor}" --inspect-pom "${tmp_dir}/invalid-pom.xml" --tree "${tree_dir}" --output "${tmp_dir}/invalid.json" >"${tmp_dir}/invalid.out" 2>&1; then
   echo "expected invalid POM to fail" >&2
   exit 1

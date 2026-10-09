@@ -12,6 +12,7 @@ import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
 import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.tdmq.TdmqMQClient;
 import io.ddd4j.mq.tdmq.TdmqProperties;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -24,8 +25,7 @@ class TdmqMQBootAutoConfigurationTest {
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
             .withConfiguration(AutoConfigurations.of(Ddd4jMQAutoConfiguration.class, TdmqMQBootAutoConfiguration.class))
             .withUserConfiguration(DisabledMQInitializationConfiguration.class)
-            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=tdmq")
-;
+            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=tdmq");
 
     @Test
     void defaultAssemblyShouldCreateClientAndProperties() {

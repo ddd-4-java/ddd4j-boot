@@ -12,6 +12,7 @@ import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
 import io.ddd4j.mq.MQProperties;
 import io.ddd4j.mq.sqs.SqsMQClient;
 import io.ddd4j.mq.sqs.SqsProperties;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -24,8 +25,7 @@ class SqsMQBootAutoConfigurationTest {
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
             .withConfiguration(AutoConfigurations.of(Ddd4jMQAutoConfiguration.class, SqsMQBootAutoConfiguration.class))
             .withUserConfiguration(DisabledMQInitializationConfiguration.class)
-            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=sqs")
-;
+            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=sqs");
 
     @Test
     void defaultAssemblyShouldCreateClientAndProperties() {

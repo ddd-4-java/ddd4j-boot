@@ -7,7 +7,8 @@
 
 ## 1. 目标与范围
 
-收集容器中所有 `CommandExecutor<?>`，构建唯一 `DefaultCommandBus`。保留重复 handler 启动失败、缺失 handler 执行期失败的核心语义。条件装配 `ProjectionPositionRepository`、`EventChunkReader`、`ProjectionService`、`ProjectionRunner`。
+收集容器中所有 `CommandExecutor<?>`，构建唯一 `DefaultCommandBus`。保留重复 handler 启动失败、缺失 handler 执行期失败的核心语义。条件装配
+`ProjectionPositionRepository`、`EventChunkReader`、`ProjectionService`、`ProjectionRunner`。
 
 ### 非目标
 
@@ -33,10 +34,10 @@ Ddd4jCoreAutoConfiguration
 
 ## 4. 核心抽象
 
-| 类 | 职责 |
-|----|------|
-| `DefaultCommandBus` | 收集 CommandExecutor，唯一路由 |
-| `ProjectionRunner` | 投影执行（上游提供，Boot 只调度） |
+| 类                  | 职责                              |
+|---------------------|-----------------------------------|
+| `DefaultCommandBus` | 收集 CommandExecutor，唯一路由    |
+| `ProjectionRunner`  | 投影执行（上游提供，Boot 只调度） |
 
 ## 5. 配置结构
 

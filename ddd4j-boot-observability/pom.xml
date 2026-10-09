@@ -13,7 +13,8 @@
     <artifactId>ddd4j-boot-observability</artifactId>
     <description>ddd4j-boot 可观测性模块：micrometer-tracing + OpenTelemetry bridge（OTLP 导出）、
         MDC + TTL ThreadContext 追踪桥接、W3C traceparent 入站继承/出站注入、敏感材料脱敏与采样控制。
-        对应家族规格 family-observability（change: establish-boot-observability）。</description>
+        对应家族规格 family-observability（change: establish-boot-observability）。
+    </description>
 
     <dependencies>
         <!-- ddd4j 核心：TTL ThreadContext（追踪上下文与因果链并列双写） -->

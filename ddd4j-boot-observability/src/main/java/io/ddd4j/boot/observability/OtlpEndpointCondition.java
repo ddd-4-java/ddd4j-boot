@@ -18,7 +18,7 @@ public class OtlpEndpointCondition implements Condition {
     /**
      * 判断 OTLP 端点是否已配置。
      *
-     * @param context 条件上下文
+     * @param context  条件上下文
      * @param metadata 注解元数据
      * @return true 表示端点已配置（非空白）
      */

@@ -1,7 +1,7 @@
 # ddd4j-boot-sample-druid-mqtt
 
 > **生产集成**：领域事件发布/订阅请使用 [`ddd4j-boot-cmpt-mqtt`](../../ddd4j-boot-cmpt/ddd4j-boot-cmpt-mqtt)（
-`ddd4j.mq.broker=mqtt`，Eclipse Paho + Spring Integration）。本 sample 演示底层 MQTT 客户端配置。
+> `ddd4j.mq.broker=mqtt`，Eclipse Paho + Spring Integration）。本 sample 演示底层 MQTT 客户端配置。
 
 >
 基于 [Spring Boot 3.x](https://docs.spring.io/spring-boot/index.html) 、[Mybatis Plus](https://baomidou.com/introduce/)、[Druid](https://github.com/alibaba/druid)
@@ -248,20 +248,20 @@ mqtt:
       truststore-pass:          # 可选参数：ssl 双向认证 truststore 密码
 ```
 
-注意：**ssl** 存在三种情况
+注意： **ssl** 存在三种情况
 
-| 服务端开启ssl                        | 客户端                                 |
-|---------------------------------|-------------------------------------|
-| ClientAuth 为 NONE（不需要客户端验证）     | 仅仅需要开启 ssl 即可不用配置证书                 |
-| ClientAuth 为 OPTIONAL（与客户端协商）   | 需开启 ssl 并且配置 truststore 证书          |
+| 服务端开启ssl                            | 客户端                                        |
+|------------------------------------------|-----------------------------------------------|
+| ClientAuth 为 NONE（不需要客户端验证）   | 仅仅需要开启 ssl 即可不用配置证书             |
+| ClientAuth 为 OPTIONAL（与客户端协商）   | 需开启 ssl 并且配置 truststore 证书           |
 | ClientAuth 为 REQUIRE (必须的客户端验证) | 需开启 ssl 并且配置 truststore、 keystore证书 |
 
 ##### 2.2 可实现接口（注册成 Spring Bean 即可）
 
-| 接口                               | 是否必须 | 说明                             |
-|----------------------------------|------|--------------------------------|
-| IMqttClientConnectListener       | 否    | 客户端连接成功监听                      |
-| IMqttClientGlobalMessageListener | 否    | 全局消息监听，可以监听到所有订阅消息。（2.2.9开始支持） |
+| 接口                             | 是否必须 | 说明                                                    |
+|----------------------------------|----------|---------------------------------------------------------|
+| IMqttClientConnectListener       | 否       | 客户端连接成功监听                                      |
+| IMqttClientGlobalMessageListener | 否       | 全局消息监听，可以监听到所有订阅消息。（2.2.9开始支持） |
 
 ##### 2.3 客户端上下线监听
 
@@ -347,7 +347,7 @@ public class MqttClientSubscribeListener {
 
 ##### 2.6 共享订阅 topic 说明
 
-mica-mqtt 支持两种**共享订阅**方式：
+mica-mqtt 支持两种 **共享订阅**方式：
 
 1. 共享订阅：订阅前缀 `$queue/`，多个客户端订阅了 `$queue/topic`，发布者发布到 `topic`，则只有一个客户端会接收到消息。
 2. 分组订阅：订阅前缀 `$share/<group>/`，组客户端订阅了 `$share/group1/topic`、`$share/group2/topic`..，发布者发布到 `topic`
