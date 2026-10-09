@@ -27,13 +27,13 @@
 
 ## 4. 核心抽象
 
-| 测试工具 | 用途 |
-|----------|------|
-| `ApplicationContextRunner` | 普通模块 |
-| `WebApplicationContextRunner` | WebMVC 模块 |
-| `ReactiveWebApplicationContextRunner` | WebFlux 模块 |
-| `FilteredClassLoader` | 模拟 classpath 缺失 |
-| `BeanClassLoaderOverride` | 覆盖类加载器 |
+| 测试工具                              | 用途                |
+|---------------------------------------|---------------------|
+| `ApplicationContextRunner`            | 普通模块            |
+| `WebApplicationContextRunner`         | WebMVC 模块         |
+| `ReactiveWebApplicationContextRunner` | WebFlux 模块        |
+| `FilteredClassLoader`                 | 模拟 classpath 缺失 |
+| `BeanClassLoaderOverride`             | 覆盖类加载器        |
 
 ## 5. 配置结构
 
@@ -44,9 +44,11 @@
 ### 6.1 五个维度
 
 1. **默认装配**：`runner.run(ctx -> assertThat(ctx).hasSingleBean(Xxx.class))`
-2. **开关回退**：`runner.withPropertyValues("ddd4j.xxx.enabled=false").run(ctx -> assertThat(ctx).doesNotHaveBean(Xxx.class))`
+2. **开关回退**：
+   `runner.withPropertyValues("ddd4j.xxx.enabled=false").run(ctx -> assertThat(ctx).doesNotHaveBean(Xxx.class))`
 3. **缺类回退**：`runner.withClassLoader(new FilteredClassLoader(SomeClass.class)).run(...)`
-4. **用户覆盖**：`runner.withBean(Xxx.class, customImpl).run(ctx -> assertThat(ctx).getBean(Xxx.class).isSameAs(customImpl))`
+4. **用户覆盖**：
+   `runner.withBean(Xxx.class, customImpl).run(ctx -> assertThat(ctx).getBean(Xxx.class).isSameAs(customImpl))`
 5. **关闭无残留**：验证上下文关闭后静态注册表被清理
 
 ### 6.2 覆盖率

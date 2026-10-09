@@ -7,7 +7,8 @@
 
 ## 1. 目标与范围
 
-保持 Servlet 与 Reactive 条件互斥，复用 `ddd4j-web-core` 的异常翻译、Request ID、Client IP、访问策略和统一响应。不在 Boot 另建协议。
+保持 Servlet 与 Reactive 条件互斥，复用 `ddd4j-web-core` 的异常翻译、Request ID、Client IP、访问策略和统一响应。不在 Boot
+另建协议。
 
 ### 非目标
 
@@ -46,20 +47,20 @@ ddd4j-boot-web/
 
 ## 4. 核心抽象
 
-| 类 | 职责 |
-|----|------|
-| `Ddd4jWebMvcAutoConfiguration` | Servlet 环境条件装配 |
+| 类                              | 职责                  |
+|---------------------------------|-----------------------|
+| `Ddd4jWebMvcAutoConfiguration`  | Servlet 环境条件装配  |
 | `Ddd4jWebFluxAutoConfiguration` | Reactive 环境条件装配 |
-| `Ddd4jWebMvcProperties` | MVC 配置属性 |
-| `Ddd4jWebFluxProperties` | WebFlux 配置属性 |
+| `Ddd4jWebMvcProperties`         | MVC 配置属性          |
+| `Ddd4jWebFluxProperties`        | WebFlux 配置属性      |
 
 ## 5. 配置结构
 
-| 前缀 | 属性 | 默认值 | 说明 |
-|------|------|--------|------|
-| `ddd4j.web` | `public-paths` | - | 公开路径 |
-| `ddd4j.web` | `trust-forwarded-headers` | - | 信任转发头 |
-| `ddd4j.web.webflux` | `enabled` | `true` | WebFlux 装配开关 |
+| 前缀                | 属性                      | 默认值 | 说明             |
+|---------------------|---------------------------|--------|------------------|
+| `ddd4j.web`         | `public-paths`            | -      | 公开路径         |
+| `ddd4j.web`         | `trust-forwarded-headers` | -      | 信任转发头       |
+| `ddd4j.web.webflux` | `enabled`                 | `true` | WebFlux 装配开关 |
 
 ## 6. 测试策略
 

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
 import io.ddd4j.mq.mqttmica.MicaMqttMQClient;
 import io.ddd4j.mq.mqttmica.MicaMqttProperties;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -21,8 +22,7 @@ class MicaMqttMQBootAutoConfigurationTest {
 
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
             .withConfiguration(AutoConfigurations.of(Ddd4jMQAutoConfiguration.class, MicaMqttMQBootAutoConfiguration.class))
-            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=mqtt-mica")
-;
+            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=mqtt-mica");
 
     @Test
     void defaultAssemblyShouldCreateClientAndProperties() {
