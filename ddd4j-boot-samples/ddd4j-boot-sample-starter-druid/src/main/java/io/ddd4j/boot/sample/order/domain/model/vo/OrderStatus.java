@@ -1,7 +1,6 @@
 package io.ddd4j.boot.sample.order.domain.model.vo;
 
 
-
 /**
  * 订单状态值对象
  */

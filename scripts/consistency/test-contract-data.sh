@@ -30,14 +30,14 @@ assert_fails_contains() {
 
 sed '/^4\.1\.x\t/d' \
   "${repo_root}/config/consistency/ddd4j-boot-branch-groups.tsv" \
-  > "${tmp_dir}/missing-branch.tsv"
+  >"${tmp_dir}/missing-branch.tsv"
 printf 'branch\tcontract_id\tstatus\treason\tmigration_document\tevidence_ref\n2.3.x\tCORE_SPI_REPOSITORY_CQRS\tUNKNOWN\treason\t\tfixture\n' \
-  > "${tmp_dir}/unsupported-status.tsv"
+  >"${tmp_dir}/unsupported-status.tsv"
 printf 'branch\tcontract_id\tstatus\treason\tmigration_document\tevidence_ref\n2.3.x\tMQ\tNOT_APPLICABLE\tplatform removed\t\tfixture\n' \
-  > "${tmp_dir}/missing-migration.tsv"
+  >"${tmp_dir}/missing-migration.tsv"
 sed 's/\tddd4j-boot-core$/\t/' \
   "${repo_root}/config/consistency/ddd4j-boot-logical-contracts.tsv" \
-  > "${tmp_dir}/missing-owner.tsv"
+  >"${tmp_dir}/missing-owner.tsv"
 
 assert_fails_contains missing_branch "must contain exactly 13 maintenance branches" python3 "${validator}" \
   --branches "${tmp_dir}/missing-branch.tsv" \

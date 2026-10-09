@@ -63,18 +63,59 @@ public class OrderPageResponse implements Serializable {
         return new OrderPageResponse(records, total, pageNum, pageSize, totalPages, hasPrevious, hasNext);
     }
 
-    public List<OrderResponse> getRecords() { return records; }
-    public void setRecords(List<OrderResponse> records) { this.records = records; }
-    public Long getTotal() { return total; }
-    public void setTotal(Long total) { this.total = total; }
-    public Integer getPageNum() { return pageNum; }
-    public void setPageNum(Integer pageNum) { this.pageNum = pageNum; }
-    public Integer getPageSize() { return pageSize; }
-    public void setPageSize(Integer pageSize) { this.pageSize = pageSize; }
-    public Integer getTotalPages() { return totalPages; }
-    public void setTotalPages(Integer totalPages) { this.totalPages = totalPages; }
-    public Boolean getHasPrevious() { return hasPrevious; }
-    public void setHasPrevious(Boolean hasPrevious) { this.hasPrevious = hasPrevious; }
-    public Boolean getHasNext() { return hasNext; }
-    public void setHasNext(Boolean hasNext) { this.hasNext = hasNext; }
+    public List<OrderResponse> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<OrderResponse> records) {
+        this.records = records;
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
+    }
+
+    public Integer getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public Integer getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
+    }
+
+    public Boolean getHasPrevious() {
+        return hasPrevious;
+    }
+
+    public void setHasPrevious(Boolean hasPrevious) {
+        this.hasPrevious = hasPrevious;
+    }
+
+    public Boolean getHasNext() {
+        return hasNext;
+    }
+
+    public void setHasNext(Boolean hasNext) {
+        this.hasNext = hasNext;
+    }
 }

@@ -36,7 +36,7 @@ public class MdcTtlTraceContextBridge implements TraceContextBridge {
      */
     @Override
     public void detach() {
-        for (String field : new String[] {
+        for (String field : new String[]{
                 TraceLogFields.TRACE_ID, TraceLogFields.CORRELATION_ID, TraceLogFields.CAUSATION_ID}) {
             MDC.remove(field);
             ThreadContext.remove(field);

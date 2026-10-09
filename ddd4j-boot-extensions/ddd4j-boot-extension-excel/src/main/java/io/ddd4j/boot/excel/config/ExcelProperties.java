@@ -57,16 +57,45 @@ public class ExcelProperties {
      */
     private Style style = new Style();
 
-    public boolean isEnabled() { return enabled; }
-    public void setEnabled(boolean enabled) { this.enabled = enabled; }
-    public int getBatchSize() { return batchSize; }
-    public void setBatchSize(int batchSize) { this.batchSize = batchSize; }
-    public int getMaxUploadMB() { return maxUploadMB; }
-    public void setMaxUploadMB(int maxUploadMB) { this.maxUploadMB = maxUploadMB; }
-    public String getCharset() { return charset; }
-    public void setCharset(String charset) { this.charset = charset; }
-    public Style getStyle() { return style; }
-    public void setStyle(Style style) { this.style = style; }
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public int getBatchSize() {
+        return batchSize;
+    }
+
+    public void setBatchSize(int batchSize) {
+        this.batchSize = batchSize;
+    }
+
+    public int getMaxUploadMB() {
+        return maxUploadMB;
+    }
+
+    public void setMaxUploadMB(int maxUploadMB) {
+        this.maxUploadMB = maxUploadMB;
+    }
+
+    public String getCharset() {
+        return charset;
+    }
+
+    public void setCharset(String charset) {
+        this.charset = charset;
+    }
+
+    public Style getStyle() {
+        return style;
+    }
+
+    public void setStyle(Style style) {
+        this.style = style;
+    }
 
     public static class Style {
 
@@ -86,11 +115,28 @@ public class ExcelProperties {
          */
         private short headerRowHeight = 600;
 
-        public boolean isDefaultBorder() { return defaultBorder; }
-        public void setDefaultBorder(boolean defaultBorder) { this.defaultBorder = defaultBorder; }
-        public boolean isAutoSizeColumn() { return autoSizeColumn; }
-        public void setAutoSizeColumn(boolean autoSizeColumn) { this.autoSizeColumn = autoSizeColumn; }
-        public short getHeaderRowHeight() { return headerRowHeight; }
-        public void setHeaderRowHeight(short headerRowHeight) { this.headerRowHeight = headerRowHeight; }
+        public boolean isDefaultBorder() {
+            return defaultBorder;
+        }
+
+        public void setDefaultBorder(boolean defaultBorder) {
+            this.defaultBorder = defaultBorder;
+        }
+
+        public boolean isAutoSizeColumn() {
+            return autoSizeColumn;
+        }
+
+        public void setAutoSizeColumn(boolean autoSizeColumn) {
+            this.autoSizeColumn = autoSizeColumn;
+        }
+
+        public short getHeaderRowHeight() {
+            return headerRowHeight;
+        }
+
+        public void setHeaderRowHeight(short headerRowHeight) {
+            this.headerRowHeight = headerRowHeight;
+        }
     }
 }

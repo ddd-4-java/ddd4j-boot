@@ -2,6 +2,7 @@ package io.ddd4j.boot.sample.app.order.query;
 
 import io.ddd4j.boot.sample.domain.order.model.vo.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -322,7 +323,8 @@ public class OrderQuery implements Serializable {
         if (this$sortField == null ? other$sortField != null : !this$sortField.equals(other$sortField)) return false;
         final java.lang.Object this$sortDirection = this.getSortDirection();
         final java.lang.Object other$sortDirection = other.getSortDirection();
-        if (this$sortDirection == null ? other$sortDirection != null : !this$sortDirection.equals(other$sortDirection)) return false;
+        if (this$sortDirection == null ? other$sortDirection != null : !this$sortDirection.equals(other$sortDirection))
+            return false;
         return true;
     }
 

@@ -4,7 +4,6 @@ import io.ddd4j.boot.sample.order.domain.model.vo.Money;
 import io.ddd4j.core.ddd.model.Entity;
 
 
-
 import java.math.BigDecimal;
 
 /**

@@ -3,6 +3,7 @@ package io.ddd4j.boot.sample.infrastructure.order.messaging;
 import io.ddd4j.boot.sample.domain.order.event.DomainEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
