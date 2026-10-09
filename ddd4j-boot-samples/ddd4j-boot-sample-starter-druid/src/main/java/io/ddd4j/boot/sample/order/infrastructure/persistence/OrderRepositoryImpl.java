@@ -36,10 +36,10 @@ public class OrderRepositoryImpl implements OrderRepository {
     private final OrderDomainEventPublisher domainEventPublisher;
 
     public OrderRepositoryImpl(OrderMapper orderMapper,
-            OrderItemMapper orderItemMapper,
-            OrderItemRepository orderItemRepository,
-            OrderConverter orderConverter,
-            OrderDomainEventPublisher domainEventPublisher) {
+                               OrderItemMapper orderItemMapper,
+                               OrderItemRepository orderItemRepository,
+                               OrderConverter orderConverter,
+                               OrderDomainEventPublisher domainEventPublisher) {
         this.orderMapper = orderMapper;
         this.orderItemMapper = orderItemMapper;
         this.orderItemRepository = orderItemRepository;

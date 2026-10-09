@@ -7,20 +7,21 @@
 
 ## 1. 目标与范围
 
-`ddd4j-boot-data/src/main/java/io/ddd4j/data/` 目录下存在与 `ddd4j-boot-data-*` 子模块重复的自动配置类。需确认无有效消费者后删除，或改为 deprecated 转发层并给出移除窗口。
+`ddd4j-boot-data/src/main/java/io/ddd4j/data/` 目录下存在与 `ddd4j-boot-data-*` 子模块重复的自动配置类。需确认无有效消费者后删除，或改为
+deprecated 转发层并给出移除窗口。
 
 ### 重复文件清单
 
-| Legacy 路径 | 对应子模块 | 状态 |
-|------------|-----------|------|
-| `ddd4j-boot-data/src/main/java/io/ddd4j/data/config/Ddd4jApiLogAspectAutoConfiguration.java` | `ddd4j-boot-data-logs` | 重复 |
-| `ddd4j-boot-data/src/main/java/io/ddd4j/data/config/Ddd4jCryptoAutoConfiguration.java` | `ddd4j-boot-data-crypto` | 重复 |
-| `ddd4j-boot-data/src/main/java/io/ddd4j/data/config/Ddd4jDataScopeAutoConfiguration.java` | `ddd4j-boot-data-datascope` | 重复 |
-| `ddd4j-boot-data/src/main/java/io/ddd4j/data/config/Ddd4jExternalAutoConfiguration.java` | `ddd4j-boot-data-external` | 重复 |
-| `ddd4j-boot-data/src/main/java/io/ddd4j/data/config/Ddd4jGlobalSequenceAutoConfiguration.java` | `ddd4j-boot-data-external` | 重复 |
-| `ddd4j-boot-data/src/main/java/io/ddd4j/data/web/MybatisExceptionHandler.java` | `ddd4j-boot-data-mybatis` | 重复 |
-| `ddd4j-boot-data/src/main/java/io/ddd4j/data/advice/DecryptRequestBodyAdvice.java` | `ddd4j-boot-data-crypto` | 重复 |
-| `ddd4j-boot-data/src/main/java/io/ddd4j/data/advice/EncryptResponseBodyAdvice.java` | `ddd4j-boot-data-crypto` | 重复 |
+| Legacy 路径                                                                                    | 对应子模块                  | 状态 |
+|------------------------------------------------------------------------------------------------|-----------------------------|------|
+| `ddd4j-boot-data/src/main/java/io/ddd4j/data/config/Ddd4jApiLogAspectAutoConfiguration.java`   | `ddd4j-boot-data-logs`      | 重复 |
+| `ddd4j-boot-data/src/main/java/io/ddd4j/data/config/Ddd4jCryptoAutoConfiguration.java`         | `ddd4j-boot-data-crypto`    | 重复 |
+| `ddd4j-boot-data/src/main/java/io/ddd4j/data/config/Ddd4jDataScopeAutoConfiguration.java`      | `ddd4j-boot-data-datascope` | 重复 |
+| `ddd4j-boot-data/src/main/java/io/ddd4j/data/config/Ddd4jExternalAutoConfiguration.java`       | `ddd4j-boot-data-external`  | 重复 |
+| `ddd4j-boot-data/src/main/java/io/ddd4j/data/config/Ddd4jGlobalSequenceAutoConfiguration.java` | `ddd4j-boot-data-external`  | 重复 |
+| `ddd4j-boot-data/src/main/java/io/ddd4j/data/web/MybatisExceptionHandler.java`                 | `ddd4j-boot-data-mybatis`   | 重复 |
+| `ddd4j-boot-data/src/main/java/io/ddd4j/data/advice/DecryptRequestBodyAdvice.java`             | `ddd4j-boot-data-crypto`    | 重复 |
+| `ddd4j-boot-data/src/main/java/io/ddd4j/data/advice/EncryptResponseBodyAdvice.java`            | `ddd4j-boot-data-crypto`    | 重复 |
 
 ## 2. 总体架构
 
@@ -28,7 +29,8 @@
 
 ### 方案 A：直接删除（推荐）
 
-确认 `ddd4j-boot-data` 顶层模块的 `AutoConfiguration.imports` 未注册这些类，且无外部项目依赖 `ddd4j-boot-data`（而非子模块），则直接删除。
+确认 `ddd4j-boot-data` 顶层模块的 `AutoConfiguration.imports` 未注册这些类，且无外部项目依赖 `ddd4j-boot-data`
+（而非子模块），则直接删除。
 
 ### 方案 B：Deprecated 转发层
 
@@ -63,8 +65,8 @@ ddd4j-boot-data/
 
 ## 8. 实施风险与缓解
 
-| 风险 | 缓解 |
-|------|------|
+| 风险                                | 缓解                                        |
+|-------------------------------------|---------------------------------------------|
 | 外部项目依赖 `ddd4j-boot-data` 顶层 | 先搜索 Maven Central / 私有仓库是否有消费者 |
 
 ## 9. 交付物清单

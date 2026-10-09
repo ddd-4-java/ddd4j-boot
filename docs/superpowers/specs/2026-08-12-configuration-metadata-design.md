@@ -23,13 +23,13 @@ ddd4j-boot-extensions/pom.xml
 
 ## 3. 模块结构
 
-| 模块 | 是否有配置属性类 | 是否添加 processor |
-|------|-----------------|-------------------|
-| ddd4j-boot-core | 是 | 是 |
-| ddd4j-boot-extensions (聚合) | 是 | 是 |
-| ddd4j-boot-web-webmvc | 是 | 否（由 extensions 聚合管理） |
-| ddd4j-boot-web-webflux | 是 | 否 |
-| ddd4j-boot-mq-core | 是 | 否 |
+| 模块                         | 是否有配置属性类 | 是否添加 processor           |
+|------------------------------|------------------|------------------------------|
+| ddd4j-boot-core              | 是               | 是                           |
+| ddd4j-boot-extensions (聚合) | 是               | 是                           |
+| ddd4j-boot-web-webmvc        | 是               | 否（由 extensions 聚合管理） |
+| ddd4j-boot-web-webflux       | 是               | 否                           |
+| ddd4j-boot-mq-core           | 是               | 否                           |
 
 ## 4. 核心抽象
 
@@ -37,7 +37,8 @@ ddd4j-boot-extensions/pom.xml
 
 ## 5. 配置结构
 
-IDE 元数据自动生成到 `META-INF/additional-spring-configuration-metadata.json` 或 `META-INF/spring-configuration-metadata.json`。
+IDE 元数据自动生成到 `META-INF/additional-spring-configuration-metadata.json` 或
+`META-INF/spring-configuration-metadata.json`。
 
 ## 6. 测试策略
 
