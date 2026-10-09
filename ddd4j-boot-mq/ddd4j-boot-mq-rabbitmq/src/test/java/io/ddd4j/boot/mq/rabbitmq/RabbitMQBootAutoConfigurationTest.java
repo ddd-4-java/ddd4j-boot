@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
 import io.ddd4j.mq.rabbitmq.RabbitMQClient;
 import io.ddd4j.mq.rabbitmq.RabbitMQProperties;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -21,8 +22,7 @@ class RabbitMQBootAutoConfigurationTest {
 
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
             .withConfiguration(AutoConfigurations.of(Ddd4jMQAutoConfiguration.class, RabbitMQBootAutoConfiguration.class))
-            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=rabbit")
-;
+            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=rabbit");
 
     @Test
     void defaultAssemblyShouldCreateClientAndProperties() {

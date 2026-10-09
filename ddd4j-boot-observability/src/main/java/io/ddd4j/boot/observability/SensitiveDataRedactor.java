@@ -67,7 +67,7 @@ public final class SensitiveDataRedactor {
         this.allowlist = Objects.isNull(allowlist)
                 ? Collections.emptySet()
                 : allowlist.stream().map(SensitiveDataRedactor::normalize)
-                        .collect(Collectors.toCollection(LinkedHashSet::new));
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     /**

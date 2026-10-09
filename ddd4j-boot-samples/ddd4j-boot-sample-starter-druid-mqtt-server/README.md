@@ -76,29 +76,29 @@ mqtt:
       client-auth: none         # 是否需要客户端认证（双向认证），默认：NONE（不需要）
 ```
 
-注意：**ssl** 存在三种情况
+注意： **ssl** 存在三种情况
 
-| 服务端开启ssl                        | 客户端                                 |
-|---------------------------------|-------------------------------------|
-| ClientAuth 为 NONE（不需要客户端验证）     | 仅仅需要开启 ssl 即可不用配置证书                 |
-| ClientAuth 为 OPTIONAL（与客户端协商）   | 需开启 ssl 并且配置 truststore 证书          |
+| 服务端开启ssl                            | 客户端                                        |
+|------------------------------------------|-----------------------------------------------|
+| ClientAuth 为 NONE（不需要客户端验证）   | 仅仅需要开启 ssl 即可不用配置证书             |
+| ClientAuth 为 OPTIONAL（与客户端协商）   | 需开启 ssl 并且配置 truststore 证书           |
 | ClientAuth 为 REQUIRE (必须的客户端验证) | 需开启 ssl 并且配置 truststore、 keystore证书 |
 
 ### 2.2 可实现接口（注册成 Spring Bean 即可）
 
-| 接口                            | 是否必须       | 说明                                            |
-|-------------------------------|------------|-----------------------------------------------|
-| IMqttServerUniqueIdService    | 否          | 用于 clientId 不唯一时，自定义实现唯一标识，后续接口使用它替代 clientId |
-| IMqttServerAuthHandler        | 是          | 用于服务端认证                                       |
-| IMqttServerSubscribeValidator | 否（建议实现）    | 1.1.3 新增，用于对客户端订阅校验                           |
-| IMqttServerPublishPermission  | 否（建议实现）    | 1.2.2 新增，用于对客户端发布权限校验                         |
-| IMqttMessageListener          | 否（1.3.x为否） | 消息监听                                          |
-| IMqttConnectStatusListener    | 是          | 连接状态监听                                        |
-| IMqttSessionManager           | 否          | session 管理                                    |
-| IMqttSessionListener          | 否          | session 监听                                    |
-| IMqttMessageStore             | 集群是，单机否    | 遗嘱和保留消息存储                                     |
-| AbstractMqttMessageDispatcher | 集群是，单机否    | 消息转发，（遗嘱、保留消息转发）                              |
-| IMqttMessageInterceptor       | 否          | 消息拦截器，1.3.9 新增                                |
+| 接口                          | 是否必须        | 说明                                                                    |
+|-------------------------------|-----------------|-------------------------------------------------------------------------|
+| IMqttServerUniqueIdService    | 否              | 用于 clientId 不唯一时，自定义实现唯一标识，后续接口使用它替代 clientId |
+| IMqttServerAuthHandler        | 是              | 用于服务端认证                                                          |
+| IMqttServerSubscribeValidator | 否（建议实现）  | 1.1.3 新增，用于对客户端订阅校验                                        |
+| IMqttServerPublishPermission  | 否（建议实现）  | 1.2.2 新增，用于对客户端发布权限校验                                    |
+| IMqttMessageListener          | 否（1.3.x为否） | 消息监听                                                                |
+| IMqttConnectStatusListener    | 是              | 连接状态监听                                                            |
+| IMqttSessionManager           | 否              | session 管理                                                            |
+| IMqttSessionListener          | 否              | session 监听                                                            |
+| IMqttMessageStore             | 集群是，单机否  | 遗嘱和保留消息存储                                                      |
+| AbstractMqttMessageDispatcher | 集群是，单机否  | 消息转发，（遗嘱、保留消息转发）                                        |
+| IMqttMessageInterceptor       | 否              | 消息拦截器，1.3.9 新增                                                  |
 
 ### 2.3 IMqttMessageListener (用于监听客户端上传的消息) 使用示例
 
@@ -197,14 +197,14 @@ public class MqttConnectStatusListener {
 </dependency>
 ```
 
-| 支持得指标                          | 说明       |
-|--------------------------------|----------|
-| mqtt_connections_accepted      | 共接受过连接数  |
-| mqtt_connections_closed        | 关闭过的连接数  |
-| mqtt_connections_size          | 当前连接数    |
-| mqtt_messages_handled_packets  | 已处理消息数   |
+| 支持得指标                     | 说明             |
+|--------------------------------|------------------|
+| mqtt_connections_accepted      | 共接受过连接数   |
+| mqtt_connections_closed        | 关闭过的连接数   |
+| mqtt_connections_size          | 当前连接数       |
+| mqtt_messages_handled_packets  | 已处理消息数     |
 | mqtt_messages_handled_bytes    | 已处理消息字节数 |
-| mqtt_messages_received_packets | 已接收消息数   |
+| mqtt_messages_received_packets | 已接收消息数     |
 | mqtt_messages_received_bytes   | 已处理消息字节数 |
-| mqtt_messages_send_packets     | 已发送消息数   |
+| mqtt_messages_send_packets     | 已发送消息数     |
 | mqtt_messages_send_bytes       | 已发送消息字节数 |

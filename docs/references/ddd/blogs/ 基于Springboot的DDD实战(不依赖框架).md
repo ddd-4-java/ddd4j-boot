@@ -1,4 +1,4 @@
-## 基于Springboot的DDD实战(不依赖框架)
+## 基于Springboot的DDD实战 (不依赖框架)
 
 领域驱动设计（DDD）是一把锋利的双刃剑。它既是斩断复杂业务“一团乱麻”的神兵利器，也可能在经验不足的团队手中，成为过度设计、拖累项目的沉重枷锁。
 
@@ -8,7 +8,7 @@
 
 在开始之前，我们必须达成一个共识：DDD的核心价值在于战略设计，而非战术上的炫技。
 
-- 传统分层架构的问题: **数据驱动**，**贫血模型**，业务逻辑散落在大量的Service类中。当业务变得复杂时，这些Service会迅速膨胀，最终变成难以维护的“上帝类”。
+- 传统分层架构的问题: **数据驱动**， **贫血模型**，业务逻辑散落在大量的Service类中。当业务变得复杂时，这些Service会迅速膨胀，最终变成难以维护的“上帝类”。
 - **DDD的承诺**: 将系统的核心——业务领域——置于中心地位。通过通用语言（Ubiquitous Language）统一团队认知，通过限界上下文（Bounded
   Context）拆分复杂问题，让软件的结构精准地反映业务的本质。
 - **工程哲学共鸣**:
@@ -131,7 +131,7 @@ nova-coffee/
                     └── OrderController.java      (Spring MVC Controller)
 ```
 
-依赖关系: `interfaces -> application -> domain。infrastructure -> domain`。关键：**domain**层不依赖任何其他层，它是项目的核心和灵魂。
+依赖关系: `interfaces -> application -> domain。infrastructure -> domain`。关键： **domain**层不依赖任何其他层，它是项目的核心和灵魂。
 
 #### 4.2 样例代码 (以Order聚合为例)
 

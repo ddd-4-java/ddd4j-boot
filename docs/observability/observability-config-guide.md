@@ -22,7 +22,7 @@
 
 ## 2. 开启 / 关闭
 
-追踪能力**默认关闭**（`enabled=false`），关闭时零装配、对外行为与未引入本模块前一致。
+追踪能力 **默认关闭**（`enabled=false`），关闭时零装配、对外行为与未引入本模块前一致。
 
 ```properties
 # 开启链路追踪
@@ -80,8 +80,7 @@ ddd4j.observability.tracing.service-name=my-application
 
 默认拒绝 + 白名单放行。首批敏感 key 匹配集（D9，归一化后 contains 命中）：
 `privateKey` / `private_key` / `mnemonic` / `seed` / `seedPhrase` / `secretKey` / `keystore`，
-命中值在 span 起始期与导出期双重拦截，置为 `***REDACTED***`。
-**私钥、助记词不得进入日志/指标/通用 DTO/追踪。**
+命中值在 span 起始期与导出期双重拦截，置为 `***REDACTED***`。 **私钥、助记词不得进入日志/指标/通用 DTO/追踪。**
 
 ```properties
 # 业务白名单（逗号分隔，命中白名单的 key 保持原值）

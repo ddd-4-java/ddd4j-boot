@@ -14,7 +14,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ResourceLoader;
 
-/** Spring Boot assembly for the framework-neutral QR code application service. */
+/**
+ * Spring Boot assembly for the framework-neutral QR code application service.
+ */
 @AutoConfiguration
 @ConditionalOnClass(QrCodeService.class)
 @ConditionalOnProperty(prefix = QrCodeProperties.PREFIX, name = "enabled",
