@@ -2,6 +2,7 @@ package io.ddd4j.boot.sample.app.order.response;
 
 import io.ddd4j.boot.sample.app.order.dto.OrderDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -190,10 +191,12 @@ public class OrderPageResponse implements Serializable {
         if (this$pageSize == null ? other$pageSize != null : !this$pageSize.equals(other$pageSize)) return false;
         final java.lang.Object this$totalPages = this.getTotalPages();
         final java.lang.Object other$totalPages = other.getTotalPages();
-        if (this$totalPages == null ? other$totalPages != null : !this$totalPages.equals(other$totalPages)) return false;
+        if (this$totalPages == null ? other$totalPages != null : !this$totalPages.equals(other$totalPages))
+            return false;
         final java.lang.Object this$hasPrevious = this.getHasPrevious();
         final java.lang.Object other$hasPrevious = other.getHasPrevious();
-        if (this$hasPrevious == null ? other$hasPrevious != null : !this$hasPrevious.equals(other$hasPrevious)) return false;
+        if (this$hasPrevious == null ? other$hasPrevious != null : !this$hasPrevious.equals(other$hasPrevious))
+            return false;
         final java.lang.Object this$hasNext = this.getHasNext();
         final java.lang.Object other$hasNext = other.getHasNext();
         if (this$hasNext == null ? other$hasNext != null : !this$hasNext.equals(other$hasNext)) return false;
@@ -239,15 +242,15 @@ public class OrderPageResponse implements Serializable {
     /**
      * Creates a new {@code OrderPageResponse} instance.
      *
-     * @param records 订单列表数据
-     * @param total 总记录数
-     * @param pageNum 当前页码
-     * 从1开始
-     * @param pageSize 每页大小
-     * @param totalPages 总页数
-     * 根据总记录数和每页大小计算得出
+     * @param records     订单列表数据
+     * @param total       总记录数
+     * @param pageNum     当前页码
+     *                    从1开始
+     * @param pageSize    每页大小
+     * @param totalPages  总页数
+     *                    根据总记录数和每页大小计算得出
      * @param hasPrevious 是否有上一页
-     * @param hasNext 是否有下一页
+     * @param hasNext     是否有下一页
      */
     public OrderPageResponse(final List<OrderDTO> records, final Long total, final Integer pageNum, final Integer pageSize, final Integer totalPages, final Boolean hasPrevious, final Boolean hasNext) {
         this.records = records;

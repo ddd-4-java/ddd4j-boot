@@ -16,7 +16,8 @@
         Boot 2.x 生态无 micrometer-tracing/OTel 同代栈，本线为纯 Java 退化最小集
         （design 风险预案），配置键与字段命名契约（D9）与 3.0.x+/4.0.x+ 完整版一致；
         行为契约：traceparent 编解码/继承语义、因果三键互查、出站头恒合法——均不变。
-        对应家族规格 family-observability（change: establish-boot-observability）。</description>
+        对应家族规格 family-observability（change: establish-boot-observability）。
+    </description>
 
     <dependencies>
         <!-- ddd4j 核心：TTL ThreadContext（追踪上下文与因果链并列双写） -->

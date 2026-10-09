@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -120,13 +121,16 @@ public class CreateOrderCommand implements Serializable {
             if (this$quantity == null ? other$quantity != null : !this$quantity.equals(other$quantity)) return false;
             final java.lang.Object this$productId = this.getProductId();
             final java.lang.Object other$productId = other.getProductId();
-            if (this$productId == null ? other$productId != null : !this$productId.equals(other$productId)) return false;
+            if (this$productId == null ? other$productId != null : !this$productId.equals(other$productId))
+                return false;
             final java.lang.Object this$productName = this.getProductName();
             final java.lang.Object other$productName = other.getProductName();
-            if (this$productName == null ? other$productName != null : !this$productName.equals(other$productName)) return false;
+            if (this$productName == null ? other$productName != null : !this$productName.equals(other$productName))
+                return false;
             final java.lang.Object this$unitPrice = this.getUnitPrice();
             final java.lang.Object other$unitPrice = other.getUnitPrice();
-            if (this$unitPrice == null ? other$unitPrice != null : !this$unitPrice.equals(other$unitPrice)) return false;
+            if (this$unitPrice == null ? other$unitPrice != null : !this$unitPrice.equals(other$unitPrice))
+                return false;
             final java.lang.Object this$currency = this.getCurrency();
             final java.lang.Object other$currency = other.getCurrency();
             if (this$currency == null ? other$currency != null : !this$currency.equals(other$currency)) return false;
@@ -321,7 +325,8 @@ public class CreateOrderCommand implements Serializable {
         if (this$userId == null ? other$userId != null : !this$userId.equals(other$userId)) return false;
         final java.lang.Object this$shippingAddress = this.getShippingAddress();
         final java.lang.Object other$shippingAddress = other.getShippingAddress();
-        if (this$shippingAddress == null ? other$shippingAddress != null : !this$shippingAddress.equals(other$shippingAddress)) return false;
+        if (this$shippingAddress == null ? other$shippingAddress != null : !this$shippingAddress.equals(other$shippingAddress))
+            return false;
         final java.lang.Object this$remark = this.getRemark();
         final java.lang.Object other$remark = other.getRemark();
         if (this$remark == null ? other$remark != null : !this$remark.equals(other$remark)) return false;

@@ -54,7 +54,7 @@ public class Ddd4jAkkaBootAutoConfiguration {
      * 装配 ActorSystem。
      *
      * @param akkaAutoConfiguration Akka 工厂
-     * @param properties           Akka 配置
+     * @param properties            Akka 配置
      * @return ActorSystem 实例
      */
     @Bean

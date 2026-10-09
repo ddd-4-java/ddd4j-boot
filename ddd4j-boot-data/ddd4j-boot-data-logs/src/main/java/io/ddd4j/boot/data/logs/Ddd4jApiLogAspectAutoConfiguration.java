@@ -54,8 +54,8 @@ public class Ddd4jApiLogAspectAutoConfiguration {
     /**
      * 装配 API 操作日志切面。
      *
-     * @param snowflake    雪花算法 ID 生成器
-     * @param logProvider  操作日志提供者
+     * @param snowflake   雪花算法 ID 生成器
+     * @param logProvider 操作日志提供者
      * @return 切面实例
      */
     @Bean

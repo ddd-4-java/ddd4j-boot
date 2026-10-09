@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.IOException;
 
-/** Stable HTTP error mapping for the opt-in QR code endpoints. */
+/**
+ * Stable HTTP error mapping for the opt-in QR code endpoints.
+ */
 @RestControllerAdvice(assignableTypes = QrCodeController.class)
 public class QrCodeExceptionHandler {
 

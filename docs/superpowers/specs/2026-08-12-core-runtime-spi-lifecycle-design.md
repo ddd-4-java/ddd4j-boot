@@ -53,15 +53,15 @@ ddd4j-boot-core/
 
 ## 4. 核心抽象
 
-| 类 | 职责 |
-|----|------|
-| `Ddd4jCoreAutoConfiguration` | 条件装配核心 SPI Bean，注册到 `SpiRegistrationScope` |
-| `SpiRegistrationScope` | 成组注册 SPI，支持启动失败回滚、关闭恢复、ThreadContext 清理 |
+| 类                           | 职责                                                         |
+|------------------------------|--------------------------------------------------------------|
+| `Ddd4jCoreAutoConfiguration` | 条件装配核心 SPI Bean，注册到 `SpiRegistrationScope`         |
+| `SpiRegistrationScope`       | 成组注册 SPI，支持启动失败回滚、关闭恢复、ThreadContext 清理 |
 
 ## 5. 配置结构
 
-| 前缀 | 属性 | 默认值 | 说明 |
-|------|------|--------|------|
+| 前缀    | 属性      | 默认值 | 说明   |
+|---------|-----------|--------|--------|
 | `ddd4j` | `enabled` | `true` | 总开关 |
 
 ## 6. 测试策略
@@ -80,9 +80,9 @@ ddd4j-boot-core/
 
 ## 8. 实施风险与缓解
 
-| 风险 | 缓解 |
-|------|------|
-| SPI 注册泄漏到测试间 | `SpiRegistrationScope` 关闭时对称清理 |
+| 风险                             | 缓解                                               |
+|----------------------------------|----------------------------------------------------|
+| SPI 注册泄漏到测试间             | `SpiRegistrationScope` 关闭时对称清理              |
 | 父子 ApplicationContext 重复注册 | 使用 `@ConditionalOnMissingBean` + 注册 scope 去重 |
 
 ## 9. 交付物清单
