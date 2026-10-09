@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
 import io.ddd4j.mq.ons.OnsMQClient;
 import io.ddd4j.mq.ons.OnsProperties;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -21,8 +22,7 @@ class OnsMQBootAutoConfigurationTest {
 
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
             .withConfiguration(AutoConfigurations.of(Ddd4jMQAutoConfiguration.class, OnsMQBootAutoConfiguration.class))
-            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=ons")
-;
+            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=ons");
 
     @Test
     void defaultAssemblyShouldCreateClientAndProperties() {

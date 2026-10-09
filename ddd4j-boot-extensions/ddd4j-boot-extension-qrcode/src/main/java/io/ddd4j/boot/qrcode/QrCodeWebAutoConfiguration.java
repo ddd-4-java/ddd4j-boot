@@ -9,7 +9,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 
-/** Opt-in servlet HTTP endpoints for QR code rendering and decoding. */
+/**
+ * Opt-in servlet HTTP endpoints for QR code rendering and decoding.
+ */
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(Ddd4jQrCodeBootAutoConfiguration.class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)

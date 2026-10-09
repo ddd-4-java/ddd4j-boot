@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
 import io.ddd4j.mq.disruptor.DisruptorMQClient;
 import io.ddd4j.mq.disruptor.DisruptorMQProperties;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -21,8 +22,7 @@ class DisruptorMQBootAutoConfigurationTest {
 
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
             .withConfiguration(AutoConfigurations.of(Ddd4jMQAutoConfiguration.class, DisruptorMQBootAutoConfiguration.class))
-            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=disruptor")
-;
+            .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=disruptor");
 
     @Test
     void defaultAssemblyShouldCreateClientAndProperties() {
