@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 
 /**
  * Spring领域事件发布者实现
- * 
+ *
  * <p>基础设施层：使用Spring的ApplicationEventPublisher实现事件发布。
  * 负责将领域事件发布到Spring事件系统中。
- * 
+ *
  * <p>注意：此类是可选的，只有在使用Spring事件机制时才需要。
  * 如果不需要事件机制，可以不使用此类。
- * 
+ *
  * @author ddd4j-boot
  * @version 1.0
  * @since 1.0
@@ -29,7 +29,7 @@ public class SpringDomainEventPublisher implements DomainEventPublisher {
 
     /**
      * 构造函数
-     * 
+     *
      * @param eventPublisher Spring事件发布器
      */
     public SpringDomainEventPublisher(ApplicationEventPublisher eventPublisher) {
@@ -38,7 +38,7 @@ public class SpringDomainEventPublisher implements DomainEventPublisher {
 
     /**
      * 发布规则创建事件
-     * 
+     *
      * @param event 规则创建事件，不能为null
      */
     @Override
@@ -51,7 +51,7 @@ public class SpringDomainEventPublisher implements DomainEventPublisher {
 
     /**
      * 发布规则更新事件
-     * 
+     *
      * @param event 规则更新事件，不能为null
      */
     @Override
@@ -63,7 +63,7 @@ public class SpringDomainEventPublisher implements DomainEventPublisher {
 
     /**
      * 发布规则删除事件
-     * 
+     *
      * @param event 规则删除事件，不能为null
      */
     @Override

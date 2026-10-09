@@ -13,14 +13,15 @@ public class Address {
     String district;
     String detail;
     String zipCode;
+
     /**
      * 构造函数
      *
      * @param province 省份
-     * @param city 城市
+     * @param city     城市
      * @param district 区县
-     * @param detail 详细地址
-     * @param zipCode 邮编
+     * @param detail   详细地址
+     * @param zipCode  邮编
      */
     public Address(String province, String city, String district, String detail, String zipCode) {
         if (province == null || province.trim().isEmpty()) {

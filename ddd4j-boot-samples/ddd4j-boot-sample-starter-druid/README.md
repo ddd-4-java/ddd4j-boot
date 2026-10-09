@@ -6,8 +6,6 @@
 4、Druid 高性能数据库连接池:自带SQL安全防护
 5、Log4j2 高性能日志记录
 
-
-
 ### 推送镜像到私有仓库
 
 #### 使用构建脚本（推荐）
@@ -51,6 +49,7 @@ export DOCKER_REGISTRY_PASSWORD='******'
 ```
 
 **脚本特性：**
+
 - 支持单平台和多平台构建
 - 自动处理 buildx builder 的创建和初始化
 - 支持腾讯云镜像源（适合国内环境）
@@ -91,8 +90,11 @@ mvn -pl ddd4j-boot-samples/ddd4j-boot-sample-starter-druid -am \
 ```
 
 说明：
-- 多平台构建需要启用 buildx；通过 Maven 方式构建跨平台镜像时，可用 `exec-maven-plugin` 在 `verify` 阶段自动安装 binfmt 并创建/自愈 builder。
-- Linux/macOS 多平台示例：追加 `-Ddocker.buildx.skip=false -Ddocker.buildx.unix.skip=false -Ddocker.buildx.windows.skip=true`
+
+- 多平台构建需要启用 buildx；通过 Maven 方式构建跨平台镜像时，可用 `exec-maven-plugin` 在 `verify` 阶段自动安装 binfmt
+  并创建/自愈 builder。
+- Linux/macOS 多平台示例：追加
+  `-Ddocker.buildx.skip=false -Ddocker.buildx.unix.skip=false -Ddocker.buildx.windows.skip=true`
 - Windows 多平台示例：追加 `-Ddocker.buildx.skip=false -Ddocker.buildx.unix.skip=true -Ddocker.buildx.windows.skip=false`
 
 #### Windows (CMD/PowerShell) 构建脚本
@@ -152,6 +154,7 @@ $env:DOCKER_REGISTRY_PASSWORD="******"
 ```
 
 说明：
+
 - Windows 下脚本会优先按宿主机架构选择单平台（ARM64 -> linux/arm64，其他 -> linux/amd64）。
 - `DOCKER_REGISTRY_PASSWORD` 建议只在本机环境变量中设置，不要写入仓库文件或提交到 Git。
 
