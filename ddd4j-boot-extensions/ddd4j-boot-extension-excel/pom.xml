@@ -10,7 +10,9 @@
     </parent>
 
     <artifactId>ddd4j-boot-extension-excel</artifactId>
-    <description>Ddd4j Boot Excel Component — Spring Boot integration for ExcelKit (AutoConfiguration + Web download/upload)</description>
+    <description>Ddd4j Boot Excel Component — Spring Boot integration for ExcelKit (AutoConfiguration + Web
+        download/upload)
+    </description>
 
     <dependencies>
         <!-- 库侧实现：纯 Java 的 ExcelKit，必须显式 ${ddd4j.version} -->

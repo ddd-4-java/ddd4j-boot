@@ -10,11 +10,26 @@ OUTPUT=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --repo) REPO=$2; shift 2 ;;
-    --branch) BRANCH=$2; shift 2 ;;
-    --profile) PROFILE=$2; shift 2 ;;
-    --output) OUTPUT=$2; shift 2 ;;
-    *) echo "Unknown argument: $1" >&2; exit 64 ;;
+  --repo)
+    REPO=$2
+    shift 2
+    ;;
+  --branch)
+    BRANCH=$2
+    shift 2
+    ;;
+  --profile)
+    PROFILE=$2
+    shift 2
+    ;;
+  --output)
+    OUTPUT=$2
+    shift 2
+    ;;
+  *)
+    echo "Unknown argument: $1" >&2
+    exit 64
+    ;;
   esac
 done
 
@@ -50,9 +65,9 @@ write_result() {
   local status=$1 reason=$2 exit_code=$3 tests=$4 failures=$5 errors=$6 skipped=$7 log_path=$8 images=$9 command=${10}
   mkdir -p "$(dirname "$OUTPUT")"
   STATUS="$status" REASON="$reason" EXIT_CODE="$exit_code" TESTS="$tests" \
-  FAILURES="$failures" ERRORS="$errors" SKIPPED="$skipped" LOG_PATH="$log_path" \
-  IMAGES="$images" COMMAND="$command" BRANCH_VALUE="$BRANCH" PROFILE_VALUE="$PROFILE" \
-  JDK_VALUE="$jdk" BOOT_VALUE="$boot" DDD4J_VALUE="$ddd4j" python3 - "$OUTPUT" <<'PY'
+    FAILURES="$failures" ERRORS="$errors" SKIPPED="$skipped" LOG_PATH="$log_path" \
+    IMAGES="$images" COMMAND="$command" BRANCH_VALUE="$BRANCH" PROFILE_VALUE="$PROFILE" \
+    JDK_VALUE="$jdk" BOOT_VALUE="$boot" DDD4J_VALUE="$ddd4j" python3 - "$OUTPUT" <<'PY'
 import json
 import os
 import sys
@@ -110,7 +125,10 @@ if [[ ${#modules[@]} -eq 0 ]]; then
   exit 0
 fi
 
-module_csv=$(IFS=,; echo "${modules[*]}")
+module_csv=$(
+  IFS=,
+  echo "${modules[*]}"
+)
 log_dir=$(mktemp -d)
 log_path="$log_dir/integration-contracts.log"
 maven_cmd=${INTEGRATION_MAVEN_CMD:-$REPO/mvnw}
@@ -130,7 +148,8 @@ set +e
 exit_code=$?
 set -e
 
-stats=$(python3 - "$REPO" "${modules[@]}" <<'PY'
+stats=$(
+  python3 - "$REPO" "${modules[@]}" <<'PY'
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path

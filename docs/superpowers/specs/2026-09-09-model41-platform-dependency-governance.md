@@ -75,13 +75,15 @@ flowchart TD
 
 1. 外部父 POM：保留 `groupId/artifactId/version`，不声明 `relativePath`。
 2. reactor 内部父 POM：保留 `groupId/artifactId/version`，不声明 `relativePath`；父坐标由 Maven 4 reactor 解析。
-3. 本规则已通过 Maven 4.0.0-rc-6 的非默认父目录场景验证。仅保留 `relativePath` 会触发模型告警；只保留 `groupId/artifactId` 则无法在真实多层 reactor 中解析父版本。
+3. 本规则已通过 Maven 4.0.0-rc-6 的非默认父目录场景验证。仅保留 `relativePath` 会触发模型告警；只保留 `groupId/artifactId`
+   则无法在真实多层 reactor 中解析父版本。
 4. 4.x 聚合仍使用 `<subprojects>`，不得退回 `<modules>`。
 
 ### 可观察验收
 
 - 4.0、4.1 所有实际 `pom.xml` 都通过结构检查。
-- Maven 4 输出中的 Model 4.1 `GAV + relativePath` 语法告警从 72 条降为 0；当前 Maven rc6 默认 `..` 路径检查保留 13 条精确白名单。
+- Maven 4 输出中的 Model 4.1 `GAV + relativePath` 语法告警从 72 条降为 0；当前 Maven rc6 默认 `..` 路径检查保留 13
+  条精确白名单。
 - 根、BOM、dependencies、parent、license 聚焦 reactor 均能解析和编译。
 - 不改变任何制品坐标、版本号和模块集合。
 
@@ -182,37 +184,47 @@ flowchart TD
 
 Boot 4.0 和 4.1 均在完整 73 模块 reactor 的第 57 个模块 `ddd4j-boot-sample-starter-druid` 停止，前 56 个模块通过。已证实三类失败：
 
-- `MeterRegistryCustomizer` 仍引用 Boot 3 Actuator 包；Boot 4 包为 `org.springframework.boot.micrometer.metrics.autoconfigure.MeterRegistryCustomizer`。
-- `io.github.easy4j:dozer-extra-converters` 2.0/3.0 本地 JAR 均无 class；全树扫描确认 14 份 `DozerMapperConfiguration` 引用其类，14 个样例 POM 声明该空制品。
+- `MeterRegistryCustomizer` 仍引用 Boot 3 Actuator 包；Boot 4 包为
+  `org.springframework.boot.micrometer.metrics.autoconfigure.MeterRegistryCustomizer`。
+- `io.github.easy4j:dozer-extra-converters` 2.0/3.0 本地 JAR 均无 class；全树扫描确认 14 份 `DozerMapperConfiguration`
+  引用其类，14 个样例 POM 声明该空制品。
 - MyBatis-Plus 3.5.17 已将 `IService` / `ServiceImpl` 迁移到 `com.baomidou.mybatisplus.spring.service` 包。
 - Boot 4 将 `TestRestTemplate` 移入 `spring-boot-resttestclient`，并要求 `@AutoConfigureTestRestTemplate`。
 - Easy4J Validation、MyBatis-Plus ActiveRecord 和 Spring WebFlux 7 均有命名空间或常量迁移。
-- Resilience4j 的 Boot 专属 Starter 由 `ddd4j-boot-dependencies` 按生态线管理：4.x 使用 `resilience4j-spring-boot4:2.4.0`，不得下放到 `ddd4j-dependencies`。
+- Resilience4j 的 Boot 专属 Starter 由 `ddd4j-boot-dependencies` 按生态线管理：4.x 使用 `resilience4j-spring-boot4:2.4.0`
+  ，不得下放到 `ddd4j-dependencies`。
 
 实施规则：
 
 - 修改两份 `DemoApplication` 的 MeterRegistryCustomizer import，保持公共标签行为。
-- 删除 14 份无实现依赖的 `DozerMapperConfiguration` 和 14 个样例 POM 中的空 converter 依赖，保留 Dozer 核心 Starter；静态契约必须保证两类引用均归零。
+- 删除 14 份无实现依赖的 `DozerMapperConfiguration` 和 14 个样例 POM 中的空 converter 依赖，保留 Dozer 核心
+  Starter；静态契约必须保证两类引用均归零。
 - 将样例 MyBatis-Plus Service import 迁移到 3.5.17 新包，不创建兼容空壳。
 - 将测试、Validation、ActiveRecord 和 WebFlux 旧 API 迁移到当前 Boot 4 / Spring 7 坐标，并由全树静态契约防止回归。
-- `ddd4j-boot-dependencies` 以 `<spring-boot-starter-resilience4j.version>${resilience4j.version}</spring-boot-starter-resilience4j.version>` 复用 ddd4j 按 JDK 线确定的统一版本，并管理 `resilience4j-spring-boot4`；4.x 样例禁止依赖 Boot 2 Starter。
+- `ddd4j-boot-dependencies` 以
+  `<spring-boot-starter-resilience4j.version>${resilience4j.version}</spring-boot-starter-resilience4j.version>` 复用
+  ddd4j 按 JDK 线确定的统一版本，并管理 `resilience4j-spring-boot4`；4.x 样例禁止依赖 Boot 2 Starter。
 - 4.1 先完成测试和 73/73，再传播到 4.0；禁止排除样例或跳过编译刷绿。
 
 验收：两个分支的目标样例测试通过，完整 reactor 都达到 73/73。
 
 ## 阶段四：ddd4j 多 BOM 冲突源头治理
 
-Boot 4.1 当前有 `7,286` 条 `Ignored POM import` 展开记录，去重后为 `233` 个冲突组合。治理顺序为 ActiveMQ、Micrometer、Hibernate、SLF4J/JAXB，再处理 Oracle JDBC、Brave、gRPC、GraphQL、Ehcache、Elasticsearch 等剩余组。
+Boot 4.1 当前有 `7,286` 条 `Ignored POM import` 展开记录，去重后为 `233` 个冲突组合。治理顺序为
+ActiveMQ、Micrometer、Hibernate、SLF4J/JAXB，再处理 Oracle JDBC、Brave、gRPC、GraphQL、Ehcache、Elasticsearch 等剩余组。
 
-每个冲突族必须在 `ddd4j-dependencies` 选定唯一期望版本并由有效 POM 契约断言。优先删除与平台基线重复的 BOM import，但只有该 BOM 的独有坐标仍被平台管理时才能删除；必须保留的 BOM 由 ddd4j 源头添加直接约束。
+每个冲突族必须在 `ddd4j-dependencies` 选定唯一期望版本并由有效 POM 契约断言。优先删除与平台基线重复的 BOM import，但只有该
+BOM 的独有坐标仍被平台管理时才能删除；必须保留的 BOM 由 ddd4j 源头添加直接约束。
 
-禁止仅交换 BOM 顺序、关闭告警或扩大模糊白名单。每完成一族，必须运行 ddd4j 有效模型、`clean install`、Boot 4.1/4.0 有效模型和聚焦 reactor。
+禁止仅交换 BOM 顺序、关闭告警或扩大模糊白名单。每完成一族，必须运行 ddd4j 有效模型、`clean install`、Boot 4.1/4.0 有效模型和聚焦
+reactor。
 
 验收：233 个基线冲突全部消除，或进入包含两侧版本、最终版本、权威来源和原因的坐标级精确白名单；新增或版本变化的冲突必须使验证失败。
 
 ## 阶段五：独立代码审查
 
-样例 73/73 和 BOM 契约完成后，对实际 Git 变更派发独立代码审查。审查覆盖正确性、版本权威、Boot 4.0/4.1 兼容、consumer POM 和回归证据。Critical/Important 问题必须修复并重新验证。
+样例 73/73 和 BOM 契约完成后，对实际 Git 变更派发独立代码审查。审查覆盖正确性、版本权威、Boot 4.0/4.1 兼容、consumer POM
+和回归证据。Critical/Important 问题必须修复并重新验证。
 
 ## 扩展完成定义
 

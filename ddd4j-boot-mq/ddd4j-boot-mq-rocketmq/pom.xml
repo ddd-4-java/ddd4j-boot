@@ -10,7 +10,8 @@
     </parent>
 
     <artifactId>ddd4j-boot-mq-rocketmq</artifactId>
-    <description>Ddd4j Boot MQ rocketmq Spring Boot AutoConfiguration (thin adapter over ddd4j-mq-rocketmq)</description>
+    <description>Ddd4j Boot MQ rocketmq Spring Boot AutoConfiguration (thin adapter over ddd4j-mq-rocketmq)
+    </description>
 
     <dependencies>
         <dependency>

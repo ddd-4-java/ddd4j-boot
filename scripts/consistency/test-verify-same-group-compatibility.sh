@@ -7,20 +7,20 @@ GENERATOR="$ROOT/scripts/consistency/generate_branch_surfaces.py"
 TMP_DIR=$(mktemp -d)
 trap 'rm -rf "$TMP_DIR"' EXIT
 
-cat > "$TMP_DIR/map.tsv" <<'EOF'
+cat >"$TMP_DIR/map.tsv" <<'EOF'
 from_group	to_group	contract_id	source_surface	target_surface	behavior_delta	validation_command
 jdk8	jdk17	AUTO_CONFIGURATION	factories	imports	behavior stable	mvn test
 EOF
-cat > "$TMP_DIR/baseline.tsv" <<'EOF'
+cat >"$TMP_DIR/baseline.tsv" <<'EOF'
 jdk_group	surface	value	deprecated
 jdk17	config:ddd4j.enabled	true	false
 EOF
-printf 'jdk_group\tsurface\tvalue\tdeprecated\n' > "$TMP_DIR/removed.tsv"
-cat > "$TMP_DIR/drift.tsv" <<'EOF'
+printf 'jdk_group\tsurface\tvalue\tdeprecated\n' >"$TMP_DIR/removed.tsv"
+cat >"$TMP_DIR/drift.tsv" <<'EOF'
 jdk_group	surface	value	deprecated
 jdk17	config:ddd4j.enabled	false	false
 EOF
-cat > "$TMP_DIR/deprecated.tsv" <<'EOF'
+cat >"$TMP_DIR/deprecated.tsv" <<'EOF'
 jdk_group	surface	value	deprecated
 jdk17	config:ddd4j.enabled	false	true
 EOF
@@ -51,17 +51,17 @@ rg -Fq '"status": "REVIEW_REQUIRED"' "$TMP_DIR/deprecated.json"
 mkdir -p "$TMP_DIR/tree/src/main/java/io/ddd4j/example" \
   "$TMP_DIR/tree/src/main/resources/META-INF" \
   "$TMP_DIR/tree/ddd4j-boot-samples/demo/src/main/java/io/ddd4j/sample"
-cat > "$TMP_DIR/tree/src/main/java/io/ddd4j/example/Demo.java" <<'EOF'
+cat >"$TMP_DIR/tree/src/main/java/io/ddd4j/example/Demo.java" <<'EOF'
 package io.ddd4j.example;
 public class Demo {
     public String find(String id) { return id; }
 }
 EOF
-cat > "$TMP_DIR/tree/ddd4j-boot-samples/demo/src/main/java/io/ddd4j/sample/SampleOnly.java" <<'EOF'
+cat >"$TMP_DIR/tree/ddd4j-boot-samples/demo/src/main/java/io/ddd4j/sample/SampleOnly.java" <<'EOF'
 package io.ddd4j.sample;
 public class SampleOnly { public void run() {} }
 EOF
-cat > "$TMP_DIR/tree/src/main/resources/META-INF/spring-configuration-metadata.json" <<'EOF'
+cat >"$TMP_DIR/tree/src/main/resources/META-INF/spring-configuration-metadata.json" <<'EOF'
 {"properties":[{"name":"ddd4j.demo.enabled","type":"java.lang.Boolean","defaultValue":true}]}
 EOF
 python3 "$GENERATOR" --tree "$TMP_DIR/tree" --jdk-group jdk17 --output "$TMP_DIR/generated.tsv"

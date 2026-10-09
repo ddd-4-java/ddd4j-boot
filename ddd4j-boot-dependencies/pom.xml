@@ -29,24 +29,30 @@
         <spring-boot-starter-axis2.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-axis2.version>
         <spring-boot-starter-baiduapi.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-baiduapi.version>
         <spring-boot-starter-berkeley.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-berkeley.version>
-        <spring-boot-starter-calibre-invoker.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-calibre-invoker.version>
+        <spring-boot-starter-calibre-invoker.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-calibre-invoker.version>
         <spring-boot-starter-camel.version>${camel.version}</spring-boot-starter-camel.version>
         <spring-boot-starter-canal.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-canal.version>
         <spring-boot-starter-casclient.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-casclient.version>
         <spring-boot-starter-curator.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-curator.version>
         <spring-boot-starter-cxf-client.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-cxf-client.version>
-        <spring-boot-starter-cxf-jaxrs-security.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-cxf-jaxrs-security.version>
-        <spring-boot-starter-cxf-jaxws-security.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-cxf-jaxws-security.version>
+        <spring-boot-starter-cxf-jaxrs-security.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-cxf-jaxrs-security.version>
+        <spring-boot-starter-cxf-jaxws-security.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-cxf-jaxws-security.version>
         <spring-boot-starter-cxf.version>${cxf.version}</spring-boot-starter-cxf.version>
-        <spring-boot-starter-debezium-embedded.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-debezium-embedded.version>
+        <spring-boot-starter-debezium-embedded.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-debezium-embedded.version>
         <spring-boot-starter-derby.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-derby.version>
         <spring-boot-starter-dingtalk.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-dingtalk.version>
         <spring-boot-starter-disruptor.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-disruptor.version>
-        <spring-boot-starter-docx4j-exportfo.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-docx4j-exportfo.version>
+        <spring-boot-starter-docx4j-exportfo.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-docx4j-exportfo.version>
         <spring-boot-starter-docx4j.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-docx4j.version>
         <spring-boot-starter-dozermapper.version>${dozer-core.version}</spring-boot-starter-dozermapper.version>
         <spring-boot-starter-dreamina.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-dreamina.version>
-        <spring-boot-starter-dropwizard-metrics.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-dropwizard-metrics.version>
+        <spring-boot-starter-dropwizard-metrics.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-dropwizard-metrics.version>
         <spring-boot-starter-druid-plus.version>4.1.x.20260820-SNAPSHOT</spring-boot-starter-druid-plus.version>
         <spring-boot-starter-druid.version>${druid.version}</spring-boot-starter-druid.version>
         <spring-boot-starter-dynamic-datasource.version>4.3.1</spring-boot-starter-dynamic-datasource.version>
@@ -60,7 +66,8 @@
         <spring-boot-starter-fetion4j.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-fetion4j.version>
         <spring-boot-starter-ffmpeg.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-ffmpeg.version>
         <spring-boot-starter-flyway-plus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-flyway-plus.version>
-        <spring-boot-starter-freemarker-taglibs.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-freemarker-taglibs.version>
+        <spring-boot-starter-freemarker-taglibs.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-freemarker-taglibs.version>
         <spring-boot-starter-ftpclient.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-ftpclient.version>
         <spring-boot-starter-geoip.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-geoip.version>
         <spring-boot-starter-grpc.version>5.2.0</spring-boot-starter-grpc.version>
@@ -93,10 +100,12 @@
         <spring-boot-starter-mbassador.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-mbassador.version>
         <spring-boot-starter-meituan.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-meituan.version>
         <spring-boot-starter-minio.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-minio.version>
-        <spring-boot-starter-mybatis-dbperms.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-mybatis-dbperms.version>
+        <spring-boot-starter-mybatis-dbperms.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-mybatis-dbperms.version>
         <spring-boot-starter-mybatis-tk.version>${mybatis-tk.version}</spring-boot-starter-mybatis-tk.version>
         <spring-boot-starter-mybatis.version>3.0.5</spring-boot-starter-mybatis.version>
-        <spring-boot-starter-mysql-binlog-connector.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-mysql-binlog-connector.version>
+        <spring-boot-starter-mysql-binlog-connector.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-mysql-binlog-connector.version>
         <spring-boot-starter-nacos-config.version>0.3.0-RC</spring-boot-starter-nacos-config.version>
         <spring-boot-starter-nacos-discovery.version>0.3.0-RC</spring-boot-starter-nacos-discovery.version>
         <spring-boot-starter-okhttp3.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-okhttp3.version>
@@ -129,35 +138,48 @@
         <spring-boot-starter-security-acl.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-acl.version>
         <spring-boot-starter-security-biz.version>4.1.x.20250712-SNAPSHOT</spring-boot-starter-security-biz.version>
         <spring-boot-starter-security-cas.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-cas.version>
-        <spring-boot-starter-security-dingtalk.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-dingtalk.version>
-        <spring-boot-starter-security-extension.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-extension.version>
-        <spring-boot-starter-security-facebook.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-facebook.version>
-        <spring-boot-starter-security-faceid.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-faceid.version>
-        <spring-boot-starter-security-google.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-google.version>
+        <spring-boot-starter-security-dingtalk.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-security-dingtalk.version>
+        <spring-boot-starter-security-extension.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-security-extension.version>
+        <spring-boot-starter-security-facebook.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-security-facebook.version>
+        <spring-boot-starter-security-faceid.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-security-faceid.version>
+        <spring-boot-starter-security-google.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-security-google.version>
         <spring-boot-starter-security-guard.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-guard.version>
         <spring-boot-starter-security-jwt.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-jwt.version>
         <spring-boot-starter-security-ldap.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-ldap.version>
         <spring-boot-starter-security-line.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-line.version>
-        <spring-boot-starter-security-oauth2.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-oauth2.version>
+        <spring-boot-starter-security-oauth2.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-security-oauth2.version>
         <spring-boot-starter-security-oidc.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-oidc.version>
-        <spring-boot-starter-security-openid.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-openid.version>
+        <spring-boot-starter-security-openid.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-security-openid.version>
         <spring-boot-starter-security-otp.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-otp.version>
         <spring-boot-starter-security-pac4j.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-pac4j.version>
-        <spring-boot-starter-security-qrcode.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-qrcode.version>
+        <spring-boot-starter-security-qrcode.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-security-qrcode.version>
         <spring-boot-starter-security-saml.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-saml.version>
         <spring-boot-starter-security-sms.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-sms.version>
-        <spring-boot-starter-security-unionid.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-unionid.version>
-        <spring-boot-starter-security-weixin.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-weixin.version>
+        <spring-boot-starter-security-unionid.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-security-unionid.version>
+        <spring-boot-starter-security-weixin.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-security-weixin.version>
         <spring-boot-starter-security-yiban.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-security-yiban.version>
         <spring-boot-starter-shanyan.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shanyan.version>
         <spring-boot-starter-shardingsphere-jdbc.version>5.2.1</spring-boot-starter-shardingsphere-jdbc.version>
         <spring-boot-starter-shiro-antisamy.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-antisamy.version>
         <spring-boot-starter-shiro-cas.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-cas.version>
-        <spring-boot-starter-shiro-csrfguard.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-csrfguard.version>
+        <spring-boot-starter-shiro-csrfguard.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-shiro-csrfguard.version>
         <spring-boot-starter-shiro-dingtalk.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-dingtalk.version>
-        <spring-boot-starter-shiro-extension.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-extension.version>
+        <spring-boot-starter-shiro-extension.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-shiro-extension.version>
         <spring-boot-starter-shiro-faceid.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-faceid.version>
-        <spring-boot-starter-shiro-html-sanitizer.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-html-sanitizer.version>
+        <spring-boot-starter-shiro-html-sanitizer.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-shiro-html-sanitizer.version>
         <spring-boot-starter-shiro-jwt.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-jwt.version>
         <spring-boot-starter-shiro-kisso.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-kisso.version>
         <spring-boot-starter-shiro-ldap.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-shiro-ldap.version>
@@ -181,10 +203,13 @@
         <spring-boot-starter-soapui.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-soapui.version>
         <spring-boot-starter-socketio.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-socketio.version>
         <spring-boot-starter-tencentapi.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-tencentapi.version>
-        <spring-boot-starter-validation-mimetypes.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-validation-mimetypes.version>
-        <spring-boot-starter-webflux-swagger2.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-webflux-swagger2.version>
+        <spring-boot-starter-validation-mimetypes.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-validation-mimetypes.version>
+        <spring-boot-starter-webflux-swagger2.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-webflux-swagger2.version>
         <spring-boot-starter-webit.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-webit.version>
-        <spring-boot-starter-webmvc-swagger2.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-webmvc-swagger2.version>
+        <spring-boot-starter-webmvc-swagger2.version>4.1.x.20260630-SNAPSHOT
+        </spring-boot-starter-webmvc-swagger2.version>
         <spring-boot-starter-xmemcached.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-xmemcached.version>
         <spring-boot-starter-xxljob.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-xxljob.version>
         <spring-boot-starter-zbus.version>4.1.x.20260630-SNAPSHOT</spring-boot-starter-zbus.version>
@@ -1511,7 +1536,7 @@
                 <artifactId>zbus-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-zbus.version}</version>
             </dependency>
-        
+
             <!-- 原 hiwepy 坐标迁至 easy4j（属性沿用） -->
             <dependency>
                 <groupId>io.github.easy4j</groupId>
@@ -1743,7 +1768,7 @@
                 <artifactId>zxing-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-zxing.version}</version>
             </dependency>
-        
+
             <!-- easy4j starter 逐个版本（与 ddd4j-boot-starters 仓库一一对应，外部提交丢失后补齐） -->
             <dependency>
                 <groupId>io.github.easy4j</groupId>

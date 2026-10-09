@@ -43,7 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * <p>三个关键配置（官方镜像不提供开箱即用的单容器组合）：
  * <ul>
-     *   <li><b>brokerIP1/listenPort</b>：broker 向 namesrv 公告的对外地址。客户端（宿主机）
+ *   <li><b>brokerIP1/listenPort</b>：broker 向 namesrv 公告的对外地址。客户端（宿主机）
  *       经 namesrv 拿到该地址直连 broker，故必须等于宿主机可达地址 + 固定映射端口
  *       （{@code 10911:10911}，VIP 通道另需 {@code 10909:10909}，可用
  *       {@code -Dddd4j.test.rocketmq.brokerPort=} 覆盖固定端口以规避 CI 冲突）</li>

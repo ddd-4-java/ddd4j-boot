@@ -29,7 +29,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class DefaultJacksonAutoConfigurationNullTest {
 
-    /** 测试用 POJO：包含各类属性。 */
+    /**
+     * 测试用 POJO：包含各类属性。
+     */
     static final class SampleBean {
         public String name;
         public Integer count;
@@ -119,7 +121,7 @@ class DefaultJacksonAutoConfigurationNullTest {
                 .contains("\"meta\":{\"k\":\"v\"}");
     }
 
-    enum Status { ACTIVE, INACTIVE }
+    enum Status {ACTIVE, INACTIVE}
 
     static final class ExtendedBean {
         public UUID uuid;

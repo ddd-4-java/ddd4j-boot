@@ -19,7 +19,7 @@ if [[ $# -eq 0 ]]; then
       --tree "$tree" --jdk-group "$group" --output "$TMP_DIR/$branch.tsv"
     baseline_file="$TMP_DIR/baseline-$group"
     if [[ ! -f "$baseline_file" ]]; then
-      printf '%s\n' "$branch" > "$baseline_file"
+      printf '%s\n' "$branch" >"$baseline_file"
       continue
     fi
     baseline=$(cat "$baseline_file")
@@ -28,7 +28,7 @@ if [[ $# -eq 0 ]]; then
       --candidate-surfaces "$TMP_DIR/$branch.tsv" \
       --output "$TMP_DIR/$baseline--$branch.json"
     printf 'PASS: %s -> %s (%s)\n' "$baseline" "$branch" "$group"
-  done < "$BRANCH_GROUP_FILE"
+  done <"$BRANCH_GROUP_FILE"
   exit 0
 fi
 
@@ -39,11 +39,26 @@ OUTPUT=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --migration-map) MIGRATION_MAP=$2; shift 2 ;;
-    --baseline-surfaces) BASELINE=$2; shift 2 ;;
-    --candidate-surfaces) CANDIDATE=$2; shift 2 ;;
-    --output) OUTPUT=$2; shift 2 ;;
-    *) echo "Unknown argument: $1" >&2; exit 64 ;;
+  --migration-map)
+    MIGRATION_MAP=$2
+    shift 2
+    ;;
+  --baseline-surfaces)
+    BASELINE=$2
+    shift 2
+    ;;
+  --candidate-surfaces)
+    CANDIDATE=$2
+    shift 2
+    ;;
+  --output)
+    OUTPUT=$2
+    shift 2
+    ;;
+  *)
+    echo "Unknown argument: $1" >&2
+    exit 64
+    ;;
   esac
 done
 
@@ -58,7 +73,8 @@ python3 "$COMPARATOR" \
   --candidate-surfaces "$CANDIDATE" \
   --output "$OUTPUT"
 
-status=$(python3 - "$OUTPUT" <<'PY'
+status=$(
+  python3 - "$OUTPUT" <<'PY'
 import json
 import sys
 print(json.load(open(sys.argv[1], encoding="utf-8"))["status"])

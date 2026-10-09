@@ -10,7 +10,8 @@
     </parent>
 
     <artifactId>ddd4j-boot-sample-order</artifactId>
-    <description>Spring Boot Order sample built from the framework-neutral DDD and CQRS application kernel.</description>
+    <description>Spring Boot Order sample built from the framework-neutral DDD and CQRS application kernel.
+    </description>
 
     <dependencies>
         <dependency>

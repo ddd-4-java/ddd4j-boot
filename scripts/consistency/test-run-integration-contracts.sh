@@ -16,7 +16,7 @@ if "$RUNNER" --branch 4.1.x --output "$TMP_DIR/missing-profile.json" >/dev/null 
   exit 1
 fi
 
-cat > "$TMP_DIR/docker-unavailable" <<'EOF'
+cat >"$TMP_DIR/docker-unavailable" <<'EOF'
 #!/usr/bin/env bash
 exit 1
 EOF
@@ -35,13 +35,13 @@ assert result["status"] == "BLOCKED", result
 assert "Docker" in result["reason"], result
 PY
 
-cat > "$TMP_DIR/docker-available" <<'EOF'
+cat >"$TMP_DIR/docker-available" <<'EOF'
 #!/usr/bin/env bash
 exit 0
 EOF
 chmod +x "$TMP_DIR/docker-available"
 
-cat > "$TMP_DIR/maven-skipped" <<'EOF'
+cat >"$TMP_DIR/maven-skipped" <<'EOF'
 #!/usr/bin/env bash
 mkdir -p ddd4j-boot-mq/ddd4j-boot-mq-nats/target/surefire-reports
 cat > ddd4j-boot-mq/ddd4j-boot-mq-nats/target/surefire-reports/TEST-skipped.xml <<'XML'
@@ -54,14 +54,14 @@ chmod +x "$TMP_DIR/maven-skipped"
 fixture_repo="$TMP_DIR/repo"
 mkdir -p "$fixture_repo/config/consistency" "$fixture_repo/ddd4j-boot-mq/ddd4j-boot-mq-nats"
 cp "$ROOT/config/consistency/ddd4j-boot-build-matrix.tsv" "$fixture_repo/config/consistency/"
-printf '%s\n' '<project />' > "$fixture_repo/ddd4j-boot-mq/ddd4j-boot-mq-nats/pom.xml"
+printf '%s\n' '<project />' >"$fixture_repo/ddd4j-boot-mq/ddd4j-boot-mq-nats/pom.xml"
 git -C "$fixture_repo" init -q
 git -C "$fixture_repo" config user.email test@example.invalid
 git -C "$fixture_repo" config user.name Test
 git -C "$fixture_repo" checkout -qb 4.1.x
 
 INTEGRATION_DOCKER_CMD="$TMP_DIR/docker-available" \
-INTEGRATION_MAVEN_CMD="$TMP_DIR/maven-skipped" \
+  INTEGRATION_MAVEN_CMD="$TMP_DIR/maven-skipped" \
   "$RUNNER" --repo "$fixture_repo" --branch 4.1.x --profile integration \
   --output "$TMP_DIR/skipped.json" >/dev/null
 

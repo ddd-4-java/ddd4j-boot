@@ -20,18 +20,18 @@
 
 ## 同组比较
 
-| 基线 | 候选 | JDK 组 | 结果 |
-|---|---|---|---|
-| 2.3.x | 2.4.x | jdk8 | PASS |
-| 2.3.x | 2.5.x | jdk8 | PASS |
-| 2.3.x | 2.6.x | jdk8 | PASS |
-| 2.3.x | 2.7.x | jdk8 | PASS |
-| 3.0.x | 3.1.x | jdk17 | PASS |
-| 3.0.x | 3.2.x | jdk17 | PASS |
-| 3.0.x | 3.3.x | jdk17 | PASS |
-| 3.0.x | 3.4.x | jdk17 | PASS |
-| 3.0.x | 3.5.x | jdk17 | PASS |
-| 4.0.x | 4.1.x | jdk21 | PASS |
+| 基线  | 候选  | JDK 组 | 结果 |
+|-------|-------|--------|------|
+| 2.3.x | 2.4.x | jdk8   | PASS |
+| 2.3.x | 2.5.x | jdk8   | PASS |
+| 2.3.x | 2.6.x | jdk8   | PASS |
+| 2.3.x | 2.7.x | jdk8   | PASS |
+| 3.0.x | 3.1.x | jdk17  | PASS |
+| 3.0.x | 3.2.x | jdk17  | PASS |
+| 3.0.x | 3.3.x | jdk17  | PASS |
+| 3.0.x | 3.4.x | jdk17  | PASS |
+| 3.0.x | 3.5.x | jdk17  | PASS |
+| 4.0.x | 4.1.x | jdk21  | PASS |
 
 复现：
 
@@ -54,21 +54,21 @@ RocketMQ 测试动态选择 broker/VIP 端口对，并使用 `listenPort` 同步
 
 ## 阶段六完整 reactor 证据
 
-| 分支 | 工具链 | reactor | `clean verify` | SHA |
-|---|---|---:|---:|---|
-| 2.3.x | JDK 8 / Maven 3 | 72/72 | 04:00 | `343d34cd08fb` |
-| 2.4.x | JDK 8 / Maven 3 | 72/72 | 04:45 | `ed30a330ddbc` |
-| 2.5.x | JDK 8 / Maven 3 | 72/72 | 04:33 | `bf7bfa8a5ebd` |
-| 2.6.x | JDK 8 / Maven 3 | 72/72 | 03:44 | `3c5c4c432443` |
-| 2.7.x | JDK 8 / Maven 3 | 72/72 | 03:53 | `6a3481944a25` |
-| 3.0.x | JDK 17 / Maven 3 | 73/73 | 04:07 | `301a4d59c152` |
-| 3.1.x | JDK 17 / Maven 3 | 73/73 | 03:40 | `7e457d18079b` |
-| 3.2.x | JDK 17 / Maven 3 | 73/73 | 03:24 | `2c9752497069` |
-| 3.3.x | JDK 17 / Maven 3 | 73/73 | 03:26 | `d77241b9dae5` |
-| 3.4.x | JDK 17 / Maven 3 | 73/73 | 03:33 | `1f977a0eb25c` |
-| 3.5.x | JDK 17 / Maven 3 | 73/73 | 03:39 | `f76684ab26c3` |
-| 4.0.x | JDK 21 / Maven 4 | 73/73 | 03:15 | `e9dc153fcab7` |
-| 4.1.x | JDK 21 / Maven 4 | 73/73 | 04:03 | `2ce4476b1c96` |
+| 分支  | 工具链           | reactor | `clean verify` | SHA            |
+|-------|------------------|--------:|---------------:|----------------|
+| 2.3.x | JDK 8 / Maven 3  |   72/72 |          04:00 | `343d34cd08fb` |
+| 2.4.x | JDK 8 / Maven 3  |   72/72 |          04:45 | `ed30a330ddbc` |
+| 2.5.x | JDK 8 / Maven 3  |   72/72 |          04:33 | `bf7bfa8a5ebd` |
+| 2.6.x | JDK 8 / Maven 3  |   72/72 |          03:44 | `3c5c4c432443` |
+| 2.7.x | JDK 8 / Maven 3  |   72/72 |          03:53 | `6a3481944a25` |
+| 3.0.x | JDK 17 / Maven 3 |   73/73 |          04:07 | `301a4d59c152` |
+| 3.1.x | JDK 17 / Maven 3 |   73/73 |          03:40 | `7e457d18079b` |
+| 3.2.x | JDK 17 / Maven 3 |   73/73 |          03:24 | `2c9752497069` |
+| 3.3.x | JDK 17 / Maven 3 |   73/73 |          03:26 | `d77241b9dae5` |
+| 3.4.x | JDK 17 / Maven 3 |   73/73 |          03:33 | `1f977a0eb25c` |
+| 3.5.x | JDK 17 / Maven 3 |   73/73 |          03:39 | `f76684ab26c3` |
+| 4.0.x | JDK 21 / Maven 4 |   73/73 |          03:15 | `e9dc153fcab7` |
+| 4.1.x | JDK 21 / Maven 4 |   73/73 |          04:03 | `2ce4476b1c96` |
 
 13/13 负向扫描通过：POM、Java 源码和 generated consumer POM 中均无
 `RedisOperationTemplate` 或 `redistpl-plus-spring-boot-starter` 残留。RocketMQ Testcontainers
@@ -76,8 +76,8 @@ RocketMQ 测试动态选择 broker/VIP 端口对，并使用 `listenPort` 同步
 
 ## 双远端状态
 
-| 分支 | GitHub | Codeup | 状态 |
-|---|---|---|---|
+| 分支  | GitHub       | Codeup       | 状态                              |
+|-------|--------------|--------------|-----------------------------------|
 | 2.3.x | 343d34cd08fb | bc130cd10361 | DRIFT: Codeup credential required |
 | 2.4.x | ed30a330ddbc | fd043cb4532e | DRIFT: Codeup credential required |
 | 2.5.x | bf7bfa8a5ebd | a838d5c6b6bc | DRIFT: Codeup credential required |
