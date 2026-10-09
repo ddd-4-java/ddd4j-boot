@@ -4,12 +4,12 @@
 
 ## 必须处理的替换
 
-| 来源 | 目标 | 保持不变的行为 |
-|---|---|---|
-| Boot 2.7/3 自动配置入口 | Boot 4 `AutoConfiguration.imports` | 条件装配五维与资源关闭所有权 |
-| Java 17 运行时 | Java 21 运行时 | 业务默认值、认证失败语义、缓存与 MQ 关闭语义 |
-| Boot 3 BOM/Jackson 适配层 | Boot 4 BOM/Jackson 适配层 | 对外配置键、JSON wire contract、错误响应 |
-| Boot 3 Jakarta Web | Boot 4 Jakarta Web | Servlet/WebFlux 条件边界、请求上下文和异常翻译 |
+| 来源                      | 目标                               | 保持不变的行为                                 |
+|---------------------------|------------------------------------|------------------------------------------------|
+| Boot 2.7/3 自动配置入口   | Boot 4 `AutoConfiguration.imports` | 条件装配五维与资源关闭所有权                   |
+| Java 17 运行时            | Java 21 运行时                     | 业务默认值、认证失败语义、缓存与 MQ 关闭语义   |
+| Boot 3 BOM/Jackson 适配层 | Boot 4 BOM/Jackson 适配层          | 对外配置键、JSON wire contract、错误响应       |
+| Boot 3 Jakarta Web        | Boot 4 Jakarta Web                 | Servlet/WebFlux 条件边界、请求上下文和异常翻译 |
 
 ## 最小验证
 

@@ -47,7 +47,9 @@ class SqsMQClientIntegrationTest {
 
     private static final String QUEUE_NAME = "ddd4j-events";
 
-    /** 占位符（编译期常量，供注解引用），实际 URL 由 QueueUrlRewriter 以动态端口改写。 */
+    /**
+     * 占位符（编译期常量，供注解引用），实际 URL 由 QueueUrlRewriter 以动态端口改写。
+     */
     private static final String QUEUE_URL_PLACEHOLDER = "${test.sqs.queue-url}";
 
     private static final String ACCESS_KEY = "test";
@@ -59,7 +61,9 @@ class SqsMQClientIntegrationTest {
             DockerImageName.parse("localstack/localstack:3.8.0"))
             .withServices(LocalStackContainer.Service.SQS);
 
-    /** 运行时 queueUrl：动态端口 + LocalStack 固定账号段 000000000000。 */
+    /**
+     * 运行时 queueUrl：动态端口 + LocalStack 固定账号段 000000000000。
+     */
     private static String queueUrl() {
         return endpoint() + "/000000000000/" + QUEUE_NAME;
     }

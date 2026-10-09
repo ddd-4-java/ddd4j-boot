@@ -9,7 +9,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-/** Resolves classpath and file resources through Spring's resource abstraction. */
+/**
+ * Resolves classpath and file resources through Spring's resource abstraction.
+ */
 public class SpringResourceQrCodeResolver implements QrCodeResourceResolver {
 
     private final ResourceLoader resourceLoader;

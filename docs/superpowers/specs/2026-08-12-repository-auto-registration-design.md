@@ -7,7 +7,8 @@
 
 ## 1. 目标与范围
 
-自动发现 Spring 容器中的领域 Repository Bean，注册到 `RepositoryRegistry`，支持 Aggregate 类型及可选 Query 类型。Context 关闭时对称移除映射，解决 `BaseContext` 与兼容静态 Map 双状态泄漏。
+自动发现 Spring 容器中的领域 Repository Bean，注册到 `RepositoryRegistry`，支持 Aggregate 类型及可选 Query 类型。Context
+关闭时对称移除映射，解决 `BaseContext` 与兼容静态 Map 双状态泄漏。
 
 ### 非目标
 
@@ -37,10 +38,10 @@ ddd4j-boot-core/
 
 ## 4. 核心抽象
 
-| 类 | 职责 |
-|----|------|
+| 类                                 | 职责                                                           |
+|------------------------------------|----------------------------------------------------------------|
 | `Ddd4jRepositoryAutoConfiguration` | BeanPostProcessor 自动注册 Repository，DisposableBean 关闭清理 |
-| `RepositoryRegistry` | 上游 ddd4j-core 的静态注册表 |
+| `RepositoryRegistry`               | 上游 ddd4j-core 的静态注册表                                   |
 
 ## 5. 配置结构
 
@@ -57,10 +58,10 @@ ddd4j-boot-core/
 
 ## 8. 实施风险与缓解
 
-| 风险 | 缓解 |
-|------|------|
-| 泛型擦除导致类型推断失败 | 提供显式注册器扩展点 |
-| 测试间静态 Map 泄漏 | DisposableBean 对称清理 |
+| 风险                     | 缓解                    |
+|--------------------------|-------------------------|
+| 泛型擦除导致类型推断失败 | 提供显式注册器扩展点    |
+| 测试间静态 Map 泄漏      | DisposableBean 对称清理 |
 
 ## 9. 交付物清单
 
