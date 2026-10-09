@@ -12,7 +12,9 @@
 
     <artifactId>ddd4j-boot-extensions</artifactId>
     <packaging>pom</packaging>
-    <description>Ddd4j Boot Extensions - 扩展模块聚合父 POM（与 3.4.x 对齐）。下含 5 类子模块：data-* / mq-* / auth-* / extension-* / web-*</description>
+    <description>Ddd4j Boot Extensions - 扩展模块聚合父 POM（与 3.4.x 对齐）。下含 5 类子模块：data-* / mq-* / auth-* /
+        extension-* / web-*
+    </description>
 
     <modules>
         <!-- data-* (4)：数据层扩展（与 ddd4j-boot-data 单模块互补） -->

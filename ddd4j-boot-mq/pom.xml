@@ -11,7 +11,9 @@
     </parent>
 
     <artifactId>ddd4j-boot-mq</artifactId>
-    <description>Ddd4j Boot MQ - 消息队列 Port/契约层（不依赖任何具体 broker）。具体 broker 适配（kafka/rocketmq/rabbitmq 等）见 ddd4j-boot-extensions 下的 mq-* 子模块。</description>
+    <description>Ddd4j Boot MQ - 消息队列 Port/契约层（不依赖任何具体 broker）。具体 broker 适配（kafka/rocketmq/rabbitmq
+        等）见 ddd4j-boot-extensions 下的 mq-* 子模块。
+    </description>
 
     <dependencies>
         <!-- 基础契约层 -->

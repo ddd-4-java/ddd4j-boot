@@ -16,9 +16,9 @@ import java.util.List;
  */
 @Mapper
 public interface OrderMapper {
-    
+
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
-    
+
     /**
      * 命令转领域对象
      */
@@ -31,7 +31,7 @@ public interface OrderMapper {
                         new Money(item.getUnitPrice(), item.getCurrency() != null ? item.getCurrency() : "CNY")
                 ))
                 .collect(java.util.stream.Collectors.toList());
-        
+
         // 转换地址
         CreateOrderCommand.AddressCommand addrCmd = command.getShippingAddress();
         Address address = new Address(
@@ -41,10 +41,10 @@ public interface OrderMapper {
                 addrCmd.getDetail(),
                 addrCmd.getZipCode()
         );
-        
+
         return Order.create(orderNo, command.getUserId(), address, items);
     }
-    
+
     /**
      * 领域对象转DTO
      */
@@ -74,7 +74,7 @@ public interface OrderMapper {
         }
         return dto;
     }
-    
+
     /**
      * 地址转DTO
      */
@@ -91,7 +91,7 @@ public interface OrderMapper {
         dto.setFullAddress(address.getFullAddress());
         return dto;
     }
-    
+
     /**
      * 订单项转DTO
      */
@@ -109,7 +109,7 @@ public interface OrderMapper {
         dto.setCurrency(item.getUnitPrice() != null ? item.getUnitPrice().currency() : null);
         return dto;
     }
-    
+
     /**
      * 订单列表转DTO列表
      */

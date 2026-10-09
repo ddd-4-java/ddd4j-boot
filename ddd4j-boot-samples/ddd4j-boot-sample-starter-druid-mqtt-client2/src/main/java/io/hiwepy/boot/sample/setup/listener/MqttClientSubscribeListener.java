@@ -31,7 +31,7 @@ public class MqttClientSubscribeListener {
     }
 
     @MqttClientSubscribe(
-        value = "/test/json", deserialize = MqttJsonDeserializer.class // 2.4.5 开始支持 自定义序列化，默认 json 序列化
+            value = "/test/json", deserialize = MqttJsonDeserializer.class // 2.4.5 开始支持 自定义序列化，默认 json 序列化
     )
     public void testJson(String topic, MqttPublishMessage message, TestJsonBean data) {
         // 2.4.5 开始支持，支持 2 到 3 个参数，字段类型映射规则如下

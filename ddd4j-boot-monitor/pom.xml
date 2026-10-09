@@ -11,7 +11,9 @@
     </parent>
 
     <artifactId>ddd4j-boot-monitor</artifactId>
-    <description>Ddd4j Boot Monitor - 监控/可观测入口（Actuator + Micrometer 整合）。包路径保留 io.ddd4j.boot.monitor 以与 3.4.x 保持完全一致。</description>
+    <description>Ddd4j Boot Monitor - 监控/可观测入口（Actuator + Micrometer 整合）。包路径保留 io.ddd4j.boot.monitor 以与
+        3.4.x 保持完全一致。
+    </description>
 
     <dependencies>
         <!-- 基础契约层 -->

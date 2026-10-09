@@ -18,18 +18,18 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.StringValueResolver;
 
 @ApiResponses({
-    @ApiResponse(code = HttpStatus.SC_BAD_REQUEST, message = "参数类型不匹配或格式不正确", response = ApiRestResponse.class),
-    @ApiResponse(code = HttpStatus.SC_UNAUTHORIZED, message = "不允许访问（功能未授权）", response = ApiRestResponse.class),
-    @ApiResponse(code = HttpStatus.SC_FORBIDDEN, message = "服务器拒绝请求", response = ApiRestResponse.class),
-    @ApiResponse(code = HttpStatus.SC_NOT_FOUND, message = "请求地址不存在", response = ApiRestResponse.class),
-    @ApiResponse(code = HttpStatus.SC_METHOD_NOT_ALLOWED, message = "不支持的请求方法", response = ApiRestResponse.class),
-    @ApiResponse(code = HttpStatus.SC_NOT_ACCEPTABLE, message = "不匹配的媒体类型", response = ApiRestResponse.class),
-    @ApiResponse(code = HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE, message = "不支持的媒体类型", response = ApiRestResponse.class),
-    @ApiResponse(code = HttpStatus.SC_REQUEST_TOO_LONG, message = "请求实体过大", response = ApiRestResponse.class),
-    @ApiResponse(code = HttpStatus.SC_INTERNAL_SERVER_ERROR, message = "服务器内部错误", response = ApiRestResponse.class),
-    @ApiResponse(code = HttpStatus.SC_BAD_GATEWAY, message = "错误网关", response = ApiRestResponse.class),
-    @ApiResponse(code = HttpStatus.SC_SERVICE_UNAVAILABLE, message = "服务不可用", response = ApiRestResponse.class),
-    @ApiResponse(code = HttpStatus.SC_GATEWAY_TIMEOUT, message = "网关访问超时", response = ApiRestResponse.class)
+        @ApiResponse(code = HttpStatus.SC_BAD_REQUEST, message = "参数类型不匹配或格式不正确", response = ApiRestResponse.class),
+        @ApiResponse(code = HttpStatus.SC_UNAUTHORIZED, message = "不允许访问（功能未授权）", response = ApiRestResponse.class),
+        @ApiResponse(code = HttpStatus.SC_FORBIDDEN, message = "服务器拒绝请求", response = ApiRestResponse.class),
+        @ApiResponse(code = HttpStatus.SC_NOT_FOUND, message = "请求地址不存在", response = ApiRestResponse.class),
+        @ApiResponse(code = HttpStatus.SC_METHOD_NOT_ALLOWED, message = "不支持的请求方法", response = ApiRestResponse.class),
+        @ApiResponse(code = HttpStatus.SC_NOT_ACCEPTABLE, message = "不匹配的媒体类型", response = ApiRestResponse.class),
+        @ApiResponse(code = HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE, message = "不支持的媒体类型", response = ApiRestResponse.class),
+        @ApiResponse(code = HttpStatus.SC_REQUEST_TOO_LONG, message = "请求实体过大", response = ApiRestResponse.class),
+        @ApiResponse(code = HttpStatus.SC_INTERNAL_SERVER_ERROR, message = "服务器内部错误", response = ApiRestResponse.class),
+        @ApiResponse(code = HttpStatus.SC_BAD_GATEWAY, message = "错误网关", response = ApiRestResponse.class),
+        @ApiResponse(code = HttpStatus.SC_SERVICE_UNAVAILABLE, message = "服务不可用", response = ApiRestResponse.class),
+        @ApiResponse(code = HttpStatus.SC_GATEWAY_TIMEOUT, message = "网关访问超时", response = ApiRestResponse.class)
 })
 public class BaseController implements ApplicationEventPublisherAware, ApplicationContextAware, EmbeddedValueResolverAware {
 

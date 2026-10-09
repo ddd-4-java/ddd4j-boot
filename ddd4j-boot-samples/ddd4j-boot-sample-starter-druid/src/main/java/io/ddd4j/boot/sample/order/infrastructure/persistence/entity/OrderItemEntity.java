@@ -16,22 +16,22 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @TableName("t_order_item")
 public class OrderItemEntity extends BaseEntity<OrderItemEntity> {
-    
+
     @TableId(type = IdType.AUTO)
     private Long id;
-    
+
     private Long orderId;
-    
+
     private String productId;
-    
+
     private String productName;
-    
+
     private Integer quantity;
-    
+
     private BigDecimal unitPrice;
-    
+
     private BigDecimal totalPrice;
-    
+
     private String currency;
 }
 

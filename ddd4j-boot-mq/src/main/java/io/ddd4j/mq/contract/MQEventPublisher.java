@@ -15,9 +15,9 @@ public interface MQEventPublisher {
     /**
      * 发布 MQ 事件。
      *
-     * @param topic   主题/队列
-     * @param event   事件内容（任意可序列化对象）
-     * @param <T>     事件类型
+     * @param topic 主题/队列
+     * @param event 事件内容（任意可序列化对象）
+     * @param <T>   事件类型
      */
     <T> void publish(String topic, T event);
 

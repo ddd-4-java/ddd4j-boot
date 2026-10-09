@@ -9,9 +9,9 @@ import java.util.List;
  * 领域事件发布器（聚合根内部使用）
  */
 public class DomainEventPublisher {
-    
+
     private final List<DomainEvent> domainEvents = new ArrayList<>();
-    
+
     /**
      * 发布领域事件
      */
@@ -20,14 +20,14 @@ public class DomainEventPublisher {
             domainEvents.add(event);
         }
     }
-    
+
     /**
      * 获取所有领域事件
      */
     public List<DomainEvent> getDomainEvents() {
         return new ArrayList<>(domainEvents);
     }
-    
+
     /**
      * 清空领域事件
      */

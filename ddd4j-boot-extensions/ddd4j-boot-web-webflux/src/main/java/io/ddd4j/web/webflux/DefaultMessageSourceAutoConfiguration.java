@@ -40,7 +40,7 @@ import java.time.Duration;
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 @AutoConfigureBefore(MessageSourceAutoConfiguration.class)
-@EnableConfigurationProperties({ ServerI18nProperties.class, ServerInfoProperties.class, ServerVendorProperties.class})
+@EnableConfigurationProperties({ServerI18nProperties.class, ServerInfoProperties.class, ServerVendorProperties.class})
 public class DefaultMessageSourceAutoConfiguration {
 
     private static final Resource[] NO_RESOURCES = {};

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 @Component
 public class OrderConverter {
-    
+
     /**
      * 领域对象转持久化实体
      */
@@ -25,7 +25,7 @@ public class OrderConverter {
         if (order == null) {
             return null;
         }
-        
+
         OrderEntity entity = new OrderEntity();
         entity.setId(order.getId());
         entity.setOrderNo(order.getOrderNo());
@@ -33,7 +33,7 @@ public class OrderConverter {
         entity.setStatus(order.getStatus() != null ? order.getStatus().getCode() : null);
         entity.setTotalAmount(order.getTotalAmount() != null ? order.getTotalAmount().amount() : null);
         entity.setCurrency(order.getTotalAmount() != null ? order.getTotalAmount().currency() : null);
-        
+
         if (order.getShippingAddress() != null) {
             Address address = order.getShippingAddress();
             entity.setProvince(address.province());
@@ -42,15 +42,15 @@ public class OrderConverter {
             entity.setDetail(address.detail());
             entity.setZipCode(address.zipCode());
         }
-        
+
         entity.setRemark(order.getRemark());
         entity.setPaidTime(order.getPaidTime());
         entity.setShippedTime(order.getShippedTime());
         entity.setDeliveredTime(order.getDeliveredTime());
-        
+
         return entity;
     }
-    
+
     /**
      * 持久化实体转领域对象
      */
@@ -58,14 +58,14 @@ public class OrderConverter {
         if (entity == null) {
             return null;
         }
-        
+
         Order order = new Order();
         order.setId(entity.getId());
         order.setOrderNo(entity.getOrderNo());
         order.setUserId(entity.getUserId());
         order.setStatus(OrderStatus.valueOf(entity.getStatus()));
         order.setTotalAmount(new Money(entity.getTotalAmount(), entity.getCurrency() != null ? entity.getCurrency() : "CNY"));
-        
+
         if (entity.getProvince() != null) {
             order.setShippingAddress(new Address(
                     entity.getProvince(),
@@ -75,16 +75,16 @@ public class OrderConverter {
                     entity.getZipCode()
             ));
         }
-        
+
         order.setRemark(entity.getRemark());
         order.setPaidTime(entity.getPaidTime());
         order.setShippedTime(entity.getShippedTime());
         order.setDeliveredTime(entity.getDeliveredTime());
         order.setItems(items != null ? items : new java.util.ArrayList<>());
-        
+
         return order;
     }
-    
+
     /**
      * 订单项领域对象转持久化实体
      */
@@ -92,7 +92,7 @@ public class OrderConverter {
         if (item == null) {
             return null;
         }
-        
+
         OrderItemEntity entity = new OrderItemEntity();
         entity.setId(item.getId());
         entity.setOrderId(item.getOrderId());
@@ -102,10 +102,10 @@ public class OrderConverter {
         entity.setUnitPrice(item.getUnitPrice() != null ? item.getUnitPrice().amount() : null);
         entity.setTotalPrice(item.getTotalPrice() != null ? item.getTotalPrice().amount() : null);
         entity.setCurrency(item.getUnitPrice() != null ? item.getUnitPrice().currency() : null);
-        
+
         return entity;
     }
-    
+
     /**
      * 订单项持久化实体转领域对象
      */
@@ -113,7 +113,7 @@ public class OrderConverter {
         if (entity == null) {
             return null;
         }
-        
+
         OrderItem item = new OrderItem(
                 entity.getProductId(),
                 entity.getProductName(),
@@ -122,10 +122,10 @@ public class OrderConverter {
         );
         item.setId(entity.getId());
         item.setOrderId(entity.getOrderId());
-        
+
         return item;
     }
-    
+
     /**
      * 订单项列表转换
      */
@@ -137,7 +137,7 @@ public class OrderConverter {
                 .map(this::toItemDomain)
                 .collect(Collectors.toList());
     }
-    
+
     public List<OrderItemEntity> toItemEntityList(List<OrderItem> items) {
         if (items == null) {
             return new java.util.ArrayList<>();
