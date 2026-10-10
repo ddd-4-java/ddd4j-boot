@@ -1,19 +1,34 @@
 package io.ddd4j.boot.sample.domain.order.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import java.util.Objects;
+
 import java.math.BigDecimal;
 
 /**
  * 金额值对象
  */
-public record Money(BigDecimal amount, String currency) {
+public final class Money {
 
-    public Money {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
+    private static final long serialVersionUID = 0L;
+
+    private final BigDecimal amount;
+
+    private final String currency;
+
+    @JsonCreator()
+    public Money(@JsonProperty("amount") BigDecimal amount, @JsonProperty("currency") String currency) {
+        if (Objects.isNull(amount) || amount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("金额不能为负数");
         }
-        if (currency == null || currency.trim().isEmpty()) {
+        if (Objects.isNull(currency) || currency.trim().isEmpty()) {
             throw new IllegalArgumentException("货币类型不能为空");
         }
+        this.amount = amount;
+        this.currency = currency;
     }
 
     public Money add(Money other) {
@@ -34,5 +49,39 @@ public record Money(BigDecimal amount, String currency) {
         return new Money(this.amount.multiply(multiplier), this.currency);
     }
 
+    @JsonProperty("amount")
+    public BigDecimal amount() {
+        return amount;
+    }
+
+    @JsonProperty("currency")
+    public String currency() {
+        return currency;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (Objects.isNull(obj) || getClass() != obj.getClass()) {
+            return false;
+        }
+        Money other = (Money) obj;
+        return Objects.equals(this.amount, other.amount) && Objects.equals(this.currency, other.currency);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 0;
+        result = 31 * result + Objects.hashCode(amount);
+        result = 31 * result + Objects.hashCode(currency);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Money[amount=" + amount + ", currency=" + currency + "]";
+    }
 }
 
