@@ -1,10 +1,10 @@
 package io.ddd4j.boot.excel.web;
 
+import com.alibaba.excel.read.listener.ReadListener;
 import io.ddd4j.boot.excel.config.ExcelProperties;
 import io.ddd4j.core.exception.BizRuntimeException;
 import io.ddd4j.extension.excel.ExcelKit;
 import io.ddd4j.extension.excel.importer.ImportResult;
-import com.alibaba.excel.read.listener.ReadListener;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -127,33 +127,6 @@ public class ExcelHttpKit {
     }
 
     /**
-     * 一行下载：导出 → 字节 → Response（实例方法，便于注入 Bean 后调用）。
-     *
-     * @param response HTTP 响应
-     * @param filename 文件名
-     * @param head     表头类
-     * @param data     数据
-     */
-    public void write(HttpServletResponse response, String filename,
-                      Class<?> head, List<?> data) {
-        byte[] bytes = ExcelKit.export(head, data);
-        download(response, filename, bytes);
-    }
-
-    /**
-     * 直接写字节到 Response（实例方法）。
-     *
-     * @param response HTTP 响应
-     * @param filename 文件名
-     * @param bytes    xlsx 字节
-     */
-    public void write(HttpServletResponse response, String filename, byte[] bytes) {
-        download(response, filename, bytes);
-    }
-
-    // ───────────────────── 上传 ─────────────────────
-
-    /**
      * 从上传文件中获取输入流（用于后续 {@link ExcelKit#importExcel}）。
      *
      * <p>调用方负责关闭返回的 InputStream（建议 try-with-resources）。
@@ -185,6 +158,8 @@ public class ExcelHttpKit {
         }
     }
 
+    // ───────────────────── 上传 ─────────────────────
+
     /**
      * Web 上传：用自定义 listener 解析 MultipartFile。
      *
@@ -200,28 +175,6 @@ public class ExcelHttpKit {
         } catch (Exception e) {
             return io.ddd4j.extension.excel.importer.ImportResult.empty();
         }
-    }
-
-    /**
-     * 实例方法上传（带 {@link ExcelProperties#getMaxUploadMB()} 大小校验）。
-     *
-     * @param file 上传文件
-     * @param head 表头类
-     * @param <T>  数据类型
-     * @return 导入结果
-     */
-    public <T> ImportResult<T> read(MultipartFile file, Class<T> head) {
-        validate(file);
-        return upload(file, head);
-    }
-
-    /**
-     * 校验上传文件大小与扩展名（使用 {@link ExcelProperties#getMaxUploadMB()} 配置上限）。
-     *
-     * @param file 上传文件
-     */
-    public void validate(MultipartFile file) {
-        validate(file, properties.getMaxUploadMB(), List.of(".xlsx", ".xls"));
     }
 
     /**
@@ -251,5 +204,52 @@ public class ExcelHttpKit {
         if (!ok) {
             throw new BizRuntimeException(400, "excel.upload.invalid.extension", original);
         }
+    }
+
+    /**
+     * 一行下载：导出 → 字节 → Response（实例方法，便于注入 Bean 后调用）。
+     *
+     * @param response HTTP 响应
+     * @param filename 文件名
+     * @param head     表头类
+     * @param data     数据
+     */
+    public void write(HttpServletResponse response, String filename,
+                      Class<?> head, List<?> data) {
+        byte[] bytes = ExcelKit.export(head, data);
+        download(response, filename, bytes);
+    }
+
+    /**
+     * 直接写字节到 Response（实例方法）。
+     *
+     * @param response HTTP 响应
+     * @param filename 文件名
+     * @param bytes    xlsx 字节
+     */
+    public void write(HttpServletResponse response, String filename, byte[] bytes) {
+        download(response, filename, bytes);
+    }
+
+    /**
+     * 实例方法上传（带 {@link ExcelProperties#getMaxUploadMB()} 大小校验）。
+     *
+     * @param file 上传文件
+     * @param head 表头类
+     * @param <T>  数据类型
+     * @return 导入结果
+     */
+    public <T> ImportResult<T> read(MultipartFile file, Class<T> head) {
+        validate(file);
+        return upload(file, head);
+    }
+
+    /**
+     * 校验上传文件大小与扩展名（使用 {@link ExcelProperties#getMaxUploadMB()} 配置上限）。
+     *
+     * @param file 上传文件
+     */
+    public void validate(MultipartFile file) {
+        validate(file, properties.getMaxUploadMB(), List.of(".xlsx", ".xls"));
     }
 }

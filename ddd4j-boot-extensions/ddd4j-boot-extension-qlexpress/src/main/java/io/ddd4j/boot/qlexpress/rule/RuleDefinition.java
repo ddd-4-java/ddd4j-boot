@@ -39,6 +39,10 @@ public class RuleDefinition implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public String getId() {
         return id;
     }
@@ -119,8 +123,8 @@ public class RuleDefinition implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public boolean isAvailable() {
+        return Boolean.TRUE.equals(enabled);
     }
 
     public static class Builder {
@@ -188,9 +192,5 @@ public class RuleDefinition implements Serializable {
         public RuleDefinition build() {
             return new RuleDefinition(id, code, name, expression, description, type, enabled, priority, createdAt, updatedAt);
         }
-    }
-
-    public boolean isAvailable() {
-        return Boolean.TRUE.equals(enabled);
     }
 }

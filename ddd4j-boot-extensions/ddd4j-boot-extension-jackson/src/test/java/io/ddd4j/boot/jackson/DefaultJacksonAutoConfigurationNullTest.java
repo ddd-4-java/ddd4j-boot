@@ -16,23 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class DefaultJacksonAutoConfigurationNullTest {
 
-    enum Status {ACTIVE, INACTIVE}
-
-    static final class SampleBean {
-        public String name;
-        public Integer count;
-        public Boolean active;
-        public List<String> tags;
-        public Map<String, Object> meta;
-        public SampleBean nested;
-    }
-
-    static final class ExtendedBean {
-        public UUID uuid;
-        public Status status;
-        public LocalDateTime dateTime;
-    }
-
     private static ObjectMapper mapperWith(boolean array, boolean number, boolean string,
                                            boolean date, boolean booleanValue, boolean jsonObject) {
         SimpleModule module = new SimpleModule("test");
@@ -105,5 +88,22 @@ class DefaultJacksonAutoConfigurationNullTest {
         assertThat(json)
                 .contains("\"status\":null")     // enum handler: string flag off → null
                 .contains("\"uuid\":{}");        // UUID is uncategorized, jsonObject=true → {}
+    }
+
+    enum Status {ACTIVE, INACTIVE}
+
+    static final class SampleBean {
+        public String name;
+        public Integer count;
+        public Boolean active;
+        public List<String> tags;
+        public Map<String, Object> meta;
+        public SampleBean nested;
+    }
+
+    static final class ExtendedBean {
+        public UUID uuid;
+        public Status status;
+        public LocalDateTime dateTime;
     }
 }

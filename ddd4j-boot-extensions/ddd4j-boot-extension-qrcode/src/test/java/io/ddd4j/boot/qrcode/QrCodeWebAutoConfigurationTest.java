@@ -1,6 +1,5 @@
 package io.ddd4j.boot.qrcode;
 
-import io.ddd4j.boot.qrcode.Ddd4jQrCodeBootAutoConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;

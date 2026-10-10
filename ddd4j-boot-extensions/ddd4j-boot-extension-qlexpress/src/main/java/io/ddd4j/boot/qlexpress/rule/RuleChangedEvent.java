@@ -8,15 +8,15 @@ import java.time.LocalDateTime;
 public record RuleChangedEvent(String ruleId, String ruleCode, Operation operation,
                                LocalDateTime occurredAt) {
 
+    public static RuleChangedEvent of(RuleDefinition rule, Operation operation) {
+        return new RuleChangedEvent(rule.getId(), rule.getCode(), operation, LocalDateTime.now());
+    }
+
     public enum Operation {
         CREATED,
         UPDATED,
         DELETED,
         ENABLED,
         DISABLED
-    }
-
-    public static RuleChangedEvent of(RuleDefinition rule, Operation operation) {
-        return new RuleChangedEvent(rule.getId(), rule.getCode(), operation, LocalDateTime.now());
     }
 }

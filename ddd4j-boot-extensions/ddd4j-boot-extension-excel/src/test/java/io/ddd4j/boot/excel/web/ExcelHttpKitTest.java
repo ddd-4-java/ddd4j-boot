@@ -1,7 +1,6 @@
 package io.ddd4j.boot.excel.web;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import io.ddd4j.boot.excel.config.ExcelProperties;
 import io.ddd4j.core.exception.BizRuntimeException;
 import io.ddd4j.extension.excel.ExcelKit;
 import io.ddd4j.extension.excel.importer.ImportResult;

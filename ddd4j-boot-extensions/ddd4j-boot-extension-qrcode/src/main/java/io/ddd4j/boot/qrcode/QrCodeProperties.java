@@ -9,12 +9,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class QrCodeProperties {
 
     public static final String PREFIX = "ddd4j.qrcode";
-
+    private final Web web = new Web();
     private boolean enabled = true;
     private int concurrency = Math.min(Runtime.getRuntime().availableProcessors(), 8);
     private int maxBatchSize = 100;
     private int maxUploadBytes = 10 * 1024 * 1024;
-    private final Web web = new Web();
 
     public boolean isEnabled() {
         return enabled;

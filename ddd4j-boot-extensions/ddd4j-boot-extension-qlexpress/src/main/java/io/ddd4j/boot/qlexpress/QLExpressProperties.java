@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class QLExpressProperties {
 
     public static final String PREFIX = "ddd4j.qlexpress";
-
+    private final Rules rules = new Rules();
     private boolean enabled = true;
     private boolean builtInFunctions = true;
     private boolean allowPrivateAccess;
@@ -20,7 +20,6 @@ public class QLExpressProperties {
     private boolean precise;
     private boolean avoidNullPointer;
     private int maxArrayLength = QLExpressExecutionOptions.DEFAULT_MAX_ARRAY_LENGTH;
-    private final Rules rules = new Rules();
 
     public boolean isEnabled() {
         return enabled;

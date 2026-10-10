@@ -5,6 +5,7 @@
 package io.hiwepy.boot.sample;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.net.URL;
 import java.util.Map;
-
-import org.junit.jupiter.api.Disabled;
 
 @SpringBootTest(classes = MqttClientApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Disabled("需要外部基础设施（MQ/数据库等服务），通过显式 profile 启用")

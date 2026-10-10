@@ -7,12 +7,7 @@ import io.ddd4j.kit.lang.StrKit;
 import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Boot 层规则 CRUD、缓存协调、执行和事件发布服务。
@@ -30,6 +25,12 @@ public class RuleService {
         this.cache = Objects.requireNonNull(cache, "cache 不能为空");
         this.engine = Objects.requireNonNull(engine, "engine 不能为空");
         this.eventPublisher = Objects.requireNonNull(eventPublisher, "eventPublisher 不能为空");
+    }
+
+    private static void requireText(String value, String field) {
+        if (!StrKit.hasText(value)) {
+            throw new IllegalArgumentException(field + " 不能为空");
+        }
     }
 
     public RuleDefinition create(RuleDefinition rule) {
@@ -162,11 +163,5 @@ public class RuleService {
 
     private void publish(RuleDefinition rule, RuleChangedEvent.Operation operation) {
         eventPublisher.publishEvent(RuleChangedEvent.of(rule, operation));
-    }
-
-    private static void requireText(String value, String field) {
-        if (!StrKit.hasText(value)) {
-            throw new IllegalArgumentException(field + " 不能为空");
-        }
     }
 }
