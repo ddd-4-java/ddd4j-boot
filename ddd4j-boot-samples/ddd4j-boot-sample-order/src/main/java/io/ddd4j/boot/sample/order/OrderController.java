@@ -1,5 +1,11 @@
 package io.ddd4j.boot.sample.order;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import java.util.Objects;
+
 import io.ddd4j.core.api.R;
 import io.ddd4j.sample.order.application.AddOrderLineCommand;
 import io.ddd4j.sample.order.application.CreateOrderCommand;
@@ -66,10 +72,144 @@ public class OrderController {
         return R.ok(applicationService.find(orderId));
     }
 
-    public record CreateOrderRequest(@NotBlank String orderNo, @NotBlank String buyerId, @NotBlank String buyerName) {
+    public final static class CreateOrderRequest {
+
+        private static final long serialVersionUID = 0L;
+
+        @NotBlank
+        private final String orderNo;
+
+        @NotBlank
+        private final String buyerId;
+
+        @NotBlank
+        private final String buyerName;
+
+        @JsonCreator()
+        public CreateOrderRequest(@NotBlank @JsonProperty("orderNo") String orderNo, @NotBlank @JsonProperty("buyerId") String buyerId, @NotBlank @JsonProperty("buyerName") String buyerName) {
+            this.orderNo = orderNo;
+            this.buyerId = buyerId;
+            this.buyerName = buyerName;
+        }
+
+        @NotBlank
+        @JsonProperty("orderNo")
+        public String orderNo() {
+            return orderNo;
+        }
+
+        @NotBlank
+        @JsonProperty("buyerId")
+        public String buyerId() {
+            return buyerId;
+        }
+
+        @NotBlank
+        @JsonProperty("buyerName")
+        public String buyerName() {
+            return buyerName;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (Objects.isNull(obj) || getClass() != obj.getClass()) {
+                return false;
+            }
+            CreateOrderRequest other = (CreateOrderRequest) obj;
+            return Objects.equals(this.orderNo, other.orderNo) && Objects.equals(this.buyerId, other.buyerId) && Objects.equals(this.buyerName, other.buyerName);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = 0;
+            result = 31 * result + Objects.hashCode(orderNo);
+            result = 31 * result + Objects.hashCode(buyerId);
+            result = 31 * result + Objects.hashCode(buyerName);
+            return result;
+        }
+
+        @Override
+        public String toString() {
+            return "CreateOrderRequest[orderNo=" + orderNo + ", buyerId=" + buyerId + ", buyerName=" + buyerName + "]";
+        }
     }
 
-    public record AddOrderLineRequest(@NotBlank String goodsId, @NotBlank String goodsName,
-                                      @Min(1) int quantity, @DecimalMin(value = "0.01") BigDecimal unitPrice) {
+    public final static class AddOrderLineRequest {
+
+        private static final long serialVersionUID = 0L;
+
+        @NotBlank
+        private final String goodsId;
+
+        @NotBlank
+        private final String goodsName;
+
+        @Min(1)
+        private final int quantity;
+
+        @DecimalMin(value = "0.01")
+        private final BigDecimal unitPrice;
+
+        @JsonCreator()
+        public AddOrderLineRequest(@NotBlank @JsonProperty("goodsId") String goodsId, @NotBlank @JsonProperty("goodsName") String goodsName, @Min(1) @JsonProperty("quantity") int quantity, @DecimalMin(value = "0.01") @JsonProperty("unitPrice") BigDecimal unitPrice) {
+            this.goodsId = goodsId;
+            this.goodsName = goodsName;
+            this.quantity = quantity;
+            this.unitPrice = unitPrice;
+        }
+
+        @NotBlank
+        @JsonProperty("goodsId")
+        public String goodsId() {
+            return goodsId;
+        }
+
+        @NotBlank
+        @JsonProperty("goodsName")
+        public String goodsName() {
+            return goodsName;
+        }
+
+        @Min(1)
+        @JsonProperty("quantity")
+        public int quantity() {
+            return quantity;
+        }
+
+        @DecimalMin(value = "0.01")
+        @JsonProperty("unitPrice")
+        public BigDecimal unitPrice() {
+            return unitPrice;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (Objects.isNull(obj) || getClass() != obj.getClass()) {
+                return false;
+            }
+            AddOrderLineRequest other = (AddOrderLineRequest) obj;
+            return Objects.equals(this.goodsId, other.goodsId) && Objects.equals(this.goodsName, other.goodsName) && this.quantity == other.quantity && Objects.equals(this.unitPrice, other.unitPrice);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = 0;
+            result = 31 * result + Objects.hashCode(goodsId);
+            result = 31 * result + Objects.hashCode(goodsName);
+            result = 31 * result + Integer.hashCode(quantity);
+            result = 31 * result + Objects.hashCode(unitPrice);
+            return result;
+        }
+
+        @Override
+        public String toString() {
+            return "AddOrderLineRequest[goodsId=" + goodsId + ", goodsName=" + goodsName + ", quantity=" + quantity + ", unitPrice=" + unitPrice + "]";
+        }
     }
 }
