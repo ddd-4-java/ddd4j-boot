@@ -1431,32 +1431,7 @@
                                     <!-- 3. 如果不存在，创建新的 builder -->
                                     <!-- 4. 优先使用腾讯云镜像（适合国内环境），失败则回退到默认镜像 -->
                                     <!-- 5. 确保 BuildKit 容器正常运行 -->
-                                    <argument>BUILDER_NAME="${docker.buildx.builder.name}"; \
-                                        BUILDKIT_IMAGE="${docker.buildx.buildkit.image}"; \
-                                        if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
-                                        echo "Builder $BUILDER_NAME exists, checking status..."; \
-                                        if docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1;
-                                        then \
-                                        echo "Builder $BUILDER_NAME is healthy"; \
-                                        docker buildx use "$BUILDER_NAME"; \
-                                        else \
-                                        echo "Builder $BUILDER_NAME is unhealthy, removing and recreating..."; \
-                                        docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
-                                        docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
-                                        true; \
-                                        fi; \
-                                        else \
-                                        echo "Builder $BUILDER_NAME does not exist, creating..."; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
-                                        docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
-                                        true; \
-                                        fi
-                                    </argument>
+                                    <argument>BUILDER_NAME="${docker.buildx.builder.name}";  BUILDKIT_IMAGE="${docker.buildx.buildkit.image}";  if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then  echo "Builder $BUILDER_NAME exists, checking status...";  if docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1; then  echo "Builder $BUILDER_NAME is healthy";  docker buildx use "$BUILDER_NAME";  else  echo "Builder $BUILDER_NAME is unhealthy, removing and recreating...";  docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true;  docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE";  docker buildx use "$BUILDER_NAME";  docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true;  fi;  else  echo "Builder $BUILDER_NAME does not exist, creating...";  docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE";  docker buildx use "$BUILDER_NAME";  docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true;  fi</argument>
                                 </arguments>
                             </configuration>
                         </execution>
@@ -1474,39 +1449,7 @@
                                     <argument>-c</argument>
                                     <!-- 验证并重启 buildx builder，解决导出阶段的连接中断问题 -->
                                     <!-- 策略：在每次构建前重启 BuildKit 容器，确保其处于干净状态 -->
-                                    <argument>BUILDER_NAME="${docker.buildx.builder.name}"; \
-                                        BUILDKIT_IMAGE="${docker.buildx.buildkit.image}"; \
-                                        echo "Preparing buildx builder $BUILDER_NAME before build..."; \
-                                        if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
-                                        echo "Builder exists, restarting BuildKit container to ensure clean state..."; \
-                                        BUILDER_CONTAINER=$(docker ps -a --filter "name=buildx_buildkit_${BUILDER_NAME}"
-                                        --format "{{.Names}}" | head -1); \
-                                        if [ -n "$BUILDER_CONTAINER" ]; then \
-                                        echo "Stopping and removing BuildKit container: $BUILDER_CONTAINER"; \
-                                        docker stop "$BUILDER_CONTAINER" 2&gt;/dev/null || true; \
-                                        docker rm "$BUILDER_CONTAINER" 2&gt;/dev/null || true; \
-                                        fi; \
-                                        echo "Recreating builder with fresh BuildKit container..."; \
-                                        docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
-                                        docker buildx use "$BUILDER_NAME"; \
-                                        echo "Booting BuildKit container..."; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
-                                        echo "WARNING: Builder bootstrap failed, but continuing..."; \
-                                        echo "Waiting for BuildKit to be ready..."; \
-                                        sleep 2; \
-                                        else \
-                                        echo "Builder does not exist, creating new builder..."; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
-                                        docker buildx use "$BUILDER_NAME"; \
-                                        docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
-                                        true; \
-                                        sleep 2; \
-                                        fi; \
-                                        echo "Builder $BUILDER_NAME is ready"
-                                    </argument>
+                                    <argument>BUILDER_NAME="${docker.buildx.builder.name}";  BUILDKIT_IMAGE="${docker.buildx.buildkit.image}";  echo "Preparing buildx builder $BUILDER_NAME before build...";  if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then  echo "Builder exists, restarting BuildKit container to ensure clean state...";  BUILDER_CONTAINER=$(docker ps -a --filter "name=buildx_buildkit_${BUILDER_NAME}" --format "{{.Names}}" | head -1);  if [ -n "$BUILDER_CONTAINER" ]; then  echo "Stopping and removing BuildKit container: $BUILDER_CONTAINER";  docker stop "$BUILDER_CONTAINER" 2&gt;/dev/null || true;  docker rm "$BUILDER_CONTAINER" 2&gt;/dev/null || true;  fi;  echo "Recreating builder with fresh BuildKit container...";  docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true;  docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE";  docker buildx use "$BUILDER_NAME";  echo "Booting BuildKit container...";  docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || echo "WARNING: Builder bootstrap failed, but continuing...";  echo "Waiting for BuildKit to be ready...";  sleep 2;  else  echo "Builder does not exist, creating new builder...";  docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE";  docker buildx use "$BUILDER_NAME";  docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 || true;  sleep 2;  fi;  echo "Builder $BUILDER_NAME is ready"</argument>
                                 </arguments>
                             </configuration>
                         </execution>
@@ -1522,22 +1465,7 @@
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
-                                    <argument>if [ "${docker.push.skip}" = "true" ]; then exit 0; fi; \
-                                        MODE="${docker.buildx.push.mode}"; \
-                                        IMAGE="${docker.registry.host}/${project.artifactId}:${project.version}"; \
-                                        PLATFORMS="${docker.platforms}"; \
-                                        BUILDER="${docker.buildx.builder.name}"; \
-                                        DOCKERFILE="${project.basedir}/Dockerfile"; \
-                                        CONTEXT="${project.basedir}"; \
-                                        if [ "$MODE" = "push" ]; then \
-                                        docker buildx build --builder "$BUILDER" --platform "$PLATFORMS" -t "$IMAGE" -f
-                                        "$DOCKERFILE" "$CONTEXT" --provenance=false --sbom=false --push; \
-                                        else \
-                                        docker buildx build --builder "$BUILDER" --platform "$PLATFORMS" -t "$IMAGE" -f
-                                        "$DOCKERFILE" "$CONTEXT" --provenance=false --sbom=false --output
-                                        ${docker.buildx.push.output}; \
-                                        fi
-                                    </argument>
+                                    <argument>if [ "${docker.push.skip}" = "true" ]; then exit 0; fi;  MODE="${docker.buildx.push.mode}";  IMAGE="${docker.registry.host}/${project.artifactId}:${project.version}";  PLATFORMS="${docker.platforms}";  BUILDER="${docker.buildx.builder.name}";  DOCKERFILE="${project.basedir}/Dockerfile";  CONTEXT="${project.basedir}";  if [ "$MODE" = "push" ]; then  docker buildx build --builder "$BUILDER" --platform "$PLATFORMS" -t "$IMAGE" -f "$DOCKERFILE" "$CONTEXT" --provenance=false --sbom=false --push;  else  docker buildx build --builder "$BUILDER" --platform "$PLATFORMS" -t "$IMAGE" -f "$DOCKERFILE" "$CONTEXT" --provenance=false --sbom=false --output ${docker.buildx.push.output};  fi</argument>
                                 </arguments>
                             </configuration>
                         </execution>
