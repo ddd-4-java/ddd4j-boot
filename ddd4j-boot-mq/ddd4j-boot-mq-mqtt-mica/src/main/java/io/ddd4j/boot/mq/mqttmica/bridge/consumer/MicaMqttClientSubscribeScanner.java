@@ -27,6 +27,12 @@ public class MicaMqttClientSubscribeScanner implements BeanPostProcessor, Ordere
     private final MicaMqttClientSubscribeDefinitionRegistry registry;
     private final MicaMqttClientSubscribeRegistrar registrar;
 
+    /**
+     * 构造扫描器。
+     *
+     * @param registry 订阅定义注册表
+     * @param registrar 订阅注册器
+     */
     public MicaMqttClientSubscribeScanner(
             MicaMqttClientSubscribeDefinitionRegistry registry,
             MicaMqttClientSubscribeRegistrar registrar) {
@@ -60,6 +66,8 @@ public class MicaMqttClientSubscribeScanner implements BeanPostProcessor, Ordere
 
     /**
      * 返回已扫描到的订阅定义（门面，供测试与诊断使用）。
+     *
+     * @return 注册表中的订阅定义只读列表
      */
     public java.util.List<MicaMqttClientSubscribeDefinition> scan() {
         return registry.definitions();

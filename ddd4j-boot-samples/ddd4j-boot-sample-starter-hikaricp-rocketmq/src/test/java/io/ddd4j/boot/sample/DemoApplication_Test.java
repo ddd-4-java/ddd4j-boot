@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
+ * Copyright (C) 2018 ddd4j (https://github.com/easy4j).
  * All Rights Reserved.
  */
 package io.ddd4j.boot.sample;

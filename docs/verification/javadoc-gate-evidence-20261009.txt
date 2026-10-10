@@ -1,0 +1,618 @@
+================================================================================
+ddd4j-boot 非样本部分 javadoc 检查门禁 + 全量补注 证据文件
+日期：2026-10-09
+范围：ddd4j-boot 仓（4.0.x 工作树）非样本部分 src/main/java（103 文件，
+      其中 87 文件在基线 r1 存在 doclint 告警）
+排除：.git/、*/target/、ddd4j-boot-samples/（并行智能体负责，零触碰）
+纪律：
+  - 不运行 mvn/gradle；javadoc CLI 仅用于自查（JDK 21.0.4）
+  - 不 git commit / push / 切分支；仅增量添加 javadoc，保护既有未提交成果
+  - 输出严禁出现 4 个旧品牌标识字面量（一律角色名：旧教育品牌 /
+    旧家族名(h 开头 6 字母) / 旧应用名(j 开头 6 字母) / 旧中文品牌）；
+    扫描模式 bash 邻接拼接构造（值存 /tmp/.oldseg.txt、/tmp/.oldapp.txt），
+    展示前过掩码管道 /tmp/.mask.sh
+================================================================================
+
+【0】自查环境口径
+--------------------------------------------------------------------------------
+0.1 javadoc CLI 命令（仓库根目录执行，相对路径引用源文件）：
+      "D:/Java/jdk-21.0.4/bin/javadoc" -Xdoclint:all \
+        -Xmaxwarns 1000000 -Xmaxerrs 1000000 -quiet @<argfile> > <log> 2>&1
+    - argfile（@file）书写规则：不接受 -J 标志；-encoding UTF-8 / -d <dir> /
+      源文件列表逐行书写；argfile 内不支持通配符。
+    - 源文件必须以仓根为 cwd 的相对路径列出，否则包结构解析失败。
+0.2 日志解析口径：javadoc 日志为 GBK 编码，按
+      raw = open(log,'rb').read().decode('gbk', errors='replace')
+    解析，以 "警告" / "错误" 计数；-quiet 模式下无任何诊断 → 0 字节日志
+    = 清零（配合 EXIT=0 与 HTML 生成时间戳三重验证）。
+0.3 argfile -d 陷阱（过程事实，非失败）：原 args.txt 中 "-d" 与值分两行书写，
+    派生批次 argfile 时前缀过滤无法去掉下一行的值 → javadoc 以 Windows 盘根
+    解析，实际输出到 E:/tmp/jdoc-fw/out（而非脚本另附的 -d 目录）。
+    验证不受影响：以 EXIT=0 + 0 字节日志 + E:/tmp/jdoc-fw/out/** 站点 HTML
+    生成时间戳为本轮时刻 三重判定（见【3】）。
+0.4 判定口径：跨工程依赖类（classpath）解析失败错误按任务纪律忽略；
+    doclint 的 missing（缺注释/缺标签）、语法、标题层级、引用错误必须清零。
+0.5 注释格式实测（探针 probe2，见【8】）：
+    - 单行内联标签不被识别：`/** 获取值。 @return 值 */` 仍报「没有 @return」；
+    - 必须使用多行紧凑格式：
+        /** 描述。
+         * @return 值 */
+    - 类级文档隐式 H1 后正文标题必须从 <h2> 起（<h3> 报「标题超出序列」错误）；
+    - {@link} 引用必须可解析：未 import 的外部类型用全限定 FQN 链接；
+    - 公共类若无显式构造器，必然报「使用不提供注释的默认构造器」。
+
+【1】门禁配置清单（Maven 侧，工作树 diff 摘要）
+--------------------------------------------------------------------------------
+1.1 根 pom.xml（门禁开关集中属性化）
+    + <javadoc.doclint>all</javadoc.doclint>
+    + <javadoc.failOnWarning>true</javadoc.failOnWarning>
+    + <javadoc.failOnError>true</javadoc.failOnError>
+      （属性块附纪律注释：禁止子模块/profile 硬编码关闭；
+        仅应急可用 -Djavadoc.failOnWarning=false 临时放行，不得写回 POM）
+    + <java.version>21</java.version> → javadoc <release>${java.version}</release>
+1.2 根 pom.xml pluginManagement → maven-javadoc-plugin
+    + <doclint>${javadoc.doclint}</doclint>
+    + <failOnWarnings>${javadoc.failOnWarning}</failOnWarnings>
+    + <failOnError>${javadoc.failOnError}</failOnError>
+    + <release>${java.version}</release>（即 --release 21）
+    + additionalOptions：-Xmaxwarns 1000000 / -Xmaxerrs 1000000
+        （告警不截断，避免默认 100 条上限掩盖缺口）
+    + execution id=attach-javadocs：绑定 verify 阶段 goal=jar
+        （门禁与 -javadoc.jar 产物同批生效，先于 deploy）
+    - 删除旧的 disable-javadoc-doclint profile（-Xdoclint:none 旁路）
+    - 删除「doclint 将未解析 {@link} 升级为 error → 快照发布不因 javadoc 中断」
+      的放行配置与注释
+1.3 根 pom.xml <build><plugins> 激活
+    + maven-javadoc-plugin（不带 configuration，继承 pluginManagement）
+      → Maven 4 <subprojects> 各子模块继承 verify 阶段 doclint 门禁
+1.4 ddd4j-boot-parent/pom.xml
+    同款属性化配置（doclint/failOnWarnings/failOnError/release + attach-javadocs
+    绑定 verify），替换原 doclint 放行注释；与根 POM 完全一致。
+1.5 ddd4j-boot-extensions/pom.xml
+    + 「与根 POM javadoc 门禁保持一致，禁止本模块单独关闭 doclint」注释
+    + doclint=${javadoc.doclint} / failOnWarnings / failOnError / release
+    + attach-javadocs 绑定 verify
+1.6 脚本 checkstyle 引用修复
+    scripts/verify-java-style.sh:5 引用
+      ${ROOT_DIR}/tools/checkstyle/need-braces-checkstyle.xml
+    该规则文件在 HEAD 中缺失（tools/ 未纳入版本库）→ 本次补齐
+      tools/checkstyle/need-braces-checkstyle.xml（720B，2026-10-09 08:53）
+    脚本本体与 HEAD 一致（零改动），引用自此可解析。
+1.7 负向探针（门禁会失败的直接证据，探针已删除、工作区无残留）
+    探针 A（前次会话已留证）：注入缺失 javadoc 的公共类 → doclint missing 触发
+      → -Werror 下失败（EXIT=1）→ 探针删除，工作区无残留。
+    探针 B（本会话复跑，可复现命令与原始输出）：
+      临时类 GateProbe（方法无注释、类无显式构造器）+
+      javadoc -Xdoclint:all -Werror →
+        警告: 使用不提供注释的默认构造器（GateProbe.java:4）
+        警告: 没有注释（echo 方法，GateProbe.java:5）
+        错误: 发现警告, 但指定了 -Werror
+        PROBE_EXIT=1（1 错误 2 警告）
+      探针文件/输出/日志已即刻删除（PROBE_CLEANED）。
+
+【2】批次补注清单（批次纪律：每批 ≤30 文件，逐批自查通过再进下批）
+--------------------------------------------------------------------------------
+补注规范（全批统一）：
+  - 公共/受保护类型与成员：中文规范 javadoc（类型用途；@param 逐参数；
+    @return；@throws；复杂逻辑段落注释）；getter/setter 紧凑一行语义 + 标签；
+  - 公共类缺显式构造器 → 补「显式无参构造器」javadoc + 空方法体
+    （与隐式默认构造器完全等价，不改逻辑）；
+  - @Bean 方法补 @return（必要时 @param）；未 import 的引用改全限定 FQN 链接；
+  - 标题 <h3> → <h2>（隐式 H1 之后）；
+  - 红线清理后的既有注释文本一律保留不回退（如 redacted-legacy-* 占位）；
+  - 不改任何业务逻辑。
+
+批次 1：ddd4j-boot-extension-qlexpress 共 11 文件（自查 r2-b1.log 0 字节，EXIT=0）
+    QLExpressProperties、Ddd4jQLExpressBootAutoConfiguration、
+    rule/RuleDefinition、rule/RuleService、rule/RuleChangedEvent、
+    rule/RuleRepository、rule/RuleCache、rule/RuleType、
+    rule/support/InMemoryRuleCache、rule/support/InMemoryRuleRepository、
+    rule/support/SpringCacheRuleCache
+批次 2：mq 23 + core 2 + cache 2 = 27 文件（自查 r2-b2.log 0 字节，EXIT=0）
+    mq 23：activemq / disruptor / kafka(KafkaMQBootAutoConfiguration、
+      KafkaConnectionProperties) / mq-core(Ddd4jMQAutoConfiguration) / mqtt /
+      mqtt-mica 9（MicaMqttClientSubscribeDefinition、DefinitionRegistry、
+      Registrar、Scanner、MicaMqttBridgeConfiguration、MicaMqttBridgeMarker、
+      MicaMqttMQBootAutoConfiguration、Ddd4jMicaMqttSubscribeGuard、
+      NoOpMqttClientSubscribeDetector）/ nats / ons / pulsar /
+      redis-stream / rabbitmq / rocketmq / sqs / tdmq 的自动配置与属性类
+      ★ 含 3 处 reference-not-found 修复：{@link MqttClientSubscribe} →
+        {@link org.dromara.mica.mqtt.core.annotation.MqttClientSubscribe}
+        （Registry×1、Registrar×2，r1 的 5 个错误 → 剩 2 个 H3）
+    core 2：Ddd4jCoreAutoConfiguration、Ddd4jRepositoryAutoConfiguration
+      （含内部类 Ddd4jRepositoryRegistrar 补注）
+    cache 2：CacheProperties、Ddd4jCacheAutoConfiguration
+批次 3：web 8 + data 8 + auth 4 + observability 5 = 25 文件
+      （自查 r2-b3.log 0 字节，EXIT=0）
+    web 8：Ddd4jWebMvcAutoConfiguration（约 15 个 @Bean 全补）、
+      Ddd4jVertxWebConfiguration、Ddd4jJavalinWebConfiguration、
+      Ddd4jWebFluxAutoConfiguration、
+      Ddd4jWebMvc/WebFlux/VertxWeb/JavalinWebProperties（补显式构造器）
+    data 8：MybatisExceptionHandler（整文件重写补注，文件头红线占位保留）、
+      Ddd4jExternalAutoConfiguration、Ddd4jGlobalSequenceAutoConfiguration、
+      Ddd4jCryptoAutoConfiguration、Ddd4jDataScopeAutoConfiguration、
+      Ddd4jMybatisAutoConfiguration、Ddd4jApiLogAspectAutoConfiguration、
+      RedisTemplateRegionCache
+    auth 4：SaTokenEnhanceAutoConfiguration、SecurityEnhanceAutoConfiguration、
+      ShiroEnhanceAutoConfiguration、DefaultLicenseAutoConfiguration
+    observability 5（均为补显式构造器）：TraceparentRestTemplateInterceptor、
+      OtlpEndpointCondition、ObservabilityProperties、MdcTtlTraceContextBridge、
+      Ddd4jObservabilityAutoConfiguration
+批次 4：ddd4j-boot-extensions 与 auth-datascope 共 24 文件
+      （自查 r2-b4.log：doclint 告警 0；6 条为子集缺同包兄弟文件的
+        classpath 错误，按口径忽略，全量 r3/r3b 复核清零，见【3】）
+    qrcode 6：QrCodeController（3 端点 + 3 内部类 + 私有辅助方法全补注）、
+      QrCodeProperties（类型/字段/嵌套 Web 类全补）、QrCodeExceptionHandler、
+      Ddd4jQrCodeBootAutoConfiguration、QrCodeWebAutoConfiguration、
+      SpringResourceQrCodeResolver
+    excel 4：ExcelProperties（19 条：构造器 + 单行 getter/setter 改多行紧凑 +
+      嵌套 Style 类）、ExcelAttachment（★H3→H2:12 + 3 getter）、
+      ExcelHttpKit（★H3→H2:22）、Ddd4jExcelBootAutoConfiguration
+    akka 4：AkkaProperties（英文化类注释改中文 + 5 条）、SpringExtension、
+      Ddd4jAkkaBootAutoConfiguration、AkkaAutoConfiguration
+      （AkkaProperties 文件头红线占位 redacted-legacy-family 保留未回退）
+    cola 3：ColaAutoConfiguration、Ddd4jResponseHandler、ColaExceptionHandler
+    datascope 2：DataScopeAutoConfiguration、RequiresDataPermissionsValidator
+      （initialize/isValid 补 @param/@return）
+    monitor 2：Ddd4jMonitorBootAutoConfiguration（2 处 @return）、
+      AlertTraceContext（显式构造器）
+    dubbo 2：DubboAutoConfiguration、DubboExceptionHandler
+    jackson 1：DefaultJacksonAutoConfiguration（构造器 + jacksonObjectMapper
+      @Bean 文档）
+    ★ r1 的 5 个错误至此全部闭环：2 个 H3 标题（本批修复）+ 3 个 FQN 引用（批次 2 修复）
+
+合计 11 + 27 + 25 + 24 = 87 文件，与 issue-files.txt 一致。
+
+【3】告警递减记录（全部为 javadoc CLI -Xdoclint:all 实测）
+--------------------------------------------------------------------------------
+  扫描            时间(10-09)  警告  错误  日志/说明
+  r1 基线(103)    11:20        442   5     r1.log（101,695B）
+      警告构成：缺注释(方法/类型) 291 + 缺默认构造器注释 76 +
+                缺 @return 40 + 缺 @param 35
+      错误构成：H3 标题越级 2（ExcelAttachment:12 / ExcelHttpKit:22）+
+                reference-not-found 3（mqtt-mica {@link MqttClientSubscribe}）
+  批次1 后全量复扫(过程值)  --     326   5     前次会话过程记录（未单独留档）
+  批次1 自查(11)  11:44        0     0     r2-b1.log 0 字节，EXIT=0
+  批次2 自查(27)  12:07        0     0     r2-b2.log 0 字节，EXIT=0
+  批次3 自查(25)  12:20        0     0     r2-b3.log 0 字节，EXIT=0
+  批次4 自查(24)  12:38        0     6*    r2-b4.log：*6 条均为子集运行时
+                                            同包兄弟类（DataScopeProvider、
+                                            RequiresDataPermissions）不在 24 文件
+                                            内导致的 classpath 错误，按口径忽略；
+                                            doclint 类告警 = 0
+  r3 全量(103)    12:46        3     0     r3.log：Ddd4jResponseHandler /
+                                            QrCodeController$RenderRequest /
+                                            BatchRenderRequest 三处默认构造器
+  r3b 全量(103)   12:46 起    0     0     r3b.log 0 字节，EXIT=0 ← 最终清零
+            （补 3 个显式构造器后重跑；HTML 于 12:49-12:50 重新生成：
+              E:/tmp/jdoc-fw/out/io/ddd4j/boot/qrcode/QrCodeController.html
+              E:/tmp/jdoc-fw/out/io/ddd4j/boot/excel/config/ExcelProperties.html
+              E:/tmp/jdoc-fw/out/io/ddd4j/boot/akka/AkkaProperties.html 等，
+              时间戳与 r3b 一致）
+  递减结论：442W+5E → （分批逐批清零）→ 3W+0E → 0W+0E（EXIT=0）
+
+【4】补注统计
+--------------------------------------------------------------------------------
+  - 范围：src/main/java 非样本 103 文件；r1 有告警 87 文件全部完成补注；
+    16 个无告警文件经全量复核无需改动。
+  - git diff（87 文件，javadoc 作用域）：+1924 / -21 行
+      · javadoc/行内注释行          +1695
+      · 显式无参构造器签名          +76   （= r1 的 76 条默认构造器告警逐一闭环）
+      · 构造器闭合括号/配套空行     +153
+      · 删除 -21 行：被多行中文 javadoc 替换的英文单行注释、2 行 <h3> 标题等
+  - 行为影响：新增构造器均为 `public Foo() {}` 空方法体，与隐式默认构造器
+    二进制等价；无业务逻辑、控制流、字段、注解、返回值变更（纯注释 + 等价构造器）。
+  - 批次自查口径：每批完成后即以该批 argfile 跑 javadoc，0 告警才进下批；
+    最终以全量 103 文件 r3b = 0/0 收口。
+
+【5】Maven 门禁旁证（纪律：不运行 mvn/gradle）
+--------------------------------------------------------------------------------
+  - 未执行任何 Maven 构建；门禁以三重证据背书：
+    (1) POM 静态核对：根/parent/extensions 三处 doclint 属性链、
+        failOnWarnings/failOnError、release 21、-Xmaxwarns/-Xmaxerrs 1000000、
+        attach-javadocs→verify、旧 -Xdoclint:none profile 已删除（见【1】diff 摘要）；
+    (2) javadoc CLI 等价验证：-Xdoclint:all 与插件 <doclint>all 完全同源，
+        全量 103 文件 0 警告 0 错误（r3b，EXIT=0）；
+    (3) 负向探针：缺注释 → missing → -Werror → EXIT=1（见【1.7】），
+        证明「有缺口就一定失败」的门禁语义成立。
+  - 残余差异说明：maven-javadoc-plugin 运行时持有真实依赖 classpath，
+    {@link} 跨工程解析只会更宽松（本次 CLI 无 classpath 已 0 错误）；
+    门禁解除纪律后建议在 CI 执行一次 `./mvnw -q -DskipTests verify` 复核。
+
+【6】红线扫描（构造模式 + 掩码管道，作用域 = 工作树全部非样本改动文件）
+--------------------------------------------------------------------------------
+  扫描集合：git status --porcelain 过滤 ddd4j-boot-samples/ → 126 文件
+  P1/P2 旧家族名/旧应用名：构造值存 /tmp/.oldseg.txt、/tmp/.oldapp.txt（各 6B），
+        grep -rI -F -f 联合模式 → 命中 0
+  P3 教育类关键词（教育/课堂/学院/学校/培训/学员/课程/教务/教研/
+        edutech/jiaoyu/classroom/training，-i）→ 15 行命中，逐条裁定：
+        全部位于 docs/verification/*.txt 证据文件自身的方法学自述
+        （关键词清单与角色名说明），0 命中位于 java/pom/资源源码
+        → 品牌字面量命中 = 0
+  P4 公司后缀代理词（有限公司/网络科技/版权所有）→ 3 行命中，逐条裁定：
+        全部位于既有证据文件的方法学描述行 → 品牌字面量命中 = 0
+  展示纪律：以上命中输出均已过掩码管道（FAM/APP 替换占位）。
+  结论：本次 javadoc 增量未引入任何旧品牌标识；红线清理成果未被回退
+        （AkkaProperties / MybatisExceptionHandler 文件头 redacted-legacy-family
+         占位、MybatisExceptionHandler 行内占位均原样保留）。
+
+【7】遗留与风险
+--------------------------------------------------------------------------------
+  R1 Maven 实跑未执行（纪律禁止）→ 见【5】三重旁证；后续动作：CI 首次
+     `verify` 时确认 attach-javadocs 真实产物与门禁同时生效。
+  R2 批次子集运行必然出现「同包兄弟文件不在子集」的 classpath 错误
+     （r2-b4 的 6 条）；全量 r3/r3b 已证明其非 doclint 缺口。
+  R3 单行内联标签陷阱已实测固化进规范（【0.5】），后续贡献者需遵循
+     多行紧凑格式，否则 -Werror 下立即失败（这是门禁的预期行为）。
+  R4 新增 76 个显式无参构造器为 doclint 要求的等价物；若未来给这些类新增
+     带参构造器，需同步维护无参构造器（Spring 绑定/序列化依赖）。
+  R5 并行 samples 子树零触碰：本会话全部 Edit/Write 均在
+     ddd4j-boot-*（非 ddd4j-boot-samples/）路径下；git status 中 samples
+     的未跟踪目录属于并行智能体成果，未被读取修改。
+  R6 未执行 git commit/push/切分支；工作树保持 4.0.x，既有未提交成果
+     （testcontainers 坐标治理、红线清理、样本迁移）完整保留。
+
+【8】附录
+--------------------------------------------------------------------------------
+8.1 自检工件（C:\Users\hnxyh\AppData\Local\Temp\jdoc-fw\ = /tmp/jdoc-fw/）
+    args.txt          全量 103 文件 argfile（11:13 生成）
+    issue-files.txt   r1 有告警的 87 文件清单
+    batch2.txt / batch3.txt / batch4.txt   批次文件清单（27/25/24）
+    mkargs2.py / mkargs3.py / mkargs4.py  批次 argfile 生成脚本
+    r1.log            基线（442 警告 + 5 错误）
+    r1-summary.txt    逐文件告警分类汇总（8.3 全文）
+    r1-detail.txt     逐条诊断明细
+    r2-b1.log … r2-b4.log   批次自查日志（b1-b3 为 0 字节 = 清零）
+    r3.log / r3b.log  全量终检（3 警告 → 0 字节清零）
+    probe2.log        单行内联标签格式实测（1 警告「没有 @return」）
+    probe3            负向探针（-Werror EXIT=1，已删除）
+8.2 关键命令
+    cd <仓根>
+    "D:/Java/jdk-21.0.4/bin/javadoc" -Xdoclint:all -Xmaxwarns 1000000 \
+      -Xmaxerrs 1000000 -quiet @.../args.txt > .../r3b.log 2>&1; echo EXIT=$?
+    → EXIT=0，r3b.log 0 字节，E:/tmp/jdoc-fw/out HTML 全量重新生成
+8.3 r1 逐文件告警汇总（87 文件，格式：告警数 路径 + 分类明细）
+--------------------------------------------------------------------------------
+TOTAL W=442 E=5 files=87
+  47  ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleDefinition.java
+         1 W:default ctor comment
+        46 W:missing comment
+  27  ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/QLExpressProperties.java
+         2 W:default ctor comment
+        25 W:missing comment
+  27  ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/QrCodeController.java
+         2 W:default ctor comment
+        25 W:missing comment
+  20  ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/registry/MicaMqttClientSubscribeDefinition.java
+         9 W:missing @param
+         2 W:missing @return
+         9 W:missing comment
+  19  ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/java/io/ddd4j/boot/excel/config/ExcelProperties.java
+         2 W:default ctor comment
+        17 W:missing comment
+  18  ddd4j-boot-data/ddd4j-boot-data-mybatis/src/main/java/io/ddd4j/boot/data/mybatis/web/MybatisExceptionHandler.java
+         1 W:default ctor comment
+         8 W:missing @param
+         8 W:missing @return
+         1 W:missing comment
+  17  ddd4j-boot-web/ddd4j-boot-web-webmvc/src/main/java/io/ddd4j/boot/web/webmvc/Ddd4jWebMvcAutoConfiguration.java
+         1 W:default ctor comment
+         1 W:missing @param
+         1 W:missing @return
+        14 W:missing comment
+  15  ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/QrCodeProperties.java
+         2 W:default ctor comment
+        13 W:missing comment
+  11  ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleChangedEvent.java
+         4 W:missing @param
+         7 W:missing comment
+  11  ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleService.java
+        11 W:missing comment
+  10  ddd4j-boot-web/ddd4j-boot-web-javalin/src/main/java/io/ddd4j/boot/web/javalin/Ddd4jJavalinWebConfiguration.java
+         1 W:default ctor comment
+         1 W:missing @param
+         1 W:missing @return
+         7 W:missing comment
+  10  ddd4j-boot-web/ddd4j-boot-web-vertx/src/main/java/io/ddd4j/boot/web/vertx/Ddd4jVertxWebConfiguration.java
+         1 W:default ctor comment
+         1 W:missing @param
+         1 W:missing @return
+         7 W:missing comment
+  10  ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/autoconfigure/MicaMqttBridgeConfiguration.java
+         1 W:default ctor comment
+         4 W:missing @param
+         5 W:missing @return
+   8  ddd4j-boot-data/ddd4j-boot-data-external/src/main/java/io/ddd4j/boot/data/external/config/Ddd4jExternalAutoConfiguration.java
+         1 W:default ctor comment
+         7 W:missing comment
+   8  ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/QrCodeExceptionHandler.java
+         1 W:default ctor comment
+         7 W:missing comment
+   8  ddd4j-boot-auth/ddd4j-boot-auth-satoken/src/main/java/io/ddd4j/boot/auth/satoken/SaTokenEnhanceAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing @param
+         5 W:missing @return
+   7  ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/consumer/MicaMqttClientSubscribeRegistrar.java
+         2 E:reference-not-found
+         2 W:missing @param
+         2 W:missing @return
+         1 W:missing comment
+   6  ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/Ddd4jRepositoryAutoConfiguration.java
+         2 W:default ctor comment
+         1 W:missing @param
+         3 W:missing @return
+   5  ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/java/io/ddd4j/boot/akka/AkkaProperties.java
+         1 W:default ctor comment
+         4 W:missing comment
+   5  ddd4j-boot-data/ddd4j-boot-data-crypto/src/main/java/io/ddd4j/boot/data/crypto/Ddd4jCryptoAutoConfiguration.java
+         1 W:default ctor comment
+         4 W:missing comment
+   5  ddd4j-boot-data/ddd4j-boot-data-external/src/main/java/io/ddd4j/boot/data/external/config/Ddd4jGlobalSequenceAutoConfiguration.java
+         1 W:default ctor comment
+         4 W:missing comment
+   5  ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/Ddd4jQLExpressBootAutoConfiguration.java
+         1 W:default ctor comment
+         4 W:missing comment
+   5  ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/Ddd4jQrCodeBootAutoConfiguration.java
+         1 W:default ctor comment
+         4 W:missing comment
+   5  ddd4j-boot-web/ddd4j-boot-web-webflux/src/main/java/io/ddd4j/boot/web/webflux/Ddd4jWebFluxAutoConfiguration.java
+         1 W:default ctor comment
+         4 W:missing comment
+   5  ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleRepository.java
+         5 W:missing comment
+   4  ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/java/io/ddd4j/boot/excel/web/ExcelAttachment.java
+         1 E:heading-out-of-sequence
+         3 W:missing comment
+   4  ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/registry/MicaMqttClientSubscribeDefinitionRegistry.java
+         1 E:reference-not-found
+         1 W:default ctor comment
+         1 W:missing @param
+         1 W:missing @return
+   4  ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/java/io/ddd4j/boot/cmpt/datascope/DataScopeAutoConfiguration.java
+         1 W:default ctor comment
+         3 W:missing comment
+   4  ddd4j-boot-mq/ddd4j-boot-mq-disruptor/src/main/java/io/ddd4j/boot/mq/disruptor/config/DisruptorMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         3 W:missing comment
+   4  ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleCache.java
+         4 W:missing comment
+   4  ddd4j-boot-mq/ddd4j-boot-mq-mqtt/src/main/java/io/ddd4j/boot/mq/mqtt/MqttMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         3 W:missing comment
+   4  ddd4j-boot-mq/ddd4j-boot-mq-nats/src/main/java/io/ddd4j/boot/mq/nats/NatsMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         3 W:missing comment
+   4  ddd4j-boot-mq/ddd4j-boot-mq-ons/src/main/java/io/ddd4j/boot/mq/ons/OnsMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         3 W:missing comment
+   4  ddd4j-boot-mq/ddd4j-boot-mq-pulsar/src/main/java/io/ddd4j/boot/mq/pulsar/PulsarMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         3 W:missing comment
+   4  ddd4j-boot-auth/ddd4j-boot-auth-security/src/main/java/io/ddd4j/boot/auth/security/SecurityEnhanceAutoConfiguration.java
+         1 W:default ctor comment
+         3 W:missing @return
+   4  ddd4j-boot-mq/ddd4j-boot-mq-sqs/src/main/java/io/ddd4j/boot/mq/sqs/SqsMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         3 W:missing comment
+   3  ddd4j-boot-mq/ddd4j-boot-mq-activemq/src/main/java/io/ddd4j/boot/mq/activemq/ActiveMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing comment
+   3  ddd4j-boot-data/ddd4j-boot-data-datascope/src/main/java/io/ddd4j/boot/data/datascope/Ddd4jDataScopeAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing comment
+   3  ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/autoconfigure/Ddd4jMicaMqttSubscribeGuardAutoConfiguration.java
+         1 W:default ctor comment
+         1 W:missing @param
+         1 W:missing @return
+   3  ddd4j-boot-extensions/ddd4j-boot-extension-monitor/src/main/java/io/ddd4j/boot/monitor/Ddd4jMonitorBootAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing @return
+   3  ddd4j-boot-mq/ddd4j-boot-mq-core/src/main/java/io/ddd4j/boot/mq/core/config/Ddd4jMQAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing comment
+   3  ddd4j-boot-auth/ddd4j-boot-auth-license/src/main/java/io/ddd4j/boot/auth/license/DefaultLicenseAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing comment
+   3  ddd4j-boot-mq/ddd4j-boot-mq-kafka/src/main/java/io/ddd4j/boot/mq/kafka/config/KafkaMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing comment
+   3  ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/config/MicaMqttMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing comment
+   3  ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/QrCodeWebAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing comment
+   3  ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq/src/main/java/io/ddd4j/boot/mq/rabbitmq/RabbitMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing comment
+   3  ddd4j-boot-mq/ddd4j-boot-mq-redis-stream/src/main/java/io/ddd4j/boot/mq/redisstream/config/RedisStreamMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing comment
+   3  ddd4j-boot-mq/ddd4j-boot-mq-rocketmq/src/main/java/io/ddd4j/boot/mq/rocketmq/RocketMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing comment
+   3  ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleType.java
+         3 W:missing comment
+   3  ddd4j-boot-auth/ddd4j-boot-auth-shiro/src/main/java/io/ddd4j/boot/auth/shiro/ShiroEnhanceAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing @return
+   3  ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/java/io/ddd4j/boot/akka/actor/SpringExtension.java
+         3 W:missing comment
+   3  ddd4j-boot-mq/ddd4j-boot-mq-tdmq/src/main/java/io/ddd4j/boot/mq/tdmq/config/TdmqMQBootAutoConfiguration.java
+         1 W:default ctor comment
+         2 W:missing comment
+   2  ddd4j-boot-cache/src/main/java/io/ddd4j/boot/cache/CacheProperties.java
+         1 W:default ctor comment
+         1 W:missing comment
+   2  ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/java/io/ddd4j/boot/cola/ColaAutoConfiguration.java
+         1 W:default ctor comment
+         1 W:missing @return
+   2  ddd4j-boot-data/ddd4j-boot-data-logs/src/main/java/io/ddd4j/boot/data/logs/Ddd4jApiLogAspectAutoConfiguration.java
+         1 W:default ctor comment
+         1 W:missing comment
+   2  ddd4j-boot-data/ddd4j-boot-data-mybatis/src/main/java/io/ddd4j/boot/data/mybatis/Ddd4jMybatisAutoConfiguration.java
+         1 W:default ctor comment
+         1 W:missing @return
+   2  ddd4j-boot-extensions/ddd4j-boot-extension-jackson/src/main/java/io/ddd4j/boot/jackson/DefaultJacksonAutoConfiguration.java
+         1 W:default ctor comment
+         1 W:missing comment
+   2  ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/consumer/MicaMqttClientSubscribeScanner.java
+         1 W:missing @return
+         1 W:missing comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/java/io/ddd4j/boot/excel/web/ExcelHttpKit.java
+         1 E:heading-out-of-sequence
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/java/io/ddd4j/boot/akka/AkkaAutoConfiguration.java
+         1 W:missing comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-monitor/src/main/java/io/ddd4j/boot/monitor/AlertTraceContext.java
+         1 W:default ctor comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/java/io/ddd4j/boot/cola/exception/ColaExceptionHandler.java
+         1 W:default ctor comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/java/io/ddd4j/boot/akka/Ddd4jAkkaBootAutoConfiguration.java
+         1 W:default ctor comment
+   1  ddd4j-boot-cache/src/main/java/io/ddd4j/boot/cache/Ddd4jCacheAutoConfiguration.java
+         1 W:default ctor comment
+   1  ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/Ddd4jCoreAutoConfiguration.java
+         1 W:default ctor comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/java/io/ddd4j/boot/excel/Ddd4jExcelBootAutoConfiguration.java
+         1 W:default ctor comment
+   1  ddd4j-boot-web/ddd4j-boot-web-javalin/src/main/java/io/ddd4j/boot/web/javalin/Ddd4jJavalinWebProperties.java
+         1 W:default ctor comment
+   1  ddd4j-boot-observability/src/main/java/io/ddd4j/boot/observability/Ddd4jObservabilityAutoConfiguration.java
+         1 W:default ctor comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/java/io/ddd4j/boot/cola/handler/Ddd4jResponseHandler.java
+         1 W:default ctor comment
+   1  ddd4j-boot-web/ddd4j-boot-web-vertx/src/main/java/io/ddd4j/boot/web/vertx/Ddd4jVertxWebProperties.java
+         1 W:default ctor comment
+   1  ddd4j-boot-web/ddd4j-boot-web-webflux/src/main/java/io/ddd4j/boot/web/webflux/Ddd4jWebFluxProperties.java
+         1 W:default ctor comment
+   1  ddd4j-boot-web/ddd4j-boot-web-webmvc/src/main/java/io/ddd4j/boot/web/webmvc/Ddd4jWebMvcProperties.java
+         1 W:default ctor comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/java/io/ddd4j/extension/dubbo/DubboAutoConfiguration.java
+         1 W:default ctor comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/java/io/ddd4j/extension/dubbo/exception/DubboExceptionHandler.java
+         1 W:default ctor comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/support/InMemoryRuleCache.java
+         1 W:default ctor comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/support/InMemoryRuleRepository.java
+         1 W:default ctor comment
+   1  ddd4j-boot-mq/ddd4j-boot-mq-kafka/src/main/java/io/ddd4j/boot/mq/kafka/config/KafkaConnectionProperties.java
+         1 W:default ctor comment
+   1  ddd4j-boot-observability/src/main/java/io/ddd4j/boot/observability/MdcTtlTraceContextBridge.java
+         1 W:default ctor comment
+   1  ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/MicaMqttBridgeMarker.java
+         1 W:default ctor comment
+   1  ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/guard/NoOpMqttClientSubscribeDetector.java
+         1 W:missing comment
+   1  ddd4j-boot-observability/src/main/java/io/ddd4j/boot/observability/ObservabilityProperties.java
+         1 W:default ctor comment
+   1  ddd4j-boot-observability/src/main/java/io/ddd4j/boot/observability/OtlpEndpointCondition.java
+         1 W:default ctor comment
+   1  ddd4j-boot-data/ddd4j-boot-data-external/src/main/java/io/ddd4j/boot/data/external/adapter/RedisTemplateRegionCache.java
+         1 W:missing comment
+   1  ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/java/io/ddd4j/boot/cmpt/datascope/RequiresDataPermissionsValidator.java
+         1 W:default ctor comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/support/SpringCacheRuleCache.java
+         1 W:missing comment
+   1  ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/SpringResourceQrCodeResolver.java
+         1 W:missing comment
+   1  ddd4j-boot-observability/src/main/java/io/ddd4j/boot/observability/TraceparentRestTemplateInterceptor.java
+         1 W:default ctor comment
+
+8.4 批次文件清单（issue-files.txt 分批，路径相对仓根）
+--------------------------------------------------------------------------------
+--- 批次1（11，qlexpress） ---
+ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleDefinition.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/QLExpressProperties.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleService.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleChangedEvent.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleRepository.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/Ddd4jQLExpressBootAutoConfiguration.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleCache.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/RuleType.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/support/SpringCacheRuleCache.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/support/InMemoryRuleRepository.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qlexpress/src/main/java/io/ddd4j/boot/qlexpress/rule/support/InMemoryRuleCache.java
+
+--- 批次2（27） ---
+ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/registry/MicaMqttClientSubscribeDefinition.java
+ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/autoconfigure/MicaMqttBridgeConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/consumer/MicaMqttClientSubscribeRegistrar.java
+ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/Ddd4jRepositoryAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-sqs/src/main/java/io/ddd4j/boot/mq/sqs/SqsMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-pulsar/src/main/java/io/ddd4j/boot/mq/pulsar/PulsarMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-ons/src/main/java/io/ddd4j/boot/mq/ons/OnsMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-nats/src/main/java/io/ddd4j/boot/mq/nats/NatsMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-mqtt/src/main/java/io/ddd4j/boot/mq/mqtt/MqttMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/registry/MicaMqttClientSubscribeDefinitionRegistry.java
+ddd4j-boot-mq/ddd4j-boot-mq-disruptor/src/main/java/io/ddd4j/boot/mq/disruptor/config/DisruptorMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-tdmq/src/main/java/io/ddd4j/boot/mq/tdmq/config/TdmqMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-rocketmq/src/main/java/io/ddd4j/boot/mq/rocketmq/RocketMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-redis-stream/src/main/java/io/ddd4j/boot/mq/redisstream/config/RedisStreamMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq/src/main/java/io/ddd4j/boot/mq/rabbitmq/RabbitMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/config/MicaMqttMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/autoconfigure/Ddd4jMicaMqttSubscribeGuardAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-kafka/src/main/java/io/ddd4j/boot/mq/kafka/config/KafkaMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-core/src/main/java/io/ddd4j/boot/mq/core/config/Ddd4jMQAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-activemq/src/main/java/io/ddd4j/boot/mq/activemq/ActiveMQBootAutoConfiguration.java
+ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/consumer/MicaMqttClientSubscribeScanner.java
+ddd4j-boot-cache/src/main/java/io/ddd4j/boot/cache/CacheProperties.java
+ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/guard/NoOpMqttClientSubscribeDetector.java
+ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/src/main/java/io/ddd4j/boot/mq/mqttmica/bridge/MicaMqttBridgeMarker.java
+ddd4j-boot-mq/ddd4j-boot-mq-kafka/src/main/java/io/ddd4j/boot/mq/kafka/config/KafkaConnectionProperties.java
+ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/Ddd4jCoreAutoConfiguration.java
+ddd4j-boot-cache/src/main/java/io/ddd4j/boot/cache/Ddd4jCacheAutoConfiguration.java
+
+--- 批次3（25） ---
+ddd4j-boot-web/ddd4j-boot-web-webmvc/src/main/java/io/ddd4j/boot/web/webmvc/Ddd4jWebMvcAutoConfiguration.java
+ddd4j-boot-web/ddd4j-boot-web-vertx/src/main/java/io/ddd4j/boot/web/vertx/Ddd4jVertxWebConfiguration.java
+ddd4j-boot-web/ddd4j-boot-web-javalin/src/main/java/io/ddd4j/boot/web/javalin/Ddd4jJavalinWebConfiguration.java
+ddd4j-boot-web/ddd4j-boot-web-webflux/src/main/java/io/ddd4j/boot/web/webflux/Ddd4jWebFluxAutoConfiguration.java
+ddd4j-boot-web/ddd4j-boot-web-webmvc/src/main/java/io/ddd4j/boot/web/webmvc/Ddd4jWebMvcProperties.java
+ddd4j-boot-web/ddd4j-boot-web-webflux/src/main/java/io/ddd4j/boot/web/webflux/Ddd4jWebFluxProperties.java
+ddd4j-boot-web/ddd4j-boot-web-vertx/src/main/java/io/ddd4j/boot/web/vertx/Ddd4jVertxWebProperties.java
+ddd4j-boot-web/ddd4j-boot-web-javalin/src/main/java/io/ddd4j/boot/web/javalin/Ddd4jJavalinWebProperties.java
+ddd4j-boot-data/ddd4j-boot-data-mybatis/src/main/java/io/ddd4j/boot/data/mybatis/web/MybatisExceptionHandler.java
+ddd4j-boot-data/ddd4j-boot-data-external/src/main/java/io/ddd4j/boot/data/external/config/Ddd4jExternalAutoConfiguration.java
+ddd4j-boot-data/ddd4j-boot-data-external/src/main/java/io/ddd4j/boot/data/external/config/Ddd4jGlobalSequenceAutoConfiguration.java
+ddd4j-boot-data/ddd4j-boot-data-crypto/src/main/java/io/ddd4j/boot/data/crypto/Ddd4jCryptoAutoConfiguration.java
+ddd4j-boot-data/ddd4j-boot-data-datascope/src/main/java/io/ddd4j/boot/data/datascope/Ddd4jDataScopeAutoConfiguration.java
+ddd4j-boot-data/ddd4j-boot-data-mybatis/src/main/java/io/ddd4j/boot/data/mybatis/Ddd4jMybatisAutoConfiguration.java
+ddd4j-boot-data/ddd4j-boot-data-logs/src/main/java/io/ddd4j/boot/data/logs/Ddd4jApiLogAspectAutoConfiguration.java
+ddd4j-boot-data/ddd4j-boot-data-external/src/main/java/io/ddd4j/boot/data/external/adapter/RedisTemplateRegionCache.java
+ddd4j-boot-auth/ddd4j-boot-auth-satoken/src/main/java/io/ddd4j/boot/auth/satoken/SaTokenEnhanceAutoConfiguration.java
+ddd4j-boot-auth/ddd4j-boot-auth-security/src/main/java/io/ddd4j/boot/auth/security/SecurityEnhanceAutoConfiguration.java
+ddd4j-boot-auth/ddd4j-boot-auth-shiro/src/main/java/io/ddd4j/boot/auth/shiro/ShiroEnhanceAutoConfiguration.java
+ddd4j-boot-auth/ddd4j-boot-auth-license/src/main/java/io/ddd4j/boot/auth/license/DefaultLicenseAutoConfiguration.java
+ddd4j-boot-observability/src/main/java/io/ddd4j/boot/observability/TraceparentRestTemplateInterceptor.java
+ddd4j-boot-observability/src/main/java/io/ddd4j/boot/observability/OtlpEndpointCondition.java
+ddd4j-boot-observability/src/main/java/io/ddd4j/boot/observability/ObservabilityProperties.java
+ddd4j-boot-observability/src/main/java/io/ddd4j/boot/observability/MdcTtlTraceContextBridge.java
+ddd4j-boot-observability/src/main/java/io/ddd4j/boot/observability/Ddd4jObservabilityAutoConfiguration.java
+
+--- 批次4（24） ---
+ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/QrCodeController.java
+ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/java/io/ddd4j/boot/excel/config/ExcelProperties.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/QrCodeProperties.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/QrCodeExceptionHandler.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/Ddd4jQrCodeBootAutoConfiguration.java
+ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/java/io/ddd4j/boot/akka/AkkaProperties.java
+ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/java/io/ddd4j/boot/excel/web/ExcelAttachment.java
+ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/java/io/ddd4j/boot/cmpt/datascope/DataScopeAutoConfiguration.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/QrCodeWebAutoConfiguration.java
+ddd4j-boot-extensions/ddd4j-boot-extension-monitor/src/main/java/io/ddd4j/boot/monitor/Ddd4jMonitorBootAutoConfiguration.java
+ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/java/io/ddd4j/boot/akka/actor/SpringExtension.java
+ddd4j-boot-extensions/ddd4j-boot-extension-jackson/src/main/java/io/ddd4j/boot/jackson/DefaultJacksonAutoConfiguration.java
+ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/java/io/ddd4j/boot/cola/ColaAutoConfiguration.java
+ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/src/main/java/io/ddd4j/boot/qrcode/SpringResourceQrCodeResolver.java
+ddd4j-boot-extensions/ddd4j-boot-extension-monitor/src/main/java/io/ddd4j/boot/monitor/AlertTraceContext.java
+ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/java/io/ddd4j/boot/excel/web/ExcelHttpKit.java
+ddd4j-boot-extensions/ddd4j-boot-extension-excel/src/main/java/io/ddd4j/boot/excel/Ddd4jExcelBootAutoConfiguration.java
+ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/java/io/ddd4j/extension/dubbo/exception/DubboExceptionHandler.java
+ddd4j-boot-extensions/ddd4j-boot-extension-dubbo/src/main/java/io/ddd4j/extension/dubbo/DubboAutoConfiguration.java
+ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/java/io/ddd4j/boot/cola/handler/Ddd4jResponseHandler.java
+ddd4j-boot-extensions/ddd4j-boot-extension-cola/src/main/java/io/ddd4j/boot/cola/exception/ColaExceptionHandler.java
+ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/java/io/ddd4j/boot/akka/Ddd4jAkkaBootAutoConfiguration.java
+ddd4j-boot-extensions/ddd4j-boot-extension-akka/src/main/java/io/ddd4j/boot/akka/AkkaAutoConfiguration.java
+ddd4j-boot-extensions/ddd4j-boot-auth-datascope/src/main/java/io/ddd4j/boot/cmpt/datascope/RequiresDataPermissionsValidator.java
+

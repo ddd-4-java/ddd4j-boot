@@ -6,4 +6,10 @@ package io.ddd4j.boot.mq.mqttmica.bridge;
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
 public class MicaMqttBridgeMarker {
+
+    /**
+     * 显式无参构造器，供 Spring 实例化标记 Bean。
+     */
+    public MicaMqttBridgeMarker() {
+    }
 }

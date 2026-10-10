@@ -30,6 +30,17 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(ApiOperationLogAspect.class)
 public class Ddd4jApiLogAspectAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 实例化本配置类。
+     */
+    public Ddd4jApiLogAspectAutoConfiguration() {
+    }
+
+    /**
+     * 装配默认 API 操作日志提供者。
+     *
+     * @return 操作日志提供者实例
+     */
     @Bean
     @ConditionalOnMissingBean(ApiOperationLogProvider.class)
     public ApiOperationLogProvider apiOperationLogProvider() {

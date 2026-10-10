@@ -36,6 +36,18 @@ import org.springframework.core.env.Environment;
 @ConditionalOnProperty(prefix = "ddd4j.mq", name = "enabled", havingValue = "true")
 public class Ddd4jMQAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public Ddd4jMQAutoConfiguration() {
+    }
+
+    /**
+     * 手动绑定 {@code ddd4j.mq.*} 到上游纯 POJO {@link MQProperties} 并注册为 {@code @Primary}。
+     *
+     * @param environment Spring 环境，提供 {@code ddd4j.mq.*} 配置来源
+     * @return 绑定完成的 MQ 属性实例
+     */
     @Bean
     @Primary
     @ConditionalOnMissingBean(MQProperties.class)
@@ -45,6 +57,11 @@ public class Ddd4jMQAutoConfiguration {
         return properties;
     }
 
+    /**
+     * 注册默认 JSON 序列化实现，用户可通过自定义 {@link MQEventSerialization} Bean 覆盖。
+     *
+     * @return JSON MQ 事件序列化器
+     */
     @Bean
     @ConditionalOnMissingBean(MQEventSerialization.class)
     public MQEventSerialization mqEventSerialization() {

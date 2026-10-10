@@ -20,6 +20,12 @@ import java.util.Set;
 public class ObservabilityProperties {
 
     /**
+     * 显式无参构造器，供 {@code @EnableConfigurationProperties} 绑定时实例化。
+     */
+    public ObservabilityProperties() {
+    }
+
+    /**
      * 配置前缀。
      */
     public static final String PREFIX = "ddd4j.observability.tracing";

@@ -24,6 +24,14 @@ public class RuleService {
     private final QLExpressEngine engine;
     private final ApplicationEventPublisher eventPublisher;
 
+    /**
+     * 构造规则服务，四个依赖均做非空校验，缺失时立即失败。
+     *
+     * @param repository     规则持久化仓库
+     * @param cache          规则缓存
+     * @param engine         QLExpress 执行引擎
+     * @param eventPublisher Spring 事件发布器，用于广播规则变更事件
+     */
     public RuleService(RuleRepository repository, RuleCache cache, QLExpressEngine engine,
                        ApplicationEventPublisher eventPublisher) {
         this.repository = Objects.requireNonNull(repository, "repository 不能为空");
@@ -32,6 +40,13 @@ public class RuleService {
         this.eventPublisher = Objects.requireNonNull(eventPublisher, "eventPublisher 不能为空");
     }
 
+    /**
+     * 新建规则：校验合法性与编码唯一性，生成主键与时间戳，落库后写缓存并发布 CREATED 事件。
+     *
+     * @param rule 待创建的规则定义
+     * @return 持久化后的规则定义
+     * @throws IllegalArgumentException 编码已存在或规则必填项校验失败
+     */
     public RuleDefinition create(RuleDefinition rule) {
         RuleDefinition checked = requireValidRule(rule);
         if (repository.findByCode(checked.getCode()).isPresent()) {
@@ -49,6 +64,15 @@ public class RuleService {
         return saved;
     }
 
+    /**
+     * 更新规则：编码不可变，仅合并可变字段（名称、表达式、说明、分类、启用状态、优先级），
+     * 更新后刷新缓存并发布 UPDATED 事件。
+     *
+     * @param id      规则唯一标识
+     * @param changes 变更内容（按字段覆盖）
+     * @return 更新后的规则定义
+     * @throws IllegalArgumentException 规则不存在、尝试修改编码或校验失败
+     */
     public RuleDefinition update(String id, RuleDefinition changes) {
         requireText(id, "id");
         RuleDefinition existing = repository.findById(id)
@@ -72,6 +96,12 @@ public class RuleService {
         return saved;
     }
 
+    /**
+     * 删除规则：落库删除后清理对应缓存并发布 DELETED 事件。
+     *
+     * @param id 规则唯一标识
+     * @throws IllegalArgumentException 规则不存在或 id 为空
+     */
     public void delete(String id) {
         requireText(id, "id");
         RuleDefinition existing = repository.findById(id)
@@ -81,14 +111,34 @@ public class RuleService {
         publish(existing, RuleChangedEvent.Operation.DELETED);
     }
 
+    /**
+     * 启用规则：刷新启用状态与时间戳，写入缓存并发布 ENABLED 事件。
+     *
+     * @param id 规则唯一标识
+     * @return 启用后的规则定义
+     * @throws IllegalArgumentException 规则不存在或 id 为空
+     */
     public RuleDefinition enable(String id) {
         return changeAvailability(id, true, RuleChangedEvent.Operation.ENABLED);
     }
 
+    /**
+     * 停用规则：刷新启用状态与时间戳，清理缓存并发布 DISABLED 事件。
+     *
+     * @param id 规则唯一标识
+     * @return 停用后的规则定义
+     * @throws IllegalArgumentException 规则不存在或 id 为空
+     */
     public RuleDefinition disable(String id) {
         return changeAvailability(id, false, RuleChangedEvent.Operation.DISABLED);
     }
 
+    /**
+     * 按唯一标识查询规则，id 为空时直接返回空结果不回源。
+     *
+     * @param id 规则唯一标识
+     * @return 命中的规则定义，未命中时为空
+     */
     public Optional<RuleDefinition> findById(String id) {
         if (!StrKit.hasText(id)) {
             return Optional.empty();
@@ -96,6 +146,13 @@ public class RuleService {
         return repository.findById(id);
     }
 
+    /**
+     * 按业务编码查询规则：先查缓存，未命中回源仓库并回填缓存。
+     *
+     * @param code 规则业务编码
+     * @return 命中的规则定义，未命中时为空
+     * @throws IllegalArgumentException code 为空
+     */
     public Optional<RuleDefinition> findByCode(String code) {
         requireText(code, "code");
         RuleDefinition cached = cache.get(code);
@@ -107,6 +164,11 @@ public class RuleService {
         return rule;
     }
 
+    /**
+     * 查询全部规则并按优先级倒序排列（空优先级按 0 处理）。
+     *
+     * @return 按优先级降序排列的规则列表
+     */
     public List<RuleDefinition> findAll() {
         return repository.findAll().stream()
                 .sorted(Comparator.comparing(
@@ -115,6 +177,13 @@ public class RuleService {
                 .toList();
     }
 
+    /**
+     * 按编码加载规则并执行表达式，规则不存在或已禁用时返回失败结果而非抛异常。
+     *
+     * @param code    规则业务编码
+     * @param context 表达式执行上下文变量
+     * @return 执行结果；规则缺失时失败码 {@code RULE_NOT_FOUND}，禁用时为 {@code RULE_DISABLED}
+     */
     public QLExpressExecutionResult<Object> execute(String code, Map<String, Object> context) {
         Optional<RuleDefinition> rule = findByCode(code);
         if (rule.isEmpty()) {
@@ -126,6 +195,9 @@ public class RuleService {
         return engine.executeSafely(rule.get().getExpression(), context);
     }
 
+    /**
+     * 清空全部规则缓存，用于运维手工刷新或批量变更后的失效兜底。
+     */
     public void clearCache() {
         cache.clear();
     }

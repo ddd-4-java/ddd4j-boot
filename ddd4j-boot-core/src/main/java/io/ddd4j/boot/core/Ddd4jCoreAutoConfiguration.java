@@ -28,4 +28,10 @@ import io.ddd4j.spring.event.SpringDomainEventPublisher;
 @Import({SpringCoreConfig.class, SpringDomainEventPublisher.class, SpringContextBridge.class})
 @Order(Ordered.HIGHEST_PRECEDENCE + 100)
 public class Ddd4jCoreAutoConfiguration {
+
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public Ddd4jCoreAutoConfiguration() {
+    }
 }

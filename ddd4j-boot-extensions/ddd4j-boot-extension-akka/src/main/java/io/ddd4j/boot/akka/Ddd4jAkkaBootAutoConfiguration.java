@@ -29,6 +29,12 @@ import org.springframework.context.annotation.Configuration;
 public class Ddd4jAkkaBootAutoConfiguration {
 
     /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public Ddd4jAkkaBootAutoConfiguration() {
+    }
+
+    /**
      * Akka 配置属性。
      *
      * @return AkkaProperties

@@ -160,18 +160,29 @@
                 </plugin>
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
                 <plugin>
-                    <!-- 文档插件:发布时自动生成文档 -->
+                    <!-- 文档插件:发布时自动生成文档（与根 POM javadoc 门禁保持一致，禁止本模块单独关闭 doclint） -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <configuration>
                         <charset>${project.build.sourceEncoding}</charset>
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <docencoding>${project.build.sourceEncoding}</docencoding>
+                        <doclint>${javadoc.doclint}</doclint>
+                        <failOnWarnings>${javadoc.failOnWarning}</failOnWarnings>
+                        <failOnError>${javadoc.failOnError}</failOnError>
+                        <release>${java.version}</release>
+                        <additionalOptions>
+                            <additionalOption>-Xmaxwarns</additionalOption>
+                            <additionalOption>1000000</additionalOption>
+                            <additionalOption>-Xmaxerrs</additionalOption>
+                            <additionalOption>1000000</additionalOption>
+                        </additionalOptions>
                     </configuration>
                     <executions>
                         <execution>
                             <id>attach-javadocs</id>
-                            <phase>package</phase>
+                            <!-- 与根 POM 一致绑定 verify，保证 javadoc 门禁先于 deploy 生效 -->
+                            <phase>verify</phase>
                             <goals>
                                 <goal>jar</goal>
                             </goals>

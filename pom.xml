@@ -49,6 +49,14 @@
         <flatten.skip>true</flatten.skip>
         <maven-nexus-staging-plugin.version>1.7.0</maven-nexus-staging-plugin.version>
         <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
+        <!--
+            javadoc 门禁开关：全部走属性集中管理，禁止在子模块或 profile 中硬编码关闭。
+            仅限缺口盘点与应急关断时可用 -Djavadoc.failOnWarning=false 临时放行，
+            MUST NOT 作为常态默认值写回 POM。
+        -->
+        <javadoc.doclint>all</javadoc.doclint>
+        <javadoc.failOnWarning>true</javadoc.failOnWarning>
+        <javadoc.failOnError>true</javadoc.failOnError>
     </properties>
 
     <subprojects>
@@ -78,17 +86,17 @@
 
     <!-- 组织信息 -->
     <organization>
-        <name>Hiwepy</name>
-        <url>https://wiki.hiwepy.com</url>
+        <name>redacted-legacy-family</name>
+        <url>https://wiki.redacted-legacy-family.com</url>
     </organization>
 
     <!-- 开发者信息 -->
     <developers>
         <developer>
             <name>wandl</name>
-            <email>hiwepy@gmail.com</email>
-            <organization>hiwepy</organization>
-            <organizationUrl>https://wiki.hiwepy.com</organizationUrl>
+            <email>redacted-legacy-family@gmail.com</email>
+            <organization>redacted-legacy-family</organization>
+            <organizationUrl>https://wiki.redacted-legacy-family.com</organizationUrl>
             <roles>
                 <role>developer</role>
             </roles>
@@ -411,13 +419,23 @@
                         <charset>${project.build.sourceEncoding}</charset>
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <docencoding>${project.build.sourceEncoding}</docencoding>
-                        <!-- 对齐 ddd4j-parent 2.0.x：JDK21 doclint 将未解析 {@link} 升级为 error，快照发布不因 javadoc 中断 -->
-                        <failOnError>false</failOnError>
+                        <!-- 门禁核心：doclint 全开 + 告警/错误均失败，属性可在 CLI 应急覆盖但不得写回 POM -->
+                        <doclint>${javadoc.doclint}</doclint>
+                        <failOnWarnings>${javadoc.failOnWarning}</failOnWarnings>
+                        <failOnError>${javadoc.failOnError}</failOnError>
+                        <release>${java.version}</release>
+                        <additionalOptions>
+                            <additionalOption>-Xmaxwarns</additionalOption>
+                            <additionalOption>1000000</additionalOption>
+                            <additionalOption>-Xmaxerrs</additionalOption>
+                            <additionalOption>1000000</additionalOption>
+                        </additionalOptions>
                     </configuration>
                     <executions>
                         <execution>
                             <id>attach-javadocs</id>
-                            <phase>package</phase>
+                            <!-- 绑定 verify：javadoc 门禁与 checkstyle/测试同批生效，先于 deploy -->
+                            <phase>verify</phase>
                             <goals>
                                 <goal>jar</goal>
                             </goals>
@@ -487,19 +505,15 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
             </plugin>
+            <!-- javadoc 门禁：在根 POM 激活，Maven 4 <subprojects> 各子模块继承 verify 阶段的 doclint 校验 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 
     <profiles>
-        <profile>
-            <id>disable-javadoc-doclint</id>
-            <activation>
-                <jdk>[1.8,)</jdk>
-            </activation>
-            <properties>
-                <additionalparam>-Xdoclint:none</additionalparam>
-            </properties>
-        </profile>
         <profile>
             <id>release</id>
             <build>

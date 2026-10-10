@@ -22,7 +22,15 @@ import org.springframework.context.annotation.Bean;
 public class Ddd4jMonitorBootAutoConfiguration {
 
     /**
-     * 绑定 {@code monitor.*} 配置到 {@link BaseMonitorProperties}。
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public Ddd4jMonitorBootAutoConfiguration() {
+    }
+
+    /**
+     * 绑定 {@code monitor.*} 配置到 {@link BaseMonitorProperties}（用户可自定义 Bean 覆盖）。
+     *
+     * @return 监控配置属性实例
      */
     @Bean
     @ConditionalOnMissingBean(BaseMonitorProperties.class)
@@ -33,7 +41,9 @@ public class Ddd4jMonitorBootAutoConfiguration {
 
     /**
      * 告警追踪关联渲染器（业务发送告警时调用 {@link AlertTraceContext#decorate(String)}
-     * 即可携带 traceId/correlationId，使告警可一键回溯调用链）。
+     * 即可携带 traceId/correlationId，使告警可一键回溯调用链；用户可自定义 Bean 覆盖）。
+     *
+     * @return 告警追踪关联渲染器实例
      */
     @Bean
     @ConditionalOnMissingBean(AlertTraceContext.class)

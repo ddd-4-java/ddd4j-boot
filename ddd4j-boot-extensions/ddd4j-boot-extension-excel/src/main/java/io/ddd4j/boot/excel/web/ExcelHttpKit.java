@@ -19,7 +19,7 @@ import java.util.List;
  * <p>位于 boot 侧，依赖 Servlet + Spring Web；封装 {@link HttpServletResponse} 文件下载与
  * {@link MultipartFile} 文件上传的样板代码，并复用库侧 {@link ExcelKit}。
  *
- * <h3>静态调用</h3>
+ * <h2>静态调用</h2>
  * <pre>{@code
  * // 一行下载
  * ExcelHttpKit.download(response, "订单.xlsx", OrderVO.class, orderService.listAll());

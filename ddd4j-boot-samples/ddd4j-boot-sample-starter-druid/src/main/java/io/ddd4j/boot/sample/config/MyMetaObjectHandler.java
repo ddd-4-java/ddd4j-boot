@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
+ * Copyright (C) 2018 ddd4j (https://github.com/ddd-4-java/ddd4j).
  * All Rights Reserved.
  */
 package io.ddd4j.boot.sample.config;
@@ -12,9 +12,26 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 
+/**
+ * Mybatis-Plus 元数据字段自动填充处理器。
+ *
+ * <p>插入与更新时统一为 createTime、modifyTime 字段写入当前时间。
+ */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
+    /**
+     * 构造元数据填充处理器实例。
+     *
+     */
+    public MyMetaObjectHandler() {
+    }
+
+    /**
+     * 插入时的字段自动填充。
+     *
+     * @param metaObject 目标对象的元数据
+     */
     @Override
     public void insertFill(MetaObject metaObject) {
         org.slf4j.LoggerFactory.getLogger(MyMetaObjectHandler.class).info("start insert fill ....");
@@ -36,6 +53,11 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.fillStrategy(metaObject, "createTime", LocalDateTime.now()); // 也可以使用(3.3.0 该方法有bug)
     }
 
+    /**
+     * 更新时的字段自动填充。
+     *
+     * @param metaObject 目标对象的元数据
+     */
     @Override
     public void updateFill(MetaObject metaObject) {
         org.slf4j.LoggerFactory.getLogger(MyMetaObjectHandler.class).info("start update fill ....");

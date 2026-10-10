@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Schema(description = "订单信息")
 public class OrderDTO implements Serializable {
+    /** 序列化版本UID */
     private static final long serialVersionUID = 1L;
     /**
      * 订单ID
@@ -118,71 +119,106 @@ public class OrderDTO implements Serializable {
      */
     @Schema(description = "地址信息")
     public static class AddressDTO implements Serializable {
+        /** 序列化版本UID */
         private static final long serialVersionUID = 1L;
+        /** 省份 */
         @Schema(description = "省份", example = "广东省")
         private String province;
+        /** 城市 */
         @Schema(description = "城市", example = "深圳市")
         private String city;
+        /** 区县 */
         @Schema(description = "区县", example = "南山区")
         private String district;
+        /** 详细地址 */
         @Schema(description = "详细地址", example = "科技园南区")
         private String detail;
+        /** 邮编 */
         @Schema(description = "邮编", example = "518000")
         private String zipCode;
+        /** 完整地址 */
         @Schema(description = "完整地址", example = "广东省深圳市南山区科技园南区")
         private String fullAddress;
 
+        /** 构造 AddressDTO 对象。 */
         public AddressDTO() {
         }
 
+        /** 获取省份。
+         * @return 省份 */
         public String getProvince() {
             return this.province;
         }
 
+        /** 获取城市。
+         * @return 城市 */
         public String getCity() {
             return this.city;
         }
 
+        /** 获取区县。
+         * @return 区县 */
         public String getDistrict() {
             return this.district;
         }
 
+        /** 获取详细地址。
+         * @return 详细地址 */
         public String getDetail() {
             return this.detail;
         }
 
+        /** 获取邮编。
+         * @return 邮编 */
         public String getZipCode() {
             return this.zipCode;
         }
 
+        /** 获取完整地址。
+         * @return 完整地址 */
         public String getFullAddress() {
             return this.fullAddress;
         }
 
+        /** 设置省份。
+         * @param province 省份 */
         public void setProvince(final String province) {
             this.province = province;
         }
 
+        /** 设置城市。
+         * @param city 城市 */
         public void setCity(final String city) {
             this.city = city;
         }
 
+        /** 设置区县。
+         * @param district 区县 */
         public void setDistrict(final String district) {
             this.district = district;
         }
 
+        /** 设置详细地址。
+         * @param detail 详细地址 */
         public void setDetail(final String detail) {
             this.detail = detail;
         }
 
+        /** 设置邮编。
+         * @param zipCode 邮编 */
         public void setZipCode(final String zipCode) {
             this.zipCode = zipCode;
         }
 
+        /** 设置完整地址。
+         * @param fullAddress 完整地址 */
         public void setFullAddress(final String fullAddress) {
             this.fullAddress = fullAddress;
         }
 
+        /** 判断当前对象与指定对象是否相等。
+         * @param o 待比较对象
+         * @return 相等返回 {@code true}，否则返回 {@code false} */
         @java.lang.Override
         public boolean equals(final java.lang.Object o) {
             if (o == this) return true;
@@ -210,10 +246,15 @@ public class OrderDTO implements Serializable {
             return true;
         }
 
+        /** 判断指定对象是否可与当前对象进行相等比较（供 equals 协作的子类扩展点）。
+         * @param other 待判断对象
+         * @return 可比较返回 {@code true}，否则返回 {@code false} */
         protected boolean canEqual(final java.lang.Object other) {
             return other instanceof OrderDTO.AddressDTO;
         }
 
+        /** 返回基于各字段计算的哈希码。
+         * @return 哈希码 */
         @java.lang.Override
         public int hashCode() {
             final int PRIME = 59;
@@ -233,6 +274,8 @@ public class OrderDTO implements Serializable {
             return result;
         }
 
+        /** 返回对象各字段拼接而成的字符串表示。
+         * @return 字符串表示 */
         @java.lang.Override
         public java.lang.String toString() {
             return "OrderDTO.AddressDTO(province=" + this.getProvince() + ", city=" + this.getCity() + ", district=" + this.getDistrict() + ", detail=" + this.getDetail() + ", zipCode=" + this.getZipCode() + ", fullAddress=" + this.getFullAddress() + ")";
@@ -246,81 +289,121 @@ public class OrderDTO implements Serializable {
      */
     @Schema(description = "订单项信息")
     public static class OrderItemDTO implements Serializable {
+        /** 序列化版本UID */
         private static final long serialVersionUID = 1L;
+        /** 订单项ID */
         @Schema(description = "订单项ID", example = "1")
         private Long id;
+        /** 商品ID */
         @Schema(description = "商品ID", example = "P001")
         private String productId;
+        /** 商品名称 */
         @Schema(description = "商品名称", example = "iPhone 15 Pro")
         private String productName;
+        /** 数量 */
         @Schema(description = "数量", example = "1")
         private Integer quantity;
+        /** 单价 */
         @Schema(description = "单价", example = "8999.00")
         private java.math.BigDecimal unitPrice;
+        /** 总价 */
         @Schema(description = "总价", example = "8999.00")
         private java.math.BigDecimal totalPrice;
+        /** 货币类型 */
         @Schema(description = "货币类型", example = "CNY")
         private String currency;
 
+        /** 构造 OrderItemDTO 对象。 */
         public OrderItemDTO() {
         }
 
+        /** 获取订单项ID。
+         * @return 订单项ID */
         public Long getId() {
             return this.id;
         }
 
+        /** 获取商品ID。
+         * @return 商品ID */
         public String getProductId() {
             return this.productId;
         }
 
+        /** 获取商品名称。
+         * @return 商品名称 */
         public String getProductName() {
             return this.productName;
         }
 
+        /** 获取数量。
+         * @return 数量 */
         public Integer getQuantity() {
             return this.quantity;
         }
 
+        /** 获取单价。
+         * @return 单价 */
         public java.math.BigDecimal getUnitPrice() {
             return this.unitPrice;
         }
 
+        /** 获取总价。
+         * @return 总价 */
         public java.math.BigDecimal getTotalPrice() {
             return this.totalPrice;
         }
 
+        /** 获取货币类型。
+         * @return 货币类型 */
         public String getCurrency() {
             return this.currency;
         }
 
+        /** 设置订单项ID。
+         * @param id 订单项ID */
         public void setId(final Long id) {
             this.id = id;
         }
 
+        /** 设置商品ID。
+         * @param productId 商品ID */
         public void setProductId(final String productId) {
             this.productId = productId;
         }
 
+        /** 设置商品名称。
+         * @param productName 商品名称 */
         public void setProductName(final String productName) {
             this.productName = productName;
         }
 
+        /** 设置数量。
+         * @param quantity 数量 */
         public void setQuantity(final Integer quantity) {
             this.quantity = quantity;
         }
 
+        /** 设置单价。
+         * @param unitPrice 单价 */
         public void setUnitPrice(final java.math.BigDecimal unitPrice) {
             this.unitPrice = unitPrice;
         }
 
+        /** 设置总价。
+         * @param totalPrice 总价 */
         public void setTotalPrice(final java.math.BigDecimal totalPrice) {
             this.totalPrice = totalPrice;
         }
 
+        /** 设置货币类型。
+         * @param currency 货币类型 */
         public void setCurrency(final String currency) {
             this.currency = currency;
         }
 
+        /** 判断当前对象与指定对象是否相等。
+         * @param o 待比较对象
+         * @return 相等返回 {@code true}，否则返回 {@code false} */
         @java.lang.Override
         public boolean equals(final java.lang.Object o) {
             if (o == this) return true;
@@ -351,10 +434,15 @@ public class OrderDTO implements Serializable {
             return true;
         }
 
+        /** 判断指定对象是否可与当前对象进行相等比较（供 equals 协作的子类扩展点）。
+         * @param other 待判断对象
+         * @return 可比较返回 {@code true}，否则返回 {@code false} */
         protected boolean canEqual(final java.lang.Object other) {
             return other instanceof OrderDTO.OrderItemDTO;
         }
 
+        /** 返回基于各字段计算的哈希码。
+         * @return 哈希码 */
         @java.lang.Override
         public int hashCode() {
             final int PRIME = 59;
@@ -376,18 +464,22 @@ public class OrderDTO implements Serializable {
             return result;
         }
 
+        /** 返回对象各字段拼接而成的字符串表示。
+         * @return 字符串表示 */
         @java.lang.Override
         public java.lang.String toString() {
             return "OrderDTO.OrderItemDTO(id=" + this.getId() + ", productId=" + this.getProductId() + ", productName=" + this.getProductName() + ", quantity=" + this.getQuantity() + ", unitPrice=" + this.getUnitPrice() + ", totalPrice=" + this.getTotalPrice() + ", currency=" + this.getCurrency() + ")";
         }
     }
 
+    /** 构造 OrderDTO 对象。 */
     public OrderDTO() {
     }
 
     /**
      * 订单ID
      * 数据库主键，唯一标识一个订单
+     * @return 订单ID
      */
     public Long getId() {
         return this.id;
@@ -396,6 +488,7 @@ public class OrderDTO implements Serializable {
     /**
      * 订单号
      * 业务唯一标识，格式：ORD + 日期时间 + 随机数
+     * @return 订单号
      */
     public String getOrderNo() {
         return this.orderNo;
@@ -404,6 +497,7 @@ public class OrderDTO implements Serializable {
     /**
      * 用户ID
      * 订单所属用户的ID
+     * @return 用户ID
      */
     public Long getUserId() {
         return this.userId;
@@ -412,6 +506,7 @@ public class OrderDTO implements Serializable {
     /**
      * 订单状态
      * PENDING-待支付, PAID-已支付, SHIPPED-已发货, DELIVERED-已送达, COMPLETED-已完成, CANCELLED-已取消
+     * @return 订单状态
      */
     public OrderStatus getStatus() {
         return this.status;
@@ -420,6 +515,7 @@ public class OrderDTO implements Serializable {
     /**
      * 订单状态描述
      * 订单状态的中文描述，用于前端展示
+     * @return 订单状态描述
      */
     public String getStatusDescription() {
         return this.statusDescription;
@@ -428,6 +524,7 @@ public class OrderDTO implements Serializable {
     /**
      * 订单总金额
      * 订单所有商品的总金额，单位：元
+     * @return 订单总金额（元）
      */
     public java.math.BigDecimal getTotalAmount() {
         return this.totalAmount;
@@ -436,6 +533,7 @@ public class OrderDTO implements Serializable {
     /**
      * 货币类型
      * 订单金额的货币类型，默认：CNY（人民币）
+     * @return 货币类型
      */
     public String getCurrency() {
         return this.currency;
@@ -444,6 +542,7 @@ public class OrderDTO implements Serializable {
     /**
      * 收货地址
      * 订单的收货地址信息
+     * @return 收货地址
      */
     public AddressDTO getShippingAddress() {
         return this.shippingAddress;
@@ -452,6 +551,7 @@ public class OrderDTO implements Serializable {
     /**
      * 备注
      * 用户下单时的备注信息
+     * @return 备注
      */
     public String getRemark() {
         return this.remark;
@@ -460,6 +560,7 @@ public class OrderDTO implements Serializable {
     /**
      * 支付时间
      * 订单支付完成的时间
+     * @return 支付时间
      */
     public LocalDateTime getPaidTime() {
         return this.paidTime;
@@ -468,6 +569,7 @@ public class OrderDTO implements Serializable {
     /**
      * 发货时间
      * 订单发货的时间
+     * @return 发货时间
      */
     public LocalDateTime getShippedTime() {
         return this.shippedTime;
@@ -476,6 +578,7 @@ public class OrderDTO implements Serializable {
     /**
      * 送达时间
      * 订单送达的时间
+     * @return 送达时间
      */
     public LocalDateTime getDeliveredTime() {
         return this.deliveredTime;
@@ -484,6 +587,7 @@ public class OrderDTO implements Serializable {
     /**
      * 创建时间
      * 订单创建的时间
+     * @return 创建时间
      */
     public LocalDateTime getCreatedAt() {
         return this.createdAt;
@@ -492,6 +596,7 @@ public class OrderDTO implements Serializable {
     /**
      * 更新时间
      * 订单最后更新的时间
+     * @return 更新时间
      */
     public LocalDateTime getUpdatedAt() {
         return this.updatedAt;
@@ -500,6 +605,7 @@ public class OrderDTO implements Serializable {
     /**
      * 订单项列表
      * 订单包含的所有商品项
+     * @return 订单项列表
      */
     public List<OrderItemDTO> getItems() {
         return this.items;
@@ -508,6 +614,7 @@ public class OrderDTO implements Serializable {
     /**
      * 订单ID
      * 数据库主键，唯一标识一个订单
+     * @param id 订单项ID
      */
     public void setId(final Long id) {
         this.id = id;
@@ -516,6 +623,7 @@ public class OrderDTO implements Serializable {
     /**
      * 订单号
      * 业务唯一标识，格式：ORD + 日期时间 + 随机数
+     * @param orderNo 订单号
      */
     public void setOrderNo(final String orderNo) {
         this.orderNo = orderNo;
@@ -524,6 +632,7 @@ public class OrderDTO implements Serializable {
     /**
      * 用户ID
      * 订单所属用户的ID
+     * @param userId 用户ID
      */
     public void setUserId(final Long userId) {
         this.userId = userId;
@@ -532,6 +641,7 @@ public class OrderDTO implements Serializable {
     /**
      * 订单状态
      * PENDING-待支付, PAID-已支付, SHIPPED-已发货, DELIVERED-已送达, COMPLETED-已完成, CANCELLED-已取消
+     * @param status 订单状态
      */
     public void setStatus(final OrderStatus status) {
         this.status = status;
@@ -540,6 +650,7 @@ public class OrderDTO implements Serializable {
     /**
      * 订单状态描述
      * 订单状态的中文描述，用于前端展示
+     * @param statusDescription 订单状态描述
      */
     public void setStatusDescription(final String statusDescription) {
         this.statusDescription = statusDescription;
@@ -548,6 +659,7 @@ public class OrderDTO implements Serializable {
     /**
      * 订单总金额
      * 订单所有商品的总金额，单位：元
+     * @param totalAmount 订单总金额（元）
      */
     public void setTotalAmount(final java.math.BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
@@ -556,6 +668,7 @@ public class OrderDTO implements Serializable {
     /**
      * 货币类型
      * 订单金额的货币类型，默认：CNY（人民币）
+     * @param currency 货币类型
      */
     public void setCurrency(final String currency) {
         this.currency = currency;
@@ -564,6 +677,7 @@ public class OrderDTO implements Serializable {
     /**
      * 收货地址
      * 订单的收货地址信息
+     * @param shippingAddress 收货地址
      */
     public void setShippingAddress(final AddressDTO shippingAddress) {
         this.shippingAddress = shippingAddress;
@@ -572,6 +686,7 @@ public class OrderDTO implements Serializable {
     /**
      * 备注
      * 用户下单时的备注信息
+     * @param remark 备注
      */
     public void setRemark(final String remark) {
         this.remark = remark;
@@ -580,6 +695,7 @@ public class OrderDTO implements Serializable {
     /**
      * 支付时间
      * 订单支付完成的时间
+     * @param paidTime 支付时间
      */
     public void setPaidTime(final LocalDateTime paidTime) {
         this.paidTime = paidTime;
@@ -588,6 +704,7 @@ public class OrderDTO implements Serializable {
     /**
      * 发货时间
      * 订单发货的时间
+     * @param shippedTime 发货时间
      */
     public void setShippedTime(final LocalDateTime shippedTime) {
         this.shippedTime = shippedTime;
@@ -596,6 +713,7 @@ public class OrderDTO implements Serializable {
     /**
      * 送达时间
      * 订单送达的时间
+     * @param deliveredTime 送达时间
      */
     public void setDeliveredTime(final LocalDateTime deliveredTime) {
         this.deliveredTime = deliveredTime;
@@ -604,6 +722,7 @@ public class OrderDTO implements Serializable {
     /**
      * 创建时间
      * 订单创建的时间
+     * @param createdAt 创建时间
      */
     public void setCreatedAt(final LocalDateTime createdAt) {
         this.createdAt = createdAt;
@@ -612,6 +731,7 @@ public class OrderDTO implements Serializable {
     /**
      * 更新时间
      * 订单最后更新的时间
+     * @param updatedAt 更新时间
      */
     public void setUpdatedAt(final LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
@@ -620,11 +740,15 @@ public class OrderDTO implements Serializable {
     /**
      * 订单项列表
      * 订单包含的所有商品项
+     * @param items 订单项列表
      */
     public void setItems(final List<OrderItemDTO> items) {
         this.items = items;
     }
 
+    /** 判断当前对象与指定对象是否相等。
+     * @param o 待比较对象
+     * @return 相等返回 {@code true}，否则返回 {@code false} */
     @java.lang.Override
     public boolean equals(final java.lang.Object o) {
         if (o == this) return true;
@@ -679,10 +803,15 @@ public class OrderDTO implements Serializable {
         return true;
     }
 
+    /** 判断指定对象是否可与当前对象进行相等比较（供 equals 协作的子类扩展点）。
+     * @param other 待判断对象
+     * @return 可比较返回 {@code true}，否则返回 {@code false} */
     protected boolean canEqual(final java.lang.Object other) {
         return other instanceof OrderDTO;
     }
 
+    /** 返回基于各字段计算的哈希码。
+     * @return 哈希码 */
     @java.lang.Override
     public int hashCode() {
         final int PRIME = 59;
@@ -720,6 +849,8 @@ public class OrderDTO implements Serializable {
         return result;
     }
 
+    /** 返回对象各字段拼接而成的字符串表示。
+     * @return 字符串表示 */
     @java.lang.Override
     public java.lang.String toString() {
         return "OrderDTO(id=" + this.getId() + ", orderNo=" + this.getOrderNo() + ", userId=" + this.getUserId() + ", status=" + this.getStatus() + ", statusDescription=" + this.getStatusDescription() + ", totalAmount=" + this.getTotalAmount() + ", currency=" + this.getCurrency() + ", shippingAddress=" + this.getShippingAddress() + ", remark=" + this.getRemark() + ", paidTime=" + this.getPaidTime() + ", shippedTime=" + this.getShippedTime() + ", deliveredTime=" + this.getDeliveredTime() + ", createdAt=" + this.getCreatedAt() + ", updatedAt=" + this.getUpdatedAt() + ", items=" + this.getItems() + ")";

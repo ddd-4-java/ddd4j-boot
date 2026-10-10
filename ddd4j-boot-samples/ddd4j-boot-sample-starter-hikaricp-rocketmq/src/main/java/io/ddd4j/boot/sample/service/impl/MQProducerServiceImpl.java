@@ -12,20 +12,39 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
+/**
+ * RocketMQ 消息生产服务实现，基于 {@link RocketMQTemplate} 提供各类消息发送。
+ */
 @Slf4j
 @Component
 public class MQProducerServiceImpl implements MQProducerService {
 
     // 建议正常规模项目统一用一个TOPIC
     private static final String topic = "RLT_TEST_TOPIC";
+
+    /**
+     * 消息发送超时时间，取自 rocketmq.producer.send-message-timeout 配置。
+     */
     @Value("${rocketmq.producer.send-message-timeout}")
     private Integer messageTimeOut;
+
     // 直接注入使用，用于发送消息到broker服务器
+    /**
+     * RocketMQ 消息发送模板。
+     */
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
 
     /**
+     * 构造消息生产服务实现类实例。
+     */
+    public MQProducerServiceImpl() {
+    }
+
+    /**
      * 普通发送（这里的参数对象可以随意定义，可以发送个对象，也可以是字符串等）
+     *
+     * @param message 消息数据传输对象
      */
     public void send(MessageDTO message) {
         rocketMQTemplate.convertAndSend(topic + ":tag1", message);
@@ -35,6 +54,9 @@ public class MQProducerServiceImpl implements MQProducerService {
     /**
      * 发送同步消息（阻塞当前线程，等待broker响应发送结果，这样不太容易丢失消息）
      * （msgBody也可以是对象，sendResult为返回的发送结果）
+     *
+     * @param msgBody 消息体
+     * @return 发送结果
      */
     public SendResult sendMsg(String msgBody) {
         SendResult sendResult = rocketMQTemplate.syncSend(topic, MessageBuilder.withPayload(msgBody).build());
@@ -45,6 +67,8 @@ public class MQProducerServiceImpl implements MQProducerService {
     /**
      * 发送异步消息（通过线程池执行发送到broker的消息任务，执行完后回调：在SendCallback中可处理相关成功失败时的逻辑）
      * （适合对响应时间敏感的业务场景）
+     *
+     * @param msgBody 消息体
      */
     public void sendAsyncMsg(String msgBody) {
 
@@ -65,6 +89,9 @@ public class MQProducerServiceImpl implements MQProducerService {
     /**
      * 发送延时消息（上面的发送同步消息，delayLevel的值就为0，因为不延时）
      * 在start版本中 延时消息一共分为18个等级分别为：1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
+     *
+     * @param msgBody     消息体
+     * @param delayLevel 延时级别，0 表示不延时
      */
     public void sendDelayMsg(String msgBody, int delayLevel) {
         rocketMQTemplate.syncSend(topic, MessageBuilder.withPayload(msgBody).build(), messageTimeOut, delayLevel);
@@ -72,6 +99,8 @@ public class MQProducerServiceImpl implements MQProducerService {
 
     /**
      * 发送单向消息（只负责发送消息，不等待应答，不关心发送结果，如日志）
+     *
+     * @param msgBody 消息体
      */
     public void sendOneWayMsg(String msgBody) {
         rocketMQTemplate.sendOneWay(topic, MessageBuilder.withPayload(msgBody).build());
@@ -79,6 +108,9 @@ public class MQProducerServiceImpl implements MQProducerService {
 
     /**
      * 发送带tag的消息，直接在topic后面加上":tag"
+     *
+     * @param msgBody 消息体
+     * @return 发送结果
      */
     public SendResult sendTagMsg(String msgBody) {
         return rocketMQTemplate.syncSend(topic + ":tag2", MessageBuilder.withPayload(msgBody).build());

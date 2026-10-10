@@ -87,8 +87,8 @@ class XxxClientIntegrationTest {
 
 ## 9. 交付物清单
 
-- [ ] 7 个 broker 集成测试
-- [ ] 集成测试 profile 配置
+- [ ] 7 个 broker 集成测试【待办】
+- [ ] 集成测试 profile 配置【待办】
 
 ## 10. 未决事项
 

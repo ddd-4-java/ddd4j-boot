@@ -27,6 +27,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class InMemoryOrderAdapters implements OrderRepository, OutboxPort, OrderReadModelPort, IdempotencyPort,
         OrderTransactionPort {
 
+/**
+ * 构造InMemoryOrderAdapters对象（默认无参构造，字段由调用方逐个设置）。
+ */
+public InMemoryOrderAdapters() {
+}
+
     private final Map<String, Order> orders = new ConcurrentHashMap<>();
     private final Map<String, OrderReadModel> readModels = new ConcurrentHashMap<>();
     private final Map<String, OutboxMessage> pendingMessages = new ConcurrentHashMap<>();

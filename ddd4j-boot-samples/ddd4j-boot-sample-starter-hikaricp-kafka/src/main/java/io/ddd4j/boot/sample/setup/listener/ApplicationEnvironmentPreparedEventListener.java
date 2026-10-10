@@ -11,17 +11,34 @@ import org.springframework.core.env.PropertySource;
 import java.util.Iterator;
 
 /**
- * @author ： <a href="https://github.com/wandl">wandl</a>
+ * Spring Boot 配置环境事件监听。
+ * <p>
+ * ApplicationEnvironmentPreparedEvent：Spring Boot 对应 Enviroment 已经准备完毕，
+ * 但此时上下文 context 还没有创建。事件触发时打印全部属性源信息。
+ *
+ * @author wandl
  * @version V1.0
- * @className ： ApplicationEnvironmentPreparedEventListener
- * @description ： Spring Boot 配置环境事件监听
- * ApplicationEnvironmentPreparedEvent：Spring Boot 对应Enviroment已经准备完毕，但此时上下文context还没有创建。
- * @date ： 2017年11月10日 下午4:55:22
+ * @since 2017-11-10
  */
 public class ApplicationEnvironmentPreparedEventListener implements
         ApplicationListener<ApplicationEnvironmentPreparedEvent> {
+
+    /**
+     * 日志记录器。
+     */
     private Logger logger = LoggerFactory.getLogger(ApplicationEnvironmentPreparedEventListener.class);
 
+    /**
+     * 构造配置环境事件监听器实例。
+     */
+    public ApplicationEnvironmentPreparedEventListener() {
+    }
+
+    /**
+     * 处理配置环境准备完毕事件，遍历并打印属性源名称、来源与类型。
+     *
+     * @param event 应用配置环境准备事件
+     */
     @Override
     public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
 

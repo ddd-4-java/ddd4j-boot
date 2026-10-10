@@ -13,9 +13,18 @@ import java.time.format.DateTimeFormatter;
  */
 @Service
 public class OrderDomainService {
+    /**
+     * 构造 OrderDomainService 实例。
+     *
+     */
+    public OrderDomainService() {
+    }
 
     /**
      * 验证订单是否可以取消
+     *
+     * @param order 订单
+     * @return 处理结果
      */
     public boolean canCancel(Order order) {
         return OrderSpecification.canCancel(order);
@@ -23,6 +32,9 @@ public class OrderDomainService {
 
     /**
      * 验证订单是否可以支付
+     *
+     * @param order 订单
+     * @return 处理结果
      */
     public boolean canPay(Order order) {
         return OrderSpecification.canPay(order);
@@ -31,6 +43,8 @@ public class OrderDomainService {
     /**
      * 生成订单号
      * 格式：ORD + 日期时间 + 随机数
+     *
+     * @return 处理结果
      */
     public String generateOrderNo() {
         String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
@@ -40,6 +54,9 @@ public class OrderDomainService {
 
     /**
      * 验证订单金额是否合理
+     *
+     * @param order 订单
+     * @return 校验结果
      */
     public boolean isAmountValid(Order order) {
         if (order == null || order.getTotalAmount() == null) {

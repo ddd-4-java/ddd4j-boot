@@ -1,0 +1,211 @@
+sample-migration-mqtt-evidence-20261009.txt
+================================================================
+任务：ddd4j-boot feature/4.0.x 样本模块「半迁移收尾」（4 个模块，限定范围）
+日期：2026-10-09
+执行者：Java 工程专家子智能体（并行分工，仅负责下列 4 模块）
+
+范围（且仅限于此 4 个模块）：
+  ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1
+  ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2
+  ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-server
+  ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-rocketmq
+
+红线声明（输出安全）：
+  - 全部扫描模式由 bash 邻接/变量拼接构造，来源仅为：
+      SEG=$(cat /tmp/.oldseg.txt)   # 旧家族名（h 开头 6 字母）
+      APP=$(cat /tmp/.oldapp.txt)   # 旧应用名（j 开头 6 字母，去尾部下划线）
+    4 个旧品牌字面量（旧教育品牌 / 旧家族名 / 旧应用名 / 旧中文品牌）不进入任何命令文本。
+  - 所有展示输出统一过掩码链 show3：
+      sed -E -e "s/$SEG/[[oldfam]]/Ig" -e "s/$APP/[[oldapp]]/Ig"
+            -e 's/([A-Za-z] ){4,}/<ART>/g'
+            -e 's/\b[A-Za-z0-9_-]*[A-Z]{2,}[A-Za-z0-9_-]*\b/<CAP>/g'
+            -e 's/\b[a-z]+[A-Z][A-Za-z0-9]+\b/<CAMEL>/g'
+            -e 's/[^ -~]+/<CJK>/g'
+  - 本文档中旧标识一律以角色名或 [[oldfam]] / [[oldapp]] 占位符出现。
+  - 权威扫描一律使用 command grep（规避用户 profile 中 grep 包装器对 / 开头
+    模式的假性 0 命中问题）。
+  - 按任务约束未执行 mvn/gradle；未执行任何 git commit/push/分支操作。
+
+----------------------------------------------------------------
+[1] 迁移前双侧树盘点（io.旧家族侧 vs io.ddd4j 侧）
+----------------------------------------------------------------
+模块 / 旧侧 src/main/java / 旧侧 src/test/java / io.ddd4j 侧 / 冲突:
+  mqtt-client1 : 19 / 2 / 0 文件 / 无同名文件
+  mqtt-client2 : 19 / 2 / 0 文件 / 无同名文件
+  mqtt-server  : 29 / 2 / 0 文件 / 无同名文件
+  druid-rocketmq: 32 / 2 / 0 文件 / 无同名文件
+
+结论：4 个模块均为「纯旧侧树」，io.ddd4j 同名侧为空 → 无合并、无同名类冲突，
+      全部为纯迁移（mv + 包声明改写）。
+
+----------------------------------------------------------------
+[2] 包树迁移执行结果
+----------------------------------------------------------------
+- 目录移动：io/<旧家族名>/** → io/ddd4j/**（src/main/java 与 src/test/java 双树）。
+- java 内容改写：s/$SEG/ddd4j/Ig; s/$APP/ddd4j/Ig（APP 为兜底，迁移前 java 内 0 命中）。
+- 迁移计数（迁移脚本输出，exit 0）：
+    mqtt-client1 : before main=19 test=2, moved=21, java_in_new=21, old_dir main=no test=no
+    mqtt-client2 : before main=19 test=2, moved=21, java_in_new=21, old_dir main=no test=no
+    mqtt-server  : before main=29 test=2, moved=31, java_in_new=31, old_dir main=no test=no
+    druid-rocketmq: before main=32 test=2, moved=34, java_in_new=34, old_dir main=no test=no
+  合计 moved=107；迁移前后 java 文件总数一致（21/21/31/34）。
+- 旧目录清除：find 检查 4 模块全部 src 树，仅存在 io/ddd4j/** 目录，io 旧家族段目录 0 残留。
+- package 语句核对：真实 `package io.ddd4j.boot.sample` 语句文件数 = 20/21/30/33。
+  差额 3 个文件 = FlywayDemoConfiguration.java（client1/server/rocketmq 各 1 个），
+  该文件为「整文件注释掉的示例代码」，package 仅出现在块注释内（` * package ...`），
+  无独立 package 语句 → 编译期无影响（详见 [8] 编译疑点 C2）。
+
+----------------------------------------------------------------
+[3] 引用修复清单（掩码展示）
+----------------------------------------------------------------
+3.1 pom.xml（每模块 1 个，共 4 个）
+  - <mainClass> 定向正则映射（s/<mainClass>com\.github\.$SEG\.boot\.sample\.([A-Za-z]+)<\/mainClass>/
+    → io.ddd4j.boot.sample.\1）+ 全量 sweep，结果 4 模块均为：
+        <mainClass>io.ddd4j.boot.sample.MqttServerApplication</mainClass>
+    HEAD 原值（git show HEAD，掩码后）：
+        <mainClass>com.github.[[oldfam]].boot.sample.MqttServerApplication</mainClass>
+    4 模块同值，属上游拷贝残留；映射保持类名不变、仅换包前缀，
+    与并行先例 ddd4j-boot-sample-starter-hikaricp-kafka 迁移后取值完全一致
+    （其迁移后同样为 io.ddd4j.boot.sample.MqttServerApplication）。
+    实际启动类（@SpringBootApplication，只读核对）：
+      mqtt-client1  = io.ddd4j.boot.sample.DemoApplication
+      mqtt-client2  = io.ddd4j.boot.sample.MqttClientApplication
+      mqtt-server   = io.ddd4j.boot.sample.MqttServerApplication  ← 与 mainClass 一致
+      druid-rocketmq= io.ddd4j.boot.sample.DemoApplication
+    → 迁移前 4 模块 mainClass 全部指向不存在的类（含 server，包前缀也错）；
+      迁移后 server 恰好解析成功，其余 3 模块维持既有陈旧配置（行为不回退）。
+  - 注释 `<!-- For [[oldapp]] -->` → `<!-- For ddd4j -->`（server、rocketmq 命中，
+    对齐并行先例 hikaricp-kafka；client1/client2 无此注释）。
+  - 第三方坐标原样保留：com.github.dozermapper / com.github.benmanes.caffeine /
+    com.github.xiaoymin（合法三方库，非旧标识）。
+
+3.2 Mapper XML（4 模块 mapper/mysql/DemoMapper.xml）
+  - namespace → io.ddd4j.boot.sample.mapper.DemoMapper
+  - 其余 resultType/parameterType/typeHandler 引用随 sweep 指向 io.ddd4j.*。
+
+3.3 MyBatis/MyBatis-Plus 配置（yaml/yml）
+  - type-aliases-package → io.ddd4j.**.dao.entities
+  - aop-patterns → io.ddd4j.boot.demo.web.mvc（main application.yaml + test
+    application.yml 各 1 处 × 4 模块 = 8 文件）
+  - mapper-locations 保持 classpath*:mapper/mysql/*.xml（与旧标识无关）。
+  - @MapperScan（java 内）：
+      mqtt-server  → {"io.ddd4j.**.mapper"}
+      druid-rocketmq → {"io.ddd4j.**.dao,io.ddd4j.**.mapper", "io.ddd4j.**.repository"}
+      （client1/client2 无 @MapperScan 注解）
+
+3.4 Log4j2 logger 映射（每模块 4 个 conf/log4j2*.xml，结构四模块一致）
+  - log4j2-dev.xml / log4j2-edas.xml / log4j2.xml（默认）：各 4 条
+      name="net.ddd4j" / "net.ddd4j.authz" / "net.ddd4j.biz" / "[Mybatis]net.ddd4j"
+      ← 原为 net.[[oldapp]]*（net.旧应用名 → net.ddd4j，对齐并行 druid 先例）
+      每模块 12 条 × 4 模块 = 48 条。
+  - log4j2-test.xml：4 条
+      name="io.ddd4j" / "io.ddd4j.authz" / "io.ddd4j.biz" / "[Mybatis]io.ddd4j"
+      ← 原为 io.[[oldfam]]*（io.旧家族名 → io.ddd4j，对齐并行 hikaricp 先例）
+      每模块 4 条 × 4 模块 = 16 条。
+  - 合计 64 条 logger 命名空间迁移；第三方 logger（org.*/com.*/net.bull.* 等）未触碰。
+  - log4j2 property APP_NAME 值 → ddd4j-boot-sample（仅日志前缀展示）。
+
+3.5 table-prefix（行为中性证据，见 [4] N1）
+  - 值 → redacted-legacy-app_：
+      每模块 application.yaml 2 处（全局 mybatis-plus 与 global-config 两段）
+      + src/test/resources/application.yml 2 处 = 每模块 4 处 × 4 模块 = 16 处。
+  - 行为中性依据：git ls-files '*.sql' 全仓仅 2 个文件、旧 token（构造模式）0 命中；
+    4 个模块内 .sql 文件 0 个 → table-prefix 属孤立配置，无任何脚本建表依赖旧前缀。
+
+3.6 其余文本值（yaml/html，对齐并行先例）
+  - spring.datasource/监控 datasource name 等 → ddd4j_boot 系列词干
+    （druid 先例一致）；test application.yml name → ddd4j_demo。
+  - footer.html（每模块 1 个）→
+      "Copyright (C) 2018 ddd4j (http://ddd4j.io). All Rights Reserved."
+    （静态页脚展示文本）
+  - swagger title / email / url 等 → ddd4j 词干（`ddd4j Boot Demo`、
+    `ddd4j@163.com`、`www.ddd4j.com`；均沿统一 sweep 产出）。
+
+3.7 修改文件总账（git status --porcelain，仅 4 模块）
+  - D（删除，即迁移源）107 个 = 21/21/31/34
+  - ??（新建，io/ddd4j 树，porcelain 折叠为目录）8 个 = 每模块 main+test 两棵树
+  - M（修改）48 个 = 每模块 12 个：
+      pom.xml、src/main/resources/application{,-dev,-prod,-test}.yaml、
+      src/main/resources/conf/log4j2{,-dev,-edas,-test}.xml、
+      src/main/resources/mapper/mysql/DemoMapper.xml、
+      src/main/resources/templates/html/footer.html、
+      src/test/resources/application.yml
+  - 合计 163 条，全部落在 4 个目标模块内；未触碰 samples 之外任何被追踪文件。
+
+----------------------------------------------------------------
+[4] 行为注记
+----------------------------------------------------------------
+N1 table-prefix → redacted-legacy-app_：【行为中性】
+   依据 [3.5]：全仓无 .sql 依赖旧表前缀、四模块无 .sql → 空配置项替换。
+   若存在仓库外手工建表使用旧前缀的库（样本场景无），MyBatis-Plus 拼表才会受影响。
+N2 Log4j2 logger 命名空间 net.[[oldapp]]* → net.ddd4j*、io.[[oldfam]]* → io.ddd4j*：
+   【行为注记】日志路由键改变。应用代码已整体迁移到 io.ddd4j 包，
+   logger 归属等价；三方库不向这些命名空间输出 → 无生产日志丢失风险。
+   仅当外部运维体系按旧命名空间订阅样本日志时才会观察到差异。
+N3 footer.html 页脚文案：【行为注记】纯静态展示文本，无逻辑依赖。
+N4 pom mainClass：【行为注记】见 [3.1]——迁移保持既有类名（上游即为陈旧值），
+   server 模块由「错包前缀不存在」变为「可解析」，其余 3 模块前后一致（不回退）。
+
+----------------------------------------------------------------
+[5] 复扫 0 命中（构造模式，command grep 权威扫描）
+----------------------------------------------------------------
+扫描集合：git ls-files -c -o --exclude-standard 限定 4 模块 + 存在性过滤
+          → 199 个文件（tracked + untracked-not-ignored）。
+模式：-niIE -e "$SEG" -e "$APP"（大小写不敏感、字面量、由 /tmp/.oldseg.txt、
+      /tmp/.oldapp.txt 拼接构造）。
+结果：
+  rescan_hits = 0
+  com\.github\.ddd4j 残留 = 0（确认 mainClass 定向正则先于 sweep 生效，未产生错拼）
+  旧家族段目录残留 = 0（find 仅列出 io/ddd4j/**）
+  client2 单独 com.github 剩余 = 0（第三方坐标仅 dozermapper/benmanes.caffeine/xiaoymin，
+    属合法三方库）
+抽查（掩码后，全部命中预期新值）：
+  package：package io.ddd4j.boot.sample.*;（20/21/30/33 文件真实语句）
+  mainClass：io.ddd4j.boot.sample.MqttServerApplication × 4
+  mapper namespace：io.ddd4j.boot.sample.mapper.DemoMapper
+  type-aliases：io.ddd4j.**.dao.entities
+  aop-patterns：io.ddd4j.boot.demo.web.mvc（8 文件）
+  table-prefix：redacted-legacy-app_（16 处）
+  logger：net.ddd4j* ×48 + io.ddd4j* ×16 = 64
+  footer：Copyright (C) 2018 ddd4j (http://ddd4j.io). All Rights Reserved.
+
+ignored（未纳入复扫、单独计数留档）：
+  文件集 8 个，其中 4 个 .flattened-pom.xml 共 6 行旧标识残留
+  （含旧 mainClass com.github.[[oldfam]].boot.sample.MqttServerApplication 与旧注释）。
+  .flattened-pom.xml 为 gitignore(:41) 构建产物（mvn flatten 插件生成），
+  按规则跳过不改，下次 mvn 构建自动刷新；src/main/*.iml 0 命中。
+
+----------------------------------------------------------------
+[6] 范围外只读盘点（未修改，仅供编排者知悉）
+----------------------------------------------------------------
+  - 仓根/.idea 等处 .flattened-pom.xml、.idea/workspace.xml（ignored）
+  - ddd4j-boot-auth-license META-INF/spring-autoconfigure-metadata.properties
+  - ddd4j-boot-data-mybatis MybatisExceptionHandler.java
+  - ddd4j-boot-dependencies/pom.xml（并行智能体已改，非本智能体）
+  - ddd4j-boot-extensions 各 pom、AkkaProperties.java
+  - pom.pom.xml.bak、target/ 构建产物
+  上述均在 samples 之外，本智能体只读记录、零改动。
+
+----------------------------------------------------------------
+[7] 执行与验证方式备忘（可复现）
+----------------------------------------------------------------
+  迁移主脚本：循环 4 模块 × 双树 find+mv（逐文件 rel 映射到 io/ddd4j/…）
+              + find -depth -type d -empty -delete 清旧树
+              + java/pom/resources 三层 sed（table-prefix 定向行在 sweep 之前先行）
+              执行 exit 0，逐模块输出 moved/java_in_new/old_dir 计数见 [2]。
+  复扫：见 [5]（构造模式 + command grep + git 追踪状态分层）。
+
+----------------------------------------------------------------
+[8] 编译疑点（交编排者 mvn 验证）
+----------------------------------------------------------------
+C1 pom mainClass 指向的类在 client1/client2/rocketmq 模块内不存在
+   （真实启动类见 [3.1]）。若 spring-boot-maven-plugin repackage 对显式
+   mainClass 做存在性校验，则该 3 模块 mvn package 可能失败——
+   但 HEAD（迁移前 com.github.[[oldfam]]... 包前缀）同样不存在 → 非本次迁移回归。
+   server 模块迁移后 mainClass 可解析（迁移反而修复）。
+   如需彻底修复：将 3 模块 mainClass 改为各自真实启动类（DemoApplication /
+   MqttClientApplication / DemoApplication）——待编排者裁定，本智能体未擅改，
+   以保持与并行 hikaricp 先例的机械一致性。
+C2 FlywayDemoConfiguration.java（client1/server/rocketmq）整文件为注释代码，
+   无 package/编译单元 → 不参与编译，无影响。
+C3 按任务约束未运行 mvn/gradle，最终以编排者 reactor 编译结果为准。

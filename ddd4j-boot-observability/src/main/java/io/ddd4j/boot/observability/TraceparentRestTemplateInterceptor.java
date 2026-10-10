@@ -19,6 +19,12 @@ import java.io.IOException;
 public class TraceparentRestTemplateInterceptor implements ClientHttpRequestInterceptor {
 
     /**
+     * 显式无参构造器，供 Spring 实例化拦截器 Bean。
+     */
+    public TraceparentRestTemplateInterceptor() {
+    }
+
+    /**
      * 注入 traceparent 头后放行。
      *
      * @param request   出站请求

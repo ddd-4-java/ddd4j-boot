@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
  */
 @Schema(description = "订单查询参数")
 public class OrderQuery implements Serializable {
+    /** 序列化版本UID */
     private static final long serialVersionUID = 1L;
     /**
      * 用户ID
@@ -105,12 +106,14 @@ public class OrderQuery implements Serializable {
         return true;
     }
 
+    /** 构造 OrderQuery 对象。 */
     public OrderQuery() {
     }
 
     /**
      * 用户ID
      * 查询指定用户的订单列表
+     * @return 用户ID
      */
     public Long getUserId() {
         return this.userId;
@@ -119,6 +122,7 @@ public class OrderQuery implements Serializable {
     /**
      * 订单状态
      * 根据订单状态筛选：PENDING-待支付, PAID-已支付, SHIPPED-已发货, DELIVERED-已送达, COMPLETED-已完成, CANCELLED-已取消
+     * @return 订单状态
      */
     public OrderStatus getStatus() {
         return this.status;
@@ -127,6 +131,7 @@ public class OrderQuery implements Serializable {
     /**
      * 开始时间
      * 查询创建时间大于等于此时间的订单
+     * @return 开始时间（订单创建时间）
      */
     public LocalDateTime getStartTime() {
         return this.startTime;
@@ -135,6 +140,7 @@ public class OrderQuery implements Serializable {
     /**
      * 结束时间
      * 查询创建时间小于等于此时间的订单
+     * @return 结束时间（订单创建时间）
      */
     public LocalDateTime getEndTime() {
         return this.endTime;
@@ -143,6 +149,7 @@ public class OrderQuery implements Serializable {
     /**
      * 最小金额
      * 查询订单总金额大于等于此金额的订单
+     * @return 最小金额
      */
     public java.math.BigDecimal getMinAmount() {
         return this.minAmount;
@@ -151,6 +158,7 @@ public class OrderQuery implements Serializable {
     /**
      * 最大金额
      * 查询订单总金额小于等于此金额的订单
+     * @return 最大金额
      */
     public java.math.BigDecimal getMaxAmount() {
         return this.maxAmount;
@@ -159,6 +167,7 @@ public class OrderQuery implements Serializable {
     /**
      * 订单号（模糊查询）
      * 支持订单号模糊匹配
+     * @return 订单号（支持模糊查询）
      */
     public String getOrderNo() {
         return this.orderNo;
@@ -167,6 +176,7 @@ public class OrderQuery implements Serializable {
     /**
      * 页码
      * 从1开始，默认为1
+     * @return 页码（从1开始）
      */
     public Integer getPageNum() {
         return this.pageNum;
@@ -175,6 +185,7 @@ public class OrderQuery implements Serializable {
     /**
      * 每页大小
      * 默认每页10条记录，最大不超过100
+     * @return 每页大小
      */
     public Integer getPageSize() {
         return this.pageSize;
@@ -183,6 +194,7 @@ public class OrderQuery implements Serializable {
     /**
      * 排序字段
      * 可选值：createTime（创建时间）、totalAmount（订单金额）
+     * @return 排序字段
      */
     public String getSortField() {
         return this.sortField;
@@ -191,6 +203,7 @@ public class OrderQuery implements Serializable {
     /**
      * 排序方向
      * ASC-升序，DESC-降序，默认为降序
+     * @return 排序方向
      */
     public String getSortDirection() {
         return this.sortDirection;
@@ -199,6 +212,7 @@ public class OrderQuery implements Serializable {
     /**
      * 用户ID
      * 查询指定用户的订单列表
+     * @param userId 用户ID
      */
     public void setUserId(final Long userId) {
         this.userId = userId;
@@ -207,6 +221,7 @@ public class OrderQuery implements Serializable {
     /**
      * 订单状态
      * 根据订单状态筛选：PENDING-待支付, PAID-已支付, SHIPPED-已发货, DELIVERED-已送达, COMPLETED-已完成, CANCELLED-已取消
+     * @param status 订单状态
      */
     public void setStatus(final OrderStatus status) {
         this.status = status;
@@ -215,6 +230,7 @@ public class OrderQuery implements Serializable {
     /**
      * 开始时间
      * 查询创建时间大于等于此时间的订单
+     * @param startTime 开始时间（订单创建时间）
      */
     public void setStartTime(final LocalDateTime startTime) {
         this.startTime = startTime;
@@ -223,6 +239,7 @@ public class OrderQuery implements Serializable {
     /**
      * 结束时间
      * 查询创建时间小于等于此时间的订单
+     * @param endTime 结束时间（订单创建时间）
      */
     public void setEndTime(final LocalDateTime endTime) {
         this.endTime = endTime;
@@ -231,6 +248,7 @@ public class OrderQuery implements Serializable {
     /**
      * 最小金额
      * 查询订单总金额大于等于此金额的订单
+     * @param minAmount 最小金额
      */
     public void setMinAmount(final java.math.BigDecimal minAmount) {
         this.minAmount = minAmount;
@@ -239,6 +257,7 @@ public class OrderQuery implements Serializable {
     /**
      * 最大金额
      * 查询订单总金额小于等于此金额的订单
+     * @param maxAmount 最大金额
      */
     public void setMaxAmount(final java.math.BigDecimal maxAmount) {
         this.maxAmount = maxAmount;
@@ -247,6 +266,7 @@ public class OrderQuery implements Serializable {
     /**
      * 订单号（模糊查询）
      * 支持订单号模糊匹配
+     * @param orderNo 订单号（支持模糊查询）
      */
     public void setOrderNo(final String orderNo) {
         this.orderNo = orderNo;
@@ -255,6 +275,7 @@ public class OrderQuery implements Serializable {
     /**
      * 页码
      * 从1开始，默认为1
+     * @param pageNum 页码（从1开始）
      */
     public void setPageNum(final Integer pageNum) {
         this.pageNum = pageNum;
@@ -263,6 +284,7 @@ public class OrderQuery implements Serializable {
     /**
      * 每页大小
      * 默认每页10条记录，最大不超过100
+     * @param pageSize 每页大小
      */
     public void setPageSize(final Integer pageSize) {
         this.pageSize = pageSize;
@@ -271,6 +293,7 @@ public class OrderQuery implements Serializable {
     /**
      * 排序字段
      * 可选值：createTime（创建时间）、totalAmount（订单金额）
+     * @param sortField 排序字段
      */
     public void setSortField(final String sortField) {
         this.sortField = sortField;
@@ -279,11 +302,15 @@ public class OrderQuery implements Serializable {
     /**
      * 排序方向
      * ASC-升序，DESC-降序，默认为降序
+     * @param sortDirection 排序方向
      */
     public void setSortDirection(final String sortDirection) {
         this.sortDirection = sortDirection;
     }
 
+    /** 判断当前对象与指定对象是否相等。
+     * @param o 待比较对象
+     * @return 相等返回 {@code true}，否则返回 {@code false} */
     @java.lang.Override
     public boolean equals(final java.lang.Object o) {
         if (o == this) return true;
@@ -326,10 +353,15 @@ public class OrderQuery implements Serializable {
         return true;
     }
 
+    /** 判断指定对象是否可与当前对象进行相等比较（供 equals 协作的子类扩展点）。
+     * @param other 待判断对象
+     * @return 可比较返回 {@code true}，否则返回 {@code false} */
     protected boolean canEqual(final java.lang.Object other) {
         return other instanceof OrderQuery;
     }
 
+    /** 返回基于各字段计算的哈希码。
+     * @return 哈希码 */
     @java.lang.Override
     public int hashCode() {
         final int PRIME = 59;
@@ -359,6 +391,8 @@ public class OrderQuery implements Serializable {
         return result;
     }
 
+    /** 返回对象各字段拼接而成的字符串表示。
+     * @return 字符串表示 */
     @java.lang.Override
     public java.lang.String toString() {
         return "OrderQuery(userId=" + this.getUserId() + ", status=" + this.getStatus() + ", startTime=" + this.getStartTime() + ", endTime=" + this.getEndTime() + ", minAmount=" + this.getMinAmount() + ", maxAmount=" + this.getMaxAmount() + ", orderNo=" + this.getOrderNo() + ", pageNum=" + this.getPageNum() + ", pageSize=" + this.getPageSize() + ", sortField=" + this.getSortField() + ", sortDirection=" + this.getSortDirection() + ")";

@@ -87,8 +87,8 @@ class SmokeTest {
 
 ## 9. 交付物清单
 
-- [ ] 6 个代表性 sample 的 SmokeTest
-- [ ] CI 集成配置
+- [ ] 6 个代表性 sample 的 SmokeTest【待办】
+- [ ] CI 集成配置【待办】
 
 ## 10. 未决事项
 

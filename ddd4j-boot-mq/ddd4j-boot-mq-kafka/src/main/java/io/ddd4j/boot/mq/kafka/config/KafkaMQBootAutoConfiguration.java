@@ -33,6 +33,17 @@ import org.springframework.context.annotation.Import;
 @Import(Ddd4jMQRegistrarConfiguration.class)
 public class KafkaMQBootAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public KafkaMQBootAutoConfiguration() {
+    }
+
+    /**
+     * 绑定 {@code ddd4j.mq.kafka.*} 配置到 {@link KafkaMQProperties}。
+     *
+     * @return 可被用户自定义 Bean 覆盖的 Kafka MQ 属性实例
+     */
     @Bean
     @ConditionalOnMissingBean
     @ConfigurationProperties(prefix = "ddd4j.mq.kafka")
@@ -40,6 +51,12 @@ public class KafkaMQBootAutoConfiguration {
         return new KafkaMQProperties();
     }
 
+    /**
+     * 基于属性创建上游 {@link KafkaMQClient}，容器销毁时调用 {@code close} 释放连接。
+     *
+     * @param properties 已绑定的 {@code ddd4j.mq.kafka.*} 配置
+     * @return Kafka MQ 客户端实例
+     */
     @Bean(destroyMethod = "close")
     @ConditionalOnMissingBean
     public KafkaMQClient kafkaMQClient(KafkaMQProperties properties) {

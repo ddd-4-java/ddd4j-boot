@@ -245,7 +245,7 @@
 
 ## Phase 3：收敛 JDK 8 历史兼容组
 
-- [ ] **Task 6: 为 2.3.x–2.7.x 建立等价自动配置与生命周期测试**
+- [x] **Task 6: 为 2.3.x–2.7.x 建立等价自动配置与生命周期测试**（证据: 2.3.x-2.7.x 五分支 commit 05097172/cc054b86/cb104107/6ce6ea7d/91e190bd（2026-09-07 complete Java 8 and Boot 2 integration）改 spring.factories 与核心契约测试并已推送远端）
 
   **Files (each branch; verify actual packages before editing):**
   - Modify: `pom.xml`
@@ -291,7 +291,7 @@
 
 ## Phase 4：收敛 JDK 17 主能力组
 
-- [ ] **Task 7: 对 3.0.x–3.5.x 执行主能力契约回归与最小修复**
+- [ ] **Task 7: 对 3.0.x–3.5.x 执行主能力契约回归与最小修复**【待办】
 
   **Files (each branch; 3.4.x is the source-location reference):**
   - Modify: `pom.xml`, `ddd4j-boot-bom/pom.xml`, `ddd4j-boot-dependencies/pom.xml`
@@ -338,7 +338,7 @@
 
 ## Phase 5：收敛 JDK 21 / Boot 4 组
 
-- [ ] **Task 8: 审计并适配 4.0.x 与 4.1.x 的 Boot 4 能力**
+- [ ] **Task 8: 审计并适配 4.0.x 与 4.1.x 的 Boot 4 能力**【待办】
 
   **Files (resolve actual module paths from Phase 1 before edits):**
   - Modify: `pom.xml`
@@ -372,7 +372,7 @@
 
 ## Phase 6：外部依赖、API 与发布证据
 
-- [ ] **Task 9: 为 Data、Cache 与 MQ 补齐真实依赖的契约证据**
+- [ ] **Task 9: 为 Data、Cache 与 MQ 补齐真实依赖的契约证据**【待办】
 
   **Files:**
   - Create: `scripts/consistency/run_integration_contracts.sh`
@@ -413,7 +413,7 @@
   git commit -m "test: record boot integration contract evidence"
   ```
 
-- [ ] **Task 10: 建立同组 API/配置差异门禁和最终报告**
+- [ ] **Task 10: 建立同组 API/配置差异门禁和最终报告**【待办】
 
   **Files:**
   - Create: `scripts/consistency/verify_same_group_compatibility.sh`
@@ -458,7 +458,7 @@
 
 ## Phase 7：发布前复核与 ddd4j-cloud 输入
 
-- [ ] **Task 11: 复核双远端和向 ddd4j-cloud 提供版本组合输入**
+- [ ] **Task 11: 复核双远端和向 ddd4j-cloud 提供版本组合输入**【待办】
 
   **Files:**
   - Create: `docs/superpowers/reports/ddd4j-boot-release-line-input.tsv`

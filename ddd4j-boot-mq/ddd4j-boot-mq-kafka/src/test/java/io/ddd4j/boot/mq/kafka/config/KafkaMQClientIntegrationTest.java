@@ -34,6 +34,7 @@ class KafkaMQClientIntegrationTest {
 
     @Container
     static final KafkaContainer KAFKA = new KafkaContainer(
+            // 测试镜像来源: https://testcontainers.com/modules/kafka/
             DockerImageName.parse("confluentinc/cp-kafka:7.7.2"));
 
     @Test

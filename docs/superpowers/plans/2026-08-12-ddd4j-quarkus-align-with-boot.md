@@ -21,97 +21,97 @@
 
 ## 1. Phase P0：基线修复 + Cache 完善（Week 1）
 
-- [ ] **Step 1: 版本基线修复**
+- [x] **Step 1: 版本基线修复**（证据: root pom.xml:40 与 ddd4j-quarkus-dependencies/pom.xml:24 的 quarkus-bom.version 统一为 3.37.4（计划基线 3.36.3 已随版本线更新），ddd4j.version=2.0.x.20260630-SNAPSHOT 双处一致，qrcode pom 无 Hibernate/Agroal 覆盖）
 
   - 统一 `root pom.xml` 与 `ddd4j-quarkus-dependencies/pom.xml` 的 quarkus-bom 版本为 3.36.3
   - 删除 `ddd4j-quarkus-extension-qrcode` 中的 Hibernate/Agroal 显式覆盖
 
-- [ ] **Step 2: ddd4j-quarkus-cache 完善**
+- [x] **Step 2: ddd4j-quarkus-cache 完善**（证据: ddd4j-quarkus-cache 模块 Ddd4jCacheBuildItemProducer.java、CacheRecorder.java、META-INF/quarkus-extension.yaml、Ddd4jCacheConfigTest.java 四件齐全）
 
   - 新增 `Ddd4jCacheBuildItemProducer.java`（BuildStep）
   - 新增 `CacheRecorder.java`（Recorder）
   - 新增 `quarkus-extension.yaml`
   - 新增 `Ddd4jCacheConfigTest.java`（@QuarkusTest + Caffeine）
 
-- [ ] **Step 3: parent profile 补齐**
+- [ ] **Step 3: parent profile 补齐**【待办】
 
   - 移除 `legacy-resteasy` profile
   - 新增 `ddd4j-full` profile
 
 ## 2. Phase P1：Web / Data-JPA / Data-External（Week 2-3）
 
-- [ ] **Step 1: 新增 ddd4j-quarkus-web**
+- [ ] **Step 1: 新增 ddd4j-quarkus-web**【待办】
 
   - 从 `ddd4j-web-quarkus` 复用 7 个文件（改包名）
   - 新增 `Ddd4jQuarkusWebHealthCheck.java`
   - 新增 `Ddd4jWebBuildItemProducer.java`
   - 新增 `HealthCheckTest.java`（@QuarkusTest）
 
-- [ ] **Step 2: 补齐 ddd4j-quarkus-data-jpa**
+- [ ] **Step 2: 补齐 ddd4j-quarkus-data-jpa**【待办】
 
   - 新增 `JpaAggregateRepository.java`、`JpaCdiProducer.java`、`JpaRepositoryBuildItem.java`
   - 新增 Testcontainers PostgreSQL 测试
 
-- [ ] **Step 3: 补齐 ddd4j-quarkus-data-external**
+- [ ] **Step 3: 补齐 ddd4j-quarkus-data-external**【待办】
 
   - 新增 `IpRegionQuarkusAdapter.java`、`WeatherQuarkusAdapter.java`、`QuarkusExternalCdiProducer.java`
   - 新增 Testcontainers Redis 测试
 
 ## 3. Phase P2：MQ Testcontainers + 13 Broker 测试（Week 4-5）
 
-- [ ] **Step 1: 新增 ddd4j-quarkus-mq-testcontainers 共享 fixture**
+- [x] **Step 1: 新增 ddd4j-quarkus-mq-testcontainers 共享 fixture**（证据: ddd4j-quarkus-mq/ddd4j-quarkus-mq-testcontainers 下 13 个 *QuarkusTestResource fixture + JunitJupiterQuarkusTestContainers + AbstractTestContainerFixture）
 
   - 从 `ddd4j-javalin-testcontainers` 复用 13 个 fixture（改包名）
   - 新增 `JunitJupiterQuarkusTestContainers` 注解
 
-- [ ] **Step 2: 13 Broker 集成测试**
+- [ ] **Step 2: 13 Broker 集成测试**【待办】
 
   - 每个 broker 新增 `@QuarkusTest` + Testcontainers 测试
   - 断言 produce -> consume 端到端流转
   - 验证 manual ack / requeue / dead letter 三种场景
 
-- [ ] **Step 3: mq-core 测试补齐**
+- [x] **Step 3: mq-core 测试补齐**（证据: ddd4j-quarkus-mq-core src/test 下 QuarkusMQListenerRegistrarTest.java 与 Ddd4jMQCdiProducerTest.java 存在且有编译产物）
 
   - `QuarkusMQListenerRegistrarTest` + `Ddd4jMQCdiProducerTest`
 
 ## 4. Phase P3：Auth 完善 + JWT Testcontainers（Week 6）
 
-- [ ] **Step 1: 异常映射器补齐**
+- [ ] **Step 1: 异常映射器补齐**【待办】
 
   - Sa-Token：抽离 `SaTokenExceptionMapper` 为独立类
   - Security：新增 `SecurityExceptionMapper`
   - Shiro/License：无需改动
 
-- [ ] **Step 2: 新增 ddd4j-quarkus-auth-testcontainers**
+- [ ] **Step 2: 新增 ddd4j-quarkus-auth-testcontainers**【待办】
 
   - `JwtTestContainerFixture`（Keycloak）
   - `RedisTestContainerFixture`（sa-token session）
 
-- [ ] **Step 3: 各 auth 子模块集成测试**
+- [ ] **Step 3: 各 auth 子模块集成测试**【待办】
 
   - satoken/security/shiro：登录 -> 访问受保护资源 -> token 失效
   - jwt：Keycloak 签发 -> SmallRye 验签 -> Subject 注入
 
 ## 5. Phase P4：Extensions 7 个补齐（Week 7-8）
 
-- [ ] **Step 1: 删除 ddd4j-quarkus-extension-pf4j**
+- [x] **Step 1: 删除 ddd4j-quarkus-extension-pf4j**（证据: ddd4j-quarkus-extension-pf4j 模块不存在，root pom 模块清单与 extensions 目录均无 pf4j）
 
   - 改用 Quarkus Plugin 体系
 
-- [ ] **Step 2: 新增 6 个 extension**
+- [x] **Step 2: 新增 6 个 extension**（证据: ddd4j-quarkus-extensions/ 下 akka、cola、excel、jackson、monitor、qlexpress 6 个 extension 齐备）
 
   - akka / cola / excel / jackson / monitor / qlexpress
   - 参考 ddd4j-boot 对应模块，改为 Quarkus CDI Producer + ConfigMapping
 
 ## 6. Phase P5：Samples 完整化 + CI/CD（Week 9-10）
 
-- [ ] **Step 1: 完整化 14 个 sample**
+- [ ] **Step 1: 完整化 14 个 sample**【待办】
 
   - 补 1 个 domain entity + 1 个 application service + 1 个 infrastructure repository + 1 个 adapter resource
 
-- [ ] **Step 2: 各 sample 新增 @QuarkusTest 集成测试**
+- [ ] **Step 2: 各 sample 新增 @QuarkusTest 集成测试**【待办】
 
-- [ ] **Step 3: CI/CD**
+- [x] **Step 3: CI/CD**（证据: .github/workflows/ci.yml 含 13 broker matrix 与 Java 17/21 矩阵，仓内无 Jenkinsfile）
 
   - 新增 `.github/workflows/ci.yml`
   - 移除 Jenkinsfile 引用

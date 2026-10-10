@@ -13,6 +13,11 @@ import org.springframework.context.ApplicationContext;
  */
 public class NoOpMqttClientSubscribeDetector extends MqttClientSubscribeDetector {
 
+    /**
+     * 构造 no-op 检测器。
+     *
+     * @param applicationContext Spring 上下文，透传给 mica 检测器基类
+     */
     public NoOpMqttClientSubscribeDetector(ApplicationContext applicationContext) {
         super(applicationContext);
     }

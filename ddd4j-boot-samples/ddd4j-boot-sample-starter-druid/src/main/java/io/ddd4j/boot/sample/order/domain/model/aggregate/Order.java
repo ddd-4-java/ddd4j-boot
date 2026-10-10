@@ -21,25 +21,44 @@ import java.util.List;
 
 
 public class Order implements Entity<Long> {
+    /**
+     * 构造 Order 实例。
+     *
+     */
+    public Order() {
+    }
 
     @Override
     public Long id() {
         return id;
     }
 
+    /** id。 */
     private Long id;
+    /** orderNo。 */
     private String orderNo;
+    /** userId。 */
     private Long userId;
+    /** status。 */
     private OrderStatus status;
+    /** totalAmount。 */
     private Money totalAmount;
+    /** shippingAddress。 */
     private Address shippingAddress;
+    /** remark。 */
     private String remark;
+    /** paidTime。 */
     private LocalDateTime paidTime;
+    /** shippedTime。 */
     private LocalDateTime shippedTime;
+    /** deliveredTime。 */
     private LocalDateTime deliveredTime;
+    /** createTime。 */
     private LocalDateTime createTime;
+    /** updateTime。 */
     private LocalDateTime updateTime;
 
+    /** 订单项列表。 */
     private List<OrderItem> items = new ArrayList<>();
 
     // 领域事件列表（不持久化）
@@ -47,6 +66,12 @@ public class Order implements Entity<Long> {
 
     /**
      * 创建订单
+     *
+     * @param orderNo 订单号
+     * @param userId 用户 ID
+     * @param shippingAddress 收货地址
+     * @param items 条目集合
+     * @return 新增结果
      */
     public static Order create(String orderNo, Long userId, Address shippingAddress, List<OrderItem> items) {
         if (orderNo == null || orderNo.trim().isEmpty()) {
@@ -75,6 +100,8 @@ public class Order implements Entity<Long> {
 
     /**
      * 添加领域事件
+     *
+     * @param event 领域事件
      */
     public void addDomainEvent(DomainEvent event) {
         if (domainEvents == null) {
@@ -85,6 +112,8 @@ public class Order implements Entity<Long> {
 
     /**
      * 获取所有领域事件
+     *
+     * @return 查询结果
      */
     public List<DomainEvent> getDomainEvents() {
         return domainEvents != null ? Collections.unmodifiableList(domainEvents) : Collections.emptyList();
@@ -117,6 +146,8 @@ public class Order implements Entity<Long> {
 
     /**
      * 添加订单项
+     *
+     * @param item 条目
      */
     public void addItem(OrderItem item) {
         if (item == null) {
@@ -131,6 +162,8 @@ public class Order implements Entity<Long> {
 
     /**
      * 移除订单项
+     *
+     * @param itemId itemId
      */
     public void removeItem(Long itemId) {
         if (this.status != OrderStatus.PENDING) {
@@ -142,6 +175,8 @@ public class Order implements Entity<Long> {
 
     /**
      * 支付订单
+     *
+     * @param paymentMethod 支付方式
      */
     public void pay(String paymentMethod) {
         if (this.status != OrderStatus.PENDING) {
@@ -156,6 +191,8 @@ public class Order implements Entity<Long> {
 
     /**
      * 取消订单
+     *
+     * @param reason 原因
      */
     public void cancel(String reason) {
         if (this.status == OrderStatus.COMPLETED || this.status == OrderStatus.CANCELLED) {
@@ -172,6 +209,9 @@ public class Order implements Entity<Long> {
 
     /**
      * 发货
+     *
+     * @param trackingNumber 物流单号
+     * @param logisticsCompany 物流公司
      */
     public void ship(String trackingNumber, String logisticsCompany) {
         if (this.status != OrderStatus.PAID) {
@@ -207,6 +247,8 @@ public class Order implements Entity<Long> {
 
     /**
      * 更新收货地址
+     *
+     * @param newAddress 新地址
      */
     public void updateShippingAddress(Address newAddress) {
         if (this.status != OrderStatus.PENDING) {
@@ -216,106 +258,236 @@ public class Order implements Entity<Long> {
     }
 
 
+    /**
+     * 获取Id。
+     *
+     * @return Id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * 设置Id。
+     *
+     * @param id Id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * 获取OrderNo。
+     *
+     * @return OrderNo
+     */
     public String getOrderNo() {
         return orderNo;
     }
 
+    /**
+     * 设置OrderNo。
+     *
+     * @param orderNo OrderNo
+     */
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
     }
 
+    /**
+     * 获取UserId。
+     *
+     * @return UserId
+     */
     public Long getUserId() {
         return userId;
     }
 
+    /**
+     * 设置UserId。
+     *
+     * @param userId UserId
+     */
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
+    /**
+     * 获取Status。
+     *
+     * @return Status
+     */
     public OrderStatus getStatus() {
         return status;
     }
 
+    /**
+     * 设置Status。
+     *
+     * @param status Status
+     */
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
+    /**
+     * 获取TotalAmount。
+     *
+     * @return TotalAmount
+     */
     public Money getTotalAmount() {
         return totalAmount;
     }
 
+    /**
+     * 设置TotalAmount。
+     *
+     * @param totalAmount TotalAmount
+     */
     public void setTotalAmount(Money totalAmount) {
         this.totalAmount = totalAmount;
     }
 
+    /**
+     * 获取ShippingAddress。
+     *
+     * @return ShippingAddress
+     */
     public Address getShippingAddress() {
         return shippingAddress;
     }
 
+    /**
+     * 设置ShippingAddress。
+     *
+     * @param shippingAddress ShippingAddress
+     */
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
 
+    /**
+     * 获取Remark。
+     *
+     * @return Remark
+     */
     public String getRemark() {
         return remark;
     }
 
+    /**
+     * 设置Remark。
+     *
+     * @param remark Remark
+     */
     public void setRemark(String remark) {
         this.remark = remark;
     }
 
+    /**
+     * 获取PaidTime。
+     *
+     * @return PaidTime
+     */
     public LocalDateTime getPaidTime() {
         return paidTime;
     }
 
+    /**
+     * 设置PaidTime。
+     *
+     * @param paidTime PaidTime
+     */
     public void setPaidTime(LocalDateTime paidTime) {
         this.paidTime = paidTime;
     }
 
+    /**
+     * 获取ShippedTime。
+     *
+     * @return ShippedTime
+     */
     public LocalDateTime getShippedTime() {
         return shippedTime;
     }
 
+    /**
+     * 设置ShippedTime。
+     *
+     * @param shippedTime ShippedTime
+     */
     public void setShippedTime(LocalDateTime shippedTime) {
         this.shippedTime = shippedTime;
     }
 
+    /**
+     * 获取DeliveredTime。
+     *
+     * @return DeliveredTime
+     */
     public LocalDateTime getDeliveredTime() {
         return deliveredTime;
     }
 
+    /**
+     * 设置DeliveredTime。
+     *
+     * @param deliveredTime DeliveredTime
+     */
     public void setDeliveredTime(LocalDateTime deliveredTime) {
         this.deliveredTime = deliveredTime;
     }
 
+    /**
+     * 获取CreateTime。
+     *
+     * @return CreateTime
+     */
     public LocalDateTime getCreateTime() {
         return createTime;
     }
 
+    /**
+     * 设置CreateTime。
+     *
+     * @param createTime CreateTime
+     */
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
+    /**
+     * 获取UpdateTime。
+     *
+     * @return UpdateTime
+     */
     public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
+    /**
+     * 设置UpdateTime。
+     *
+     * @param updateTime UpdateTime
+     */
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 
+    /**
+     * 获取Items。
+     *
+     * @return Items
+     */
     public List<OrderItem> getItems() {
         return items;
     }
 
+    /**
+     * 设置Items。
+     *
+     * @param items Items
+     */
     public void setItems(List<OrderItem> items) {
         this.items = items;
     }

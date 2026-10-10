@@ -17,10 +17,15 @@ import java.util.List;
 @Mapper
 public interface OrderMapper {
 
+    /** 订单对象映射器实例（MapStruct 生成）。 */
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
     /**
      * 命令转领域对象
+     *
+     * @param command 命令对象
+     * @param orderNo 订单号
+     * @return 转换结果
      */
     default Order toDomain(CreateOrderCommand command, String orderNo) {
         List<OrderItem> items = command.getItems().stream()
@@ -47,6 +52,9 @@ public interface OrderMapper {
 
     /**
      * 领域对象转DTO
+     *
+     * @param order 订单
+     * @return 转换结果
      */
     default OrderDTO toDTO(Order order) {
         if (order == null) {
@@ -77,6 +85,9 @@ public interface OrderMapper {
 
     /**
      * 地址转DTO
+     *
+     * @param address 地址
+     * @return 转换结果
      */
     default OrderDTO.AddressDTO toAddressDTO(Address address) {
         if (address == null) {
@@ -94,6 +105,9 @@ public interface OrderMapper {
 
     /**
      * 订单项转DTO
+     *
+     * @param item 条目
+     * @return 转换结果
      */
     default OrderDTO.OrderItemDTO toItemDTO(OrderItem item) {
         if (item == null) {
@@ -112,6 +126,9 @@ public interface OrderMapper {
 
     /**
      * 订单列表转DTO列表
+     *
+     * @param orders 订单集合
+     * @return 转换结果
      */
     List<OrderDTO> toDTOList(List<Order> orders);
 }

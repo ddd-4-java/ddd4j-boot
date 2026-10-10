@@ -8,7 +8,7 @@
       "registration_file_count": 18,
       "registrations": [
         {
-          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "class_name": "com.github.redacted-legacy-family.ddd4j.jackson.DefaultCryptoAutoConfiguration",
           "contract_id": "DATA_CACHE",
           "mapping_status": "MAPPED",
           "registration_files": [
@@ -226,7 +226,7 @@
       "registration_file_count": 18,
       "registrations": [
         {
-          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "class_name": "com.github.redacted-legacy-family.ddd4j.jackson.DefaultCryptoAutoConfiguration",
           "contract_id": "DATA_CACHE",
           "mapping_status": "MAPPED",
           "registration_files": [
@@ -444,7 +444,7 @@
       "registration_file_count": 18,
       "registrations": [
         {
-          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "class_name": "com.github.redacted-legacy-family.ddd4j.jackson.DefaultCryptoAutoConfiguration",
           "contract_id": "DATA_CACHE",
           "mapping_status": "MAPPED",
           "registration_files": [
@@ -662,7 +662,7 @@
       "registration_file_count": 18,
       "registrations": [
         {
-          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "class_name": "com.github.redacted-legacy-family.ddd4j.jackson.DefaultCryptoAutoConfiguration",
           "contract_id": "DATA_CACHE",
           "mapping_status": "MAPPED",
           "registration_files": [
@@ -3589,7 +3589,7 @@
       "registration_file_count": 31,
       "registrations": [
         {
-          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "class_name": "com.github.redacted-legacy-family.ddd4j.jackson.DefaultCryptoAutoConfiguration",
           "contract_id": "DATA_CACHE",
           "mapping_status": "MAPPED",
           "registration_files": [
@@ -3924,7 +3924,7 @@
       "registration_file_count": 31,
       "registrations": [
         {
-          "class_name": "com.github.hiwepy.ddd4j.jackson.DefaultCryptoAutoConfiguration",
+          "class_name": "com.github.redacted-legacy-family.ddd4j.jackson.DefaultCryptoAutoConfiguration",
           "contract_id": "DATA_CACHE",
           "mapping_status": "MAPPED",
           "registration_files": [

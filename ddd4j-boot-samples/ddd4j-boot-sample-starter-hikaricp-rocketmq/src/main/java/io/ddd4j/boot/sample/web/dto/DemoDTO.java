@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
+ * Copyright (C) 2018 ddd4j (https://github.com/easy4j).
  * All Rights Reserved.
  */
 package io.ddd4j.boot.sample.web.dto;
@@ -8,9 +8,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+/**
+ * Demo 示例修改请求数据传输对象。
+ */
 @Schema(description = "xxx数据传输对象")
 @Data
 public class DemoDTO {
+
+    /**
+     * 构造 Demo 修改请求数据传输对象实例。
+     */
+    public DemoDTO() {
+    }
 
     @Schema(description = "xxID", requiredMode = Schema.RequiredMode.REQUIRED)
     private String id;

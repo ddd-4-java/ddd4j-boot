@@ -13,14 +13,28 @@ import java.util.List;
 
 /**
  * 订单对象映射器
+ *
+ * <p>应用层的模型转换门面：在「命令 / DTO」与「订单聚合」之间做显式映射，
+ * 是应用层与领域层之间的隔离带。批量方法 {@code toDTOList} 由 MapStruct
+ * 按接口抽象生成实现，其余 default 方法承载需要业务判断的逐字段映射。</p>
  */
 @Mapper
 public interface OrderMapper {
 
+    /** MapStruct 生成实现的单例入口，供应用服务直接引用。 */
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
     /**
-     * 命令转领域对象
+     * 命令转领域对象。
+     *
+     * <p>把创建订单命令中的订单项、收货地址逐项组装为领域对象后，
+     * 交给订单聚合工厂 {@link Order#create} 完成校验与状态初始化；
+     * 币种缺失时按 CNY 兜底。</p>
+     *
+     * @param command 创建订单命令
+     * @param orderNo 已生成的订单编号
+     * @return 新建的订单聚合根
+     * @throws IllegalArgumentException 命令必填项缺失导致聚合工厂校验失败时抛出
      */
     default Order toDomain(CreateOrderCommand command, String orderNo) {
         List<OrderItem> items = command.getItems().stream()
@@ -46,7 +60,10 @@ public interface OrderMapper {
     }
 
     /**
-     * 领域对象转DTO
+     * 领域对象转 DTO。
+     *
+     * @param order 订单聚合根，为 {@code null} 时返回 {@code null}
+     * @return 订单 DTO，含订单项与收货地址
      */
     default OrderDTO toDTO(Order order) {
         if (order == null) {
@@ -76,7 +93,10 @@ public interface OrderMapper {
     }
 
     /**
-     * 地址转DTO
+     * 地址转 DTO。
+     *
+     * @param address 地址值对象，为 {@code null} 时返回 {@code null}
+     * @return 地址 DTO，含拼接后的完整地址
      */
     default OrderDTO.AddressDTO toAddressDTO(Address address) {
         if (address == null) {
@@ -93,7 +113,10 @@ public interface OrderMapper {
     }
 
     /**
-     * 订单项转DTO
+     * 订单项转 DTO。
+     *
+     * @param item 订单项实体，为 {@code null} 时返回 {@code null}
+     * @return 订单项 DTO，金额取数值部分、币种单独映射
      */
     default OrderDTO.OrderItemDTO toItemDTO(OrderItem item) {
         if (item == null) {
@@ -111,7 +134,10 @@ public interface OrderMapper {
     }
 
     /**
-     * 订单列表转DTO列表
+     * 订单列表转 DTO 列表（由 MapStruct 生成实现）。
+     *
+     * @param orders 订单聚合根列表
+     * @return 对应的订单 DTO 列表
      */
     List<OrderDTO> toDTOList(List<Order> orders);
 }

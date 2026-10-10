@@ -18,7 +18,16 @@ import org.springframework.context.annotation.Configuration;
 public class Ddd4jMicaMqttSubscribeGuardAutoConfiguration {
 
     /**
+     * 显式无参构造器，供 Spring 实例化本配置类。
+     */
+    public Ddd4jMicaMqttSubscribeGuardAutoConfiguration() {
+    }
+
+    /**
      * 注册 no-op 检测器，优先于 mica {@code MqttClientConfiguration}，避免全局扫描 {@code @MqttClientSubscribe}。
+     *
+     * @param applicationContext Spring 上下文，注入给 mica 检测器基类
+     * @return no-op 订阅检测器 Bean 实例
      */
     @Bean
     public MqttClientSubscribeDetector ddd4jMicaMqttSubscribeDetectorGuard(ApplicationContext applicationContext) {

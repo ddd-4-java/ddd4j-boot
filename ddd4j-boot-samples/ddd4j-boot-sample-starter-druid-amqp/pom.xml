@@ -18,7 +18,7 @@
 
     <dependencies>
 
-        <!-- For Jeebiz -->
+        <!-- For redacted-legacy-app -->
         <dependency>
             <groupId>io.ddd4j</groupId>
             <artifactId>ddd4j-core</artifactId>
@@ -218,7 +218,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.github.hiwepy.boot.sample.MqttServerApplication</mainClass>
+                    <mainClass>io.ddd4j.boot.sample.DemoApplication</mainClass>
                 </configuration>
             </plugin>
             <!-- 第一步：生成可执行的启动脚本 -->

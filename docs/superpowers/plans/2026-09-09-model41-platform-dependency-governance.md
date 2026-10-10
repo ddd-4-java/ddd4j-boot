@@ -468,7 +468,7 @@ git commit -m "fix(deps): restore platform dependency ownership"
 - Consumes: all prior task outputs.
 - Produces: branch-specific evidence for source, tests, model warnings, Git and publication state.
 
-- [ ] **Step 1: Run all static and focused gates on 4.0 and 4.1**
+- [ ] **Step 1: Run all static and focused gates on 4.0 and 4.1**【外部阻塞: 需在 4.0/4.1 双分支执行门禁与 Maven 许可测试（跨分支+禁 mvn）】
 
 ```bash
 python3 scripts/test_model41_parent_contract.py
@@ -479,19 +479,19 @@ bash scripts/consistency/test-maintenance-build-matrix.sh
 
 Run the Maven 4/JDK 21 license tests on each branch with `<skipTests>false</skipTests>` where the parent defaults skip tests.
 
-- [ ] **Step 2: Capture warning deltas**
+- [ ] **Step 2: Capture warning deltas**【待办】
 
 Record before/after values for total model problems, parent warnings, ignored imports and conflicting coordinate groups. Do not report an unchanged or whitelisted warning as fixed.
 
-- [ ] **Step 3: Run the largest safe reactor**
+- [ ] **Step 3: Run the largest safe reactor**【外部阻塞: 需执行全量 Maven reactor（禁 mvn）】
 
 Run the full 4.x reactor when all required local artifacts resolve. If it stops, record the exact first failing module, command, error and passed module count.
 
-- [ ] **Step 4: Update status documents**
+- [ ] **Step 4: Update status documents**【待办】
 
 Set the specification status to `implemented` only when all unblocked acceptance criteria pass. List Task 6 as blocked if `feature/3.0.x` remains occupied.
 
-- [ ] **Step 5: Verify Git state and push without rewriting history**
+- [ ] **Step 5: Verify Git state and push without rewriting history**【外部阻塞: 需推送远端】
 
 For each changed branch:
 

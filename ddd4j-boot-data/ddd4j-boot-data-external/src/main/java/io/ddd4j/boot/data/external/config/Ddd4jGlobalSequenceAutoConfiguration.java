@@ -28,8 +28,20 @@ import java.util.Objects;
 @Configuration(proxyBeanMethods = false)
 public class Ddd4jGlobalSequenceAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 实例化本配置类。
+     */
+    public Ddd4jGlobalSequenceAutoConfiguration() {
+    }
+
     private GlobalSequence globalSequence;
 
+    /**
+     * 手动绑定 {@code ddd4j.sequence.*} 到上游纯 POJO {@link SequenceProperties}。
+     *
+     * @param environment Spring 环境，提供配置来源
+     * @return 绑定完成的序列属性实例
+     */
     @Bean
     @ConditionalOnMissingBean(SequenceProperties.class)
     public SequenceProperties sequenceProperties(Environment environment) {
@@ -38,6 +50,12 @@ public class Ddd4jGlobalSequenceAutoConfiguration {
         return properties;
     }
 
+    /**
+     * 创建全局序列生成器：workerId 缺省取本机 IP 尾段，数据中心/时间偏移/随机序列上限均有默认值。
+     *
+     * @param properties 已绑定的序列属性
+     * @return 全局序列（雪花）生成器实例
+     */
     @Bean
     public GlobalSequence globalSequence(SequenceProperties properties) {
         long workerId = Objects.isNull(properties.getWorkerId()) ? 0x0000001F & IdKit.getLastIPAddress() : properties.getWorkerId();
@@ -54,6 +72,9 @@ public class Ddd4jGlobalSequenceAutoConfiguration {
         return this.globalSequence;
     }
 
+    /**
+     * 容器关闭时优雅停机全局序列生成器。
+     */
     @PreDestroy
     public void destroy() {
         if (Objects.nonNull(globalSequence)) {
@@ -61,6 +82,11 @@ public class Ddd4jGlobalSequenceAutoConfiguration {
         }
     }
 
+    /**
+     * 注册 Hutool 雪花 ID 生成器（数据中心/工作机器 ID 由本机网络信息推导）。
+     *
+     * @return 雪花 ID 生成器实例
+     */
     @Bean
     public cn.hutool.core.lang.Snowflake snowflakeIdGenerator() {
         long datacenterId = IdUtil.getDataCenterId(31);

@@ -43,10 +43,18 @@ import org.springframework.context.annotation.ComponentScan;
 public class ColaAutoConfiguration {
 
     /**
-     * 注册 ddd4j-boot 风格的 ResponseHandler。
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public ColaAutoConfiguration() {
+    }
+
+    /**
+     * 注册 ddd4j-boot 风格的 ResponseHandler（用户可自定义 Bean 覆盖）。
      *
      * <p>让 COLA catchlog 的异常处理输出 ddd4j-boot 的 {@link io.ddd4j.core.ApiRestResponse} 格式，
      * 而非 COLA 默认的 {@code Response} 格式。
+     *
+     * @return {@link Ddd4jResponseHandler} 实例
      */
     @Bean
     @ConditionalOnMissingBean

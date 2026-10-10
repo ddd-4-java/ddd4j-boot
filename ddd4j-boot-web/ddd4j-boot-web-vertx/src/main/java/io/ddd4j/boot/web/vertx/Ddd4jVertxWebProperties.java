@@ -20,6 +20,12 @@ import java.util.List;
 @ConfigurationProperties(prefix = "ddd4j.web.vertx")
 public class Ddd4jVertxWebProperties {
 
+    /**
+     * 显式无参构造器，供 {@code @EnableConfigurationProperties} 绑定时实例化。
+     */
+    public Ddd4jVertxWebProperties() {
+    }
+
     /** 无需认证即可访问的路径。 */
     private List<String> publicPaths = new ArrayList<>(List.of(
             "/health", "/health/readiness", "/health/liveness"));

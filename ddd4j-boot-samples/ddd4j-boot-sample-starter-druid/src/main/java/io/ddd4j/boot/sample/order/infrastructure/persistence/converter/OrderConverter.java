@@ -17,9 +17,18 @@ import java.util.stream.Collectors;
  */
 @Component
 public class OrderConverter {
+    /**
+     * 构造 OrderConverter 实例。
+     *
+     */
+    public OrderConverter() {
+    }
 
     /**
      * 领域对象转持久化实体
+     *
+     * @param order 订单
+     * @return 转换结果
      */
     public OrderEntity toEntity(Order order) {
         if (order == null) {
@@ -53,6 +62,10 @@ public class OrderConverter {
 
     /**
      * 持久化实体转领域对象
+     *
+     * @param entity 实体对象
+     * @param items 条目集合
+     * @return 转换结果
      */
     public Order toDomain(OrderEntity entity, List<OrderItem> items) {
         if (entity == null) {
@@ -87,6 +100,9 @@ public class OrderConverter {
 
     /**
      * 订单项领域对象转持久化实体
+     *
+     * @param item 条目
+     * @return 转换结果
      */
     public OrderItemEntity toItemEntity(OrderItem item) {
         if (item == null) {
@@ -108,6 +124,9 @@ public class OrderConverter {
 
     /**
      * 订单项持久化实体转领域对象
+     *
+     * @param entity 实体对象
+     * @return 转换结果
      */
     public OrderItem toItemDomain(OrderItemEntity entity) {
         if (entity == null) {
@@ -128,6 +147,9 @@ public class OrderConverter {
 
     /**
      * 订单项列表转换
+     *
+     * @param entities 实体对象集合
+     * @return 转换结果
      */
     public List<OrderItem> toItemDomainList(List<OrderItemEntity> entities) {
         if (entities == null) {
@@ -138,6 +160,13 @@ public class OrderConverter {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 执行 toItemEntityList 操作。
+     *
+     * @param items 条目集合
+     *
+     * @return 转换结果
+     */
     public List<OrderItemEntity> toItemEntityList(List<OrderItem> items) {
         if (items == null) {
             return new java.util.ArrayList<>();

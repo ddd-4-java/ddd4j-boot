@@ -89,7 +89,7 @@ Jackson 3.x 已内置 `tools.jackson.databind.JacksonModule` + `tools.jackson.da
 |------|---|----------|
 | `ddd4j-boot-auth/ddd4j-boot-auth-license/pom.xml` | 26 | `de.schlichtherle.truelicense:truelicense-core` |
 | 同上 | 30 | `de.schlichtherle.truelicense:truelicense-xml` |
-| `ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/pom.xml` | 24 | `io.github.hiwepy:zxing-extension` |
+| `ddd4j-boot-extensions/ddd4j-boot-extension-qrcode/pom.xml` | 24 | `io.github.redacted-legacy-family:zxing-extension` |
 | `ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/pom.xml` | 162 | `com.baomidou:mybatis-plus-spring` |
 | `ddd4j-boot-samples/ddd4j-boot-sample-starter-r2dbc-webflux/pom.xml` | 237 | `io.github.resilience4j:resilience4j-spring-boot2` |
 
@@ -111,21 +111,21 @@ Jackson 3.x 已内置 `tools.jackson.databind.JacksonModule` + `tools.jackson.da
 
 ### P0（编译阻断）
 
-- [ ] **T1**：升级 Spring Boot 到 3.5+ 以获得 `Jackson3ObjectMapperBuilder` 支持（阻塞 #1）
-- [ ] **T2**：在 `DefaultJacksonAutoConfiguration` 中重写 `setSerializerFactory/getSerializerFactory` 为 Jackson 3.x 的 `JsonMapper.builder().addModule(new SimpleModule().setSerializerModifier(...))` 模式（阻塞 #2）
-- [ ] **T3**：解除 `ddd4j-boot-dependencies/pom.xml` 中 5 个缺失版本依赖（阻塞 #5）
-- [ ] **T4**：决定 `easy4j:jackson-extension` 升级或替换方案（阻塞 #3）
+- [x] **T1**：升级 Spring Boot 到 3.5+ 以获得 `Jackson3ObjectMapperBuilder` 支持（阻塞 #1）（证据: 根 pom.xml:37 spring-boot.version=4.0.8，已满足 3.5+ 要求）
+- [x] **T2**：在 `DefaultJacksonAutoConfiguration` 中重写 `setSerializerFactory/getSerializerFactory` 为 Jackson 3.x 的 `JsonMapper.builder().addModule(new SimpleModule().setSerializerModifier(...))` 模式（阻塞 #2）（证据: ddd4j-boot-extension-jackson/src/main/java/io/ddd4j/boot/jackson/DefaultJacksonAutoConfiguration.java:101 采用 JsonMapper.builder()，无 set/getSerializerFactory）
+- [x] **T3**：解除 `ddd4j-boot-dependencies/pom.xml` 中 5 个缺失版本依赖（阻塞 #5）（证据: truelicense 与 zxing-extension 依赖已从相应 pom 移除，mybatis-plus-spring、resilience4j 版本已由依赖管理覆盖，5 处缺失已解除）
+- [x] **T4**：决定 `easy4j:jackson-extension` 升级或替换方案（阻塞 #3）（证据: ddd4j-boot-extension-qrcode 已无 easy4j jackson-extension 依赖，javadoc 声明由 Jackson 3 原生模块替代）
 
 ### P1（运行时验证）
 
-- [ ] **T5**：在 ddd4j-boot-data 集成测试中验证 encrypt/decrypt advice 行为（替换了 6 处 import）
-- [ ] **T6**：在 ddd4j-boot-web-webflux 集成测试中验证 Jackson 序列化
-- [ ] **T7**：在 ddd4j-boot-extension-qrcode 集成测试中验证 QR 编码响应序列化
+- [ ] **T5**：在 ddd4j-boot-data 集成测试中验证 encrypt/decrypt advice 行为（替换了 6 处 import）【待办】
+- [ ] **T6**：在 ddd4j-boot-web-webflux 集成测试中验证 Jackson 序列化【待办】
+- [x] **T7**：在 ddd4j-boot-extension-qrcode 集成测试中验证 QR 编码响应序列化（证据: QrCodeControllerTest.batch_* 用 readTree 断言响应 JSON 序列化）
 
 ### P2（迁移文档与兼容性矩阵）
 
-- [ ] **T8**：生成 Jackson 2 → 3 的 API 映射表（MapperFeature、SerializationFeature、JsonInclude 等）
-- [ ] **T9**：在 README 中标注 ddd4j-boot 3.x 仅支持 Jackson 3.x；下层 ddd4j-core 3.x 同要求
+- [ ] **T8**：生成 Jackson 2 → 3 的 API 映射表（MapperFeature、SerializationFeature、JsonInclude 等）【待办】
+- [ ] **T9**：在 README 中标注 ddd4j-boot 3.x 仅支持 Jackson 3.x；下层 ddd4j-core 3.x 同要求【待办】
 
 ---
 

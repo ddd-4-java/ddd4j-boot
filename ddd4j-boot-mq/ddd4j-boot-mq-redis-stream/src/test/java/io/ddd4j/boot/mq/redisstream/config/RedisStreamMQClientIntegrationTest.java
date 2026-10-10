@@ -32,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RedisStreamMQClientIntegrationTest {
 
     @Container
+    // 测试镜像来源: https://testcontainers.com/modules/redis/
     static final GenericContainer<?> REDIS = new GenericContainer<>(DockerImageName.parse("redis:7.4-alpine"))
             .withExposedPorts(6379)
             .waitingFor(Wait.forListeningPort());

@@ -34,6 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class NatsMQClientIntegrationTest {
 
     @Container
+    // 测试镜像来源: https://testcontainers.com/modules/nats/
     static final GenericContainer<?> NATS = new GenericContainer<>(DockerImageName.parse("nats:2.10.22"))
             .withCommand("-js")
             .withExposedPorts(4222)

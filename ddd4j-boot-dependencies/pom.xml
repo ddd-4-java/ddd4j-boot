@@ -323,6 +323,23 @@
                 <artifactId>mysql</artifactId>
                 <version>${spring-boot-testcontainers.version}</version>
             </dependency>
+            <!-- mq 模块容器测试用例（kafka/rabbitmq/localstack），与上方同批钉版 1.21.4，
+                 使 1.x 命名构件不再落到上游 BOM 的 2.0.5，保证测试类路径 testcontainers 版本唯一 -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>kafka</artifactId>
+                <version>${spring-boot-testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>rabbitmq</artifactId>
+                <version>${spring-boot-testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>localstack</artifactId>
+                <version>${spring-boot-testcontainers.version}</version>
+            </dependency>
             <!-- Boot 3.3 logging system binary compatibility baseline. -->
             <dependency>
                 <groupId>ch.qos.logback</groupId>
@@ -564,9 +581,9 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/dingtalk-spring-boot-starter -->
+            <!-- https://mvnrepository.com/artifact/io.github.easy4j/dingtalk-spring-boot-starter -->
             <dependency>
-                <groupId>com.github.hiwepy</groupId>
+                <groupId>io.github.easy4j</groupId>
                 <artifactId>dingtalk-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-dingtalk.version}</version>
                 <exclusions>
@@ -580,7 +597,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/docx4j-spring-boot-starter -->
+            <!-- https://mvnrepository.com/artifact/io.github.easy4j/docx4j-spring-boot-starter -->
             <!-- https://mvnrepository.com/artifact/com.github.dozermapper/dozer-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.dozermapper</groupId>
@@ -958,7 +975,7 @@
                 <artifactId>shardingsphere-encrypt-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-shardingsphere-jdbc.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.hiwepy/validation-mimetypes-spring-boot-starter -->
+            <!-- https://mvnrepository.com/artifact/io.github.easy4j/validation-mimetypes-spring-boot-starter -->
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>validation-mimetypes-spring-boot-starter</artifactId>
@@ -1151,7 +1168,7 @@
                 <version>${spring-boot-starter-freemarker-taglibs.version}</version>
             </dependency>
             <dependency>
-                <groupId>net.jeebiz</groupId>
+                <groupId>io.github.easy4j</groupId>
                 <artifactId>ftpclient-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-ftpclient.version}</version>
             </dependency>
@@ -1311,7 +1328,7 @@
                 <version>${spring-boot-starter-rocketmq-plus.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.easy4j</groupId>
+                <groupId>io.github.easy4j</groupId>
                 <artifactId>rythm-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-rythm.version}</version>
             </dependency>
@@ -1531,7 +1548,7 @@
                 <version>${spring-boot-starter-zbus.version}</version>
             </dependency>
         
-            <!-- 原 hiwepy 坐标迁至 easy4j（属性沿用） -->
+            <!-- 原 redacted-legacy-family 坐标迁至 easy4j（属性沿用） -->
             <dependency>
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>agora-spring-boot-starter</artifactId>
@@ -1761,18 +1778,6 @@
                 <groupId>io.github.easy4j</groupId>
                 <artifactId>zxing-spring-boot-starter</artifactId>
                 <version>${spring-boot-starter-zxing.version}</version>
-            </dependency>
-        
-            <!-- easy4j starter 逐个版本（与 ddd4j-boot-starters 仓库一一对应，外部提交丢失后补齐） -->
-            <dependency>
-                <groupId>io.github.easy4j</groupId>
-                <artifactId>net.jeebiz</artifactId>
-                <version>${spring-boot-starter-ftpclient.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.easy4j</groupId>
-                <artifactId>com.github.easy4j</artifactId>
-                <version>${spring-boot-starter-rythm.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.resilience4j</groupId>

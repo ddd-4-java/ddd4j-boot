@@ -1,7 +1,8 @@
 package io.ddd4j.boot.sample.service;
 
-import io.ddd4j.boot.sample.demo.infra.persistence.entity.DemoEntity;
 
+import com.baomidou.mybatisplus.spring.service.IService;
+import io.ddd4j.boot.sample.entity.DemoEntity;
 
 /**
  * <p>
@@ -11,6 +12,6 @@ import io.ddd4j.boot.sample.demo.infra.persistence.entity.DemoEntity;
  * @author wandl
  * @since 2023-08-06
  */
-public interface IDemoService {
+public interface IDemoService extends IService<DemoEntity> {
 
 }

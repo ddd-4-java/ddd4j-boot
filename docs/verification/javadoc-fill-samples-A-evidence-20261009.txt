@@ -1,0 +1,153 @@
+javadoc fill evidence - samples A - 2026-10-09
+========================================================================
+repo: E:/workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j-boot/
+branch: feature/4.0.x
+scope: 6 sample modules, src/main/java only, 83 files
+  ddd4j-boot-sample-starter-druid / -common / -adapter
+  ddd4j-boot-sample-auth-shiro / -auth-security / -auth-satoken
+tool: JDK21 (D:/Java/jdk-21.0.4) javadoc -Xdoclint:all -Xmaxwarns 1000000
+      -Xmaxerrs 1000000 -quiet via @argfile (classpath+sourcepath resolved)
+rule: 找不到符号/非法的类型开始 errors outside the 6 modules (sample-app,
+      r2dbc-webflux) come from -sourcepath pull-in of parallel agents -> ignored.
+
+BATCH LISTS (83 files)
+------------------------------------------------------------------------
+[batch 1] cla-b1-abs.txt  (30 files)
+   1. ddd4j-boot-samples/ddd4j-boot-sample-adapter/src/main/java/io/ddd4j/boot/sample/adapter/order/web/OrderController.java
+   2. ddd4j-boot-samples/ddd4j-boot-sample-auth-satoken/src/main/java/io/ddd4j/boot/sample/auth/satoken/SaTokenAuthApplication.java
+   3. ddd4j-boot-samples/ddd4j-boot-sample-auth-satoken/src/main/java/io/ddd4j/boot/sample/auth/satoken/controller/AuthController.java
+   4. ddd4j-boot-samples/ddd4j-boot-sample-auth-security/src/main/java/io/ddd4j/boot/sample/auth/security/SecurityAuthApplication.java
+   5. ddd4j-boot-samples/ddd4j-boot-sample-auth-security/src/main/java/io/ddd4j/boot/sample/auth/security/controller/AuthController.java
+   6. ddd4j-boot-samples/ddd4j-boot-sample-auth-shiro/src/main/java/io/ddd4j/boot/sample/auth/shiro/ShiroAuthApplication.java
+   7. ddd4j-boot-samples/ddd4j-boot-sample-auth-shiro/src/main/java/io/ddd4j/boot/sample/auth/shiro/controller/AuthController.java
+   8. ddd4j-boot-samples/ddd4j-boot-sample-common/src/main/java/io/ddd4j/boot/sample/constant/LogConstant.java
+   9. ddd4j-boot-samples/ddd4j-boot-sample-common/src/main/java/io/ddd4j/boot/sample/exception/BizExceptionCode.java
+  10. ddd4j-boot-samples/ddd4j-boot-sample-common/src/main/java/io/ddd4j/boot/sample/exception/BizExceptionHandler.java
+  11. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/DemoApplication.java
+  12. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/config/CaffeineCacheConfig.java
+  13. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/config/DataSourceConfig.java
+  14. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/config/MyMetaObjectHandler.java
+  15. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/config/MybatisPlusConfiguration.java
+  16. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/config/WebMvcConfiguration.java
+  17. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/config/WebMvcSwagger3Configuration.java
+  18. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/demo/adapter/web/DemoController.java
+  19. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/demo/app/command/CreateDemoCommand.java
+  20. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/demo/app/command/UpdateDemoCommand.java
+  21. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/demo/app/dto/DemoDTO.java
+  22. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/demo/app/service/DemoApplicationService.java
+  23. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/demo/domain/model/entity/DemoEntity.java
+  24. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/demo/domain/repository/DemoRepository.java
+  25. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/demo/infra/persistence/DemoRepositoryImpl.java
+  26. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/demo/infra/persistence/converter/DemoConverter.java
+  27. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/demo/infra/persistence/entity/DemoEntity.java
+  28. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/demo/infra/persistence/mapper/DemoMapper.java
+  29. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/entity/DemoEntity.java
+  30. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/exception/BizExceptionCode.java
+
+[batch 2] cla-b2-abs.txt  (30 files)
+   1. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/exception/BizExceptionHandler.java
+   2. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/mapper/DemoMapper.java
+   3. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/application/command/CancelOrderCommand.java
+   4. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/application/command/CreateOrderCommand.java
+   5. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/application/command/PayOrderCommand.java
+   6. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/application/command/ShipOrderCommand.java
+   7. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/application/dto/OrderDTO.java
+   8. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/application/mapper/OrderMapper.java
+   9. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/application/package-info.java
+  10. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/application/query/OrderQuery.java
+  11. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/application/response/OrderPageResponse.java
+  12. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/application/service/OrderApplicationService.java
+  13. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/event/DomainEvent.java
+  14. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/event/OrderCancelledEvent.java
+  15. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/event/OrderCreatedEvent.java
+  16. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/event/OrderPaidEvent.java
+  17. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/event/OrderShippedEvent.java
+  18. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/model/aggregate/DomainEventPublisher.java
+  19. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/model/aggregate/Order.java
+  20. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/model/entity/OrderItem.java
+  21. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/model/vo/Address.java
+  22. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/model/vo/Money.java
+  23. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/model/vo/OrderStatus.java
+  24. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/package-info.java
+  25. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/repository/OrderItemRepository.java
+  26. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/repository/OrderQuery.java
+  27. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/repository/OrderRepository.java
+  28. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/service/OrderDomainService.java
+  29. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/domain/specification/OrderSpecification.java
+  30. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/infrastructure/config/OrderDomainEventConfig.java
+
+[batch 3] cla-b3-abs.txt  (23 files)
+   1. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/infrastructure/messaging/OrderDomainEventPublisher.java
+   2. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/infrastructure/messaging/handler/OrderEventHandler.java
+   3. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/infrastructure/package-info.java
+   4. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/infrastructure/persistence/OrderItemRepositoryImpl.java
+   5. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/infrastructure/persistence/OrderRepositoryImpl.java
+   6. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/infrastructure/persistence/converter/OrderConverter.java
+   7. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/infrastructure/persistence/entity/OrderEntity.java
+   8. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/infrastructure/persistence/entity/OrderItemEntity.java
+   9. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/infrastructure/persistence/mapper/OrderItemMapper.java
+  10. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/infrastructure/persistence/mapper/OrderMapper.java
+  11. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/interfaces/package-info.java
+  12. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/order/interfaces/rest/OrderController.java
+  13. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/service/IDemoService.java
+  14. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/service/impl/DemoServiceImpl.java
+  15. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/setup/LogConstant.java
+  16. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/setup/config/CaffeineCacheConfig.java
+  17. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/setup/config/DataSourceConfig.java
+  18. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/setup/config/MyMetaObjectHandler.java
+  19. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/setup/config/WebMvcConfiguration.java
+  20. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/setup/config/WebMvcSwagger3Configuration.java
+  21. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/web/controller/DemoController.java
+  22. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/web/dto/DemoDTO.java
+  23. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid/src/main/java/io/ddd4j/boot/sample/web/dto/DemoNewDTO.java
+
+WARN/ERROR PROGRESSION -> 0
+------------------------------------------------------------------------
+  B1 final     cla_final_b1d.txt    actual:    0 warn    0 err | 0 warn / 0 err  (baseline was 267 warn)
+  B2 baseline  cla_b2_chk0.txt      actual:  407 warn    0 err | 406 warn / 0 err
+  B2 pass1     cla_b2_chk1.txt      actual:  124 warn    3 err | 124 warn / 3 err
+  B2 pass2     cla_b2_chk2.txt      actual:   40 warn    6 err | 39 warn / 4 err (+manual HTML fix)
+  B2 pass3     cla_b2_chk3.txt      actual:    0 warn  748 err | aborted: JAVA_HOME=17 -> GBK decode, rerun w/ JDK21
+  B2 pass4     cla_b2_chk4.txt      actual:   29 warn   29 err | 28 warn / 28 err (stray @return on ctor/type docs)
+  B2 FINAL     cla_b2_chk5.txt      actual:    0 warn    0 err | 0 warn / 0 err
+  B3 baseline  cla_b3_chk0.txt      actual:  170 warn    4 err | 169 warn / 3 err (out-of-scope)
+  B3 pass1     cla_b3_chk1.txt      actual:   59 warn   19 err | 58 warn / 18 err
+  B3 pass2     cla_b3_chk2.txt      actual:    5 warn    5 err | 4 warn / 4 err
+  B3 FINAL     cla_b3_chk3.txt      actual:    0 warn    4 err | 0 warn / 3 err (out-of-scope only)
+  RECHECK B1   cla_final_b1d.txt    actual:    0 warn    0 err | 0 warn / 0 err
+  RECHECK B2   cla_final_b2d.txt    actual:    0 warn    0 err | 0 warn / 0 err
+  RECHECK B3   cla_final_b3d.txt    actual:    0 warn    4 err | 0 warn / 3 err (out-of-scope only)
+
+FINAL: batch1=0/0  batch2=0/0  batch3=0 warn (3 err out-of-scope only)
+
+DAMAGE SCAN (cla_scan.py over all 83: quoted-param/double-close/nested-doc/ctor-on-const)
+------------------------------------------------------------------------
+  1 hit: LogConstant BUSINESS = false positive (nested public static class, not enum
+  constant; javadoc reports nothing). real damage = 0.
+
+GIT DIFF (read-only, no staging/commit)
+------------------------------------------------------------------------
+  tracked modified target files : 68
+  diff lines                     : +2819 / -102
+  untracked new-pkg files        : 8 (817 lines; package-migration artifacts)
+  no-change files                : 3
+  staged                         : 0
+
+CONTENT STATS (javadoc currently present in the 83 files)
+------------------------------------------------------------------------
+  /** blocks : 900
+  @param/@return/@throws tags : 703
+
+PIPELINE SCRIPTS (temp, outside repo)
+------------------------------------------------------------------------
+  cla_autodoc.py accessors   cla_fixtags.py missing tags    cla_addctor.py ctor docs
+  cla_fixwarn.py line-driven cla_delreturn.py strip bad @return  cla_scan.py damage
+
+RISK NOTES
+------------------------------------------------------------------------
+  1. explicit no-arg ctors added where doclint demanded documented default ctors;
+     semantics unchanged (implicit default ctor already existed).
+  2. script misfires (annotation args as params, enum consts as ctors) were caught by
+     cla_scan+doclint and hand-repaired (Money/OrderStatus/DemoEntity/DataSourceConfig
+    /CreateOrderCommand/OrderMapper/Order).
+  3. sample-app / r2dbc-webflux errors are outside the 6-module scope (parallel agents).

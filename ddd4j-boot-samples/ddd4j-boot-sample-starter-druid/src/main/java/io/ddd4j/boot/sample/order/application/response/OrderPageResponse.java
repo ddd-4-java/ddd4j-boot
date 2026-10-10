@@ -24,9 +24,25 @@ public class OrderPageResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 构造 OrderPageResponse 实例。
+     *
+     */
     public OrderPageResponse() {
     }
 
+    /**
+     * 构造 OrderPageResponse 实例。
+     *
+     * @param records records
+     * @param total total
+     * @param pageNum pageNum
+     * @param pageSize pageSize
+     * @param totalPages totalPages
+     * @param hasPrevious hasPrevious
+     * @param hasNext hasNext
+     *
+     */
     public OrderPageResponse(List<OrderDTO> records, Long total, Integer pageNum, Integer pageSize,
             Integer totalPages, Boolean hasPrevious, Boolean hasNext) {
         this.records = records;

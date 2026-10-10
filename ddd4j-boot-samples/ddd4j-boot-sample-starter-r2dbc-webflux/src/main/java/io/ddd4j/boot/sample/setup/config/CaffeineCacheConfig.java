@@ -4,13 +4,25 @@ import com.github.benmanes.caffeine.cache.CacheLoader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Caffeine 本地缓存配置：声明 {@code CacheLoader} Bean，使 refreshAfterWrite=5s 自动刷新生效。
+ *
+ * @author ddd4j
+ * @since 1.0.0
+ */
 @Configuration
 public class CaffeineCacheConfig {
 
     /**
+     * 构造 Caffeine 缓存配置对象。
+     */
+    public CaffeineCacheConfig() {
+    }
+
+    /**
      * 必须要指定这个Bean，refreshAfterWrite=5s这个配置属性才生效
      *
-     * @return
+     * @return 缓存加载器，load 返回空值、reload 回传旧值以实现缓存刷新
      */
     @Bean
     public CacheLoader<Object, Object> cacheLoader() {

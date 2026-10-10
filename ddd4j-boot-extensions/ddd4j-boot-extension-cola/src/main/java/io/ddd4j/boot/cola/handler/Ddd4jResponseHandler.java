@@ -31,6 +31,23 @@ public class Ddd4jResponseHandler implements ResponseHandlerI {
 
     private static final Logger log = LoggerFactory.getLogger(Ddd4jResponseHandler.class);
 
+    /**
+     * 显式无参构造器，供 Spring 以 {@code @Component} 方式实例化本处理器。
+     */
+    public Ddd4jResponseHandler() {
+    }
+
+    /**
+     * 按目标返回类型构造统一异常响应。
+     *
+     * <p>{@code ApiRestResponse} 返回 fail 格式；COLA {@code Response} 保持兼容格式；
+     * 其他类型兜底返回 {@code null}（由 catchlog 记录）。
+     *
+     * @param returnType 期望的返回类型
+     * @param errCode    错误码
+     * @param errMsg     错误信息
+     * @return 构造的响应对象，无法构造时为 {@code null}
+     */
     @Override
     public Object handle(Class returnType, String errCode, String errMsg) {
         log.debug("COLA catchlog 捕获异常: errCode={}, errMsg={}", errCode, errMsg);

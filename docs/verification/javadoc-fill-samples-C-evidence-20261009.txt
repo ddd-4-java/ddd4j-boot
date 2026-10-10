@@ -1,0 +1,272 @@
+================================================================================
+ddd4j-boot 5 个 druid 样本模块 javadoc 全量补注 证据文件（批次 C）
+日期：2026-10-09
+范围：ddd4j-boot-samples 下且仅以下 5 个模块的 src/main/java，共 102 个 Java 文件：
+        ddd4j-boot-sample-starter-druid-kafka        27 文件
+        ddd4j-boot-sample-starter-druid-war          20 文件
+        ddd4j-boot-sample-starter-druid-amqp         17 文件
+        ddd4j-boot-sample-starter-druid-mqtt-client1 19 文件
+        ddd4j-boot-sample-starter-druid-mqtt-client2 19 文件
+排除：samples 下其余模块与 samples 之外一切文件（并行智能体各管一片，零触碰）
+纪律：
+  - 不运行 mvn/gradle；javadoc CLI 仅用于自查（JDK 21.0.4，D:/Java/jdk-21.0.4）
+  - 不 git commit / push / 切分支
+  - 保护样本既有的包树迁移（io.ddd4j.boot.sample）与红线清理成果，只增量补 javadoc
+  - 输出严禁出现 4 个旧品牌标识字面量（一律角色名：旧教育品牌 / 旧家族名 /
+    旧应用名 / 旧中文品牌）；扫描模式 bash 邻接拼接构造（值存 /tmp/.oldseg.txt、
+    /tmp/.oldapp.txt），展示前过掩码管道 /tmp/.mask.sh
+================================================================================
+
+【0】自查环境与判定口径
+--------------------------------------------------------------------------------
+0.1 javadoc CLI 命令（仓库根目录 ddd4j-boot 执行，源文件用仓根相对路径）：
+      "D:/Java/jdk-21.0.4/bin/javadoc" -encoding UTF-8 -charset UTF-8 -d <out>
+        -quiet -Xdoclint:all -Xmaxwarns 1000000 -Xmaxerrs 1000000
+        -classpath <379+2 jar 并集> @<argfile> > <log> 2>&1; echo EXIT=$?
+    - argfile（@file）：选项与源文件逐行书写，不支持通配符、不接受 -J 标志。
+    - classpath 取自既有 maven javadoc 报告 target/reports/apidocs/options 的并集
+      （379 jar）再补 spring-kafka-4.0.7.jar、kafka-clients-4.3.1.jar；
+      补齐前基线报「程序包…不存在」717 条，补齐后归零，属环境准备而非代码问题。
+0.2 日志解析口径：javadoc 日志为 GBK 编码，按
+      raw = open(log,'rb').read().decode('gbk', errors='replace')
+    以「警告」「错误」计数；-quiet 模式下无任何诊断 → 0 字节日志 = 清零
+    （配合 EXIT=0 判定）。
+0.3 【关键】同一 FQN 跨模块冲突会互相掩盖告警：5 个样本模块同包同名类
+    （如 io.ddd4j.boot.sample.exception.BizExceptionCode 同时存在于 3 个模块），
+    合并跑 javadoc 时 doclint 只对每个 FQN 的首个出现位置完整解析，
+    导致合并基线只报 202 警告 + 9 错误，而逐模块基线合计 509 警告 + 9 错误。
+    因此：【逐模块自查为权威判定】，合并跑仅作交叉复核。
+0.4 注释格式实测口径（与非样本批次 C 口径一致）：
+    - 单行内联注释块不被识别：`/** 描述。 @return 值 */` 仍报「没有 @return」；
+    - 必须写成多行紧凑块：
+        /** 描述。
+         * @return 值 */
+    - 类级文档隐式 H1 后正文标题从 <h2> 起；
+    - 未 import 的外部类型在引用处写全限定名；
+    - 公共类无显式构造器必然报「使用不提供注释的默认构造器」→ 补显式无参构造器
+      （空方法体，与编译器默认构造器语义等价）；Lombok @Data 类补显式构造器后
+      不再生成默认构造器，二者等价、无冲突。
+    - 被整块注释掉的类（无任何声明）不产生告警，按纪律跳过不改：
+      kafka / mqtt-client1 的 setup/config/FlywayDemoConfiguration.java 共 2 个。
+0.5 classpath 错误按任务纪律忽略；doclint missing（缺注释/缺标签）、语法、
+    标题层级、引用错误必须清零。
+
+【1】批次划分与文件清单（全量 102 文件，每批 ≤30）
+--------------------------------------------------------------------------------
+B1 ddd4j-boot-sample-starter-druid-kafka —— 27 文件
+      1. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/DemoApplication.java
+      2. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/entity/DemoEntity.java
+      3. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/exception/BizExceptionCode.java
+      4. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/exception/BizExceptionHandler.java
+      5. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/mapper/DemoMapper.java
+      6. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/service/IDemoService.java
+      7. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/service/impl/DemoServiceImpl.java
+      8. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/LogConstant.java
+      9. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/TopicConstant.java
+     10. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/config/CaffeineCacheConfig.java
+     11. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/config/DataSourceConfig.java
+     12. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/config/FlywayDemoConfiguration.java
+     13. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/config/MyMetaObjectHandler.java
+     14. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/config/MybatisPlusConfiguration.java
+     15. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/config/WebMvcConfiguration.java
+     16. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/config/WebMvcSwagger3Configuration.java
+     17. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/consumer/KafkaConsumer.java
+     18. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/listener/ApplicationEnvironmentPreparedEventListener.java
+     19. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/listener/ApplicationFailedEventListener.java
+     20. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/setup/listener/ApplicationStartedEventListener.java
+     21. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/web/controller/DemoController.java
+     22. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/web/controller/IndexController.java
+     23. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/web/controller/KafkaController.java
+     24. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/web/dto/DemoDTO.java
+     25. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/web/dto/DemoNewDTO.java
+     26. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/web/dto/MessageDTO.java
+     27. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/sample/web/vo/DemoVo.java
+
+B2 ddd4j-boot-sample-starter-druid-war —— 20 文件
+      1. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/DemoApplication.java
+      2. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/dao/entities/DemoEntity.java
+      3. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/entity/DemoEntity.java
+      4. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/exception/BizExceptionCode.java
+      5. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/exception/BizExceptionHandler.java
+      6. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/mapper/DemoMapper.java
+      7. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/service/IDemoService.java
+      8. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/service/impl/DemoServiceImpl.java
+      9. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/setup/LogConstant.java
+     10. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/setup/config/CaffeineCacheConfig.java
+     11. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/setup/config/DataSourceConfig.java
+     12. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/setup/config/MyMetaObjectHandler.java
+     13. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/setup/config/MybatisPlusConfiguration.java
+     14. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/setup/config/WebMvcConfiguration.java
+     15. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/setup/config/WebMvcSwagger3Configuration.java
+     16. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/web/controller/DemoController.java
+     17. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/web/controller/IndexController.java
+     18. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/web/dto/DemoDTO.java
+     19. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/web/dto/DemoNewDTO.java
+     20. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-war/src/main/java/io/ddd4j/boot/sample/web/vo/DemoVo.java
+
+B3 ddd4j-boot-sample-starter-druid-amqp —— 17 文件
+      1. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/DemoApplication.java
+      2. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/entity/DemoEntity.java
+      3. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/exception/BizExceptionCode.java
+      4. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/exception/BizExceptionHandler.java
+      5. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/mapper/DemoMapper.java
+      6. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/service/IDemoService.java
+      7. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/service/impl/DemoServiceImpl.java
+      8. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/setup/LogConstant.java
+      9. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/setup/config/CaffeineCacheConfig.java
+     10. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/setup/config/DataSourceConfig.java
+     11. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/setup/config/MyMetaObjectHandler.java
+     12. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/setup/config/MybatisPlusConfiguration.java
+     13. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/setup/config/WebMvcConfiguration.java
+     14. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/setup/config/WebMvcSwagger3Configuration.java
+     15. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/web/controller/DemoController.java
+     16. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/web/dto/DemoDTO.java
+     17. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-amqp/src/main/java/io/ddd4j/boot/sample/web/dto/DemoNewDTO.java
+
+B4 ddd4j-boot-sample-starter-druid-mqtt-client1 —— 19 文件
+      1. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/DemoApplication.java
+      2. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/handler/MqttMessageHandler.java
+      3. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/service/MqttPublisher.java
+      4. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/MqttClientCallBack.java
+      5. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/TopicConstant.java
+      6. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/config/CaffeineCacheConfig.java
+      7. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/config/DataSourceConfig.java
+      8. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/config/FlywayDemoConfiguration.java
+      9. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/config/MqttConfig.java
+     10. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/config/MyMetaObjectHandler.java
+     11. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/config/MybatisPlusConfiguration.java
+     12. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/config/WebMvcConfiguration.java
+     13. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/hander/MqttPublisher.java
+     14. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/listener/ApplicationEnvironmentPreparedEventListener.java
+     15. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/listener/ApplicationFailedEventListener.java
+     16. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/setup/listener/ApplicationStartedEventListener.java
+     17. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/web/controller/IndexController.java
+     18. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/web/controller/MqttController.java
+     19. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client1/src/main/java/io/ddd4j/boot/sample/web/dto/MessageDTO.java
+
+B5 ddd4j-boot-sample-starter-druid-mqtt-client2 —— 19 文件
+      1. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/MqttClientApplication.java
+      2. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/service/MainService.java
+      3. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/service/MqttClientSubscribeListener.java
+      4. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/TopicConstant.java
+      5. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/config/CaffeineCacheConfig.java
+      6. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/config/DataSourceConfig.java
+      7. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/config/MqttClientCustomizerConfiguration.java
+      8. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/config/MyMetaObjectHandler.java
+      9. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/config/MybatisPlusConfiguration.java
+     10. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/config/OtherMqttClientConfiguration.java
+     11. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/config/WebMvcConfiguration.java
+     12. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/listener/ApplicationEnvironmentPreparedEventListener.java
+     13. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/listener/ApplicationFailedEventListener.java
+     14. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/listener/ApplicationStartedEventListener.java
+     15. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/listener/MqttClientConnectListener.java
+     16. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/listener/MqttClientSubscribeListener.java
+     17. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/setup/listener/TestJsonBean.java
+     18. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/web/controller/IndexController.java
+     19. ddd4j-boot-samples/ddd4j-boot-sample-starter-druid-mqtt-client2/src/main/java/io/ddd4j/boot/sample/web/dto/MessageDTO.java
+
+【2】告警递减 → 0（基线 r1 → 自查 r2/r3）
+--------------------------------------------------------------------------------
+批次 模块                            文件数  基线警告 基线错误  自查警告 自查错误 日志字节
+B1   ddd4j-boot-sample-starter-druid-kafka   27      148        3        0        0        0
+B2   ddd4j-boot-sample-starter-druid-war   20      130        0        0        0        0
+B3   ddd4j-boot-sample-starter-druid-amqp   17      115        0        0        0        0
+B4   ddd4j-boot-sample-starter-druid-mqtt-client1   19       55        3        0        0        0
+B5   ddd4j-boot-sample-starter-druid-mqtt-client2   19       61        3        0        0        0
+合计   5 个样本模块                           102      509        9        0        0        0
+
+说明：
+  - 基线 = 首次对 5 个模块跑 javadoc 的逐模块诊断（E:/tmp/jdoc-clc/r1-bN-detail.txt）；
+    其中 9 条为「错误: 未知标记」，分布在 kafka / mqtt-client1 / mqtt-client2 的
+    setup/listener/ApplicationEnvironmentPreparedEventListener.java（@className /
+    @description / @date 三个非标准标签），已改写为正文描述并保留 @author/@version。
+  - 合并基线（单次跑全部 102 文件）为 202 警告 + 9 错误，低于逐模块合计，
+    原因见 0.3（同 FQN 掩盖），不作为判定依据。
+  - 自查命令与日志：
+      B1: javadoc @/tmp/clc-args-b1.txt > /tmp/clc-r2-b1.log 2>&1  →  EXIT=0, 0 字节
+      B2: javadoc @/tmp/clc-args-b2.txt > /tmp/clc-r2-b2.log 2>&1  →  EXIT=0, 0 字节
+      B3: javadoc @/tmp/clc-args-b3.txt > /tmp/clc-r2-b3.log 2>&1  →  EXIT=0, 0 字节
+      B4: javadoc @/tmp/clc-args-b4.txt > /tmp/clc-r2-b4.log 2>&1  →  EXIT=0, 0 字节
+      B5: javadoc @/tmp/clc-args-b5.txt > /tmp/clc-r2-b5.log 2>&1  →  EXIT=0, 0 字节
+  - 全量复扫：javadoc @/tmp/clc-all-args.txt（102 文件）→ /tmp/clc-r4-all.log
+      首次全量复扫曾报 16 条「错误: 找不到引用」，全部为 {@link} 简单类名在
+      跨模块同 FQN 场景下的解析失败（每个 FQN 仅首个出现位置可解析）。
+      已将这 6 类跨模块易失效引用改为 {@code}（等价渲染、不参与链接）：
+        BaseExceptionHandler×3、NestedMessageSource×3、CacheLoader×5、
+        WebMvcConfigurer×5、ApplicationEnvironmentPreparedEvent×3、
+        ApplicationFailedEvent×3，共 22 处 / 19 文件。
+      改后复扫：EXIT=0, 0 字节 = 0 警告 0 错误；
+      同时重跑 B1–B5 全部逐模块自查，均 EXIT=0 / 0 字节。
+  - 最终判定：5 个逐模块自查 + 1 个全量复扫 共 6 次 javadoc 运行全部
+    「missing / 语法 / 标题 / 引用」告警与错误清零。
+
+【3】补注内容统计
+--------------------------------------------------------------------------------
+  files        = 102
+  docBlocks    = 655
+  ctors        = 97
+  tags         = 275
+  tagReturn    = 115
+  tagParam     = 133
+  tagThrows    = 27
+
+  按模块（文件数 / javadoc 块 / 显式无参构造器 / 标签）：
+    kafka          files=27 docBlocks=189 explicitCtors=25
+    war            files=20 docBlocks=169 explicitCtors=19
+    amqp           files=17 docBlocks=146 explicitCtors=16
+    mqtt-client1   files=19 docBlocks=75 explicitCtors=18
+    mqtt-client2   files=19 docBlocks=76 explicitCtors=19
+
+  处理要点：
+    - 每个公共/受保护类型补类型用途说明；方法逐参数 @param、@return、@throws；
+      枚举常量、常量字段、@Bean 方法、@Resource 字段均补块注释。
+    - exception/BizExceptionCode：约 60 个枚举常量逐个补注（含错误码语义），
+      5 个静态/实例方法补 @param/@return/@throws，2 个泛型方法补 @param <T>，
+      4 个 getter 与 3 个 @Override getter 补注。
+    - 所有缺默认构造器的公共类补「显式无参构造器 + javadoc」，
+      含 Lombok @Data 类、@Configuration 类、@RestController 类与内部静态类。
+    - WebMvcSwagger3Configuration 的包私有内部类 HomepageController 一并补注。
+    - 复杂逻辑段落保留原有行内 // 注释，仅在其上补块级 javadoc，不删既有注释。
+
+【4】红线扫描（4 个旧品牌标识字面量，构造模式扫描）
+--------------------------------------------------------------------------------
+  扫描范围：上述 5 个模块 src/main/java 全量文件（源码 + 注释）
+  P1 旧家族名（值存 /tmp/.oldseg.txt，grep -F）            命中 = 0
+  P2 旧应用名（值存 /tmp/.oldapp.txt，grep -F）            命中 = 0
+  P3 旧教育品牌关键词（bash 邻接拼接构造，不出现在命令原文）  命中 = 0
+  P4 公司后缀类标识（bash 邻接拼接构造）                    命中 = 0
+  合并掩码输出（/tmp/.mask.sh）                            无输出
+  结论：本轮新增 javadoc 文本全部为通用技术中文描述，未引入任何品牌字面量。
+
+【5】逻辑等价校验（不改逻辑的机器证据）
+--------------------------------------------------------------------------------
+  方法：以 git HEAD 中同模块旧包路径（io/<旧家族名，见 /tmp/.oldseg.txt> → io/ddd4j 归一化）为基线，
+        对 102 个文件做「去注释 + 去空方法体无参构造器」后的 token 流比对。
+  结果：checked=102  commentOnlyIdentical=14  ctorOnlyDelta=88  otherDelta=0
+  含义：除「新增显式无参构造器」与「注释（javadoc）」外，
+        102 个文件的代码 token 流与基线完全一致，无任何逻辑改动。
+  脚本：E:/tmp/jdoc-clc/logiccheck3.py
+
+【6】风险点与遗留
+--------------------------------------------------------------------------------
+  R1 同 FQN 跨模块：合并跑 javadoc 存在掩盖与 {@link} 解析失败，
+     已用 {@code} 规避；后续若新增跨模块 {@link}，需在合并跑中复验。
+  R2 war / amqp / mqtt-client1 / mqtt-client2 的 MybatisPlusConfiguration
+     @MapperScan 值为 {"io.ddd4j.**.mapper,io.ddd4j.**.mapper", ...}，
+     疑似迁移残留的重复片段（kafka 为 {"io.ddd4j.**.dao,io.ddd4j.**.mapper", ...}）。
+     本轮按「不改逻辑」纪律原样保留，未修改，建议后续单独确认。
+  R3 kafka / mqtt-client1 各有 1 个整文件被注释掉的 FlywayDemoConfiguration，
+     按纪律跳过；其内容不含任何声明，doclint 也不产生告警。
+  R4 mqtt-client1 同时存在 service/MqttPublisher 与 setup/hander/MqttPublisher
+     两个同名 @Service（包名不同），运行期按类型注入可能歧义；
+     属样本既有结构，本轮未改。
+  R5 本轮仅新增注释与显式无参构造器，未执行 mvn 编译/测试（纪律禁止）；
+     正确性由 javadoc 解析 + token 等价校验双证据支撑，
+     编译级回归需在允许构建的环节补跑。
+  R6 自查使用 JDK 21 javadoc；样本若以更低 JDK 编译，注释本身无兼容影响。
+
+================================================================================
+结论：5 个样本模块 102 个 Java 文件 javadoc 全量补注完成；
+      逐模块 5 次 + 全量 1 次 javadoc 自查全部 0 警告 0 错误；
+      红线 4 类字面量扫描全 0；逻辑等价校验 otherDelta=0。
+================================================================================

@@ -12,8 +12,22 @@ import org.springframework.context.ApplicationListener;
  */
 public class ApplicationStartedEventListener implements ApplicationListener<ApplicationStartingEvent> {
 
+    /**
+     * 日志记录器。
+     */
     private Logger logger = LoggerFactory.getLogger(ApplicationStartedEventListener.class);
 
+    /**
+     * 构造启动事件监听器实例。
+     */
+    public ApplicationStartedEventListener() {
+    }
+
+    /**
+     * 处理应用启动开始事件，打印启动主类信息。
+     *
+     * @param event 应用启动开始事件
+     */
     @Override
     public void onApplicationEvent(ApplicationStartingEvent event) {
         SpringApplication app = event.getSpringApplication();

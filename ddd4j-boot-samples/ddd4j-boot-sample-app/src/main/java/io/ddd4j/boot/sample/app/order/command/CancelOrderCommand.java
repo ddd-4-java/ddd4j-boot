@@ -14,41 +14,61 @@ import java.io.Serializable;
  */
 @Schema(description = "取消订单请求")
 public class CancelOrderCommand implements Serializable {
+    /** 序列化版本UID */
     private static final long serialVersionUID = 1L;
+    /** 订单ID */
     @Schema(description = "订单ID", example = "1")
     private Long orderId;
+    /** 订单号 */
     @Schema(description = "订单号", example = "ORD1234567890")
     private String orderNo;
+    /** 取消原因 */
     @Schema(description = "取消原因", example = "不想要了")
     private String reason;
 
+    /** 构造 CancelOrderCommand 对象。 */
     public CancelOrderCommand() {
     }
 
+    /** 获取订单ID。
+     * @return 订单ID */
     public Long getOrderId() {
         return this.orderId;
     }
 
+    /** 获取订单号。
+     * @return 订单号 */
     public String getOrderNo() {
         return this.orderNo;
     }
 
+    /** 获取取消原因。
+     * @return 取消原因 */
     public String getReason() {
         return this.reason;
     }
 
+    /** 设置订单ID。
+     * @param orderId 订单ID */
     public void setOrderId(final Long orderId) {
         this.orderId = orderId;
     }
 
+    /** 设置订单号。
+     * @param orderNo 订单号 */
     public void setOrderNo(final String orderNo) {
         this.orderNo = orderNo;
     }
 
+    /** 设置取消原因。
+     * @param reason 取消原因 */
     public void setReason(final String reason) {
         this.reason = reason;
     }
 
+    /** 判断当前对象与指定对象是否相等。
+     * @param o 待比较对象
+     * @return 相等返回 {@code true}，否则返回 {@code false} */
     @java.lang.Override
     public boolean equals(final java.lang.Object o) {
         if (o == this) return true;
@@ -67,10 +87,15 @@ public class CancelOrderCommand implements Serializable {
         return true;
     }
 
+    /** 判断指定对象是否可与当前对象进行相等比较（供 equals 协作的子类扩展点）。
+     * @param other 待判断对象
+     * @return 可比较返回 {@code true}，否则返回 {@code false} */
     protected boolean canEqual(final java.lang.Object other) {
         return other instanceof CancelOrderCommand;
     }
 
+    /** 返回基于各字段计算的哈希码。
+     * @return 哈希码 */
     @java.lang.Override
     public int hashCode() {
         final int PRIME = 59;
@@ -84,6 +109,8 @@ public class CancelOrderCommand implements Serializable {
         return result;
     }
 
+    /** 返回对象各字段拼接而成的字符串表示。
+     * @return 字符串表示 */
     @java.lang.Override
     public java.lang.String toString() {
         return "CancelOrderCommand(orderId=" + this.getOrderId() + ", orderNo=" + this.getOrderNo() + ", reason=" + this.getReason() + ")";

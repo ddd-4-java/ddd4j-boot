@@ -64,6 +64,7 @@ public class User extends AggregateRoot<String> {
      * 修改昵称（领域行为）。
      *
      * @param nickname 新昵称
+     * @return 更新后的当前用户对象
      */
     public User rename(String nickname) {
         if (!StringUtils.hasText(nickname)) {
@@ -75,6 +76,8 @@ public class User extends AggregateRoot<String> {
 
     /**
      * 禁用用户（领域行为）。
+     *
+     * @return 禁用后的当前用户对象
      */
     public User disable() {
         this.status = 0;
@@ -83,44 +86,65 @@ public class User extends AggregateRoot<String> {
 
     /**
      * 启用用户（领域行为）。
+     *
+     * @return 启用后的当前用户对象
      */
     public User enable() {
         this.status = 1;
         return this;
     }
 
+    /** 获取用户ID。
+     * @return 用户ID */
     public String getId() {
         return id;
     }
 
+    /** 设置用户ID。
+     * @param id 用户ID */
     public void setId(String id) {
         this.id = id;
     }
 
+    /** 获取手机号。
+     * @return 手机号 */
     public String getPhone() {
         return phone;
     }
 
+    /** 设置手机号。
+     * @param phone 手机号 */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /** 获取昵称。
+     * @return 昵称 */
     public String getNickname() {
         return nickname;
     }
 
+    /** 设置昵称。
+     * @param nickname 昵称 */
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
+    /** 获取状态。
+     * @return 状态 */
     public Integer getStatus() {
         return status;
     }
 
+    /** 设置状态。
+     * @param status 状态 */
     public void setStatus(Integer status) {
         this.status = status;
     }
 
+    /** 判断当前对象与指定对象是否相等。
+     * @param o 待比较对象
+     * @return 相等返回 {@code true}，否则返回 {@code false} */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -129,6 +153,8 @@ public class User extends AggregateRoot<String> {
         return Objects.equals(id, user.id);
     }
 
+    /** 返回基于各字段计算的哈希码。
+     * @return 哈希码 */
     @Override
     public int hashCode() {
         return Objects.hash(id);

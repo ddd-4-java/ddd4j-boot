@@ -19,12 +19,19 @@ public class OrderDomainEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
+    /**
+     * 构造 OrderDomainEventPublisher 实例。
+     *
+     * @param applicationEventPublisher applicationEventPublisher
+     */
     public OrderDomainEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
     /**
      * 发布领域事件
+     *
+     * @param event 领域事件
      */
     public void publish(DomainEvent event) {
         if (event != null) {
@@ -35,6 +42,8 @@ public class OrderDomainEventPublisher {
 
     /**
      * 批量发布领域事件
+     *
+     * @param events 领域事件集合
      */
     public void publishAll(List<DomainEvent> events) {
         if (events != null && !events.isEmpty()) {

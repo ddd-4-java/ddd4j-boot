@@ -96,19 +96,22 @@ class RocketMQClientIntegrationTest {
 
     private static GenericContainer<?> rocketmqContainer() {
         try {
-            // 临时文件默认 0600，Testcontainers 以 root 拷入容器后 broker（rocketmq 用户）无法读取，
-            // 必须显式放宽到 0644
+            // 临时文件默认 0600，拷入容器后属主为 root，而镜像内 broker 以 rocketmq(uid 3000) 用户
+            // 运行无法读取，必须落盘为 0644。不能用 Files.setPosixFilePermissions 放宽本地权限：
+            // Windows（NTFS 默认文件系统）没有 posix:permissions 视图，该调用会在类静态初始化期
+            // 抛 UnsupportedOperationException 导致整个测试类 ExceptionInInitializerError；
+            // 改用 MountableFile 强制 tar mode=0644（跨平台等价于 rw-r--r--，不依赖宿主机文件系统）
             Path brokerConf = Files.createTempFile("ddd4j-rocketmq-broker", ".conf");
             Files.writeString(brokerConf, String.format(BROKER_CONF_TEMPLATE, BROKER_PORT));
-            Files.setPosixFilePermissions(brokerConf,
-                    java.nio.file.attribute.PosixFilePermissions.fromString("rw-r--r--"));
             GenericContainer<?> container = new LockedRocketMQContainer(
+                    // 测试镜像来源: Docker Hub 官方镜像 apache/rocketmq:5.3.2
+                    // （官方模块索引 https://testcontainers.com/modules/ 暂无 RocketMQ 模块）
                     DockerImageName.parse("apache/rocketmq:5.3.2"))
                     .withEnv("JAVA_OPT_EXT", "-Xms512m -Xmx512m -Xmn256m")
                     .withCommand("sh", "-c",
                             "sh mqnamesrv & sleep 10 && sh mqbroker -n 127.0.0.1:9876"
                                     + " -c /home/rocketmq/rocketmq-5.3.2/conf/broker.conf")
-                    .withCopyFileToContainer(MountableFile.forHostPath(brokerConf),
+                    .withCopyFileToContainer(MountableFile.forHostPath(brokerConf, 0644),
                             "/home/rocketmq/rocketmq-5.3.2/conf/broker.conf")
                     .withExposedPorts(9876)
                     .waitingFor(Wait.forLogMessage(".*boot success.*", 2));

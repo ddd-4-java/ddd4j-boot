@@ -22,6 +22,12 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
     private final OrderItemMapper orderItemMapper;
     private final OrderConverter orderConverter;
 
+    /**
+     * 构造 OrderItemRepositoryImpl 实例。
+     *
+     * @param orderItemMapper orderItemMapper
+     * @param orderConverter orderConverter
+     */
     public OrderItemRepositoryImpl(OrderItemMapper orderItemMapper, OrderConverter orderConverter) {
         this.orderItemMapper = orderItemMapper;
         this.orderConverter = orderConverter;

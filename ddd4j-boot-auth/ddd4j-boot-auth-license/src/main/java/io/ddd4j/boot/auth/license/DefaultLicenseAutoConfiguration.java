@@ -27,6 +27,18 @@ import org.springframework.core.env.Environment;
 @ConditionalOnClass({LicenseVerify.class})
 public class DefaultLicenseAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 实例化本配置类。
+     */
+    public DefaultLicenseAutoConfiguration() {
+    }
+
+    /**
+     * 手动绑定 {@code ddd4j.license.*} 到上游纯 POJO {@link LicenseProperties}。
+     *
+     * @param environment Spring 环境，提供配置来源
+     * @return 绑定完成的 License 属性实例
+     */
     @Bean
     @ConditionalOnMissingBean(LicenseProperties.class)
     public LicenseProperties licenseProperties(Environment environment) {
@@ -35,6 +47,12 @@ public class DefaultLicenseAutoConfiguration {
         return properties;
     }
 
+    /**
+     * 注册 License 校验器：初始化时安装 License，容器销毁时卸载。
+     *
+     * @param properties 已绑定的 License 属性
+     * @return License 校验器实例
+     */
     @Bean(initMethod = "installLicense", destroyMethod = "unInstallLicense")
     public LicenseVerify licenseVerify(LicenseProperties properties) {
         return new LicenseVerify(properties.getSubject(), properties.getPublicAlias(), properties.getStorePass(),

@@ -29,15 +29,21 @@ public class OrderController {
 
     private final OrderApplicationService orderApplicationService;
 
+    /**
+     * 构造 OrderController 实例。
+     *
+     * @param orderApplicationService orderApplicationService
+     */
     public OrderController(OrderApplicationService orderApplicationService) {
         this.orderApplicationService = orderApplicationService;
     }
 
     /**
      * 创建订单
+     *
+     * @param command 命令对象
+     * @return 新增结果
      */
-    @Operation(summary = "创建订单", description = "创建一个新的订单")
-    @PostMapping
     public ApiRestResponse<OrderDTO> createOrder(@Valid @RequestBody CreateOrderCommand command) {
         OrderDTO order = orderApplicationService.createOrder(command);
         return ApiRestResponse.success(order);
@@ -45,9 +51,11 @@ public class OrderController {
 
     /**
      * 支付订单
+     *
+     * @param orderId 订单 ID
+     * @param command 命令对象
+     * @return 处理结果
      */
-    @Operation(summary = "支付订单", description = "对指定订单进行支付操作")
-    @PostMapping("/{orderId}/pay")
     public ApiRestResponse<OrderDTO> payOrder(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long orderId,
@@ -59,9 +67,11 @@ public class OrderController {
 
     /**
      * 发货
+     *
+     * @param orderId 订单 ID
+     * @param command 命令对象
+     * @return 处理结果
      */
-    @Operation(summary = "订单发货", description = "对已支付的订单进行发货操作")
-    @PostMapping("/{orderId}/ship")
     public ApiRestResponse<OrderDTO> shipOrder(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long orderId,
@@ -73,9 +83,11 @@ public class OrderController {
 
     /**
      * 确认收货
+     *
+     * @param orderId 订单 ID
+     * @param orderNo 订单号
+     * @return 处理结果
      */
-    @Operation(summary = "确认收货", description = "确认订单已送达")
-    @PostMapping("/{orderId}/confirm-delivery")
     public ApiRestResponse<OrderDTO> confirmDelivery(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long orderId,
@@ -87,9 +99,11 @@ public class OrderController {
 
     /**
      * 完成订单
+     *
+     * @param orderId 订单 ID
+     * @param orderNo 订单号
+     * @return 处理结果
      */
-    @Operation(summary = "完成订单", description = "完成订单流程")
-    @PostMapping("/{orderId}/complete")
     public ApiRestResponse<OrderDTO> completeOrder(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long orderId,
@@ -101,9 +115,11 @@ public class OrderController {
 
     /**
      * 取消订单
+     *
+     * @param orderId 订单 ID
+     * @param command 命令对象
+     * @return 删除结果
      */
-    @Operation(summary = "取消订单", description = "取消指定订单")
-    @PostMapping("/{orderId}/cancel")
     public ApiRestResponse<OrderDTO> cancelOrder(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long orderId,
@@ -115,9 +131,10 @@ public class OrderController {
 
     /**
      * 根据ID查询订单
+     *
+     * @param id 标识 ID
+     * @return 查询结果
      */
-    @Operation(summary = "查询订单", description = "根据订单ID查询订单详情")
-    @GetMapping("/{id}")
     public ApiRestResponse<OrderDTO> getOrderById(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long id) {
@@ -127,9 +144,10 @@ public class OrderController {
 
     /**
      * 根据订单号查询订单
+     *
+     * @param orderNo 订单号
+     * @return 查询结果
      */
-    @Operation(summary = "根据订单号查询", description = "根据订单号查询订单详情")
-    @GetMapping("/order-no/{orderNo}")
     public ApiRestResponse<OrderDTO> getOrderByOrderNo(
             @Parameter(description = "订单号", example = "ORD1234567890", required = true)
             @PathVariable String orderNo) {
@@ -139,9 +157,10 @@ public class OrderController {
 
     /**
      * 根据用户ID查询订单列表
+     *
+     * @param userId 用户 ID
+     * @return 查询结果
      */
-    @Operation(summary = "查询用户订单列表", description = "根据用户ID查询该用户的所有订单")
-    @GetMapping("/user/{userId}")
     public ApiRestResponse<List<OrderDTO>> getOrdersByUserId(
             @Parameter(description = "用户ID", example = "1001", required = true)
             @PathVariable Long userId) {
@@ -151,9 +170,10 @@ public class OrderController {
 
     /**
      * 分页查询订单
+     *
+     * @param query 查询条件
+     * @return 查询结果
      */
-    @Operation(summary = "分页查询订单", description = "根据查询条件分页查询订单列表，支持多条件组合查询")
-    @PostMapping("/query")
     public ApiRestResponse<OrderPageResponse> queryOrders(@Valid @RequestBody OrderQuery query) {
         OrderPageResponse result = orderApplicationService.queryOrders(query);
         return ApiRestResponse.success(result);

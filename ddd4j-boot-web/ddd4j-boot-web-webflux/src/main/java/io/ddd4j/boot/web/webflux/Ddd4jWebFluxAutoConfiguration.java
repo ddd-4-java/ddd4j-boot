@@ -32,24 +32,50 @@ import org.springframework.web.reactive.DispatcherHandler;
         DefaultWebFluxConfiguration.class, GlobalErrorAttributes.class, GlobalErrorWebExceptionHandler.class})
 public class Ddd4jWebFluxAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public Ddd4jWebFluxAutoConfiguration() {
+    }
+
+    /**
+     * 注册 Jackson {@link ObjectMapper}（用户可通过同类型 Bean 覆盖）。
+     *
+     * @return JSON 序列化器实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
 
+    /**
+     * 注册本地静态资源属性绑定 Bean。
+     *
+     * @return 静态资源属性实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public LocalResourceProperteis localResourceProperteis() {
         return new LocalResourceProperteis();
     }
 
+    /**
+     * 注册分布式序列属性绑定 Bean。
+     *
+     * @return 序列属性实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public SequenceProperties sequenceProperties() {
         return new SequenceProperties();
     }
 
+    /**
+     * 注册 Web 运行时健康指示器（runtime=spring-webflux）。
+     *
+     * @return 健康指示器实例
+     */
     @Bean("ddd4jWebHealthIndicator")
     @ConditionalOnClass(HealthIndicator.class)
     @ConditionalOnMissingBean(name = "ddd4jWebHealthIndicator")

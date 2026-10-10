@@ -43,7 +43,7 @@ flowchart LR
 
 每条 JDK 8 分支在 `ddd4j-boot-dependencies/pom.xml` 增加 `ddd4j.version=1.0.x.20260630-SNAPSHOT`，并管理 `io.ddd4j:ddd4j-ddd` 与 `io.ddd4j:ddd4j-core`。`ddd4j-boot-core/pom.xml` 仅依赖这些公开构件，不嵌入上游源码。
 
-`ddd4j feature/1.0.x` 保持既有 `com.github.hiwepy:mybatis-plus-enhance` 单体 ABI，并将其 dependency-management revision 对齐为 `2.7.x.20260630-SNAPSHOT`。不得把模块化 `io.github.easy4j:mybatis-plus-enhance-core` / `extension` / `spring` 构件以旧单体坐标安装或发布。
+`ddd4j feature/1.0.x` 保持既有 `com.github.redacted-legacy-family:mybatis-plus-enhance` 单体 ABI，并将其 dependency-management revision 对齐为 `2.7.x.20260630-SNAPSHOT`。不得把模块化 `io.github.easy4j:mybatis-plus-enhance-core` / `extension` / `spring` 构件以旧单体坐标安装或发布。
 
 候选仓库无法解析这些精确构件时，构建或发布报告必须标为 `BLOCKED`；本地安装只用于验证，不构成发布证据。
 

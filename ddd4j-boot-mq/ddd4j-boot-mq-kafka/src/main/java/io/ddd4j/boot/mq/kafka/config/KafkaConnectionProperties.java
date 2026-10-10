@@ -21,6 +21,13 @@ import java.util.Objects;
 public class KafkaConnectionProperties {
 
     /**
+     * 显式无参构造器：本类无 {@code final} 字段，Lombok {@code @Data} 不生成构造器，
+     * 显式声明以供绑定器实例化并满足 doclint 对默认构造器的注释要求。
+     */
+    public KafkaConnectionProperties() {
+    }
+
+    /**
      * Kafka bootstrap 地址，如 {@code localhost:9092}
      */
     private String bootstrapServers;

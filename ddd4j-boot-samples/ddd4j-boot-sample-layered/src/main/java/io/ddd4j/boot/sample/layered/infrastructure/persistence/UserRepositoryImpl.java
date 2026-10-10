@@ -30,6 +30,12 @@ import java.util.List;
 @DomainRepository
 public class UserRepositoryImpl extends BaseRepositoryImpl<UserMapper, User, UserPO, UserQuery, String> implements UserRepository {
 
+/**
+ * 构造UserRepositoryImpl对象（默认无参构造，字段由调用方逐个设置）。
+ */
+public UserRepositoryImpl() {
+}
+
     /**
      * 聚合填充示例：查用户列表后自动填充关联数据。
      *

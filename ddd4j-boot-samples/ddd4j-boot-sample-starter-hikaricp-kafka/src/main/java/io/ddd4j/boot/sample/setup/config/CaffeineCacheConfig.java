@@ -4,13 +4,24 @@ import com.github.benmanes.caffeine.cache.CacheLoader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Caffeine 本地缓存配置类，注册缓存加载器以支持刷新过期缓存。
+ */
 @Configuration
 public class CaffeineCacheConfig {
 
     /**
-     * 必须要指定这个Bean，refreshAfterWrite=5s这个配置属性才生效
+     * 构造 Caffeine 缓存配置类实例。
+     */
+    public CaffeineCacheConfig() {
+    }
+
+    /**
+     * 必须要指定这个Bean，refreshAfterWrite=5s这个配置属性才生效。
+     * <p>
+     * 加载新值失败时将旧值原样返回，进而刷新缓存。
      *
-     * @return
+     * @return 缓存加载器
      */
     @Bean
     public CacheLoader<Object, Object> cacheLoader() {

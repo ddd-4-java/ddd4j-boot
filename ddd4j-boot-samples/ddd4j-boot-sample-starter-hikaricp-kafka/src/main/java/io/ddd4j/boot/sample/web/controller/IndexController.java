@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
+ * Copyright (C) 2018 ddd4j (https://github.com/easy4j).
  * All Rights Reserved.
  */
 package io.ddd4j.boot.sample.web.controller;
@@ -16,7 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 
     /**
+     * 构造默认地址控制器实例。
+     */
+    public IndexController() {
+    }
+
+    /**
      * 登录成功后的默认重定向地址：可重写返回的路径进行业务系统定制
+     *
+     * @param request HTTP 请求对象
+     * @param model   视图模型
+     * @return 视图名称
      */
     @RequestMapping("/index")
     public String index(HttpServletRequest request, Model model) {

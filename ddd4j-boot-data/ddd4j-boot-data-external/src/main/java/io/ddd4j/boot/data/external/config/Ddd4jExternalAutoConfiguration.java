@@ -29,6 +29,18 @@ import java.util.Objects;
 @Configuration(proxyBeanMethods = false)
 public class Ddd4jExternalAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 实例化本配置类。
+     */
+    public Ddd4jExternalAutoConfiguration() {
+    }
+
+    /**
+     * 手动绑定 {@code ddd4j.data.external.*} 到上游纯 POJO {@link ExternalProperties}。
+     *
+     * @param environment Spring 环境，提供配置来源
+     * @return 绑定完成的外部服务属性实例
+     */
     @Bean
     @ConditionalOnMissingBean(ExternalProperties.class)
     public ExternalProperties externalProperties(Environment environment) {
@@ -37,6 +49,12 @@ public class Ddd4jExternalAutoConfiguration {
         return properties;
     }
 
+    /**
+     * 注册行政区划区域缓存：容器中存在 {@link StringRedisTemplate} 时用 Redis 实现，否则回落到空实现。
+     *
+     * @param redisTemplateProvider 可选的 String Redis 模板
+     * @return 区域缓存实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public RegionCache regionCache(ObjectProvider<StringRedisTemplate> redisTemplateProvider) {
@@ -47,28 +65,59 @@ public class Ddd4jExternalAutoConfiguration {
         return new RedisTemplateRegionCache(redisTemplate);
     }
 
+    /**
+     * 注册默认 IP 归属地模板（空实现，业务可覆盖为真实实现）。
+     *
+     * @return IP 归属地模板实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public IpRegionTemplate ipRegionTemplate() {
         return IpRegionTemplate.none();
     }
 
+    /**
+     * 注册百度地理位置模板。
+     *
+     * @param properties 外部服务属性，提供百度 AK
+     * @param regionCache 区域缓存
+     * @return 百度地理位置模板实例
+     */
     @Bean
     public BaiduRegionTemplate baiduRegionTemplate(ExternalProperties properties, RegionCache regionCache) {
         return new BaiduRegionTemplate(properties.getBaiduAk(), regionCache);
     }
 
+    /**
+     * 注册太平洋在线（Pconline）地理位置模板。
+     *
+     * @param regionCache 区域缓存
+     * @return Pconline 地理位置模板实例
+     */
     @Bean
     public PconlineRegionTemplate pconlineRegionTemplate(RegionCache regionCache) {
         return new PconlineRegionTemplate(regionCache);
     }
 
+    /**
+     * 注册嵌套地理位置模板（IP → Pconline → 百度 逐级回退）。
+     *
+     * @param regionCache 区域缓存
+     * @param ipRegionTemplate IP 归属地模板
+     * @param pconlineRegionTemplate Pconline 模板
+     * @return 嵌套地理位置模板实例
+     */
     @Bean
     public NestedRegionTemplate nestedRegionTemplate(RegionCache regionCache, IpRegionTemplate ipRegionTemplate,
                                                      PconlineRegionTemplate pconlineRegionTemplate) {
         return new NestedRegionTemplate(regionCache, ipRegionTemplate, pconlineRegionTemplate);
     }
 
+    /**
+     * 注册天气查询模板。
+     *
+     * @return 天气模板实例
+     */
     @Bean
     public WeatherTemplate weatherTemplate() {
         return new WeatherTemplate();

@@ -36,6 +36,18 @@ import java.util.stream.Collectors;
 @ConditionalOnProperty(prefix = CryptoProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 public class Ddd4jCryptoAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 实例化本配置类。
+     */
+    public Ddd4jCryptoAutoConfiguration() {
+    }
+
+    /**
+     * 手动绑定 {@code ddd4j.crypto.*} 到上游纯 POJO {@link CryptoProperties}。
+     *
+     * @param environment Spring 环境，提供配置来源
+     * @return 绑定完成的加解密属性实例
+     */
     @Bean
     @ConditionalOnMissingBean(CryptoProperties.class)
     public CryptoProperties cryptoProperties(Environment environment) {
@@ -44,17 +56,38 @@ public class Ddd4jCryptoAutoConfiguration {
         return properties;
     }
 
+    /**
+     * 注册默认加解密提供者，聚合容器中全部 {@link CryptoStrategy} 实现。
+     *
+     * @param cryptoStrategyProvider 全部加解密策略
+     * @param cryptoProperties 加解密属性
+     * @return 默认加解密提供者实例
+     */
     @Bean
     public DefaultCryptoProvider cryptoProvider(ObjectProvider<CryptoStrategy> cryptoStrategyProvider, CryptoProperties cryptoProperties) {
         return new DefaultCryptoProvider(cryptoStrategyProvider.stream().collect(Collectors.toList()), cryptoProperties);
     }
 
+    /**
+     * 注册空操作加解密策略（明文透传，作为兜底实现）。
+     *
+     * @param objectMapperProvider 可选的 Jackson 序列化器
+     * @param cryptoProperties 加解密属性
+     * @return 空操作加解密策略实例
+     */
     @Bean
     public NoOpCryptoStrategy noOpCryptoStrategy(ObjectProvider<ObjectMapper> objectMapperProvider, CryptoProperties cryptoProperties) {
         ObjectMapper objectMapper = objectMapperProvider.getIfAvailable(ObjectMapper::new);
         return new NoOpCryptoStrategy(objectMapper);
     }
 
+    /**
+     * 注册默认对称加解密策略。
+     *
+     * @param objectMapperProvider 可选的 Jackson 序列化器
+     * @param cryptoProperties 加解密属性
+     * @return 默认加解密策略实例
+     */
     @Bean
     public DefaultCryptoStrategy defaultCryptoStrategy(ObjectProvider<ObjectMapper> objectMapperProvider, CryptoProperties cryptoProperties) {
         ObjectMapper objectMapper = objectMapperProvider.getIfAvailable(ObjectMapper::new);

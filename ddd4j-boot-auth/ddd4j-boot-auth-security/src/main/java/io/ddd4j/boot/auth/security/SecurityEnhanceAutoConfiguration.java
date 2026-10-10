@@ -32,7 +32,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityEnhanceAutoConfiguration {
 
     /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public SecurityEnhanceAutoConfiguration() {
+    }
+
+    /**
      * 密码加密工具（BCrypt，Spring Security 标准）。
+     *
+     * @return BCrypt 密码编码器实例（强度 6）
      */
     @Bean
     @ConditionalOnMissingBean(PasswordEncoder.class)
@@ -42,6 +50,8 @@ public class SecurityEnhanceAutoConfiguration {
 
     /**
      * Spring Security SubjectProvider（覆盖默认装配）。
+     *
+     * @return Subject 提供者实例
      */
     @Bean
     @ConditionalOnMissingBean(SubjectProvider.class)
@@ -51,6 +61,8 @@ public class SecurityEnhanceAutoConfiguration {
 
     /**
      * Spring Security exception handler for servlet applications.
+     *
+     * @return Spring Security 异常处理器实例
      */
     @Bean
     @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)

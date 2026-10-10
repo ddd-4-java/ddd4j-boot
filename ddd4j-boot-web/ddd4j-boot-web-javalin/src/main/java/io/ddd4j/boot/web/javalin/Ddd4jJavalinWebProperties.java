@@ -20,6 +20,12 @@ import java.util.List;
 @ConfigurationProperties(prefix = "ddd4j.web.javalin")
 public class Ddd4jJavalinWebProperties {
 
+    /**
+     * 显式无参构造器，供 {@code @EnableConfigurationProperties} 绑定时实例化。
+     */
+    public Ddd4jJavalinWebProperties() {
+    }
+
     /** 无需认证即可访问的路径。 */
     private List<String> publicPaths = new ArrayList<>(List.of(
             "/health", "/health/readiness", "/health/liveness"));

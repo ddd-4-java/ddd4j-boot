@@ -69,9 +69,9 @@ ddd4j-boot-data/
 
 ## 9. 交付物清单
 
-- [ ] 确认无外部消费者
-- [ ] 删除 legacy 重复源码
-- [ ] 验证编译通过
+- [ ] 确认无外部消费者【待办】
+- [x] 删除 legacy 重复源码（证据: ddd4j-boot-data 顶层 8 个 legacy 重复类已删除，仅存 resources/scripts/redis-snowflake-batch.lua）
+- [ ] 验证编译通过【外部阻塞: 需执行全量 mvn verify（禁 mvn）】
 
 ## 10. 未决事项
 

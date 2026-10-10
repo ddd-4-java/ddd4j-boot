@@ -11,7 +11,7 @@ FORBIDDEN = {
         "old MeterRegistryCustomizer package",
     "org.springframework.boot.test.web.client.TestRestTemplate": "old TestRestTemplate package",
     "com.github.dozermapper.extra.converters": "empty Dozer converter API",
-    "com.github.hiwepy.validation.constraints": "old Easy4J validation package",
+    "com.github.redacted-legacy-family.validation.constraints": "old Easy4J validation package",
     "com.baomidou.mybatisplus.extension.service": "old MyBatis-Plus service package",
     "com.baomidou.mybatisplus.extension.activerecord": "old MyBatis-Plus active record package",
     "org.springframework.web.reactive.resource.WebJarsResourceResolver":

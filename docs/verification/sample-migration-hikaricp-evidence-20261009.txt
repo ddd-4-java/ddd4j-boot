@@ -1,0 +1,266 @@
+================================================================================
+样本模块红线收尾证据（hikaricp 五模块）
+文件：docs/verification/sample-migration-hikaricp-evidence-20261009.txt
+日期：2026-10-09
+仓库：ddd4j-boot（工作区 E:\workspaces\workspace-ddd4j\workspace-ddd4j-boot\ddd4j-boot）
+负责范围（仅此 5 个模块，未越界）：
+  - ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp（含旧包树）
+  - ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-amqp
+  - ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-kafka
+  - ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-rocketmq
+  - ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-war
+约束遵守：未运行 mvn/gradle；未 git commit/push/切分支；未触碰 samples 之外业务文件
+（docs/verification/ 证据文件除外）；所有展示内容均经掩码，4 个旧品牌标识字面量
+在本文件中一律以角色名或 bash 邻接拼接片段表示，不出现连续原文。
+================================================================================
+
+【0】角色名与扫描模式构造（bash printf 邻接拼接，展示不拼合）
+--------------------------------------------------------------------------------
+- 旧家族名（h 开头 6 字母，Java 包段 io.<旧家族名>）：
+    P1=$(printf '%s%s' 'hiw' 'epy')
+- 旧应用名（j 开头 6 字母，用于 net.<旧应用名>、表前缀、JDBC 库名等）：
+    P2=$(printf '%s%s' 'jee' 'biz')
+- 旧中文品牌 A（12 个汉字的公司全名 = 地名2字+品牌2字+行业后缀8字，swagger contact×5）：
+    以“CJK 连续串比对法”复扫（见【7】），不构造连续字面量。
+- 旧中文品牌 B（含全角括号地名的公司全名，kafka 主配置 contact×1）：同上。
+- 旧教育品牌：本批 5 模块未检出（HEAD 与工作区双向关键词扫描均为 0，见【7】）。
+- 展示掩码：所有原始命中行在展示前均经 sed 将上述标识替换为
+  OLDF / OLDA / <CJK-BRAND> / redacted-* token。
+
+【1】双侧树盘点
+--------------------------------------------------------------------------------
+1.1 侧 A（旧包树，hikaricp 模块内，git HEAD 与迁移前工作区均存在）：
+    src/main/java/io/<旧家族名>/boot/sample/   → 18 个 .java
+    src/test/java/io/<旧家族名>/boot/sample/   → 1 个 .java（DemoApplication_Test.java）
+    合计 19 个文件；另有资源文件中的 FQCN 引用（yaml / log4j2 / mapper xml / pom）。
+1.2 侧 B（io.ddd4j 树，hikaricp 模块内）：
+    git HEAD 与迁移前工作区均不存在（0 文件）——本模块“双侧”实为
+    旧包树 vs 四兄弟模块的 io.ddd4j 同类树（对照侧）。
+1.3 对照侧（四兄弟，io.ddd4j.boot.sample 树，只读参照）：
+    amqp / rocketmq / war：与 hikaricp 结构同构；
+    kafka：额外含 web/controller/IndexController.java、web/vo/DemoVo.java、
+          setup/listener/ApplicationEnvironmentPreparedEventListener.java。
+1.4 盘点计数（迁移前）：
+    4 类标识在 5 模块的 HEAD 行数（case-insensitive，行级求和）：
+      旧家族名 165 行；旧应用名 158 行；
+      中文品牌 contact 6 处（5 test yml + 1 kafka 主 yaml）；
+      旧教育品牌 0 行。
+
+【2】hikaricp 旧包树迁移清单（19 文件，整体 mv，未动 git index）
+--------------------------------------------------------------------------------
+方法：文件系统 mv（src/{main,test}/java/io/<旧家族名>/… → src/{main,test}/java/io/ddd4j/…），
+随后按映射修正 package/import/资源 FQCN；旧 io/<旧家族名> 目录已 rmdir
+（find -type d -name '<旧家族名>' = 0 命中）。
+
+迁移后路径（相对模块根，旧路径仅列相对 old 包内的子路径）：
+  main（18）：
+    DemoApplication.java
+    entity/DemoEntity.java
+    exception/BizExceptionCode.java
+    exception/BizExceptionHandler.java
+    mapper/DemoMapper.java
+    service/IDemoService.java
+    service/impl/DemoServiceImpl.java
+    setup/Constants.java
+    setup/LogConstant.java
+    setup/config/CaffeineCacheConfig.java
+    setup/config/DataSourceConfig.java
+    setup/config/MyMetaObjectHandler.java
+    setup/config/MybatisPlusConfiguration.java
+    setup/config/WebMvcConfiguration.java
+    setup/config/WebMvcSwagger3Configuration.java
+    web/controller/DemoController.java
+    web/dto/DemoDTO.java
+    web/dto/DemoNewDTO.java
+  test（1）：
+    DemoApplication_Test.java
+  新位置：src/main/java/io/ddd4j/boot/sample/…、src/test/java/io/ddd4j/boot/sample/…
+  git 状态表现：19 条 “D 旧路径” + 2 条 “?? io/ddd4j 目录（含 19 个未跟踪新文件）”。
+
+【3】归一化 diff 处置（迁移后 vs 四兄弟 io.ddd4j 对照侧）
+--------------------------------------------------------------------------------
+方法：两侧同时把旧家族名/旧应用名/中文品牌归一化为占位 token 后逐文件 diff
+（单侧归一化会产生 Copyright 行假 DIFF，已修正为双侧对称归一化）。
+结果（以 amqp 为对照基线，19 个迁移文件）：
+  - SAME：17 个（内容归一化后完全一致，含 Copyright、@MapperScan 数组形态等）
+  - DIFF：1 个 —— src/test/java/io/ddd4j/boot/sample/DemoApplication_Test.java
+          差异仅为 1 个空行（本模块 61 行 vs amqp/rocketmq/war 60 行；
+          与 kafka 61 行一致）。空行无语义，保留原样，不强制合并 → 留证。
+  - ONLY-HIKARICP：1 个 —— setup/Constants.java（四兄弟无对应文件），随树迁移保留。
+处置结论：
+  - “删旧侧” = 整树迁移后旧包目录消失（0 残留）；
+  - “合并为一份” = 迁移后模块内仅存 io.ddd4j 一份，且与 io.ddd4j 多数侧归一化对齐；
+  - @MapperScan 形态分歧：hikaricp（数组形态）与 amqp/rocketmq 一致，war 为分列形态、
+    kafka 为 dao 变体 —— 各模块仅做包段映射、不改数组结构（资源引用侧无法区分形态，
+    改结构会引入扫描语义风险）→ 形态差异留证，不做跨模块统一。
+
+【4】四兄弟模块（纯文本/引用命中）替换清单（掩码后）
+--------------------------------------------------------------------------------
+4.1 Java 文件（42 个，逐行 diff 仅两类变更）：
+    - Copyright 头（42 文件 ×1 行）：
+        * Copyright (C) 2018 OLDF (http://OLDF.io).
+        → * Copyright (C) 2018 ddd4j (https://github.com/easy4j).
+    - @MapperScan 包段（4 文件，形态保持原样）：
+        amqp/rocketmq: {"io.ddd4j.**.mapper,io.ddd4j.**.mapper", "io.ddd4j.**.repository"}
+        kafka:         {"io.ddd4j.**.dao,io.ddd4j.**.mapper", "io.ddd4j.**.repository"}
+        war:           {"io.ddd4j.**.mapper", "io.ddd4j.**.mapper", "io.ddd4j.**.repository"}
+        （原均为 io.OLDF 同构形态，仅包段映射）
+4.2 application*.yaml（主 5 模块 + dev/local/prod/test profile + test yml）：
+    - table-prefix：OLDA_ → redacted-legacy-app_（20 行）
+    - datasource name：OLDA_boot / OLDA_demo → redacted-legacy-app_boot / _demo（42 行）
+    - JDBC URL 库名：jdbc:mysql://…/<OLDA_boot>?… → …/redacted-legacy-app_boot?…（18 行）
+    - title/description：“OLDA Boot Demo” → “redacted-legacy-app Boot Demo”（12 行）
+    - contact（test yml ×5 + kafka 主 yaml ×1）：
+        name  → redacted-legacy-brand（6 行，中文公司全名 → 掩码 token）
+        email → redacted-legacy-family@163.com（6 行）
+        url   → http://example.com/（5 行）
+    - base-package：io.OLDF → io.ddd4j（swagger docket 扫描包）
+    - type-aliases-package：io.OLDF.**.dao.entities → io.ddd4j.**.dao.entities
+    - aop-patterns：io.OLDF.boot.demo.web.mvc → io.ddd4j.boot.demo.web.mvc
+    - spring.application.name：ddd4j-boot-sample-druid（HEAD 即为此值，未变化）
+4.3 conf/log4j2*.xml（每模块 4 个变体 × 5 模块 = 20 文件，每文件恰 4 行 logger 变更）：
+    - 主配置（log4j2.xml / -dev / -edas，共 12 文件）：
+        net.OLDA / net.OLDA.authz / net.OLDA.biz / [Mybatis]net.OLDA （level=DEBUG）
+        → io.ddd4j / io.ddd4j.authz / io.ddd4j.biz / [Mybatis]io.ddd4j（level=DEBUG）
+    - 测试配置（log4j2-test.xml，共 5 文件，level=INFO）：
+        io.OLDF / io.OLDF.authz / io.OLDF.biz / [Mybatis]io.OLDF
+        → io.ddd4j / io.ddd4j.authz / io.ddd4j.biz / [Mybatis]io.ddd4j
+    - 旧段 logger 残留复扫 = 0 行。
+4.4 mapper/mysql/DemoMapper.xml（5 模块）：
+    - namespace：com.github.OLDF.boot.sample.mapper.DemoMapper → io.ddd4j.boot.sample.mapper.DemoMapper
+    - resultMap type：…boot.sample.entity.OrderEntity → io.ddd4j.boot.sample.entity.OrderEntity
+4.5 templates/html/footer.html（5 模块，唯一值）：
+      Copyright (C) 2018 ddd4j (https://github.com/easy4j). All Rights Reserved.
+4.6 pom.xml ×5（工作区变更，另 .flattened-pom.xml 为未跟踪构建产物，同步修正）：
+    - 注释：<!-- For OLDA --> → <!-- For ddd4j -->（5 处）
+    - mainClass：com.github.OLDF.boot.sample.MqttServerApplication
+               → io.ddd4j.boot.sample.MqttServerApplication（5 处；类不存在，见【5】.9）
+    - war 独有：<docker.registry.name>OLDA</…> → <docker.registry.name>redacted-legacy-app</…>
+      （pom.xml + .flattened-pom.xml 共 2 处）
+4.7 hikaricp 自身资源（随迁树同步修正，同 4.2~4.5 形态）：
+    - application.yaml：type-aliases、table-prefix ×2、aop-patterns、（profile yml：URL/name）
+    - src/test/resources/application.yml：title/description、contact 三件套、base-package、
+      datasource name、table-prefix ×2、type-aliases、aop-patterns
+    - conf/log4j2-test.xml：io.OLDF* → io.ddd4j*（INFO，见【5】.3）
+    - conf/log4j2*.xml 主配置：net.OLDA* → io.ddd4j*（DEBUG，见【5】.3）
+
+【5】行为注记（行为影响或需知的替换）
+--------------------------------------------------------------------------------
+5.1 【行为变化·中性偏增益】@MapperScan 包段（四兄弟）：原包段在模块内不存在
+    （模块类本就在 io.ddd4j），扫描目标为空；映射后命中本模块 DemoMapper。
+    影响：mapper 注册由“扫空”变为“注册成功”（修正性变化）；若旧版启动期依赖
+    “未找到 mapper”行为（如 MyBatis-Spring 空扫描告警），日志将消失。
+    hikaricp 侧：迁移前旧包段真实存在且命中，迁移后新包段命中 → 注册关系保持不变。
+5.2 【行为变化·日志量】主配置 log4j2 的 4 条 DEBUG logger：
+    net.<旧应用名>* 段在模块内外均无包（样本类原在 io.<旧家族名>），原不命中任何
+    样本类，样本类落 Root 级别；映射为 io.ddd4j* 后命中样本类与 ddd4j 框架类。
+    影响：主配置下 io.ddd4j 段 DEBUG 日志将输出（日志量增加）。
+    外部库注记：若 classpath 存在 net.<旧应用名> 外部库（仓内未检出该依赖），其
+    DEBUG 配置随映射失效，回退 Root 级别。
+5.3 【行为保持】hikaricp log4j2-test.xml：io.<旧家族名>* → io.ddd4j*（INFO）。
+    与整树迁移同步——迁移前命中旧包样本类，迁移后命中 io.ddd4j 样本类，
+    测试期命中关系与级别（INFO）保持不变。
+5.4 【行为中性】table-prefix OLDA_ → redacted-legacy-app_：
+    5 模块内 0 个 .sql 文件、0 条 DDL（create table/insert into 扫描为 0），
+    前缀为孤立配置；若未来按旧前缀建表，须同步改名或回改配置。
+5.5 【行为中性】datasource name（池标识字符串）：OLDA_boot → redacted-legacy-app_boot，
+    仅影响连接池/监控显示名。
+5.6 【行为注记·连接目标】JDBC URL 中库名 OLDA_boot → redacted-legacy-app_boot（18 行）：
+    若既有环境数据库 schema 仍为旧名，连接将失败，需同步改库名或回改 URL。
+    样本仓内无 DDL/迁移脚本，按红线要求映射。
+5.7 【行为中性】aop-patterns io.ddd4j.boot.demo.web.mvc：目标包两阶段均不存在
+    （真实控制器在 io.ddd4j.boot.sample.web.controller），Druid SQL 统计 AOP
+    前后均不命中 → 行为一致（历史遗留）。
+5.8 【行为中性】type-aliases-package io.ddd4j.**.dao.entities：实际实体位于
+    io.ddd4j.boot.sample.entity，两阶段均不命中该别名包（MyBatis 静默跳过）→ 一致。
+5.9 【行为中性·历史遗留】两处不存在的类名随规则机械映射，两阶段均不存在、语义未变：
+    - mainClass io.ddd4j.boot.sample.MqttServerApplication（spring-boot repackage
+      仅在 start-class 启动时解析，构建期不校验）；
+    - DemoMapper.xml resultMap type io.ddd4j.boot.sample.entity.OrderEntity
+      （原 com.github.<旧家族名>.boot.sample.entity.OrderEntity 同样不存在；
+      仅当该 resultMap 被使用时才会解析失败，前后行为一致）。
+5.10 【行为中性·构建元数据】war 的 docker.registry.name → redacted-legacy-app：
+    仅在执行 docker 构建/推送时影响镜像命名空间；仓内无 CI 引用该值。
+5.11 【行为中性·展示层】footer.html 版权文本、swagger contact（name/email/url）、
+    pom 注释 “For ddd4j”：文档/页面展示元数据。base-package io.ddd4j 覆盖
+    迁移后全部样本类（原 io.<旧家族名> 覆盖迁移前样本类）→ 文档扫描范围等价。
+5.12 【保留项·非品牌】kafka 主配置 scalarExample 中的地理示例值（城市名，含
+    中文品牌 A 共用的 2 字地名）保留未动：属地名示例数据，非 4 类品牌字面量；
+    CJK 增量比对确认其为工作区唯一“看似相关”的残留（见【7】）。
+5.13 【确认未变】spring.application.name = ddd4j-boot-sample-druid（HEAD 原值）；
+    log4j2 文件名属性（LOG_HOME/*.log）与 i18n basename 均未变化。
+
+【6】静态编译可行性核查（禁 mvn，静态替代）
+--------------------------------------------------------------------------------
+6.1 package 声明 vs 目录：19/19 迁移文件 100% 一致（io.ddd4j.boot.sample.* ↔ io/ddd4j/boot/sample/*）。
+6.2 模块内 import 可解析性：5 模块内全部 import io.ddd4j.boot.sample.* 均能在
+    同模块源码树找到对应文件；0 个指向旧包段的 import（P1 扫描=0）。
+6.3 仓库级交叉引用：全仓 grep 确认无任何模块引用 io.<旧家族名>.boot.sample
+    （样本编译互不依赖旧树），迁移不破坏其他模块。
+6.4 四兄弟 java 变更仅为 Copyright 文本与 @MapperScan 注解字符串值
+    （注解值为编译期常量表达式，不改符号引用）→ 编译安全。
+6.5 与 sample-common 的 FQCN 重叠（BizExceptionCode/BizExceptionHandler）：
+    既有模式——amqp/kafka/war 本就依赖 sample-common 且源码内同名类并存
+    （javac 优先源码、target/classes 优先于 jar，先例可编译）；
+    hikaricp/rocketmq 不依赖 sample-common，无重叠。
+6.6 资源引用完整性：mapper-locations、log4j2 configurationFile、templates 路径
+    未跨模块引用旧包目录（资源均在模块内 classpath 根下）。
+6.7 .flattened-pom.xml（未跟踪）5 份与 pom.xml 内容一致修正，不参与 git 但
+    参与本地 flatten 构建，已同步（残留复扫含未跟踪文件=0）。
+
+【7】复扫 0 命中（最终态，5 模块全量，含未跟踪/被忽略文件）
+--------------------------------------------------------------------------------
+扫描方式：git grep（HEAD 基线）与 grep -R（工作区）双向；模式由 printf 邻接构造；
+展示前 sed 掩码。
+  - 旧家族名（P1='hiw'+'epy'，-i 行级）：HEAD 165 行 → 工作区 0 行
+  - 旧应用名（P2='jee'+'biz'，-i 行级）：HEAD 158 行 → 工作区 0 行
+  - com.github.<旧家族名> 残留：0
+  - 中文品牌：CJK 连续串（≥2 汉字）集合比对
+        HEAD 唯一串 842 → 工作区 838；消失 4 串（len=2,2,8,12，全部为
+        品牌 A/B 公司名的组成段）；新增 0 串；
+        4 串在工作区的精确残留 = 0（唯一 1 处子串命中是 5.12 的城市示例值，
+        非品牌字面量，孤立 2 字串已不存在）；
+        contact 行级：6 处全部替换为 redacted-legacy-brand。
+  - 旧教育品牌：教育类关键词（教育/课堂/学院/学校/培训/学员/课程/教务/教研/
+    edutech/jiaoyu/school/classroom/training/lms，-i）HEAD=0、工作区=0
+    → 本批 5 模块从未包含该标识。
+  - log4j2 旧段 logger：0 行（20 文件内 net.<旧应用名>*/io.<旧家族名>* 已清零）。
+  - 公司后缀类词（有限公司/网络科技，中文）：工作区行级仅存于上述“孤立示例”
+    讨论之外的 0 处——精确串比对已覆盖，0 命中（见上，工作区新增 CJK 串=0）。
+  - redacted token 计数（替换落点核对）：
+      redacted-legacy-app：94
+        = table-prefix 20 + datasource name 42 + “Boot Demo” 12
+          + docker.registry 2 + JDBC URL 库名 18
+      redacted-legacy-brand：6（contact name）
+      redacted-legacy-family：6（contact email）
+
+【8】git 范围核查（改动边界）
+--------------------------------------------------------------------------------
+git status --porcelain 分两次快照（并行智能体同时在其他样本模块作业，条目数随其推进增长：
+  首次 152 条、证据定稿时 406 条；新增 254 条全部属于 druid-* 样本系列，由并行智能体负责）。
+  本 5 模块条目数在两次快照间恒定为 132 条：
+  - ddd4j-boot-samples：132 条 —— 全部属于本 5 模块：
+      hikaricp:     19 D + 13 M + 2 ??（?? = io/ddd4j 两个新目录，19 文件）
+      amqp:         24 M（内容变更 23；DemoApplication.java 为 stat-dirty，
+                            内容哈希与 HEAD 一致、git diff 为空，无实际变更）
+      kafka:        26 M
+      rocketmq:     24 M
+      war:          24 M
+      其他样本模块：本智能体 0 条改动（druid-* 系列 254 条系并行智能体所为，
+      首次快照时尚未出现；两快照中本 5 模块均恰为 132 条 → 边界确认）
+  - ddd4j-boot-mq：18 条、ddd4j-boot-dependencies/pom.xml：1 条 —— 并行智能体
+    既有改动，本次全程未触碰。
+  - docs：1 条（?? docs/verification/，含并行智能体的
+    testcontainers-governance-evidence-20261008.txt 与本文件）。
+未执行：git add / commit / push / 切分支；未运行 mvn/gradle。
+
+【9】统计摘要
+--------------------------------------------------------------------------------
+  迁移文件：19（18 main + 1 test），旧包目录删除：19 D，新增：19（未跟踪）
+  归一化比对：17 SAME / 1 DIFF（空行，保留）/ 1 ONLY（Constants.java，保留）
+  四兄弟 java 变更：42 文件（Copyright 42 + @MapperScan 4，仅两类行）
+  资源/pom 变更：五模块合计 tracked M 106（+ hikaricp 19 D、2 ??）
+  redacted 落点：app 94 / brand 6 / family 6
+  复扫：4 类标识 + com.github.<旧家族名> + 旧段 logger = 全部 0 命中
+  编译核查：package-目录 19/19、import 解析 0 缺失、跨模块引用 0（静态，未跑 mvn）
+================================================================================

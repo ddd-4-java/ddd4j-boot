@@ -67,7 +67,7 @@
 
 这是战略设计的核心产出，它定义了上下文之间的关系。我们将使用Spring Cloud来实现这些关系。
 
-![](https://wiki.hiwepy.com/uploads/ddd/images/m_ae150e1e415b31e11e724a248626d8e4_r.png)
+![](https://wiki.redacted-legacy-family.com/uploads/ddd/images/m_ae150e1e415b31e11e724a248626d8e4_r.png)
 
 **解读**:
 

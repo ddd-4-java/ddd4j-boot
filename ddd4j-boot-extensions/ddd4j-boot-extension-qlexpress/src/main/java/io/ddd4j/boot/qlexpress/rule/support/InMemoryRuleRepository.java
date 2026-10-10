@@ -14,6 +14,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class InMemoryRuleRepository implements RuleRepository {
 
+    /**
+     * 无参构造器，初始化 id 与 code 两张并发索引表。
+     */
+    public InMemoryRuleRepository() {
+    }
+
     private final ConcurrentHashMap<String, RuleDefinition> rulesById = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, String> idsByCode = new ConcurrentHashMap<>();
 

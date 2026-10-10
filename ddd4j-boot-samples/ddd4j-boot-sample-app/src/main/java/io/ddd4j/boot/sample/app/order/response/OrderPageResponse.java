@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Schema(description = "订单分页响应")
 public class OrderPageResponse implements Serializable {
+    /** 序列化版本UID */
     private static final long serialVersionUID = 1L;
     /**
      * 订单列表数据
@@ -73,6 +74,7 @@ public class OrderPageResponse implements Serializable {
 
     /**
      * 订单列表数据
+     * @return 订单列表
      */
     public List<OrderDTO> getRecords() {
         return this.records;
@@ -80,6 +82,7 @@ public class OrderPageResponse implements Serializable {
 
     /**
      * 总记录数
+     * @return 总记录数
      */
     public Long getTotal() {
         return this.total;
@@ -88,6 +91,7 @@ public class OrderPageResponse implements Serializable {
     /**
      * 当前页码
      * 从1开始
+     * @return 当前页码（从1开始）
      */
     public Integer getPageNum() {
         return this.pageNum;
@@ -95,6 +99,7 @@ public class OrderPageResponse implements Serializable {
 
     /**
      * 每页大小
+     * @return 每页大小
      */
     public Integer getPageSize() {
         return this.pageSize;
@@ -103,6 +108,7 @@ public class OrderPageResponse implements Serializable {
     /**
      * 总页数
      * 根据总记录数和每页大小计算得出
+     * @return 总页数
      */
     public Integer getTotalPages() {
         return this.totalPages;
@@ -110,6 +116,7 @@ public class OrderPageResponse implements Serializable {
 
     /**
      * 是否有上一页
+     * @return 是否有上一页
      */
     public Boolean getHasPrevious() {
         return this.hasPrevious;
@@ -117,6 +124,7 @@ public class OrderPageResponse implements Serializable {
 
     /**
      * 是否有下一页
+     * @return 是否有下一页
      */
     public Boolean getHasNext() {
         return this.hasNext;
@@ -124,6 +132,7 @@ public class OrderPageResponse implements Serializable {
 
     /**
      * 订单列表数据
+     * @param records 订单列表
      */
     public void setRecords(final List<OrderDTO> records) {
         this.records = records;
@@ -131,6 +140,7 @@ public class OrderPageResponse implements Serializable {
 
     /**
      * 总记录数
+     * @param total 总记录数
      */
     public void setTotal(final Long total) {
         this.total = total;
@@ -139,6 +149,7 @@ public class OrderPageResponse implements Serializable {
     /**
      * 当前页码
      * 从1开始
+     * @param pageNum 当前页码（从1开始）
      */
     public void setPageNum(final Integer pageNum) {
         this.pageNum = pageNum;
@@ -146,6 +157,7 @@ public class OrderPageResponse implements Serializable {
 
     /**
      * 每页大小
+     * @param pageSize 每页大小
      */
     public void setPageSize(final Integer pageSize) {
         this.pageSize = pageSize;
@@ -154,6 +166,7 @@ public class OrderPageResponse implements Serializable {
     /**
      * 总页数
      * 根据总记录数和每页大小计算得出
+     * @param totalPages 总页数
      */
     public void setTotalPages(final Integer totalPages) {
         this.totalPages = totalPages;
@@ -161,6 +174,7 @@ public class OrderPageResponse implements Serializable {
 
     /**
      * 是否有上一页
+     * @param hasPrevious 是否有上一页
      */
     public void setHasPrevious(final Boolean hasPrevious) {
         this.hasPrevious = hasPrevious;
@@ -168,11 +182,15 @@ public class OrderPageResponse implements Serializable {
 
     /**
      * 是否有下一页
+     * @param hasNext 是否有下一页
      */
     public void setHasNext(final Boolean hasNext) {
         this.hasNext = hasNext;
     }
 
+    /** 判断当前对象与指定对象是否相等。
+     * @param o 待比较对象
+     * @return 相等返回 {@code true}，否则返回 {@code false} */
     @java.lang.Override
     public boolean equals(final java.lang.Object o) {
         if (o == this) return true;
@@ -203,10 +221,15 @@ public class OrderPageResponse implements Serializable {
         return true;
     }
 
+    /** 判断指定对象是否可与当前对象进行相等比较（供 equals 协作的子类扩展点）。
+     * @param other 待判断对象
+     * @return 可比较返回 {@code true}，否则返回 {@code false} */
     protected boolean canEqual(final java.lang.Object other) {
         return other instanceof OrderPageResponse;
     }
 
+    /** 返回基于各字段计算的哈希码。
+     * @return 哈希码 */
     @java.lang.Override
     public int hashCode() {
         final int PRIME = 59;
@@ -228,11 +251,14 @@ public class OrderPageResponse implements Serializable {
         return result;
     }
 
+    /** 返回对象各字段拼接而成的字符串表示。
+     * @return 字符串表示 */
     @java.lang.Override
     public java.lang.String toString() {
         return "OrderPageResponse(records=" + this.getRecords() + ", total=" + this.getTotal() + ", pageNum=" + this.getPageNum() + ", pageSize=" + this.getPageSize() + ", totalPages=" + this.getTotalPages() + ", hasPrevious=" + this.getHasPrevious() + ", hasNext=" + this.getHasNext() + ")";
     }
 
+    /** 构造 OrderPageResponse 对象。 */
     public OrderPageResponse() {
     }
 

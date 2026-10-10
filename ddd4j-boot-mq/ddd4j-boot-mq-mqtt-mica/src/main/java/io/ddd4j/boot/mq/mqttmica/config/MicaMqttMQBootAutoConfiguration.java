@@ -23,6 +23,17 @@ import org.springframework.context.annotation.Import;
 @Import(Ddd4jMQRegistrarConfiguration.class)
 public class MicaMqttMQBootAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public MicaMqttMQBootAutoConfiguration() {
+    }
+
+    /**
+     * 绑定 {@code ddd4j.mq.mqtt-mica.*} 配置到 {@link MicaMqttProperties}。
+     *
+     * @return 可被用户自定义 Bean 覆盖的 mqtt-mica 属性实例
+     */
     @Bean
     @ConditionalOnMissingBean
     @ConfigurationProperties(prefix = "ddd4j.mq.mqtt-mica")
@@ -30,6 +41,12 @@ public class MicaMqttMQBootAutoConfiguration {
         return new MicaMqttProperties();
     }
 
+    /**
+     * 基于属性创建上游 {@link MicaMqttMQClient}。
+     *
+     * @param properties 已绑定的 {@code ddd4j.mq.mqtt-mica.*} 配置
+     * @return mqtt-mica MQ 客户端实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public MicaMqttMQClient micaMqttMQClient(MicaMqttProperties properties) {

@@ -32,6 +32,17 @@ import org.springframework.context.annotation.Import;
 @Import(Ddd4jMQRegistrarConfiguration.class)
 public class RocketMQBootAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public RocketMQBootAutoConfiguration() {
+    }
+
+    /**
+     * 绑定 {@code ddd4j.mq.rocketmq.*} 配置到 {@link RocketMQProperties}。
+     *
+     * @return 可被用户自定义 Bean 覆盖的 RocketMQ 属性实例
+     */
     @Bean
     @ConditionalOnMissingBean
     @ConfigurationProperties(prefix = "ddd4j.mq.rocketmq")
@@ -39,6 +50,12 @@ public class RocketMQBootAutoConfiguration {
         return new RocketMQProperties();
     }
 
+    /**
+     * 基于属性创建上游 {@link RocketMQClient}，容器销毁时调用 {@code close} 释放连接。
+     *
+     * @param properties 已绑定的 {@code ddd4j.mq.rocketmq.*} 配置
+     * @return RocketMQ 客户端实例
+     */
     @Bean(destroyMethod = "close")
     @ConditionalOnMissingBean
     public RocketMQClient rocketMQClient(RocketMQProperties properties) {

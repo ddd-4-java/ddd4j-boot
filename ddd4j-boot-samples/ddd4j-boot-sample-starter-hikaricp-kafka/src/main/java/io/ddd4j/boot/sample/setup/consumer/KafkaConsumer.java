@@ -10,10 +10,24 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Kafka 消息消费者，监听普通与事务两类主题并打印日志。
+ */
 @Slf4j
 @Component
 public class KafkaConsumer implements InitializingBean {
 
+    /**
+     * 构造 Kafka 消费者实例。
+     */
+    public KafkaConsumer() {
+    }
+
+    /**
+     * Bean 属性初始化完成后回调，当前无额外初始化逻辑。
+     *
+     * @throws Exception 初始化过程异常
+     */
     @Override
     public void afterPropertiesSet() throws Exception {
 

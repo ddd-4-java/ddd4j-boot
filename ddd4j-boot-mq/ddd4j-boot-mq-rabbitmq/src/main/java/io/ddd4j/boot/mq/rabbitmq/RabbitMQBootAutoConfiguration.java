@@ -32,6 +32,17 @@ import org.springframework.context.annotation.Import;
 @Import(Ddd4jMQRegistrarConfiguration.class)
 public class RabbitMQBootAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public RabbitMQBootAutoConfiguration() {
+    }
+
+    /**
+     * 绑定 {@code ddd4j.mq.rabbitmq.*} 配置到 {@link RabbitMQProperties}。
+     *
+     * @return 可被用户自定义 Bean 覆盖的 RabbitMQ 属性实例
+     */
     @Bean
     @ConditionalOnMissingBean
     @ConfigurationProperties(prefix = "ddd4j.mq.rabbitmq")
@@ -39,6 +50,12 @@ public class RabbitMQBootAutoConfiguration {
         return new RabbitMQProperties();
     }
 
+    /**
+     * 基于属性创建上游 {@link RabbitMQClient}，容器销毁时调用 {@code close} 释放连接。
+     *
+     * @param properties 已绑定的 {@code ddd4j.mq.rabbitmq.*} 配置
+     * @return RabbitMQ 客户端实例
+     */
     @Bean(destroyMethod = "close")
     @ConditionalOnMissingBean
     public RabbitMQClient rabbitMQClient(RabbitMQProperties properties) {

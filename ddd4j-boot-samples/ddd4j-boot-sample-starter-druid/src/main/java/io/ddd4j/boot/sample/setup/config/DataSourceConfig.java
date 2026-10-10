@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
+ * Copyright (C) 2018 ddd4j (https://github.com/ddd-4-java/ddd4j).
  * All Rights Reserved.
  */
 package io.ddd4j.boot.sample.setup.config;
@@ -19,8 +19,20 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 public class DataSourceConfig {
+    /**
+     * 构造 DataSourceConfig 实例。
+     *
+     */
+    public DataSourceConfig() {
+    }
 
     //注意: @Qualifier 按名称在IOC容器中找指定名称的bean，
+    /**
+     * 执行 platformTransactionManager 操作。
+     *
+     * @param myDataSource 目标数据源
+     * @return 事务管理器
+     */
     @Bean //或者 @Bean("myTransactionManager")
     public PlatformTransactionManager platformTransactionManager(
             @Qualifier("dataSource") DataSource myDataSource) {

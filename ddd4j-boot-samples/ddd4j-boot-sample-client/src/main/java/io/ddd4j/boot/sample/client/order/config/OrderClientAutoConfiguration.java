@@ -21,8 +21,22 @@ import org.springframework.web.client.RestClient;
 @EnableConfigurationProperties(OrderClientProperties.class)
 public class OrderClientAutoConfiguration {
 
+    /**
+     * 构造OrderClientAutoConfiguration对象（默认无参构造，字段由调用方逐个设置）。
+     */
+    public OrderClientAutoConfiguration() {
+    }
+
     private static final Logger log = LoggerFactory.getLogger(OrderClientAutoConfiguration.class);
 
+    /**
+     * 构建订单服务客户端使用的 {@link RestClient}。
+     *
+     * <p>按配置属性设置连接/读取超时，并记录初始化日志。</p>
+     *
+     * @param properties 订单服务客户端配置属性
+     * @return 配置完成的 RestClient 实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public RestClient restClient(OrderClientProperties properties) {
@@ -38,6 +52,13 @@ public class OrderClientAutoConfiguration {
         return restClient;
     }
 
+    /**
+     * 注册订单服务客户端 Bean。
+     *
+     * @param restClient 注入的 RestClient
+     * @param properties 订单服务客户端配置属性
+     * @return 基于 RestClient 的订单服务客户端实现
+     */
     @Bean
     @ConditionalOnMissingBean
     public OrderServiceClient orderServiceClient(

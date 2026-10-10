@@ -46,6 +46,12 @@ public class Ddd4jObservabilityAutoConfiguration {
     private static final String INSTRUMENTATION_SCOPE = "io.ddd4j.boot.observability";
 
     /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public Ddd4jObservabilityAutoConfiguration() {
+    }
+
+    /**
      * 敏感材料脱敏器（默认拒绝 + 白名单）。
      *
      * @param properties 配置属性

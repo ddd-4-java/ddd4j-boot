@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
+ * Copyright (C) 2018 ddd4j (https://github.com/ddd-4-java/ddd4j).
  * All Rights Reserved.
  */
 package io.ddd4j.boot.sample.setup.config;
@@ -12,8 +12,17 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 
+/**
+ * MyMetaObjectHandler 类
+ */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
+    /**
+     * 构造 MyMetaObjectHandler 实例。
+     *
+     */
+    public MyMetaObjectHandler() {
+    }
 
     @Override
     public void insertFill(MetaObject metaObject) {

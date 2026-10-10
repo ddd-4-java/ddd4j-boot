@@ -24,14 +24,21 @@ public class DemoApplicationService {
 
     private final DemoRepository demoRepository;
 
+    /**
+     * 构造 DemoApplicationService 实例。
+     *
+     * @param demoRepository demoRepository
+     */
     public DemoApplicationService(DemoRepository demoRepository) {
         this.demoRepository = demoRepository;
     }
 
     /**
      * 创建Demo
+     *
+     * @param command 命令对象
+     * @return 新增结果
      */
-    @Transactional(rollbackFor = Exception.class)
     public DemoDTO createDemo(CreateDemoCommand command) {
         org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("创建Demo，名称: {}", command.getName());
 
@@ -47,8 +54,10 @@ public class DemoApplicationService {
 
     /**
      * 更新Demo
+     *
+     * @param command 命令对象
+     * @return 更新结果
      */
-    @Transactional(rollbackFor = Exception.class)
     public DemoDTO updateDemo(UpdateDemoCommand command) {
         org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("更新Demo，ID: {}", command.getId());
 
@@ -74,6 +83,9 @@ public class DemoApplicationService {
 
     /**
      * 根据ID查询Demo
+     *
+     * @param id 标识 ID
+     * @return 查询结果
      */
     public DemoDTO getDemoById(Long id) {
         return demoRepository.findById(id)
@@ -83,6 +95,8 @@ public class DemoApplicationService {
 
     /**
      * 查询所有Demo
+     *
+     * @return 查询结果
      */
     public List<DemoDTO> getAllDemos() {
         return demoRepository.findAll().stream()
@@ -92,8 +106,9 @@ public class DemoApplicationService {
 
     /**
      * 删除Demo
+     *
+     * @param id 标识 ID
      */
-    @Transactional(rollbackFor = Exception.class)
     public void deleteDemo(Long id) {
         org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("删除Demo，ID: {}", id);
         demoRepository.delete(id);
@@ -101,8 +116,9 @@ public class DemoApplicationService {
 
     /**
      * 批量删除Demo
+     *
+     * @param ids 标识 ID 集合
      */
-    @Transactional(rollbackFor = Exception.class)
     public void deleteDemos(List<Long> ids) {
         org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("批量删除Demo，IDs: {}", ids);
         ids.forEach(this::deleteDemo);

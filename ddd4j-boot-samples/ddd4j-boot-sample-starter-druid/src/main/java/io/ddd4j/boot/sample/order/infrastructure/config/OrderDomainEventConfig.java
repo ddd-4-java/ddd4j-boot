@@ -9,6 +9,12 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @Configuration
 @EnableAsync
 public class OrderDomainEventConfig {
+    /**
+     * 构造 OrderDomainEventConfig 实例。
+     *
+     */
+    public OrderDomainEventConfig() {
+    }
     // 启用异步事件处理
 }
 

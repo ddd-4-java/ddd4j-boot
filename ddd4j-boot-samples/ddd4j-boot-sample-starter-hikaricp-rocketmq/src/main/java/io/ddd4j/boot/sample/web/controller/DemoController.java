@@ -38,15 +38,27 @@ import java.util.List;
 @RequestMapping("demo")
 public class DemoController extends BaseController {
 
+    /**
+     * 构造 Demo 前端控制器实例。
+     *
+     * @param messageSource I18N 国际化消息源
+     * @param beanMapper     对象映射器
+     */
     public DemoController(NestedMessageSource messageSource, Mapper beanMapper) {
         super(messageSource, beanMapper);
     }
 
+    /**
+     * Demo 示例服务。
+     */
     @Autowired
     private IDemoService demoService;
 
     /**
      * 增加逻辑实现
+     *
+     * @param dto 新增请求数据传输对象
+     * @return 接口返回对象
      */
     @Operation(summary = "创建xxx信息", description = "根据DemoVo创建xxx")
     @Parameter(name = "demoVo", description = "xxx数据传输对象", required = true)
@@ -73,6 +85,10 @@ public class DemoController extends BaseController {
 
     /**
      * 修改逻辑实现
+     *
+     * @param demoVo 修改请求数据传输对象
+     * @return 接口返回对象
+     * @throws Exception 业务处理异常
      */
     @Operation(summary = "修改xxx信息", description = "修改xxx")
     @Parameter(name = "demoVo", description = "xxx数据传输对象", required = true)
@@ -99,6 +115,11 @@ public class DemoController extends BaseController {
 
     /**
      * 删除逻辑实现
+     *
+     * @param ids     主键集合，多个使用英文逗号拼接
+     * @param request HTTP 请求对象
+     * @return 接口返回对象
+     * @throws Exception 业务处理异常
      */
     @Operation(summary = "删除xxx信息", description = "根据ID删除xxx")
     @Parameter(name = "ids", description = "ID集合，多个使用,拼接", required = true)
@@ -121,10 +142,20 @@ public class DemoController extends BaseController {
     }
 
 
+    /**
+     * 获取 Demo 示例服务。
+     *
+     * @return Demo 示例服务
+     */
     public IDemoService getDemoService() {
         return demoService;
     }
 
+    /**
+     * 设置 Demo 示例服务。
+     *
+     * @param demoService Demo 示例服务
+     */
     public void setDemoService(IDemoService demoService) {
         this.demoService = demoService;
     }

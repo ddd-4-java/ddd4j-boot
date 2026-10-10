@@ -13,6 +13,12 @@ public class RedisTemplateRegionCache implements RegionCache {
 
     private final StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * 构造基于 Redis 的区域缓存。
+     *
+     * @param stringRedisTemplate Spring Data Redis 字符串模板（不可为 {@code null}）
+     * @throws NullPointerException {@code stringRedisTemplate} 为 {@code null} 时抛出
+     */
     public RedisTemplateRegionCache(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = Objects.requireNonNull(
                 stringRedisTemplate, "stringRedisTemplate must not be null");

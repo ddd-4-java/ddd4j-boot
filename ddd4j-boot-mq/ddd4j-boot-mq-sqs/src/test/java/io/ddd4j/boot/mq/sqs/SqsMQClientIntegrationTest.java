@@ -56,6 +56,7 @@ class SqsMQClientIntegrationTest {
 
     @Container
     static final LocalStackContainer LOCALSTACK = new LocalStackContainer(
+            // 测试镜像来源: https://testcontainers.com/modules/localstack/（SQS/SNS 由 LocalStack 模块覆盖，官方无独立 SQS 模块）
             DockerImageName.parse("localstack/localstack:3.8.0"))
             .withServices(LocalStackContainer.Service.SQS);
 
