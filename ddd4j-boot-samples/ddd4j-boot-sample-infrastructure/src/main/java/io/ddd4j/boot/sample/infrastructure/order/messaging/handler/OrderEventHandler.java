@@ -11,13 +11,25 @@ import org.springframework.stereotype.Component;
 /**
  * 订单领域事件处理器
  * 处理订单相关的领域事件，可以触发后续的业务流程
+ *
+ * <p>领域语义：事务提交后的副作用出口。每个方法以 {@code @EventListener}
+ * 订阅一类订单事件，并以 {@code @Async} 在独立线程异步执行，
+ * 保证通知、库存、积分等后续动作不阻塞主交易链路、不参与其事务。</p>
  */
 @Component
 public class OrderEventHandler {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class);
 
     /**
-     * 处理订单创建事件
+     * 构造订单领域事件处理器，本类无状态、可复用。
+     */
+    public OrderEventHandler() {
+    }
+
+    /**
+     * 处理订单创建事件。
+     *
+     * @param event 订单创建事件，含订单号与用户 ID
      */
     @Async
     @EventListener
@@ -30,7 +42,9 @@ public class OrderEventHandler {
     }
 
     /**
-     * 处理订单支付事件
+     * 处理订单支付事件。
+     *
+     * @param event 订单支付事件，含订单号与支付方式
      */
     @Async
     @EventListener
@@ -43,7 +57,9 @@ public class OrderEventHandler {
     }
 
     /**
-     * 处理订单发货事件
+     * 处理订单发货事件。
+     *
+     * @param event 订单发货事件，含订单号与物流单号
      */
     @Async
     @EventListener
@@ -56,7 +72,9 @@ public class OrderEventHandler {
     }
 
     /**
-     * 处理订单取消事件
+     * 处理订单取消事件。
+     *
+     * @param event 订单取消事件，含订单号与取消原因
      */
     @Async
     @EventListener

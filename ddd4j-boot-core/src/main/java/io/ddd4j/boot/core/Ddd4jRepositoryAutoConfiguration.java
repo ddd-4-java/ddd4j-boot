@@ -37,7 +37,15 @@ public class Ddd4jRepositoryAutoConfiguration {
     private static final Logger log = LoggerFactory.getLogger(Ddd4jRepositoryAutoConfiguration.class);
 
     /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public Ddd4jRepositoryAutoConfiguration() {
+    }
+
+    /**
      * Repository 自动注册器：扫描 Spring 容器中的 Repository Bean 并注册到 RepositoryRegistry。
+     *
+     * @return 仓储自动注册器 Bean 实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -46,7 +54,11 @@ public class Ddd4jRepositoryAutoConfiguration {
     }
 
     /**
-     * CommandBus 自动装配：收集所有 CommandExecutor 并构建唯一的 CommandBus。
+     * CommandBus 自动装配：收集所有 CommandExecutor 并构建唯一的 CommandBus；
+     * 未发现任何执行器时打印告警日志，便于排查 CQRS 未接入问题。
+     *
+     * @param commandExecutors 容器中收集到的全部命令执行器
+     * @return 基于 {@link DefaultCommandBus} 的命令总线实例
      */
     @Bean
     @ConditionalOnMissingBean(CommandBus.class)
@@ -64,6 +76,12 @@ public class Ddd4jRepositoryAutoConfiguration {
      * 并注册到 {@link RepositoryRegistry}。
      */
     public static class Ddd4jRepositoryRegistrar implements BeanPostProcessor, DisposableBean {
+
+        /**
+         * 显式无参构造器，供 Spring 实例化该 BeanPostProcessor。
+         */
+        public Ddd4jRepositoryRegistrar() {
+        }
 
         private static final Logger log = LoggerFactory.getLogger(Ddd4jRepositoryRegistrar.class);
 
@@ -143,6 +161,8 @@ public class Ddd4jRepositoryAutoConfiguration {
 
         /**
          * 获取已注册的仓储实例映射（用于测试）。
+         *
+         * @return 不可修改的聚合类型到仓储实例映射快照
          */
         public Map<Class<?>, Repository> getRegisteredRepositories() {
             return java.util.Collections.unmodifiableMap(registeredRepositories);

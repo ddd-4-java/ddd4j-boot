@@ -11,4 +11,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class Ddd4jWebFluxProperties {
 
     private boolean enabled = true;
+
+    /**
+     * 显式无参构造器，供 {@code @EnableConfigurationProperties} 绑定时实例化。
+     */
+    public Ddd4jWebFluxProperties() {
+    }
 }

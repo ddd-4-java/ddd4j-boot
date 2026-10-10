@@ -187,7 +187,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.github.hiwepy.boot.sample.MqttServerApplication</mainClass>
+                    <mainClass>io.ddd4j.boot.sample.MqttServerApplication</mainClass>
                 </configuration>
             </plugin>
 

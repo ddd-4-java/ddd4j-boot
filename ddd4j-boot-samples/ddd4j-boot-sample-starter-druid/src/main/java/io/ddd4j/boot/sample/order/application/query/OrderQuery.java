@@ -19,6 +19,12 @@ import java.time.LocalDateTime;
 @Schema(description = "订单查询参数")
 
 public class OrderQuery implements Serializable {
+    /**
+     * 构造 OrderQuery 实例。
+     *
+     */
+    public OrderQuery() {
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -120,90 +126,200 @@ public class OrderQuery implements Serializable {
         return true;
     }
 
+    /**
+     * 获取用户ID。
+     *
+     * @return 用户ID
+     */
     public Long getUserId() {
         return userId;
     }
 
+    /**
+     * 设置用户ID。
+     *
+     * @param userId 用户ID
+     */
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
+    /**
+     * 获取订单状态。
+     *
+     * @return 订单状态
+     */
     public OrderStatus getStatus() {
         return status;
     }
 
+    /**
+     * 设置订单状态。
+     *
+     * @param status 订单状态
+     */
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
+    /**
+     * 获取开始时间（订单创建时间）。
+     *
+     * @return 开始时间（订单创建时间）
+     */
     public LocalDateTime getStartTime() {
         return startTime;
     }
 
+    /**
+     * 设置开始时间（订单创建时间）。
+     *
+     * @param startTime 开始时间（订单创建时间）
+     */
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
+    /**
+     * 获取结束时间（订单创建时间）。
+     *
+     * @return 结束时间（订单创建时间）
+     */
     public LocalDateTime getEndTime() {
         return endTime;
     }
 
+    /**
+     * 设置结束时间（订单创建时间）。
+     *
+     * @param endTime 结束时间（订单创建时间）
+     */
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
+    /**
+     * 获取最小金额。
+     *
+     * @return 最小金额
+     */
     public java.math.BigDecimal getMinAmount() {
         return minAmount;
     }
 
+    /**
+     * 设置最小金额。
+     *
+     * @param minAmount 最小金额
+     */
     public void setMinAmount(java.math.BigDecimal minAmount) {
         this.minAmount = minAmount;
     }
 
+    /**
+     * 获取最大金额。
+     *
+     * @return 最大金额
+     */
     public java.math.BigDecimal getMaxAmount() {
         return maxAmount;
     }
 
+    /**
+     * 设置最大金额。
+     *
+     * @param maxAmount 最大金额
+     */
     public void setMaxAmount(java.math.BigDecimal maxAmount) {
         this.maxAmount = maxAmount;
     }
 
+    /**
+     * 获取订单号（支持模糊查询）。
+     *
+     * @return 订单号（支持模糊查询）
+     */
     public String getOrderNo() {
         return orderNo;
     }
 
+    /**
+     * 设置订单号（支持模糊查询）。
+     *
+     * @param orderNo 订单号（支持模糊查询）
+     */
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
     }
 
+    /**
+     * 获取页码（从1开始）。
+     *
+     * @return 页码（从1开始）
+     */
     public Integer getPageNum() {
         return pageNum;
     }
 
+    /**
+     * 设置页码（从1开始）。
+     *
+     * @param pageNum 页码（从1开始）
+     */
     public void setPageNum(Integer pageNum) {
         this.pageNum = pageNum;
     }
 
+    /**
+     * 获取每页大小。
+     *
+     * @return 每页大小
+     */
     public Integer getPageSize() {
         return pageSize;
     }
 
+    /**
+     * 设置每页大小。
+     *
+     * @param pageSize 每页大小
+     */
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
 
+    /**
+     * 获取排序字段。
+     *
+     * @return 排序字段
+     */
     public String getSortField() {
         return sortField;
     }
 
+    /**
+     * 设置排序字段。
+     *
+     * @param sortField 排序字段
+     */
     public void setSortField(String sortField) {
         this.sortField = sortField;
     }
 
+    /**
+     * 获取排序方向。
+     *
+     * @return 排序方向
+     */
     public String getSortDirection() {
         return sortDirection;
     }
 
+    /**
+     * 设置排序方向。
+     *
+     * @param sortDirection 排序方向
+     */
     public void setSortDirection(String sortDirection) {
         this.sortDirection = sortDirection;
     }

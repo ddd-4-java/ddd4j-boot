@@ -1,0 +1,187 @@
+================================================================================
+testcontainers 构件治理证据（ddd4j-boot 4.0.x，双版本漂移修复）
+日期: 2026-10-08
+仓库: E:\workspaces\workspace-ddd4j\workspace-ddd4j-boot\ddd4j-boot
+分支: 4.0.x（github/4.0.x），执行前 git status: 工作树干净
+执行方式: 仅使用 grep/find/unzip/javap/Read/Edit/WebFetch；未运行 mvn/gradle；
+          未执行 git commit/push/切分支。
+================================================================================
+
+一、缺陷描述
+--------------------------------------------------------------------------------
+治理前 ddd4j-boot-dependencies/pom.xml 仅钉版 3 个 testcontainers 构件
+（testcontainers / junit-jupiter / mysql = 1.21.4），而 9 个 mq 相关模块声明的是
+**2.x 命名构件**（testcontainers-junit-jupiter / testcontainers-kafka /
+testcontainers-rabbitmq / testcontainers-localstack）且不带 <version>，
+被上游 BOM 解析为 2.x，与钉版 1.21.4 在测试类路径双版本共存（包名相同、类分裂）。
+
+二、2.x 命名构件命中清单（治理前，模块:行）
+--------------------------------------------------------------------------------
+grep -rn --include=pom.xml -E 'testcontainers-(junit-jupiter|kafka|rabbitmq|localstack)' .
+命中 12 处 / 9 个模块 pom：
+  ddd4j-boot-mq/ddd4j-boot-mq-activemq/pom.xml:42        testcontainers-junit-jupiter
+  ddd4j-boot-mq/ddd4j-boot-mq-kafka/pom.xml:53           testcontainers-kafka
+  ddd4j-boot-mq/ddd4j-boot-mq-kafka/pom.xml:58           testcontainers-junit-jupiter
+  ddd4j-boot-mq/ddd4j-boot-mq-mqtt-mica/pom.xml:55       testcontainers-junit-jupiter
+  ddd4j-boot-mq/ddd4j-boot-mq-nats/pom.xml:42            testcontainers-junit-jupiter
+  ddd4j-boot-mq/ddd4j-boot-mq-pulsar/pom.xml:42          testcontainers-junit-jupiter
+  ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq/pom.xml:47        testcontainers-rabbitmq
+  ddd4j-boot-mq/ddd4j-boot-mq-rabbitmq/pom.xml:52        testcontainers-junit-jupiter
+  ddd4j-boot-mq/ddd4j-boot-mq-redis-stream/pom.xml:47    testcontainers-junit-jupiter
+  ddd4j-boot-mq/ddd4j-boot-mq-rocketmq/pom.xml:47        testcontainers-junit-jupiter
+  ddd4j-boot-mq/ddd4j-boot-mq-sqs/pom.xml:42             testcontainers-junit-jupiter
+  ddd4j-boot-mq/ddd4j-boot-mq-sqs/pom.xml:47             testcontainers-localstack
+
+三、版本管理来源核查（上游 BOM 实测）
+--------------------------------------------------------------------------------
+1) spring-boot-dependencies 4.0.8（根 pom.xml import）
+   ~/.m2/.../spring-boot-dependencies-4.0.8.pom
+   - property: testcontainers.version = 2.0.5
+   - import: org.testcontainers:testcontainers-bom:2.0.5（scope=import）
+   - testcontainers-bom:2.0.5 管理清单实测：管理 core `testcontainers` 及全部
+     `testcontainers-*` 重命名构件；对 1.x 命名 junit-jupiter/kafka/rabbitmq/
+     localstack/mysql/jdbc/database-commons 的管理计数均为 0。
+2) ddd4j-dependencies 3.0.x.20260630-SNAPSHOT（ddd4j-boot-dependencies import）
+   - junit-jupiter = 1.20.6、postgresql = 1.20.6
+   - core testcontainers = 2.0.3
+   - testcontainers-junit-jupiter / -kafka / -mysql / -postgresql / -rabbitmq = 2.0.3
+   - testcontainers-localstack = 2.0.5
+   即：治理前 org.testcontainers 存在 1.20.6 / 2.0.3 / 2.0.5 三个管理来源。
+3) ddd4j-boot-dependencies 直接 <dependencyManagement> 条目优先于上述 import
+   （Maven 规则：当前 POM 直接声明支配 import），钉版 = 1.21.4。
+
+四、API 兼容性检查结论（决定 9 个模块是否可转换）
+--------------------------------------------------------------------------------
+测试源码 import 全部为经典包名（org.testcontainers.containers.* /
+org.testcontainers.junit.jupiter.* / org.testcontainers.utility.*）。
+javap 实测（本地仓库 jar）：
+  - org.testcontainers:kafka:1.20.6
+      KafkaContainer(DockerImageName) 构造器存在；getBootstrapServers() 存在
+  - org.testcontainers:rabbitmq:1.20.6
+      RabbitMQContainer(DockerImageName) 构造器存在；getAmqpPort() 存在；
+      execInContainer 来自 core GenericContainer（1.21.4 存在）
+  - org.testcontainers:localstack:1.20.6
+      LocalStackContainer(DockerImageName) 构造器存在；
+      withServices(LocalStackContainer.Service...) 存在；
+      getEndpointOverride(Service) 返回 java.net.URI 存在
+  - org.testcontainers:junit-jupiter:1.21.4
+      @Testcontainers(disabledWithoutDocker=...) / @Container 存在
+  - core GenericContainer / Wait / DockerImageName / MountableFile /
+    Container.ExecResult：1.21.4 均存在（unzip 核对 GenericContainer.class）
+  - 其余 6 模块（activemq/mqtt-mica/nats/pulsar/redis-stream/rocketmq）仅用
+    GenericContainer + Wait + DockerImageName + MountableFile，全部 core API
+结论：未发现任何 2.x-only API，9 个模块全部可转换，0 个模块因 API 不兼容停止。
+备注：本地仓库暂无 kafka/rabbitmq/localstack 的 1.21.4 二进制（仅 1.20.6），
+      1.21.4 在构建时由编排者统一拉取；1.20.6 与 1.21.4 同属 1.x，上表 API
+      签名在 1.21.4 保持兼容（1.x 契约稳定）。
+
+五、转换前后坐标
+--------------------------------------------------------------------------------
+模块                 转换前（无版本，被 BOM 解析为 2.x）      转换后（钉版 1.21.4 覆盖）
+activemq             org.testcontainers:testcontainers-junit-jupiter
+                     -> org.testcontainers:junit-jupiter
+kafka                org.testcontainers:testcontainers-kafka  -> org.testcontainers:kafka
+                     org.testcontainers:testcontainers-junit-jupiter -> junit-jupiter
+mqtt-mica            testcontainers-junit-jupiter              -> junit-jupiter
+nats                 testcontainers-junit-jupiter              -> junit-jupiter
+pulsar               testcontainers-junit-jupiter              -> junit-jupiter
+rabbitmq             testcontainers-rabbitmq                   -> rabbitmq
+                     testcontainers-junit-jupiter              -> junit-jupiter
+redis-stream         testcontainers-junit-jupiter              -> junit-jupiter
+rocketmq             testcontainers-junit-jupiter              -> junit-jupiter
+sqs                  testcontainers-junit-jupiter              -> junit-jupiter
+                     testcontainers-localstack                 -> localstack
+（groupId 均为 org.testcontainers，scope 均为 test，原行号不变）
+
+六、钉版清单变化（ddd4j-boot-dependencies/pom.xml）
+--------------------------------------------------------------------------------
+治理前（3 条，约 309-325 行）：testcontainers / junit-jupiter / mysql = 1.21.4
+治理后（6 条，311-342 行）：
+  :313 testcontainers  :318 junit-jupiter  :323 mysql
+  :330 kafka           :335 rabbitmq       :340 localstack   （新增 3 条）
+新增条目附注释说明"与上方同批钉版 1.21.4，使 1.x 命名构件不再落到上游 BOM 的 2.x"。
+版本属性 spring-boot-testcontainers.version = 1.21.4（:214）不变。
+
+七、双版本 -> 单版本证明（grep / jar 实测计数）
+--------------------------------------------------------------------------------
+A. 2.x 命名构件计数
+   治理前: grep '<artifactId>testcontainers-' --include=pom.xml -r .  => 12 处 / 9 文件
+   治理后: 同命令                                              => 0 处（退出码 1）
+B. org.testcontainers 依赖声明分布（治理后全仓）
+   groupId 邻接 artifactId 计数：junit-jupiter 13、testcontainers 13、
+   mysql 2、kafka 2、rabbitmq 2、localstack 2（含钉版清单自身 6 条）；
+   不同 artifactId 去重 = 6，与钉版清单 6 条一一对应，无遗漏。
+C. 带 <version> 的 org.testcontainers 块（治理后全仓）
+   grep -A2 groupId 后命中 <version> 的仅 6 处，全部位于
+   ddd4j-boot-dependencies/pom.xml（:314/:319/:324/:331/:336/:341），
+   且全部 = ${spring-boot-testcontainers.version} = 1.21.4。
+   模块级声明全部无 <version>，统一由钉版清单解析 => 1.21.4。
+D. 传递依赖落点
+   mysql:1.21.4 -> jdbc:1.21.4 -> database-commons:1.21.4（来自 mysql pom）；
+   testcontainers-bom:2.0.5 与 ddd4j-dependencies BOM 均不管理 1.x 命名的
+   jdbc / database-commons（实测计数 0 / 无该条目），故传递链保持 1.21.4。
+   junit-jupiter/kafka/rabbitmq/localstack 的传递依赖仅为 core testcontainers
+   （已被钉 1.21.4）。
+E. 双版本共存（治理前）的 jar 级证据
+   - org/testcontainers/junit/jupiter/Testcontainers.class 等同名类同时存在于
+     junit-jupiter-1.21.4.jar（10 个 class）与 testcontainers-junit-jupiter-2.0.5.jar
+     （10 个 class）——同 FQN 双版本。
+   - org/testcontainers/containers/KafkaContainer.class 同时存在于 1.x kafka 与
+     testcontainers-kafka-2.0.5.jar；
+     org/testcontainers/containers/RabbitMQContainer.class 同时存在于 1.x rabbitmq
+     与 testcontainers-rabbitmq-2.0.5.jar；
+     org/testcontainers/containers/localstack/LocalStackContainer.java 同时存在于
+     1.x localstack 与 testcontainers-localstack-2.0.5（sources jar）——
+     与 core 1.21.4 的 org.testcontainers.containers.* 包共享，构成类分裂。
+   本地仓库实存 testcontainers-junit-jupiter / -kafka / -rabbitmq / -localstack
+   的 2.0.3 与 2.0.5 版本目录，佐证治理前 2.x 确已参与解析。
+结论：治理后 ddd4j-boot 4.0.x 全部 org.testcontainers 依赖（6 个直接 artifactId
++ 传递 jdbc/database-commons）唯一解析为 1.21.4，双版本漂移消除。
+
+八、testcontainers 溯源注释（任务 2）
+--------------------------------------------------------------------------------
+已 WebFetch https://testcontainers.com/modules/ 核对，并逐页确认 URL：
+  kafka      -> https://testcontainers.com/modules/kafka/        （页面标题 Testcontainers Kafka Module）
+  rabbitmq   -> https://testcontainers.com/modules/rabbitmq/     （Testcontainers RabbitMQ Module）
+  localstack -> https://testcontainers.com/modules/localstack/   （Testcontainers LocalStack Module）
+  artemis    -> https://testcontainers.com/modules/artemis/      （Testcontainers Artemis Module，镜像 apache/activemq-artemis）
+  mosquitto  -> https://testcontainers.com/modules/mosquitto/    （Testcontainers Mosquitto Module）
+  nats       -> https://testcontainers.com/modules/nats/         （Testcontainers NATS Module）
+  pulsar     -> https://testcontainers.com/modules/pulsar/       （Testcontainers Pulsar Module）
+  redis      -> https://testcontainers.com/modules/redis/        （Testcontainers Redis Module）
+  SQS/SNS: 模块索引页无独立 SQS/SNS 模块，由 LocalStack 模块覆盖（sqs 测试注释已注明）。
+  RocketMQ: 模块索引页无该模块，注释改为 Docker Hub 官方镜像来源 + 模块索引链接。
+新增 `// 测试镜像来源: ...` 注释共 9 条（每测试文件 1 条），位于 DockerImageName.parse
+镜像声明处：
+  ddd4j-boot-mq-activemq/.../ActiveMQClientIntegrationTest.java
+  ddd4j-boot-mq-kafka/.../KafkaMQClientIntegrationTest.java
+  ddd4j-boot-mq-mqtt-mica/.../MicaMqttMQClientIntegrationTest.java
+  ddd4j-boot-mq-nats/.../NatsMQClientIntegrationTest.java
+  ddd4j-boot-mq-pulsar/.../PulsarMQClientIntegrationTest.java
+  ddd4j-boot-mq-rabbitmq/.../RabbitMQClientIntegrationTest.java
+  ddd4j-boot-mq-redis-stream/.../RedisStreamMQClientIntegrationTest.java
+  ddd4j-boot-mq-rocketmq/.../RocketMQClientIntegrationTest.java
+  ddd4j-boot-mq-sqs/.../SqsMQClientIntegrationTest.java
+
+九、家族一致性结论（任务 3）
+--------------------------------------------------------------------------------
+同家族 admin 项目已将 testcontainers 归口 boot-bom 1.21.4，本次修改与其一致，
+admin 无需改动。
+boot 线（ddd4j-boot 4.0.x）治理后 testcontainers 版本唯一性结论：**1.21.4 唯一**
+（依据第七节 A/B/C/D 四组计数；构建级 dependency:tree 终证由编排者统一执行）。
+
+十、改动文件清单（git diff --stat，19 文件，+39/-12）
+--------------------------------------------------------------------------------
+  ddd4j-boot-dependencies/pom.xml（钉版 +3 条）
+  9 个 mq 模块 pom.xml（坐标替换）
+  9 个 mq 模块测试类（溯源注释）
+
+十一、未尽事项 / 风险
+--------------------------------------------------------------------------------
+1. 禁止运行 mvn，构建级证明（mvn dependency:tree / test-compile / IT）待编排者执行。
+2. 本地仓库缺 org.testcontainers:kafka/rabbitmq/localstack:1.21.4 二进制
+   （现有 1.20.6），首次构建需联网拉取 1.21.4。
+3. 根 pom.xml organization/developers 段存在已知红线命中：按约束未修复、未回显，
+   留待编排者处理；本次改动内容均为 testcontainers 坐标与中文技术注释，
+   不含任何品牌类字面量。
+================================================================================

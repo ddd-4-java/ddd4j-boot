@@ -35,11 +35,20 @@ public class OrderRepositoryImpl implements OrderRepository {
     private final OrderConverter orderConverter;
     private final OrderDomainEventPublisher domainEventPublisher;
 
+    /**
+     * 构造 OrderRepositoryImpl 实例。
+     *
+     * @param orderMapper 订单对象映射器
+     * @param orderItemMapper orderItemMapper
+     * @param orderItemRepository orderItemRepository
+     * @param orderConverter orderConverter
+     * @param domainEventPublisher domainEventPublisher
+     */
     public OrderRepositoryImpl(OrderMapper orderMapper,
-                               OrderItemMapper orderItemMapper,
-                               OrderItemRepository orderItemRepository,
-                               OrderConverter orderConverter,
-                               OrderDomainEventPublisher domainEventPublisher) {
+            OrderItemMapper orderItemMapper,
+            OrderItemRepository orderItemRepository,
+            OrderConverter orderConverter,
+            OrderDomainEventPublisher domainEventPublisher) {
         this.orderMapper = orderMapper;
         this.orderItemMapper = orderItemMapper;
         this.orderItemRepository = orderItemRepository;

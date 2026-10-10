@@ -37,6 +37,15 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
 @Import(AuthSpringConfiguration.class)
 public class SaTokenEnhanceAutoConfiguration implements InitializingBean {
 
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public SaTokenEnhanceAutoConfiguration() {
+    }
+
+    /**
+     * 重写 Sa-Token 的注解处理器，增加注解合并功能。
+     */
     @Override
     public void afterPropertiesSet() throws Exception {
         // 重写 Sa-Token 的注解处理器，增加注解合并功能
@@ -45,6 +54,10 @@ public class SaTokenEnhanceAutoConfiguration implements InitializingBean {
 
     /**
      * 显式注册 ddd4j 扩展注解处理器，避免依赖框架自动发现策略。
+     *
+     * @param mixCheckLoginHandler 多账号混合登录注解处理器
+     * @param internalCheckHandler 内部服务 API Key 注解处理器
+     * @return 初始化回调 Bean，容器就绪时完成注册
      */
     @Bean
     @ConditionalOnMissingBean(name = "ddd4jSaTokenAnnotationHandlerRegistrar")
@@ -60,6 +73,8 @@ public class SaTokenEnhanceAutoConfiguration implements InitializingBean {
 
     /**
      * 多账号混合登录注解处理器。
+     *
+     * @return 混合登录注解处理器实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -69,6 +84,8 @@ public class SaTokenEnhanceAutoConfiguration implements InitializingBean {
 
     /**
      * 内部服务 API Key 注解处理器。
+     *
+     * @return 内部 API Key 注解处理器实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -78,6 +95,8 @@ public class SaTokenEnhanceAutoConfiguration implements InitializingBean {
 
     /**
      * Sa-Token SubjectProvider（覆盖 ddd4j-auth-spring 的默认装配，确保 sa-token 优先）。
+     *
+     * @return Subject 提供者实例
      */
     @Bean
     @ConditionalOnMissingBean(SubjectProvider.class)
@@ -87,6 +106,8 @@ public class SaTokenEnhanceAutoConfiguration implements InitializingBean {
 
     /**
      * Sa-Token exception handler for servlet applications.
+     *
+     * @return Sa-Token 异常处理器实例
      */
     @Bean
     @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)

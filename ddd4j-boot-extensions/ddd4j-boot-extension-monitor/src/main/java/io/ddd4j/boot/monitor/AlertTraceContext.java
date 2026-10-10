@@ -24,6 +24,12 @@ public class AlertTraceContext {
     private static final String MISSING_VALUE = "-";
 
     /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本渲染器。
+     */
+    public AlertTraceContext() {
+    }
+
+    /**
      * 渲染告警关联字段块（追加在告警正文之后）。
      *
      * @return 形如 {@code \ntraceId: xxx\ncorrelationId: yyy} 的文本块

@@ -30,8 +30,9 @@
         </dependency>
         <!-- For Spring Biz -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.github.easy4j</groupId>
             <artifactId>spring-biz</artifactId>
+            <version>3.3.x.20241020.RELEASE</version>
         </dependency>
     </dependencies>
 

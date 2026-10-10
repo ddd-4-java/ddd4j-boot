@@ -34,6 +34,12 @@ public class ColaExceptionHandler extends BaseExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(ColaExceptionHandler.class);
 
     /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本异常处理类。
+     */
+    public ColaExceptionHandler() {
+    }
+
+    /**
      * 处理 COLA 业务异常。
      *
      * @param ex COLA 业务异常

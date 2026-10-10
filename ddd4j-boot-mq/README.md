@@ -725,10 +725,10 @@ mvn verify -Pmq-integration-tests -pl ddd4j-boot-cmpt-rabbit,ddd4j-boot-cmpt-kaf
 
 ### 阶段四：深化与治理
 
-- [ ] 各 Broker Ack 映射矩阵配置模板（yaml 片段）
-- [ ] SQS 迁移至 `io.awspring.cloud:spring-cloud-aws-starter-sqs`
+- [ ] 各 Broker Ack 映射矩阵配置模板（yaml 片段）【待办】
+- [ ] SQS 迁移至 `io.awspring.cloud:spring-cloud-aws-starter-sqs`【待办】
 - [x] Rocket / Redis Stream Testcontainers IT
-- [ ] 可选：`ddd4j-cloud-cmpt-base-mqflow` 拦截器集成
+- [ ] 可选：`ddd4j-cloud-cmpt-base-mqflow` 拦截器集成【待办】
 - [x] legacy 配置桥接移除（`base-mq.*` / `LegacyMQBridgeConfiguration` / `MQEventPublisherBridgeConfiguration`）
 - [x] legacy `impl/*Client` 源码清理
 

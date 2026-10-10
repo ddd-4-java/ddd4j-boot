@@ -39,7 +39,15 @@ import javax.sql.DataSource;
 public class Ddd4jMybatisAutoConfiguration {
 
     /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public Ddd4jMybatisAutoConfiguration() {
+    }
+
+    /**
      * MyBatis Plus 官方拦截器，聚合多个 InnerInterceptor。
+     *
+     * @return 聚合了分页、乐观锁、防全表攻击插件的拦截器实例
      */
     @Bean
     @ConditionalOnMissingBean(MybatisPlusInterceptor.class)

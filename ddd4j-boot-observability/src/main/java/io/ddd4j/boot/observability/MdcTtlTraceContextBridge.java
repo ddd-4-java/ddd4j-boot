@@ -18,6 +18,12 @@ import org.springframework.util.StringUtils;
 public class MdcTtlTraceContextBridge implements TraceContextBridge {
 
     /**
+     * 显式无参构造器，供 Spring 实例化桥接 Bean。
+     */
+    public MdcTtlTraceContextBridge() {
+    }
+
+    /**
      * 将三键同时写入 MDC 与 TTL ThreadContext（空值跳过，不污染上下文）。
      *
      * @param traceId       当前 trace 标识
@@ -36,7 +42,7 @@ public class MdcTtlTraceContextBridge implements TraceContextBridge {
      */
     @Override
     public void detach() {
-        for (String field : new String[]{
+        for (String field : new String[] {
                 TraceLogFields.TRACE_ID, TraceLogFields.CORRELATION_ID, TraceLogFields.CAUSATION_ID}) {
             MDC.remove(field);
             ThreadContext.remove(field);

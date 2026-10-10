@@ -16,9 +16,15 @@ import org.springframework.util.StringUtils;
 public class OtlpEndpointCondition implements Condition {
 
     /**
+     * 显式无参构造器，供 Spring 实例化条件判定对象。
+     */
+    public OtlpEndpointCondition() {
+    }
+
+    /**
      * 判断 OTLP 端点是否已配置。
      *
-     * @param context  条件上下文
+     * @param context 条件上下文
      * @param metadata 注解元数据
      * @return true 表示端点已配置（非空白）
      */

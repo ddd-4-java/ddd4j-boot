@@ -15,6 +15,9 @@ import java.util.Objects;
  */
 public class AkkaAutoConfiguration {
 
+    /**
+     * 显式无参构造器（纯 Java 工厂，供 {@link Ddd4jAkkaBootAutoConfiguration} 以 {@code @Bean} 装配）。
+     */
     public AkkaAutoConfiguration() {
     }
 

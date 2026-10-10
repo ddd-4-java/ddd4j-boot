@@ -19,4 +19,9 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(CacheProperties.class)
 public class Ddd4jCacheAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public Ddd4jCacheAutoConfiguration() {
+    }
 }

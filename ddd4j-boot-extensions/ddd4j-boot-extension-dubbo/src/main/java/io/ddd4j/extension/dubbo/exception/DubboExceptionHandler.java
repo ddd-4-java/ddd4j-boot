@@ -35,6 +35,12 @@ public class DubboExceptionHandler extends BaseExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(DubboExceptionHandler.class);
 
     /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本异常处理类。
+     */
+    public DubboExceptionHandler() {
+    }
+
+    /**
      * 处理 Dubbo RPC 异常。
      *
      * @param ex RPC 异常

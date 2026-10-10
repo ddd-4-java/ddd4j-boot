@@ -37,6 +37,7 @@ class ActiveMQClientIntegrationTest {
 
     @Container
     static final GenericContainer<?> ARTEMIS = new GenericContainer<>(
+            // 测试镜像来源: https://testcontainers.com/modules/artemis/
             DockerImageName.parse("apache/activemq-artemis:2.33.0-alpine"))
             .withEnv("ARTEMIS_USER", USER)
             .withEnv("ARTEMIS_PASSWORD", PASSWORD)

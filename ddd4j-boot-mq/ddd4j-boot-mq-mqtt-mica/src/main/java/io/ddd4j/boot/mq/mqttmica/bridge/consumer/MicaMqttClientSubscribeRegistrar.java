@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 将 {@link MqttClientSubscribe} 定义编程式注册到 mica {@link IMqttClientSession}。
+ * 将 {@link org.dromara.mica.mqtt.core.annotation.MqttClientSubscribe} 定义编程式注册到 mica {@link IMqttClientSession}。
  * <p>
  * 注册 API 与 mica 内置 {@code MqttClientSubscribeDetector} 一致：
  * {@code clientSession.addSubscriptionList(topicFilters, qos, listener)}。
@@ -33,12 +33,23 @@ public class MicaMqttClientSubscribeRegistrar implements AutoCloseable {
     private final ApplicationContext applicationContext;
     private final List<MicaMqttClientSubscribeDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
 
+    /**
+     * 构造注册器。
+     *
+     * @param applicationContext Spring 上下文，用于定位客户端模板、会话与环境占位符
+     */
     public MicaMqttClientSubscribeRegistrar(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
     /**
-     * 注册单条 {@link MqttClientSubscribe} 定义到 mica 客户端会话。
+     * 注册单条 {@link org.dromara.mica.mqtt.core.annotation.MqttClientSubscribe} 定义到 mica 客户端会话。
+     *
+     * <p>类级监听直接以 {@link IMqttClientMessageListener} 注册；方法级监听先校验方法签名
+     * （public、非 static、2~3 个参数）再包装为 {@link MqttClientSubscribeListener} 注册。
+     *
+     * @param definition 待注册的订阅定义
+     * @throws IllegalArgumentException 方法级订阅签名不符合 mica 规则时抛出
      */
     public void register(MicaMqttClientSubscribeDefinition definition) {
         Objects.requireNonNull(definition, "definition");
@@ -71,6 +82,9 @@ public class MicaMqttClientSubscribeRegistrar implements AutoCloseable {
 
     /**
      * 解析 topic 模板为 MQTT filter（Spring 占位符 + {@code ${}} 变量替换）。
+     *
+     * @param topicTemplates 注解声明的 topic 模板
+     * @return 展开占位符后的 MQTT topic 过滤器数组
      */
     public String[] resolveTopicFilters(String[] topicTemplates) {
         Environment environment = applicationContext.getEnvironment();
@@ -82,6 +96,8 @@ public class MicaMqttClientSubscribeRegistrar implements AutoCloseable {
 
     /**
      * 返回已注册定义（只读视图）。
+     *
+     * @return 不可修改的已注册订阅定义列表
      */
     public List<MicaMqttClientSubscribeDefinition> registeredDefinitions() {
         return List.copyOf(registeredDefinitions);

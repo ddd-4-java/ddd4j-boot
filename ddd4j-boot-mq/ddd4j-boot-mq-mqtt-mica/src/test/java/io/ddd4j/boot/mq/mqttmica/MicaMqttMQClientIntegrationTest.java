@@ -33,6 +33,7 @@ class MicaMqttMQClientIntegrationTest {
 
     @Container
     static final GenericContainer<?> MOSQUITTO = new GenericContainer<>(
+            // 测试镜像来源: https://testcontainers.com/modules/mosquitto/
             DockerImageName.parse("eclipse-mosquitto:1.6.15"))
             .withExposedPorts(1883)
             .waitingFor(Wait.forListeningPort());

@@ -28,18 +28,34 @@ import java.util.UUID;
 @RequestMapping("/api/orders")
 public class OrderController {
 
+    /** 订单应用服务 */
     private final OrderApplicationService applicationService;
 
+    /** 构造 OrderController 对象。
+     * @param applicationService 订单应用服务 */
     public OrderController(OrderApplicationService applicationService) {
         this.applicationService = applicationService;
     }
 
+    /**
+     * 创建订单。
+     *
+     * @param request 创建订单请求（订单号、买家ID、买家名称）
+     * @return 订单读模型
+     */
     @PostMapping
     public R<OrderReadModel> create(@Valid @RequestBody CreateOrderRequest request) {
         return R.ok(applicationService.find(applicationService.create(
                 new CreateOrderCommand(request.orderNo(), request.buyerId(), request.buyerName())).id()));
     }
 
+    /**
+     * 为订单追加明细行。
+     *
+     * @param orderId 订单ID
+     * @param request 追加明细请求（商品ID、商品名称、数量、单价）
+     * @return 更新后的订单读模型
+     */
     @PostMapping("/{orderId}/lines")
     public R<OrderReadModel> addLine(@PathVariable String orderId, @Valid @RequestBody AddOrderLineRequest request) {
         applicationService.addLine(new AddOrderLineCommand(orderId, request.goodsId(), request.goodsName(),
@@ -47,6 +63,13 @@ public class OrderController {
         return R.ok(applicationService.find(orderId));
     }
 
+    /**
+     * 支付订单（携带幂等键，未提供时自动生成 UUID）。
+     *
+     * @param orderId         订单ID
+     * @param idempotencyKey  幂等键（请求头 Idempotency-Key，可选）
+     * @return 支付后的订单读模型
+     */
     @PostMapping("/{orderId}/pay")
     public R<OrderReadModel> pay(@PathVariable String orderId,
                                  @RequestHeader(value = "Idempotency-Key", required = false) String idempotencyKey) {
@@ -55,20 +78,47 @@ public class OrderController {
         return R.ok(applicationService.find(orderId));
     }
 
+    /**
+     * 取消订单。
+     *
+     * @param orderId 订单ID
+     * @return 取消后的订单读模型
+     */
     @PostMapping("/{orderId}/cancel")
     public R<OrderReadModel> cancel(@PathVariable String orderId) {
         applicationService.cancel(orderId);
         return R.ok(applicationService.find(orderId));
     }
 
+    /**
+     * 按订单ID查询订单读模型。
+     *
+     * @param orderId 订单ID
+     * @return 订单读模型
+     */
     @GetMapping("/{orderId}")
     public R<OrderReadModel> find(@PathVariable String orderId) {
         return R.ok(applicationService.find(orderId));
     }
 
+    /**
+     * 创建订单请求参数。
+     *
+     * @param orderNo   订单号
+     * @param buyerId   买家ID
+     * @param buyerName 买家名称
+     */
     public record CreateOrderRequest(@NotBlank String orderNo, @NotBlank String buyerId, @NotBlank String buyerName) {
     }
 
+    /**
+     * 追加订单明细请求参数。
+     *
+     * @param goodsId   商品ID
+     * @param goodsName 商品名称
+     * @param quantity  数量（最小为 1）
+     * @param unitPrice 单价（最小为 0.01）
+     */
     public record AddOrderLineRequest(@NotBlank String goodsId, @NotBlank String goodsName,
                                       @Min(1) int quantity, @DecimalMin(value = "0.01") BigDecimal unitPrice) {
     }

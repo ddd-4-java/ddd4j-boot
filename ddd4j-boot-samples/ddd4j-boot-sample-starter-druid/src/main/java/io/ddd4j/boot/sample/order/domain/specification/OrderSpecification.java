@@ -10,9 +10,18 @@ import java.time.LocalDateTime;
  * 用于封装复杂的业务规则查询条件
  */
 public class OrderSpecification {
+    /**
+     * 构造 OrderSpecification 实例。
+     *
+     */
+    public OrderSpecification() {
+    }
 
     /**
      * 订单是否可以取消
+     *
+     * @param order 订单
+     * @return 处理结果
      */
     public static boolean canCancel(Order order) {
         if (order == null) {
@@ -24,6 +33,9 @@ public class OrderSpecification {
 
     /**
      * 订单是否可以支付
+     *
+     * @param order 订单
+     * @return 处理结果
      */
     public static boolean canPay(Order order) {
         return order != null && order.getStatus() == OrderStatus.PENDING;
@@ -31,6 +43,9 @@ public class OrderSpecification {
 
     /**
      * 订单是否可以发货
+     *
+     * @param order 订单
+     * @return 处理结果
      */
     public static boolean canShip(Order order) {
         return order != null && order.getStatus() == OrderStatus.PAID;
@@ -38,6 +53,9 @@ public class OrderSpecification {
 
     /**
      * 订单是否可以确认收货
+     *
+     * @param order 订单
+     * @return 处理结果
      */
     public static boolean canConfirmDelivery(Order order) {
         return order != null && order.getStatus() == OrderStatus.SHIPPED;
@@ -45,6 +63,9 @@ public class OrderSpecification {
 
     /**
      * 订单是否可以完成
+     *
+     * @param order 订单
+     * @return 处理结果
      */
     public static boolean canComplete(Order order) {
         return order != null && order.getStatus() == OrderStatus.DELIVERED;
@@ -52,6 +73,11 @@ public class OrderSpecification {
 
     /**
      * 订单是否在指定时间范围内创建
+     *
+     * @param order 订单
+     * @param start 开始时间
+     * @param end 结束时间
+     * @return 校验结果
      */
     public static boolean isCreatedBetween(Order order, LocalDateTime start, LocalDateTime end) {
         if (order == null || order.getCreateTime() == null) {
@@ -64,6 +90,10 @@ public class OrderSpecification {
 
     /**
      * 订单金额是否大于指定金额
+     *
+     * @param order 订单
+     * @param amount 金额
+     * @return 校验结果
      */
     public static boolean isAmountGreaterThan(Order order, java.math.BigDecimal amount) {
         return order != null

@@ -33,17 +33,17 @@ Testcontainers 完善集成测试。保留 Guice + Javalin 编程式路由范式
 
 ## 2. Step 1：基础设施层（预计 2 天）
 
-- [ ] **Task 1: 注册 testcontainers BOM**
+- [x] **Task 1: 注册 testcontainers BOM**（证据: ddd4j-javalin-dependencies/pom.xml:47 testcontainers.version=1.20.6，L197-199 BOM import）
 
     - 在 `ddd4j-javalin-dependencies/pom.xml` 注册 testcontainers BOM 1.20.6
 
-- [ ] **Task 2: 新建 ddd4j-javalin-testcontainers 共享模块**
+- [ ] **Task 2: 新建 ddd4j-javalin-testcontainers 共享模块**【待办】
 
     - 11 个 fixture：MySQL、Postgres、MariaDB、MongoDB、Redis、Kafka、RabbitMQ、ActiveMQ、Keycloak、WireMock、MQTT
     - `Ddd4jTestContainersExtension.java`（JUnit 5 Extension）
     - `JunitJupiterTestContainers.java` 注解
 
-- [ ] **Task 3: 新建 ddd4j-javalin-web 核心模块**
+- [x] **Task 3: 新建 ddd4j-javalin-web 核心模块**（证据: ddd4j-javalin-web 模块含 Ddd4jJavalinProperties/AutoConfiguration/Application 与 AutoConfigurationTest，JavalinTestFixture 在 ddd4j-javalin-testcontainers 模块）
 
     - `Ddd4jJavalinProperties.java`（配置 POJO）
     - `Ddd4jJavalinAutoConfiguration.java`（Guice Module）
@@ -53,62 +53,62 @@ Testcontainers 完善集成测试。保留 Guice + Javalin 编程式路由范式
 
 ## 3. Step 2：数据层（预计 1.5 天）
 
-- [ ] **Task 4: 删除 3 个 @Deprecated Module**
+- [x] **Task 4: 删除 3 个 @Deprecated Module**（证据: cache-javalin、data-mybatisplus-javalin、data-crypto-javalin 三个模块目录已不存在）
 
     - cache-javalin、data-mybatisplus-javalin、data-crypto-javalin
 
-- [ ] **Task 5: 补 4 个数据空壳**
+- [x] **Task 5: 补 4 个数据空壳**（证据: Ddd4jApiLogJavalinModule/Ddd4jExternalJavalinModule/Ddd4jDataScopeJavalinModule/Ddd4jJpaJavalinModule 四类齐备，data-jpa 另有 Ddd4jJpaJavalinPostgresIT）
 
     - data-logs：`Ddd4jApiLogJavalinModule`
     - data-external：`Ddd4jExternalJavalinModule`
     - data-datascope：`Ddd4jDataScopeJavalinModule`
     - data-jpa：`Ddd4jJpaJavalinModule` + Testcontainers PostgreSQL 测试
 
-- [ ] **Task 6: data-mybatisplus 加集成测试**
+- [x] **Task 6: data-mybatisplus 加集成测试**（证据: ddd4j-javalin-data-mybatisplus src/test 下 it/Ddd4jMybatisJavalinMySqlIT.java，target/failsafe-reports 有执行记录）
 
     - `Ddd4jMybatisJavalinMySqlIT.java`（Testcontainers MySQL + 完整 CRUD）
 
 ## 4. Step 3：鉴权层（预计 1 天）
 
-- [ ] **Task 7: 补 auth-license 空壳**
+- [x] **Task 7: 补 auth-license 空壳**（证据: ddd4j-javalin-auth-license src/main 下 Ddd4jLicenseJavalinModule.java 与对应模块测试）
 
     - `Ddd4jLicenseJavalinModule`
 
-- [ ] **Task 8: 3 个 auth 加 Keycloak 集成测试**
+- [x] **Task 8: 3 个 auth 加 Keycloak 集成测试**（证据: Ddd4jSaTokenKeycloakSmokeIT、Ddd4jSecurityKeycloakSmokeIT、Ddd4jShiroKeycloakSmokeIT 三文件齐备且有 failsafe-reports）
 
     - satoken/security/shiro 各加 `*KeycloakIT.java`
 
 ## 5. Step 4：MQ 层（预计 2 天）
 
-- [ ] **Task 9: 4 个核心 broker 集成测试**
+- [x] **Task 9: 4 个核心 broker 集成测试**（证据: Ddd4jKafkaMqIT、Ddd4jRabbitMqIT、Ddd4jRedisStreamMqIT、Ddd4jActiveMqIT 四个 IT 齐备且有 failsafe-reports）
 
     - kafka / rabbitmq / redis-stream / activemq 各加 `*IT.java`
 
-- [ ] **Task 10: 其余 9 个 broker 加骨架**
+- [ ] **Task 10: 其余 9 个 broker 加骨架**【待办】
 
     - 只放 Container 启动与配置注入
 
 ## 6. Step 5：扩展层（预计 0.5 天）
 
-- [ ] **Task 11: 补 extension-qlexpress 空壳**
+- [x] **Task 11: 补 extension-qlexpress 空壳**（证据: ddd4j-javalin-extension-qlexpress src/main 下 Ddd4jQLExpressJavalinModule.java 与对应模块测试）
 
     - `Ddd4jQLExpressJavalinModule`
 
 ## 7. Step 6：Sample 升级与新增（预计 1.5 天）
 
-- [ ] **Task 12: 5 个现有 sample 升级**
+- [ ] **Task 12: 5 个现有 sample 升级**【待办】
 
     - 使用 `Ddd4jJavalinApplication` + `JavalinTestFixture`
 
-- [ ] **Task 13: 新增 5 个 sample**
+- [ ] **Task 13: 新增 5 个 sample**【待办】
 
     - jdbc / mybatis-testcontainers / cqrs-person-kafka / qlexpress / keycloak
 
 ## 8. Step 7：文档与收尾（预计 0.5 天）
 
-- [ ] **Task 14: 顶层 README.md + docs/ 文档**
+- [x] **Task 14: 顶层 README.md + docs/ 文档**（证据: 顶层 README.md 与 docs/ 下 architecture.md、javalin-flow.md、javalin-version-matrix.md、testcontainers-guide.md）
 
-- [ ] **Task 15: 跑全量集成测试**
+- [x] **Task 15: 跑全量集成测试**（证据: pom.xml:396 javalin-integration-tests profile，19 个 target/failsafe-reports/*.txt 覆盖 auth/data/mq）
 
     - `mvn verify -Pjavalin-integration-tests`
 

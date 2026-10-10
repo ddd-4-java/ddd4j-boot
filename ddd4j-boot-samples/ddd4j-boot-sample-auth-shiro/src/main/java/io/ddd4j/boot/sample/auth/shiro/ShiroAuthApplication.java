@@ -11,6 +11,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ShiroAuthApplication {
 
+    /**
+     * 构造 ShiroAuthApplication 实例。
+     *
+     */
+    public ShiroAuthApplication() {
+    }
+
+    /**
+     * Shiro 鉴权示例应用的启动类，负责引导 Spring 容器启动。
+     *
+     * @param args 命令行参数，由 Spring 启动流程使用
+     */
     public static void main(String[] args) {
         SpringApplication.run(ShiroAuthApplication.class, args);
     }

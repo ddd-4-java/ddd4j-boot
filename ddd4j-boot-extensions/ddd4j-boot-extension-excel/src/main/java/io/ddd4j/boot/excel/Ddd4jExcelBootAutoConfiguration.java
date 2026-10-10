@@ -35,6 +35,12 @@ import org.springframework.context.annotation.Bean;
 public class Ddd4jExcelBootAutoConfiguration {
 
     /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public Ddd4jExcelBootAutoConfiguration() {
+    }
+
+    /**
      * Web Excel 工具 Bean（仅当 classpath 上有 {@link HttpServletResponse} 时装配）。
      *
      * <p>业务侧可直接注入使用：

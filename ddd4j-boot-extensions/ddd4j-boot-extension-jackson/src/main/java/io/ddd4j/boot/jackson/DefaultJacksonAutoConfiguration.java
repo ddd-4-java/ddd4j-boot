@@ -63,6 +63,19 @@ public class DefaultJacksonAutoConfiguration {
     @Value("${spring.jackson.default-null-json-object-serializer:true}")
     private boolean defaultNullJsonObjectSerializer;
 
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public DefaultJacksonAutoConfiguration() {
+    }
+
+    /**
+     * 构造 Jackson 3.x {@code JsonMapper} 主 Bean（{@code @Primary}，最高优先级）。
+     *
+     * <p>注册 JSR310 时间序列化器与按类型的 null 值序列化策略。
+     *
+     * @return 配置完成的 {@link JsonMapper} 实例
+     */
     @Bean
     @Order(Integer.MIN_VALUE)
     @Primary

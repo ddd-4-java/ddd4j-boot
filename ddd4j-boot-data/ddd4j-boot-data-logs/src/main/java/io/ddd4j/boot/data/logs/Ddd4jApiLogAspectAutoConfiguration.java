@@ -30,6 +30,17 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(ApiOperationLogAspect.class)
 public class Ddd4jApiLogAspectAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 实例化本配置类。
+     */
+    public Ddd4jApiLogAspectAutoConfiguration() {
+    }
+
+    /**
+     * 装配默认 API 操作日志提供者。
+     *
+     * @return 操作日志提供者实例
+     */
     @Bean
     @ConditionalOnMissingBean(ApiOperationLogProvider.class)
     public ApiOperationLogProvider apiOperationLogProvider() {
@@ -54,8 +65,8 @@ public class Ddd4jApiLogAspectAutoConfiguration {
     /**
      * 装配 API 操作日志切面。
      *
-     * @param snowflake   雪花算法 ID 生成器
-     * @param logProvider 操作日志提供者
+     * @param snowflake    雪花算法 ID 生成器
+     * @param logProvider  操作日志提供者
      * @return 切面实例
      */
     @Bean

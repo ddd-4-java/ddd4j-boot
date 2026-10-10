@@ -14,12 +14,28 @@ import java.util.stream.Collectors;
 
 /**
  * 订单转换器（领域对象与持久化实体转换）
+ *
+ * <p>领域语义：防腐层（ACL）中的对象映射组件，负责订单聚合与
+ * t_order / t_order_item 表实体之间的双向转换，隔离领域模型与
+ * 存储模型；状态编码、金额与币种、地址拆合等差异均在此收敛，
+ * 转换失败（入参为 null）一律返回 {@code null} 而非抛错。</p>
  */
 @Component
 public class OrderConverter {
 
     /**
-     * 领域对象转持久化实体
+     * 构造订单转换器，本类无状态、可复用。
+     */
+    public OrderConverter() {
+    }
+
+    /**
+     * 领域对象转持久化实体。
+     *
+     * <p>状态取编码值、金额与币种拆分存储、地址打平为省市区等列。</p>
+     *
+     * @param order 订单聚合根，为 {@code null} 时返回 {@code null}
+     * @return 对应的订单持久化实体
      */
     public OrderEntity toEntity(Order order) {
         if (order == null) {
@@ -52,7 +68,16 @@ public class OrderConverter {
     }
 
     /**
-     * 持久化实体转领域对象
+     * 持久化实体转领域对象。
+     *
+     * <p>状态编码还原为 {@link OrderStatus}，省市区各列还原为
+     * {@link Address} 值对象，币种缺失时按 CNY 兜底；
+     * 订单项由调用方一并传入后挂载到聚合内部。</p>
+     *
+     * @param entity 订单持久化实体，为 {@code null} 时返回 {@code null}
+     * @param items  该订单的订单项列表，为 {@code null} 时按空列表处理
+     * @return 订单聚合根实例
+     * @throws IllegalArgumentException 状态编码无法匹配到 {@link OrderStatus} 时抛出
      */
     public Order toDomain(OrderEntity entity, List<OrderItem> items) {
         if (entity == null) {
@@ -86,7 +111,12 @@ public class OrderConverter {
     }
 
     /**
-     * 订单项领域对象转持久化实体
+     * 订单项领域对象转持久化实体。
+     *
+     * <p>单价与小计的金额部分写入数值列，币种单独落列。</p>
+     *
+     * @param item 订单项实体，为 {@code null} 时返回 {@code null}
+     * @return 对应的订单项持久化实体
      */
     public OrderItemEntity toItemEntity(OrderItem item) {
         if (item == null) {
@@ -107,7 +137,14 @@ public class OrderConverter {
     }
 
     /**
-     * 订单项持久化实体转领域对象
+     * 订单项持久化实体转领域对象。
+     *
+     * <p>金额列与币种列重组为 {@link Money} 后，走订单项构造器
+     * 复用其必填校验与小计推导逻辑。</p>
+     *
+     * @param entity 订单项持久化实体，为 {@code null} 时返回 {@code null}
+     * @return 订单项领域对象
+     * @throws IllegalArgumentException 商品 ID、数量或单价非法（持久化数据不合规）时抛出
      */
     public OrderItem toItemDomain(OrderItemEntity entity) {
         if (entity == null) {
@@ -127,7 +164,10 @@ public class OrderConverter {
     }
 
     /**
-     * 订单项列表转换
+     * 订单项持久化实体列表批量转领域对象列表。
+     *
+     * @param entities 订单项持久化实体列表，为 {@code null} 时返回空列表
+     * @return 订单项领域对象列表
      */
     public List<OrderItem> toItemDomainList(List<OrderItemEntity> entities) {
         if (entities == null) {
@@ -138,6 +178,12 @@ public class OrderConverter {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 订单项领域对象列表批量转持久化实体列表。
+     *
+     * @param items 订单项领域对象列表，为 {@code null} 时返回空列表
+     * @return 订单项持久化实体列表
+     */
     public List<OrderItemEntity> toItemEntityList(List<OrderItem> items) {
         if (items == null) {
             return new java.util.ArrayList<>();

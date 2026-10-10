@@ -22,6 +22,12 @@ public class DemoRepositoryImpl implements DemoRepository {
     private final DemoMapper demoMapper;
     private final DemoConverter demoConverter;
 
+    /**
+     * 构造 DemoRepositoryImpl 实例。
+     *
+     * @param demoMapper demoMapper
+     * @param demoConverter demoConverter
+     */
     public DemoRepositoryImpl(DemoMapper demoMapper, DemoConverter demoConverter) {
         this.demoMapper = demoMapper;
         this.demoConverter = demoConverter;

@@ -13,11 +13,23 @@ import akka.actor.Props;
  */
 public class SpringExtension extends AbstractExtensionId<SpringExtension.SpringExt> {
 
+    /**
+     * Akka 扩展单例提供者，供 {@code Props.create} 等场景复用。
+     */
     public static final SpringExtension SPRING_EXTENSION_PROVIDER = new SpringExtension();
 
+    /**
+     * 显式无参构造器（Akka {@link AbstractExtensionId} 要求扩展 Id 可实例化）。
+     */
     public SpringExtension() {
     }
 
+    /**
+     * 创建 Akka 扩展实例（每次 ActorSystem 注册时调用一次）。
+     *
+     * @param system 扩展宿主 ActorSystem
+     * @return 新建的 {@link SpringExt} 扩展实例
+     */
     @Override
     public SpringExt createExtension(ExtendedActorSystem system) {
         return new SpringExt();
@@ -29,6 +41,9 @@ public class SpringExtension extends AbstractExtensionId<SpringExtension.SpringE
      */
     public static class SpringExt implements Extension {
 
+        /**
+         * 显式无参构造器，供 Akka 扩展机制实例化。
+         */
         public SpringExt() {
         }
 

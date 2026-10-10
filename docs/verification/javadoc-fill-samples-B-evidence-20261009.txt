@@ -1,0 +1,143 @@
+================================================================================
+ddd4j-boot 样本模块 javadoc 全量补注（批次 B）证据
+日期：2026-10-09
+分支：4.0.x（工作区 E:\workspaces\workspace-ddd4j\workspace-ddd4j-boot\ddd4j-boot）
+执行纪律：不运行 mvn/gradle；不 git commit/push/切分支；仅触碰 3 个目标样本模块文件
+================================================================================
+
+【0】任务范围与纪律
+--------------------------------------------------------------------------------
+- 目标：仅以下 3 个样本模块 src/main/java 全部公共/受保护类型与成员补规范中文 javadoc。
+  1) ddd4j-boot-sample-starter-druid-rocketmq    32 文件（/tmp/clb2-m1.txt）
+  2) ddd4j-boot-sample-starter-druid-mqtt-server  29 文件（/tmp/clb2-m2.txt）
+  3) ddd4j-boot-sample-starter-r2dbc-webflux      28 文件（/tmp/clb2-m3.txt）
+  合计 89 文件（总清单：/tmp/clb2-batch.txt，find 生成；本证据内所有统计口径均以此清单为准）
+- 前序状态：上一轮代理完成部分批次但未留证据且中断，本轮先做只读盘点（r0 系列）再补缺口；
+  mqtt 模块 29 文件基线即 0 告警（既有文档已合规），全部跳过、仅做终验复跑。
+- 保护先期成果：不回退包树迁移（io.ddd4j.boot.sample）与红线清理成果；
+  按纪律为 doclint「default constructor」告警补「显式无参构造器 + javadoc」（语义等价，不改逻辑）。
+- 红线铁律：本证据文件不含 4 个旧品牌标识字面量；扫描使用构造模式
+  （/tmp/.oldseg.txt、/tmp/.oldapp.txt、/tmp/.rl4-edu.txt、/tmp/.rl4-cn.txt，各 1 行构造模式），
+  输出前必过掩码管道 /tmp/.mask.sh。
+- 他人辖区保护：common 模块 LogConstant/BizExceptionHandler 版权头已由集成方清洗，本轮未触碰；
+  本批 3 模块内的同名样本类（io.ddd4j.boot.sample.*）属本批辖区，正常补注。
+
+【1】自查方法（javadoc CLI）
+--------------------------------------------------------------------------------
+harness：/e/tmp/jdoc-clb2/run.sh <tag> <files...>
+命令要素：
+  JDK       = D:/Java/jdk-21.0.4（固定，未使用 JDK17；javadoc 加 -J-Duser.language=en）
+  参数      = -Xdoclint:all -Xmaxwarns 1000000 -Xmaxerrs 1000000 -quiet -protected
+              -source 21 -encoding UTF-8
+  classpath = /tmp/clb2-cp-mini.txt（3536 个 jar，newest-first 精简集；经 CLASSPATH 环境变量传递，
+              规避 bash ARG_MAX 超限）
+  sourcepath= run.sh 按文件所属模块自动推导 src/main/java（跨模块同 FQN 不互相掩盖）
+输出：TAG/FILES/WARN/ERR/EXIT；日志 /e/tmp/jdoc-clb2/<tag>.log（grep 须 -a）。
+口径：missing（no comment / no @param / no @return / default constructor）与语法告警
+      均须清零；逐模块跑为权威判定，全量合并跑为终态门禁。
+
+【2】盘点基线（r0 系列，只读）
+--------------------------------------------------------------------------------
+r0/r0b 为 harness 标定期（classpath/编码问题，含 err=3~4 的工具性失败），r0c 为权威基线：
+  模块                文件   WARN   ERR   备注
+  rocketmq             32    159    0    需补注
+  mqtt-server          29      0    0    全部跳过（既有文档已合规）
+  r2dbc-webflux        28    119    0    需补注
+  合计                 89    278    0
+日志：/e/tmp/jdoc-clb2/r0c-{rocketmq,mqtt,webflux}.log
+
+【3】按批清单与告警递减轨迹（迭代批 ≤30 文件；模块级终验按整模块跑）
+--------------------------------------------------------------------------------
+批   模块/范围            文件   递减轨迹（WARN/ERR）                              终态
+b1   rocketmq              32   r0c 159/0 → r1-rocketmq 0/0                        0/0
+b2   webflux               28   r0c 119/0 → r1-webflux 23/0 → r2-webflux 0/0       0/0
+b3   mqtt                  29   r0c 0/0（全跳过，仅终验复跑 rf-m2 0/0）             0/0
+终验 rf-m1(32)=0/0  rf-m2(29)=0/0  rf-m3(28)=0/0
+全量合并终态：rfull2 FILES=89 WARN=0 ERR=0 EXIT=0
+进度日志：/tmp/clb2-progress.txt（逐批记录，含各轮数字与修复备注）
+
+处理方式留痕（与进度日志一致）：
+- b1 rocketmq：15 个结构同构文件同步注释 + 13 个手工补注（逐文件核对语义），其余随同步收口。
+- b2 webflux：
+  a) 16 处单行访问器注释被 doclint 判缺 @param/@return → 改为多行紧凑块补全标签；
+  b) 7 个隐式默认构造器 → 显式声明 + 文档化；
+  c) 4 个 Lombok 实体（entity/User、entity/MyEvent、repository/entities/User、
+     repository/entities/MyEvent）：@NoArgsConstructor 与显式无参构造器共存会触发
+     lombok「已在类中定义了构造器」编译错误（最小复现 /e/tmp/jdoc-clb2-lbt/ 实测），
+     改为删除 @NoArgsConstructor 注解与 import、保留显式无参构造器并改写注释，
+     javac+lombok 实测 RC=0，javap 校验恰 1 个无参构造 + 生成全参构造 + getter，
+     与原语义等价（@Data 因已有全参构造不注入无参，@AllArgsConstructor 保留全参）。
+
+【4】全量合并跑 15 个 reference not found 的根因与消除（终态门禁）
+--------------------------------------------------------------------------------
+现象：rfull（89 文件一次跑）WARN=0 但 ERR=15（全部 error: reference not found），
+      而逐模块跑全部 0/0 —— 同样的 {@link} 引用逐模块可解析、仅合并失败。
+最小复现实验（日志 /e/tmp/jdoc-clb2/repro*.log）：
+  repro1 = rocketmq+webflux 两个同 FQN LogConstant 合并 → ERR=2（webflux 侧两个 {@link} 全失败）
+  repro2 = 仅 webflux LogConstant 单跑               → ERR=0
+  repro3 = 合并将 {@link} 改全限定名形式             → ERR=2（FQN 形式同样失败）
+  repro4 = 合并将 {@link} 改 {@code}                 → ERR=0（不解析引用即不报错）
+根因：3 个样本模块共享 io.ddd4j.boot.sample.* 包树，27 个 FQN 跨模块重复；
+      合并 sourcepath 下 doc 注释与类符号绑定错乱（以先入为主符号为准），
+      后入文件的注释在其自身编译单元上下文中无法完成 {@link} 元素解析 —— 属合并跑伪错误。
+复核：15 个错误全部落在重复 FQN 文件上（DUP≥2，逐文件核实），13 个去重引用 / 11 个文件。
+修复：仅对失败行做 {@link X} → {@code X} 等形改写（共 15 处 = 10 文件 13 处 + LogConstant 2 处）：
+  rocketmq：BizExceptionHandler、WebMvcConfiguration、
+            ApplicationEnvironmentPreparedEventListener、ApplicationFailedEventListener、
+            ApplicationStartedEventListener（各 1 处）
+  webflux ：entity/DemoEntity、mapper/DemoMapper(2)、service/IDemoService(2)、
+            service/impl/DemoServiceImpl(2)、setup/config/CaffeineCacheConfig（各按失败行）、
+            setup/LogConstant(2)
+  逐处均为注释文本行内替换，不动任何代码行。
+终态复跑：
+  rfull2 (89 合并) = 0 warning / 0 error / EXIT=0
+  rf-m1 (rocketmq 32) = 0/0    rf-m2 (mqtt 29) = 0/0    rf-m3 (webflux 28) = 0/0
+
+【5】红线扫描（4 模式 × 89 文件）
+--------------------------------------------------------------------------------
+方式：grep -F -f <构造模式文件> 逐文件计数，只输出命中数（0 命中无输出可展示）。
+结果：/tmp/.oldseg.txt hits=0
+      /tmp/.oldapp.txt hits=0
+      /tmp/.rl4-edu.txt hits=0
+      /tmp/.rl4-cn.txt  hits=0
+      pattern-hit-files = 0 × 4；掩码管道输出为空。
+（另：本证据文件与会话输出均未出现 4 个旧品牌字面量原文。）
+
+【6】统计
+--------------------------------------------------------------------------------
+javadoc 构造统计（当前态，按 /tmp/clb2-*.txt 清单 grep 计数）：
+  模块        文件   块注释 /**   @param   @return   @throws
+  rocketmq     32        233        52       39        4
+  mqtt         29        181        38       25        2
+  webflux      28        179        38       42        6
+  合计         89        593       128      106       12
+git diff 归因（仅 webflux 28 文件有基线可 diff；rocketmq/mqtt 的 io.ddd4j 新包树为
+迁移代理 untracked 产物，无 git 基线，以上表 grep 当前态口径统计）：
+  28 files changed, 709 insertions(+), 46 deletions(-)
+  新增：@param×38、@return×42、@throws×6、块注释起始 /**×141
+  删除的非注释行共 14 行，全部为注释化改写的伴随调整：
+    4 × import lombok.NoArgsConstructor;
+    4 × @NoArgsConstructor
+    4 × @Data 行（2 行含行尾说明文案更新 + 2 行纯注解行，改为显式构造器方案）
+    2 × } （尾部换行归一），无任何业务逻辑删除。
+日志证据（/e/tmp/jdoc-clb2/）：
+  r0c-* 盘点基线 → r1-rocketmq/r2-webflux 模块清零 → rfull 15e 根因四组 repro
+  → rfull2 89f/0w/0e → rf-m1/rf-m2/rf-m3 三模块 0/0；红线 4 模式 0 命中。
+
+【7】风险点与剩余事项
+--------------------------------------------------------------------------------
+1. {@link}→{@code} 共 15 处：合并跑下 doclint 无法解析重复 FQN 注释内引用（repro3 证明
+   FQN 形式亦失败），故牺牲这 15 处超链接、保留代码字体语义；逐模块与合并两种口径均 0/0。
+   若后续样本模块拆包去重（消除跨模块重复 FQN），可再还原为 {@link}。
+2. Lombok 4 实体文件删除 @NoArgsConstructor、保留等价显式无参构造器：已通过 javac+lombok
+   实测与 javap 反校（RC=0，构造器/getter 形态符合预期），属语义等价改写，非逻辑变更。
+3. rocketmq/mqtt 的 61 个 src 文件在 git 中为 untracked（io.ddd4j 新包树，迁移代理产物、
+   未提交），其补注成果无法用 git diff 归因，只能以当前态 grep 统计与 javadoc 日志为证。
+4. python 写入使部分文件 LF 归一，git 提示 autocrlf 下次 touch 转 CRLF，diff 内容不受影响。
+5. 并发工作区：仓库内另有他人未提交改动（含旧包树 65 处删除 = 包迁移代理的 io.* → io.ddd4j
+   迁移、pom/资源等 M 项），本轮一律未触碰；本批证据统计仅圈定 3 模块 89 文件清单。
+6. common 模块 LogConstant/BizExceptionHandler（他人辖区）版权头未动，符合既定纪律。
+================================================================================
+终态：89 文件全量合并 javadoc 自检 0 warning / 0 error（rfull2 EXIT=0），
+      逐模块 0/0，红线扫描 0 命中。批次 B 完成。
+================================================================================

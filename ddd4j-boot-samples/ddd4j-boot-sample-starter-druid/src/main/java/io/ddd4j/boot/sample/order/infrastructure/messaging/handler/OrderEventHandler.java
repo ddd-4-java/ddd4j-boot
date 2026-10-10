@@ -16,12 +16,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderEventHandler {
+    /**
+     * 构造 OrderEventHandler 实例。
+     *
+     */
+    public OrderEventHandler() {
+    }
 
     /**
      * 处理订单创建事件
+     *
+     * @param event 领域事件
      */
-    @Async
-    @EventListener
     public void handleOrderCreated(OrderCreatedEvent event) {
         org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class).info("处理订单创建事件 - 订单号: {}, 用户ID: {}", event.getOrderNo(), event.getUserId());
         // TODO: 可以在这里触发后续业务流程，如：
@@ -32,9 +38,9 @@ public class OrderEventHandler {
 
     /**
      * 处理订单支付事件
+     *
+     * @param event 领域事件
      */
-    @Async
-    @EventListener
     public void handleOrderPaid(OrderPaidEvent event) {
         org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class).info("处理订单支付事件 - 订单号: {}, 支付方式: {}", event.getOrderNo(), event.getPaymentMethod());
         // TODO: 可以在这里触发后续业务流程，如：
@@ -45,9 +51,9 @@ public class OrderEventHandler {
 
     /**
      * 处理订单发货事件
+     *
+     * @param event 领域事件
      */
-    @Async
-    @EventListener
     public void handleOrderShipped(OrderShippedEvent event) {
         org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class).info("处理订单发货事件 - 订单号: {}, 物流单号: {}", event.getOrderNo(), event.getTrackingNumber());
         // TODO: 可以在这里触发后续业务流程，如：
@@ -58,9 +64,9 @@ public class OrderEventHandler {
 
     /**
      * 处理订单取消事件
+     *
+     * @param event 领域事件
      */
-    @Async
-    @EventListener
     public void handleOrderCancelled(OrderCancelledEvent event) {
         org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class).info("处理订单取消事件 - 订单号: {}, 取消原因: {}", event.getOrderNo(), event.getReason());
         // TODO: 可以在这里触发后续业务流程，如：

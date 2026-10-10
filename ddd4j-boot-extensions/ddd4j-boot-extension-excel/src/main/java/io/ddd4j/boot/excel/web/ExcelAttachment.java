@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
  *
  * <p>封装 Web 下载时所需的 HTTP 响应头字段，统一处理中文文件名编码（RFC 5987）。
  *
- * <h3>典型用法</h3>
+ * <h2>典型用法</h2>
  * <pre>{@code
  * ExcelAttachment attachment = ExcelAttachment.xlsx("订单.xlsx");
  * response.setContentType(attachment.contentType());
@@ -46,14 +46,20 @@ public final class ExcelAttachment {
         this.charset = charset;
     }
 
+    /** 获取文件名（含扩展名）。
+     * @return 文件名 */
     public String getFilename() {
         return filename;
     }
 
+    /** 获取原始 Content-Type（不含 charset 参数）。
+     * @return Content-Type */
     public String getContentType() {
         return contentType;
     }
 
+    /** 获取文件名编码所用字符集。
+     * @return 字符集 */
     public Charset getCharset() {
         return charset;
     }

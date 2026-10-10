@@ -1,0 +1,125 @@
+================================================================================
+ddd4j-boot 样本模块 javadoc 全量补注（批次 E）证据
+日期：2026-10-09
+分支：4.0.x（工作区 E:\workspaces\workspace-ddd4j\workspace-ddd4j-boot\ddd4j-boot）
+执行纪律：不运行 mvn/gradle；不 git commit/push/切分支；不修改 6 模块之外任何文件
+================================================================================
+
+【0】任务范围与纪律
+--------------------------------------------------------------------------------
+- 目标：仅以下 6 个样本模块 src/main/java 全部公共/受保护类型与成员补规范中文 javadoc。
+  1) ddd4j-boot-sample-domain          17 文件
+  2) ddd4j-boot-sample-infrastructure  11 文件
+  3) ddd4j-boot-sample-app             10 文件
+  4) ddd4j-boot-sample-client           9 文件
+  5) ddd4j-boot-sample-layered          8 文件
+  6) ddd4j-boot-sample-order            7 文件
+  合计 62 文件（清单：/tmp/cle-batch.txt，find 生成）
+- 保护先期成果：包树迁移（io.ddd4j.boot.sample）与红线清理保留勿动，本轮只增量加注释；
+  另按纪律为 doclint「default constructor」告警补「显式无参构造器 + javadoc」，
+  与隐式默认构造语义等价，不改逻辑。
+- 红线铁律：输出与本证据文件不含 4 个旧品牌标识字面量；扫描使用构造模式
+  （/tmp/.oldseg.txt、/tmp/.oldapp.txt 各 6 字节；关键词集 /tmp/.p3.txt、/tmp/.p4.txt），
+  展示前必过掩码管道 /tmp/.mask.sh。
+- 本批工具全部只接受上述 62 文件清单作为输入（python 批处理脚本 + javadoc harness），
+  未对其他样本模块与 samples 之外文件发起任何写操作。
+
+【1】自查方法（javadoc CLI）
+--------------------------------------------------------------------------------
+harness：/e/tmp/jdoc-cle/run.sh <tag> <files...>
+命令要素：
+  JDK      = D:/Java/jdk-21.0.4（javadoc -J-Duser.language=en）
+  参数     = -Xdoclint:all -Xmaxwarns 1000000 -Xmaxerrs 1000000 -quiet -protected
+             -source 21 -encoding UTF-8
+  classpath= /tmp/cle-cp-final.txt（6969 个 jar）
+  sourcepath= 6 个目标模块 src/main/java
+输出：TAG/FILES/WARN/ERR/EXIT；日志 /e/tmp/jdoc-cle/<tag>.log（grep 须加 -a）
+口径：missing（no comment / no @param / no @return / default constructor）与语法告警
+      均须清零；classpath「找不到符号」类错误按纪律忽略（本批未出现）。
+
+【2】按批清单与告警递减轨迹（6 批，每批 ≤30 文件）
+--------------------------------------------------------------------------------
+批  模块               文件  递减轨迹（WARN/ERR）                                      终态
+b1  sample-domain        17  r1 115/0 → r2 10/0 → r3 0/0                              0/0
+b2  sample-infrastructure 11  r1 80/0 → r2 0/7(默认构造器,已补) → r3 0/0                0/0
+b3  sample-app           10  r1 235/1 → r2 0/51 → r3 33/67 → r4 0/0                    0/0
+b4  sample-client         9  r1 206/3 → r2 148/0 → r3 22/0 → r4 0/2 → r5 0/0           0/0
+b5  sample-layered        8  r1 62/0 → r2 0/8(构造器错位,已修) → r3 23/0 → r4 0/0       0/0
+b6  sample-order          7  r1 51/0 → r2 0/1(构造器错位,已修) → r3 27/0 → r4 0/0       0/0
+合计                       62  基线 WARN=749 / ERR=4  →  终态 WARN=0 / ERR=0
+全量合并跑（62 文件一次跑）：TAG=rfull FILES=62 WARN=0 ERR=0 EXIT=0
+进度日志：/tmp/cle-progress.txt（逐批记录，含各轮数字与修复备注）
+
+过程性故障与修复（均为工具问题，已回写工具根因）：
+- b3「@param { { 伪标签」67 error：正则把整行签名当参数名传入 split_params。
+  修复：改为 re.search(r'\((.*)\)', line) 取参数组；fixb3.py 清理已注入伪标签。
+- b3/b5 addctor 多块插入 off 补偿不足：构造器块被插到类声明前/方法体内（51/8/1 error）。
+  修复：按缩进定位删除错位块并在类声明行后重插；UserController、
+  OrderPostgresInfrastructureConfiguration 已逐处人工复核方法体完整。
+- b1/b4「游离 </p>」「h3 越级」3 error：改为独立闭合 <p>，标题从 <h2> 起。
+
+【3】终态自查（逐批 + 全量，全部 0/0）
+--------------------------------------------------------------------------------
+r3-b1  WARN=0 ERR=0      r3-b2  WARN=0 ERR=0      r4-b3  WARN=0 ERR=0
+r5-b4  WARN=0 ERR=0      r4-b5  WARN=0 ERR=0      r4-b6  WARN=0 ERR=0
+rfull  WARN=0 ERR=0  （62 文件合并跑，关键终态证据）
+
+【4】品牌红线扫描（62 文件，构造模式）
+--------------------------------------------------------------------------------
+扫描范围：/tmp/cle-batch.txt 全部 62 文件（源码 + 注释 + 本轮新增 javadoc）
+  P1 旧家族名（值存 /tmp/.oldseg.txt，grep -F -i）            命中文件数 = 0
+  P2 旧应用名（值存 /tmp/.oldapp.txt，grep -F -i）            命中文件数 = 0
+  P3 旧教育品牌关键词集（/tmp/.p3.txt，grep -F）              命中文件数 = 0
+  P4 旧中文品牌/公司后缀类标识（/tmp/.p4.txt，grep -F）       命中文件数 = 0
+  合并命中经 /tmp/.mask.sh 掩码输出                           无输出
+结论：本轮新增 javadoc 文本全部为通用技术中文描述，未引入任何品牌字面量；
+      本证据文件自身对 4 类字面量的命中 = 0。
+
+【5】逻辑等价校验（不改逻辑的机器证据）
+--------------------------------------------------------------------------------
+方法：对 62 文件，取 git HEAD 版本 vs 工作区版本，
+      双方同样执行「去块注释 + 去行注释 + 去空方法体无参构造器」后比对 token 流。
+脚本：E:/tmp/cle-eqcheck.py
+结果：checked=62  byteIdentical=8  commentOrCtorOnly=54  otherDelta=0
+含义：54 个有改动的文件，除「注释」与「显式无参构造器」外，代码 token 流与
+      HEAD 完全一致；8 个文件字节未变；无任何业务逻辑改动。
+补充：git diff（62 文件）insertions=2469 / deletions=93；
+      删除行逐行复核 = 100% 旧注释行重写 + 5 处文件尾换行归一（-} 后原样 +}），
+      非注释代码删除行 = 0。
+
+【6】统计
+--------------------------------------------------------------------------------
+目标文件           62 / 62 已补注（100%），6 批推进，每批 ≤30 文件
+基线告警           WARN=749 ERR=4  →  终态 WARN=0 ERR=0（-100%）
+新增 javadoc 块    ≈742 处（diff 中新增 /** 起始行计数）
+新增 @param        423 个（逐参数，含中文描述）
+新增 @return       379 个
+新增 @throws       30 个
+显式无参构造器     20 处（doclint default-constructor 规则所需，等价于隐式默认构造）
+git 增量           insertions=2469 / deletions=93（删除全部为注释重写）
+红线扫描           4 类旧品牌字面量命中 = 0
+逻辑等价           otherDelta = 0
+自查轮次           24 轮逐批 + 1 轮全量合并，终态 0/0
+
+【7】风险点与遗留
+--------------------------------------------------------------------------------
+R1 javadoc 自查使用 JDK 21、-source 21；样本实际编译 JDK 若更低，
+    注释本身无兼容影响，但 {@code}/{@link} 引用类型解析需在编译期复验。
+R2 本轮按纪律未执行 mvn 编译/测试；正确性由「javadoc 解析 0/0 + token 等价
+    otherDelta=0」双证据支撑，编译级回归需在允许构建的环节补跑。
+R3 显式无参构造器 20 处为满足 doclint 而新增；若类后续改为不可变全参构造，
+    需同步移除这些默认构造器。
+R4 合并跑 sourcepath 覆盖 6 模块，同名简单类若跨模块出现会互相掩盖；
+    本批 62 文件无同名冲突（逐批与全量均 0 告警可佐证），后续新增跨模块
+    {@link} 需在全量跑中复验。
+R5 batch 工具（cle-b3doc.py / addctor.py）对「多块插入偏移补偿」敏感，
+    曾造成 3 次构造器错位 error，均已修复并复核方法体完整；
+    后续复用该工具时应先跑小样本验证插入位置。
+R6 样本中 package-info.java、被整文件注释掉的类按纪律处理（有声明即补注，
+    无声明则跳过），doclint 无遗留告警。
+
+================================================================================
+结论：6 个样本模块 62 个 Java 文件 javadoc 全量补注完成；
+      逐批 24 轮 + 全量 1 轮 javadoc 自查终态全部 0 警告 0 错误；
+      红线 4 类旧品牌字面量命中 = 0；逻辑等价 otherDelta = 0。
+================================================================================

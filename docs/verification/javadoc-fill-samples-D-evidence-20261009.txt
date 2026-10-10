@@ -1,0 +1,127 @@
+ddd4j-boot 样本模块 javadoc 全量补注 证据文件（批次 D：hikaricp 系列 5 模块）
+================================================================================
+日期：2026-10-09
+分支：4.0.x
+范围（仅此 5 个模块的 src/main/java，共 100 个 java 文件，严禁越界）：
+  - ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp         18 文件
+  - ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-war     17 文件
+  - ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-amqp    17 文件
+  - ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-kafka   26 文件
+  - ddd4j-boot-samples/ddd4j-boot-sample-starter-hikaricp-rocketmq 22 文件
+清单文件：/tmp/cld-batch.txt（100 行），进度文件：/tmp/cld-progress.txt
+
+纪律声明
+--------------------------------------------------------------------------------
+- 红线铁律：输出与证据文件不含 4 个旧品牌标识字面量；扫描使用构造模式
+  （/tmp/.oldseg.txt、/tmp/.oldapp.txt，各 6 字节），展示前必过掩码管道 /tmp/.mask.sh。
+- 不运行 mvn/gradle；不 git commit/push/切分支；不改业务逻辑；不回退包树迁移
+  （io.ddd4j.boot.sample）与红线清理成果；未触碰 5 模块之外任何文件。
+- 自检工具：javadoc CLI -Xdoclint:all -Xmaxwarns 1000000 -Xmaxerrs 1000000
+  （D:/Java/jdk-21.0.4，classpath = ~/.m2 全量 6957 jars，前置 swagger-annotations/
+  models 2.2.52 规避旧 2.0.0 符号冲突；日志 GBK 解析）。
+
+一、基线（批次开始前，分模块扫描）
+--------------------------------------------------------------------------------
+模块 / 扫描标签            文件数  WARN  ERR   有告警文件数
+r0-hikaricp                   18    123    0       17
+r0-war                        17    115    0       16
+r0-amqp                       17    115    0       16
+r0-kafka                      26    148    3       25
+r0-rocketmq                   22    141    0       21
+全量合计（cld-r0.log）        100   642    3       —
+基线告警类别：没有注释 119、使用不提供注释的默认构造器 33、
+没有@return(s) 25、没有@throws 2、@return 没有说明 1、无主说明 1、
+<T>没有 @param 2（含 kafka 模块 ApplicationEnvironmentPreparedEventListener
+的 3 个“未知标记: className/description/date” doclint 错误，ERR=3 全在 kafka）。
+
+二、按批推进与逐批自查（告警递减 → 0）
+--------------------------------------------------------------------------------
+批次1  hikaricp 基础模块 18 文件（手改全部 17 个有告警文件 + 复核 IDemoService）
+  修改要点：DemoApplication/BizExceptionHandler/DemoMapper 等补类型注释；
+  13 个类补显式无参构造器+注释（doclint 默认构造器规则）；BizExceptionCode 53 个
+  枚举常量逐个补注释、4 个 getter 补注释、2 个 <T> 方法补 @param <T>、5 个静态/
+  实例方法补 @param/@return/@throws；DemoController 3 方法补 @param/@return/@throws、
+  构造器与 getter/setter 补注释；Constants/LogConstant 嵌套类与常量补注释；
+  各 @Bean 方法补 @return 说明；CaffeineCacheConfig 补 @return 说明。
+  自查 r1-hikaricp：WARN=0 ERR=0 FILES=0  ✅（123 → 0）
+
+批次2  war 模块 17 文件（16 文件与批次1 原稿字节相同，直接同步；
+       MybatisPlusConfiguration 保留 war 自己的 @MapperScan 变体）
+  自查 r2-war：WARN=0 ERR=0 FILES=0  ✅（115 → 0）
+
+批次3  amqp 模块 17 文件（与批次1 共性文件同步；MapperScan 与 base 同变体）
+  自查 r3-amqp：WARN=0 ERR=0 FILES=0  ✅（115 → 0）
+
+批次4  kafka 模块 26 文件（16 共性文件同步 + MybatisPlusConfiguration 保留
+       kafka 的 @MapperScan 变体 + 9 个独有文件手改）：
+  独有文件：TopicConstant、KafkaConsumer、ApplicationEnvironmentPreparedEventListener
+  （重写类注释：@className/@description/@date 非法标记改为规范 doc，消除 3 个 ERR +
+  无主说明）、ApplicationFailedEventListener、ApplicationStartedEventListener、
+  IndexController、KafkaController（含内部 KafkaOperationsCallback）、MessageDTO、
+  DemoVo（8 个 getter/setter 行注释）。
+  自查 r4-kafka：WARN=0 ERR=0 FILES=0  ✅（148 → 0，ERR 3 → 0）
+
+批次5  rocketmq 模块 22 文件（16 共性文件同步 + 5 个独有文件手改）：
+  独有文件：MQProducerService（接口 6 方法补 @param/@return）、MQProducerServiceImpl、
+  MQConsumerServiceImpl（外层+3 个内部监听器类补注释与显式构造器）、RocketMQController、
+  MessageDTO。
+  自查 r5-rocketmq：WARN=3（3 个内部类默认构造器）→ 补内部类显式构造器+注释
+  自查 r5b-rocketmq：WARN=0 ERR=0  ✅（141 → 0）
+
+三、全量复扫（100 文件一次性）
+--------------------------------------------------------------------------------
+命令：javadoc -Xdoclint:all -Xmaxwarns 1000000 -Xmaxerrs 1000000 -quiet
+      @cld-args-full.txt（100 个源文件，仓根相对路径）
+结果：files 100 / WARN=0 / ERR=0 / FILES=0 / LOG_BYTES=0   ✅
+日志：/tmp/cld-final-full.log
+递减轨迹：642/3（基线）→ 123/0 → 115/0 → 115/0 → 148/3 → 141/0（分批）
+        → 全量 0/0（终态）。
+
+四、品牌红线扫描（100 文件）
+--------------------------------------------------------------------------------
+P1 旧家族名（构造模式，-i 精确）：命中文件数 = 0
+P2 旧应用名（构造模式，-i 精确）：命中文件数 = 0
+P3 旧行业品牌（关键词集，定义见扫描脚本）：命中文件数 = 0
+P4 旧中文品牌（公司/品牌词后缀）：命中文件数 = 0
+→ 4 类旧品牌标识在本批 100 个文件 = 0。
+证据文件自扫裁定：本文件对 P1/P2 字面量命中 = 0；P3/P4 关键字命中仅为
+纪律声明与扫描方法学中的角色名/关键词集自引用（非品牌字面量），裁定为合规；
+公司词后缀硬字面量（3 类后缀）在本文件命中 = 0。
+
+五、git 落盘核对（只读，未执行任何 git 变更操作）
+--------------------------------------------------------------------------------
+- 5 模块 src/main/java 文件数 = 18+17+17+26+22 = 100，与清单一致。
+- git status（5 模块范围）：M=146 / D=19 / ??=2。
+  · D=19 全部为迁移期删除的旧包（旧家族名包路径）文件（先期迁移成果，保留勿动）；
+  · ??=2 为 base 模块新包 io/ddd4j/**（未跟踪，本批补注写入其中）；
+  · M 中 java（src/main/java）78 个 = 其余 4 模块新包文件（含本批补注 +
+    先期版权头替换）；4 个 src/test DemoApplication_Test.java 与
+    yaml/xml/html/pom 等非 java 改动均为并行智能体/先期迁移产物，本批未触碰。
+- 对 src/main/java/io/ddd4j 的 diff 复核：删除行 = 0（纯增量 javadoc，
+  无业务逻辑改动）。
+- 5 模块之外的样本模块（adapter/app 等 M 文件）为并行智能体负责，本批未触碰。
+
+六、统计
+--------------------------------------------------------------------------------
+目标文件：100 / 100 已补注（100%）
+批次：5 批，每批 ≤30 文件，逐批 javadoc 自查通过。
+告警：WARN 642 → 0（-100%），ERR 3 → 0。
+新增显式无参构造器+注释：33 处（doclint 默认构造器规则所需，含 rocketmq 3 个内部类）。
+枚举常量补注：53 个（BizExceptionCode，5 模块各一份同构文件）。
+红线：4 类旧品牌字面量命中 = 0。
+
+七、风险点
+--------------------------------------------------------------------------------
+R1 复制式同步依赖“同构文件字节一致”前提：本批按相对路径 md5 核对后仅
+   MybatisPlusConfiguration 存在 3 个 @MapperScan 变体（base/amqp/rocketmq、
+   war、kafka），已分别保留各自变体；若后续有人改其中一份，其余不会自动跟随。
+R2 显式无参构造器是为满足 doclint “默认构造器须有注释”规则而新增的
+   等价声明（无逻辑变化）；对 Spring Bean、@Data 类无行为影响，但会在
+   javadoc 生成的 API 文档中显示构造器条目。
+R3 kafka 模块 ApplicationEnvironmentPreparedEventListener 原类注释中的
+   @className/@description/@date 为非标准标记（3 个 doclint 错误），已改写为
+   规范 doc（作者/版本/日期用标准标记），语义保留。
+R4 本批未运行 mvn 编译（纪律禁止）；javadoc CLI 已带全量 classpath 通过
+   doclint 解析，等价覆盖语法与引用检查，但不替代编译验证。
+R5 git 工作区中同模块的 yaml/xml/html/pom/test 改动来自并行智能体与先期迁移，
+   合并/提交时需由集成方统一归口，本批不作任何 git 操作。

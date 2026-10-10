@@ -13,6 +13,11 @@ public final class SpringCacheRuleCache implements RuleCache {
 
     private final Cache cache;
 
+    /**
+     * 构造 Spring Cache 适配器，底层缓存实例非空校验。
+     *
+     * @param cache Spring Cache 抽象实例（Caffeine、Redis 等）
+     */
     public SpringCacheRuleCache(Cache cache) {
         this.cache = Objects.requireNonNull(cache, "cache 不能为空");
     }

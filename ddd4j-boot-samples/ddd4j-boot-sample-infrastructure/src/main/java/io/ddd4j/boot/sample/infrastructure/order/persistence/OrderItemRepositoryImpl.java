@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 
 /**
  * 订单项仓储实现（基础设施层）
+ *
+ * <p>领域语义：领域层 {@link OrderItemRepository} 接口的 MyBatis-Plus 实现，
+ * 以 LambdaQueryWrapper 组装按订单维度的查询与级联删除，并通过
+ * {@link OrderConverter} 完成实体与领域对象的双向转换。</p>
  */
 @Repository
 public class OrderItemRepositoryImpl implements OrderItemRepository {
@@ -52,6 +56,12 @@ public class OrderItemRepositoryImpl implements OrderItemRepository {
         orderItemMapper.deleteById(id);
     }
 
+    /**
+     * 构造订单项仓储实现。
+     *
+     * @param orderItemMapper 订单项 MyBatis-Plus Mapper，由容器注入
+     * @param orderConverter  订单对象转换器，由容器注入
+     */
     public OrderItemRepositoryImpl(final OrderItemMapper orderItemMapper, final OrderConverter orderConverter) {
         this.orderItemMapper = orderItemMapper;
         this.orderConverter = orderConverter;

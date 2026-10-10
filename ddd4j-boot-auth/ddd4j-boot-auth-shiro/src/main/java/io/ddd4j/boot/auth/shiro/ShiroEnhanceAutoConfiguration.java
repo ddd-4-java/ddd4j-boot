@@ -32,7 +32,15 @@ import org.springframework.context.annotation.Import;
 public class ShiroEnhanceAutoConfiguration {
 
     /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public ShiroEnhanceAutoConfiguration() {
+    }
+
+    /**
      * Shiro SubjectProvider（覆盖默认装配）。
+     *
+     * @return Subject 提供者实例
      */
     @Bean
     @ConditionalOnMissingBean(SubjectProvider.class)
@@ -42,6 +50,8 @@ public class ShiroEnhanceAutoConfiguration {
 
     /**
      * Shiro exception handler for servlet applications.
+     *
+     * @return Shiro 异常处理器实例
      */
     @Bean
     @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)

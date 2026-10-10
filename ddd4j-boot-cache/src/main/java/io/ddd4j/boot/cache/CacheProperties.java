@@ -18,6 +18,17 @@ public class CacheProperties {
      */
     private CacheKit.LocalCacheType defaultType = CacheKit.LocalCacheType.CAFFEINE;
 
+    /**
+     * 显式无参构造器，供 {@code @EnableConfigurationProperties} 绑定时实例化。
+     */
+    public CacheProperties() {
+    }
+
+    /**
+     * 设置默认本地缓存实现类型，同时同步到 {@link CacheKit} 静态默认值。
+     *
+     * @param defaultType 本地缓存实现类型（CAFFEINE / GUAVA / HUTOOL）
+     */
     public void setDefaultType(CacheKit.LocalCacheType defaultType) {
         this.defaultType = defaultType;
         CacheKit.setDefaultType(defaultType);

@@ -25,19 +25,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 演示 REST 控制器：继承 {@code BaseController}，提供演示数据的新增、修改与批量删除接口。
+ *
+ * @author ddd4j
+ * @since 1.0.0
+ */
 @RestController
 @RequestMapping("demo")
 public class DemoController extends BaseController {
 
+    /**
+     * 构造演示控制器。
+     *
+     * @param messageSource 嵌套消息源，供国际化文案解析
+     * @param beanMapper    Dozer 对象映射器，供对象拷贝使用
+     */
     public DemoController(NestedMessageSource messageSource, com.github.dozermapper.core.Mapper beanMapper) {
         super(messageSource, beanMapper);
     }
 
+    /**
+     * 演示业务服务，注入后供各接口执行持久化操作。
+     */
     @Autowired
     private IDemoService demoService;
 
     /**
-     * 增加逻辑实现
+     * 新增演示数据：将传输对象转换为实体并保存，失败时返回统一失败响应。
+     *
+     * @param dto 新增用演示传输对象（校验必填）
+     * @return 统一响应对象，成功时携带 demo.new.success 文案
      */
     @Operation(summary = "创建xxx信息", description = "根据DemoVo创建xxx")
     @Parameter(name = "demoVo", description = "xxx数据传输对象", required = true)
@@ -63,7 +81,11 @@ public class DemoController extends BaseController {
     }
 
     /**
-     * 修改逻辑实现
+     * 修改演示数据：按传输对象字段更新对应实体记录。
+     *
+     * @param demoVo 修改用演示传输对象（校验必填）
+     * @return 统一响应对象，成功时携带 demo.renew.success 文案
+     * @throws Exception 参数校验或处理过程中的异常
      */
     @Operation(summary = "修改xxx信息", description = "修改xxx")
     @Parameter(name = "demoVo", description = "xxx数据传输对象", required = true)
@@ -89,7 +111,12 @@ public class DemoController extends BaseController {
     }
 
     /**
-     * 删除逻辑实现
+     * 批量删除演示数据：ids 为空直接返回失败，否则按逗号分隔后批量移除。
+     *
+     * @param ids     逗号拼接的主键集合
+     * @param request 当前 HTTP 请求
+     * @return 统一响应对象，成功时携带 demo.delete.success 文案
+     * @throws Exception 删除过程中的异常
      */
     @Operation(summary = "删除xxx信息", description = "根据ID删除xxx")
     @Parameter(name = "ids", description = "ID集合，多个使用,拼接", required = true)
@@ -112,10 +139,20 @@ public class DemoController extends BaseController {
     }
 
 
+    /**
+     * 获取演示业务服务。
+     *
+     * @return 演示业务服务
+     */
     public IDemoService getDemoService() {
         return demoService;
     }
 
+    /**
+     * 设置演示业务服务。
+     *
+     * @param demoService 演示业务服务
+     */
     public void setDemoService(IDemoService demoService) {
         this.demoService = demoService;
     }

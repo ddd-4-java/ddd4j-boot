@@ -57,6 +57,7 @@ class RabbitMQClientIntegrationTest {
 
     @Container
     static final RabbitMQContainer RABBIT = new RabbitMQContainer(
+            // 测试镜像来源: https://testcontainers.com/modules/rabbitmq/
             DockerImageName.parse("rabbitmq:3.13-management"));
 
     @BeforeAll

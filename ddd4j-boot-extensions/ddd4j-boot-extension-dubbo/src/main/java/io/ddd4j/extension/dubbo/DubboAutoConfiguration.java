@@ -39,4 +39,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 @ConditionalOnProperty(prefix = "ddd4j.dubbo", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class DubboAutoConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public DubboAutoConfiguration() {
+    }
+
 }

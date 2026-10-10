@@ -28,7 +28,7 @@ redis-stream 与 pulsar 两个 broker 添加真实端到端 Testcontainers 集�
   绑定不生效（Kafka IT 踩过的坑）。
 - 每切片独立提交，智能体完成后报告测试运行证据（`Tests run:` 统计行）。
 
-**范围外（用户确认）**：幽灵 data 模块清理（P1）、hiwepy 样例清理（P4）另立计划。
+**范围外（用户确认）**：幽灵 data 模块清理（P1）、redacted-legacy-family 样例清理（P4）另立计划。
 
 ---
 
@@ -144,9 +144,9 @@ redis-stream 与 pulsar 两个 broker 添加真实端到端 Testcontainers 集�
   Pulsar `[.order]`(P-001)——五条真实消费日志，`Tests run: 1, Failures: 0, Errors: 0, Skipped: 0` × 5。
 - **范围外排除（环境阻塞，非本次改动引起，详见"环境取证"）**：
     - `ddd4j-boot-data-external` + 全部 `ddd4j-boot-samples`（27 样例）：依赖已从私有仓库消失的
-      `com.github.hiwepy:redistpl-plus-spring-boot-starter:2.3.x.20241003-SNAPSHOT` 等死构件
-    - `ddd4j-boot-extension-jackson`：`dbd39263` 把 import 改为从未发布过的 `io.github.hiwepy.jackson.*` 包
-      （远端 `io.github.hiwepy:jackson-extension:2.0.x.20260630-SNAPSHOT` 里实际是 `io.github.easy4j.jackson` 包）
+    `com.github.redacted-legacy-family:redistpl-plus-spring-boot-starter:2.3.x.20241003-SNAPSHOT` 等死构件
+  - `ddd4j-boot-extension-jackson`：`dbd39263` 把 import 改为从未发布过的 `io.github.redacted-legacy-family.jackson.*` 包
+    （远端 `io.github.redacted-legacy-family:jackson-extension:2.0.x.20260630-SNAPSHOT` 里实际是 `io.github.easy4j.jackson` 包）
 
 ### 执行偏差与发现
 
@@ -191,14 +191,14 @@ redis-stream 与 pulsar 两个 broker 添加真实端到端 Testcontainers 集�
     - pom 补 surefire `<skip>false</skip>` 覆盖（对齐 excel/qlexpress 模式，父 pom 默认 skipTests=true）
     - 契约测试修复：默认装配用例的 runner 补入 Boot 的 `JacksonAutoConfiguration`
       （`Jackson2ObjectMapperBuilder` 由其提供；`@AutoConfigureBefore` 下两配置同载才对齐真实应用装配）
-2. **jackson-extension 本地重建**：boot 的 `dbd39263` import `io.github.hiwepy.jackson.*`，
+2. **jackson-extension 本地重建**：boot 的 `dbd39263` import `io.github.redacted-legacy-family.jackson.*`，
    该包名从未发布（远端 jar 实为 `io.github.easy4j.jackson`）。从 jackson-extension 仓库
-   `21486a7^`（Jackson 3 迁移前）git archive 草稿构建，包名/坐标机械重命名为 hiwepy 后安装。
+   `21486a7^`（Jackson 3 迁移前）git archive 草稿构建，包名/坐标机械重命名为 redacted-legacy-family 后安装。
 3. **validation-mimetypes 复活**：从 starters 仓库 `0e9b79e^`（2.3.x.20250430 版本点）JDK 8
-   构建（JDK 21 下旧 Lombok 注解处理失效），坐标改回 `com.github.hiwepy` 安装。
+   构建（JDK 21 下旧 Lombok 注解处理失效），坐标改回 `com.github.redacted-legacy-family` 安装。
 4. **redistpl shim**：源码该版本点缺 redistpl-core 依赖声明无法重建；boot 活代码实际只用
    `RedisOperationTemplate`（真正提供者 = spring-data-redis-extension）。制作空 jar + pom
-   shim（`com.github.hiwepy:redistpl-plus-spring-boot-starter:2.3.x.20241003-SNAPSHOT`，
+   shim（`com.github.redacted-legacy-family:redistpl-plus-spring-boot-starter:2.3.x.20241003-SNAPSHOT`，
    传递 sdre 3.0.x + starter-data-redis 3.4.13）。
 5. **构建环境隔离**：发现 IntelliJ Maven 守护进程（IDEA import）与 ~/.m2 状态互相踩踏
    （io.ddd4j SNAPSHOT 反复被翻新/毒害），且 aliyun 私仓 `ddd4j-dependencies` metadata
@@ -211,6 +211,6 @@ redis-stream 与 pulsar 两个 broker 添加真实端到端 Testcontainers 集�
 - **aliyun 私仓 metadata 损坏**：`io.ddd4j:ddd4j-dependencies` SNAPSHOT metadata 指向已删除
   的 `20260807.180512-55`——任何在线 `-U` 构建都会失败。需重新 deploy 一次上游快照修复。
 - **死构件需重新发布**：redistpl 20241003（或改 boot 版本钉指向可发布版本线）、
-  jackson-extension 需按 hiwepy 包名正式发版（当前为本地重建 shim）。
+  jackson-extension 需按 redacted-legacy-family 包名正式发版（当前为本地重建 shim）。
 - **上游适配任务**：boot 仍消费 web-core 拆包前（14082fde）的上游；适配 `3ae1205e+`
   拆包上游是独立计划。

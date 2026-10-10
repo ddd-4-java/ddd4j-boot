@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Hiwepy (http://hiwepy.io).
+ * Copyright (C) 2018 ddd4j (https://github.com/ddd-4-java/ddd4j).
  * All Rights Reserved.
  */
 package io.ddd4j.boot.sample.config;
@@ -14,12 +14,27 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Mybatis-Plus 核心配置。
+ *
+ * <p>扫描示例模块下的 Mapper 接口，并注册乐观锁、分页、全表更新删除防护等
+ * 内置拦截器与 SQL 注入器。
+ */
 @Configuration
 @MapperScan({"io.ddd4j.boot.sample.**.mapper", "io.ddd4j.boot.sample.**.infrastructure.persistence.mapper"})
 public class MybatisPlusConfiguration {
 
     /**
-     * 乐观锁插件
+     * 构造 Mybatis-Plus 配置类实例。
+     *
+     */
+    public MybatisPlusConfiguration() {
+    }
+
+    /**
+     * 注册乐观锁插件，按版本号字段实现乐观并发控制。
+     *
+     * @return 乐观锁拦截器 Bean
      */
     @Bean
     public OptimisticLockerInnerInterceptor optimisticLockerInterceptor() {
@@ -29,6 +44,8 @@ public class MybatisPlusConfiguration {
     /**
      * 新的分页插件,一缓和二缓遵循mybatis的规则,需要设置 MybatisConfiguration#useDeprecatedExecutor =
      * false 避免缓存出现问题(该属性会在旧插件移除后一同移除)
+     *
+     * @return 聚合拦截器 Bean，依次挂载全表防护与分页拦截器
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
@@ -41,6 +58,8 @@ public class MybatisPlusConfiguration {
     /**
      * mybatis-plus分页插件<br>
      * 文档：http://mp.baomidou.com<br>
+     *
+     * @return 分页拦截器 Bean，超出总页数时不追加页码
      */
     @Bean
     public PaginationInnerInterceptor paginationInterceptor() {
@@ -49,6 +68,11 @@ public class MybatisPlusConfiguration {
         return paginationInterceptor;
     }
 
+    /**
+     * 注册全表更新与全表删除防护插件。
+     *
+     * @return 全表防护拦截器 Bean
+     */
     @Bean
     public BlockAttackInnerInterceptor blockAttackInnerInterceptor() {
         BlockAttackInnerInterceptor sqlExplainInterceptor = new BlockAttackInnerInterceptor();
@@ -57,6 +81,8 @@ public class MybatisPlusConfiguration {
 
     /**
      * 注入sql注入器
+     *
+     * @return 默认 SQL 注入器 Bean
      */
     @Bean
     public ISqlInjector sqlInjector() {

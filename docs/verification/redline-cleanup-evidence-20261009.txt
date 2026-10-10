@@ -1,0 +1,220 @@
+================================================================================
+ddd4j-boot 非样本部分 旧品牌标识红线清理 证据文件
+日期：2026-10-09
+范围：ddd4j-boot 仓（4.0.x 工作树）非样本部分
+排除：.git/、*/target/、ddd4j-boot-samples/（样本批次由并行智能体负责，零触碰）
+纪律：任何输出不出现 4 个旧品牌标识字面量；提及用角色名
+      （旧教育品牌 / 旧家族名(h 开头 6 字母) / 旧应用名(j 开头 6 字母) / 旧中文品牌）；
+      扫描模式一律 bash 邻接拼接构造；展示前过掩码管道。
+================================================================================
+
+【0】模式构造与掩码纪律
+--------------------------------------------------------------------------------
+  - P1 旧家族名：printf '%s%s' '<首3>' '<尾3>' 邻接构造（6 字母），值存
+    /tmp/.oldseg.txt（6 字节）。
+  - P2 旧应用名：同法构造，值存 /tmp/.oldapp.txt（6 字节）。
+  - P3 旧教育品牌：教育类关键词集合（教育/课堂/学院/学校/培训/学员/课程/教务/
+    教研/edutech/jiaoyu/school/classroom/training/lms，-i）。
+  - P4 旧中文品牌：CJK 连续串（≥2 汉字）集合比对（HEAD vs 工作区，逐改动文件）
+    ＋ 公司后缀代理词（有限公司/网络科技/版权所有）。不构造连续字面量。
+  - 掩码管道 /tmp/.mask.sh（展示前必过）：
+      export FAM=$(cat /tmp/.oldseg.txt) APP=$(cat /tmp/.oldapp.txt)
+      perl -CSD -pe 's/\Q$ENV{FAM}\E/<FAM>/gi; s/\Q$ENV{APP}\E/<APP>/gi'
+  - 替换映射：旧教育品牌→redacted-legacy-edu；旧家族名→redacted-legacy-family；
+    旧应用名→redacted-legacy-app；旧中文品牌→旧家族。
+    Maven 真实坐标不走文字映射，走 easy4j 迁移。
+
+【1】命中 → 处置对照表（自扫清单 + 允许补扫的同类命中）
+--------------------------------------------------------------------------------
+  #  文件 / 位置                          修复前命中(掩码形态)                处置                 复扫
+  1  根 pom.xml（5 行）                   <name>/<organization>、             文本映射             0
+                                          wiki.<FAM>.com×2、<FAM>@gmail.com    →redacted-legacy-family
+  2  ddd4j-boot-dependencies/pom.xml
+     584/600/978 注释 URL                 com.github.<FAM>/                   →io.github.easy4j/    0
+     586 dingtalk groupId                 com.github.<FAM>                    →io.github.easy4j     0
+     1171 ftpclient groupId               net.<APP>                           →io.github.easy4j     0
+     1331 rythm 主清单 groupId            com.github.easy4j                    →io.github.easy4j     0
+                                          （Option Z：与 c 段修正条目 GAV 对齐）
+     1551 注释                            原 <FAM> 坐标迁至 easy4j…           →原 redacted-legacy-  0
+                                                                       family 坐标迁至 easy4j… 0
+     1786 损坏 artifactId                 net.<APP>                           →ftpclient-spring-    0
+                                                                       boot-starter            0
+     1791 损坏 artifactId                 com.github.<FAM>                    →rythm-spring-boot-   0
+                                                                       starter                 0
+     1782-1793 段头+重复条目              “…starter 逐个版本”段头、           删除（GAV 去重，见【3】）0
+                                          两个与主清单同 GAV 的条目
+  3  ddd4j-boot-dependencies/pom.pom.xml.bak   com.github.<FAM> ×129 行       →io.github.easy4j     0
+                                          （文件保留不删）                     （Ig sed）            0
+  4  META-INF/spring-autoconfigure-       com.github.<FAM>.ddd4j.jackson.     按模块 .imports       0
+     metadata.properties ×3               DefaultCryptoAutoConfiguration=     真实 FQCN 修正（见【4】）
+     （auth-license / extension-cola / extension-dubbo）
+  5  MybatisExceptionHandler.java         Copyright … <FAM> (…/<FAM>.io)      文本映射              0
+     AkkaProperties.java                  同上                                文本映射              0
+  6  ddd4j-boot-web-webflux/pom.xml       com.github.<FAM>:spring-biz          →io.github.easy4j +   0
+                                          +注释“运行所需的 <FAM> 依赖”         version3.3.x.20241020.RELEASE + 注释映射
+     ddd4j-boot-auth-datascope/pom.xml    com.github.<FAM>:spring-biz          同上                  0
+  7  scripts/verify_boot4_sample_          FORBIDDEN token                     映射（与 fixture 一致，0
+     compatibility.py:14                  com.github.<FAM>.validation…         见【6】）
+     scripts/test_boot4_sample_            同上 fixture                        同步映射              0
+     compatibility.py:28
+  8  docs/ 补扫 7 文件（23 处）           见【5】                             文本映射              0
+  9  .idea/workspace.xml（8 处，ignored）  io.<FAM>.boot.sample.{Demo,Mqtt*}   文本映射→             0
+                                                                       io.redacted-legacy-family.boot.sample.*
+ 10  .flattened-pom.xml ×3（ignored）      根 5 处组织信息 / deps 5+FAM2+APP2   根=文本映射；          0
+                                          处坐标与注释 / webflux 2 处          deps/webflux=同源坐标电池+注释映射
+ 11  scripts/__pycache__ stale .pyc ×2     各1 命中（Sep 生成的派生字节码）    删除（见【8】E3）     0
+ 12  .codegraph/codegraph.db（ignored）    30013 命中（38MB 二进制索引，       删除（见【8】E3）     0
+                                          2026-10-06 旧索引，不可安全字节替换）
+
+【2】坐标迁移推导（easy4j）与引用计数 = 0 证明
+--------------------------------------------------------------------------------
+  2.1 reactor 引用计数（改 BOM 管理项是否影响模块编译）：
+      对 dingtalk-spring-boot-starter / docx4j-spring-boot-starter /
+      validation-mimetypes-spring-boot-starter / ftpclient-spring-boot-starter /
+      rythm-spring-boot-starter：BOM 外全部模块 pom 引用数 = 0。
+      （统计口径：全模块 pom 排除 ddd4j-boot-dependencies/pom.xml；
+        首次排除用 'ddd4j-boot-dependencies/pom.xml' 精确串，Windows 反斜杠路径致
+        排除失效，改用点号通配 'ddd4j-boot-dependencies.pom.xml' 后读数归零。）
+      → 5 项坐标迁移与 GAV 去重不破坏任何模块的依赖声明。
+  2.2 spring-biz 引用：仅 webflux、auth-datascope 两个模块 pom 显式引用（本体已随
+      迁移改写）；BOM 内原 com.github.<FAM>:spring-biz 管理项由上游
+      io.ddd4j:ddd4j-dependencies import 承载（上游注释已注明“已迁至 io.github.easy4j”
+      但条目仍旧）——本次在两个消费模块上显式落 easy4j 坐标+版本，规避 version-missing。
+  2.3 存在性核验（~/.m2 与 Maven Central）：
+      - ~/.m2/repository/io/github/easy4j：validation-mimetypes ✓ 存在（共22构件）；
+        缺 dingtalk / docx4j / ftpclient / rythm / spring-biz。
+      - ~/.m2/repository/com/github/easy4j：空目录。
+      - ~/.m2/repository/com.github.<FAM>：spring-biz 1.1.5.RELEASE 与
+        3.3.x.20241020.RELEASE ✓（后者=datascope/webflux 版本沿用依据）。
+      - Maven Central io/github/easy4j 索引存在，但上述 5 构件路径均 404。
+      → 详见【8】E1 例外。
+  2.4 starters 仓权威坐标（workspace-ddd4j-boot-starters 各 starter pom 第14行）：
+      dingtalk=io.github.easy4j、docx4j=io.github.easy4j、
+      validation-mimetypes=io.github.easy4j、ftpclient=net.<APP>、
+      rythm=com.github.easy4j。
+      → 后两项与 brief 强制的统一 groupId（io.github.easy4j）不一致，见【8】E2。
+
+【3】损坏条目修正前后（掩码形态）
+--------------------------------------------------------------------------------
+  修复前（BOM c 段 “easy4j starter 逐个版本” 内，掩码）：
+      <dependency>
+          <groupId>io.github.easy4j</groupId>
+          <artifactId>net.<APP></artifactId>          <!-- artifactId 误写为 groupId 形态 -->
+      </dependency>
+      <dependency>
+          <groupId>io.github.easy4j</groupId>
+          <artifactId>com.github.<FAM></artifactId>   <!-- artifactId 误写为 groupId 形态 -->
+      </dependency>
+  修正后：
+      artifactId → ftpclient-spring-boot-starter / rythm-spring-boot-starter（真实构件名），
+      groupId 统一 io.github.easy4j。
+  去重：修正后两 GAV 与主清单条目（1171、1331 行）完全一致 →
+      删除 c 段头注释与两个重复条目，主清单保留（1331 rythm groupId 同步
+      com.github.easy4j→io.github.easy4j 以满足“同一 GAV 只留一处”）；
+      c 段 resilience4j 条目不重复，保留。
+  验证：全 BOM 内 (groupId,artifactId,version) 三元组重复检查 = 0 组。
+  testcontainers 钉版块（用户既有未提交改动，326-342 行）完好：grep -c testcontainers = 19。
+
+【4】spring-autoconfigure-metadata.properties 修正（3 文件）
+--------------------------------------------------------------------------------
+  修复前：三文件均为过期行 com.github.<FAM>.ddd4j.jackson.DefaultCryptoAutoConfiguration=
+          （全仓无对应 Java 类 = 纯过期行）。
+  修正后（各模块 META-INF/*.imports 中的真实 FQCN）：
+      auth-license    → io.ddd4j.boot.auth.license.DefaultLicenseAutoConfiguration=
+      extension-cola  → io.ddd4j.boot.cola.ColaAutoConfiguration=
+      extension-dubbo → io.ddd4j.extension.dubbo.DubboAutoConfiguration=
+
+【5】docs/ 描述文本映射（7 文件 / 23 处）
+--------------------------------------------------------------------------------
+  docs/JACKSON3_MIGRATION_TASKS.md                                   1 处（io.github.<FAM>:zxing-extension 形态）
+  docs/references/ddd/blogs/ 基于Springboot的DDD实战(不依赖框架).md    1 处（wiki.<FAM>.com 图片 URL）
+  docs/superpowers/plans/2026-08-14-production-readiness-testing.md   9 处
+  docs/superpowers/plans/2026-08-31-jdk8-ddd-core-bridge.md           4 处
+  docs/superpowers/specs/2026-08-31-jdk8-ddd-core-bridge-design.md    1 处
+  docs/superpowers/reports/ddd4j-boot-auto-configuration-inventory.json 6 处（FQCN 形态）
+  docs/superpowers/reports/2026-08-31-jdk8-2.3-build-blocked.md       1 处
+  全部 sed "s/<FAM>/redacted-legacy-family/Ig"（大小写不敏感），docs/ 目录品牌模式复扫 = 0。
+  说明：docs 属不可执行描述文本，按【0】文字映射处理；真实坐标语义的迁移落在
+  BOM/模块 pom（见【2】）。
+
+【6】守卫脚本与单测（行为注记）
+--------------------------------------------------------------------------------
+  scripts/verify_boot4_sample_compatibility.py:14 与
+  scripts/test_boot4_sample_compatibility.py:28 的受控 token 同步映射为
+  com.github.redacted-legacy-family.validation.constraints。
+  验证：
+    - python -c ast.parse(verify…) → OK
+    - python scripts/test_boot4_sample_compatibility.py → Ran 3 tests … OK
+  行为注记：守卫的检测目标随红线映射变更（旧字面量按红线不得出现在任何输出/文件），
+  守卫机制本身（扫描+报错）由 3 个单测覆盖且全部通过；对“真实旧坐标”的拦截语义
+  由样本批次迁移完成后按映射目标复核（记录为 E6）。
+
+【7】复扫 0 命中（最终态，非样本全量，含未跟踪/被忽略文件）
+--------------------------------------------------------------------------------
+  扫描方式：find 全树 477 文件（排除 .git/、*/target/、ddd4j-boot-samples/；
+  含本证据文件与兄弟证据文件），find -print0 | xargs -0 grep；模式 printf 邻接
+  构造；展示前 /tmp/.mask.sh。
+  HEAD 基线：git grep HEAD -- ':!ddd4j-boot-samples'。
+  - P1 旧家族名（-i 行级）：HEAD 19 文件 / 172 行 → 工作区 0 文件 / 0 行
+  - P2 旧应用名（-i 行级）：HEAD 1 文件 / 2 行   → 工作区 0 文件 / 0 行
+  - P3 旧教育品牌（关键词集）：HEAD 1 文件 → 工作区 4 文件，逐条裁定：
+      · docs/concepts/CQRS 思维导图.md：“技能…培训”通用词，HEAD 即存在，未改动，非品牌；
+      · docs/verification/sample-migration-hikaricp-evidence-20261009.txt 与
+        …-mqtt-evidence-20261009.txt：兄弟样本批次方法学自述（关键词清单/角色名），
+        无品牌字面量；
+      · 本证据文件（关键词清单与裁定自述的自引用，同方法学性质）。
+      → 新增命中全部为方法学自述/通用词，旧教育品牌字面量命中 = 0。
+  - P4 旧中文品牌：
+      · 公司后缀代理词 HEAD=0、工作区=2（兄弟证据文件“有限公司/网络科技”方法学
+        自述行 + 本证据文件同性质自引用），非品牌；
+      · CJK 集合比对：全量法（HEAD7777 vs 工作区7811）受 git grep -o 与 grep -o
+        提取伪影干扰（差异串呈“同一文本不同切分”形态），弃用；改用逐改动文件法：
+        git diff HEAD（非样本）=44 改动文件，逐一比对 CJK≥2 唯一串：
+        新增12串（全部为 testcontainers 钉版/治理说明用语：与上方同批钉版、测试镜像
+        来源、模块容器测试用例等）、消失3串（“仓库一一对应”“外部提交丢失后补齐”
+        属用户 testcontainers 既有改动；“逐个版本”属 BOM c 段头删除）。
+        无任何公司全名/品牌段串 → 旧中文品牌字面量 = 0。
+  - redacted token 落点核对（非样本全树，含 ignored）：
+      redacted-legacy-family = 54（20 文件）
+      redacted-legacy-app    = 13（仅兄弟证据文件内的替换记录，非本任务落点）
+      redacted-legacy-edu    = 0（本范围无 edu 命中）
+      redacted-legacy-brand  = 3（仅兄弟证据文件内的替换记录）
+  - 结论：4 类旧品牌标识在非样本范围 = 0（P1/P2 精确模式 0；P3/P4 逐条裁定无品牌
+    字面量，命中均为方法学自述与通用词）。
+
+【8】例外清单
+--------------------------------------------------------------------------------
+  E1 easy4j 五构件存在性：io.github.easy4j 的 dingtalk / docx4j / ftpclient / rythm /
+     spring-biz 在本地 .m2 缺失、Maven Central 404（仅可能存在于阿里云私有仓库，
+     本任务无凭据未免密核验）。按 brief“不存在则记录例外+理由”登记；BOM/模块坐标
+     已按 brief 统一 easy4j，构建可用性待私仓侧核验。
+  E2 starters 仓权威 groupId 与统一 groupId 不一致：ftpclient 权威=net.<APP>、
+     rythm 权威=com.github.easy4j，brief 强制统一为 io.github.easy4j——按 brief 执行，
+     差异留档待发布侧核对实际 GAV。
+  E3 删除的派生文件（可再生，非源码）：scripts/__pycache__ 下 2 个 stale .pyc
+     （Sep 生成，含旧 token 字节码，删后由下次运行重新生成干净副本）；
+     .codegraph/codegraph.db（38MB 二进制索引，2026-10-06 旧索引，30013 命中，
+     变长编码不可安全字节替换 → 删除，后续可用 codegraph 重新索引）。
+     .codegraph/.gitignore 与 writer.pid 保留。
+  E4 兄弟样本批次证据文件（docs/verification/sample-migration-*）与本证据文件
+     含教育类关键词清单与角色名自述 → 方法学文本，非品牌字面量，保留。
+  E5 docs/concepts/CQRS 思维导图.md 通用词“培训”（HEAD 即存在）→ 非品牌，保留。
+  E6 守卫脚本检测目标随映射变更（见【6】行为注记）。
+
+【9】边界核查（禁止项遵守）
+--------------------------------------------------------------------------------
+  - 未运行 mvn / gradle；未执行任何 git commit / push / 切分支。
+  - ddd4j-boot-samples/ 零触碰；*/target/ 零触碰。
+  - testcontainers 相关既有改动完好：deps BOM 326-342 钉版块（钉1.21.4 注释原文
+    完整）仍在工作树；mq 8 模块 pom + 8 个集成测试的既有未提交改动全部保留
+    （git diff --name-only 清单中均可见，本任务未编辑其内容）。
+  - git status --porcelain 快照（含并行样本批次智能体条目）：
+      22 ?? / 205 D / 284 M —— 大量 D/M 属 ddd4j-boot-samples 样本迁移批次；
+      本任务非样本改动文件清单 = 【1】表 1-12 各行。
+  - 自检纪律：期间曾发生 2 次输出掩码漏过（字符级拼接与一次 diff 未接管道），
+    已即时修正并统一“任何可能含品牌输出必过 /tmp/.mask.sh”；本证据文件成文后
+    经四模式全文复检：0 命中。
+
+================================================================================
+状态：完成。四模式复扫（非样本全量）= 0；例外 E1-E6 已登记。
+================================================================================

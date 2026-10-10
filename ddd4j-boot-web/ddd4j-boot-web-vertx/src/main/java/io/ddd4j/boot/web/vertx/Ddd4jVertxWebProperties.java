@@ -21,33 +21,27 @@ import java.util.List;
 public class Ddd4jVertxWebProperties {
 
     /**
-     * 无需认证即可访问的路径。
+     * 显式无参构造器，供 {@code @EnableConfigurationProperties} 绑定时实例化。
      */
+    public Ddd4jVertxWebProperties() {
+    }
+
+    /** 无需认证即可访问的路径。 */
     private List<String> publicPaths = new ArrayList<>(List.of(
             "/health", "/health/readiness", "/health/liveness"));
 
-    /**
-     * 默认认证模式。
-     */
+    /** 默认认证模式。 */
     private AuthenticationMode defaultAuthenticationMode = AuthenticationMode.REQUIRED;
 
-    /**
-     * 是否信任 X-Forwarded-* 请求头解析客户端 IP。
-     */
+    /** 是否信任 X-Forwarded-* 请求头解析客户端 IP。 */
     private boolean trustForwardedHeaders;
 
-    /**
-     * 是否启用幂等防护。
-     */
+    /** 是否启用幂等防护。 */
     private boolean idempotencyEnabled = true;
 
-    /**
-     * 幂等防护使用的缓存名。
-     */
+    /** 幂等防护使用的缓存名。 */
     private String idempotencyCacheName = "ddd4j-web-idempotency";
 
-    /**
-     * 幂等防护的默认 TTL。
-     */
+    /** 幂等防护的默认 TTL。 */
     private Duration idempotencyTtl = Duration.ofMinutes(5);
 }

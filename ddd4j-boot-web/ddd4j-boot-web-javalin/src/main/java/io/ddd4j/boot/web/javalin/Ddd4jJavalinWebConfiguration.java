@@ -39,18 +39,40 @@ import org.springframework.context.annotation.Bean;
 @EnableConfigurationProperties(Ddd4jJavalinWebProperties.class)
 public class Ddd4jJavalinWebConfiguration {
 
+    /**
+     * 显式无参构造器，供 Spring 以自动装配方式实例化本配置类。
+     */
+    public Ddd4jJavalinWebConfiguration() {
+    }
+
+    /**
+     * 注册 Bearer Token 主体认证器。
+     *
+     * @return Bearer 主体认证器实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public BearerSubjectAuthenticator bearerSubjectAuthenticator() {
         return new BearerSubjectAuthenticator();
     }
 
+    /**
+     * 注册默认异常翻译器。
+     *
+     * @return Web 异常翻译器实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebExceptionTranslator webExceptionTranslator() {
         return new DefaultWebExceptionTranslator();
     }
 
+    /**
+     * 注册请求上下文工厂，按配置决定是否信任转发头获取客户端 IP。
+     *
+     * @param properties Javalin Web 配置属性
+     * @return 请求上下文工厂实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebRequestContextFactory webRequestContextFactory(Ddd4jJavalinWebProperties properties) {
@@ -59,12 +81,25 @@ public class Ddd4jJavalinWebConfiguration {
         return new WebRequestContextFactory(RequestIdGenerator.uuid(), clientIpResolver);
     }
 
+    /**
+     * 注册访问策略：公开路径与鉴权模式来自 {@code ddd4j.web.javalin.*} 配置。
+     *
+     * @param properties Javalin Web 配置属性
+     * @return 基于路径的访问策略实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebAccessPolicy webAccessPolicy(Ddd4jJavalinWebProperties properties) {
         return new PathWebAccessPolicy(properties.getPublicPaths(), properties.getDefaultAuthenticationMode());
     }
 
+    /**
+     * 注册请求生命周期组件（鉴权 + 访问策略）。
+     *
+     * @param authenticator Bearer 主体认证器
+     * @param accessPolicy 访问策略
+     * @return 请求生命周期实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebRequestLifecycle webRequestLifecycle(BearerSubjectAuthenticator authenticator,
@@ -78,6 +113,9 @@ public class Ddd4jJavalinWebConfiguration {
      * <p>{@link CacheIdempotencyGuard} 依赖 {@link CacheKit} 中已注册的同名缓存，
      * 若该缓存未注册，任何带幂等 Key 的请求都会因 {@code IllegalStateException}
      * 被翻译为 409。此处按需注册本地 Caffeine 实现，业务方可自行注册同名缓存覆盖。
+     *
+     * @param properties Javalin Web 配置属性，提供幂等缓存名称
+     * @return Web 幂等生命周期实例
      */
     @Bean
     @ConditionalOnMissingBean
@@ -86,6 +124,15 @@ public class Ddd4jJavalinWebConfiguration {
         return new WebIdempotencyLifecycle(new CacheIdempotencyGuard(properties.getIdempotencyCacheName()));
     }
 
+    /**
+     * 注册 Javalin Web 适配器，将 ddd4j 请求基础设施接入 Javalin。
+     *
+     * @param contextFactory 请求上下文工厂
+     * @param requestLifecycle 请求生命周期组件
+     * @param exceptionTranslator 异常翻译器
+     * @param idempotencyLifecycle 幂等生命周期（可选）
+     * @return ddd4j Javalin Web 适配器实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public Ddd4jJavalinWeb ddd4jJavalinWeb(WebRequestContextFactory contextFactory,
@@ -96,6 +143,11 @@ public class Ddd4jJavalinWebConfiguration {
                 idempotencyLifecycle.getIfAvailable());
     }
 
+    /**
+     * 注册 Web 运行时健康指示器（runtime=javalin）。
+     *
+     * @return 健康指示器实例
+     */
     @Bean("ddd4jWebHealthIndicator")
     @ConditionalOnClass(HealthIndicator.class)
     @ConditionalOnMissingBean(name = "ddd4jWebHealthIndicator")
@@ -103,6 +155,11 @@ public class Ddd4jJavalinWebConfiguration {
         return () -> Health.up().withDetail("runtime", "javalin").build();
     }
 
+    /**
+     * 按缓存名注册本地 Caffeine 幂等缓存（幂等操作，已存在则跳过）。
+     *
+     * @param cacheName 幂等缓存名称
+     */
     private static void registerDefaultIdempotencyCache(String cacheName) {
         if (CacheKit.getCache(cacheName) == null) {
             CacheKit.register(cacheName, CaffeineCache.create(CacheConfig.builder(cacheName).build()));

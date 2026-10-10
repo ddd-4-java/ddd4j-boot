@@ -11,12 +11,29 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
+/**
+ * SQS 消息客户端的 Spring Boot 自动装配。
+ *
+ * <p>仅当 {@code ddd4j.mq.broker=sqs} 且 {@link SqsMQClient} 类存在时生效，
+ * 并通过 {@link Ddd4jMQRegistrarConfiguration} 导入 MQ 通用注册配置。
+ */
 @AutoConfiguration
 @ConditionalOnClass(SqsMQClient.class)
 @ConditionalOnProperty(prefix = "ddd4j.mq", name = "broker", havingValue = "sqs")
 @Import(Ddd4jMQRegistrarConfiguration.class)
 public class SqsMQBootAutoConfiguration {
 
+    /**
+     * 无参构造器，供 Spring 反射实例化自动配置类使用。
+     */
+    public SqsMQBootAutoConfiguration() {
+    }
+
+    /**
+     * 装配 SQS 配置属性，绑定 {@code ddd4j.mq.sqs.*}。
+     *
+     * @return 配置属性实例
+     */
     @Bean
     @ConditionalOnMissingBean
     @ConfigurationProperties("ddd4j.mq.sqs")
@@ -24,6 +41,12 @@ public class SqsMQBootAutoConfiguration {
         return new SqsProperties();
     }
 
+    /**
+     * 装配 SQS 消息客户端。
+     *
+     * @param properties SQS 配置属性
+     * @return 消息客户端实例
+     */
     @Bean
     @ConditionalOnMissingBean
     public SqsMQClient sqsMQClient(SqsProperties properties) {

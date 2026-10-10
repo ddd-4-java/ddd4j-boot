@@ -19,7 +19,7 @@ import java.util.List;
  * <p>位于 boot 侧，依赖 Servlet + Spring Web；封装 {@link HttpServletResponse} 文件下载与
  * {@link MultipartFile} 文件上传的样板代码，并复用库侧 {@link ExcelKit}。
  *
- * <h3>静态调用</h3>
+ * <h2>静态调用</h2>
  * <pre>{@code
  * // 一行下载
  * ExcelHttpKit.download(response, "订单.xlsx", OrderVO.class, orderService.listAll());
@@ -74,7 +74,7 @@ public class ExcelHttpKit {
     /**
      * 下载自定义附件类型的字节数组。
      *
-     * @param response   HTTP 响应
+     * @param response  HTTP 响应
      * @param attachment 附件元数据
      * @param bytes      xlsx 字节
      */
@@ -100,9 +100,9 @@ public class ExcelHttpKit {
      * 本方法不会自行 reset 响应。如需"成功返回 Excel / 失败返回 JSON"的混合模式，
      * 由调用方在 catch 块中 {@code response.reset()} 后写 JSON。
      *
-     * @param response        HTTP 响应
-     * @param filename        文件名
-     * @param bytes           xlsx 字节
+     * @param response HTTP 响应
+     * @param filename 文件名
+     * @param bytes    xlsx 字节
      * @param autoCloseStream 是否在写完后自动关闭流（默认 true）
      */
     public static void download(HttpServletResponse response, String filename, byte[] bytes,

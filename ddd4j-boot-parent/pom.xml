@@ -270,20 +270,30 @@
                 </plugin>
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
                 <plugin>
-                    <!-- 文档插件:发布时自动生成文档 -->
+                    <!-- 文档插件:发布时自动生成文档（与根 POM javadoc 门禁保持一致，禁止本模块单独关闭 doclint） -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <configuration>
                         <charset>${project.build.sourceEncoding}</charset>
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <docencoding>${project.build.sourceEncoding}</docencoding>
-                        <!-- 对齐 ddd4j-parent 2.0.x 行为：JDK21 下 doclint 将未解析的 {@link} 升级为 error，快照发布不因 javadoc 中断 -->
-                        <failOnError>false</failOnError>
+                        <!-- 门禁核心：doclint 全开 + 告警/错误均失败，属性集中在根 POM 统一管理 -->
+                        <doclint>${javadoc.doclint}</doclint>
+                        <failOnWarnings>${javadoc.failOnWarning}</failOnWarnings>
+                        <failOnError>${javadoc.failOnError}</failOnError>
+                        <release>${java.version}</release>
+                        <additionalOptions>
+                            <additionalOption>-Xmaxwarns</additionalOption>
+                            <additionalOption>1000000</additionalOption>
+                            <additionalOption>-Xmaxerrs</additionalOption>
+                            <additionalOption>1000000</additionalOption>
+                        </additionalOptions>
                     </configuration>
                     <executions>
                         <execution>
                             <id>attach-javadocs</id>
-                            <phase>package</phase>
+                            <!-- 与根 POM 一致绑定 verify，保证 javadoc 门禁先于 deploy 生效 -->
+                            <phase>verify</phase>
                             <goals>
                                 <goal>jar</goal>
                             </goals>
@@ -1319,8 +1329,7 @@
                                 <executable>sh</executable>
                                 <arguments>
                                     <argument>-c</argument>
-                                    <argument>echo '${docker.registry.password}' | docker login -u
-                                        ${docker.registry.username} --password-stdin https://${docker.registry.host}
+                                    <argument>echo '${docker.registry.password}' | docker login -u ${docker.registry.username} --password-stdin https://${docker.registry.host}
                                     </argument>
                                 </arguments>
                             </configuration>
@@ -1382,16 +1391,14 @@
                                         else \
                                         echo "Builder $BUILDER_NAME is unhealthy, removing and recreating..."; \
                                         docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
                                         true; \
                                         fi; \
                                         else \
                                         echo "Builder $BUILDER_NAME does not exist, creating..."; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
                                         true; \
@@ -1419,8 +1426,7 @@
                                         echo "Preparing buildx builder $BUILDER_NAME before build..."; \
                                         if docker buildx inspect "$BUILDER_NAME" &gt;/dev/null 2&gt;&amp;1; then \
                                         echo "Builder exists, restarting BuildKit container to ensure clean state..."; \
-                                        BUILDER_CONTAINER=$(docker ps -a --filter "name=buildx_buildkit_${BUILDER_NAME}"
-                                        --format "{{.Names}}" | head -1); \
+                                        BUILDER_CONTAINER=$(docker ps -a --filter "name=buildx_buildkit_${BUILDER_NAME}" --format "{{.Names}}" | head -1); \
                                         if [ -n "$BUILDER_CONTAINER" ]; then \
                                         echo "Stopping and removing BuildKit container: $BUILDER_CONTAINER"; \
                                         docker stop "$BUILDER_CONTAINER" 2&gt;/dev/null || true; \
@@ -1428,8 +1434,7 @@
                                         fi; \
                                         echo "Recreating builder with fresh BuildKit container..."; \
                                         docker buildx rm "$BUILDER_NAME" 2&gt;/dev/null || true; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         echo "Booting BuildKit container..."; \
                                         docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
@@ -1438,8 +1443,7 @@
                                         sleep 2; \
                                         else \
                                         echo "Builder does not exist, creating new builder..."; \
-                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container
-                                        --driver-opt image="$BUILDKIT_IMAGE"; \
+                                        docker buildx create --use --name "$BUILDER_NAME" --driver docker-container --driver-opt image="$BUILDKIT_IMAGE"; \
                                         docker buildx use "$BUILDER_NAME"; \
                                         docker buildx inspect "$BUILDER_NAME" --bootstrap &gt;/dev/null 2&gt;&amp;1 ||
                                         true; \

@@ -32,6 +32,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+        <!-- 契约测试与 activemq/nats/mica 模块对齐：Testcontainers 起真实 MQTT broker，
+             装配上下文触发 MQClient#init 的 producer fail-fast 建连（版本由
+             ddd4j-boot-dependencies 统一钉 1.21.4） -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>

@@ -53,6 +53,17 @@ public class DemoEntity implements Entity<Long> {
     @TableField("`status`")
     private Integer status;
 
+    /**
+     * 构造 Demo 示例实体实例。
+     */
+    public DemoEntity() {
+    }
+
+    /**
+     * 获取实体主键。
+     *
+     * @return 实体主键
+     */
     @Override
     public Long id() {
         return id;

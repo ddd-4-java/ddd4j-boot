@@ -1,0 +1,333 @@
+样本模块半迁移收尾 证据文件
+================================================================
+生成日期: 2026-10-09
+仓库: ddd4j-boot (4.0.x, Spring Boot 4.0.x)
+责任范围: ddd4j-boot-samples 下 5 个模块
+  1) ddd4j-boot-sample-starter-druid
+  2) ddd4j-boot-sample-starter-druid-amqp
+  3) ddd4j-boot-sample-starter-druid-kafka
+  4) ddd4j-boot-sample-starter-druid-war
+  5) ddd4j-boot-sample-starter-r2dbc-webflux
+
+红线合规声明
+----------------------------------------------------------------
+本文件不包含以下 4 个旧品牌标识字面量的任何形式:
+  - 旧教育品牌
+  - 旧家族名 (6 字母, Java 包段 io.<旧家族名>, 下文记 OLD-FAM)
+  - 旧应用名 (6 字母, net.<旧应用名>, 下文记 OLD-APP)
+  - 旧中文品牌
+扫描与替换全程使用运行时派生变量(从 sed 脚本/仓库内容提取, 掩码长度 6),
+展示前统一经 sed -E "s/$FAM/<OLD-FAM>/gI; s/$APP/<OLD-APP>/gI" 处理。
+本任务未执行 mvn/gradle(编译验证由编排者执行), 未执行任何 git 提交/分支操作,
+未触碰 samples 之外的文件(本证据文件为唯一例外)。
+
+任务开始前已执行 git status, 既有未提交改动(含并行智能体负责的其他样本模块)已识别并保持原状, 未被本次操作覆盖。
+
+================================================================
+一、模块级文件迁移统计 (处置规则 1)
+================================================================
+
+[1] ddd4j-boot-sample-starter-druid  (半迁移: 双栈并存, 逐文件 diff 合并)
+    - 迁移(移动) 8 个: 旧 io.<OLD-FAM>.boot.sample.* -> io.ddd4j.boot.sample.*
+        entity/DemoEntity.java
+        exception/BizExceptionCode.java
+        exception/BizExceptionHandler.java
+        mapper/DemoMapper.java
+        setup/LogConstant.java
+        web/controller/DemoController.java
+        web/dto/DemoDTO.java
+        web/dto/DemoNewDTO.java
+    - 删除 2 个 (同名冲突, 保留新侧):
+        DemoApplication.java
+          -> 冲突两侧: 旧扁平栈 DemoApplication vs 新侧 io.ddd4j.boot.sample.DemoApplication
+          -> 保留新侧 (新侧含 CQRS demo/order 栈的组件扫描入口, 功能覆盖更全)
+        setup/config/MybatisPlusConfiguration.java (旧扁平栈侧)
+          -> 冲突两侧: 旧扁平栈 setup/config/MybatisPlusConfiguration vs 新栈 config/MybatisPlusConfiguration
+          -> 保留新栈 config/ 侧 (@MapperScan 指向 io.ddd4j.boot.sample.**.mapper, 与迁移后树自洽)
+    - 合并 1 个:
+        service/IDemoService.java
+          -> 归一化 diff 方法: 旧包名替换为新包名后逐行比较, 结果不一致, 判定合并
+          -> 旧侧(被删侧): "extends IService<DemoEntity>" + import
+             com.baomidou.mybatisplus.spring.service.IService +
+             import io.<OLD-FAM>.boot.sample.entity.DemoEntity   [功能更全]
+          -> 新侧(HEAD): 空 marker 接口 "public interface IDemoService {}",
+             import io.ddd4j.boot.sample.demo.infrastructure.persistence.entity.DemoEntity [无继承]
+          -> 处置: 采用旧侧内容 + 包名/import 归一化后覆盖新侧。
+             推导依据: 迁移后唯一实现类 io.ddd4j.boot.sample.service.impl.DemoServiceImpl
+             (extends com.baomidou.mybatisplus.spring.service.impl.ServiceImpl<DemoMapper, DemoEntity>
+              implements IDemoService) 依赖 IDemoService 继承 IService 才能与
+              ServiceImpl 的类型参数契约一致; 且旧侧 DemoController(迁移后)
+              注入 IDemoService。新侧旧 import(demo.infrastructure...DemoEntity)
+              指向的栈并不使用 IDemoService (全模块引用仅 service/、service/impl/、
+              web/controller/ 三处, 均为扁平栈侧)。
+          -> 合并后文件全文已验证: package io.ddd4j.boot.sample.service;
+             import com.baomidou.mybatisplus.spring.service.IService;
+             import io.ddd4j.boot.sample.entity.DemoEntity;
+             public interface IDemoService extends IService<DemoEntity> {}
+          -> 依赖合法性旁证: com.baomidou.mybatisplus.spring.service.IService 实际存在于
+             mybatis-plus-spring-3.5.17.jar (本机 ~/.m2 已核对, 该包为 MP 新版
+             从 extension 迁移到 spring 后的路径), 编译依赖由父 POM 的 MP 版本满足。
+    - 旧包树 io/<OLD-FAM>/boot/sample 已整树删除, 目录扫描 0 残留;
+      迁移期间误建的空目录已清理。
+    - git 状态: D=11, M=15, ??=5 (新包树 5 个新增入口)
+
+[2] ddd4j-boot-sample-starter-druid-amqp
+    - 迁移(整树) 18 个: src/main/java 与 src/test/java 由
+      src/{main,test}/java/io/<OLD-FAM> -> src/{main,test}/java/io/ddd4j (mv, 0 同名碰撞)
+    - 删除 0, 合并 0 (HEAD 不存在新侧 io.ddd4j 树, 无冲突)
+    - git 状态: D=18, M=13, ??=2
+
+[3] ddd4j-boot-sample-starter-druid-kafka
+    - 迁移(整树) 29 个 (含 src/test/java), 同上方式, 0 碰撞
+    - git 状态: D=29, M=12, ??=2
+
+[4] ddd4j-boot-sample-starter-druid-war
+    - 迁移(整树) 21 个 (含 src/test/java), 同上方式, 0 碰撞
+    - git 状态: D=21, M=13, ??=2
+
+[5] ddd4j-boot-sample-starter-r2dbc-webflux
+    - java 迁移 0 (HEAD 已全部位于 io.ddd4j.boot.sample)
+    - 仅资源/文本/版权头修复: git 状态 M=35
+      (24 个 java 版权头 + application*.yaml×5 + conf/log4j2*.xml×4 +
+       templates/html/footer.html + src/test/resources/application.yml + pom.xml)
+
+合计: 迁移 76 个 java 文件, 删除 2 个, 合并 1 个;
+批量 sed 修复文件 168 个 (清单口径: grep -rli -e "$FAM" -e "$APP" 对 5 模块取到的
+全部命中文件, 逐个 sed -i -f /tmp/brandfix.sed; 其中 git 跟踪修改 88, 随迁移
+新增路径并同步处理 76, 另含生成物 .flattened-pom.xml 5 个)。
+
+================================================================
+二、引用修复清单 (处置规则 2, 文件:行, 全部已掩码)
+================================================================
+
+2.1 pom.xml mainClass (5 个 pom + 5 个 .flattened-pom.xml)
+    ddd4j-boot-sample-starter-druid/pom.xml:242
+    ...-druid-amqp/pom.xml:221
+    ...-druid-kafka/pom.xml:223
+    ...-druid-war/pom.xml:225
+    ...-r2dbc-webflux/pom.xml:244
+    -> <mainClass>io.ddd4j.boot.sample.DemoApplication</mainClass>
+    原值指向 "com.github.<OLD-FAM>.boot.sample.MqttServerApplication"(全模块不存在的类)。
+    自洽核验: 5 个模块 src/main/java/io/ddd4j/boot/sample/DemoApplication.java 均存在。
+    行为注记: 根 POM 对 spring-boot-maven-plugin 仅 pluginManagement、无 executions
+    (repackage 不自动绑定), 且原值本身即为不存在类 -> 改值为零构建风险。
+
+2.2 war pom:22
+    <docker.registry.name> 形态键的值 <OLD-APP> -> redacted-legacy-app
+    行为注记: 仅影响以该属性构建的镜像命名空间, 属红线强制映射。
+
+2.3 mapper/mysql/DemoMapper.xml (druid/amqp/kafka/war 各 1 个)
+    行3 namespace="io.<OLD-FAM>.boot.sample.mapper.DemoMapper"
+      -> io.ddd4j.boot.sample.mapper.DemoMapper
+      (对应接口已迁移, 自洽; 4 模块均已核验类文件存在)
+    行6 resultMap type="io.<OLD-FAM>.boot.sample.entity.OrderEntity"
+      -> 二次修正为 io.ddd4j.boot.sample.entity.DemoEntity
+      (首次批量 sed 后为 io.ddd4j.boot.sample.entity.OrderEntity——该类在这 4 个模块
+       从未存在, 属半迁移前即有的坏引用; 选定 DemoEntity 的依据: resultMap 列
+       id,name,intro,order_by,status 与 DemoEntity 字段一一吻合, 且迁移后同包存在;
+       该 XML 无任何 select/insert/update/delete statement (0 条), BaseResultMap/
+       Base_Column_List 无使用者 -> 修正仅消除解析期隐患, 不改变运行行为;
+       注: resultMap 另有 is_deleted/creator/create_time/modifyer/modify_time
+       5 列在 DemoEntity 中无对应属性, 因无 statement 引用该 resultMap, 不会被实例化。)
+    r2dbc 的 DemoMapper.xml 使用短别名(namespace="DemoMapper", type="DemoEntity"),
+    无 FQCN, 未改动。
+
+2.4 @MapperScan (Java, 行18)
+    druid  src/.../io/ddd4j/boot/sample/config/MybatisPlusConfiguration.java:18
+      -> {"io.ddd4j.boot.sample.**.mapper",
+          "io.ddd4j.boot.sample.**.infrastructure.persistence.mapper"} (与 HEAD 一致, 未变)
+    amqp   src/.../io/ddd4j/boot/sample/setup/config/MybatisPlusConfiguration.java:18
+      -> {"io.ddd4j.**.mapper,io.ddd4j.**.mapper", "io.ddd4j.**.repository"}
+    kafka  同路径:18
+      -> {"io.ddd4j.**.dao,io.ddd4j.**.mapper", "io.ddd4j.**.repository"}
+    war    同路径:18
+      -> {"io.ddd4j.**.mapper,io.ddd4j.**.mapper", "io.ddd4j.**.repository"}
+    amqp/kafka/war 三个值均为旧值的纯 token 替换(旧值本身即为同一数组元素内逗号
+    连接的重复形态, 属原样保留结构)。语义核验(读 mybatis-spring-3.0.5 字节码):
+    MapperScannerRegistrar 不直接扫描, 而是注册 MapperScannerConfigurer 并以
+    collectionToCommaDelimitedString 拼接 basePackage; MapperScannerConfigurer.
+    afterPropertiesSet 以分隔符 ",; \t\n" 调用 StringUtils.tokenizeToStringArray
+    拆分后逐个 scan -> 逗号内嵌 pattern 可正常拆分, 迁移前后语义等价;
+    io.ddd4j.**.repository / **.dao 在 3 模块无匹配包, 与迁移前(旧 token 同样无匹配)
+    行为一致。
+
+2.5 application*.yaml / application*.yml (5 模块 main+test)
+    - type-aliases-package: io.<OLD-FAM>**.dao.entities -> io.ddd4j.**.dao.entities
+      (r2dbc-webflux/src/main/resources/application.yaml:234, src/test/.../application.yml:219;
+       druid 系 4 模块同键同构)
+      行为注记: 迁移前后两侧均无以 dao/entities 结尾的包(git ls-tree 已核验 HEAD 与
+      工作区均无该路径) -> 该键迁移前后都扫描 0 个包, 纯映射替换, 行为等价(半迁移遗留)。
+    - aop-patterns: io.<OLD-FAM>.boot.demo.web.mvc -> io.ddd4j.boot.demo.web.mvc
+      (druid application.yaml:130, src/test application.yml:131 等)
+      行为注记: 该切点模式在 5 模块内无匹配包(真实树为 boot.sample.demo), 属死配置,
+      映射前后均匹配 0 个连接点, 行为等价。
+    - springdoc 文档元数据 (kafka/war application.yaml:88-91 等):
+      contact email <OLD-FAM>@163.com -> ddd4j@163.com;
+      contact url http://<OLD-FAM>.io / www.<OLD-FAM>.com -> github.com/ddd-4-java/ddd4j;
+      OpenAPI base-package -> io.ddd4j
+    - component-scan/测试 base-package: -> io.ddd4j
+      (amqp/kafka/war test application.yml:69, kafka/war main yaml:91 等)
+
+2.6 log4j2 logger 配置
+    amqp/kafka/war/r2dbc 每模块 12 行 (3 个文件 x 4 行):
+      conf/log4j2.xml:213-216 / conf/log4j2-dev.xml:101-104 / conf/log4j2-edas.xml:205-208
+      net.<OLD-APP>            -> redacted-legacy-app
+      net.<OLD-APP>.authz      -> redacted-legacy-app.authz
+      net.<OLD-APP>.biz        -> redacted-legacy-app.biz
+      [Mybatis]net.<OLD-APP>   -> [Mybatis]redacted-legacy-app
+    druid: 上述 3 个 main 配置文件同位置原值即为 net.ddd4j 形态(6 字节新品牌 token,
+      非 OLD-APP, 未触碰); conf/log4j2-test.xml 中 4 行 io.<OLD-FAM>[.authz/.biz]
+      与 [Mybatis]io.<OLD-FAM> -> io.ddd4j[...], 与迁移后包名对齐。
+    外部库 logger (org.apache.tomcat.util.net.*, net.bull.javamelody, net.oschina,
+      len=5 f=b, len=7/8 f=o 等) 均非旧应用名, 未触碰。
+    行为注记(见三.4): 红线强制。
+
+2.7 文本类
+    - templates/html/footer.html:5 (5 模块): 版权行 ->
+      "Copyright (C) 2018 ddd4j (https://github.com/ddd-4-java/ddd4j). All Rights Reserved."
+    - java 文件版权头 (druid 新栈 config/ 6 文件, r2dbc 24 文件):
+      "Copyright (C) 2018 <OLD-FAM> (http://<OLD-FAM>.io)" -> 同上新文案
+    - banner.txt ASCII 艺术字: 属视觉展示、无可检索字面量, 处置规则未覆盖, 未改动 (留证)。
+    - yaml contact.name 处的旧中文品牌: 处置规则 3 未覆盖该项, 文件内未改动 (留证; 输出中不提及字面量)。
+
+2.8 DB 连接串样例 (处置规则 3)
+    application-{dev,local,test,prod}.yaml 及 test application.yml 中
+    datasource name/url/username 的 <OLD-APP>_boot 形态 ->
+    redacted-legacy-app_boot (如 amqp application-prod.yaml:17/20/21)。
+    行为注记: 见三.2。
+
+================================================================
+三、表前缀 / DB 名 / logger 名处置与行为注记 (处置规则 3+4)
+================================================================
+
+前置核对: 全仓 .sql (Flyway 脚本与资源目录) 中旧应用名命中数 = 0;
+mapper XML 内 SQL 均为显式表名(t_demo / BIZ_SIMPLE)或无 statement ->
+mybatis-plus 的 table-prefix 配置在本 5 模块内不参与任何实际 SQL 拼接。
+
+注记 1. table-prefix: <OLD-APP>_ -> redacted-legacy-app_
+    位置: amqp application.yaml:260/319 + test yml:224/283;
+          kafka/war application.yaml:368/427 + test yml:224/283;
+          r2dbc application.yaml:239/298 + test yml:224/283
+    (druid 自身原值即为 ddd4j_, 未改动, application.yaml:260/319, test yml:215/274)
+    影响分析: 该键仅作用于 "无显式表名的自动语句"; 本 5 模块无此类语句 ->
+    替换不改变任何实际执行的 SQL, 属孤立配置; 风险=0。
+    定性: 行为中性, 红线强制映射。
+
+注记 2. datasource name/url/username 的 <OLD-APP>_boot -> redacted-legacy-app_boot
+    影响分析: 仅样例连接配置(指向 192.168.x 内网样例库); 若某真实环境仍沿用旧库名,
+    需以环境变量/profile 覆盖。属红线强制, 库名映射不可回退(回退将导致旧应用名
+    字面量复现)。风险: 样例开箱直连内网库场景需人工改配置(迁移前同样不可用)。
+
+注记 3. test application.yml 的 name: <OLD-APP>_demo -> redacted-legacy-app_demo
+    影响分析: 仅 Spring 应用名展示/actuator 标识, 无行为依赖, 行为中性。
+
+注记 4. log4j2 logger 名 net.<OLD-APP>* -> redacted-legacy-app*
+    (4 模块 x 12 行, 见 2.6)
+    影响分析: 这些 logger 名此前对应旧应用家族的日志命名空间; 映射后:
+      (a) 本仓库代码不含旧应用包名 -> 这些 logger 原本就不会匹配到本仓任何 logger
+          (迁移前该配置即为"指向外部命名空间");
+      (b) 映射后 logger 名 redacted-legacy-app* 不再匹配原外部库输出, 相关 DEBUG 级别
+          配置变为惰性(无 logger 使用时按 log4j2 静默忽略);
+      (c) 若旧应用名所指外部库仍在 classpath, 其输出将回落到 root 级别(不再被这 4 行
+          单独设为 DEBUG) -> 可能产生更多/更少该库日志, 属红线强制的行为注记。
+    定性: 红线强制, 已知副作用, 接受。
+
+注记 5. druid log4j2-test.xml 的 io.<OLD-FAM>* -> io.ddd4j*
+    影响分析: 迁移后本仓代码包名即为 io.ddd4j.* -> 这些 INFO 级 logger 从
+    "指向旧包(已不存在)" 变为 "精确命中迁移后的代码包", 属行为改善。
+
+注记 6. aop-patterns / type-aliases-package 死条目 (见 2.5)
+    迁移前后均匹配 0 -> 行为等价。
+
+注记 7. mainClass 改值 (见 2.1): 原值指向不存在类, 且 repackage 不绑定 -> 零风险。
+
+注记 8. docker.registry.name <OLD-APP> -> redacted-legacy-app (war pom:22)
+    影响分析: 仅镜像仓库命名空间, 非运行时行为; 若 CI 有推送白名单需同步。
+
+注记 9. footer.html / java 版权头 / URL 文本 (见 2.7): 纯展示文本, 零行为影响。
+
+注记 10. DemoMapper.xml 行6 resultMap type 修正 (见 2.3):
+    消除半迁移遗留的解析期坏引用; 因无 statement 使用, 运行行为不变。
+
+================================================================
+四、复扫证据 (处置规则 2 收口, 结果必须为 0)
+================================================================
+扫描方式: 运行时派生 token (FAM 取自 /tmp/brandfix.sed 第 8 行规则,
+APP 取自第 6 行规则; 均为 6 字母, APP 首字母 j; 字面量不在任何输出中出现),
+在仓库根目录对上述 5 模块执行:
+
+  grep -rli "$FAM"        <5模块>   -> 0   (旧家族名任意形态)
+  grep -rli "$APP"        <5模块>   -> 0   (旧应用名任意形态)
+  grep -rli "io.$FAM"     <5模块>   -> 0   (Java 包引用)
+  grep -rli "com.github.$FAM" <5模块> -> 0 (com.github 旧形态)
+  grep -rli "net.$APP"    <5模块>   -> 0   (logger/包引用)
+  find <5模块> -type d -path "*/io/$FAM" -> 0 (旧包目录残留)
+  grep 'table-prefix' 5模块 -> 仅 ddd4j_ / redacted-legacy-app_ 两种取值
+  复扫覆盖含 .flattened-pom.xml、src/test、conf、templates、mapper 全部资源。
+
+================================================================
+五、可编译自洽检查 (文本级, 未运行 mvn)
+================================================================
+5.1 package 声明 vs 目录路径: 5 模块全部 .java 逐个比对, 一致。
+    唯一例外: ddd4j-boot-sample-starter-druid-kafka/src/main/java/io/ddd4j/boot/
+    sample/setup/config/FlywayDemoConfiguration.java —— 该文件自 HEAD 起即为
+    19 行纯注释(无 package/无类型声明, 仅注释块中出现"package ...;"字样),
+    javac 对仅含注释的编译单元可正常通过; 本次仅对其做了品牌文案替换, 未改变结构。
+5.2 模块内 io.ddd4j.boot.sample.* 的 import 全部可解析到现存源文件: 0 missing。
+5.3 5 个 pom mainClass 类存在 (io.ddd4j.boot.sample.DemoApplication)。
+5.4 4 个 mapper XML namespace 类存在; resultMap type 类存在 (Phase D 修正后)。
+5.5 druid 合并后的 IDemoService/DemoServiceImpl/DemoController 类型链一致
+    (ServiceImpl<DemoMapper, DemoEntity> implements IDemoService extends IService<DemoEntity>)。
+5.6 r2dbc 别名引用: namespace/type 使用短别名, 依赖 type-aliases-package(死键, 见 2.5),
+    与 HEAD 行为一致。
+
+================================================================
+六、风险点 / 编译疑点 / 运行期待验证 (如实列出, 交编排者)
+================================================================
+风险 1 (druid, 双栈, 运行期): @MapperScan "io.ddd4j.boot.sample.**.mapper" 同时命中
+    迁移进来的 io.ddd4j.boot.sample.mapper.DemoMapper 与新栈
+    io.ddd4j.boot.sample.demo.infrastructure.persistence.mapper.DemoMapper ——
+    两者默认 bean 名同为 demoMapper; 且
+    order/application/mapper/OrderMapper 与 order/infrastructure/persistence/mapper/
+    OrderMapper 同为 orderMapper (此项在迁移前 HEAD 即存在于同一扫描范围)。
+    按 Spring 7 ClassPathBeanDefinitionScanner.checkCandidate 的字节码逻辑,
+    "两个扫描得到的定义同名且 beanClass 不同" 会在扫描期抛
+    ConflictingBeanDefinitionException(spring.main.allow-bean-definition-overriding=true
+    未必能豁免扫描器内建检查); mybatis-spring 的 checkCandidate 重写仅在 super 返回
+    false 时打 warn, 不捕获该异常。
+    结论: druid 运行期启动存在同名 mapper bean 冲突风险。该风险类别在迁移前即已存在
+    (orderMapper 冲突、mainClass 指向不存在类、跨栈引用断裂), 非本次迁移新造;
+    本次并树使 demoMapper 也进入同一扫描域, 属风险面扩大。
+    编译不受影响(接口/类均合法)。验证须由编排者运行 mvn/启动上下文。
+风险 2 (druid, 双栈, 运行期): setup/config/ 与 config/ 下 5 对同名 @Configuration
+    (CaffeineCacheConfig/DataSourceConfig/MyMetaObjectHandler/WebMvcConfiguration/
+    WebMvcSwagger3Configuration) —— HEAD 即存在, 依赖 application.properties:3 的
+    spring.main.allow-bean-definition-overriding=true 覆盖共存, 未在本次触碰。
+风险 3 (druid, 双栈, 运行期): 迁移进来的 web/controller/DemoController(映射 demo*)
+    与新栈 demo/adapter/web/DemoController(映射 /api/demos) 路径不同 ->
+    无 @RequestMapping 歧义; 但 bean 名 demoController 二选一, 取胜一侧决定哪组端点
+    实际注册(依赖覆盖顺序), 属运行期行为观察点。
+风险 4 (druid, 迁移前遗留): 迁移前扁平栈实体/mapper 位于旧包, 新栈 DemoServiceImpl
+    以旧包 FQCN 引用它们 -> 任一 DemoApplication 入口下都无法完整装配(半迁移烂尾态)。
+    迁移后全部跨栈引用统一到 io.ddd4j, 上述断链已接通; 剩余问题即风险 1-3。
+风险 5: 注记 2 的样例 DB 库名映射需真实环境人工覆盖(红线强制, 不可回退)。
+风险 6: r2dbc/kafka 等模块的 type-aliases-package 死键为半迁移遗留, 本次仅做等价映射,
+    未"顺手修复"为真实包(避免超出处置规则引入行为变化); 如需修复应另立变更。
+编译疑点: 文本级自洽检查(第五节)未发现问题; 实际编译结论以编排者执行的
+    mvn -pl <5模块> test/compile 为准(本任务禁跑构建)。
+
+================================================================
+七、统计汇总
+================================================================
+模块                       迁移   删除   合并   资源/文本修复(git M)  旧包树残留
+ddd4j-boot-sample-starter-druid        8      2      1    15                   0
+...-druid-amqp                        18      0      0    13                   0
+...-druid-kafka                       29      0      0    12                   0
+...-druid-war                         21      0      0    13                   0
+...-r2dbc-webflux                      0      0      0    35                   0
+合计                                  76      2      1    88                   0
+批量 sed 修复文件总数: 168 (含随迁移新增路径 76 与 .flattened-pom.xml 生成物)
+最终复扫: 旧家族名=0, 旧应用名=0, io.<OLD-FAM>=0, com.github.<OLD-FAM>=0,
+          net.<OLD-APP>=0, 旧包目录=0
+================================================================
+(文件结束)

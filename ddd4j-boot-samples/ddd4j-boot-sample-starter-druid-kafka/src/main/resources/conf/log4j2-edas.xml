@@ -202,10 +202,10 @@
         <!--log4j2 自带过滤日志-->
 
         <!-- 应用系统日志过滤 -->
-        <Logger name="net.jeebiz" level="DEBUG" additivity="true"/>
-        <Logger name="net.jeebiz.authz" level="DEBUG" additivity="true"/>
-        <Logger name="net.jeebiz.biz" level="DEBUG" additivity="true"/>
-        <Logger name="[Mybatis]net.jeebiz" level="DEBUG" additivity="true"/>
+        <Logger name="redacted-legacy-app" level="DEBUG" additivity="true"/>
+        <Logger name="redacted-legacy-app.authz" level="DEBUG" additivity="true"/>
+        <Logger name="redacted-legacy-app.biz" level="DEBUG" additivity="true"/>
+        <Logger name="[Mybatis]redacted-legacy-app" level="DEBUG" additivity="true"/>
 
     </Loggers>
 </Configuration>

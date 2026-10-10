@@ -16,7 +16,7 @@
 
     <dependencies>
 
-        <!-- For Jeebiz -->
+        <!-- For ddd4j -->
         <dependency>
             <groupId>io.ddd4j</groupId>
             <artifactId>ddd4j-core</artifactId>
@@ -151,7 +151,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-
+            
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
@@ -199,7 +199,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.github.hiwepy.boot.sample.MqttServerApplication</mainClass>
+                    <mainClass>io.ddd4j.boot.sample.MqttServerApplication</mainClass>
                 </configuration>
             </plugin>
 

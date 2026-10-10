@@ -44,6 +44,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PulsarMQClientIntegrationTest {
 
     @Container
+    // 测试镜像来源: https://testcontainers.com/modules/pulsar/
     static final GenericContainer<?> PULSAR = new GenericContainer<>(DockerImageName.parse("apachepulsar/pulsar:3.2.0"))
             .withCommand("bin/pulsar", "standalone")
             .withExposedPorts(6650, 8080)

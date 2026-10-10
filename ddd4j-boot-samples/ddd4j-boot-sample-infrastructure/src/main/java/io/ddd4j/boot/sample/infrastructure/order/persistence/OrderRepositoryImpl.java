@@ -23,6 +23,11 @@ import java.util.stream.Collectors;
 
 /**
  * 订单仓储实现（基础设施层）
+ *
+ * <p>领域语义：订单聚合的 MyBatis-Plus 持久化实现。写操作内部同时维护
+ * 主表与订单项明细（经 {@link OrderItemRepository} 级联删除），并在保存、
+ * 删除后通过 {@link OrderDomainEventPublisher} 投递聚合暂存的领域事件；
+ * 查询按 {@link OrderQuery} 条件动态拼装 Wrapper，支持分页与总数统计。</p>
  */
 @Repository
 public class OrderRepositoryImpl implements OrderRepository {
@@ -175,6 +180,15 @@ public class OrderRepositoryImpl implements OrderRepository {
         orderMapper.deleteById(id);
     }
 
+    /**
+     * 构造订单仓储实现。
+     *
+     * @param orderMapper        订单 MyBatis-Plus Mapper，由容器注入
+     * @param orderItemMapper    订单项 MyBatis-Plus Mapper，由容器注入
+     * @param orderItemRepository 订单项仓储，用于级联删除订单明细
+     * @param orderConverter     订单对象转换器，由容器注入
+     * @param domainEventPublisher 领域事件发布器，用于在写操作后投递暂存事件
+     */
     public OrderRepositoryImpl(final OrderMapper orderMapper, final OrderItemMapper orderItemMapper, final OrderItemRepository orderItemRepository, final OrderConverter orderConverter, final OrderDomainEventPublisher domainEventPublisher) {
         this.orderMapper = orderMapper;
         this.orderItemMapper = orderItemMapper;

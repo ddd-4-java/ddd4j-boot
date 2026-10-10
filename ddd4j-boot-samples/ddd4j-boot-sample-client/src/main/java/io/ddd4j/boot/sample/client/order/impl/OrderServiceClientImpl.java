@@ -20,7 +20,7 @@ import java.util.List;
  *
  * <p>使用Spring 6.1+ 的 RestClient 实现订单服务的HTTP调用。</p>
  *
- * <h3>配置说明：</h3>
+ * <h2>配置说明</h2>
  * <pre>{@code
  * # application.yml
  * order:
@@ -33,11 +33,17 @@ import java.util.List;
  */
 public class OrderServiceClientImpl implements OrderServiceClient {
 
+    /** 订单接口路径前缀 */
     private static final String API_PREFIX = "/api/orders";
     private static final Logger log = LoggerFactory.getLogger(OrderServiceClientImpl.class);
+    /** RestClient 实例 */
     private final RestClient restClient;
+    /** 订单服务基础地址 */
     private final String baseUrl;
 
+    /** 构造 OrderServiceClientImpl 对象。
+     * @param restClient RestClient 实例
+     * @param baseUrl 订单服务基础地址 */
     public OrderServiceClientImpl(RestClient restClient, String baseUrl) {
         this.restClient = restClient;
         this.baseUrl = baseUrl;
@@ -218,9 +224,12 @@ public class OrderServiceClientImpl implements OrderServiceClient {
      */
     @SuppressWarnings("unused")
     private static class PayOrderRequest {
+        /** 支付方式 */
         @SuppressWarnings("unused")
         private String paymentMethod;
 
+        /** 设置支付方式。
+         * @param paymentMethod 支付方式 */
         public void setPaymentMethod(String paymentMethod) {
             this.paymentMethod = paymentMethod;
         }
@@ -231,15 +240,21 @@ public class OrderServiceClientImpl implements OrderServiceClient {
      */
     @SuppressWarnings("unused")
     private static class ShipOrderRequest {
+        /** 物流单号 */
         @SuppressWarnings("unused")
         private String trackingNumber;
+        /** 物流公司 */
         @SuppressWarnings("unused")
         private String logisticsCompany;
 
+        /** 设置物流单号。
+         * @param trackingNumber 物流单号 */
         public void setTrackingNumber(String trackingNumber) {
             this.trackingNumber = trackingNumber;
         }
 
+        /** 设置物流公司。
+         * @param logisticsCompany 物流公司 */
         public void setLogisticsCompany(String logisticsCompany) {
             this.logisticsCompany = logisticsCompany;
         }
@@ -250,9 +265,12 @@ public class OrderServiceClientImpl implements OrderServiceClient {
      */
     @SuppressWarnings("unused")
     private static class CancelOrderRequest {
+        /** 取消原因 */
         @SuppressWarnings("unused")
         private String reason;
 
+        /** 设置取消原因。
+         * @param reason 取消原因 */
         public void setReason(String reason) {
             this.reason = reason;
         }

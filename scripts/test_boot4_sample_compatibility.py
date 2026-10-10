@@ -25,7 +25,7 @@ class Boot4SampleCompatibilityTest(unittest.TestCase):
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import com.github.dozermapper.extra.converters.BooleanStringConverter;
-import com.github.hiwepy.validation.constraints.FileNotEmpty;
+import com.github.redacted-legacy-family.validation.constraints.FileNotEmpty;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import org.springframework.web.reactive.resource.WebJarsResourceResolver;

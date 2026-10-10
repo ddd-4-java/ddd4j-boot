@@ -25,15 +25,21 @@ public class DemoController {
 
     private final DemoApplicationService demoApplicationService;
 
+    /**
+     * 构造 DemoController 实例。
+     *
+     * @param demoApplicationService demoApplicationService
+     */
     public DemoController(DemoApplicationService demoApplicationService) {
         this.demoApplicationService = demoApplicationService;
     }
 
     /**
      * 创建Demo
+     *
+     * @param command 命令对象
+     * @return 新增结果
      */
-    @Operation(summary = "创建Demo", description = "创建新的Demo记录")
-    @PostMapping
     public ApiRestResponse<DemoDTO> createDemo(@Valid @RequestBody CreateDemoCommand command) {
         DemoDTO demo = demoApplicationService.createDemo(command);
         return ApiRestResponse.success(demo);
@@ -41,9 +47,11 @@ public class DemoController {
 
     /**
      * 更新Demo
+     *
+     * @param id 标识 ID
+     * @param command 命令对象
+     * @return 更新结果
      */
-    @Operation(summary = "更新Demo", description = "更新指定Demo的信息")
-    @PutMapping("/{id}")
     public ApiRestResponse<DemoDTO> updateDemo(
             @Parameter(description = "Demo ID", example = "1", required = true)
             @PathVariable Long id,
@@ -55,9 +63,10 @@ public class DemoController {
 
     /**
      * 根据ID查询Demo
+     *
+     * @param id 标识 ID
+     * @return 查询结果
      */
-    @Operation(summary = "根据ID查询Demo", description = "根据Demo ID查询详细信息")
-    @GetMapping("/{id}")
     public ApiRestResponse<DemoDTO> getDemoById(
             @Parameter(description = "Demo ID", example = "1", required = true)
             @PathVariable Long id) {
@@ -67,9 +76,9 @@ public class DemoController {
 
     /**
      * 查询所有Demo
+     *
+     * @return 查询结果
      */
-    @Operation(summary = "查询所有Demo", description = "查询所有Demo记录列表")
-    @GetMapping
     public ApiRestResponse<List<DemoDTO>> getAllDemos() {
         List<DemoDTO> demos = demoApplicationService.getAllDemos();
         return ApiRestResponse.success(demos);
@@ -77,9 +86,10 @@ public class DemoController {
 
     /**
      * 删除Demo
+     *
+     * @param id 标识 ID
+     * @return 删除结果
      */
-    @Operation(summary = "删除Demo", description = "根据ID删除指定Demo")
-    @DeleteMapping("/{id}")
     public ApiRestResponse<String> deleteDemo(
             @Parameter(description = "Demo ID", example = "1", required = true)
             @PathVariable Long id) {
@@ -89,9 +99,10 @@ public class DemoController {
 
     /**
      * 批量删除Demo
+     *
+     * @param ids 标识 ID 集合
+     * @return 删除结果
      */
-    @Operation(summary = "批量删除Demo", description = "根据ID列表批量删除Demo")
-    @DeleteMapping("/batch")
     public ApiRestResponse<String> deleteDemos(
             @Parameter(description = "Demo ID列表", required = true)
             @RequestBody List<Long> ids) {

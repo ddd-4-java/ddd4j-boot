@@ -17,4 +17,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class DemoServiceImpl extends ServiceImpl<DemoMapper, DemoEntity> implements IDemoService {
 
+    /**
+     * 构造服务实现类实例。
+     */
+    public DemoServiceImpl() {
+    }
+
 }

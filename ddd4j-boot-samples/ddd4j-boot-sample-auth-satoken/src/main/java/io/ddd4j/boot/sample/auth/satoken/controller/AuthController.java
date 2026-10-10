@@ -26,7 +26,20 @@ import java.util.Map;
 public class AuthController {
 
     /**
-     * 登录：SubjectKit.login(AuthRequest)
+     * 构造鉴权示例控制器。
+     *
+     */
+    public AuthController() {
+    }
+
+    /**
+     * 登录：SubjectKit.login(AuthRequest)。
+     *
+     * <p>先构造 {@link AuthPrincipal} 主体并绑定到 {@link AuthRequest}，
+     * 再由统一鉴权入口签发令牌，返回令牌与主体信息。
+     *
+     * @param userId 登录标识，同时用作主体的登录 ID 与用户 ID
+     * @return 包含 token 与 principal 的结果映射
      */
     @PostMapping("/login")
     public Map<String, Object> login(String userId) {
@@ -46,7 +59,9 @@ public class AuthController {
     }
 
     /**
-     * 登出：SubjectKit.logout()
+     * 登出：SubjectKit.logout()。
+     *
+     * @return 登出结果映射，success 恒为 true
      */
     @PostMapping("/logout")
     public Map<String, Object> logout() {
@@ -55,7 +70,12 @@ public class AuthController {
     }
 
     /**
-     * 当前用户：SubjectKit.getPrincipal()
+     * 当前用户：SubjectKit.getPrincipal()。
+     *
+     * <p>未登录时返回 authenticated=false 的结果；已登录时返回登录 ID、
+     * 用户 ID 与角色编码。
+     *
+     * @return 含 authenticated 标识的主体信息映射
      */
     @GetMapping("/me")
     public Map<String, Object> me() {
@@ -72,7 +92,10 @@ public class AuthController {
     }
 
     /**
-     * 权限校验：SubjectKit.hasPermission()
+     * 权限校验：SubjectKit.hasPermission()。
+     *
+     * @param permission 待校验的权限标识
+     * @return 含 permission 原值与 has 校验结论的结果映射
      */
     @GetMapping("/check/permission")
     public Map<String, Object> checkPermission(String permission) {
@@ -81,7 +104,10 @@ public class AuthController {
     }
 
     /**
-     * 角色校验：SubjectKit.hasRole()
+     * 角色校验：SubjectKit.hasRole()。
+     *
+     * @param role 待校验的角色编码
+     * @return 含 role 原值与 has 校验结论的结果映射
      */
     @GetMapping("/check/role")
     public Map<String, Object> checkRole(String role) {
@@ -90,7 +116,9 @@ public class AuthController {
     }
 
     /**
-     * 登录状态：SubjectKit.isLogin()
+     * 登录状态：SubjectKit.isLogin()。
+     *
+     * @return 含 login 标识的状态映射，true 表示当前已登录
      */
     @GetMapping("/status")
     public Map<String, Object> status() {
