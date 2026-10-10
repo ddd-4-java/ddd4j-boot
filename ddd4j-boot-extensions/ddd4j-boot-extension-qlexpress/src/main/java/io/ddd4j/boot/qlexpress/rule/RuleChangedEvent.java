@@ -1,22 +1,89 @@
 package io.ddd4j.boot.qlexpress.rule;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import java.util.Objects;
+
 import java.time.LocalDateTime;
 
 /**
  * 规则变更应用事件。
  */
-public record RuleChangedEvent(String ruleId, String ruleCode, Operation operation,
-                               LocalDateTime occurredAt) {
+public final class RuleChangedEvent {
+
+    private static final long serialVersionUID = 0L;
+
+    private final String ruleId;
+
+    private final String ruleCode;
+
+    private final Operation operation;
+
+    private final LocalDateTime occurredAt;
 
     public static RuleChangedEvent of(RuleDefinition rule, Operation operation) {
         return new RuleChangedEvent(rule.getId(), rule.getCode(), operation, LocalDateTime.now());
     }
 
     public enum Operation {
-        CREATED,
-        UPDATED,
-        DELETED,
-        ENABLED,
-        DISABLED
+
+        CREATED, UPDATED, DELETED, ENABLED, DISABLED
+    }
+
+    @JsonCreator()
+    public RuleChangedEvent(@JsonProperty("ruleId") String ruleId, @JsonProperty("ruleCode") String ruleCode, @JsonProperty("operation") Operation operation, @JsonProperty("occurredAt") LocalDateTime occurredAt) {
+        this.ruleId = ruleId;
+        this.ruleCode = ruleCode;
+        this.operation = operation;
+        this.occurredAt = occurredAt;
+    }
+
+    @JsonProperty("ruleId")
+    public String ruleId() {
+        return ruleId;
+    }
+
+    @JsonProperty("ruleCode")
+    public String ruleCode() {
+        return ruleCode;
+    }
+
+    @JsonProperty("operation")
+    public Operation operation() {
+        return operation;
+    }
+
+    @JsonProperty("occurredAt")
+    public LocalDateTime occurredAt() {
+        return occurredAt;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (Objects.isNull(obj) || getClass() != obj.getClass()) {
+            return false;
+        }
+        RuleChangedEvent other = (RuleChangedEvent) obj;
+        return Objects.equals(this.ruleId, other.ruleId) && Objects.equals(this.ruleCode, other.ruleCode) && Objects.equals(this.operation, other.operation) && Objects.equals(this.occurredAt, other.occurredAt);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 0;
+        result = 31 * result + Objects.hashCode(ruleId);
+        result = 31 * result + Objects.hashCode(ruleCode);
+        result = 31 * result + Objects.hashCode(operation);
+        result = 31 * result + Objects.hashCode(occurredAt);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "RuleChangedEvent[ruleId=" + ruleId + ", ruleCode=" + ruleCode + ", operation=" + operation + ", occurredAt=" + occurredAt + "]";
     }
 }
