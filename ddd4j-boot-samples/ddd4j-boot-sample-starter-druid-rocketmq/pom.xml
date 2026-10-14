@@ -100,7 +100,7 @@
             <artifactId>dozer-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
+            <groupId>io.github.easy4j</groupId>
             <artifactId>dozer-extra-converters</artifactId>
         </dependency>
         <!-- For AOP -->
