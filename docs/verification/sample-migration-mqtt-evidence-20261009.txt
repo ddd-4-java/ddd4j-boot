@@ -122,7 +122,7 @@ sample-migration-mqtt-evidence-20261009.txt
     `ddd4j@163.com`、`www.ddd4j.com`；均沿统一 sweep 产出）。
 
 3.7 修改文件总账（git status --porcelain，仅 4 模块）
-  - D（删除，即迁移源）107 个 = 21/21/31/34
+  - D（删除，即来源出处）107 个 = 21/21/31/34
   - ??（新建，io/ddd4j 树，porcelain 折叠为目录）8 个 = 每模块 main+test 两棵树
   - M（修改）48 个 = 每模块 12 个：
       pom.xml、src/main/resources/application{,-dev,-prod,-test}.yaml、
