@@ -15,6 +15,7 @@
     <description>Ddd4j Boot Dependencies</description>
 
     <properties>
+        <dozer-extra-converters.version>1.0.x.20260630-SNAPSHOT</dozer-extra-converters.version>
         <!-- Third Party Spring Boot Starter Dependency versions -->
         <spring-boot-admin.version>2.5.6</spring-boot-admin.version>
         <spring-boot-aliyun.version>1.0.0</spring-boot-aliyun.version>
@@ -233,6 +234,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Verified provider version, independent of the DDD4J branch and remote parent BOM. -->
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>dozer-extra-converters</artifactId>
+                <version>${dozer-extra-converters.version}</version>
+            </dependency>
             <!-- 导入上游 ddd4j-dependencies BOM（基础组件版本统一管理） -->
             <dependency>
                 <groupId>io.ddd4j</groupId>
