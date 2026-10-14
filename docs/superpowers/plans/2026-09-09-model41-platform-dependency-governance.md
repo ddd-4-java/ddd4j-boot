@@ -151,7 +151,7 @@ Run:
 ```bash
 python3 scripts/test_model41_parent_contract.py
 python3 scripts/verify_model41_parent_contract.py .
-JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn \
+JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/dev//tools/apache-maven-4.0.0-rc-6/bin/mvn \
   -nsu -B -ntp -e -pl ddd4j-boot-auth/ddd4j-boot-auth-license -am validate
 ```
 
@@ -162,7 +162,7 @@ Expected: both Python commands PASS; Maven output contains zero `parent.relative
 Run:
 
 ```bash
-JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn \
+JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/dev//tools/apache-maven-4.0.0-rc-6/bin/mvn \
   -nsu -B -ntp -pl ddd4j-boot-auth/ddd4j-boot-auth-license -am -DskipTests compile
 ```
 
@@ -206,7 +206,7 @@ Apply Task 2's exact invariant; preserve `4.0.x.20260630-SNAPSHOT`, Spring Boot 
 ```bash
 python3 scripts/test_model41_parent_contract.py
 python3 scripts/verify_model41_parent_contract.py .
-JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn \
+JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/dev//tools/apache-maven-4.0.0-rc-6/bin/mvn \
   -nsu -B -ntp -pl ddd4j-boot-auth/ddd4j-boot-auth-license -am -DskipTests compile
 ```
 
@@ -373,9 +373,9 @@ git commit -m "docs(deps): classify Boot dependency ownership"
 - [x] **Step 1: Enforce the branch-availability gate**
 
 ```bash
-git -C /Users/wandl/workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j status --short
-git -C /Users/wandl/workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j worktree list
-git -C /Users/wandl/workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j switch feature/3.0.x
+git -C /Users/dev//workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j status --short
+git -C /Users/dev//workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j worktree list
+git -C /Users/dev//workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j switch feature/3.0.x
 ```
 
 Expected: proceed only if the primary checkout can switch normally. If Git reports that the branch is already checked
@@ -407,7 +407,7 @@ resolves to the expected version.
 ```bash
 git add ddd4j-dependencies/pom.xml scripts
 git commit -m "fix(deps): centralize platform dependency versions"
-JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn \
+JAVA_HOME=$(/usr/libexec/java_home -v 21) /Users/dev//tools/apache-maven-4.0.0-rc-6/bin/mvn \
   -nsu -B -ntp -pl ddd4j-dependencies -am -DskipTests install
 ```
 

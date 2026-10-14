@@ -7,7 +7,7 @@
  *   <li>{@link io.ddd4j.extension.dubbo.exception.DubboExceptionHandler} — Dubbo 异常到 {@code ApiRestResponse} 转换</li>
  * </ul>
  *
- * @author wandl
+ * @author ddd4j
  * @since 3.4.x
  */
 package io.ddd4j.extension.dubbo;

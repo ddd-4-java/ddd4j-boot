@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  *   <li>其他 COLA 异常 → {@code ApiCode.SC_INTERNAL_SERVER_ERROR}</li>
  * </ul>
  *
- * @author wandl
+ * @author ddd4j
  * @since 3.4.x
  */
 @RestControllerAdvice

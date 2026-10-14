@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * <p>直接调用领域层的充血方法（user.save() / user.rename()），
  * 演示"Controller → 领域模型"的简洁调用链，无需 Service 层中转。
  *
- * @author wandl
+ * @author ddd4j
  */
 @RestController
 @RequestMapping("/api/users")

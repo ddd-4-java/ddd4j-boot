@@ -18,7 +18,7 @@ import java.util.Objects;
  *
  * <p>领域行为直接写在聚合根上（充血），而非 Service 层（贫血）。
  *
- * @author wandl
+ * @author ddd4j
  */
 @DomainEntity(aggregateRoot = true)
 public class User extends AggregateRoot<String> {

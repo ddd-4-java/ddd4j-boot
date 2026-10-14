@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
  * Demo示例表
  * </p>
  *
- * @author wandl
+ * @author ddd4j
  * @since 2023-08-06
  */
 @Data

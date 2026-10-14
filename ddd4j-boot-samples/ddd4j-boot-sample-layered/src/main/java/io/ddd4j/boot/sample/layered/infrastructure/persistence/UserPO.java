@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * 带 MyBatis Plus 注解（{@code @TableName/@TableId/@TableLogic/@TableField}）。
  * {@code BaseRepositoryImpl} 通过 BeanKit 双向拷贝自动完成 Model↔PO 转换。
  *
- * @author wandl
+ * @author ddd4j
  */
 @TableName("sample_user")
 public class UserPO {

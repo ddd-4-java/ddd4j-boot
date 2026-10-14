@@ -31,7 +31,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
  *
  * <p>可通过 {@code ddd4j.dubbo.enabled=false} 关闭自动配置。
  *
- * @author wandl
+ * @author ddd4j
  * @since 3.4.x
  */
 @AutoConfiguration

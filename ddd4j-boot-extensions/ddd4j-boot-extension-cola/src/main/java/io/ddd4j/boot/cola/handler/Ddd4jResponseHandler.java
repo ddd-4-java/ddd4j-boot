@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
  * <p>当 COLA 的 Response 被成功处理时（无异常），原样返回；
  * 当捕获异常时，转换为 {@code ApiRestResponse} 的 fail 格式。
  *
- * @author wandl
+ * @author ddd4j
  * @since 3.4.x
  */
 @Component

@@ -33,7 +33,7 @@ import org.springframework.context.annotation.ComponentScan;
  *   <li>DomainFactory 领域对象工厂</li>
  * </ul>
  *
- * @author wandl
+ * @author ddd4j
  * @since 3.4.x
  */
 @AutoConfiguration

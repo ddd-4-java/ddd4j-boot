@@ -18,7 +18,7 @@ import io.ddd4j.core.cqrs.query.Query;
  * new UserQuery().setPhone("13800138000").notExist("该手机号已注册");
  * </pre>
  *
- * @author wandl
+ * @author ddd4j
  */
 public class UserQuery extends Query<User> {
 

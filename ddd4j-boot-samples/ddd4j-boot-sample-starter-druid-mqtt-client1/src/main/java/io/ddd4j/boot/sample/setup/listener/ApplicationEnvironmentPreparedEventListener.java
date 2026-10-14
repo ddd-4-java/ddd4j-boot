@@ -18,7 +18,7 @@ import java.util.Iterator;
  * 便于启动阶段排查配置加载顺序。
  * </p>
  *
- * @author ： <a href="https://github.com/wandl">wandl</a>
+ * @author ： <a href="https://github.com/ddd4j">ddd4j</a>
  * @version V1.0
  */
 public class ApplicationEnvironmentPreparedEventListener implements

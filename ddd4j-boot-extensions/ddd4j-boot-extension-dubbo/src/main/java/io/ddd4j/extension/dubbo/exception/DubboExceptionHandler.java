@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  *   <li>其他 → 500 Internal Server Error</li>
  * </ul>
  *
- * @author wandl
+ * @author ddd4j
  * @since 3.4.x
  */
 @RestControllerAdvice

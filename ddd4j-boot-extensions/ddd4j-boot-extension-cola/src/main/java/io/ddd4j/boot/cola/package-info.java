@@ -11,7 +11,7 @@
  * <p>COLA 组件（cola-component-*）自带 Spring Boot AutoConfiguration，
  * 本模块做的是 ddd4j-boot 风格的适配（统一响应、异常处理）。
  *
- * @author wandl
+ * @author ddd4j
  * @since 3.4.x
  */
 package io.ddd4j.boot.cola;

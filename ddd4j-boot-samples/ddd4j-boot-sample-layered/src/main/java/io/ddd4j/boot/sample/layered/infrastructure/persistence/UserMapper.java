@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * <p>空接口——继承 MP {@link BaseMapper} 即获得标准 CRUD 方法，
  * 由 {@link UserRepositoryImpl} 的四泛型体系自动调用。
  *
- * @author wandl
+ * @author ddd4j
  */
 public interface UserMapper extends BaseMapper<UserPO> {
 }

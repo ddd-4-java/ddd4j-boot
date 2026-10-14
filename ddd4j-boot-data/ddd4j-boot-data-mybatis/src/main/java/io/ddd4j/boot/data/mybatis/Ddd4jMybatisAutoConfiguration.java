@@ -29,7 +29,7 @@ import javax.sql.DataSource;
  * <p>业务项目可通过 {@code @ConditionalOnMissingBean} 覆盖此配置，
  * 自行注册 {@link MybatisPlusInterceptor}（如需要 TenantLineInnerInterceptor 等额外插件）。
  *
- * @author wandl
+ * @author ddd4j
  * @since 3.4.x
  */
 @AutoConfiguration

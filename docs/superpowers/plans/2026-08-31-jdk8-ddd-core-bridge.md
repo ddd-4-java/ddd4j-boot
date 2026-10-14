@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- 串行处理 `2.3.x`、`2.4.x`、`2.5.x`、`2.6.x`，每次修改前验证 GitHub/Codeup SHA、`git status` 和 JDK 8。
+- 串行处理 `2.3.x`、`2.4.x`、`2.5.x`、`2.6.x`，每次修改前验证 GitHub/内网平台 SHA、`git status` 和 JDK 8。
 - 不使用 Git worktree、不推送、不删除或重命名现有 `io.ddd4j.boot.*` 类型、模块或配置键。
 - 只使用 `ddd4j 1.0.x.20260630-SNAPSHOT` 的 Java 8 构件；候选仓库不能解析时记录 `BLOCKED`，本地安装只作测试依赖。
 - `ddd4j 1.0.x` 保持 `com.github.redacted-legacy-family:mybatis-plus-enhance` 单体 ABI，并使用 `2.7.x.20260630-SNAPSHOT`；禁止用模块化 `io.github.easy4j` 构件伪装旧坐标。
@@ -24,7 +24,7 @@
 
 ### Task 0: 对齐并验证 ddd4j 1.0.x 的旧单体 ABI
 
-**Repository:** `/Users/wandl/workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j`, branch `feature/1.0.x`
+**Repository:** `/Users/dev//workspaces/workspace-ddd4j/workspace-ddd4j-boot/ddd4j`, branch `feature/1.0.x`
 
 **Files:**
 

@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *   <li>DDD 注解标注分层角色（@DomainEntity/@DomainRepository）</li>
  * </ul>
  *
- * @author wandl
+ * @author ddd4j
  */
 @SpringBootApplication
 @MapperScan("io.ddd4j.boot.sample.layered.infrastructure.persistence")

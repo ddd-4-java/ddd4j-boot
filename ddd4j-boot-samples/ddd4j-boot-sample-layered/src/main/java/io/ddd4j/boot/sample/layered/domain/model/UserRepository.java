@@ -9,7 +9,7 @@ import io.ddd4j.core.ddd.repository.Repository;
  * <b>不暴露 PO 概念</b>。基础设施层的 {@code UserRepositoryImpl}
  * 继承 {@code BaseRepositoryImpl} 获得 MyBatis-Plus 适配能力。
  *
- * @author wandl
+ * @author ddd4j
  */
 public interface UserRepository extends Repository<User, String> {
 }

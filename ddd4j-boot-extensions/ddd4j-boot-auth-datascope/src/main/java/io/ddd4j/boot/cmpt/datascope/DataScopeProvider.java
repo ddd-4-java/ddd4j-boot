@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * 数据权限提供者
  *
- * @author wandl
+ * @author ddd4j
  */
 public interface DataScopeProvider {
 

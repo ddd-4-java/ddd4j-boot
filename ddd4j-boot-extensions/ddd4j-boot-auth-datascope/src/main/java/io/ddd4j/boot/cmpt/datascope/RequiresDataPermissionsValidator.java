@@ -12,7 +12,7 @@ import java.util.Objects;
  * 数据权限校验
  * Data permission verification
  *
- * @author wandl
+ * @author ddd4j
  * @see RequiresDataPermissions
  */
 @Slf4j

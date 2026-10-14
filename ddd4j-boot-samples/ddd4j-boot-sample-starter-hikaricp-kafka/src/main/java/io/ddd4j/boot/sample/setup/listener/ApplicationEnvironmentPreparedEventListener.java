@@ -16,7 +16,7 @@ import java.util.Iterator;
  * ApplicationEnvironmentPreparedEvent：Spring Boot 对应 Enviroment 已经准备完毕，
  * 但此时上下文 context 还没有创建。事件触发时打印全部属性源信息。
  *
- * @author wandl
+ * @author ddd4j
  * @version V1.0
  * @since 2017-11-10
  */

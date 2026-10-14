@@ -20,7 +20,7 @@ import io.ddd4j.spring.event.SpringDomainEventPublisher;
  *
  * <p>导入上游 {@link SpringCoreConfig} 获取基础 Bean，本类负责 SPI 注册。
  *
- * @author wandl
+ * @author ddd4j
  * @since 3.4.x
  */
 @AutoConfiguration

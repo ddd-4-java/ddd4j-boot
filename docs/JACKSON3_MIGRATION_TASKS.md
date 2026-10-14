@@ -141,6 +141,6 @@ Jackson 3.x 已内置 `tools.jackson.databind.JacksonModule` + `tools.jackson.da
 
 **JVM 验证命令**（CI 环境运行）：
 ```bash
-/Users/wandl/tools/apache-maven-4.0.0-rc-6/bin/mvn -pl ddd4j-boot-extensions/ddd4j-boot-extension-jackson compile
+/Users/dev//tools/apache-maven-4.0.0-rc-6/bin/mvn -pl ddd4j-boot-extensions/ddd4j-boot-extension-jackson compile
 ```
 预期：完成 T1-T4 后通过编译；当前失败原因是阻塞 #1 + 阻塞 #3（easy4j snapshot 不可用）。

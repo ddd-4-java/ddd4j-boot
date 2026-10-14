@@ -16,7 +16,7 @@ import java.util.Iterator;
  * <p>监听 {@code ApplicationEnvironmentPreparedEvent}：此时对应的 Environment 已经准备完毕，
  * 但上下文 context 还没有创建。监听器遍历全部属性源并逐条打印名称、来源与类型，便于启动期排查配置加载顺序。</p>
  *
- * @author <a href="https://github.com/wandl">wandl</a>
+ * @author <a href="https://github.com/ddd4j">ddd4j</a>
  * @since 1.0
  */
 public class ApplicationEnvironmentPreparedEventListener implements

@@ -25,7 +25,7 @@ import java.util.List;
  * <p>构造器自动注册 Model↔PO↔Query 映射，让 {@code user.save()} /
  * {@code query.page()} 等充血方法能自动反查到本仓储。
  *
- * @author wandl
+ * @author ddd4j
  */
 @DomainRepository
 public class UserRepositoryImpl extends BaseRepositoryImpl<UserMapper, User, UserPO, UserQuery, String> implements UserRepository {

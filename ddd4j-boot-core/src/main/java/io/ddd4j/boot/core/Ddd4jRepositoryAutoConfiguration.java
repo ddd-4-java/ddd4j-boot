@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>自动发现 Spring 容器中的 {@link Repository} Bean 并注册到 {@link RepositoryRegistry}，
  * 同时收集 {@link CommandExecutor} 构建 {@link CommandBus}。
  *
- * @author wandl
+ * @author ddd4j
  * @since 3.4.x
  */
 @AutoConfiguration(after = Ddd4jCoreAutoConfiguration.class)
