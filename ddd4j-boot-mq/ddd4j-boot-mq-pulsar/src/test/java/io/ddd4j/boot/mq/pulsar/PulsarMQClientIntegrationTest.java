@@ -20,6 +20,8 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -30,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Apache Pulsar broker end-to-end integration test (Testcontainers).
  *
  * <p>Covers: publish -> route -> consume -> deserialize full chain on real Pulsar standalone.
- * Automatically skipped when Docker is unavailable ({@code disabledWithoutDocker = true}).
+ * Requires Docker so the real broker contract cannot be silently skipped.
  *
  * <p>Pulsar standalone startup takes 30-60s; wait strategy uses log message with generous timeout.
  * The {@code ddd4j.mq.pulsar.namespace=default} property is CRITICAL: empty default namespace produces
@@ -41,7 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * {@code tenant/namespace/topic} (tag excluded, app-layer filtering via message property).
  * These are distinct Pulsar topics, so the test omits tag to ensure producer/consumer topic match.
  */
-@Testcontainers(disabledWithoutDocker = true)
+@Testcontainers
 class PulsarMQClientIntegrationTest {
 
     @Container
@@ -54,6 +56,7 @@ class PulsarMQClientIntegrationTest {
     @Test
     void shouldPublishAndConsumeEventThroughRealPulsar() throws Exception {
         String serviceUrl = "pulsar://" + PULSAR.getHost() + ":" + PULSAR.getMappedPort(6650);
+        ensureDefaultNamespace();
         ensureTopicExists(serviceUrl);
 
         ApplicationContextRunner runner = new ApplicationContextRunner()
@@ -111,6 +114,28 @@ class PulsarMQClientIntegrationTest {
             lastFailure = exception;
         }
         throw new IllegalStateException("Failed to provision Pulsar integration-test topic", lastFailure);
+    }
+
+    private static void ensureDefaultNamespace() throws Exception {
+        URL namespaceUrl = new URL("http://" + PULSAR.getHost() + ":" + PULSAR.getMappedPort(8080)
+                + "/admin/v2/namespaces/public/default");
+        long deadline = System.nanoTime() + Duration.ofSeconds(60).toNanos();
+        while (System.nanoTime() < deadline) {
+            HttpURLConnection connection = (HttpURLConnection) namespaceUrl.openConnection();
+            connection.setRequestMethod("PUT");
+            connection.setConnectTimeout(2000);
+            connection.setReadTimeout(2000);
+            connection.setDoOutput(true);
+            connection.getOutputStream().close();
+            int responseCode = connection.getResponseCode();
+            connection.disconnect();
+            if (responseCode == HttpURLConnection.HTTP_NO_CONTENT
+                    || responseCode == HttpURLConnection.HTTP_CONFLICT) {
+                return;
+            }
+            Thread.sleep(500);
+        }
+        throw new AssertionError("Pulsar namespace public/default was not ready within PT60S");
     }
 
     private static void await(java.util.function.BooleanSupplier condition, Duration timeout) throws InterruptedException {
