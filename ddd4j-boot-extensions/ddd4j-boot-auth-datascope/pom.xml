@@ -33,10 +33,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- For Spring Biz -->
+        <!-- Spring Extension -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>spring-biz</artifactId>
+            <groupId>io.github.easy4j</groupId>
+            <artifactId>spring-extension</artifactId>
         </dependency>
     </dependencies>
 

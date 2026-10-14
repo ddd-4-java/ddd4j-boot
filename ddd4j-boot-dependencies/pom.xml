@@ -15,6 +15,7 @@
     <description>Ddd4j Boot Dependencies</description>
 
     <properties>
+        <spring-extension.version>1.0.x.20260630-SNAPSHOT</spring-extension.version>
         <dozer-extra-converters.version>1.0.x.20260630-SNAPSHOT</dozer-extra-converters.version>
         <!-- Third Party Spring Boot Starter Dependency versions -->
         <spring-boot-admin.version>2.4.4</spring-boot-admin.version>
@@ -234,6 +235,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Provider Java8 binary verified against the actual Spring5.3.13 consumer. -->
+            <dependency>
+                <groupId>io.github.easy4j</groupId>
+                <artifactId>spring-extension</artifactId>
+                <version>${spring-extension.version}</version>
+            </dependency>
             <!-- Verified provider version, independent of the DDD4J branch and remote parent BOM. -->
             <dependency>
                 <groupId>io.github.easy4j</groupId>
