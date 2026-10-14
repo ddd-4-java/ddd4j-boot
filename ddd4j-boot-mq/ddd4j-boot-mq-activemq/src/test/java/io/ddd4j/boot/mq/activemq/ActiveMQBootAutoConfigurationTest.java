@@ -9,9 +9,14 @@ import org.springframework.context.annotation.Configuration;
 
 import io.ddd4j.boot.mq.core.config.Ddd4jMQAutoConfiguration;
 import io.ddd4j.mq.activemq.ActiveMQClient;
-import io.ddd4j.mq.activemq.ActiveMQProperties;
+import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * {@link ActiveMQBootAutoConfiguration} 契约测试。
@@ -66,12 +71,47 @@ class ActiveMQBootAutoConfigurationTest {
                         .isSameAs(context.getBean("customActiveMQClient")));
     }
 
+    @Test
+    void shouldStartAndCloseTransportWithApplicationContext() throws Exception {
+        AtomicReference<ActiveMQConnectionFactory> factory = new AtomicReference<>();
+        runner.run(context -> {
+            assertThat(context).hasNotFailed();
+            factory.set(context.getBean(ActiveMQConnectionFactory.class));
+        });
+        verify(factory.get().createConnection()).start();
+        verify(factory.get().createConnection()).close();
+    }
+
+    @Test
+    void requiredProducerTransportFailureShouldAbortStartup() {
+        new ApplicationContextRunner()
+                .withConfiguration(AutoConfigurations.of(Ddd4jMQAutoConfiguration.class, ActiveMQBootAutoConfiguration.class))
+                .withPropertyValues("ddd4j.mq.enabled=true", "ddd4j.mq.broker=activemq")
+                .withUserConfiguration(FailingConnectionFactoryConfiguration.class)
+                .run(context -> {
+                    assertThat(context).hasFailed();
+                    assertThat(context.getStartupFailure()).hasRootCauseMessage("simulated broker transport failure");
+                });
+    }
+
+    @Configuration(proxyBeanMethods = false)
+    static class FailingConnectionFactoryConfiguration {
+
+        @Bean
+        ActiveMQConnectionFactory activeMQConnectionFactory() throws Exception {
+            ActiveMQConnectionFactory factory = mock(ActiveMQConnectionFactory.class);
+            when(factory.createConnection()).thenThrow(new IllegalStateException("simulated broker transport failure"));
+            return factory;
+        }
+    }
+
     @Configuration(proxyBeanMethods = false)
     static class ConnectionFactoryConfiguration {
 
         @Bean
-        org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory activeMQConnectionFactory() {
-            return new org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory();
+        ActiveMQConnectionFactory activeMQConnectionFactory() {
+            // 装配单测使用受控 JMS 传输；真实 broker 由集成测试验证。
+            return mock(ActiveMQConnectionFactory.class, RETURNS_DEEP_STUBS);
         }
     }
 
@@ -79,8 +119,8 @@ class ActiveMQBootAutoConfigurationTest {
     static class CustomClientConfiguration {
 
         @Bean
-        ActiveMQClient customActiveMQClient() {
-            return new ActiveMQClient(new ActiveMQProperties());
+        ActiveMQClient customActiveMQClient(ActiveMQConnectionFactory connectionFactory) {
+            return new ActiveMQClient(connectionFactory);
         }
     }
 }
