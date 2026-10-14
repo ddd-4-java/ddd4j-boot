@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * {@code MQListenerRegistrar#onContextRefreshed} 执行 {@code MQClient#init}
  * （producer 为必选初始化项，fail-fast），因此默认装配与用户 Bean 覆盖两例复用
  * {@link RabbitMQClientIntegrationTest} 同款 Testcontainers RabbitMQ 容器
- * （同镜像、同凭据创建策略）；无 Docker 环境时自动跳过，不伪报通过。
+ * （同镜像、同凭据创建策略）；CI 必须提供 Docker；无 Docker 时测试失败，不伪报通过。
  *
  * <p>契约测试无 {@code @MQEventListener} 方法，消费者初始化（queueBind 等 broker 拓扑）
  * 不会执行，故容器只需可达 + 凭据有效，无需预声明交换机。两个 backoff 用例不触发装配，
@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 绑定基础设施，使 {@code ddd4j.mq.rabbitmq.*}（host/port/username/password，父类字段随
  * 子类前缀绑定）真正落到 {@link RabbitMQProperties}，与集成测试装配方式一致。
  */
-@Testcontainers(disabledWithoutDocker = true)
+@Testcontainers
 class RabbitMQBootAutoConfigurationTest {
 
     private static final String USER = "ddd4j";
