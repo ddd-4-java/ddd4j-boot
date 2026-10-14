@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Apache Pulsar broker end-to-end integration test (Testcontainers).
  *
  * <p>Covers: publish -> route -> consume -> deserialize full chain on real Pulsar standalone.
- * Automatically skipped when Docker is unavailable ({@code disabledWithoutDocker = true}).
+ * Requires Docker so the real broker contract cannot be silently skipped.
  *
  * <p>Pulsar standalone startup takes 30-60s; wait strategy uses log message with generous timeout.
  * The {@code ddd4j.mq.pulsar.namespace=default} property is CRITICAL: empty default namespace produces
@@ -40,7 +40,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * {@code tenant/namespace/topic} (tag excluded, app-layer filtering via message property).
  * These are distinct Pulsar topics, so the test omits tag to ensure producer/consumer topic match.
  */
-@Testcontainers(disabledWithoutDocker = true)
+@Testcontainers
 class PulsarMQClientIntegrationTest {
 
     @Container
