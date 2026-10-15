@@ -18,7 +18,7 @@ JDK 8 等价夹具）、Python 3 标准库、Bash、Testcontainers（在该分�
 ## Global Constraints
 
 - 维护线分组是唯一输入：JDK 8 为 `2.3.x`–`2.7.x`；JDK 17 为 `3.0.x`–`3.5.x`；JDK 21 为 `4.0.x`、`4.1.x`。
-- 每次变更某条维护线前，先记录 `git status --short --branch`、GitHub/Codeup 两端 SHA、POM revision、JDK 和 Boot 版本。只有双方
+- 每次变更某条维护线前，先记录 `git status --short --branch`、GitHub/内网托管平台 两端 SHA、POM revision、JDK 和 Boot 版本。只有双方
   SHA 与本次基线记录一致时才能开始该线工作。
 - 本计划只接受行为、公开 API、公开配置和资源生命周期一致；不以文件文本、模块目录数或自动配置资源文件名相同作为通过条件。
 - `REQUIRED`、`ADAPTED`、`NOT_APPLICABLE`、`BLOCKED` 是仅有的能力状态；后两者必须有可追溯原因，`NOT_APPLICABLE` 还必须有迁移说明。
@@ -541,7 +541,7 @@ JDK 8 等价夹具）、Python 3 标准库、Bash、Testcontainers（在该分�
 
   **Step 1: Write a failing release-input completeness check.**
 
-  Extend `test-contract-data.sh` or add a focused test that rejects a line lacking GitHub SHA, Codeup SHA, Java, Boot
+  Extend `test-contract-data.sh` or add a focused test that rejects a line lacking GitHub SHA, 内网托管平台 SHA, Java, Boot
   line, ddd4j line, logical state, or report reference.
 
   **Step 2: Run test to verify failure.**
