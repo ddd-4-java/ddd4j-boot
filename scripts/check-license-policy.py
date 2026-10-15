@@ -14,7 +14,8 @@ FORBIDDEN = re.compile(
     re.IGNORECASE,
 )
 ALLOWED = re.compile(
-    r"Apache(?:[- ]2\.0| (?:Software )?License,? Version 2\.0)|"
+    r"Apache(?:[- ]2\.0| (?:Software )?License,? (?:Version )?2\.0)|"
+    r"\bAL 2\.0\b|"
     r"Eclipse Public License(?: v\.?| - Version)? ?2\.0|"
     r"\bMIT\b|\bBSD\b|\bEPL[- ]2\.0\b|\bISC\b",
     re.IGNORECASE,
@@ -59,7 +60,7 @@ def sbom_components(path):
     graph = bom.get("dependencies") or []
     if bom.get("bomFormat") != "CycloneDX" or not components or not graph:
         raise ValueError("Release SBOM is empty or lacks a dependency graph")
-    result = set()
+    result = {}
     refs = set()
     for component in components:
         fields = [component.get(key) for key in ("group", "name", "version")]
@@ -67,7 +68,10 @@ def sbom_components(path):
         if not all(fields) or not ref or ref in refs:
             raise ValueError("Release SBOM component is incomplete or duplicated")
         refs.add(ref)
-        result.add(":".join(fields))
+        scope = component.get("scope", "required")
+        if scope not in ("required", "optional", "excluded"):
+            raise ValueError(f"Release SBOM component has invalid scope: {ref}")
+        result[":".join(fields)] = scope
     if any(item.get("ref") not in refs or
            any(child not in refs for child in item.get("dependsOn", []))
            for item in graph):
@@ -93,8 +97,8 @@ def check(report, sbom, selections, exclusions):
                 continue
             errors.append(f"{coordinate}: selected license is absent or not allowed: {selection}")
             continue
-        if coordinate in build_only and coordinate not in included:
-            passes.append(f"Excluded build-tool component absent from SBOM: {coordinate}")
+        if coordinate in build_only and included.get(coordinate) in (None, "excluded"):
+            passes.append(f"Excluded non-published component: {coordinate}")
             continue
         errors.append(f"{coordinate}: {', '.join(blocked)}")
     return passes, errors
