@@ -1,0 +1,8 @@
+contract_id	capability	observable_behavior	required_state	owner
+CORE_SPI_REPOSITORY_CQRS	core	default core assembly, SPI/repository registration, CQRS selection and close cleanup	REQUIRED	ddd4j-boot-core
+AUTO_CONFIGURATION	auto-configuration	default, disable, missing-class, user-bean override and repeat-close behavior	REQUIRED	ddd4j-boot-core
+WEBMVC_WEBFLUX	web	Servlet/Reactive boundary, request context, health, error translation and public paths	REQUIRED	ddd4j-boot-web
+AUTH	auth	provider selection, user override, fallback and unauthenticated semantics	REQUIRED	ddd4j-boot-auth
+DATA_CACHE	data-cache	optional persistence/cache boundary, encryption, data scope, logging and defaults	REQUIRED	ddd4j-boot-data
+MQ	mq	broker switch, binding, client override, publish/consume/ack and shutdown ownership	REQUIRED	ddd4j-boot-mq
+CONFIGURATION_BOM	configuration-bom	public artifacts, configuration keys/defaults, disable semantics and legal dependency set	REQUIRED	ddd4j-boot-bom

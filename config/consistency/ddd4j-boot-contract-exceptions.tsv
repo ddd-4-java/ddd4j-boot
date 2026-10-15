@@ -1,0 +1,2 @@
+branch	contract_id	status	reason	migration_document	evidence_ref
+2.3.x	CORE_SPI_REPOSITORY_CQRS	BLOCKED	Candidate-repository resolution remains unavailable for the JDK 8 compatible mybatis-plus-enhance snapshot; local verification used a reproducibly built but unpublished exact revision.		docs/superpowers/reports/2026-08-31-jdk8-2.3-build-blocked.md
