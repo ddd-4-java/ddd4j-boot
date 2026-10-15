@@ -165,7 +165,16 @@ def validate_workflows(repo: Path, ref: str, row: dict[str, str], errors: list[s
     for path in (".github/workflows/verify.yml", ".github/workflows/deploy.yml"):
         content = git(repo, "show", f"{ref}:{path}")
         versions = sorted(set(JAVA_VERSION_PATTERN.findall(content)))
-        if versions != [row["jdk"]]:
+        pom_selected_jdk = path.endswith("deploy.yml") and all(
+            token in content for token in (
+                "id: jdk",
+                "java-version: ${{ steps.jdk.outputs.version }}",
+                "ET.parse('pom.xml')",
+                "properties.find(prefix + 'java.version')",
+                'echo "version=$JAVA_VERSION" >> "$GITHUB_OUTPUT"',
+            )
+        )
+        if not pom_selected_jdk and versions != [row["jdk"]]:
             errors.append(f"{row['branch']}: {path} Java versions are {versions}, expected {[row['jdk']]}")
         if "MAVEN_SETTINGS_XML" not in content:
             errors.append(f"{row['branch']}: {path} does not consume MAVEN_SETTINGS_XML")

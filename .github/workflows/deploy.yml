@@ -84,11 +84,30 @@ jobs:
           ref: ${{ steps.ref.outputs.ref }}
           fetch-depth: 0
 
-      - name: Set up JDK 21
+      - name: Detect JDK from checked-out POM
+        id: jdk
+        shell: bash
+        run: |
+          JAVA_VERSION=$(python3 - <<'PYCODE'
+          import xml.etree.ElementTree as ET
+          root = ET.parse('pom.xml').getroot()
+          namespace = root.tag[1:].split('}', 1)[0] if root.tag.startswith('{') else ''
+          prefix = '{' + namespace + '}' if namespace else ''
+          properties = root.find(prefix + 'properties')
+          if properties is None or properties.find(prefix + 'java.version') is None:
+              raise SystemExit('Root POM has no java.version')
+          print(properties.find(prefix + 'java.version').text.strip())
+          PYCODE
+          )
+          case "$JAVA_VERSION" in
+            8|17|21) echo "version=$JAVA_VERSION" >> "$GITHUB_OUTPUT" ;;
+            *) echo "Unsupported JDK in checked-out POM: $JAVA_VERSION" >&2; exit 1 ;;
+          esac
+      - name: Set up target JDK
         uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: ${{ steps.jdk.outputs.version }}
           cache: 'maven'
 
       - name: Configure Easy4J Maven repositories
