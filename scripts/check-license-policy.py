@@ -15,6 +15,7 @@ FORBIDDEN = re.compile(
 )
 ALLOWED = re.compile(
     r"Apache(?:[- ]2\.0| (?:Software )?License,? Version 2\.0)|"
+    r"\bApache License v?2\.0\b|\bAL 2\.0\b|"
     r"Eclipse Public License(?: v\.?| - Version)? ?2\.0|"
     r"\bMIT\b|\bBSD\b|\bEPL[- ]2\.0\b|\bISC\b",
     re.IGNORECASE,

@@ -1,0 +1,6 @@
+com.mysql:mysql-connector-j:9.7.0	absent from publishable reactor SBOM
+javax.activation:activation:1.1.1	absent from publishable reactor SBOM
+javax.activation:javax.activation-api:1.2.0	absent from publishable reactor SBOM
+javax.xml.bind:jaxb-api:2.3.1	absent from publishable reactor SBOM
+net.java.dev.jna:jna:5.2.0	test/system-only
+org.openjdk.jmh:jmh-core:1.37	absent from publishable reactor SBOM
