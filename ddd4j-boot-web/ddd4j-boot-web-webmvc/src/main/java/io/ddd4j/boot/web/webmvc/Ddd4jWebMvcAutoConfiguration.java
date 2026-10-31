@@ -76,6 +76,12 @@ public class Ddd4jWebMvcAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
+    /**
+     * Creates the profile manager from the application environment.
+     *
+     * @param environment the application environment
+     * @return the profile manager
+     */
     public ProfileManager profileManager(Environment environment) {
         return new ProfileManager(environment::getActiveProfiles);
     }
