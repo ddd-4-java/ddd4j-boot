@@ -52,35 +52,35 @@ import java.util.List;
         BaseWebConfig.class})
 public class Ddd4jWebMvcAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the base core properties.
      *
      * @return the base core properties
      */
+    @Bean
+    @ConditionalOnMissingBean
     public BaseCoreProperties baseCoreProperties() {
         return new BaseCoreProperties();
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the local resource properties.
      *
      * @return the local resource properties
      */
+    @Bean
+    @ConditionalOnMissingBean
     public LocalResourceProperteis localResourceProperteis() {
         return new LocalResourceProperteis();
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the sequence properties.
      *
      * @return the sequence properties
      */
+    @Bean
+    @ConditionalOnMissingBean
     public SequenceProperties sequenceProperties() {
         return new SequenceProperties();
     }
@@ -89,87 +89,87 @@ public class Ddd4jWebMvcAutoConfiguration {
      * Boot 已提供 RequestContextFilter、LocaleResolver 与 MVC Validator；此处只装配 ddd4j 的
      * 请求生命周期、鉴权和幂等基础设施，避免覆盖 Spring Boot 的同名 Bean。
      */
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the profile manager from the application environment.
      *
      * @param environment the application environment
      * @return the profile manager
      */
+    @Bean
+    @ConditionalOnMissingBean
     public ProfileManager profileManager(Environment environment) {
         return new ProfileManager(environment::getActiveProfiles);
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the locale change interceptor.
      *
      * @return the locale change interceptor
      */
+    @Bean
+    @ConditionalOnMissingBean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
         interceptor.setParamName(Constants.LANG_PARAM_NAME);
         return interceptor;
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the bearer subject authenticator.
      *
      * @return the bearer subject authenticator
      */
+    @Bean
+    @ConditionalOnMissingBean
     public BearerSubjectAuthenticator bearerSubjectAuthenticator() {
         return new BearerSubjectAuthenticator();
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the default web exception translator.
      *
      * @return the web exception translator
      */
+    @Bean
+    @ConditionalOnMissingBean
     public WebExceptionTranslator webExceptionTranslator() {
         return new DefaultWebExceptionTranslator();
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the MVC exception handler.
      *
      * @param exceptionTranslator the web exception translator
      * @return the MVC exception handler
      */
+    @Bean
+    @ConditionalOnMissingBean
     public Ddd4jWebMvcExceptionHandler ddd4jWebMvcExceptionHandler(WebExceptionTranslator exceptionTranslator) {
         return new Ddd4jWebMvcExceptionHandler(exceptionTranslator);
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the web access policy.
      *
      * @param environment the application environment
      * @return the web access policy
      */
+    @Bean
+    @ConditionalOnMissingBean
     public WebAccessPolicy webAccessPolicy(Environment environment) {
         String[] publicPaths = environment.getProperty("ddd4j.web.public-paths", String[].class,
                 new String[]{"/health", "/health/readiness", "/health/liveness", "/assets/**", "/webjars/**"});
         return new PathWebAccessPolicy(List.of(publicPaths), AuthenticationMode.REQUIRED);
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the web request context factory.
      *
      * @param environment the application environment
      * @return the web request context factory
      */
+    @Bean
+    @ConditionalOnMissingBean
     public WebRequestContextFactory webRequestContextFactory(Environment environment) {
         boolean trustForwardedHeaders = environment.getProperty("ddd4j.web.trust-forwarded-headers", Boolean.class,
                 false);
@@ -178,8 +178,6 @@ public class Ddd4jWebMvcAutoConfiguration {
         return new WebRequestContextFactory(RequestIdGenerator.uuid(), clientIpResolver);
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the web request lifecycle.
      *
@@ -187,18 +185,20 @@ public class Ddd4jWebMvcAutoConfiguration {
      * @param accessPolicy the web access policy
      * @return the web request lifecycle
      */
+    @Bean
+    @ConditionalOnMissingBean
     public WebRequestLifecycle webRequestLifecycle(BearerSubjectAuthenticator authenticator,
                                                    WebAccessPolicy accessPolicy) {
         return new WebRequestLifecycle(authenticator, accessPolicy);
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the web idempotency lifecycle.
      *
      * @return the web idempotency lifecycle
      */
+    @Bean
+    @ConditionalOnMissingBean
     public WebIdempotencyLifecycle webIdempotencyLifecycle() {
         registerDefaultIdempotencyCache();
         return new WebIdempotencyLifecycle(new CacheIdempotencyGuard());
@@ -219,8 +219,6 @@ public class Ddd4jWebMvcAutoConfiguration {
         }
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the MVC interceptor.
      *
@@ -229,14 +227,14 @@ public class Ddd4jWebMvcAutoConfiguration {
      * @param idempotencyLifecycle the idempotency lifecycle
      * @return the MVC interceptor
      */
+    @Bean
+    @ConditionalOnMissingBean
     public Ddd4jWebMvcInterceptor ddd4jWebMvcInterceptor(WebRequestContextFactory contextFactory,
                                                          WebRequestLifecycle requestLifecycle,
                                                          WebIdempotencyLifecycle idempotencyLifecycle) {
         return new Ddd4jWebMvcInterceptor(contextFactory, requestLifecycle, idempotencyLifecycle);
     }
 
-    @Bean
-    @ConditionalOnMissingBean
     /**
      * Creates the default MVC configurer.
      *
@@ -245,20 +243,22 @@ public class Ddd4jWebMvcAutoConfiguration {
      * @param ddd4jWebMvcInterceptor the MVC interceptor
      * @return the default MVC configurer
      */
+    @Bean
+    @ConditionalOnMissingBean
     public DefaultWebMvcConfigurer defaultWebMvcConfigurer(LocalResourceProperteis localResourceProperteis,
                                                            LocaleChangeInterceptor localeChangeInterceptor,
                                                            Ddd4jWebMvcInterceptor ddd4jWebMvcInterceptor) {
         return new DefaultWebMvcConfigurer(localResourceProperteis, localeChangeInterceptor, ddd4jWebMvcInterceptor);
     }
 
-    @Bean("ddd4jWebHealthIndicator")
-    @ConditionalOnClass(HealthIndicator.class)
-    @ConditionalOnMissingBean(name = "ddd4jWebHealthIndicator")
     /**
      * Creates the MVC health indicator.
      *
      * @return the MVC health indicator
      */
+    @Bean("ddd4jWebHealthIndicator")
+    @ConditionalOnClass(HealthIndicator.class)
+    @ConditionalOnMissingBean(name = "ddd4jWebHealthIndicator")
     public HealthIndicator ddd4jWebHealthIndicator() {
         return () -> Health.up().withDetail("runtime", "spring-webmvc").build();
     }
