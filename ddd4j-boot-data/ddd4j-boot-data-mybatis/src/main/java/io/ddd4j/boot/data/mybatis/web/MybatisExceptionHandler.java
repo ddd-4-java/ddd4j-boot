@@ -7,8 +7,8 @@
 package io.ddd4j.boot.data.mybatis.web;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
-import io.ddd4j.core.ApiCode;
-import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.api.ApiCode;
+import io.ddd4j.core.api.R;
 import io.ddd4j.web.webmvc.exception.BaseExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.binding.BindingException;
@@ -45,9 +45,9 @@ public class MybatisExceptionHandler extends BaseExceptionHandler {
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({BindingException.class})
-    public ResponseEntity<ApiRestResponse<String>> mybatisBindingException(BindingException ex) {
+    public ResponseEntity<R<String>> mybatisBindingException(BindingException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("MyBatis:绑定异常");
+        R<String> resp = ApiCode.SERVER_ERROR.toResponse("MyBatis:绑定异常");
         return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -55,9 +55,9 @@ public class MybatisExceptionHandler extends BaseExceptionHandler {
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({CacheException.class})
-    public ResponseEntity<ApiRestResponse<String>> mybatisCacheException(CacheException ex) {
+    public ResponseEntity<R<String>> mybatisCacheException(CacheException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("MyBatis:缓存异常");
+        R<String> resp = ApiCode.SERVER_ERROR.toResponse("MyBatis:缓存异常");
         return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -65,9 +65,9 @@ public class MybatisExceptionHandler extends BaseExceptionHandler {
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({DataSourceException.class})
-    public ResponseEntity<ApiRestResponse<String>> mybatisDataSourceException(DataSourceException ex) {
+    public ResponseEntity<R<String>> mybatisDataSourceException(DataSourceException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("MyBatis:数据源异常");
+        R<String> resp = ApiCode.SERVER_ERROR.toResponse("MyBatis:数据源异常");
         return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -75,9 +75,9 @@ public class MybatisExceptionHandler extends BaseExceptionHandler {
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({PluginException.class})
-    public ResponseEntity<ApiRestResponse<String>> mybatisPluginException(PluginException ex) {
+    public ResponseEntity<R<String>> mybatisPluginException(PluginException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("MyBatis:插件异常");
+        R<String> resp = ApiCode.SERVER_ERROR.toResponse("MyBatis:插件异常");
         return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -85,9 +85,9 @@ public class MybatisExceptionHandler extends BaseExceptionHandler {
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({ResultMapException.class})
-    public ResponseEntity<ApiRestResponse<String>> mybatisResultMapException(ResultMapException ex) {
+    public ResponseEntity<R<String>> mybatisResultMapException(ResultMapException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("MyBatis:结果集异常");
+        R<String> resp = ApiCode.SERVER_ERROR.toResponse("MyBatis:结果集异常");
         return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -95,9 +95,9 @@ public class MybatisExceptionHandler extends BaseExceptionHandler {
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({TooManyResultsException.class})
-    public ResponseEntity<ApiRestResponse<String>> mybatisTooManyResultsException(TooManyResultsException ex) {
+    public ResponseEntity<R<String>> mybatisTooManyResultsException(TooManyResultsException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("MyBatis:结果集异常,返回了多条数据");
+        R<String> resp = ApiCode.SERVER_ERROR.toResponse("MyBatis:结果集异常,返回了多条数据");
         return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -105,9 +105,9 @@ public class MybatisExceptionHandler extends BaseExceptionHandler {
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({PersistenceException.class})
-    public ResponseEntity<ApiRestResponse<String>> mybatisPersistenceException(PersistenceException ex) {
+    public ResponseEntity<R<String>> mybatisPersistenceException(PersistenceException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("MyBatis 内部异常：" + ex.getMessage());
+        R<String> resp = ApiCode.SERVER_ERROR.toResponse("MyBatis 内部异常：" + ex.getMessage());
         return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -115,9 +115,9 @@ public class MybatisExceptionHandler extends BaseExceptionHandler {
      * 500 (Internal Server Error)
      */
     @ExceptionHandler({MybatisPlusException.class})
-    public ResponseEntity<ApiRestResponse<String>> mybatisPlusException(MybatisPlusException ex) {
+    public ResponseEntity<R<String>> mybatisPlusException(MybatisPlusException ex) {
         this.logException(ex);
-        ApiRestResponse<String> resp = ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse("MyBatis Plus 异常：" + ex.getMessage());
+        R<String> resp = ApiCode.SERVER_ERROR.toResponse("MyBatis Plus 异常：" + ex.getMessage());
         return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
