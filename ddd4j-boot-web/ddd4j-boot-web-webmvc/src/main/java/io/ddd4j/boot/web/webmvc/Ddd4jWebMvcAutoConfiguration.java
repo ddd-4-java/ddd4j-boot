@@ -52,18 +52,33 @@ import java.util.Arrays;
         BaseWebConfig.class})
 public class Ddd4jWebMvcAutoConfiguration {
 
+    /**
+     * Creates the base core properties.
+     *
+     * @return the base core properties
+     */
     @Bean
     @ConditionalOnMissingBean
     public BaseCoreProperties baseCoreProperties() {
         return new BaseCoreProperties();
     }
 
+    /**
+     * Creates the local resource properties.
+     *
+     * @return the local resource properties
+     */
     @Bean
     @ConditionalOnMissingBean
     public LocalResourceProperteis localResourceProperteis() {
         return new LocalResourceProperteis();
     }
 
+    /**
+     * Creates the sequence properties.
+     *
+     * @return the sequence properties
+     */
     @Bean
     @ConditionalOnMissingBean
     public SequenceProperties sequenceProperties() {
@@ -74,12 +89,23 @@ public class Ddd4jWebMvcAutoConfiguration {
      * Boot 已提供 RequestContextFilter、LocaleResolver 与 MVC Validator；此处只装配 ddd4j 的
      * 请求生命周期、鉴权和幂等基础设施，避免覆盖 Spring Boot 的同名 Bean。
      */
+    /**
+     * Creates the profile manager from the application environment.
+     *
+     * @param environment the application environment
+     * @return the profile manager
+     */
     @Bean
     @ConditionalOnMissingBean
     public ProfileManager profileManager(Environment environment) {
         return new ProfileManager(environment::getActiveProfiles);
     }
 
+    /**
+     * Creates the locale change interceptor.
+     *
+     * @return the locale change interceptor
+     */
     @Bean
     @ConditionalOnMissingBean
     public LocaleChangeInterceptor localeChangeInterceptor() {
@@ -88,24 +114,46 @@ public class Ddd4jWebMvcAutoConfiguration {
         return interceptor;
     }
 
+    /**
+     * Creates the bearer subject authenticator.
+     *
+     * @return the bearer subject authenticator
+     */
     @Bean
     @ConditionalOnMissingBean
     public BearerSubjectAuthenticator bearerSubjectAuthenticator() {
         return new BearerSubjectAuthenticator();
     }
 
+    /**
+     * Creates the default web exception translator.
+     *
+     * @return the web exception translator
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebExceptionTranslator webExceptionTranslator() {
         return new DefaultWebExceptionTranslator();
     }
 
+    /**
+     * Creates the MVC exception handler.
+     *
+     * @param exceptionTranslator the web exception translator
+     * @return the MVC exception handler
+     */
     @Bean
     @ConditionalOnMissingBean
     public Ddd4jWebMvcExceptionHandler ddd4jWebMvcExceptionHandler(WebExceptionTranslator exceptionTranslator) {
         return new Ddd4jWebMvcExceptionHandler(exceptionTranslator);
     }
 
+    /**
+     * Creates the web access policy.
+     *
+     * @param environment the application environment
+     * @return the web access policy
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebAccessPolicy webAccessPolicy(Environment environment) {
@@ -114,6 +162,12 @@ public class Ddd4jWebMvcAutoConfiguration {
         return new PathWebAccessPolicy(Arrays.asList(publicPaths), AuthenticationMode.REQUIRED);
     }
 
+    /**
+     * Creates the web request context factory.
+     *
+     * @param environment the application environment
+     * @return the web request context factory
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebRequestContextFactory webRequestContextFactory(Environment environment) {
@@ -124,6 +178,13 @@ public class Ddd4jWebMvcAutoConfiguration {
         return new WebRequestContextFactory(RequestIdGenerator.uuid(), clientIpResolver);
     }
 
+    /**
+     * Creates the web request lifecycle.
+     *
+     * @param authenticator the bearer subject authenticator
+     * @param accessPolicy the web access policy
+     * @return the web request lifecycle
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebRequestLifecycle webRequestLifecycle(BearerSubjectAuthenticator authenticator,
@@ -131,6 +192,11 @@ public class Ddd4jWebMvcAutoConfiguration {
         return new WebRequestLifecycle(authenticator, accessPolicy);
     }
 
+    /**
+     * Creates the web idempotency lifecycle.
+     *
+     * @return the web idempotency lifecycle
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebIdempotencyLifecycle webIdempotencyLifecycle() {
@@ -153,6 +219,14 @@ public class Ddd4jWebMvcAutoConfiguration {
         }
     }
 
+    /**
+     * Creates the MVC interceptor.
+     *
+     * @param contextFactory the request context factory
+     * @param requestLifecycle the request lifecycle
+     * @param idempotencyLifecycle the idempotency lifecycle
+     * @return the MVC interceptor
+     */
     @Bean
     @ConditionalOnMissingBean
     public Ddd4jWebMvcInterceptor ddd4jWebMvcInterceptor(WebRequestContextFactory contextFactory,
@@ -161,6 +235,14 @@ public class Ddd4jWebMvcAutoConfiguration {
         return new Ddd4jWebMvcInterceptor(contextFactory, requestLifecycle, idempotencyLifecycle);
     }
 
+    /**
+     * Creates the default MVC configurer.
+     *
+     * @param localResourceProperteis the local resource properties
+     * @param localeChangeInterceptor the locale change interceptor
+     * @param ddd4jWebMvcInterceptor the MVC interceptor
+     * @return the default MVC configurer
+     */
     @Bean
     @ConditionalOnMissingBean
     public DefaultWebMvcConfigurer defaultWebMvcConfigurer(LocalResourceProperteis localResourceProperteis,
@@ -169,6 +251,11 @@ public class Ddd4jWebMvcAutoConfiguration {
         return new DefaultWebMvcConfigurer(localResourceProperteis, localeChangeInterceptor, ddd4jWebMvcInterceptor);
     }
 
+    /**
+     * Creates the MVC health indicator.
+     *
+     * @return the MVC health indicator
+     */
     @Bean("ddd4jWebHealthIndicator")
     @ConditionalOnClass(HealthIndicator.class)
     @ConditionalOnMissingBean(name = "ddd4jWebHealthIndicator")
