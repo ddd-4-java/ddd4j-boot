@@ -45,7 +45,7 @@ class NatsMQClientIntegrationTest {
         try (Connection connection = Nats.connect(servers)) {
             connection.jetStreamManagement().addStream(StreamConfiguration.builder()
                     .name("DDD4J_BOOT_ORDER")
-                    .subjects("order.*")
+                    .subjects("order", "order.*")
                     .build());
         }
         ApplicationContextRunner runner = new ApplicationContextRunner()
