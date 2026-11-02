@@ -40,6 +40,8 @@ public class Ddd4jMybatisAutoConfiguration {
 
     /**
      * MyBatis Plus 官方拦截器，聚合多个 InnerInterceptor。
+     *
+     * @return 包含分页、乐观锁与防全表操作插件的拦截器
      */
     @Bean
     @ConditionalOnMissingBean(MybatisPlusInterceptor.class)
