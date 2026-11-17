@@ -5,7 +5,7 @@
 - 入口：`WebFlux`（`HttpHandler`/`DispatcherHandler`）
 - 本地化与上下文：`LocaleResolver` 与响应式 `ServerWebExchange` 上下文
 - 拦截器与过滤：按组件默认配置注册，使用响应式链路处理 MDC、语言与主题
-- 控制器返回 `Mono/Flux`，统一包装 `ApiRestResponse` 响应
+- 控制器返回 `Mono/Flux`，统一包装 `R` 响应
 
 ## 关键配置与异常处理
 
@@ -22,11 +22,11 @@
 
 ## 响应统一
 
-- `ApiCode` + `ApiRestResponse`：同 MVC，响应式返回封装一致
-- 参考：`io.ddd4j.core.ApiCode`、`io.ddd4j.core.ApiRestResponse`
+- `ApiCode` + `R`：同 MVC，响应式返回封装一致
+- 参考：`io.ddd4j.core.api.ApiCode`、`io.ddd4j.core.api.R`
 
 ## 使用建议
 
-- 控制器方法返回 `Mono<ApiRestResponse<T>>` 或 `Flux<ApiRestResponse<T>>`，避免裸类型返回
+- 控制器方法返回 `Mono<R<T>>` 或 `Flux<R<T>>`，避免裸类型返回
 - 统一在异常处理类中映射错误，保证响应码与国际化消息一致
 - 在需要追踪的链路中启用 MDC，便于日志聚合

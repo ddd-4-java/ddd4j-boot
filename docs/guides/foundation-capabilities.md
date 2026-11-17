@@ -23,7 +23,7 @@
 
 ## 统一响应与异常映射
 
-- 响应：`ApiRestResponse.java:118-166`
+- 响应：`io.ddd4j.core.api.R`
 - MVC 异常：`webmvc/GlobalExceptionHandler.java`
 - WebFlux 异常：`webflux/handler/GlobalExceptionHandler.java`
 
