@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
  * <ul>
  *   <li>Dubbo Service/Reference 注解扫描支持（通过 {@link EnableDubbo}）</li>
  *   <li>Dubbo Actuator 健康检查集成</li>
- *   <li>Dubbo 异常到 {@link io.ddd4j.core.ApiRestResponse} 的统一转换</li>
+ *   <li>Dubbo 异常到 {@link io.ddd4j.core.api.R} 的统一转换</li>
  * </ul>
  *
  * <p>配置项（{@code application.yml}）：
