@@ -5,7 +5,7 @@ package io.hiwepy.boot.sample.web.controller;
 
 import io.ddd4j.annotation.BusinessType;
 import io.ddd4j.annotation.api.ApiOperationLog;
-import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.api.R;
 import io.ddd4j.web.webmvc.controller.BaseController;
 import io.hiwepy.boot.sample.entity.DemoEntity;
 import io.hiwepy.boot.sample.service.IDemoService;
@@ -53,7 +53,7 @@ public class DemoController extends BaseController {
     @ApiOperationLog(module = LogConstant.Module.N01, business = LogConstant.BUSINESS.N010001, opt = BusinessType.INSERT)
     @PostMapping("new")
     @ResponseBody
-    public ApiRestResponse<String> newDemo(@Valid DemoNewDTO dto) {
+    public R<String> newDemo(@Valid DemoNewDTO dto) {
         try {
 
             DemoEntity entity = new DemoEntity();
@@ -79,7 +79,7 @@ public class DemoController extends BaseController {
     @ApiOperationLog(module = LogConstant.Module.N01, business = LogConstant.BUSINESS.N010001, opt = BusinessType.UPDATE)
     @PostMapping("renew")
     @ResponseBody
-    public ApiRestResponse<String> renew(@Valid DemoDTO demoVo) throws Exception {
+    public R<String> renew(@Valid DemoDTO demoVo) throws Exception {
         try {
 
             DemoEntity entity = new DemoEntity();
@@ -105,7 +105,7 @@ public class DemoController extends BaseController {
     @ApiOperationLog(module = LogConstant.Module.N01, business = LogConstant.BUSINESS.N010001, opt = BusinessType.DELETE)
     @PostMapping("delete")
     @ResponseBody
-    public ApiRestResponse<String> delete(@RequestParam(value = "ids") String ids, HttpServletRequest request) throws Exception {
+    public R<String> delete(@RequestParam(value = "ids") String ids, HttpServletRequest request) throws Exception {
         try {
             if (ObjectUtils.isEmpty(ids)) {
                 return fail("demo.delete.fail");

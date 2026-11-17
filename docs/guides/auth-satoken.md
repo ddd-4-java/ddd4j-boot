@@ -35,8 +35,8 @@ String roleId = StpKit.getRoleIdAsString();
 
 ## 统一错误码
 
-- 认证/授权相关错误码集中在统一响应与异常码定义模块中，优先查看 `io.ddd4j.core.ApiCode` 及认证模块自身错误码扩展。
-- 建议在异常处理处统一映射为 `ApiRestResponse` 输出，确保客户端行为一致
+- 认证/授权相关错误码集中在统一响应与异常码定义模块中，优先查看 `io.ddd4j.core.api.ApiCode` 及认证模块自身错误码扩展。
+- 建议在异常处理处统一映射为 `R` 输出，确保客户端行为一致
 
 ## 最佳实践
 

@@ -18,6 +18,11 @@ public class CacheProperties {
      */
     private CacheKit.LocalCacheType defaultType = CacheKit.LocalCacheType.CAFFEINE;
 
+    /**
+     * 设置默认本地缓存实现，并同步更新缓存工具的全局默认值。
+     *
+     * @param defaultType 默认本地缓存实现类型
+     */
     public void setDefaultType(CacheKit.LocalCacheType defaultType) {
         this.defaultType = defaultType;
         CacheKit.setDefaultType(defaultType);
