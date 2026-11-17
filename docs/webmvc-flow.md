@@ -17,10 +17,10 @@
 
 ## 统一响应
 
-- 成功：`ApiRestResponse.success(...)`
-- 失败：`ApiRestResponse.fail(...)`
-- 错误：`ApiRestResponse.error(...)`
-- 参考：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/ApiRestResponse.java:118-166`
+- 成功：`R.success(...)`
+- 失败：`R.fail(...)`
+- 错误：`R.error(...)`
+- 参考：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/R.java:118-166`
 
 ## 全局异常映射
 
@@ -44,4 +44,3 @@
 - 控制器继承 `BaseController`，使用 `success`/`fail`/`error` 统一返回
 - 对外 API 需要幂等的，标注 `@ApiIdempotent` 并合理设置过期与重试策略
 - 通过国际化键值输出用户可读消息，统一体验
-

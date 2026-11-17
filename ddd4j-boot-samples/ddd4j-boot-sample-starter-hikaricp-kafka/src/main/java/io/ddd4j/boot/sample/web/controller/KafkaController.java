@@ -1,7 +1,7 @@
 package io.ddd4j.boot.sample.web.controller;
 
 import com.alibaba.fastjson2.JSON;
-import io.ddd4j.boot.core.ApiRestResponse;
+import io.ddd4j.boot.core.R;
 import io.ddd4j.boot.sample.setup.TopicConstant;
 import org.springframework.kafka.core.KafkaOperations;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -22,15 +22,15 @@ public class KafkaController {
     private KafkaTemplate<String, String> kafkaTsTemplate;
 
     @GetMapping("/send")
-    public ApiRestResponse<String> send() {
+    public R<String> send() {
         kafkaTemplate.send(TopicConstant.DEMO_TOPIC, "字符消息");
-        return ApiRestResponse.success("kafka.msg.send.success");
+        return R.success("kafka.msg.send.success");
     }
 
     @GetMapping("/sendTs")
-    public ApiRestResponse<String> sendTag() {
+    public R<String> sendTag() {
         kafkaTsTemplate.executeInTransaction(new KafkaOperationsCallback(TopicConstant.DEMO_TOPIC_TS, "带有tag的字符消息"));
-        return ApiRestResponse.success("kafka.msg.send.success");
+        return R.success("kafka.msg.send.success");
     }
 
     public static class KafkaOperationsCallback implements KafkaOperations.OperationsCallback<String, String, Boolean> {

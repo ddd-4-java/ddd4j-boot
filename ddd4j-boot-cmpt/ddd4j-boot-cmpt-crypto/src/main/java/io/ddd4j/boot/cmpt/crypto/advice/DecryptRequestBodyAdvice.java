@@ -66,7 +66,7 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
         if (servletRequestAttributes == null) {
-            throw new ParamException(ApiCode.SC_FAIL, "request错误");
+            throw new ParamException(ApiCode.FAIL, "request错误");
         }
 
         HttpServletRequest request = servletRequestAttributes.getRequest();
@@ -76,7 +76,7 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
         RequestData requestData = objectMapper.readValue(inputStream, RequestData.class);
 
         if (requestData == null || StringUtils.isBlank(requestData.getText())) {
-            throw new ParamException(ApiCode.SC_FAIL, "参数错误");
+            throw new ParamException(ApiCode.FAIL, "参数错误");
         }
 
         // 获取加密的数据
@@ -90,11 +90,11 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
         try {
             decryptText = aes.decryptStr(text);
         } catch (Exception e) {
-            throw new ParamException(ApiCode.SC_FAIL, "解密失败");
+            throw new ParamException(ApiCode.FAIL, "解密失败");
         }
 
         if (StringUtils.isBlank(decryptText)) {
-            throw new ParamException(ApiCode.SC_FAIL, "解密失败");
+            throw new ParamException(ApiCode.FAIL, "解密失败");
         }
 
         // 放入解密之后的数据
@@ -115,13 +115,13 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
             // 是否在有效期内
             if (Math.abs(expire) > effective) {
-                throw new ParamException(ApiCode.SC_FAIL, "时间戳不合法");
+                throw new ParamException(ApiCode.FAIL, "时间戳不合法");
             }
 
             // 返回解密之后的数据
             return result;
         } else {
-            throw new ParamException(ApiCode.SC_FAIL, String.format("请求参数类型：%s 未继承：%s", result.getClass().getName(), BaseDTO.class.getName()));
+            throw new ParamException(ApiCode.FAIL, String.format("请求参数类型：%s 未继承：%s", result.getClass().getName(), BaseDTO.class.getName()));
         }
     }
 

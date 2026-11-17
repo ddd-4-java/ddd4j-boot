@@ -5,7 +5,7 @@ import cn.hutool.crypto.symmetric.AES;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ddd4j.boot.cmpt.crypto.domain.annotation.ResponseEncrypt;
 import io.ddd4j.boot.core.ApiCode;
-import io.ddd4j.boot.core.ApiRestResponse;
+import io.ddd4j.boot.core.R;
 import io.ddd4j.boot.core.dto.BaseDTO;
 import io.ddd4j.boot.core.exception.CryptoException;
 import lombok.SneakyThrows;
@@ -27,7 +27,7 @@ import java.util.Objects;
  * 响应内容自动加密
  */
 @ControllerAdvice
-public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<ApiRestResponse<?>> {
+public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<R<?>> {
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -39,8 +39,8 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<ApiRestResp
 
         ParameterizedTypeImpl genericParameterType = (ParameterizedTypeImpl) returnType.getGenericParameterType();
 
-        // 如果直接是ApiRestResponse，则返回
-        if (genericParameterType.getRawType() == ApiRestResponse.class && returnType.hasMethodAnnotation(ResponseEncrypt.class)) {
+        // 如果直接是R，则返回
+        if (genericParameterType.getRawType() == R.class && returnType.hasMethodAnnotation(ResponseEncrypt.class)) {
             return true;
         }
 
@@ -48,9 +48,9 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<ApiRestResp
             return false;
         }
 
-        // 如果是 ResponseEntity<ApiRestResponse>
+        // 如果是 ResponseEntity<R>
         for (Type type : genericParameterType.getActualTypeArguments()) {
-            if (((ParameterizedTypeImpl) type).getRawType() == ApiRestResponse.class && returnType.hasMethodAnnotation(ResponseEncrypt.class)) {
+            if (((ParameterizedTypeImpl) type).getRawType() == R.class && returnType.hasMethodAnnotation(ResponseEncrypt.class)) {
                 return true;
             }
         }
@@ -60,7 +60,7 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<ApiRestResp
 
     @SneakyThrows
     @Override
-    public ApiRestResponse<?> beforeBodyWrite(ApiRestResponse<?> body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+    public R<?> beforeBodyWrite(R<?> body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
 
         // 待加密对象
         Object data = body.getData();
@@ -85,12 +85,12 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<ApiRestResp
 
         // 如果位数小于16，报错
         if (dataText.length() < 16) {
-            throw new CryptoException(ApiCode.SC_FAIL, "加密失败，数据小于16位");
+            throw new CryptoException(ApiCode.FAIL, "加密失败，数据小于16位");
         }
 
         String encryptText = aes.encryptHex(dataText);
 
-        return ApiRestResponse.of(body.getCode(), body.getStatus(), body.getMessage(), encryptText);
+        return R.of(body.getCode(), body.getStatus(), body.getMessage(), encryptText);
     }
 
 }

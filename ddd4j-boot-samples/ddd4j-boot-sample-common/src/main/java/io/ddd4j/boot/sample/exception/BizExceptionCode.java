@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.exception;
 
-import io.ddd4j.boot.core.ApiRestResponse;
+import io.ddd4j.boot.core.R;
 import io.ddd4j.boot.core.Constants;
 import io.ddd4j.boot.core.CustomApiCode;
 import io.ddd4j.boot.core.exception.BizRuntimeException;
@@ -92,17 +92,17 @@ public enum BizExceptionCode implements CustomApiCode {
     /**
      * 国际化Key
      */
-    private String i18nKey;
+    private final String i18nKey;
 
     /**
      * 错误编号
      */
-    private int errorCode;
+    private final int errorCode;
 
     /**
      * 错误信息
      */
-    private String errorMsg;
+    private final String errorMsg;
 
     private BizExceptionCode(String i18nKey, int errorCode, String errorMsg) {
         this.i18nKey = i18nKey;
@@ -118,8 +118,8 @@ public enum BizExceptionCode implements CustomApiCode {
         getByErrorcode(errorCode).throwException();
     }
 
-    public static void throwByResponse(ApiRestResponse<?> response) {
-        throw new BizRuntimeException(response.getCode(), response.getMessage());
+    public static void throwByResponse(R<?> response) {
+        throw new BizRuntimeException(Integer.valueOf(String.valueOf(response.getCode())), response.getMsg());
     }
 
     public static BizExceptionCode getByErrorcode(Integer errorCode) {
@@ -146,7 +146,7 @@ public enum BizExceptionCode implements CustomApiCode {
      * @param args 额外参数
      * @return 接口返回对象
      */
-    public <T> ApiRestResponse<T> asResponse(Object... args) {
+    public <T> R<T> asResponse(Object... args) {
         NestedMessageSource messageSource = SpringContextUtils.getContext().getApplicationContext().getBean(NestedMessageSource.class);
         return this.asResponse(messageSource, args);
     }
@@ -158,9 +158,9 @@ public enum BizExceptionCode implements CustomApiCode {
      * @param args          额外参数
      * @return 接口返回对象
      */
-    public <T> ApiRestResponse<T> asResponse(NestedMessageSource messageSource, Object... args) {
-        this.errorMsg = messageSource.getMessage(this.getI18nKey(), args, this.getErrorMsg(), LocaleContextHolder.getLocale());
-        return ApiRestResponse.of(this);
+    public <T> R<T> asResponse(NestedMessageSource messageSource, Object... args) {
+        String message = messageSource.getMessage(this.getI18nKey(), args, this.getErrorMsg(), LocaleContextHolder.getLocale());
+        return new R<>(getCode(), message, null);
     }
 
     public String getI18nKey() {
@@ -176,7 +176,7 @@ public enum BizExceptionCode implements CustomApiCode {
     }
 
     @Override
-    public int getCode() {
+    public Integer getCode() {
         return errorCode;
     }
 
@@ -185,9 +185,5 @@ public enum BizExceptionCode implements CustomApiCode {
         return errorMsg;
     }
 
-    @Override
-    public String getStatus() {
-        return Constants.RT_FAIL;
-    }
 
 }

@@ -54,7 +54,7 @@ public class DefaultCryptoStrategy implements CryptoStrategy {
             return valueAsString;
         } catch (Exception ex) {
             log.error("{} Encrypt Error : {}", algorithmType.getName(), ex.getMessage());
-            throw new BizRuntimeException(ApiCode.SC_INTERNAL_SERVER_ERROR, algorithmType.getName() + " Encrypt Error");
+            throw new BizRuntimeException(ApiCode.SERVER_ERROR, algorithmType.getName() + " Encrypt Error");
         }
     }
 
@@ -70,7 +70,7 @@ public class DefaultCryptoStrategy implements CryptoStrategy {
             return getObjectMapper().readValue(decryptStr, rtType);
         } catch (Exception ex) {
             log.error("{} Decrypt Error : {}", algorithmType.getName(), ex.getMessage());
-            throw new BizRuntimeException(ApiCode.SC_INTERNAL_SERVER_ERROR, algorithmType.getName() + " Decrypt Error");
+            throw new BizRuntimeException(ApiCode.SERVER_ERROR, algorithmType.getName() + " Decrypt Error");
         }
     }
 
@@ -89,7 +89,7 @@ public class DefaultCryptoStrategy implements CryptoStrategy {
             return hmacValue;
         } catch (Exception ex) {
             log.error("HMAC Digest Error : {}", ex.getMessage());
-            throw new BizRuntimeException(ApiCode.SC_INTERNAL_SERVER_ERROR, "HMAC Digest Error");
+            throw new BizRuntimeException(ApiCode.SERVER_ERROR, "HMAC Digest Error");
         }
     }
 

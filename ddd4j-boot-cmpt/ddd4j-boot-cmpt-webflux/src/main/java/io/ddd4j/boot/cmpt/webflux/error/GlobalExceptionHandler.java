@@ -8,7 +8,7 @@ import com.google.common.collect.Maps;
 import hitool.core.format.ByteUnitFormat;
 import io.ddd4j.boot.cmpt.webflux.config.ServerI18nProperties;
 import io.ddd4j.boot.core.ApiCode;
-import io.ddd4j.boot.core.ApiRestResponse;
+import io.ddd4j.boot.core.R;
 import io.ddd4j.boot.core.exception.BizCheckedException;
 import io.ddd4j.boot.core.exception.BizIOException;
 import io.ddd4j.boot.core.exception.BizRuntimeException;
@@ -68,8 +68,12 @@ import java.util.*;
 public class GlobalExceptionHandler extends ExceptinHandler {
 
     @Getter
+    private final NestedMessageSource messageSource;
+
     @Autowired
-    private NestedMessageSource messageSource;
+    public GlobalExceptionHandler(NestedMessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
     @Autowired
     private ServerI18nProperties serverI18NProperties;
 
@@ -80,14 +84,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public ApiRestResponse<String> httpRequestMethodNotSupportedException(ServerWebExchange exchange, HttpRequestMethodNotSupportedException ex) {
+    public R<String> httpRequestMethodNotSupportedException(ServerWebExchange exchange, HttpRequestMethodNotSupportedException ex) {
         this.logException(ex);
         String defaultMessage = String.format("[%s] 不支持的请求方法, 请使用 [%s].", ex.getMethod(), StringUtils.join(ex.getSupportedMethods()));
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "method.not.allowed", defaultMessage);
-            return ApiCode.SC_METHOD_NOT_ALLOWED.toResponse(message);
+            return ApiCode.METHOD_NOT_ALLOWED.toResponse(message);
         }
-        return ApiCode.SC_METHOD_NOT_ALLOWED.toResponse(defaultMessage);
+        return ApiCode.METHOD_NOT_ALLOWED.toResponse(defaultMessage);
     }
 
     /**
@@ -95,7 +99,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({HttpMediaTypeNotAcceptableException.class})
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    public ApiRestResponse<String> httpMediaTypeNotAcceptableException(ServerWebExchange exchange, HttpMediaTypeNotAcceptableException ex) {
+    public R<String> httpMediaTypeNotAcceptableException(ServerWebExchange exchange, HttpMediaTypeNotAcceptableException ex) {
         this.logException(ex);
         String[] supportedMediaTypes = new String[ex.getSupportedMediaTypes().size()];
         for (int i = 0; i < ex.getSupportedMediaTypes().size(); i++) {
@@ -105,9 +109,9 @@ public class GlobalExceptionHandler extends ExceptinHandler {
         String defaultMessage = String.format("不匹配的媒体类型, 仅匹配 [%s].", StringUtils.join(supportedMediaTypes));
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.mediaType", defaultMessage);
-            return ApiCode.SC_NOT_ACCEPTABLE.toResponse(message);
+            return ApiCode.NOT_ACCEPTABLE.toResponse(message);
         }
-        return ApiCode.SC_NOT_ACCEPTABLE.toResponse(defaultMessage);
+        return ApiCode.NOT_ACCEPTABLE.toResponse(defaultMessage);
     }
 
     /**
@@ -115,14 +119,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-    public ApiRestResponse<String> httpMediaTypeNotSupportedException(ServerWebExchange exchange, HttpMediaTypeNotSupportedException ex) {
+    public R<String> httpMediaTypeNotSupportedException(ServerWebExchange exchange, HttpMediaTypeNotSupportedException ex) {
         this.logException(ex);
         String defaultMessage = String.format("不支持的媒体类型, 仅支持 [%s].", StringUtils.join(ex.getSupportedMediaTypes()));
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.mediaType", defaultMessage);
-            return ApiCode.SC_UNSUPPORTED_MEDIA_TYPE.toResponse(message);
+            return ApiCode.UNSUPPORTED_MEDIA_TYPE.toResponse(message);
         }
-        return ApiCode.SC_UNSUPPORTED_MEDIA_TYPE.toResponse(defaultMessage);
+        return ApiCode.UNSUPPORTED_MEDIA_TYPE.toResponse(defaultMessage);
     }
 
     /**
@@ -131,14 +135,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({MissingMatrixVariableException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> missingMatrixVariableException(ServerWebExchange exchange, MissingMatrixVariableException ex) {
+    public R<String> missingMatrixVariableException(ServerWebExchange exchange, MissingMatrixVariableException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少矩阵变量: [%s].", ex.getVariableName());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.matrix-variable", defaultMessage);
-            return ApiCode.SC_MISSING_MATRIX_VARIABLE.toResponse(message);
+            return ApiCode.MISSING_MATRIX_VARIABLE.toResponse(message);
         }
-        return ApiCode.SC_MISSING_MATRIX_VARIABLE.toResponse(defaultMessage);
+        return ApiCode.MISSING_MATRIX_VARIABLE.toResponse(defaultMessage);
     }
 
     /**
@@ -146,14 +150,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({MissingPathVariableException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> missingPathVariableException(ServerWebExchange exchange, MissingPathVariableException ex) {
+    public R<String> missingPathVariableException(ServerWebExchange exchange, MissingPathVariableException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少URI模板变量: [%s].", ex.getVariableName());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.path-variable", defaultMessage);
-            return ApiCode.SC_MISSING_PATH_VARIABLE.toResponse(message);
+            return ApiCode.MISSING_PATH_VARIABLE.toResponse(message);
         }
-        return ApiCode.SC_MISSING_PATH_VARIABLE.toResponse(defaultMessage);
+        return ApiCode.MISSING_PATH_VARIABLE.toResponse(defaultMessage);
     }
 
     /**
@@ -161,14 +165,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({MissingRequestCookieException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> missingRequestCookieException(ServerWebExchange exchange, MissingRequestCookieException ex) {
+    public R<String> missingRequestCookieException(ServerWebExchange exchange, MissingRequestCookieException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少Cookie变量: [%s].", ex.getCookieName());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.cookie", defaultMessage);
-            return ApiCode.SC_MISSING_REQUEST_COOKIE.toResponse(message);
+            return ApiCode.MISSING_REQUEST_COOKIE.toResponse(message);
         }
-        return ApiCode.SC_MISSING_REQUEST_COOKIE.toResponse(defaultMessage);
+        return ApiCode.MISSING_REQUEST_COOKIE.toResponse(defaultMessage);
     }
 
     /**
@@ -176,14 +180,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({MissingRequestHeaderException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> missingRequestHeaderException(ServerWebExchange exchange, MissingRequestHeaderException ex) {
+    public R<String> missingRequestHeaderException(ServerWebExchange exchange, MissingRequestHeaderException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少请求头: [%s].", ex.getHeaderName());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.header", defaultMessage);
-            return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(message);
+            return ApiCode.MISSING_REQUEST_PARAM.toResponse(message);
         }
-        return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(defaultMessage);
+        return ApiCode.MISSING_REQUEST_PARAM.toResponse(defaultMessage);
     }
 
     /**
@@ -191,14 +195,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({MissingServletRequestParameterException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> missingServletRequestParameterException(ServerWebExchange exchange, MissingServletRequestParameterException ex) {
+    public R<String> missingServletRequestParameterException(ServerWebExchange exchange, MissingServletRequestParameterException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少参数: [%s]，类型为 [%s].", ex.getParameterName(), ex.getParameterType());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", defaultMessage);
-            return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(message);
+            return ApiCode.MISSING_REQUEST_PARAM.toResponse(message);
         }
-        return ApiCode.SC_MISSING_REQUEST_PARAM.toResponse(defaultMessage);
+        return ApiCode.MISSING_REQUEST_PARAM.toResponse(defaultMessage);
     }
 
     /**
@@ -206,14 +210,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({MissingServletRequestPartException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> missingServletRequestPartException(ServerWebExchange exchange, MissingServletRequestPartException ex) {
+    public R<String> missingServletRequestPartException(ServerWebExchange exchange, MissingServletRequestPartException ex) {
         this.logException(ex);
         String defaultMessage = String.format("缺少请求对象: [%s].", ex.getRequestPartName());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", defaultMessage);
-            return ApiCode.SC_MISSING_REQUEST_PART.toResponse(message);
+            return ApiCode.MISSING_REQUEST_PART.toResponse(message);
         }
-        return ApiCode.SC_MISSING_REQUEST_PART.toResponse(defaultMessage);
+        return ApiCode.MISSING_REQUEST_PART.toResponse(defaultMessage);
     }
 
     /**
@@ -221,13 +225,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({UnsatisfiedServletRequestParameterException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> unsatisfiedServletRequestParameterException(ServerWebExchange exchange, UnsatisfiedServletRequestParameterException ex) {
+    public R<String> unsatisfiedServletRequestParameterException(ServerWebExchange exchange, UnsatisfiedServletRequestParameterException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", ex.getMessage());
-            return ApiCode.SC_UNSATISFIED_PARAM.toResponse(message);
+            return ApiCode.UNSATISFIED_PARAM.toResponse(message);
         }
-        return ApiCode.SC_UNSATISFIED_PARAM.toResponse();
+        return ApiCode.UNSATISFIED_PARAM.toResponse();
     }
 
     /**
@@ -235,13 +239,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({ServletRequestBindingException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> servletRequestBindingException(ServerWebExchange exchange, ServletRequestBindingException ex) {
+    public R<String> servletRequestBindingException(ServerWebExchange exchange, ServletRequestBindingException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", ex.getMessage());
-            return ApiCode.SC_BINDING_ERROR.toResponse(message);
+            return ApiCode.BINDING_ERROR.toResponse(message);
         }
-        return ApiCode.SC_BINDING_ERROR.toResponse();
+        return ApiCode.BINDING_ERROR.toResponse();
     }
 
     /**
@@ -249,13 +253,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({JsonParseException.class, JsonProcessingException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> jsonProcessingException(ServerWebExchange exchange, JsonProcessingException ex) {
+    public R<String> jsonProcessingException(ServerWebExchange exchange, JsonProcessingException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", ex.getMessage());
-            return ApiCode.SC_PARSING_ERROR.toResponse(message);
+            return ApiCode.PARSING_ERROR.toResponse(message);
         }
-        return ApiCode.SC_PARSING_ERROR.toResponse();
+        return ApiCode.PARSING_ERROR.toResponse();
     }
 
     /**
@@ -263,13 +267,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> httpMessageNotReadableException(ServerWebExchange exchange, HttpMessageNotReadableException ex) {
+    public R<String> httpMessageNotReadableException(ServerWebExchange exchange, HttpMessageNotReadableException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request.param", ex.getMessage());
-            return ApiCode.SC_PARSING_ERROR.toResponse(message);
+            return ApiCode.PARSING_ERROR.toResponse(message);
         }
-        return ApiCode.SC_PARSING_ERROR.toResponse();
+        return ApiCode.PARSING_ERROR.toResponse();
     }
 
     /**
@@ -277,7 +281,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<List<String>> constraintViolationException(ServerWebExchange exchange, ConstraintViolationException ex) {
+    public R<List<String>> constraintViolationException(ServerWebExchange exchange, ConstraintViolationException ex) {
         this.logException(ex);
 
         Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
@@ -288,10 +292,10 @@ public class GlobalExceptionHandler extends ExceptinHandler {
             msgList.add(Objects.toString(cvl.getMessage(), cvl.getMessageTemplate()));
         }
         if (CollectionUtils.isEmpty(msgList)) {
-            String message = Objects.toString(ex.getMessage(), ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.getReason());
-            return ApiRestResponse.of(ApiCode.SC_METHOD_ARGUMENT_NOT_VALID, message, msgList);
+            String message = Objects.toString(ex.getMessage(), ApiCode.METHOD_ARGUMENT_NOT_VALID.getReason());
+            return R.of(ApiCode.METHOD_ARGUMENT_NOT_VALID, message, msgList);
         }
-        return ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.toResponse(msgList.get(0), msgList);
+        return ApiCode.METHOD_ARGUMENT_NOT_VALID.toResponse(msgList.get(0), msgList);
     }
 
     /**
@@ -299,7 +303,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<?> methodArgumentNotValidException(ServerWebExchange exchange, MethodArgumentNotValidException ex) {
+    public R<?> methodArgumentNotValidException(ServerWebExchange exchange, MethodArgumentNotValidException ex) {
         this.logException(ex);
         return this.bindException(exchange, ex, ex.getBindingResult());
     }
@@ -313,7 +317,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({BindException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<?> bindException(ServerWebExchange exchange, BindException ex) {
+    public R<?> bindException(ServerWebExchange exchange, BindException ex) {
         this.logException(ex);
         return this.bindException(exchange, ex, ex.getBindingResult());
     }
@@ -321,12 +325,12 @@ public class GlobalExceptionHandler extends ExceptinHandler {
 
     @ExceptionHandler(WebExchangeBindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<?> webExchangeBindException(ServerWebExchange exchange, WebExchangeBindException ex) {
+    public R<?> webExchangeBindException(ServerWebExchange exchange, WebExchangeBindException ex) {
         this.logException(ex);
         return this.bindException(exchange, ex, ex.getBindingResult());
     }
 
-    protected ApiRestResponse<?> bindException(ServerWebExchange exchange, Exception ex, BindingResult result) {
+    protected R<?> bindException(ServerWebExchange exchange, Exception ex, BindingResult result) {
         if (result.getErrorCount() > 0) {
             List<Map<String, String>> errorList = Lists.newArrayList();
             for (FieldError error : result.getFieldErrors()) {
@@ -337,12 +341,12 @@ public class GlobalExceptionHandler extends ExceptinHandler {
             }
             String message = result.getFieldErrors()
                     .stream()
-                    .findFirst().map(FieldError::getDefaultMessage).orElse(ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.getReason());
-            return ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.toResponse(message, errorList);
+                    .findFirst().map(FieldError::getDefaultMessage).orElse(ApiCode.METHOD_ARGUMENT_NOT_VALID.getReason());
+            return ApiCode.METHOD_ARGUMENT_NOT_VALID.toResponse(message, errorList);
         } else {
             ObjectError error = result.getGlobalError();
             String message = this.getLocaleMessage(exchange, ex, "bad.request", Objects.requireNonNull(error).getDefaultMessage());
-            return ApiCode.SC_METHOD_ARGUMENT_NOT_VALID.toResponse(message);
+            return ApiCode.METHOD_ARGUMENT_NOT_VALID.toResponse(message);
         }
     }
 
@@ -351,14 +355,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({InvalidFormatException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> invalidFormatException(ServerWebExchange exchange, InvalidFormatException ex) {
+    public R<String> invalidFormatException(ServerWebExchange exchange, InvalidFormatException ex) {
         this.logException(ex);
         String defaultMessage = String.format("JSON 格式错误: %s", ex.getLocation().toString());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
-            return ApiCode.SC_BAD_REQUEST.toResponse(message);
+            return ApiCode.BAD_REQUEST.toResponse(message);
         }
-        return ApiCode.SC_BAD_REQUEST.toResponse(defaultMessage);
+        return ApiCode.BAD_REQUEST.toResponse(defaultMessage);
     }
 
     /**
@@ -367,14 +371,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({TypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> typeMismatchException(ServerWebExchange exchange, TypeMismatchException ex) {
+    public R<String> typeMismatchException(ServerWebExchange exchange, TypeMismatchException ex) {
         this.logException(ex);
         String defaultMessage = String.format("Bean 属性 [%s]类型不匹配. 类型应该是 [%s].", ex.getPropertyName(), ex.getRequiredType());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
-            return ApiCode.SC_BAD_REQUEST.toResponse(message);
+            return ApiCode.BAD_REQUEST.toResponse(message);
         }
-        return ApiCode.SC_BAD_REQUEST.toResponse(defaultMessage);
+        return ApiCode.BAD_REQUEST.toResponse(defaultMessage);
     }
 
     /**
@@ -382,14 +386,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> methodArgumentTypeMismatchException(ServerWebExchange exchange, MethodArgumentTypeMismatchException ex) {
+    public R<String> methodArgumentTypeMismatchException(ServerWebExchange exchange, MethodArgumentTypeMismatchException ex) {
         this.logException(ex);
         String defaultMessage = String.format("参数类型不匹配，参数[%s]类型应该是 [%s].", ex.getName(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
-            return ApiCode.SC_BAD_REQUEST.toResponse(message);
+            return ApiCode.BAD_REQUEST.toResponse(message);
         }
-        return ApiCode.SC_BAD_REQUEST.toResponse(defaultMessage);
+        return ApiCode.BAD_REQUEST.toResponse(defaultMessage);
     }
 
     /**
@@ -397,14 +401,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({MethodArgumentConversionNotSupportedException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> methodArgumentConversionNotSupportedException(ServerWebExchange exchange, MethodArgumentConversionNotSupportedException ex) {
+    public R<String> methodArgumentConversionNotSupportedException(ServerWebExchange exchange, MethodArgumentConversionNotSupportedException ex) {
         this.logException(ex);
         String defaultMessage = String.format("参数类型转换不支持，参数[%s]类型应该是 [%s].", ex.getName(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
-            return ApiCode.SC_BAD_REQUEST.toResponse(message);
+            return ApiCode.BAD_REQUEST.toResponse(message);
         }
-        return ApiCode.SC_BAD_REQUEST.toResponse(defaultMessage);
+        return ApiCode.BAD_REQUEST.toResponse(defaultMessage);
     }
 
     /**
@@ -412,14 +416,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({ValidationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestResponse<String> validationException(ServerWebExchange exchange, ValidationException ex) {
+    public R<String> validationException(ServerWebExchange exchange, ValidationException ex) {
         this.logException(ex);
         String defaultMessage = "参数校验异常.";
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
-            return ApiCode.SC_BAD_REQUEST.toResponse(message);
+            return ApiCode.BAD_REQUEST.toResponse(message);
         }
-        return ApiCode.SC_BAD_REQUEST.toResponse(defaultMessage);
+        return ApiCode.BAD_REQUEST.toResponse(defaultMessage);
     }
 
     /**
@@ -427,14 +431,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
-    public ApiRestResponse<String> maxUploadSizeExceededException(ServerWebExchange exchange, MaxUploadSizeExceededException ex) {
+    public R<String> maxUploadSizeExceededException(ServerWebExchange exchange, MaxUploadSizeExceededException ex) {
         this.logException(ex);
         String defaultMessage = String.format("所有文件超过允许的最大限制: %s", ByteUnitFormat.B.to(ByteUnitFormat.K, ex.getMaxUploadSize()));
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
-            return ApiCode.SC_REQUEST_TOO_LONG.toResponse(message);
+            return ApiCode.REQUEST_TOO_LONG.toResponse(message);
         }
-        return ApiCode.SC_REQUEST_TOO_LONG.toResponse(defaultMessage);
+        return ApiCode.REQUEST_TOO_LONG.toResponse(defaultMessage);
     }
 
     /**
@@ -442,14 +446,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(MaxUploadSizePerFileExceededException.class)
     @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
-    public ApiRestResponse<String> maxUploadSizePerFileExceededException(ServerWebExchange exchange, MaxUploadSizePerFileExceededException ex) {
+    public R<String> maxUploadSizePerFileExceededException(ServerWebExchange exchange, MaxUploadSizePerFileExceededException ex) {
         this.logException(ex);
         String defaultMessage = String.format("单个文件超过允许的最大限制: %s", ByteUnitFormat.B.to(ByteUnitFormat.K, ex.getMaxUploadSizePerFile()));
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "bad.request", defaultMessage);
-            return ApiCode.SC_REQUEST_TOO_LONG.toResponse(message);
+            return ApiCode.REQUEST_TOO_LONG.toResponse(message);
         }
-        return ApiCode.SC_REQUEST_TOO_LONG.toResponse(defaultMessage);
+        return ApiCode.REQUEST_TOO_LONG.toResponse(defaultMessage);
     }
 
     // --- 5xx Server Error ---
@@ -459,14 +463,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({ConstraintDeclarationException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> constraintDeclarationException(ServerWebExchange exchange, ConstraintDeclarationException ex) {
+    public R<String> constraintDeclarationException(ServerWebExchange exchange, ConstraintDeclarationException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：约束声明不合法";
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -474,14 +478,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({ConstraintDefinitionException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> constraintDefinitionException(ServerWebExchange exchange, ConstraintDefinitionException ex) {
+    public R<String> constraintDefinitionException(ServerWebExchange exchange, ConstraintDefinitionException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：约束定义不合法";
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -489,14 +493,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({GroupDefinitionException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> groupDefinitionException(ServerWebExchange exchange, GroupDefinitionException ex) {
+    public R<String> groupDefinitionException(ServerWebExchange exchange, GroupDefinitionException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：约束组定义不合法";
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -504,14 +508,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({UnexpectedTypeException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> unexpectedTypeException(ServerWebExchange exchange, UnexpectedTypeException ex) {
+    public R<String> unexpectedTypeException(ServerWebExchange exchange, UnexpectedTypeException ex) {
         this.logException(ex);
         String defaultMessage = "参数约束异常：参数指定了错误的约束验证器";
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -519,13 +523,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({ConversionNotSupportedException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> conversionNotSupportedException(ServerWebExchange exchange, ConversionNotSupportedException ex) {
+    public R<String> conversionNotSupportedException(ServerWebExchange exchange, ConversionNotSupportedException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
+        return ApiCode.SERVER_ERROR.toResponse();
     }
 
     /**
@@ -533,13 +537,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({HttpMessageConversionException.class, HttpMessageNotWritableException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> httpMessageConversionException(ServerWebExchange exchange, HttpMessageConversionException ex) {
+    public R<String> httpMessageConversionException(ServerWebExchange exchange, HttpMessageConversionException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
+        return ApiCode.SERVER_ERROR.toResponse();
     }
 
     /**
@@ -547,13 +551,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(NullPointerException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> nullPointerException(ServerWebExchange exchange, NullPointerException ex) {
+    public R<String> nullPointerException(ServerWebExchange exchange, NullPointerException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
+        return ApiCode.SERVER_ERROR.toResponse();
     }
 
     /**
@@ -561,13 +565,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(ClassCastException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> classCastException(ServerWebExchange exchange, ClassCastException ex) {
+    public R<String> classCastException(ServerWebExchange exchange, ClassCastException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
+        return ApiCode.SERVER_ERROR.toResponse();
     }
 
     /**
@@ -575,13 +579,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiRestResponse<String> iOException(ServerWebExchange exchange, IOException ex) {
+    public R<String> iOException(ServerWebExchange exchange, IOException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.io.error", ex.getMessage());
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
+        return ApiCode.SERVER_ERROR.toResponse();
     }
 
     /**
@@ -589,13 +593,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(NoSuchMethodException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiRestResponse<String> noSuchMethodException(ServerWebExchange exchange, NoSuchMethodException ex) {
+    public R<String> noSuchMethodException(ServerWebExchange exchange, NoSuchMethodException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "no.such.method", ex.getMessage());
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
+        return ApiCode.SERVER_ERROR.toResponse();
     }
 
     /**
@@ -603,13 +607,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(IndexOutOfBoundsException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiRestResponse<String> indexOutOfBoundsException(ServerWebExchange exchange, IndexOutOfBoundsException ex) {
+    public R<String> indexOutOfBoundsException(ServerWebExchange exchange, IndexOutOfBoundsException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
+        return ApiCode.SERVER_ERROR.toResponse();
     }
 
     /**
@@ -617,13 +621,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiRestResponse<String> illegalArgumentException(ServerWebExchange exchange, IllegalArgumentException ex) {
+    public R<String> illegalArgumentException(ServerWebExchange exchange, IllegalArgumentException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse();
+        return ApiCode.SERVER_ERROR.toResponse();
     }
 
     /*---------------------业务异常----------------------------*/
@@ -633,13 +637,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(BizRuntimeException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiRestResponse<String> bizRuntimeException(ServerWebExchange exchange, BizRuntimeException ex) {
+    public R<String> bizRuntimeException(ServerWebExchange exchange, BizRuntimeException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.runtime.error", ex.getMessage());
-            return ApiRestResponse.error(ex.getCode(), message);
+            return R.of(ex.getCode(), message);
         }
-        return ApiRestResponse.error(ex.getCode(), ex.getMessage());
+        return R.of(ex.getCode(), ex.getMessage());
     }
 
     /**
@@ -647,13 +651,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(BizCheckedException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiRestResponse<String> bizCheckedException(ServerWebExchange exchange, BizCheckedException ex) {
+    public R<String> bizCheckedException(ServerWebExchange exchange, BizCheckedException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.checked.error", ex.getMessage());
-            return ApiRestResponse.error(ex.getCode(), message);
+            return R.of(ex.getCode(), message);
         }
-        return ApiRestResponse.error(ex.getCode(), ex.getMessage());
+        return R.of(ex.getCode(), ex.getMessage());
     }
 
     /**
@@ -661,13 +665,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(BizIOException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiRestResponse<String> bizIOException(ServerWebExchange exchange, BizIOException ex) {
+    public R<String> bizIOException(ServerWebExchange exchange, BizIOException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.io.error", ex.getMessage());
-            return ApiRestResponse.error(ex.getCode(), message);
+            return R.of(ex.getCode(), message);
         }
-        return ApiRestResponse.error(ex.getCode(), ex.getMessage());
+        return R.of(ex.getCode(), ex.getMessage());
     }
 
     /**
@@ -675,13 +679,13 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(IdempotentException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiRestResponse<String> idempotentException(ServerWebExchange exchange, IdempotentException ex) {
+    public R<String> idempotentException(ServerWebExchange exchange, IdempotentException ex) {
         this.logException(ex);
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.idempotent.error", ex.getMessage());
-            return ApiRestResponse.error(ex.getCode(), message);
+            return R.of(ex.getCode(), message);
         }
-        return ApiRestResponse.error(ex.getCode(), ex.getMessage());
+        return R.of(ex.getCode(), ex.getMessage());
     }
 
     /*---------------------JDBC异常----------------------------*/
@@ -691,7 +695,7 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> dataAccessException(ServerWebExchange exchange, DataAccessException ex) {
+    public R<String> dataAccessException(ServerWebExchange exchange, DataAccessException ex) {
         this.logException(ex);
         Throwable cause = ex.getCause();
         if (cause instanceof SQLSyntaxErrorException) {
@@ -702,9 +706,9 @@ public class GlobalExceptionHandler extends ExceptinHandler {
         String defaultMessage = "数据库访问异常，请稍后再试";
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -712,14 +716,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(BatchUpdateException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> sqlBatchUpdateException(ServerWebExchange exchange, BatchUpdateException ex) {
+    public R<String> sqlBatchUpdateException(ServerWebExchange exchange, BatchUpdateException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据批量更新失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -727,14 +731,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> sqlIntegrityConstraintViolationException(ServerWebExchange exchange, SQLIntegrityConstraintViolationException ex) {
+    public R<String> sqlIntegrityConstraintViolationException(ServerWebExchange exchange, SQLIntegrityConstraintViolationException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据保存失败，有重复的数据.", ex.getSQLState(), ex.getErrorCode());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -742,14 +746,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(SQLClientInfoException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> sqlClientInfoException(ServerWebExchange exchange, SQLClientInfoException ex) {
+    public R<String> sqlClientInfoException(ServerWebExchange exchange, SQLClientInfoException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库访问异常，客户端配置错误.", ex.getSQLState(), ex.getErrorCode());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -757,14 +761,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(SQLRecoverableException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> sqlRecoverableException(ServerWebExchange exchange, SQLRecoverableException ex) {
+    public R<String> sqlRecoverableException(ServerWebExchange exchange, SQLRecoverableException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库访问异常，请稍后再试", ex.getSQLState(), ex.getErrorCode());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -772,14 +776,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(SQLSyntaxErrorException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> sqlSyntaxErrorException(ServerWebExchange exchange, SQLSyntaxErrorException ex) {
+    public R<String> sqlSyntaxErrorException(ServerWebExchange exchange, SQLSyntaxErrorException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：SQL 语法错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -787,14 +791,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(SQLTimeoutException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> sqlTimeoutException(ServerWebExchange exchange, SQLTimeoutException ex) {
+    public R<String> sqlTimeoutException(ServerWebExchange exchange, SQLTimeoutException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库连接超时，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -802,14 +806,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(SQLTransactionRollbackException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> sqlTransactionRollbackException(ServerWebExchange exchange, SQLTransactionRollbackException ex) {
+    public R<String> sqlTransactionRollbackException(ServerWebExchange exchange, SQLTransactionRollbackException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库错误，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -817,16 +821,16 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(SQLTransientConnectionException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> sqlTransientConnectionException(ServerWebExchange exchange, SQLTransientConnectionException ex) {
+    public R<String> sqlTransientConnectionException(ServerWebExchange exchange, SQLTransientConnectionException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库连接异常，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
         log.warn(defaultMessage);
         log.warn("可尝试：1. 增加连接池的大小，2. 检查数据库连接状态，3. 优化SQL查询，4. 调整超时设置");
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -834,14 +838,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(SQLTransientException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> sqlTransientException(ServerWebExchange exchange, SQLTransientException ex) {
+    public R<String> sqlTransientException(ServerWebExchange exchange, SQLTransientException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据服务器繁忙，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
@@ -849,14 +853,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(DuplicateKeyException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> sqlDuplicateKeyException(ServerWebExchange exchange, DataIntegrityViolationException ex) {
+    public R<String> sqlDuplicateKeyException(ServerWebExchange exchange, DataIntegrityViolationException ex) {
         this.logException(ex);
         String defaultMessage = "数据保存失败，有重复的数据.";
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.duplicate.key", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
 
@@ -865,14 +869,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(SQLException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiRestResponse<String> sqlException(ServerWebExchange exchange, SQLException ex) {
+    public R<String> sqlException(ServerWebExchange exchange, SQLException ex) {
         this.logException(ex);
         String defaultMessage = String.format("SQL-%s[%s]：数据库操作失败，请稍后再试.", ex.getSQLState(), ex.getErrorCode());
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.sql.error", defaultMessage);
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /*---------------------默认全局异常----------------------------*/
@@ -883,14 +887,14 @@ public class GlobalExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiRestResponse<String> defaultExceptionHandler(ServerWebExchange exchange, Exception ex) throws Exception {
+    public R<String> defaultExceptionHandler(ServerWebExchange exchange, Exception ex) throws Exception {
         this.logException(ex);
-        String defaultMessage = ApiCode.SC_INTERNAL_SERVER_ERROR.getReason();
+        String defaultMessage = ApiCode.SERVER_ERROR.getReason();
         if (serverI18NProperties.isEnabled()) {
             String message = this.getLocaleMessage(exchange, ex, "sys.error", ex.getMessage());
-            return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(message);
+            return ApiCode.SERVER_ERROR.toResponse(message);
         }
-        return ApiCode.SC_INTERNAL_SERVER_ERROR.toResponse(defaultMessage);
+        return ApiCode.SERVER_ERROR.toResponse(defaultMessage);
     }
 
     /**
