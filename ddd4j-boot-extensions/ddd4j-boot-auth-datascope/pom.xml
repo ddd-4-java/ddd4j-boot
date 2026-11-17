@@ -33,10 +33,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- For Spring Biz -->
+        <!-- Spring 扩展 API 由 io.github.easy4j 提供，版本由 ddd4j BOM 管理。 -->
         <dependency>
-            <groupId>com.github.hiwepy</groupId>
-            <artifactId>spring-biz</artifactId>
+            <groupId>io.github.easy4j</groupId>
+            <artifactId>spring-extension</artifactId>
         </dependency>
     </dependencies>
 
