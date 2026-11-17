@@ -38,6 +38,8 @@ public class Ddd4jRepositoryAutoConfiguration {
 
     /**
      * Repository 自动注册器：扫描 Spring 容器中的 Repository Bean 并注册到 RepositoryRegistry。
+     *
+     * @return Repository 自动注册器
      */
     @Bean
     @ConditionalOnMissingBean
@@ -47,6 +49,9 @@ public class Ddd4jRepositoryAutoConfiguration {
 
     /**
      * CommandBus 自动装配：收集所有 CommandExecutor 并构建唯一的 CommandBus。
+     *
+     * @param commandExecutors Spring 容器中的命令执行器
+     * @return 由命令执行器组成的 CommandBus
      */
     @Bean
     @ConditionalOnMissingBean(CommandBus.class)
