@@ -6,16 +6,17 @@ package io.ddd4j.boot.cmpt.webflux.error;
 
 import io.ddd4j.boot.core.Constants;
 import org.slf4j.MDC;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+@Slf4j
 public abstract class ExceptinHandler {
 
     public static final String STATUS_FAIL = "fail";
     public static final String STATUS_ERROR = "error";
 
-    protected static final Logger LOG = log;
     protected static final String XML_HTTP_REQUEST = "XMLHttpRequest";
     protected static final String X_REQUESTED_WITH = "X-Requested-With";
 
@@ -24,7 +25,7 @@ public abstract class ExceptinHandler {
     }
 
     protected void logException(Exception ex) {
-        LOG.error(Constants.bizMarker, ex.getMessage(), ex);
+        log.error(Constants.bizMarker, ex.getMessage(), ex);
     }
 
     protected void logException(Exception ex, Map<String, Object> detailMap) {
@@ -36,7 +37,7 @@ public abstract class ExceptinHandler {
             }
         }
 
-        LOG.error(Constants.bizMarker, ex.getMessage(), ex);
+        log.error(Constants.bizMarker, ex.getMessage(), ex);
     }
 
     protected void logException(Exception ex, String code) {
@@ -49,7 +50,7 @@ public abstract class ExceptinHandler {
         // 自身类.class.isAssignableFrom(自身类或子类.class)
         // Exception.class.isAssignableFrom(ex.getClass())
 
-        LOG.error(Constants.bizMarker, ex.getMessage(), ex);
+        log.error(Constants.bizMarker, ex.getMessage(), ex);
     }
 
 }
