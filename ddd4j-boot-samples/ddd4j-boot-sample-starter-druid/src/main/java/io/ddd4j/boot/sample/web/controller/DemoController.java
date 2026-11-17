@@ -5,7 +5,7 @@ package io.ddd4j.boot.sample.web.controller;
 
 import io.ddd4j.annotation.BusinessType;
 import io.ddd4j.annotation.api.ApiOperationLog;
-import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.api.R;
 import io.ddd4j.web.webmvc.controller.BaseController;
 import io.ddd4j.boot.sample.entity.DemoEntity;
 import io.ddd4j.boot.sample.service.IDemoService;
@@ -57,7 +57,7 @@ public class DemoController extends BaseController {
      * @param dto 数据传输对象
      * @return 处理结果
      */
-    public ApiRestResponse<String> newDemo(@Valid DemoNewDTO dto) {
+    public R<String> newDemo(@Valid DemoNewDTO dto) {
         try {
 
             DemoEntity entity = new DemoEntity();
@@ -82,7 +82,7 @@ public class DemoController extends BaseController {
      * @return 处理结果
      * @throws Exception 执行过程中可能抛出的异常
      */
-    public ApiRestResponse<String> renew(@Valid DemoDTO demoVo) throws Exception {
+    public R<String> renew(@Valid DemoDTO demoVo) throws Exception {
         try {
 
             DemoEntity entity = new DemoEntity();
@@ -108,7 +108,7 @@ public class DemoController extends BaseController {
      * @return 删除结果
      * @throws Exception 执行过程中可能抛出的异常
      */
-    public ApiRestResponse<String> delete(@RequestParam(value = "ids") String ids, HttpServletRequest request) throws Exception {
+    public R<String> delete(@RequestParam(value = "ids") String ids, HttpServletRequest request) throws Exception {
         try {
             if (ObjectUtils.isEmpty(ids)) {
                 return fail("demo.delete.fail");

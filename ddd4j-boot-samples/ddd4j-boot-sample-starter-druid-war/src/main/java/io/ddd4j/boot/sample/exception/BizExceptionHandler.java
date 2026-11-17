@@ -35,7 +35,7 @@ public class BizExceptionHandler extends BaseExceptionHandler {
     /**
      * 500 (降级熔断)
      @ExceptionHandler({ ClientException.class })
-     @ResponseBody public ResponseEntity<ApiRestResponse<String>> netflixClientException(ClientException ex) {
+     @ResponseBody public ResponseEntity<R<String>> netflixClientException(ClientException ex) {
      this.logException(ex);
      return new ResponseEntity<>( BizExceptionCode.SYSTEM_DEPEND_UPGRADING.asResponse(messageSource), HttpStatus.OK);
      }

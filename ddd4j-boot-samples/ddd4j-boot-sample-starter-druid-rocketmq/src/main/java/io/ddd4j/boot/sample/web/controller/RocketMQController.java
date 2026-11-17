@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.web.controller;
 
-import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.api.R;
 import io.ddd4j.boot.sample.service.MQProducerService;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +37,9 @@ public class RocketMQController {
      * @return 发送结果响应
      */
     @GetMapping("/send")
-    public ApiRestResponse<String> send(String msgBody) {
+    public R<String> send(String msgBody) {
         mqProducerService.send(msgBody);
-        return ApiRestResponse.success("发送消息成功");
+        return R.success("发送消息成功");
     }
 
     /**
@@ -50,9 +50,9 @@ public class RocketMQController {
      * @return 携带 broker 发送结果的响应
      */
     @GetMapping("/sendSyncMsg")
-    public ApiRestResponse<SendResult> sendSyncMsg(String msgBody) {
+    public R<SendResult> sendSyncMsg(String msgBody) {
         SendResult sendResult = mqProducerService.sendSyncMsg(msgBody);
-        return ApiRestResponse.success(sendResult);
+        return R.success(sendResult);
     }
 
     /**
@@ -63,9 +63,9 @@ public class RocketMQController {
      * @return 发送结果响应
      */
     @GetMapping("/sendAsyncMsg")
-    public ApiRestResponse<String> sendAsyncMsg(String msgBody) {
+    public R<String> sendAsyncMsg(String msgBody) {
         mqProducerService.sendAsyncMsg(msgBody);
-        return ApiRestResponse.success("发送异步消息成功");
+        return R.success("发送异步消息成功");
     }
 
     /**
@@ -77,9 +77,9 @@ public class RocketMQController {
      * @return 发送结果响应
      */
     @GetMapping("/sendDelayMsg")
-    public ApiRestResponse<String> sendDelayMsg(String msgBody, int delayLevel) {
+    public R<String> sendDelayMsg(String msgBody, int delayLevel) {
         mqProducerService.sendDelayMsg(msgBody, delayLevel);
-        return ApiRestResponse.success("发送延时消息成功");
+        return R.success("发送延时消息成功");
     }
 
     /**
@@ -89,9 +89,9 @@ public class RocketMQController {
      * @return 发送结果响应
      */
     @GetMapping("/sendOneWayMsg")
-    public ApiRestResponse<String> sendOneWayMsg(String msgBody) {
+    public R<String> sendOneWayMsg(String msgBody) {
         mqProducerService.sendOneWayMsg(msgBody);
-        return ApiRestResponse.success("发送单向消息成功");
+        return R.success("发送单向消息成功");
     }
 
     /**
@@ -100,9 +100,9 @@ public class RocketMQController {
      * @return 携带 broker 发送结果的响应
      */
     @GetMapping("/sendTag")
-    public ApiRestResponse<SendResult> sendTag() {
+    public R<SendResult> sendTag() {
         SendResult sendResult = mqProducerService.sendTagMsg("带有tag的字符消息");
-        return ApiRestResponse.success(sendResult);
+        return R.success(sendResult);
     }
 
 

@@ -8,7 +8,7 @@ import io.ddd4j.boot.sample.order.application.dto.OrderDTO;
 import io.ddd4j.boot.sample.order.application.query.OrderQuery;
 import io.ddd4j.boot.sample.order.application.response.OrderPageResponse;
 import io.ddd4j.boot.sample.order.application.service.OrderApplicationService;
-import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.api.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,9 +44,9 @@ public class OrderController {
      * @param command 命令对象
      * @return 新增结果
      */
-    public ApiRestResponse<OrderDTO> createOrder(@Valid @RequestBody CreateOrderCommand command) {
+    public R<OrderDTO> createOrder(@Valid @RequestBody CreateOrderCommand command) {
         OrderDTO order = orderApplicationService.createOrder(command);
-        return ApiRestResponse.success(order);
+        return R.success(order);
     }
 
     /**
@@ -56,13 +56,13 @@ public class OrderController {
      * @param command 命令对象
      * @return 处理结果
      */
-    public ApiRestResponse<OrderDTO> payOrder(
+    public R<OrderDTO> payOrder(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long orderId,
             @Valid @RequestBody PayOrderCommand command) {
         command.setOrderId(orderId);
         OrderDTO order = orderApplicationService.payOrder(command);
-        return ApiRestResponse.success(order);
+        return R.success(order);
     }
 
     /**
@@ -72,13 +72,13 @@ public class OrderController {
      * @param command 命令对象
      * @return 处理结果
      */
-    public ApiRestResponse<OrderDTO> shipOrder(
+    public R<OrderDTO> shipOrder(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long orderId,
             @Valid @RequestBody ShipOrderCommand command) {
         command.setOrderId(orderId);
         OrderDTO order = orderApplicationService.shipOrder(command);
-        return ApiRestResponse.success(order);
+        return R.success(order);
     }
 
     /**
@@ -88,13 +88,13 @@ public class OrderController {
      * @param orderNo 订单号
      * @return 处理结果
      */
-    public ApiRestResponse<OrderDTO> confirmDelivery(
+    public R<OrderDTO> confirmDelivery(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long orderId,
             @Parameter(description = "订单号", example = "ORD1234567890")
             @RequestParam(required = false) String orderNo) {
         OrderDTO order = orderApplicationService.confirmDelivery(orderId, orderNo);
-        return ApiRestResponse.success(order);
+        return R.success(order);
     }
 
     /**
@@ -104,13 +104,13 @@ public class OrderController {
      * @param orderNo 订单号
      * @return 处理结果
      */
-    public ApiRestResponse<OrderDTO> completeOrder(
+    public R<OrderDTO> completeOrder(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long orderId,
             @Parameter(description = "订单号", example = "ORD1234567890")
             @RequestParam(required = false) String orderNo) {
         OrderDTO order = orderApplicationService.completeOrder(orderId, orderNo);
-        return ApiRestResponse.success(order);
+        return R.success(order);
     }
 
     /**
@@ -120,13 +120,13 @@ public class OrderController {
      * @param command 命令对象
      * @return 删除结果
      */
-    public ApiRestResponse<OrderDTO> cancelOrder(
+    public R<OrderDTO> cancelOrder(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long orderId,
             @Valid @RequestBody CancelOrderCommand command) {
         command.setOrderId(orderId);
         OrderDTO order = orderApplicationService.cancelOrder(command);
-        return ApiRestResponse.success(order);
+        return R.success(order);
     }
 
     /**
@@ -135,11 +135,11 @@ public class OrderController {
      * @param id 标识 ID
      * @return 查询结果
      */
-    public ApiRestResponse<OrderDTO> getOrderById(
+    public R<OrderDTO> getOrderById(
             @Parameter(description = "订单ID", example = "1", required = true)
             @PathVariable Long id) {
         OrderDTO order = orderApplicationService.getOrderById(id);
-        return ApiRestResponse.success(order);
+        return R.success(order);
     }
 
     /**
@@ -148,11 +148,11 @@ public class OrderController {
      * @param orderNo 订单号
      * @return 查询结果
      */
-    public ApiRestResponse<OrderDTO> getOrderByOrderNo(
+    public R<OrderDTO> getOrderByOrderNo(
             @Parameter(description = "订单号", example = "ORD1234567890", required = true)
             @PathVariable String orderNo) {
         OrderDTO order = orderApplicationService.getOrderByOrderNo(orderNo);
-        return ApiRestResponse.success(order);
+        return R.success(order);
     }
 
     /**
@@ -161,11 +161,11 @@ public class OrderController {
      * @param userId 用户 ID
      * @return 查询结果
      */
-    public ApiRestResponse<List<OrderDTO>> getOrdersByUserId(
+    public R<List<OrderDTO>> getOrdersByUserId(
             @Parameter(description = "用户ID", example = "1001", required = true)
             @PathVariable Long userId) {
         List<OrderDTO> orders = orderApplicationService.getOrdersByUserId(userId);
-        return ApiRestResponse.success(orders);
+        return R.success(orders);
     }
 
     /**
@@ -174,8 +174,8 @@ public class OrderController {
      * @param query 查询条件
      * @return 查询结果
      */
-    public ApiRestResponse<OrderPageResponse> queryOrders(@Valid @RequestBody OrderQuery query) {
+    public R<OrderPageResponse> queryOrders(@Valid @RequestBody OrderQuery query) {
         OrderPageResponse result = orderApplicationService.queryOrders(query);
-        return ApiRestResponse.success(result);
+        return R.success(result);
     }
 }

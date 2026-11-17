@@ -4,7 +4,7 @@ import io.ddd4j.boot.sample.demo.app.command.CreateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.command.UpdateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.dto.DemoDTO;
 import io.ddd4j.boot.sample.demo.app.service.DemoApplicationService;
-import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.api.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,9 +40,9 @@ public class DemoController {
      * @param command 命令对象
      * @return 新增结果
      */
-    public ApiRestResponse<DemoDTO> createDemo(@Valid @RequestBody CreateDemoCommand command) {
+    public R<DemoDTO> createDemo(@Valid @RequestBody CreateDemoCommand command) {
         DemoDTO demo = demoApplicationService.createDemo(command);
-        return ApiRestResponse.success(demo);
+        return R.success(demo);
     }
 
     /**
@@ -52,13 +52,13 @@ public class DemoController {
      * @param command 命令对象
      * @return 更新结果
      */
-    public ApiRestResponse<DemoDTO> updateDemo(
+    public R<DemoDTO> updateDemo(
             @Parameter(description = "Demo ID", example = "1", required = true)
             @PathVariable Long id,
             @Valid @RequestBody UpdateDemoCommand command) {
         command.setId(id);
         DemoDTO demo = demoApplicationService.updateDemo(command);
-        return ApiRestResponse.success(demo);
+        return R.success(demo);
     }
 
     /**
@@ -67,11 +67,11 @@ public class DemoController {
      * @param id 标识 ID
      * @return 查询结果
      */
-    public ApiRestResponse<DemoDTO> getDemoById(
+    public R<DemoDTO> getDemoById(
             @Parameter(description = "Demo ID", example = "1", required = true)
             @PathVariable Long id) {
         DemoDTO demo = demoApplicationService.getDemoById(id);
-        return ApiRestResponse.success(demo);
+        return R.success(demo);
     }
 
     /**
@@ -79,9 +79,9 @@ public class DemoController {
      *
      * @return 查询结果
      */
-    public ApiRestResponse<List<DemoDTO>> getAllDemos() {
+    public R<List<DemoDTO>> getAllDemos() {
         List<DemoDTO> demos = demoApplicationService.getAllDemos();
-        return ApiRestResponse.success(demos);
+        return R.success(demos);
     }
 
     /**
@@ -90,11 +90,11 @@ public class DemoController {
      * @param id 标识 ID
      * @return 删除结果
      */
-    public ApiRestResponse<String> deleteDemo(
+    public R<String> deleteDemo(
             @Parameter(description = "Demo ID", example = "1", required = true)
             @PathVariable Long id) {
         demoApplicationService.deleteDemo(id);
-        return ApiRestResponse.success("删除成功");
+        return R.success("删除成功");
     }
 
     /**
@@ -103,11 +103,10 @@ public class DemoController {
      * @param ids 标识 ID 集合
      * @return 删除结果
      */
-    public ApiRestResponse<String> deleteDemos(
+    public R<String> deleteDemos(
             @Parameter(description = "Demo ID列表", required = true)
             @RequestBody List<Long> ids) {
         demoApplicationService.deleteDemos(ids);
-        return ApiRestResponse.success("批量删除成功");
+        return R.success("批量删除成功");
     }
 }
-

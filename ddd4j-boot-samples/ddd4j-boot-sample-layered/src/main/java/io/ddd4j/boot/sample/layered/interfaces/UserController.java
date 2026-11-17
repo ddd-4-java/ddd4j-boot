@@ -2,7 +2,7 @@ package io.ddd4j.boot.sample.layered.interfaces;
 
 import io.ddd4j.boot.sample.layered.domain.model.User;
 import io.ddd4j.boot.sample.layered.domain.model.UserQuery;
-import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.api.R;
 import io.ddd4j.core.api.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,11 +32,11 @@ public class UserController {
      * @return 注册成功的用户
      */
     @PostMapping
-    public ApiRestResponse<User> register(@RequestBody RegisterRequest req) {
+    public R<User> register(@RequestBody RegisterRequest req) {
         // 充血模型：直接 new + save，无需 Service 层
         User user = new User(req.getPhone(), req.getNickname());
         user.save();
-        return ApiRestResponse.success(user);
+        return R.success(user);
     }
 
     /**
@@ -47,12 +47,12 @@ public class UserController {
      * @return 修改后的用户
      */
     @PostMapping("/{id}/rename")
-    public ApiRestResponse<User> rename(@PathVariable String id, @RequestBody RenameRequest req) {
+    public R<User> rename(@PathVariable String id, @RequestBody RenameRequest req) {
         // 充血查询：new UserQuery().setId(id).one("用户不存在")
         User user = (User) new UserQuery().setId(id).one("用户不存在");
         user.rename(req.getNickname());
         user.update();
-        return ApiRestResponse.success(user);
+        return R.success(user);
     }
 
     /**
@@ -62,11 +62,11 @@ public class UserController {
      * @return 禁用后的用户
      */
     @PostMapping("/{id}/disable")
-    public ApiRestResponse<User> disable(@PathVariable String id) {
+    public R<User> disable(@PathVariable String id) {
         User user = (User) new UserQuery().setId(id).one("用户不存在");
         user.disable();
         user.update();
-        return ApiRestResponse.success(user);
+        return R.success(user);
     }
 
     /**
@@ -76,9 +76,9 @@ public class UserController {
      * @return 查询到的用户
      */
     @GetMapping("/phone/{phone}")
-    public ApiRestResponse<User> getByPhone(@PathVariable String phone) {
+    public R<User> getByPhone(@PathVariable String phone) {
         User user = (User) new UserQuery().setPhone(phone).one("用户不存在");
-        return ApiRestResponse.success(user);
+        return R.success(user);
     }
 
     /**
@@ -88,9 +88,9 @@ public class UserController {
      * @return 用户分页结果
      */
     @GetMapping
-    public ApiRestResponse<Page<User>> page(UserQuery query) {
+    public R<Page<User>> page(UserQuery query) {
         Page<User> page = query.page();
-        return ApiRestResponse.success(page);
+        return R.success(page);
     }
 
     /**
@@ -100,10 +100,10 @@ public class UserController {
      * @return 校验结果提示
      */
     @GetMapping("/phone/{phone}/check")
-    public ApiRestResponse<String> checkPhone(@PathVariable String phone) {
+    public R<String> checkPhone(@PathVariable String phone) {
         // notExist: 查到就抛异常（该手机号已注册），查不到才通过
         new UserQuery().setPhone(phone).notExist("该手机号已注册");
-        return ApiRestResponse.success("手机号可用");
+        return R.success("手机号可用");
 
     }
 

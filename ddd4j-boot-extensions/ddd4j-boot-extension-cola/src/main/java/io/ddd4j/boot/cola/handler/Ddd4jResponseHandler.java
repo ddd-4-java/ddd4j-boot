@@ -3,10 +3,9 @@ package io.ddd4j.boot.cola.handler;
 import com.alibaba.cola.catchlog.ResponseHandlerI;
 import com.alibaba.cola.dto.Response;
 import com.alibaba.cola.exception.BaseException;
-import io.ddd4j.core.ApiCode;
-import io.ddd4j.core.ApiRestResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.ddd4j.core.api.ApiCode;
+import io.ddd4j.core.api.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -14,22 +13,21 @@ import org.springframework.stereotype.Component;
  * COLA catchlog 的 ResponseHandler 扩展。
  *
  * <p>实现 COLA 的 {@link ResponseHandlerI} 接口，在 catchlog 捕获异常后，
- * 将 COLA 的 {@code Response} 格式转换为 ddd4j-boot 的 {@link ApiRestResponse} 格式。
+ * 将 COLA 的 {@code Response} 格式转换为 ddd4j-boot 的 {@link R} 格式。
  *
  * <p>这样 COLA 的 {@code @CatchAndLog} AOP 产出的异常响应与 ddd4j-boot 的其他接口风格一致，
- * 前端只需处理一种响应格式（{@code ApiRestResponse}）。
+ * 前端只需处理一种响应格式（{@code R}）。
  *
  * <p>当 COLA 的 Response 被成功处理时（无异常），原样返回；
- * 当捕获异常时，转换为 {@code ApiRestResponse} 的 fail 格式。
+ * 当捕获异常时，转换为 {@code R} 的 fail 格式。
  *
  * @author ddd4j
  * @since 3.4.x
  */
 @Component
 @Order(0)
+@Slf4j
 public class Ddd4jResponseHandler implements ResponseHandlerI {
-
-    private static final Logger log = LoggerFactory.getLogger(Ddd4jResponseHandler.class);
 
     /**
      * 显式无参构造器，供 Spring 以 {@code @Component} 方式实例化本处理器。
@@ -40,7 +38,7 @@ public class Ddd4jResponseHandler implements ResponseHandlerI {
     /**
      * 按目标返回类型构造统一异常响应。
      *
-     * <p>{@code ApiRestResponse} 返回 fail 格式；COLA {@code Response} 保持兼容格式；
+     * <p>{@code R} 返回 fail 格式；COLA {@code Response} 保持兼容格式；
      * 其他类型兜底返回 {@code null}（由 catchlog 记录）。
      *
      * @param returnType 期望的返回类型
@@ -52,9 +50,9 @@ public class Ddd4jResponseHandler implements ResponseHandlerI {
     public Object handle(Class returnType, String errCode, String errMsg) {
         log.debug("COLA catchlog 捕获异常: errCode={}, errMsg={}", errCode, errMsg);
 
-        // 如果返回类型是 ddd4j-boot 的 ApiRestResponse，直接构造
-        if (ApiRestResponse.class.isAssignableFrom(returnType)) {
-            return ApiRestResponse.fail(errMsg);
+        // 如果返回类型是 ddd4j-boot 的 R，直接构造
+        if (R.class.isAssignableFrom(returnType)) {
+            return R.fail(errMsg);
         }
 
         // 如果返回类型是 COLA 的 Response，构造 COLA 格式（保持兼容）
@@ -84,7 +82,7 @@ public class Ddd4jResponseHandler implements ResponseHandlerI {
      * @return 构造的响应对象
      */
     public Object handle(Class returnType, BaseException exception) {
-        String errCode = exception.getErrCode() != null ? exception.getErrCode() : ApiCode.SC_FAIL.name();
+        String errCode = exception.getErrCode() != null ? exception.getErrCode() : ApiCode.FAIL.name();
         String errMsg = exception.getMessage() != null ? exception.getMessage() : "COLA 业务异常";
         return handle(returnType, errCode, errMsg);
     }
