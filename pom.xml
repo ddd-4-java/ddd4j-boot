@@ -136,6 +136,14 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Import before Spring Boot: keep all Testcontainers 1.x modules on one BOM. -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- Spring Boot BOM（不再继承 spring-boot-starter-parent，需显式导入） -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
