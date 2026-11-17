@@ -1,5 +1,6 @@
 package io.ddd4j.boot.sample.order.infrastructure.messaging;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.boot.sample.order.domain.event.DomainEvent;
 
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Component
 
+@Slf4j
 public class OrderDomainEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
@@ -28,7 +30,7 @@ public class OrderDomainEventPublisher {
      */
     public void publish(DomainEvent event) {
         if (event != null) {
-            org.slf4j.LoggerFactory.getLogger(OrderDomainEventPublisher.class).debug("发布领域事件: {}", event.getClass().getSimpleName());
+            log.debug("发布领域事件: {}", event.getClass().getSimpleName());
             applicationEventPublisher.publishEvent(event);
         }
     }
@@ -42,4 +44,3 @@ public class OrderDomainEventPublisher {
         }
     }
 }
-

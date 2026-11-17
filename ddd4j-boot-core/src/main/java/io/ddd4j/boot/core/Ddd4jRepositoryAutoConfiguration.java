@@ -1,13 +1,12 @@
 package io.ddd4j.boot.core;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.core.cqrs.command.CommandBus;
 import io.ddd4j.core.cqrs.command.CommandExecutor;
 import io.ddd4j.core.cqrs.command.DefaultCommandBus;
 import io.ddd4j.core.ddd.model.AggregateRoot;
 import io.ddd4j.core.ddd.repository.Repository;
 import io.ddd4j.core.ddd.repository.RepositoryRegistry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -34,9 +33,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter(Ddd4jCoreAutoConfiguration.class)
 @ConditionalOnClass({RepositoryRegistry.class, CommandBus.class})
+@Slf4j
 public class Ddd4jRepositoryAutoConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(Ddd4jRepositoryAutoConfiguration.class);
 
     /**
      * Repository 自动注册器：扫描 Spring 容器中的 Repository Bean 并注册到 RepositoryRegistry。
@@ -70,9 +69,9 @@ public class Ddd4jRepositoryAutoConfiguration {
      * <p>当 Repository Bean 初始化完成后，自动检测其泛型参数中的 AggregateRoot 类型，
      * 并注册到 {@link RepositoryRegistry}。
      */
+    @Slf4j
     public static class Ddd4jRepositoryRegistrar implements BeanPostProcessor, DisposableBean {
 
-        private static final Logger log = LoggerFactory.getLogger(Ddd4jRepositoryRegistrar.class);
 
         /**
          * 已注册的仓储实例映射（用于测试清理）。
