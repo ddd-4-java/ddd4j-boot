@@ -31,7 +31,7 @@
             <artifactId>ddd4j-boot-sample-client</artifactId>
             <version>${revision}</version>
         </dependency>
-        <!-- ddd4j-boot-core: 提供ApiRestResponse等 -->
+        <!-- ddd4j-boot-core: 提供R等 -->
         <dependency>
             <groupId>io.ddd4j.boot</groupId>
             <artifactId>ddd4j-boot-core</artifactId>

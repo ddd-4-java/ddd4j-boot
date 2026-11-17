@@ -5,7 +5,7 @@
 package io.ddd4j.auth.security;
 
 import io.ddd4j.boot.core.ApiCode;
-import io.ddd4j.boot.core.ApiRestResponse;
+import io.ddd4j.boot.core.R;
 import io.ddd4j.boot.core.exception.ExceptinHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -36,16 +36,16 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AccessDeniedException.class})
-    public ResponseEntity<ApiRestResponse<String>> accessDeniedException(AccessDeniedException ex) {
+    public ResponseEntity<R<String>> accessDeniedException(AccessDeniedException ex) {
         this.logException(ex);
-        return new ResponseEntity<>(ApiCode.SC_ACCESS_DENIED.toResponse(), HttpStatus.OK);
+        return new ResponseEntity<>(ApiCode.ACCESS_DENIED.toResponse(), HttpStatus.OK);
     }
 
     /**
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationException(AuthenticationException ex) {
+    public ResponseEntity<R<String>> authenticationException(AuthenticationException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_FAIL, ex);
     }
 
@@ -55,7 +55,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({AuthenticationServiceException.class})
     @ResponseBody
-    public ResponseEntity<ApiRestResponse<String>> authenticationServiceException(AuthenticationServiceException ex) {
+    public ResponseEntity<R<String>> authenticationServiceException(AuthenticationServiceException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHZ_THIRD_PARTY_SERVICE, ex);
     }
 
@@ -63,7 +63,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({InternalAuthenticationServiceException.class})
-    public ResponseEntity<ApiRestResponse<String>> internalAuthenticationServiceException(InternalAuthenticationServiceException ex) {
+    public ResponseEntity<R<String>> internalAuthenticationServiceException(InternalAuthenticationServiceException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHZ_THIRD_PARTY_SERVICE, ex);
     }
 
@@ -71,7 +71,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({UsernameNotFoundException.class})
-    public ResponseEntity<ApiRestResponse<String>> usernameNotFoundException(UsernameNotFoundException ex) {
+    public ResponseEntity<R<String>> usernameNotFoundException(UsernameNotFoundException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_ACCOUNT_NOT_FOUND, ex);
     }
 
@@ -79,7 +79,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({BadCredentialsException.class})
-    public ResponseEntity<ApiRestResponse<String>> badCredentialsException(BadCredentialsException ex) {
+    public ResponseEntity<R<String>> badCredentialsException(BadCredentialsException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_BAD_CREDENTIALS, ex);
     }
 
@@ -87,7 +87,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({DisabledException.class})
-    public ResponseEntity<ApiRestResponse<String>> disabledException(DisabledException ex) {
+    public ResponseEntity<R<String>> disabledException(DisabledException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_ACCOUNT_DISABLED, ex);
     }
 
@@ -95,7 +95,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({LockedException.class})
-    public ResponseEntity<ApiRestResponse<String>> lockedException(LockedException ex) {
+    public ResponseEntity<R<String>> lockedException(LockedException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_ACCOUNT_LOCKED, ex);
     }
 
@@ -103,7 +103,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AccountExpiredException.class})
-    public ResponseEntity<ApiRestResponse<String>> accountExpiredException(AccountExpiredException ex) {
+    public ResponseEntity<R<String>> accountExpiredException(AccountExpiredException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_ACCOUNT_EXPIRED, ex);
     }
 
@@ -111,7 +111,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({CredentialsExpiredException.class})
-    public ResponseEntity<ApiRestResponse<String>> credentialsExpiredException(CredentialsExpiredException ex) {
+    public ResponseEntity<R<String>> credentialsExpiredException(CredentialsExpiredException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_CREDENTIALS_EXPIRED, ex);
     }
 
@@ -121,16 +121,16 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationServiceExceptionAdapter.class})
-    public ResponseEntity<ApiRestResponse<String>> externalAuthenticationServiceException(AuthenticationServiceExceptionAdapter ex) {
+    public ResponseEntity<R<String>> externalAuthenticationServiceException(AuthenticationServiceExceptionAdapter ex) {
         this.logException(ex);
-        return new ResponseEntity<>(ApiRestResponse.of(ex.getCode(), messages.getMessage(ex.getMsgKey(), ex.getMessage())), HttpStatus.OK);
+        return new ResponseEntity<>(R.of(ex.getCode(), messages.getMessage(ex.getMsgKey(), ex.getMessage())), HttpStatus.OK);
     }
 
     /**
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationMethodNotSupportedException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationMethodNotSupportedException(AuthenticationMethodNotSupportedException ex) {
+    public ResponseEntity<R<String>> authenticationMethodNotSupportedException(AuthenticationMethodNotSupportedException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_METHOD_NOT_ALLOWED, ex);
     }
 
@@ -138,7 +138,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationOverRetryRemindException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationOverRetryRemindException(AuthenticationOverRetryRemindException ex) {
+    public ResponseEntity<R<String>> authenticationOverRetryRemindException(AuthenticationOverRetryRemindException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_OVER_RETRY_REMIND, ex);
     }
 
@@ -146,7 +146,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationCaptchaNotFoundException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationCaptchaNotFoundException(AuthenticationCaptchaNotFoundException ex) {
+    public ResponseEntity<R<String>> authenticationCaptchaNotFoundException(AuthenticationCaptchaNotFoundException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_CAPTCHA_REQUIRED, ex);
     }
 
@@ -154,7 +154,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationCaptchaExpiredException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationCaptchaExpiredException(AuthenticationCaptchaExpiredException ex) {
+    public ResponseEntity<R<String>> authenticationCaptchaExpiredException(AuthenticationCaptchaExpiredException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_CAPTCHA_EXPIRED, ex);
     }
 
@@ -162,7 +162,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationCaptchaIncorrectException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationCaptchaIncorrectException(AuthenticationCaptchaIncorrectException ex) {
+    public ResponseEntity<R<String>> authenticationCaptchaIncorrectException(AuthenticationCaptchaIncorrectException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHC_CAPTCHA_INCORRECT, ex);
     }
 
@@ -170,7 +170,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationTokenNotFoundException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationTokenNotFoundException(AuthenticationTokenNotFoundException ex) {
+    public ResponseEntity<R<String>> authenticationTokenNotFoundException(AuthenticationTokenNotFoundException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHZ_TOKEN_REQUIRED, ex);
     }
 
@@ -178,7 +178,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationTokenExpiredException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationTokenExpiredException(AuthenticationTokenExpiredException ex) {
+    public ResponseEntity<R<String>> authenticationTokenExpiredException(AuthenticationTokenExpiredException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHZ_TOKEN_EXPIRED, ex);
     }
 
@@ -186,7 +186,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationTokenInvalidException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationTokenInvalidException(AuthenticationTokenInvalidException ex) {
+    public ResponseEntity<R<String>> authenticationTokenInvalidException(AuthenticationTokenInvalidException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHZ_TOKEN_INCORRECT, ex);
     }
 
@@ -194,7 +194,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationTokenIncorrectException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationTokenIncorrectException(AuthenticationTokenIncorrectException ex) {
+    public ResponseEntity<R<String>> authenticationTokenIncorrectException(AuthenticationTokenIncorrectException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHZ_TOKEN_INCORRECT, ex);
     }
 
@@ -205,7 +205,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationJwtIssuedException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationJwtIssuedException(AuthenticationJwtIssuedException ex) {
+    public ResponseEntity<R<String>> authenticationJwtIssuedException(AuthenticationJwtIssuedException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHZ_TOKEN_ISSUED, ex);
     }
 
@@ -214,7 +214,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      */
     @ExceptionHandler({AuthenticationJwtNotFoundException.class})
     @ResponseBody
-    public ResponseEntity<ApiRestResponse<String>> authenticationJwtNotFoundException(AuthenticationJwtNotFoundException ex) {
+    public ResponseEntity<R<String>> authenticationJwtNotFoundException(AuthenticationJwtNotFoundException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHZ_TOKEN_REQUIRED, ex);
     }
 
@@ -222,7 +222,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationJwtExpiredException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationJwtExpiredException(AuthenticationJwtExpiredException ex) {
+    public ResponseEntity<R<String>> authenticationJwtExpiredException(AuthenticationJwtExpiredException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHZ_TOKEN_EXPIRED, ex);
     }
 
@@ -230,7 +230,7 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationJwtInvalidException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationJwtInvalidException(AuthenticationJwtInvalidException ex) {
+    public ResponseEntity<R<String>> authenticationJwtInvalidException(AuthenticationJwtInvalidException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHZ_TOKEN_INVALID, ex);
     }
 
@@ -238,14 +238,14 @@ public class SecurityExceptionHandler extends ExceptinHandler {
      * 401 (Unauthorized)
      */
     @ExceptionHandler({AuthenticationJwtIncorrectException.class})
-    public ResponseEntity<ApiRestResponse<String>> authenticationJwtIncorrectException(AuthenticationJwtIncorrectException ex) {
+    public ResponseEntity<R<String>> authenticationJwtIncorrectException(AuthenticationJwtIncorrectException ex) {
         return this.authenticationException(AuthResponseCode.SC_AUTHZ_TOKEN_INCORRECT, ex);
     }
 
-    protected ResponseEntity<ApiRestResponse<String>> authenticationException(AuthResponseCode responseCode, Exception ex) {
+    protected ResponseEntity<R<String>> authenticationException(AuthResponseCode responseCode, Exception ex) {
         this.logException(ex);
         String message = messages.getMessage(responseCode.getMsgKey(), ex.getMessage());
-        return new ResponseEntity<>(ApiRestResponse.of(responseCode.getCode(), message), HttpStatus.OK);
+        return new ResponseEntity<>(R.of(responseCode.getCode(), message), HttpStatus.OK);
     }
 
 }

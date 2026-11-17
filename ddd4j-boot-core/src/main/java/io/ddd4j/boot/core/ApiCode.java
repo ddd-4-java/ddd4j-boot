@@ -261,7 +261,7 @@ public enum ApiCode implements CustomApiCode {
     }
 
     @Override
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
@@ -275,20 +275,20 @@ public enum ApiCode implements CustomApiCode {
         return reason;
     }
 
-    public <T> ApiRestResponse<T> toResponse() {
-        return ApiRestResponse.of(this);
+    public <T> R<T> toResponse() {
+        return R.of(this);
     }
 
-    public <T> ApiRestResponse<T> toResponse(String message) {
-        return ApiRestResponse.of(this, message, null);
+    public <T> R<T> toResponse(String message) {
+        return R.of(this, message, null);
     }
 
-    public <T> ApiRestResponse<T> toResponse(T data) {
-        return ApiRestResponse.of(this, data);
+    public <T> R<T> toResponse(T data) {
+        return R.of(this, data);
     }
 
-    public <T> ApiRestResponse<T> toResponse(String message, T data) {
-        return ApiRestResponse.of(this, message, data);
+    public <T> R<T> toResponse(String message, T data) {
+        return R.of(this, message, data);
     }
 
 }

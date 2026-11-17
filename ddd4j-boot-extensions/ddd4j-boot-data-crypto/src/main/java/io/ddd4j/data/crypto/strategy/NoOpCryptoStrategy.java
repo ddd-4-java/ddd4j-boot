@@ -33,7 +33,7 @@ public class NoOpCryptoStrategy implements CryptoStrategy {
             return getObjectMapper().writeValueAsString(value);
         } catch (Exception ex) {
             log.error("Json Processing Error : {}", ex.getMessage());
-            throw new BizRuntimeException(ApiCode.SC_INTERNAL_SERVER_ERROR, "Json Processing Error");
+            throw new BizRuntimeException(ApiCode.SERVER_ERROR, "Json Processing Error");
         }
     }
 
@@ -43,7 +43,7 @@ public class NoOpCryptoStrategy implements CryptoStrategy {
             return getObjectMapper().readValue(value, rtType);
         } catch (Exception ex) {
             log.error("Json Processing Error : {}", ex.getMessage());
-            throw new BizRuntimeException(ApiCode.SC_INTERNAL_SERVER_ERROR, "Json Processing Error");
+            throw new BizRuntimeException(ApiCode.SERVER_ERROR, "Json Processing Error");
         }
     }
 

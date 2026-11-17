@@ -1,6 +1,6 @@
 package io.ddd4j.boot.sample.demo.adapter.web;
 
-import io.ddd4j.boot.core.ApiRestResponse;
+import io.ddd4j.boot.core.R;
 import io.ddd4j.boot.sample.demo.app.command.CreateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.command.UpdateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.dto.DemoDTO;
@@ -30,9 +30,9 @@ public class DemoController {
      */
     @ApiOperation(value = "创建Demo", notes = "创建新的Demo记录")
     @PostMapping
-    public ApiRestResponse<DemoDTO> createDemo(@Valid @RequestBody CreateDemoCommand command) {
+    public R<DemoDTO> createDemo(@Valid @RequestBody CreateDemoCommand command) {
         DemoDTO demo = demoApplicationService.createDemo(command);
-        return ApiRestResponse.success(demo);
+        return R.success(demo);
     }
 
     /**
@@ -40,13 +40,13 @@ public class DemoController {
      */
     @ApiOperation(value = "更新Demo", notes = "更新指定Demo的信息")
     @PutMapping("/{id}")
-    public ApiRestResponse<DemoDTO> updateDemo(
+    public R<DemoDTO> updateDemo(
             @ApiParam(value = "Demo ID", example = "1", required = true)
             @PathVariable Long id,
             @Valid @RequestBody UpdateDemoCommand command) {
         command.setId(id);
         DemoDTO demo = demoApplicationService.updateDemo(command);
-        return ApiRestResponse.success(demo);
+        return R.success(demo);
     }
 
     /**
@@ -54,11 +54,11 @@ public class DemoController {
      */
     @ApiOperation(value = "根据ID查询Demo", notes = "根据Demo ID查询详细信息")
     @GetMapping("/{id}")
-    public ApiRestResponse<DemoDTO> getDemoById(
+    public R<DemoDTO> getDemoById(
             @ApiParam(value = "Demo ID", example = "1", required = true)
             @PathVariable Long id) {
         DemoDTO demo = demoApplicationService.getDemoById(id);
-        return ApiRestResponse.success(demo);
+        return R.success(demo);
     }
 
     /**
@@ -66,9 +66,9 @@ public class DemoController {
      */
     @ApiOperation(value = "查询所有Demo", notes = "查询所有Demo记录列表")
     @GetMapping
-    public ApiRestResponse<List<DemoDTO>> getAllDemos() {
+    public R<List<DemoDTO>> getAllDemos() {
         List<DemoDTO> demos = demoApplicationService.getAllDemos();
-        return ApiRestResponse.success(demos);
+        return R.success(demos);
     }
 
     /**
@@ -76,11 +76,11 @@ public class DemoController {
      */
     @ApiOperation(value = "删除Demo", notes = "根据ID删除指定Demo")
     @DeleteMapping("/{id}")
-    public ApiRestResponse<String> deleteDemo(
+    public R<String> deleteDemo(
             @ApiParam(value = "Demo ID", example = "1", required = true)
             @PathVariable Long id) {
         demoApplicationService.deleteDemo(id);
-        return ApiRestResponse.success("删除成功");
+        return R.success("删除成功");
     }
 
     /**
@@ -88,11 +88,10 @@ public class DemoController {
      */
     @ApiOperation(value = "批量删除Demo", notes = "根据ID列表批量删除Demo")
     @DeleteMapping("/batch")
-    public ApiRestResponse<String> deleteDemos(
+    public R<String> deleteDemos(
             @ApiParam(value = "Demo ID列表", required = true)
             @RequestBody List<Long> ids) {
         demoApplicationService.deleteDemos(ids);
-        return ApiRestResponse.success("批量删除成功");
+        return R.success("批量删除成功");
     }
 }
-

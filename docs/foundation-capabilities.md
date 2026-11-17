@@ -23,7 +23,7 @@
 
 ## 统一响应与异常映射
 
-- 响应：`ApiRestResponse.java:118-166`
+- 响应：`R.java:118-166`
 - MVC 异常：`webmvc/GlobalExceptionHandler.java`
 - WebFlux 异常：`webflux/handler/GlobalExceptionHandler.java`
 
@@ -35,4 +35,3 @@
 ## MyBatis JSON 类型处理
 
 - `ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/mybatis/handler/JSONObjectTypeHandler.java`
-
