@@ -22,7 +22,7 @@ public class Result<T> {
      * 状态码
      */
     @ApiModelProperty(name = "code", dataType = "Integer", value = "状态码")
-    private int code = ApiCode.SC_SUCCESS.getCode();
+    private int code = ApiCode.SUCCESS.getCode();
     /**
      * 当前页码
      */

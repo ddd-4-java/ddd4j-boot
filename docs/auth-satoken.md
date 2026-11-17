@@ -36,11 +36,10 @@ String roleId = StpKit.getRoleIdAsString();
 ## 统一错误码
 
 - 认证/授权相关错误码集中在：`ddd4j-boot-core/src/main/java/io/ddd4j/boot/core/ApiCodeValue.java:56-110`
-- 建议在异常处理处统一映射为 `ApiRestResponse` 输出，确保客户端行为一致
+- 建议在异常处理处统一映射为 `R` 输出，确保客户端行为一致
 
 ## 最佳实践
 
 - 所有鉴权受保护的接口统一走 Sa-Token 拦截；在业务层通过 `StpUtil`/`StpKit` 读取上下文信息
 - 对 JWT 载荷的扩展键使用 `SaConstants` 约定字段，避免语义不一致
 - 对管理端/移动端区分 `deviceType`，用于风控与日志聚合
-
