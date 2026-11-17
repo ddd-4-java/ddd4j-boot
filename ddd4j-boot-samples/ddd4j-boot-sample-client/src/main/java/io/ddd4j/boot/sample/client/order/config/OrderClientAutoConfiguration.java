@@ -1,9 +1,8 @@
 package io.ddd4j.boot.sample.client.order.config;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.boot.sample.client.order.api.OrderServiceClient;
 import io.ddd4j.boot.sample.client.order.impl.OrderServiceClientImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,9 +18,9 @@ import org.springframework.web.client.RestTemplate;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(OrderClientProperties.class)
+@Slf4j
 public class OrderClientAutoConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(OrderClientAutoConfiguration.class);
 
     @Bean
     @ConditionalOnMissingBean
