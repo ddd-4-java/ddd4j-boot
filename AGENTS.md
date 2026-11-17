@@ -16,3 +16,5 @@
 - 静态内部类需要独立日志类别时，在该内部类声明 `@Slf4j`；非静态内部类复用外部类日志，不在其上声明 Lombok 不支持的 `@Slf4j`。
 - 生产代码的诊断输出使用日志 API，不使用 `System.out/err`；测试中用于展示结果的标准输出不作为生产日志处理。
 - 优先使用 `{}` 参数化日志；记录异常时传入 Throwable，保留堆栈。日志级别、消息与 Logger 所属类别的调整须符合实际语义。
+
+日志门禁：`python3 scripts/check_logging_style.py`；全远程缓存分支扫描：`python3 scripts/check_logging_style.py --all-remotes`（排除归档）；自测：`python3 -m unittest discover -s scripts -p test_check_logging_style.py`。门禁覆盖 private/protected/public/包级 Logger 及无工厂调用的 Logger 别名。
