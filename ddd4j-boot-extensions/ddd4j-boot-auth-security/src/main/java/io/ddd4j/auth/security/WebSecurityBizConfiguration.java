@@ -4,6 +4,7 @@
  */
 package io.ddd4j.auth.security;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.auth.security.subject.SecuritySubjectProvider;
 import io.ddd4j.boot.core.subject.SubjectProvider;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.security.web.server.context.ServerSecurityContextRepo
 import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository;
 
 @Configuration
+@Slf4j
 public class WebSecurityBizConfiguration {
 
     /**
@@ -45,6 +47,6 @@ public class WebSecurityBizConfiguration {
 
     public static void main(String[] args) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(6);
-        System.out.println(passwordEncoder.encode("123456"));
+        log.info(passwordEncoder.encode("123456"));
     }
 }

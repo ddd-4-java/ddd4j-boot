@@ -241,7 +241,7 @@ public class BaiduRegionTemplate {
                 new OkHttpClient.Builder().build());
 
         Optional<JSONObject> mapLL2 = template.getLocationByIp("183.128.136.82"); // lng：116.86380647644208  lat：38.297615350325717
-        System.out.println(mapLL2.get().toJSONString());
+        log.info(mapLL2.get().toJSONString());
     }
 
 

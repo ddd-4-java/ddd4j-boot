@@ -1,9 +1,8 @@
 package io.ddd4j.boot.core.subject;
 
 
+import lombok.extern.slf4j.Slf4j;
 import com.alibaba.ttl.TransmittableThreadLocal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
@@ -24,12 +23,12 @@ import java.util.Map;
  * execution, respectively (i.e. individually explicitly or all via the <tt>clear</tt> method).</p>
  *
  */
+@Slf4j
 public class ThreadContext {
 
     /**
      * Private internal log instance.
      */
-    private static final Logger log = LoggerFactory.getLogger(ThreadContext.class);
 
     public static final String SECURITY_MANAGER_KEY = ThreadContext.class.getName() + "_SECURITY_MANAGER_KEY";
     public static final String SUBJECT_KEY = ThreadContext.class.getName() + "_SUBJECT_KEY";
@@ -261,4 +260,3 @@ public class ThreadContext {
         }
     }
 }
-

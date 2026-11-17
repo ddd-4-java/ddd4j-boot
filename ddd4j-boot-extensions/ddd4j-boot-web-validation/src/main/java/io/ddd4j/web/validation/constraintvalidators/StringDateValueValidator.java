@@ -1,8 +1,7 @@
 package io.ddd4j.web.validation.constraintvalidators;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.web.validation.constraints.StringDateValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import javax.validation.ConstraintValidator;
@@ -16,9 +15,9 @@ import java.text.SimpleDateFormat;
  * @author hiwepy
  * @since 2021-03-08
  */
+@Slf4j
 public class StringDateValueValidator implements ConstraintValidator<StringDateValue, String> {
 
-    private static Logger logger = LoggerFactory.getLogger(StringDateValueValidator.class);
 
     private StringDateValue dateValue;
 
@@ -43,7 +42,7 @@ public class StringDateValueValidator implements ConstraintValidator<StringDateV
             simpleDateFormat.parse(value);
             res = true;
         } catch (ParseException e) {
-            logger.error("字符串日期解析出错");
+            log.error("字符串日期解析出错");
             msg = dateValue.message() + "字符串日期格式出错";
         }
         if (res == false) { // res为false表明有错误提示输出

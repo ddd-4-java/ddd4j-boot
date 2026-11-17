@@ -3305,7 +3305,7 @@
  * // 单位名称
  * private String cname;
  * <p>
- * private static Logger log = LoggerFactory.getLogger(CityAreaEnum.class);
+ * 日志由类上的 {@code @Slf4j} 提供。
  * <p>
  * private CityAreaEnum( String proCode, String code, String cname) {
  * this.proCode = proCode;

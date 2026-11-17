@@ -1,5 +1,6 @@
 package io.ddd4j.boot.core.util;
 
+import lombok.extern.slf4j.Slf4j;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.UUID;
 /**
  * 随机产生唯一的app_key和app_secret
  */
+@Slf4j
 public class AppUtils {
 
     //生成 app_secret 密钥
@@ -86,7 +88,7 @@ public class AppUtils {
     public static void main(String[] args) {
         String appId = getAppId();
         String appSecret = getAppSecret(appId);
-        System.out.println("appId: " + appId);
-        System.out.println("appSecret: " + appSecret);
+        log.info("appId: " + appId);
+        log.info("appSecret: " + appSecret);
     }
 }

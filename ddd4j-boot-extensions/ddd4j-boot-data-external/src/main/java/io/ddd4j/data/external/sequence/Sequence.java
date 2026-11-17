@@ -1,5 +1,6 @@
 package io.ddd4j.data.external.sequence;
 
+import lombok.extern.slf4j.Slf4j;
 import cn.hutool.core.util.IdUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -11,6 +12,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 
+@Slf4j
 public class Sequence {
 
     private final Queue<Long> idPool = new ConcurrentLinkedQueue<>();
@@ -56,7 +58,7 @@ public class Sequence {
                     } catch (Exception e) {
                         // 切换到本地降级模式
                         useLocalMode = true;
-                        System.err.println("Redis ID 生成失败，切换至本地降级模式: " + e.getMessage());
+                        log.info("Redis ID 生成失败，切换至本地降级模式: " + e.getMessage());
                     }
                 }
             }
@@ -79,7 +81,7 @@ public class Sequence {
                             useLocalMode = false; // 成功 refill 后切回 Redis 模式
                         } catch (Exception e) {
                             useLocalMode = true;
-                            System.err.println("异步 refill Redis 失败，保持本地降级模式: " + e.getMessage());
+                            log.info("异步 refill Redis 失败，保持本地降级模式: " + e.getMessage());
                         }
                     }
                 }

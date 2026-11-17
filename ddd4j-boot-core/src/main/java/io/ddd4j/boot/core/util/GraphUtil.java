@@ -1,12 +1,14 @@
 package io.ddd4j.boot.core.util;
 
 
+import lombok.extern.slf4j.Slf4j;
 import com.google.common.graph.Graph;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 
 import java.util.*;
 
+@Slf4j
 public class GraphUtil {
 
     public static <T> List<T> topologicalSort(Graph<T> graph) {
@@ -77,16 +79,16 @@ public class GraphUtil {
         List<Long> topologicalOrder = GraphUtil.topologicalSort(graph);
 
         // 输出执行顺序
-        System.out.println("Execution Order:");
+        log.info("Execution Order:");
         for (Long node : topologicalOrder) {
-            System.out.println("Node: " + node + ", Name: " + nodeMap.get(node));
+            log.info("Node: " + node + ", Name: " + nodeMap.get(node));
         }
 
         // 遍历图形
         /*for (Long node : graph.nodes()) {
-            System.out.println("Node: " + node);
+            log.info("Node: " + node);
             for (Long neighbor : graph.adjacentNodes(node)) {
-                System.out.println("Neighbor: " + neighbor);
+                log.info("Neighbor: " + neighbor);
             }
         }*/
     }

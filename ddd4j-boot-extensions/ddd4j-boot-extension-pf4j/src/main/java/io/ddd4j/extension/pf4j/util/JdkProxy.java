@@ -1,5 +1,6 @@
 package io.ddd4j.extension.pf4j.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
 import java.lang.reflect.InvocationHandler;
@@ -7,6 +8,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 //JDK动态代理实现InvocationHandler接口
+@Slf4j
 public class JdkProxy implements InvocationHandler {
 
     private Object target;//需要代理的目标对象
@@ -17,9 +19,9 @@ public class JdkProxy implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("JDK动态代理，监听开始！");
+        log.info("JDK动态代理，监听开始！");
         Object result = method.invoke(target, args);
-        System.out.println("JDK动态代理，监听结束！");
+        log.info("JDK动态代理，监听结束！");
         return result;
     }
 

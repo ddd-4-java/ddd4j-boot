@@ -1,5 +1,6 @@
 package io.ddd4j.extension.qlexpress.infrastructure.config;
 
+import lombok.extern.slf4j.Slf4j;
 import com.alibaba.qlexpress4.Express4Runner;
 import com.alibaba.qlexpress4.InitOptions;
 import com.alibaba.qlexpress4.annotation.QLAlias;
@@ -8,8 +9,6 @@ import io.ddd4j.extension.qlexpress.infrastructure.function.ContainsFunction;
 import io.ddd4j.extension.qlexpress.infrastructure.function.EndsWithFunction;
 import io.ddd4j.extension.qlexpress.infrastructure.function.FormatDateFunction;
 import io.ddd4j.extension.qlexpress.infrastructure.function.StartsWithFunction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
@@ -37,9 +36,9 @@ import java.util.Objects;
  */
 @Configuration
 @ConditionalOnClass(name = "com.alibaba.qlexpress4.Express4Runner")
+@Slf4j
 public class QLExpressConfig {
 
-    private static final Logger log = LoggerFactory.getLogger(QLExpressConfig.class);
 
     /**
      * 创建并配置 QLExpress 运行器
@@ -113,4 +112,3 @@ public class QLExpressConfig {
         });
     }
 }
-

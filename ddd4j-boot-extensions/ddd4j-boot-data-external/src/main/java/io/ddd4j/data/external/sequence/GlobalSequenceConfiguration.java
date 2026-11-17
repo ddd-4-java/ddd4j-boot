@@ -1,5 +1,6 @@
 package io.ddd4j.data.external.sequence;
 
+import lombok.extern.slf4j.Slf4j;
 import cn.hutool.core.util.IdUtil;
 import io.ddd4j.data.external.SequenceProperties;
 import io.ddd4j.boot.core.sequence.Sequence;
@@ -26,6 +27,7 @@ import java.util.Objects;
 @ConditionalOnClass({RedisOperationTemplate.class, GlobalSequence.class})
 @ConditionalOnProperty(prefix = SequenceProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(SequenceProperties.class)
+@Slf4j
 public class GlobalSequenceConfiguration {
 
     private GlobalSequence globalSequence;
@@ -67,8 +69,8 @@ public class GlobalSequenceConfiguration {
         long workerId = IdUtil.getWorkerId(datacenterId, 31);
         long epoch = 1288834974657L;
         long batchSize = 1000L;
-        System.out.println("datacenterId:" + datacenterId);
-        System.out.println("workerId:" + workerId);
+        log.info("datacenterId:" + datacenterId);
+        log.info("workerId:" + workerId);
         // 4. 返回实例
         // return new Sequence(redisTemplate, scriptText, datacenterId, workerId, epoch, batchSize);
         return null;
