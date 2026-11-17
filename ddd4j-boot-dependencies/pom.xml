@@ -249,6 +249,32 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Explicit overrides prevent inherited platform entries from mixing Testcontainers major versions. -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${testcontainers-bom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${testcontainers-bom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>kafka</artifactId>
+                <version>${testcontainers-bom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>rabbitmq</artifactId>
+                <version>${testcontainers-bom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>mysql</artifactId>
+                <version>${testcontainers-bom.version}</version>
+            </dependency>
             <!-- 安全修复直接条目（OSV 实测下游命中；直接条目优先级高于 import BOM，
                  覆盖 ddd4j-dependencies 硬编码的 jackson-databind/core 2.21.4）：
                  jackson-databind 2.21.5（3 条 GHSA）、httpclient5 5.6.3 / httpcore5(-h2) 5.4.3（各 1 条） -->
@@ -1553,7 +1579,7 @@
             <!-- localstack（ddd4j-boot-mq-sqs 集成测试） -->
             <dependency>
                 <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-localstack</artifactId>
+                <artifactId>localstack</artifactId>
                 <version>${testcontainers-bom.version}</version>
             </dependency>
 
