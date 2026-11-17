@@ -39,18 +39,34 @@ import org.springframework.context.annotation.Bean;
 @EnableConfigurationProperties(Ddd4jJavalinWebProperties.class)
 public class Ddd4jJavalinWebConfiguration {
 
+    /**
+     * Creates the bearer subject authenticator.
+     *
+     * @return the bearer subject authenticator
+     */
     @Bean
     @ConditionalOnMissingBean
     public BearerSubjectAuthenticator bearerSubjectAuthenticator() {
         return new BearerSubjectAuthenticator();
     }
 
+    /**
+     * Creates the web exception translator.
+     *
+     * @return the web exception translator
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebExceptionTranslator webExceptionTranslator() {
         return new DefaultWebExceptionTranslator();
     }
 
+    /**
+     * Creates the request context factory.
+     *
+     * @param properties the Javalin web properties
+     * @return the request context factory
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebRequestContextFactory webRequestContextFactory(Ddd4jJavalinWebProperties properties) {
@@ -59,12 +75,25 @@ public class Ddd4jJavalinWebConfiguration {
         return new WebRequestContextFactory(RequestIdGenerator.uuid(), clientIpResolver);
     }
 
+    /**
+     * Creates the web access policy.
+     *
+     * @param properties the Javalin web properties
+     * @return the web access policy
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebAccessPolicy webAccessPolicy(Ddd4jJavalinWebProperties properties) {
         return new PathWebAccessPolicy(properties.getPublicPaths(), properties.getDefaultAuthenticationMode());
     }
 
+    /**
+     * Creates the request lifecycle.
+     *
+     * @param authenticator the bearer subject authenticator
+     * @param accessPolicy the web access policy
+     * @return the request lifecycle
+     */
     @Bean
     @ConditionalOnMissingBean
     public WebRequestLifecycle webRequestLifecycle(BearerSubjectAuthenticator authenticator,
@@ -78,6 +107,9 @@ public class Ddd4jJavalinWebConfiguration {
      * <p>{@link CacheIdempotencyGuard} 依赖 {@link CacheKit} 中已注册的同名缓存，
      * 若该缓存未注册，任何带幂等 Key 的请求都会因 {@code IllegalStateException}
      * 被翻译为 409。此处按需注册本地 Caffeine 实现，业务方可自行注册同名缓存覆盖。
+     *
+     * @param properties the Javalin web properties
+     * @return the idempotency lifecycle
      */
     @Bean
     @ConditionalOnMissingBean
@@ -86,6 +118,15 @@ public class Ddd4jJavalinWebConfiguration {
         return new WebIdempotencyLifecycle(new CacheIdempotencyGuard(properties.getIdempotencyCacheName()));
     }
 
+    /**
+     * Creates the Javalin web adapter.
+     *
+     * @param contextFactory the request context factory
+     * @param requestLifecycle the request lifecycle
+     * @param exceptionTranslator the exception translator
+     * @param idempotencyLifecycle the optional idempotency lifecycle
+     * @return the Javalin web adapter
+     */
     @Bean
     @ConditionalOnMissingBean
     public Ddd4jJavalinWeb ddd4jJavalinWeb(WebRequestContextFactory contextFactory,
@@ -96,6 +137,11 @@ public class Ddd4jJavalinWebConfiguration {
                 idempotencyLifecycle.getIfAvailable());
     }
 
+    /**
+     * Creates the Javalin health indicator.
+     *
+     * @return the Javalin health indicator
+     */
     @Bean("ddd4jWebHealthIndicator")
     @ConditionalOnClass(HealthIndicator.class)
     @ConditionalOnMissingBean(name = "ddd4jWebHealthIndicator")
