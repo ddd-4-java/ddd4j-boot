@@ -2,7 +2,7 @@ package io.ddd4j.boot.sample.web.controller;
 
 import io.ddd4j.boot.sample.service.MQProducerService;
 import io.ddd4j.boot.sample.web.dto.MessageDTO;
-import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.api.R;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +23,9 @@ public class RocketMQController {
     }
 
     @GetMapping("/sendTag")
-    public ApiRestResponse<SendResult> sendTag() {
+    public R<SendResult> sendTag() {
         SendResult sendResult = mqProducerService.sendTagMsg("带有tag的字符消息");
-        return ApiRestResponse.success(sendResult);
+        return R.success(sendResult);
     }
 
 }
