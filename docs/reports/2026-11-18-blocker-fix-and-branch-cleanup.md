@@ -2,6 +2,15 @@
 
 日期：2026-11-18（北京时间）
 
+## GitHub 发布与日志规范更新
+
+- master、13 条维护线、3 个历史分支的代码已实际发布到 GitHub；revision-shadow 完整源码另存于远程 `archive/20261118/fix-2.7.x-revision-shadow` 分支。18 个远程源码树及分支头均逐一核对。
+- GitHub 的 12 个 `fix/*` 分支已全部删除，随后通过 GitHub API 查询确认余量为 0。发布回执见 `2026-11-18-github-publish-receipt.md`。
+- 因终端 DNS 限制，采用 GitHub API 发布同步提交。原始本地提交历史保存在 `refs/archive/github-sync-20261118/`，本地工作分支与远程同步提交对齐，文件内容未丢失。
+- 本轮按用户给出的 Repository 自动配置示例统一日志：`@Slf4j`、清理 Logger 导入、`logger` 改为 `log`、消除逐次 getLogger、生产诊断输出改为参数化日志、MQ 异常保留 Throwable 堆栈。静态内部类保留自己的日志类别，非静态监听器复用外部类日志。
+- master 的 19 个受影响模块及其依赖 reactor 编译通过，Repository 自动配置现有 5 项测试通过。其他版本的完整构建仍受前述离线依赖条件限制；不宣称所有版本 CI 通过。
+- 历史归档分支保持原样，不对归档源码继续重写。
+
 ## 本轮继续推进结果
 
 - 本地 `fix/*` 分支已全部清理（共 12 个：上一轮 10 个，本轮 2 个）。远程未删除。
