@@ -19,7 +19,7 @@
     </properties>
 
     <dependencies>
-        <!-- ddd4j-core: 提供 ApiRestResponse 等 -->
+        <!-- ddd4j-core: 提供 R 等 -->
         <dependency>
             <groupId>io.ddd4j</groupId>
             <artifactId>ddd4j-core</artifactId>
