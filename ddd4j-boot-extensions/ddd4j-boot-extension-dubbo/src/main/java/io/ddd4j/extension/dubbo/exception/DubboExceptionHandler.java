@@ -1,10 +1,9 @@
 package io.ddd4j.extension.dubbo.exception;
 
-import io.ddd4j.core.ApiCode;
-import io.ddd4j.core.ApiRestResponse;
+import io.ddd4j.core.api.ApiCode;
+import io.ddd4j.core.api.R;
 import io.ddd4j.web.webmvc.exception.BaseExceptionHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.rpc.RpcException;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * Dubbo RPC 异常处理器。
  *
- * <p>将 {@link RpcException} 及其子类转换为统一的 {@link ApiRestResponse}，
+ * <p>将 {@link RpcException} 及其子类转换为统一的 {@link R}，
  * 避免 Dubbo 的框架异常直接暴露给客户端。
  *
  * <p>异常映射规则：
@@ -30,9 +29,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 @Order(0)
+@Slf4j
 public class DubboExceptionHandler extends BaseExceptionHandler {
-
-    private static final Logger log = LoggerFactory.getLogger(DubboExceptionHandler.class);
 
     /**
      * 处理 Dubbo RPC 异常。
@@ -41,7 +39,7 @@ public class DubboExceptionHandler extends BaseExceptionHandler {
      * @return 统一响应
      */
     @ExceptionHandler(RpcException.class)
-    public ApiRestResponse<String> handleRpcException(RpcException ex) {
+    public R<String> handleRpcException(RpcException ex) {
         log.error("Dubbo RPC 异常: code={}, message={}", ex.getCode(), ex.getMessage(), ex);
 
         ApiCode apiCode = mapRpcExceptionToApiCode(ex);
@@ -57,30 +55,30 @@ public class DubboExceptionHandler extends BaseExceptionHandler {
      */
     private ApiCode mapRpcExceptionToApiCode(RpcException ex) {
         if (ex.isTimeout()) {
-            return ApiCode.SC_GATEWAY_TIMEOUT;
+            return ApiCode.GATEWAY_TIMEOUT;
         }
         if (ex.isBiz()) {
-            return ApiCode.SC_INTERNAL_SERVER_ERROR;
+            return ApiCode.SERVER_ERROR;
         }
         switch (ex.getCode()) {
             case RpcException.FORBIDDEN_EXCEPTION:
-                return ApiCode.SC_SERVICE_UNAVAILABLE;
+                return ApiCode.SERVICE_UNAVAILABLE;
             case RpcException.NETWORK_EXCEPTION:
-                return ApiCode.SC_SERVICE_UNAVAILABLE;
+                return ApiCode.SERVICE_UNAVAILABLE;
             case RpcException.METHOD_NOT_FOUND:
-                return ApiCode.SC_NOT_FOUND;
+                return ApiCode.NOT_FOUND;
             case RpcException.NO_INVOKER_AVAILABLE_AFTER_FILTER:
-                return ApiCode.SC_NOT_FOUND;
+                return ApiCode.NOT_FOUND;
             case RpcException.LIMIT_EXCEEDED_EXCEPTION:
-                return ApiCode.SC_GATEWAY_TIMEOUT;
+                return ApiCode.GATEWAY_TIMEOUT;
             case RpcException.TIMEOUT_TERMINATE:
-                return ApiCode.SC_GATEWAY_TIMEOUT;
+                return ApiCode.GATEWAY_TIMEOUT;
             case RpcException.SERIALIZATION_EXCEPTION:
-                return ApiCode.SC_BAD_REQUEST;
+                return ApiCode.BAD_REQUEST;
             case RpcException.VALIDATION_EXCEPTION:
-                return ApiCode.SC_BAD_REQUEST;
+                return ApiCode.BAD_REQUEST;
             default:
-                return ApiCode.SC_INTERNAL_SERVER_ERROR;
+                return ApiCode.SERVER_ERROR;
         }
     }
 
