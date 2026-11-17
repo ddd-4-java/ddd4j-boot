@@ -51,12 +51,12 @@ public class MQProducerServiceImpl implements MQProducerService {
 
             @Override
             public void onSuccess(SendResult sendResult) {
-                System.out.printf("异步发送成功: %s  ", sendResult);
+                log.info("异步发送成功: {}  ", sendResult);
             }
 
             @Override
             public void onException(Throwable throwable) {
-                System.out.printf("异步发送失败: %s ", throwable.getMessage());
+                log.error("异步发送失败", throwable);
             }
         });
     }
@@ -74,7 +74,7 @@ public class MQProducerServiceImpl implements MQProducerService {
      */
     public void sendOneWayMsg(String msgBody) {
         rocketMQTemplate.sendOneWay(TopicConstant.DEMO_TOPIC, MessageBuilder.withPayload(msgBody).build());
-        System.out.println("单向消息发送成功");
+        log.info("单向消息发送成功");
     }
 
     /**
@@ -84,10 +84,10 @@ public class MQProducerServiceImpl implements MQProducerService {
         try {
             // 发送带tag的消息
             SendResult result = rocketMQTemplate.syncSend(TopicConstant.DEMO_TOPIC + ":tag2", MessageBuilder.withPayload(msgBody).build());
-            System.out.printf("发送成功: %s ", result.getSendStatus());
+            log.info("发送成功: {} ", result.getSendStatus());
             return result;
         } catch (Exception e) {
-            System.out.printf("发送失败: %s ", e.getMessage());
+            log.error("发送失败", e);
             throw e;
         }
     }

@@ -1,5 +1,6 @@
 package io.ddd4j.boot.sample.infrastructure.order.messaging.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.boot.sample.domain.order.event.OrderCancelledEvent;
 import io.ddd4j.boot.sample.domain.order.event.OrderCreatedEvent;
 import io.ddd4j.boot.sample.domain.order.event.OrderPaidEvent;
@@ -13,8 +14,8 @@ import org.springframework.stereotype.Component;
  * 处理订单相关的领域事件，可以触发后续的业务流程
  */
 @Component
+@Slf4j
 public class OrderEventHandler {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class);
 
     /**
      * 处理订单创建事件
