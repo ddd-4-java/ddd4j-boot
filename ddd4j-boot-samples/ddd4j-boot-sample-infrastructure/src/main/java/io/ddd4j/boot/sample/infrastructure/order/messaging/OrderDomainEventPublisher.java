@@ -1,5 +1,6 @@
 package io.ddd4j.boot.sample.infrastructure.order.messaging;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.boot.sample.domain.order.event.DomainEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -15,8 +16,8 @@ import java.util.List;
  * 由容器内的监听器（含异步监听器）订阅消费，实现领域层与投递机制解耦。</p>
  */
 @Component
+@Slf4j
 public class OrderDomainEventPublisher {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrderDomainEventPublisher.class);
     private final ApplicationEventPublisher applicationEventPublisher;
 
     /**

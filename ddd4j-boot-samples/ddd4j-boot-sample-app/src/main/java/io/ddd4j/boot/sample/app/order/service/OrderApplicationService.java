@@ -1,5 +1,6 @@
 package io.ddd4j.boot.sample.app.order.service;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.boot.sample.app.order.command.CancelOrderCommand;
 import io.ddd4j.boot.sample.app.order.command.CreateOrderCommand;
 import io.ddd4j.boot.sample.app.order.command.PayOrderCommand;
@@ -27,8 +28,8 @@ import java.util.stream.Collectors;
  * 查询方法直接委托仓储并映射为读模型 DTO。</p>
  */
 @Service
+@Slf4j
 public class OrderApplicationService {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrderApplicationService.class);
     private final OrderRepository orderRepository;
     private final OrderDomainService orderDomainService = new OrderDomainService();
     private final OrderMapper orderMapper = OrderMapper.INSTANCE;

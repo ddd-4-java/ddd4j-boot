@@ -1,5 +1,6 @@
 package io.ddd4j.boot.sample.demo.app.service;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.boot.sample.demo.app.command.CreateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.command.UpdateDemoCommand;
 import io.ddd4j.boot.sample.demo.app.dto.DemoDTO;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 
+@Slf4j
 public class DemoApplicationService {
 
     private final DemoRepository demoRepository;
@@ -40,7 +42,7 @@ public class DemoApplicationService {
      * @return 新增结果
      */
     public DemoDTO createDemo(CreateDemoCommand command) {
-        org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("创建Demo，名称: {}", command.getName());
+        log.info("创建Demo，名称: {}", command.getName());
 
         DemoEntity entity = new DemoEntity();
         entity.setName(command.getName());
@@ -59,7 +61,7 @@ public class DemoApplicationService {
      * @return 更新结果
      */
     public DemoDTO updateDemo(UpdateDemoCommand command) {
-        org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("更新Demo，ID: {}", command.getId());
+        log.info("更新Demo，ID: {}", command.getId());
 
         DemoEntity entity = demoRepository.findById(command.getId())
                 .orElseThrow(() -> new BizRuntimeException("Demo不存在"));
@@ -110,7 +112,7 @@ public class DemoApplicationService {
      * @param id 标识 ID
      */
     public void deleteDemo(Long id) {
-        org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("删除Demo，ID: {}", id);
+        log.info("删除Demo，ID: {}", id);
         demoRepository.delete(id);
     }
 
@@ -120,7 +122,7 @@ public class DemoApplicationService {
      * @param ids 标识 ID 集合
      */
     public void deleteDemos(List<Long> ids) {
-        org.slf4j.LoggerFactory.getLogger(DemoApplicationService.class).info("批量删除Demo，IDs: {}", ids);
+        log.info("批量删除Demo，IDs: {}", ids);
         ids.forEach(this::deleteDemo);
     }
 
@@ -139,4 +141,3 @@ public class DemoApplicationService {
         return dto;
     }
 }
-

@@ -1,5 +1,6 @@
 package io.ddd4j.boot.sample.order.infrastructure.messaging.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.boot.sample.order.domain.event.OrderCancelledEvent;
 import io.ddd4j.boot.sample.order.domain.event.OrderCreatedEvent;
 import io.ddd4j.boot.sample.order.domain.event.OrderPaidEvent;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
+@Slf4j
 public class OrderEventHandler {
     /**
      * 构造 OrderEventHandler 实例。
@@ -29,7 +31,7 @@ public class OrderEventHandler {
      * @param event 领域事件
      */
     public void handleOrderCreated(OrderCreatedEvent event) {
-        org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class).info("处理订单创建事件 - 订单号: {}, 用户ID: {}", event.getOrderNo(), event.getUserId());
+        log.info("处理订单创建事件 - 订单号: {}, 用户ID: {}", event.getOrderNo(), event.getUserId());
         // TODO: 可以在这里触发后续业务流程，如：
         // 1. 发送订单创建通知
         // 2. 扣减库存
@@ -42,7 +44,7 @@ public class OrderEventHandler {
      * @param event 领域事件
      */
     public void handleOrderPaid(OrderPaidEvent event) {
-        org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class).info("处理订单支付事件 - 订单号: {}, 支付方式: {}", event.getOrderNo(), event.getPaymentMethod());
+        log.info("处理订单支付事件 - 订单号: {}, 支付方式: {}", event.getOrderNo(), event.getPaymentMethod());
         // TODO: 可以在这里触发后续业务流程，如：
         // 1. 发送支付成功通知
         // 2. 更新用户积分
@@ -55,7 +57,7 @@ public class OrderEventHandler {
      * @param event 领域事件
      */
     public void handleOrderShipped(OrderShippedEvent event) {
-        org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class).info("处理订单发货事件 - 订单号: {}, 物流单号: {}", event.getOrderNo(), event.getTrackingNumber());
+        log.info("处理订单发货事件 - 订单号: {}, 物流单号: {}", event.getOrderNo(), event.getTrackingNumber());
         // TODO: 可以在这里触发后续业务流程，如：
         // 1. 发送发货通知
         // 2. 更新物流信息
@@ -68,11 +70,10 @@ public class OrderEventHandler {
      * @param event 领域事件
      */
     public void handleOrderCancelled(OrderCancelledEvent event) {
-        org.slf4j.LoggerFactory.getLogger(OrderEventHandler.class).info("处理订单取消事件 - 订单号: {}, 取消原因: {}", event.getOrderNo(), event.getReason());
+        log.info("处理订单取消事件 - 订单号: {}, 取消原因: {}", event.getOrderNo(), event.getReason());
         // TODO: 可以在这里触发后续业务流程，如：
         // 1. 发送取消通知
         // 2. 退款处理
         // 3. 恢复库存
     }
 }
-

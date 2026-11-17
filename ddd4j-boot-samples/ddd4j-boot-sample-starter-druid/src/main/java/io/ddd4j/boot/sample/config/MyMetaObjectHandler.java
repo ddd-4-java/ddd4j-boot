@@ -4,6 +4,7 @@
  */
 package io.ddd4j.boot.sample.config;
 
+import lombok.extern.slf4j.Slf4j;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 
 import org.apache.ibatis.reflection.MetaObject;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
  * <p>插入与更新时统一为 createTime、modifyTime 字段写入当前时间。
  */
 @Component
+@Slf4j
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
     /**
@@ -34,7 +36,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        org.slf4j.LoggerFactory.getLogger(MyMetaObjectHandler.class).info("start insert fill ....");
+        log.info("start insert fill ....");
         //this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
         // 或者
         //this.strictUpdateFill(metaObject, "createTime", () -> LocalDateTime.now(), LocalDateTime.class); // 起始版本 3.3.3(推荐)
@@ -60,7 +62,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        org.slf4j.LoggerFactory.getLogger(MyMetaObjectHandler.class).info("start update fill ....");
+        log.info("start update fill ....");
         //this.strictUpdateFill(metaObject, "modifyTime", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐)
         // 或者
         // this.strictUpdateFill(metaObject, "modifyTime", () -> LocalDateTime.now(), LocalDateTime.class); // 起始版本 3.3.3(推荐)
@@ -78,4 +80,3 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.fillStrategy(metaObject, "modifyTime", LocalDateTime.now()); // 也可以使用(3.3.0 该方法有bug)
     }
 }
-

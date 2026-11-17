@@ -1,7 +1,6 @@
 package io.ddd4j.boot.sample.setup.listener;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -20,13 +19,13 @@ import java.util.Iterator;
  * @version V1.0
  * @since 2017-11-10
  */
+@Slf4j
 public class ApplicationEnvironmentPreparedEventListener implements
         ApplicationListener<ApplicationEnvironmentPreparedEvent> {
 
     /**
      * 日志记录器。
      */
-    private Logger logger = LoggerFactory.getLogger(ApplicationEnvironmentPreparedEventListener.class);
 
     /**
      * 构造配置环境事件监听器实例。
@@ -48,7 +47,7 @@ public class ApplicationEnvironmentPreparedEventListener implements
             Iterator<PropertySource<?>> iter = mps.iterator();
             while (iter.hasNext()) {
                 PropertySource<?> ps = iter.next();
-                logger
+                log
                         .info("ps.getName:{};ps.getSource:{};ps.getClass:{}", ps.getName(), ps.getSource(), ps.getClass());
             }
         }

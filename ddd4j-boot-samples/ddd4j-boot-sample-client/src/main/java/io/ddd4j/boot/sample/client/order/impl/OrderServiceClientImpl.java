@@ -1,13 +1,12 @@
 package io.ddd4j.boot.sample.client.order.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.boot.sample.client.order.api.OrderServiceClient;
 import io.ddd4j.boot.sample.client.order.dto.request.CreateOrderRequest;
 import io.ddd4j.boot.sample.client.order.dto.request.OrderQueryRequest;
 import io.ddd4j.boot.sample.client.order.dto.response.OrderPageResponse;
 import io.ddd4j.boot.sample.client.order.dto.response.OrderResponse;
 import io.ddd4j.core.api.R;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +30,11 @@ import java.util.List;
  * @author DDD4J
  * @since 1.0.0
  */
+@Slf4j
 public class OrderServiceClientImpl implements OrderServiceClient {
 
     /** 订单接口路径前缀 */
     private static final String API_PREFIX = "/api/orders";
-    private static final Logger log = LoggerFactory.getLogger(OrderServiceClientImpl.class);
     /** RestClient 实例 */
     private final RestClient restClient;
     /** 订单服务基础地址 */

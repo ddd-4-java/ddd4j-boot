@@ -1,5 +1,6 @@
 package io.ddd4j.boot.sample;
 
+import lombok.extern.slf4j.Slf4j;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +20,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableCaching(proxyTargetClass = true)
 @EnableScheduling
 @SpringBootApplication
+@Slf4j
 public class MqttServerApplication implements CommandLineRunner {
 
     /**
@@ -57,7 +59,7 @@ public class MqttServerApplication implements CommandLineRunner {
      */
     @Override
     public void run(String... args) throws Exception {
-        System.err.println("Spring Boot Application（Mica-Mqtt-Server）Started !");
+        log.info("Spring Boot Application（Mica-Mqtt-Server）Started !");
     }
 
 }

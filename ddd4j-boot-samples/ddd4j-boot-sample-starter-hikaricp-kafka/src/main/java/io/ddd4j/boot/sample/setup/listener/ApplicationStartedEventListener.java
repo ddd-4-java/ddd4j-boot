@@ -1,7 +1,6 @@
 package io.ddd4j.boot.sample.setup.listener;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.event.ApplicationStartingEvent;
 import org.springframework.context.ApplicationListener;
@@ -10,12 +9,12 @@ import org.springframework.context.ApplicationListener;
  * spring boot 启动监听类
  * ApplicationStartedEvent：spring boot启动开始时执行的事件
  */
+@Slf4j
 public class ApplicationStartedEventListener implements ApplicationListener<ApplicationStartingEvent> {
 
     /**
      * 日志记录器。
      */
-    private Logger logger = LoggerFactory.getLogger(ApplicationStartedEventListener.class);
 
     /**
      * 构造启动事件监听器实例。
@@ -31,7 +30,7 @@ public class ApplicationStartedEventListener implements ApplicationListener<Appl
     @Override
     public void onApplicationEvent(ApplicationStartingEvent event) {
         SpringApplication app = event.getSpringApplication();
-        logger.info("==MyApplicationStartedEventListener==" + app.getMainApplicationClass());
+        log.info("==MyApplicationStartedEventListener=={}", app.getMainApplicationClass());
     }
 
 }

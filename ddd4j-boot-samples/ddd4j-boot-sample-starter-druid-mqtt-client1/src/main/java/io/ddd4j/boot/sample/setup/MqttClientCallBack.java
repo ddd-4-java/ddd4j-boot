@@ -50,10 +50,10 @@ public class MqttClientCallBack implements MqttCallback {
      */
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        System.out.printf("接收消息主题 : %s%n", topic);
-        System.out.printf("接收消息Qos : %d%n", message.getQos());
-        System.out.printf("接收消息内容 : %s%n", new String(message.getPayload()));
-        System.out.printf("接收消息retained : %b%n", message.isRetained());
+        log.info("接收消息主题 : {}", topic);
+        log.info("接收消息Qos : {}", message.getQos());
+        log.info("接收消息内容 : {}", new String(message.getPayload()));
+        log.info("接收消息retained : {}", message.isRetained());
     }
 
     /**
@@ -64,7 +64,7 @@ public class MqttClientCallBack implements MqttCallback {
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
         IMqttAsyncClient client = token.getClient();
-        System.out.println(client.getClientId() + "发布消息成功！");
+        log.info("{}发布消息成功！", client.getClientId());
     }
 
 }
