@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
  * <ul>
  *   <li>COLA Domain/Extension/CatchLog/StateMachine 组件的 Spring Boot 集成
  *       （这些组件自带 AutoConfiguration，通过 ComponentScan 激活）</li>
- *   <li>{@link Ddd4jResponseHandler} — 让 catchlog 的 ResponseHandler 输出 ddd4j-boot 的 {@code ApiRestResponse} 格式</li>
+ *   <li>{@link Ddd4jResponseHandler} — 让 catchlog 的 ResponseHandler 输出 ddd4j-boot 的 {@code R} 格式</li>
  * </ul>
  *
  * <p>配置项（{@code application.yml}）：
@@ -45,7 +45,7 @@ public class ColaAutoConfiguration {
     /**
      * 注册 ddd4j-boot 风格的 ResponseHandler。
      *
-     * <p>让 COLA catchlog 的异常处理输出 ddd4j-boot 的 {@link io.ddd4j.core.ApiRestResponse} 格式，
+     * <p>让 COLA catchlog 的异常处理输出 ddd4j-boot 的 {@link io.ddd4j.core.api.R} 格式，
      * 而非 COLA 默认的 {@code Response} 格式。
      */
     @Bean
