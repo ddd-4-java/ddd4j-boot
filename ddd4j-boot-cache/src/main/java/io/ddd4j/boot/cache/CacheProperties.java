@@ -18,6 +18,11 @@ public class CacheProperties {
      */
     private CacheKit.LocalCacheType defaultType = CacheKit.LocalCacheType.CAFFEINE;
 
+    /**
+     * Sets the default local cache implementation.
+     *
+     * @param defaultType the local cache implementation type
+     */
     public void setDefaultType(CacheKit.LocalCacheType defaultType) {
         this.defaultType = defaultType;
         CacheKit.setDefaultType(defaultType);

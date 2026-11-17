@@ -47,6 +47,16 @@
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-actuator</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.annotation</groupId>
+                    <artifactId>javax.annotation-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-annotation_1.3_spec</artifactId>
         </dependency>
     </dependencies>
 

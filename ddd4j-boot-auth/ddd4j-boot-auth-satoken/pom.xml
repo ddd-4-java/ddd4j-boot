@@ -29,7 +29,7 @@
             <artifactId>ddd4j-auth-spring</artifactId>
             <version>${ddd4j.version}</version>
         </dependency>
-        <!-- ddd4j core（ApiRestResponse 等） -->
+        <!-- ddd4j core（R 等） -->
         <dependency>
             <groupId>io.ddd4j</groupId>
             <artifactId>ddd4j-core</artifactId>

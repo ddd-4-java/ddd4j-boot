@@ -220,7 +220,8 @@
         <truelicense-xml.version>1.33</truelicense-xml.version>
         <zxing-extension.version>4.1.x.20260630-SNAPSHOT</zxing-extension.version>
         <spring-boot-starter-resilience4j.version>${resilience4j.version}</spring-boot-starter-resilience4j.version>
-        <spring-boot-logback.version>1.5.22</spring-boot-logback.version>
+        <spring-boot-logback.version>1.5.36</spring-boot-logback.version>
+        <geronimo-annotation.version>1.3</geronimo-annotation.version>
         <spring-extension.version>2.0.x.20260630-SNAPSHOT</spring-extension.version>
         <spring-boot-slf4j.version>2.0.17</spring-boot-slf4j.version>
 
@@ -242,6 +243,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.geronimo.specs</groupId>
+                <artifactId>geronimo-annotation_1.3_spec</artifactId>
+                <version>${geronimo-annotation.version}</version>
+            </dependency>
             <!-- 链路追踪（micrometer-tracing + OpenTelemetry bridge，版本理由见 properties 注释） -->
             <dependency>
                 <groupId>io.micrometer</groupId>

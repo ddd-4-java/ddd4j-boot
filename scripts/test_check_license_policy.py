@@ -73,6 +73,29 @@ class LicensePolicyTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "empty"):
             POLICY.check(self.report, self.sbom, self.selections, self.exclusions)
 
+    def test_exact_apache_2_license_aliases_are_valid_selections(self):
+        coordinate = "example:dual-licensed:1"
+        for name in ("AL 2.0", "Apache License 2.0", "Apache License v2.0"):
+            with self.subTest(name=name):
+                self.report.write_text(
+                    f"    LGPL:\n        * Dual ({coordinate} - example)\n"
+                    f"    {name}:\n        * Dual ({coordinate} - example)\n",
+                    encoding="utf-8",
+                )
+                self._write_sbom([coordinate])
+                self.selections.write_text(f"{coordinate}\t{name}\n", encoding="utf-8")
+                self.assertEqual([], POLICY.check(
+                    self.report, self.sbom, self.selections, self.exclusions)[1])
+
+        self.report.write_text(
+            f"    LGPL:\n        * Dual ({coordinate} - example)\n"
+            f"    Apache License 2.1:\n        * Dual ({coordinate} - example)\n",
+            encoding="utf-8",
+        )
+        self.selections.write_text(f"{coordinate}\tApache License 2.1\n", encoding="utf-8")
+        self.assertEqual(1, len(POLICY.check(
+            self.report, self.sbom, self.selections, self.exclusions)[1]))
+
 
 if __name__ == "__main__":
     unittest.main()

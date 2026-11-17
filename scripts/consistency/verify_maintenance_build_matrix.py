@@ -73,6 +73,24 @@ def read_matrix(path: Path) -> list[dict[str, str]]:
     return rows
 
 
+def select_rows(
+    repo: Path, rows: list[dict[str, str]], branch: str | None, ref: str | None
+) -> list[dict[str, str]]:
+    if branch is None:
+        return rows
+    direct = [row for row in rows if row["branch"] == branch]
+    if direct:
+        return direct
+    if ref is None or not branch.startswith(("feature/", "test/")):
+        raise ValueError(f"branch is not in build matrix: {branch}")
+    root = parse_pom(git(repo, "show", f"{ref}:pom.xml"), f"{ref}:pom.xml")
+    revision = properties(root).get("revision")
+    selected = [row for row in rows if row["revision"] == revision]
+    if len(selected) != 1:
+        raise ValueError(f"branch {branch} has no unique maintenance contract for revision {revision!r}")
+    return selected
+
+
 def parse_pom(content: str, source: str) -> element_tree.Element:
     try:
         return element_tree.fromstring(content)
@@ -202,9 +220,7 @@ def main() -> int:
     args = parser.parse_args()
     try:
         rows = read_matrix(args.matrix)
-        selected_rows = [row for row in rows if not args.branch or row["branch"] == args.branch]
-        if not selected_rows:
-            raise ValueError(f"branch is not in build matrix: {args.branch}")
+        selected_rows = select_rows(args.repo, rows, args.branch, args.ref)
         errors: list[str] = []
         for row in selected_rows:
             validate_branch(args.repo, args.ref_prefix, row, errors, args.ref)

@@ -32,24 +32,44 @@ import org.springframework.web.reactive.DispatcherHandler;
         DefaultWebFluxConfiguration.class, GlobalErrorAttributes.class, GlobalErrorWebExceptionHandler.class})
 public class Ddd4jWebFluxAutoConfiguration {
 
+    /**
+     * Creates the JSON object mapper.
+     *
+     * @return the JSON object mapper
+     */
     @Bean
     @ConditionalOnMissingBean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
 
+    /**
+     * Creates the local resource properties.
+     *
+     * @return the local resource properties
+     */
     @Bean
     @ConditionalOnMissingBean
     public LocalResourceProperteis localResourceProperteis() {
         return new LocalResourceProperteis();
     }
 
+    /**
+     * Creates the sequence properties.
+     *
+     * @return the sequence properties
+     */
     @Bean
     @ConditionalOnMissingBean
     public SequenceProperties sequenceProperties() {
         return new SequenceProperties();
     }
 
+    /**
+     * Creates the WebFlux health indicator.
+     *
+     * @return the WebFlux health indicator
+     */
     @Bean("ddd4jWebHealthIndicator")
     @ConditionalOnClass(HealthIndicator.class)
     @ConditionalOnMissingBean(name = "ddd4jWebHealthIndicator")
