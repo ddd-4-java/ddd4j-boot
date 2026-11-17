@@ -1,13 +1,12 @@
 package io.ddd4j.boot.cmpt.express.infrastructure.service;
 
+import lombok.extern.slf4j.Slf4j;
 import com.alibaba.qlexpress4.Express4Runner;
 import com.alibaba.qlexpress4.runtime.Parameters;
 import com.alibaba.qlexpress4.runtime.QContext;
 import com.alibaba.qlexpress4.runtime.function.CustomFunction;
 import io.ddd4j.boot.cmpt.express.application.service.RuleManagementService;
 import io.ddd4j.boot.cmpt.express.domain.model.entity.RuleDefinition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -29,9 +28,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>只加载 ruleType 为 FUNCTION 的规则
  */
 @Component
+@Slf4j
 public class DynamicFunctionLoader {
 
-    private static final Logger log = LoggerFactory.getLogger(DynamicFunctionLoader.class);
 
     private final Express4Runner expressRunner;
     private final RuleManagementService ruleManagementService;
@@ -208,4 +207,3 @@ public class DynamicFunctionLoader {
         log.info("卸载函数: {}", ruleCode);
     }
 }
-

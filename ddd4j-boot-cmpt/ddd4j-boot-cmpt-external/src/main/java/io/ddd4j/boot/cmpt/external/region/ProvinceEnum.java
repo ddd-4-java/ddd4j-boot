@@ -1,11 +1,11 @@
 package io.ddd4j.boot.cmpt.external.region;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import lombok.extern.slf4j.Slf4j;
 /**
  * http://www.mca.gov.cn/article/sj/xzqh/1980/201903/201903011447.html
  */
+@Slf4j
 public enum ProvinceEnum {
 
     P110000("110000", "北京市"),
@@ -53,7 +53,6 @@ public enum ProvinceEnum {
     // 单位名称
     private String cname;
 
-    private static Logger log = LoggerFactory.getLogger(ProvinceEnum.class);
 
     private ProvinceEnum(String code, String cname) {
         this.code = code;

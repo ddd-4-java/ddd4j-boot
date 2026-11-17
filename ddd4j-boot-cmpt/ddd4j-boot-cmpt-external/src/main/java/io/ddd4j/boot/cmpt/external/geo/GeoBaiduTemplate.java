@@ -220,10 +220,10 @@ public class GeoBaiduTemplate {
         Map<String, BigDecimal> mapLL = template.getLatAndLngByAddress("浙江省杭州市西湖区"); // lng：116.86380647644208  lat：38.297615350325717
         mapLL.get("lat");
         mapLL.get("lng");
-        System.out.println("lng：" + mapLL.get("lng") + "  lat：" + mapLL.get("lat"));
+        log.info("lng：" + mapLL.get("lng") + "  lat：" + mapLL.get("lat"));
 
         Optional<JSONObject> mapLL2 = template.getLocationByIp("115.204.225.154"); // lng：116.86380647644208  lat：38.297615350325717
-        System.out.println(mapLL2.get().toJSONString());
+        log.info(mapLL2.get().toJSONString());
     }
 
 

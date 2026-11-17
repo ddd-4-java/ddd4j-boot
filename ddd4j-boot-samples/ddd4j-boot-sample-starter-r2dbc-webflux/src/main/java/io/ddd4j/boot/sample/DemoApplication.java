@@ -1,5 +1,6 @@
 package io.ddd4j.boot.sample;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.boot.sample.entity.MyEvent;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,7 @@ import org.springframework.data.mongodb.core.CollectionOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 
 @SpringBootApplication
+@Slf4j
 public class DemoApplication implements CommandLineRunner {
 
     @Bean
@@ -26,7 +28,7 @@ public class DemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.err.println("Spring Boot Application（ddd4j-boot-Demo） Started !");
+        log.info("Spring Boot Application（ddd4j-boot-Demo） Started !");
     }
 
     @Bean

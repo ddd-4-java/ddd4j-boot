@@ -1,5 +1,6 @@
 package io.ddd4j.boot.cmpt.pf4j.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
@@ -8,6 +9,7 @@ import org.springframework.cglib.proxy.MethodProxy;
 import java.lang.reflect.Method;
 
 //Cglib动态代理，实现MethodInterceptor接口
+@Slf4j
 public class CglibProxy implements MethodInterceptor {
 
     private Object target;//需要代理的目标对象
@@ -19,9 +21,9 @@ public class CglibProxy implements MethodInterceptor {
     //重写拦截方法
     @Override
     public Object intercept(Object obj, Method method, Object[] arr, MethodProxy proxy) throws Throwable {
-        System.out.println("Cglib动态代理，监听开始！");
+        log.info("Cglib动态代理，监听开始！");
         Object invoke = method.invoke(target, arr);//方法执行，参数：target 目标对象 arr参数数组
-        System.out.println("Cglib动态代理，监听结束！");
+        log.info("Cglib动态代理，监听结束！");
         return invoke;
     }
 

@@ -5,8 +5,6 @@
 package io.ddd4j.boot.cmpt.webflux.error;
 
 import io.ddd4j.boot.core.Constants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +15,7 @@ public abstract class ExceptinHandler {
     public static final String STATUS_FAIL = "fail";
     public static final String STATUS_ERROR = "error";
 
-    protected static final Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    protected static final Logger LOG = log;
     protected static final String XML_HTTP_REQUEST = "XMLHttpRequest";
     protected static final String X_REQUESTED_WITH = "X-Requested-With";
 
@@ -55,4 +53,3 @@ public abstract class ExceptinHandler {
     }
 
 }
-
