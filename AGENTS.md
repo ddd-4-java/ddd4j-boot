@@ -24,3 +24,10 @@
 - 提交前扫描当前分支所有受 Git 管理的 Java 文件并验证不存在 record 声明，执行受影响类型及 JSON/校验链路测试；报告构建和测试的实际限制。
 
 执行门禁：`python3 scripts/check_no_records.py`；扫描器自测：`python3 -m unittest discover -s scripts -p test_check_no_records.py`。
+
+## 日志统一规范（所有分支）
+
+- 使用 Lombok `@Slf4j` 和生成的 `log` 字段，禁止重复声明 `Logger` 或在业务方法中逐次调用 `LoggerFactory.getLogger(...)`。
+- 静态内部类需要独立日志类别时，在该内部类声明 `@Slf4j`；非静态内部类复用外部类日志，不在其上声明 Lombok 不支持的 `@Slf4j`。
+- 生产代码的诊断输出使用日志 API，不使用 `System.out/err`；测试中用于展示结果的标准输出不作为生产日志处理。
+- 优先使用 `{}` 参数化日志；记录异常时传入 Throwable，保留堆栈。日志级别、消息与 Logger 所属类别的调整须符合实际语义。
