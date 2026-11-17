@@ -1,5 +1,6 @@
 package io.ddd4j.boot.sample.order;
 
+import lombok.extern.slf4j.Slf4j;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ddd4j.core.cache.CacheConfig;
 import io.ddd4j.cache.CacheKit;
@@ -23,8 +24,6 @@ import io.ddd4j.sample.order.kafka.KafkaIntegrationEventPublisher;
 import io.ddd4j.sample.order.redis.RedisIdempotencyPort;
 import io.ddd4j.web.core.idempotency.CacheIdempotencyGuard;
 import io.ddd4j.web.core.idempotency.IdempotencyGuard;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -52,9 +51,9 @@ import java.util.Objects;
 @EnableScheduling
 @EnableConfigurationProperties(OrderSampleProperties.class)
 @ConditionalOnProperty(prefix = "ddd4j.sample.order", name = "infrastructure", havingValue = "postgres")
+@Slf4j
 public class OrderPostgresInfrastructureConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(OrderPostgresInfrastructureConfiguration.class);
 
     @Bean
     public JdbcOrderTransactionPort orderTransactionPort(DataSource dataSource) {

@@ -1,5 +1,6 @@
 package io.ddd4j.boot.mq.mqttmica.bridge.consumer;
 
+import lombok.extern.slf4j.Slf4j;
 import io.ddd4j.boot.mq.mqttmica.bridge.registry.MicaMqttClientSubscribeDefinition;
 import org.dromara.mica.mqtt.core.client.IMqttClientMessageListener;
 import org.dromara.mica.mqtt.core.client.IMqttClientSession;
@@ -7,8 +8,6 @@ import org.dromara.mica.mqtt.core.deserialize.MqttDeserializer;
 import org.dromara.mica.mqtt.core.util.TopicUtil;
 import org.dromara.mica.mqtt.spring.client.MqttClientSubscribeListener;
 import org.dromara.mica.mqtt.spring.client.MqttClientTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
@@ -29,9 +28,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @author <a href="https://github.com/partme-ai">PartMe.AI</a>
  */
+@Slf4j
 public class MicaMqttClientSubscribeRegistrar implements AutoCloseable {
 
-    private static final Logger log = LoggerFactory.getLogger(MicaMqttClientSubscribeRegistrar.class);
     private final ApplicationContext applicationContext;
     private final List<MicaMqttClientSubscribeDefinition> registeredDefinitions = new CopyOnWriteArrayList<>();
 
