@@ -17,10 +17,10 @@
 
 ## 统一响应
 
-- 成功：`ApiRestResponse.success(...)`
-- 失败：`ApiRestResponse.fail(...)`
-- 错误：`ApiRestResponse.error(...)`
-- 参考：`io.ddd4j.core.ApiRestResponse`
+- 成功：`R.success(...)`
+- 失败：`R.fail(...)`
+- 错误：`R.error(...)`
+- 参考：`io.ddd4j.core.api.R`
 
 ## 全局异常映射
 
